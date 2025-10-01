@@ -4,7 +4,6 @@ import { uniq } from 'lodash-es'
 
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
@@ -24,7 +23,9 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 
 import { collectionDetailsSkeleton } from './skeleton'
 import ExternalLink from '../ExternalLink/ExternalLink'
+
 import { pluralize } from '../../util/pluralize'
+import renderTooltip from '../../util/renderTooltip'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
@@ -387,16 +388,12 @@ export const CollectionDetailsBody = ({
                         <OverlayTrigger
                           placement="right"
                           overlay={
-                            (
-                              <Tooltip
-                                id="tooltip_supported-reformatting"
-                                className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
-                              >
-                                In addition to their native format, some data products can be
-                                reformatted to additional formats. If reformatting is desired,
-                                reformatting options can be set prior to downloading the data.
-                              </Tooltip>
-                            )
+                            (tooltipProps) => renderTooltip({
+                              id: 'tooltip_supported-reformatting',
+                              className: 'collection-details-body__tooltip tooltip--large tooltip--ta-left',
+                              children: 'In addition to their native format, some data products can be reformatted to additional formats. If reformatting is desired, reformatting options can be set prior to downloading the data.',
+                              ...tooltipProps
+                            })
                           }
                         >
                           <EDSCIcon icon={FaQuestionCircle} size="0.625rem" />

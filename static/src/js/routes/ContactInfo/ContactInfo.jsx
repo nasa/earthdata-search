@@ -7,6 +7,9 @@ import ContactInfoContainer from '../../containers/ContactInfoContainer/ContactI
 
 const { edscHost } = getEnvironmentConfig()
 
+/**
+ * The ContactInfo route component
+*/
 export const ContactInfo = () => (
   <>
     <Helmet>

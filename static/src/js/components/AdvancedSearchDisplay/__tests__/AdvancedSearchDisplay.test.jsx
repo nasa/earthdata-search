@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -53,9 +53,7 @@ describe('AdvancedSearchDisplay component', () => {
         })
 
         const button = screen.getByRole('button', { name: 'Remove advanced search filter' })
-        await act(async () => {
-          await user.click(button)
-        })
+        await user.click(button)
 
         expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
         expect(zustandState.query.changeQuery).toHaveBeenCalledWith({

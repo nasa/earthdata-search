@@ -5,11 +5,9 @@ import ProjectPanelSection from './ProjectPanelSection'
 
 import './VariableDetailsPanel.scss'
 
-export const VariableDetailsPanel = (props) => {
-  const {
-    variable
-  } = props
-
+export const VariableDetailsPanel = ({
+  variable = undefined
+}) => {
   if (!variable) return null
 
   const {
@@ -39,10 +37,6 @@ export const VariableDetailsPanel = (props) => {
       </ProjectPanelSection>
     </div>
   )
-}
-
-VariableDetailsPanel.defaultProps = {
-  variable: undefined
 }
 
 VariableDetailsPanel.propTypes = {

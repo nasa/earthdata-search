@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { commafy } from '../../util/commafy'
-
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
+import renderTooltip from '../../util/renderTooltip'
 
 import Cell from '../EDSCTable/EDSCTableCell'
 import CollectionResultsTableHeaderCell from './CollectionResultsTableHeaderCell'
@@ -18,6 +17,7 @@ import EDSCTable from '../EDSCTable/EDSCTable'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionResultsTable.scss'
+
 /**
  * Renders CollectionResultsTable.
  * @param {Object} props - The props passed into the component.
@@ -35,8 +35,8 @@ export const CollectionResultsTable = ({
   itemCount,
   loadMoreItems,
   onMetricsAddCollectionProject,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null
 }) => {
   const columns = useMemo(() => [
     {
@@ -115,11 +115,11 @@ export const CollectionResultsTable = ({
           id="collection-results-table-header--map-imagery"
           placement="top"
           overlay={
-            (
-              <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
-                Available in the Earthdata Cloud
-              </Tooltip>
-            )
+            (tooltipProps) => renderTooltip({
+              children: 'Available in the Earthdata Cloud',
+              id: 'collection-results-table-header--earthdata-cloud',
+              ...tooltipProps
+            })
           }
         >
           <span>
@@ -145,11 +145,11 @@ export const CollectionResultsTable = ({
           id="collection-results-table-header--map-imagery"
           placement="top"
           overlay={
-            (
-              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-                Supports advanced map visualizations using the GIBS tile service
-              </Tooltip>
-            )
+            (tooltipProps) => renderTooltip({
+              children: 'Supports advanced map visualizations using the GIBS tile service',
+              id: 'collection-results-table-header--map-imagery',
+              ...tooltipProps
+            })
           }
         >
           <span>
@@ -172,16 +172,14 @@ export const CollectionResultsTable = ({
     {
       Header: () => (
         <OverlayTrigger
-          id="collection-results-table-header--map-imagery"
+          id="collection-results-table-header--near-real-time"
           placement="top"
           overlay={
-            (
-              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-                Data is available soon after being
-                {' '}
-                acquired by the instrument on the satellite
-              </Tooltip>
-            )
+            (tooltipProps) => renderTooltip({
+              children: 'Data is available soon after being acquired by the instrument on the satellite',
+              id: 'collection-results-table-header--near-real-time',
+              ...tooltipProps
+            })
           }
         >
           <span>
@@ -313,11 +311,6 @@ export const CollectionResultsTable = ({
       />
     </div>
   )
-}
-
-CollectionResultsTable.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
 }
 
 CollectionResultsTable.propTypes = {

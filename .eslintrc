@@ -101,6 +101,14 @@
       }
     },
     {
+      "files": ["*.js", "*.jsx"],
+      "rules": {
+        "react/require-default-props": [2, {
+          "functions": "defaultArguments"
+        }]
+      }
+    },
+    {
       // Allow param reassignment in the zustand/slices files (this is handled correctly by immer)
       "files": [
         "static/src/js/zustand/slices/**/*.ts"

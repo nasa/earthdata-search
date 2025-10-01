@@ -549,3 +549,91 @@ export type NlpCollectionQuery = {
     endDate: string
   }
 }
+
+/**
+ * Admin Types
+ */
+
+/** A user */
+export interface AdminUser {
+  /** Unique identifier for the user */
+  id: string
+  /** URS username of the user */
+  ursId: string
+}
+
+/** An admin project */
+export interface AdminProject {
+  /** Unique identifier for the project */
+  id: string
+  /** Human-readable project name */
+  name: string
+  /** Obfuscated unique identifier for the project */
+  obfuscatedId: string
+  /** Source path or query string for the project */
+  path: string
+  /** User who owns the project */
+  user: AdminUser
+  /** ISO timestamp when the project was updated */
+  updatedAt: string
+  /** ISO timestamp when the project was created */
+  createdAt: string
+}
+
+/** A retrieval order */
+interface AdminRetrievalOrder {
+  /** Unique identifier for the retrieval order */
+  id: string
+  /** Additional order configuration and parameters */
+  orderInformation: object
+  /** Human-readable order number from the data provider */
+  orderNumber: string
+  /** Current processing state of the order */
+  state: string
+  /** Type of retrieval order */
+  type: string
+}
+
+/** A retrieval collection. Contains collection metadata, order information, and tracking details */
+export interface AdminRetrievalCollection {
+  /** Unique identifier for the retrieval collection */
+  id: string
+  /** NASA CMR collection identifier */
+  collectionId: string
+  /** Metadata information about the collection */
+  collectionMetadata: {
+    /** Data provider/center responsible for the collection */
+    dataCenter: string
+  }
+  /** Total number of granules in this collection */
+  granuleCount: number
+  /** Access method configuration for data retrieval */
+  accessMethod: {
+    /** Type of access method (e.g., 'download', 'opendap', 'esi') */
+    type: string
+  }
+  /** ISO timestamp when the retrieval collection was created */
+  createdAt: string
+  /** ISO timestamp when the retrieval collection was last updated */
+  updatedAt: string
+  /** Array of individual retrieval orders for this collection */
+  retrievalOrders: AdminRetrievalOrder[]
+}
+
+/** An admin retrieval */
+export interface AdminRetrieval {
+  /** Unique identifier for the retrieval */
+  id: string
+  /** Obfuscated unique identifier for the retrieval */
+  obfuscatedId: string
+  /** Raw JSON data for the retrieval */
+  jsondata: Record<string, unknown>
+  /** Environment string for the retrieval (e.g., 'prod', 'uat') */
+  environment: string
+  /** ISO timestamp when the retrieval was updated */
+  updatedAt: string
+  /** ISO timestamp when the retrieval was created */
+  createdAt: string
+  /** User who owns the retrieval */
+  user: AdminUser
+}

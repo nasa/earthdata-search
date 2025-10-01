@@ -19,14 +19,14 @@ import './ProjectPanelSection.scss'
  * @param {String} props.warning - Adds text to be used on the section.
  */
 export const ProjectPanelSection = ({
-  children,
-  faded,
-  heading,
-  headingLevel,
-  intro,
-  nested,
-  step,
-  warning
+  children = null,
+  faded = false,
+  heading = null,
+  headingLevel = 'h3',
+  intro = null,
+  nested = false,
+  step = null,
+  warning = ''
 }) => {
   const panelSectionClasses = classNames([
     'project-panel-section',
@@ -74,17 +74,6 @@ export const ProjectPanelSection = ({
       }
     </div>
   )
-}
-
-ProjectPanelSection.defaultProps = {
-  children: null,
-  faded: false,
-  heading: null,
-  headingLevel: 'h3',
-  intro: null,
-  nested: false,
-  step: null,
-  warning: ''
 }
 
 ProjectPanelSection.propTypes = {

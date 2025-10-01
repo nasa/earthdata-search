@@ -1053,6 +1053,10 @@ export type UiSlice = {
       panelsWidth: number
       /** Function to set the panelsWidth value */
       setPanelsWidth: (panelsWidth: number) => void
+      /** Flag to show if the panels are loaded */
+      panelsLoaded: boolean
+      /** Function to set the panelsLoaded value */
+      setPanelsLoaded: (panelsLoaded: boolean) => void
       /** The width of the sidebar */
       sidebarWidth: number
       /** Function to set the sidebarWidth value */

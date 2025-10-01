@@ -12,14 +12,13 @@ import type {
 import Btn from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 // @ts-expect-error: This file does not have types
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-// @ts-expect-error: This file does not have types
 import Spinner from '../Spinner/Spinner'
-// @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './Button.scss'
 
@@ -261,7 +260,25 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
       }
     </Btn>
   )
+
   if (tooltip && tooltipId) {
+    let tooltipContent = tooltip
+
+    if (tooltipKeyboardShortcut) {
+      tooltipContent = (
+        <span className="text-nowrap">
+          {tooltip}
+          {
+            tooltipKeyboardShortcut && (
+              <span className="keyboard-shortcut ms-1">
+                {tooltipKeyboardShortcut}
+              </span>
+            )
+          }
+        </span>
+      )
+    }
+
     return (
       <OverlayTrigger
         placement={tooltipPlacement || 'top'}
@@ -272,25 +289,12 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
           }
         }
         overlay={
-          (
-            <Tooltip id={tooltipId} className={overlayClass}>
-              {
-                tooltipKeyboardShortcut ? (
-                  <span className="text-nowrap">
-                    {tooltip}
-                    {
-                      tooltipKeyboardShortcut && (
-                        <span className="keyboard-shortcut ms-1">
-                          {tooltipKeyboardShortcut}
-                        </span>
-                      )
-                    }
-                  </span>
-                )
-                  : tooltip
-              }
-            </Tooltip>
-          )
+          (tooltipProps) => renderTooltip({
+            children: tooltipContent,
+            className: overlayClass,
+            id: tooltipId,
+            ...tooltipProps
+          })
         }
       >
         {button}

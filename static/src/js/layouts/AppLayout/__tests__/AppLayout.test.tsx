@@ -44,7 +44,7 @@ const setup = setupTest({
 })
 
 describe('AppLayout', () => {
-  it('renders the app layout', () => {
+  test('renders the app layout', () => {
     setup()
 
     expect(HistoryContainer).toHaveBeenCalledTimes(1)

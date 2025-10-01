@@ -4,7 +4,11 @@ import classNames from 'classnames'
 
 import './PanelSection.scss'
 
-export const PanelSection = ({ children, isActive, isOpen }) => {
+export const PanelSection = ({
+  children,
+  isActive = false,
+  isOpen = false
+}) => {
   const className = classNames([
     'panel-section',
     {
@@ -18,11 +22,6 @@ export const PanelSection = ({ children, isActive, isOpen }) => {
       {children}
     </section>
   )
-}
-
-PanelSection.defaultProps = {
-  isActive: false,
-  isOpen: false
 }
 
 PanelSection.propTypes = {

@@ -47,15 +47,17 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {String} props.ursProfile - Response object from URS profile.
 */
 const AccessMethod = ({
-  accessMethods,
-  index,
-  isActive,
-  metadata,
+  accessMethods = {},
+  index = null,
+  isActive = false,
+  metadata = {},
   onSelectAccessMethod,
   onUpdateAccessMethod,
-  projectCollection,
-  selectedAccessMethod,
-  spatial,
+  projectCollection = {
+    granules: {}
+  },
+  selectedAccessMethod = null,
+  spatial = {},
   temporal,
   ursProfile
 }) => {
@@ -994,18 +996,6 @@ const AccessMethod = ({
       </ProjectPanelSection>
     </div>
   )
-}
-
-AccessMethod.defaultProps = {
-  accessMethods: {},
-  index: null,
-  isActive: false,
-  metadata: {},
-  selectedAccessMethod: null,
-  spatial: {},
-  projectCollection: {
-    granules: {}
-  }
 }
 
 AccessMethod.propTypes = {

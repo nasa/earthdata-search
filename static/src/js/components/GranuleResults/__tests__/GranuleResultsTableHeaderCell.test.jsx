@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -69,9 +69,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     const dropdownButton = screen.getByRole('button', {
       name: 'More actions'
     })
-    await act(async () => {
-      await user.click(dropdownButton)
-    })
+
+    await user.click(dropdownButton)
 
     const detailsButton = screen.getByRole('button', {
       name: 'View details'
@@ -88,9 +87,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     const dropdownButton = screen.getByRole('button', {
       name: 'More actions'
     })
-    await act(async () => {
-      await user.click(dropdownButton)
-    })
+
+    await user.click(dropdownButton)
 
     const removeButton = screen.getByRole('button', {
       name: 'Filter granule'
@@ -123,9 +121,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     const dropdownButton = screen.getByRole('button', {
       name: 'More actions'
     })
-    await act(async () => {
-      await user.click(dropdownButton)
-    })
+
+    await user.click(dropdownButton)
 
     const removeButton = screen.getByRole('button', {
       name: 'Filter granule'
@@ -145,9 +142,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     const addGranuleButton = screen.getByRole('button', {
       name: 'Add granule to project'
     })
-    await act(async () => {
-      await user.click(addGranuleButton)
-    })
+
+    await user.click(addGranuleButton)
 
     expect(props.column.customProps.addGranuleToProjectCollection).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.addGranuleToProjectCollection).toHaveBeenCalledWith({
@@ -179,9 +175,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     const removeGranuleButton = screen.getByRole('button', {
       name: 'Remove granule from project'
     })
-    await act(async () => {
-      await user.click(removeGranuleButton)
-    })
+
+    await user.click(removeGranuleButton)
 
     expect(props.column.customProps.removeGranuleFromProjectCollection).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.removeGranuleFromProjectCollection).toHaveBeenCalledWith({

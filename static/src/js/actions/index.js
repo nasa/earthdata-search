@@ -10,13 +10,6 @@ import {
 } from './admin/retrievalMetrics'
 
 import {
-  adminViewProject,
-  fetchAdminProjects,
-  fetchAdminProject,
-  updateAdminProjectsPageNum,
-  updateAdminProjectsSortKey
-} from './admin/projects'
-import {
   updateFacets,
   onFacetsLoading,
   onFacetsLoaded,
@@ -86,7 +79,6 @@ import { generateNotebook } from './generateNotebook'
 
 const actions = {
   adminIsAuthorized,
-  adminViewProject,
   changePath,
   changeUrl,
   collectionRelevancyMetrics,
@@ -95,8 +87,6 @@ const actions = {
   deleteSubscription,
   exportSearch,
   fetchContactInfo,
-  fetchAdminProject,
-  fetchAdminProjects,
   fetchAdminRetrievalsMetrics,
   fetchRetrieval,
   fetchRetrievalCollection,
@@ -146,8 +136,6 @@ const actions = {
   updateFacets,
   updateNotificationLevel,
   updateProjectName,
-  updateAdminProjectsPageNum,
-  updateAdminProjectsSortKey,
   updateSavedProject,
   updateStore,
   updateSubscription,

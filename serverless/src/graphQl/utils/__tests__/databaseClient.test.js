@@ -126,7 +126,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrieval_collections".* from "retrieval_collections" where "retrieval_collections"."retrieval_id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."id", "retrieval_collections"."retrieval_id", "retrieval_collections"."access_method", "retrieval_collections"."collection_id", "retrieval_collections"."collection_metadata", "retrieval_collections"."granule_count", "retrieval_collections"."created_at", "retrieval_collections"."updated_at", "retrieval_collections"."granule_link_count" from "retrieval_collections" where "retrieval_collections"."retrieval_id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
       expect(queries[0].method).toEqual('select')
     })
@@ -142,7 +142,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrieval_collections".* from "retrieval_collections" where "retrieval_collections"."retrieval_id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."id", "retrieval_collections"."retrieval_id", "retrieval_collections"."access_method", "retrieval_collections"."collection_id", "retrieval_collections"."collection_metadata", "retrieval_collections"."granule_count", "retrieval_collections"."created_at", "retrieval_collections"."updated_at", "retrieval_collections"."granule_link_count" from "retrieval_collections" where "retrieval_collections"."retrieval_id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
       expect(queries[0].method).toEqual('select')
 
@@ -218,7 +218,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrieval_orders".* from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "retrieval_orders"."id", "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrieval_orders"."state", "retrieval_orders"."order_information", "retrieval_orders"."order_number" from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
       expect(queries[0].method).toEqual('select')
     })
@@ -234,7 +234,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrieval_orders".* from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "retrieval_orders"."id", "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrieval_orders"."state", "retrieval_orders"."order_information", "retrieval_orders"."order_number" from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
       expect(queries[0].method).toEqual('select')
 
@@ -280,7 +280,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals".* from "retrievals" where "retrievals"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at" from "retrievals" where "retrievals"."id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
       expect(queries[0].method).toEqual('first')
     })
@@ -296,7 +296,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals".* from "retrievals" where "retrievals"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at" from "retrievals" where "retrievals"."id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
       expect(queries[0].method).toEqual('first')
 
@@ -372,7 +372,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc')
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc')
       expect(queries[0].bindings).toEqual([])
       expect(queries[0].method).toEqual('select')
     })
@@ -388,7 +388,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc')
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc')
       expect(queries[0].bindings).toEqual([])
       expect(queries[0].method).toEqual('select')
 
@@ -430,7 +430,7 @@ describe('DatabaseClient', () => {
         })
 
         const retrievals = await databaseClient.getRetrievals({
-          sortKey: '+created_at'
+          sortKey: 'created_at'
         })
 
         expect(retrievals).toBeDefined()
@@ -465,7 +465,7 @@ describe('DatabaseClient', () => {
 
         const { queries } = dbTracker.queries
 
-        expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "retrievals"."created_at" asc')
+        expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "retrievals"."created_at" asc')
         expect(queries[0].bindings).toEqual([])
         expect(queries[0].method).toEqual('select')
       })
@@ -540,7 +540,7 @@ describe('DatabaseClient', () => {
 
         const { queries } = dbTracker.queries
 
-        expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" where "users"."urs_id" = $1 order by "id" desc')
+        expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" where "users"."urs_id" = $1 order by "id" desc')
         expect(queries[0].bindings).toEqual(['testuser'])
         expect(queries[0].method).toEqual('select')
       })
@@ -615,7 +615,7 @@ describe('DatabaseClient', () => {
 
         const { queries } = dbTracker.queries
 
-        expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" left join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrieval_collections"."id" = $1 order by "id" desc')
+        expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" left join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrieval_collections"."id" = $1 order by "id" desc')
         expect(queries[0].bindings).toEqual([1])
         expect(queries[0].method).toEqual('select')
       })
@@ -664,7 +664,7 @@ describe('DatabaseClient', () => {
 
         const { queries } = dbTracker.queries
 
-        expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" where "retrievals"."id" = $1 order by "id" desc')
+        expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" where "retrievals"."id" = $1 order by "id" desc')
         expect(queries[0].bindings).toEqual([1])
         expect(queries[0].method).toEqual('select')
       })
@@ -740,7 +740,7 @@ describe('DatabaseClient', () => {
 
         const { queries } = dbTracker.queries
 
-        expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc limit $1 offset $2')
+        expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc limit $1 offset $2')
         expect(queries[0].bindings).toEqual([2, 2])
         expect(queries[0].method).toEqual('select')
       })
@@ -776,7 +776,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users".* from "users" where "users"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."urs_id" from "users" where "users"."id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
       expect(queries[0].method).toEqual('first')
     })
@@ -792,7 +792,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users".* from "users" where "users"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."urs_id" from "users" where "users"."id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
       expect(queries[0].method).toEqual('first')
 
@@ -852,7 +852,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users".* from "users" where "users"."id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."urs_id" from "users" where "users"."id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
       expect(queries[0].method).toEqual('select')
     })
@@ -868,7 +868,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users".* from "users" where "users"."id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."urs_id" from "users" where "users"."id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
       expect(queries[0].method).toEqual('select')
 

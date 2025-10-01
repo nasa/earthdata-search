@@ -294,7 +294,7 @@ describe('Timeline component', () => {
 })
 
 describe('handleTimelineMoveEnd', () => {
-  test('calls timeline.setQuery with new values', () => {
+  test('calls timeline.setQuery with new values', async () => {
     setup({
       overrideZustandState: {
         timeline: {
@@ -309,7 +309,7 @@ describe('handleTimelineMoveEnd', () => {
     const timelineStart = '1970-01-31T00:00:00.000Z'
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onTimelineMoveEnd({
         center: 123456789000,
         timelineStart,
@@ -343,13 +343,13 @@ describe('handleTimelineMoveEnd', () => {
 })
 
 describe('handleTemporalSet', () => {
-  test('when temporal is added', () => {
+  test('when temporal is added', async () => {
     const { zustandState } = setup()
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
         temporalEnd
@@ -369,12 +369,12 @@ describe('handleTemporalSet', () => {
     )
   })
 
-  test('when temporal is removed', () => {
+  test('when temporal is removed', async () => {
     const { zustandState } = setup()
 
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onTemporalSet({})
     })
 
@@ -386,7 +386,7 @@ describe('handleTemporalSet', () => {
     })
   })
 
-  test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', () => {
+  test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', async () => {
     const { props } = setup({
       overrideProps: {
         pathname: '/projects',
@@ -410,7 +410,7 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    act(() => {
+    await act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
         temporalEnd
@@ -420,7 +420,7 @@ describe('handleTemporalSet', () => {
     expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting temporal and focus does not exist', () => {
+  test('does not call onToggleOverrideTemporalModal when setting temporal and focus does not exist', async () => {
     const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true
@@ -431,7 +431,7 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    act(() => {
+    await act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
         temporalEnd
@@ -441,7 +441,7 @@ describe('handleTemporalSet', () => {
     expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', () => {
+  test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', async () => {
     const { props } = setup({
       pathname: '/search/granules',
       showOverrideModal: false
@@ -462,7 +462,7 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    act(() => {
+    await act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
         temporalEnd
@@ -474,7 +474,7 @@ describe('handleTemporalSet', () => {
 })
 
 describe('handleFocusedSet', () => {
-  test('when focus is added query is updated', () => {
+  test('when focus is added query is updated', async () => {
     setup({
       overrideZustandState: {
         timeline: {
@@ -487,7 +487,7 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    act(() => {
+    await act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
         focusedEnd
@@ -505,7 +505,7 @@ describe('handleFocusedSet', () => {
     })
   })
 
-  test('when focus is removed query is updated', () => {
+  test('when focus is removed query is updated', async () => {
     setup({
       overrideZustandState: {
         timeline: {
@@ -516,7 +516,7 @@ describe('handleFocusedSet', () => {
 
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onFocusedSet({})
     })
 
@@ -530,7 +530,7 @@ describe('handleFocusedSet', () => {
     })
   })
 
-  test('calls onToggleOverrideTemporalModal when setting focus and temporal already exists', () => {
+  test('calls onToggleOverrideTemporalModal when setting focus and temporal already exists', async () => {
     const { props } = setup({
       overrideProps: {
         pathname: '/projects',
@@ -552,7 +552,7 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    act(() => {
+    await act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
         focusedEnd
@@ -563,7 +563,7 @@ describe('handleFocusedSet', () => {
     expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(true)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting focus and temporal does not exist', () => {
+  test('does not call onToggleOverrideTemporalModal when setting focus and temporal does not exist', async () => {
     const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true
@@ -572,7 +572,7 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    act(() => {
+    await act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
         focusedEnd
@@ -582,7 +582,7 @@ describe('handleFocusedSet', () => {
     expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting focus and temporal exists on the granules page', () => {
+  test('does not call onToggleOverrideTemporalModal when setting focus and temporal exists on the granules page', async () => {
     const { props } = setup({
       pathname: '/search/granules',
       showOverrideModal: false,
@@ -595,7 +595,7 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    act(() => {
+    await act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
         focusedEnd
@@ -700,11 +700,11 @@ describe('handle toggleTimeline', () => {
 })
 
 describe('Metrics methods', () => {
-  test('oArrowKeyPan calls onMetricsTimeline(\'Left/Right Arrow Pan\')', () => {
+  test('oArrowKeyPan calls onMetricsTimeline(\'Left/Right Arrow Pan\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onArrowKeyPan({})
     })
 
@@ -712,11 +712,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Left/Right Arrow Pan')
   })
 
-  test('onButtonPan calls onMetricsTimeline(\'Button Pan\')', () => {
+  test('onButtonPan calls onMetricsTimeline(\'Button Pan\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onButtonPan({})
     })
 
@@ -724,11 +724,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Button Pan')
   })
 
-  test('onButtonZoom calls onMetricsTimeline(\'Button Zoom\')', () => {
+  test('onButtonZoom calls onMetricsTimeline(\'Button Zoom\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onButtonZoom({})
     })
 
@@ -736,11 +736,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Button Zoom')
   })
 
-  test('onTemporalSet calls onMetricsTimeline(\'Created Temporal\')', () => {
+  test('onTemporalSet calls onMetricsTimeline(\'Created Temporal\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onTemporalSet({})
     })
 
@@ -748,11 +748,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Created Temporal')
   })
 
-  test('onDragPan calls onMetricsTimeline(\'Dragging Pan\')', () => {
+  test('onDragPan calls onMetricsTimeline(\'Dragging Pan\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onDragPan({})
     })
 
@@ -760,11 +760,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Dragging Pan')
   })
 
-  test('onFocusedIntervalClick calls onMetricsTimeline(\'Click Label\')', () => {
+  test('onFocusedIntervalClick calls onMetricsTimeline(\'Click Label\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onFocusedIntervalClick({})
     })
 
@@ -772,11 +772,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Click Label')
   })
 
-  test('onScrollPan calls onMetricsTimeline(\'Scroll Pan\')', () => {
+  test('onScrollPan calls onMetricsTimeline(\'Scroll Pan\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onScrollPan({})
     })
 
@@ -784,11 +784,11 @@ describe('Metrics methods', () => {
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Scroll Pan')
   })
 
-  test('onScrollZoom calls onMetricsTimeline(\'Scroll Zoom\')', () => {
+  test('onScrollZoom calls onMetricsTimeline(\'Scroll Zoom\')', async () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    act(() => {
+    await act(() => {
       timelineProps.onScrollZoom({})
     })
 

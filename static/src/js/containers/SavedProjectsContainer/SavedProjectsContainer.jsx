@@ -26,7 +26,7 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const SavedProjectsContainer = ({
   onChangePath,
-  authToken,
+  authToken = null,
   dispatchHandleError
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -100,10 +100,6 @@ export const SavedProjectsContainer = ({
       onDeleteProject={handleDeleteSavedProject}
     />
   )
-}
-
-SavedProjectsContainer.defaultProps = {
-  authToken: null
 }
 
 SavedProjectsContainer.propTypes = {

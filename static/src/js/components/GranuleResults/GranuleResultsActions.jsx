@@ -45,15 +45,15 @@ const GranuleResultsActions = ({
   addedGranuleIds,
   focusedCollectionId,
   focusedProjectCollection,
-  granuleLimit,
-  handoffLinks,
+  granuleLimit = undefined,
+  handoffLinks = [],
   initialLoading,
   isCollectionInProject,
   onMetricsAddCollectionProject,
   onChangePath,
-  projectGranuleCount,
+  projectGranuleCount = 0,
   removedGranuleIds,
-  searchGranuleCount
+  searchGranuleCount = 0
 }) => {
   const location = useLocation()
   const {
@@ -236,13 +236,6 @@ const GranuleResultsActions = ({
       </div>
     </div>
   )
-}
-
-GranuleResultsActions.defaultProps = {
-  granuleLimit: undefined,
-  handoffLinks: [],
-  projectGranuleCount: 0,
-  searchGranuleCount: 0
 }
 
 GranuleResultsActions.propTypes = {

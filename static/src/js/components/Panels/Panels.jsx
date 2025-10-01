@@ -1,14 +1,14 @@
 import React, { PureComponent, Children } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
-import Overlay from 'react-bootstrap/Overlay'
-import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import { PanelSection } from './PanelSection'
 import { PanelGroup } from './PanelGroup'
 
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+import renderTooltip from '../../util/renderTooltip'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
@@ -85,8 +85,9 @@ export class Panels extends PureComponent {
     const zustandState = useEdscStore.getState()
     const { ui } = zustandState
     const { panels } = ui
-    const { setPanelsWidth } = panels
+    const { setPanelsWidth, setPanelsLoaded } = panels
     setPanelsWidth(this.width)
+    setPanelsLoaded(true)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -139,13 +140,6 @@ export class Panels extends PureComponent {
         document.body.classList.remove('is-panels-dragging')
       }
     }
-
-    // When the component updates call setPanelsWidth to set the initial width
-    const zustandState = useEdscStore.getState()
-    const { ui } = zustandState
-    const { panels } = ui
-    const { setPanelsWidth } = panels
-    setPanelsWidth(this.width)
   }
 
   componentWillUnmount() {
@@ -640,18 +634,31 @@ export class Panels extends PureComponent {
       >
         {
           draggable && (
-            <>
+            <OverlayTrigger
+              show={handleToolipVisible}
+              placement="right"
+              overlay={
+                (tooltipProps) => renderTooltip({
+                  children: (
+                    <>
+                      {`${handleTooltipState} panel`}
+                      <span className="keyboard-shortcut">
+                        {keyboardShortcuts.togglePanel}
+                      </span>
+                    </>
+                  ),
+                  className: 'panels__handle-tooltip panels__handle-tooltip--collapse',
+                  id: 'panel-handle-tooltip',
+                  ...tooltipProps
+                })
+              }
+            >
               <div
                 className="panels__handle link"
                 data-testid="panels__handle"
                 aria-label={`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
                 role="button"
                 tabIndex="0"
-                ref={
-                  (node) => {
-                    this.node = node
-                  }
-                }
                 onMouseDown={this.onMouseDown}
                 onClick={this.onPanelHandleClickOrKeypress}
                 onKeyDown={this.onPanelHandleClickOrKeypress}
@@ -660,32 +667,7 @@ export class Panels extends PureComponent {
                 onMouseOut={this.onPanelHandleMouseOut}
                 onBlur={this.onPanelHandleMouseOut}
               />
-              <Overlay
-                target={this.node}
-                show={handleToolipVisible}
-                placement="right"
-              >
-                {
-                  (props) => {
-                    const tooltipProps = props
-                    delete tooltipProps.show
-
-                    return (
-                      <Tooltip
-                        {...tooltipProps}
-                        id="panel-handle-tooltip"
-                        className="panels__handle-tooltip panels__handle-tooltip--collapse"
-                      >
-                        {`${handleTooltipState} panel`}
-                        <span className="keyboard-shortcut">
-                          {keyboardShortcuts.togglePanel}
-                        </span>
-                      </Tooltip>
-                    )
-                  }
-                }
-              </Overlay>
-            </>
+            </OverlayTrigger>
           )
         }
         <div

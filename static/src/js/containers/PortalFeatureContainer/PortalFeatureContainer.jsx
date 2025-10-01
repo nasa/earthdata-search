@@ -11,11 +11,11 @@ import useEdscStore from '../../zustand/useEdscStore'
  * @param {Boolean} props.onlyGranulesCheckbox Flag to check if the only granules checkbox is enabled in the portal config
  */
 export const PortalFeatureContainer = ({
-  advancedSearch,
-  authentication,
+  advancedSearch = false,
+  authentication = false,
   children,
-  nonEosdisCheckbox,
-  onlyGranulesCheckbox
+  nonEosdisCheckbox = false,
+  onlyGranulesCheckbox = false
 }) => {
   const portal = useEdscStore((state) => state.portal)
   const {
@@ -48,13 +48,6 @@ export const PortalFeatureContainer = ({
   }
 
   return null
-}
-
-PortalFeatureContainer.defaultProps = {
-  advancedSearch: false,
-  authentication: false,
-  nonEosdisCheckbox: false,
-  onlyGranulesCheckbox: false
 }
 
 PortalFeatureContainer.propTypes = {

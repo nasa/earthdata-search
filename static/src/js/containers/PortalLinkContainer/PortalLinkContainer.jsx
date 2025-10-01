@@ -17,20 +17,19 @@ export const mapDispatchToProps = (dispatch) => ({
     (path) => dispatch(actions.changePath(path))
 })
 
-export const PortalLinkContainer = (props) => {
-  const {
-    children,
-    className,
-    dataTestId,
-    onClick,
-    newPortal,
-    to,
-    type,
-    target,
-    updatePath,
-    onChangePath
-  } = props
-
+export const PortalLinkContainer = ({
+  children = null,
+  className = '',
+  dataTestId = null,
+  newPortal = null,
+  onChangePath,
+  onClick = null,
+  target = '',
+  to = '',
+  type = '',
+  updatePath = false,
+  ...otherProps
+}) => {
   const navigate = useNavigate()
 
   const currentPortalId = useEdscStore((state) => state.portal.portalId)
@@ -105,15 +104,24 @@ export const PortalLinkContainer = (props) => {
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
     return (
       <Button
-        type="button"
-        {...props}
+        type={type || 'button'}
+        className={className}
+        dataTestId={dataTestId}
+        newPortal={newPortal}
+        onChangePath={onChangePath}
+        target={target}
+        to={to}
+        updatePath={updatePath}
+        {...otherProps}
         onClick={
           (event) => {
             onClickWithChangePath(event)
             navigate(newTo)
           }
         }
-      />
+      >
+        {children}
+      </Button>
     )
   }
 
@@ -129,19 +137,6 @@ export const PortalLinkContainer = (props) => {
       {children}
     </Link>
   )
-}
-
-PortalLinkContainer.defaultProps = {
-  children: null,
-  className: '',
-  dataTestId: null,
-  onClick: null,
-  newPortal: null,
-  staticContext: null,
-  type: '',
-  target: '',
-  to: '',
-  updatePath: false
 }
 
 PortalLinkContainer.propTypes = {

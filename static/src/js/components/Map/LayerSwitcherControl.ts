@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import Control from 'ol/control/Control'
 import EventType from 'ol/events/EventType'
 
@@ -72,17 +72,11 @@ class LayerSwitcherControl extends Control {
     })
 
     if (LayersIcon) {
-      // @ts-expect-error We are still on React 17
-      ReactDOM.render(
-        LayersIcon,
-        showButton
-      )
+      const showLayersRoot = ReactDOM.createRoot(showButton)
+      showLayersRoot.render(LayersIcon)
 
-      // @ts-expect-error We are still on React 17
-      ReactDOM.render(
-        LayersIcon,
-        hideButton
-      )
+      const hideLayersRoot = ReactDOM.createRoot(hideButton)
+      hideLayersRoot.render(LayersIcon)
     }
 
     element.appendChild(showButton)

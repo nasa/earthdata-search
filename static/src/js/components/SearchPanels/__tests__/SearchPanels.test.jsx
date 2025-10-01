@@ -1,10 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  act,
-  screen,
-  within
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
 import Helmet from 'react-helmet'
@@ -181,9 +177,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Usage' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('Relevance')
           await user.click(option)
@@ -218,9 +212,7 @@ describe('SearchPanels component', () => {
           console.log(zustandState.query.collection)
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Relevance' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('Usage')
           await user.click(option)
@@ -254,9 +246,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Relevance' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('Recent Version')
           await user.click(option)
@@ -290,9 +280,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Relevance' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('Start Date')
           await user.click(option)
@@ -326,9 +314,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Relevance' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('End Date')
           await user.click(option)
@@ -357,17 +343,12 @@ describe('SearchPanels component', () => {
 
           const openPanel = screen.getByTestId('panel-group_collection-results')
           const sortSelect = within(openPanel).getByRole('button', { name: 'View: List' })
-
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           CollectionResultsBodyContainer.mockClear()
 
           const option = await screen.findByText('Table')
-          await act(async () => {
-            await user.click(option)
-          })
+          await user.click(option)
 
           expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(1)
           expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
@@ -393,17 +374,12 @@ describe('SearchPanels component', () => {
 
           const openPanel = screen.getByTestId('panel-group_collection-results')
           const sortSelect = within(openPanel).getByRole('button', { name: 'View: Table' })
-
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           CollectionResultsBodyContainer.mockClear()
 
           const option = await screen.findByText('List')
-          await act(async () => {
-            await user.click(option)
-          })
+          await user.click(option)
 
           expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(1)
           expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
@@ -515,9 +491,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Start Date (Oldest)' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('Start Date, Newest First')
           await user.click(option)
@@ -557,9 +531,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Start Date (Newest)' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('Start Date, Oldest First')
           await user.click(option)
@@ -599,9 +571,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Start Date (Newest)' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('End Date, Newest First')
           await user.click(option)
@@ -641,9 +611,7 @@ describe('SearchPanels component', () => {
           })
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Start Date (Newest)' })
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           const option = await screen.findByText('End Date, Oldest First')
           await user.click(option)
@@ -668,17 +636,12 @@ describe('SearchPanels component', () => {
 
           const openPanel = screen.getByTestId('panel-group_granule-results')
           const sortSelect = within(openPanel).getByRole('button', { name: 'View: List' })
-
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           GranuleResultsBodyContainer.mockClear()
 
           const option = await screen.findByText('Table')
-          await act(async () => {
-            await user.click(option)
-          })
+          await user.click(option)
 
           expect(GranuleResultsBodyContainer).toHaveBeenCalledTimes(1)
           expect(GranuleResultsBodyContainer).toHaveBeenLastCalledWith({
@@ -704,17 +667,12 @@ describe('SearchPanels component', () => {
 
           const openPanel = screen.getByTestId('panel-group_granule-results')
           const sortSelect = within(openPanel).getByRole('button', { name: 'View: Table' })
-
-          await act(async () => {
-            await user.click(sortSelect)
-          })
+          await user.click(sortSelect)
 
           GranuleResultsBodyContainer.mockClear()
 
           const option = await screen.findByText('List')
-          await act(async () => {
-            await user.click(option)
-          })
+          await user.click(option)
 
           expect(GranuleResultsBodyContainer).toHaveBeenCalledTimes(1)
           expect(GranuleResultsBodyContainer).toHaveBeenLastCalledWith({

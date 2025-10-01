@@ -36,29 +36,29 @@ import './EDSCModal.scss'
  * @param {String} title The modal title.
  */
 export const EDSCModal = ({
-  activeModalOverlay,
+  activeModalOverlay = null,
   bodyEl,
-  dataTestId,
-  footer,
-  footerMeta,
+  dataTestId = null,
+  footer = null,
+  footerMeta = null,
   identifier,
-  innerHeaderEl,
+  innerHeaderEl = null,
   isOpen,
   modalClassNames,
   modalInner,
-  modalOverlayEl,
-  onModalExit,
-  onModalHide,
-  onPrimaryAction,
-  onSecondaryAction,
-  primaryAction,
-  primaryActionDisabled,
-  primaryActionLoading,
-  secondaryAction,
-  size,
-  spinner,
-  subtitle,
-  title
+  modalOverlayEl = null,
+  onModalExit = null,
+  onModalHide = null,
+  onPrimaryAction = null,
+  onSecondaryAction = null,
+  primaryAction = null,
+  primaryActionDisabled = false,
+  primaryActionLoading = false,
+  secondaryAction = null,
+  size = 'sm',
+  spinner = false,
+  subtitle = '',
+  title = null
 }) => {
   const headerClassNames = classNames([
     'edsc-modal__header',
@@ -172,28 +172,6 @@ export const EDSCModal = ({
       }
     </Modal>
   )
-}
-
-EDSCModal.defaultProps = {
-  activeModalOverlay: null,
-  dataTestId: null,
-  footer: null,
-  footerMeta: null,
-  innerHeaderEl: null,
-  modalOverlayEl: null,
-  modalOverlays: {},
-  onModalExit: null,
-  onModalHide: null,
-  onPrimaryAction: null,
-  onSecondaryAction: null,
-  primaryAction: null,
-  primaryActionDisabled: false,
-  primaryActionLoading: false,
-  secondaryAction: null,
-  size: 'sm',
-  spinner: false,
-  subtitle: '',
-  title: null
 }
 
 EDSCModal.propTypes = {

@@ -27,6 +27,14 @@ describe('permissions', () => {
             isValidUser,
             isAdminUser
           ),
+          adminProject: and(
+            isValidUser,
+            isAdminUser
+          ),
+          adminProjects: and(
+            isValidUser,
+            isAdminUser
+          ),
           adminRetrieval: and(
             isValidUser,
             isAdminUser

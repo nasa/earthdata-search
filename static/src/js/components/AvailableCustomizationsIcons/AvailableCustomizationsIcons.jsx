@@ -24,12 +24,12 @@ import './AvailableCustomizationsIcons.scss'
  * @param {boolean} hasCombine
  */
 export const AvailableCustomizationsIcons = ({
-  hasSpatialSubsetting,
-  hasVariables,
-  hasTransforms,
-  hasFormats,
-  hasTemporalSubsetting,
-  hasCombine
+  hasSpatialSubsetting = false,
+  hasVariables = false,
+  hasTransforms = false,
+  hasFormats = false,
+  hasTemporalSubsetting = false,
+  hasCombine = false
 }) => (
   hasSpatialSubsetting
       || hasVariables
@@ -107,15 +107,6 @@ export const AvailableCustomizationsIcons = ({
     }
   </>
 )
-
-AvailableCustomizationsIcons.defaultProps = {
-  hasSpatialSubsetting: false,
-  hasVariables: false,
-  hasTransforms: false,
-  hasFormats: false,
-  hasTemporalSubsetting: false,
-  hasCombine: false
-}
 
 AvailableCustomizationsIcons.propTypes = {
   hasSpatialSubsetting: PropTypes.bool,

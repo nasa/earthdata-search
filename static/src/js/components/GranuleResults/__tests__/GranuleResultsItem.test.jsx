@@ -1,11 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import {
-  act,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import Highlighter from 'react-highlight-words'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -450,13 +446,8 @@ describe('GranuleResultsItem component', () => {
         overrideProps: cmrS3Props
       })
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Download granule data' }))
-      })
-
-      await act(async () => {
-        await user.click(screen.getByRole('tab', { name: 'AWS S3 Access' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Download granule data' }))
+      await user.click(screen.getByRole('tab', { name: 'AWS S3 Access' }))
 
       expect(screen.getByRole('button', { name: 'Copy to clipboard' }).textContent).toEqual('s3-region')
       expect(screen.getByRole('link', { name: 'Get AWS S3 Credentials' })).toHaveProperty('href', 'http://example.com/creds')
@@ -526,16 +517,10 @@ describe('GranuleResultsItem component', () => {
           overrideProps: cmrProps
         })
 
-        // eslint-disable-next-line testing-library/no-unnecessary-act
-        await act(async () => {
-          const moreActions = screen.getByRole('button', { name: 'More actions' })
-          await user.click(moreActions)
-        })
+        const moreActions = screen.getByRole('button', { name: 'More actions' })
+        await user.click(moreActions)
 
-        // eslint-disable-next-line testing-library/no-unnecessary-act
-        await act(async () => {
-          await user.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
-        })
+        await user.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
 
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{
@@ -551,16 +536,10 @@ describe('GranuleResultsItem component', () => {
           overrideProps: opensearchProps
         })
 
-        // eslint-disable-next-line testing-library/no-unnecessary-act
-        await act(async () => {
-          const moreActions = screen.getByRole('button', { name: 'More actions' })
-          await user.click(moreActions)
-        })
+        const moreActions = screen.getByRole('button', { name: 'More actions' })
+        await user.click(moreActions)
 
-        // eslint-disable-next-line testing-library/no-unnecessary-act
-        await act(async () => {
-          await user.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
-        })
+        await user.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
 
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{
@@ -635,9 +614,7 @@ describe('GranuleResultsItem component', () => {
 
       expect(screen.getByLabelText('Add granule to project')).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(screen.getByLabelText('Add granule to project'))
-      })
+      await user.click(screen.getByLabelText('Add granule to project'))
 
       expect(zustandState.project.addGranuleToProjectCollection.mock.calls.length).toBe(1)
       expect(zustandState.project.addGranuleToProjectCollection.mock.calls[0]).toEqual([{
@@ -653,9 +630,7 @@ describe('GranuleResultsItem component', () => {
 
       expect(screen.getByLabelText('Add granule to project')).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(screen.getByLabelText('Add granule to project'))
-      })
+      await user.click(screen.getByLabelText('Add granule to project'))
 
       expect(props.onMetricsAddGranuleProject.mock.calls.length).toBe(1)
       expect(props.onMetricsAddGranuleProject.mock.calls[0]).toEqual([{
@@ -678,9 +653,7 @@ describe('GranuleResultsItem component', () => {
 
       expect(screen.getByLabelText('Remove granule from project')).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(screen.getByLabelText('Remove granule from project'))
-      })
+      await user.click(screen.getByLabelText('Remove granule from project'))
 
       expect(zustandState.project.removeGranuleFromProjectCollection.mock.calls.length).toBe(1)
       expect(zustandState.project.removeGranuleFromProjectCollection.mock.calls[0]).toEqual([{
@@ -705,9 +678,7 @@ describe('GranuleResultsItem component', () => {
 
       expect(dataLinksButton.href).toContain(href)
 
-      await act(async () => {
-        await user.click(dataLinksButton)
-      })
+      await user.click(dataLinksButton)
 
       expect(onMetricsDataAccess).toHaveBeenCalledTimes(1)
       expect(onMetricsDataAccess).toHaveBeenCalledWith(
@@ -805,16 +776,10 @@ describe('GranuleResultsItem component', () => {
         overrideProps: cmrProps
       })
 
-      // eslint-disable-next-line testing-library/no-unnecessary-act
-      await act(async () => {
-        const moreActions = screen.getByRole('button', { name: 'More actions' })
-        await user.click(moreActions)
-      })
+      const moreActions = screen.getByRole('button', { name: 'More actions' })
+      await user.click(moreActions)
 
-      // eslint-disable-next-line testing-library/no-unnecessary-act
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
-      })
+      await user.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
 
       expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
       expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('granuleId')

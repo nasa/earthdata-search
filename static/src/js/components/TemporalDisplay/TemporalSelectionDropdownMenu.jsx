@@ -10,14 +10,15 @@ import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import Button from '../Button/Button'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
 
-import './TemporalSelectionDropdownMenu.scss'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import './TemporalSelectionDropdownMenu.scss'
+
 const TemporalSelectionDropdownMenu = ({
-  allowRecurring,
+  allowRecurring = true,
   disabled,
-  displayStartDate,
-  displayEndDate,
+  displayStartDate = '',
+  displayEndDate = '',
   isHomePage,
   onApplyClick,
   onClearClick,
@@ -123,13 +124,6 @@ const TemporalSelectionDropdownMenu = ({
     </Dropdown.Menu>,
     document.getElementById('root')
   )
-}
-
-TemporalSelectionDropdownMenu.defaultProps = {
-  allowRecurring: true,
-  filterType: null,
-  displayStartDate: '',
-  displayEndDate: ''
 }
 
 TemporalSelectionDropdownMenu.propTypes = {

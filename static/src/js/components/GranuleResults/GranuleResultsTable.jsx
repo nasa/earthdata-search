@@ -45,8 +45,8 @@ export const GranuleResultsTable = ({
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null
 }) => {
   const location = useLocation()
   const collectionTags = useEdscStore(getFocusedCollectionTags)
@@ -218,11 +218,6 @@ export const GranuleResultsTable = ({
       />
     </div>
   )
-}
-
-GranuleResultsTable.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
 }
 
 GranuleResultsTable.propTypes = {

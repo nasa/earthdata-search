@@ -1,4 +1,8 @@
-import React, { lazy, Suspense } from 'react'
+import React, {
+  lazy,
+  Suspense,
+  useEffect
+} from 'react'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ToastProvider } from 'react-toast-notifications'
@@ -24,6 +28,9 @@ import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequir
 import PortalContainer from './containers/PortalContainer/PortalContainer'
 
 import AppLayout from './layouts/AppLayout/AppLayout'
+
+import GraphQlProvider from './providers/GraphQlProvider'
+import EmergencyNotification from './components/EmergencyNotification/EmergencyNotification'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -192,6 +199,16 @@ const browserRouter = createBrowserRouter([
         ),
         children: [
           {
+            index: true,
+            async lazy() {
+              const Admin = await import('./components/AdminIndex/AdminIndex')
+
+              return {
+                Component: Admin.default
+              }
+            }
+          },
+          {
             path: '/admin/retrievals',
             async lazy() {
               const AdminRetrievals = await import('./components/AdminRetrievals/AdminRetrievals')
@@ -202,7 +219,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/retrievals/:id',
+            path: '/admin/retrievals/:obfuscatedId',
             async lazy() {
               const AdminRetrievalContainer = await import('./containers/AdminRetrievalContainer/AdminRetrievalContainer')
 
@@ -214,20 +231,20 @@ const browserRouter = createBrowserRouter([
           {
             path: '/admin/projects',
             async lazy() {
-              const AdminProjectsContainer = await import('./containers/AdminProjectsContainer/AdminProjectsContainer')
+              const AdminProjects = await import('./components/AdminProjects/AdminProjects')
 
               return {
-                Component: AdminProjectsContainer.default
+                Component: AdminProjects.default
               }
             }
           },
           {
-            path: '/admin/projects/:id',
+            path: '/admin/projects/:obfuscatedId',
             async lazy() {
-              const AdminProjectContainer = await import('./containers/AdminProjectContainer/AdminProjectContainer')
+              const AdminProject = await import('./components/AdminProject/AdminProject')
 
               return {
-                Component: AdminProjectContainer.default
+                Component: AdminProject.default
               }
             }
           },
@@ -272,25 +289,33 @@ const App = () => {
   const url = `${edscHost}/search`
   const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}]`
 
+  useEffect(() => {
+    // Remove the loading class from the root element once the app has loaded
+    document.getElementById('root').classList.remove('root--loading')
+  }, [])
+
   return (
     <ErrorBoundary>
+      <EmergencyNotification />
       <Provider store={store}>
-        <ToastProvider ref={window.reactToastProvider}>
-          <Helmet
-            defaultTitle="Earthdata Search"
-            titleTemplate={`${titleEnv} %s - Earthdata Search`}
-          >
-            <meta name="description" content={description} />
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:url" content={url} />
-            <meta property="og:image" content={ogImage} />
-            <meta name="theme-color" content="#191a1b" />
-            <link rel="canonical" href={url} />
-          </Helmet>
-          <RouterProvider router={browserRouter} />
-        </ToastProvider>
+        <GraphQlProvider>
+          <ToastProvider ref={window.reactToastProvider}>
+            <Helmet
+              defaultTitle="Earthdata Search"
+              titleTemplate={`${titleEnv} %s - Earthdata Search`}
+            >
+              <meta name="description" content={description} />
+              <meta property="og:type" content="website" />
+              <meta property="og:title" content={title} />
+              <meta property="og:description" content={description} />
+              <meta property="og:url" content={url} />
+              <meta property="og:image" content={ogImage} />
+              <meta name="theme-color" content="#191a1b" />
+              <link rel="canonical" href={url} />
+            </Helmet>
+            <RouterProvider router={browserRouter} />
+          </ToastProvider>
+        </GraphQlProvider>
       </Provider>
     </ErrorBoundary>
   )

@@ -172,6 +172,62 @@ type AdminRetrievalOrder {
   type: String
 }
 
+type AdminProject {
+  "ID of the project"
+  id: Int
+
+  "Obfuscated ID of the project"
+  obfuscatedId: String
+
+  "Name of the project"
+  name: String
+
+  "Path to the project"
+  path: String
+
+  "User who created the project"
+  user: User
+
+  "Timestamp of when the retrieval was last updated"
+  updatedAt: DateTime
+
+  "Timestamp of when the retrieval was created"
+  createdAt: DateTime
+}
+
+input AdminProjectInput {
+  "Obfuscated ID to filter by"
+  obfuscatedId: String
+}
+
+type AdminProjects {
+  "List of projects"
+  adminProjects: [AdminProject]
+
+  "Pagination information"
+  pageInfo: PageInfo
+
+  "Total count of projects"
+  count: Int
+}
+
+input AdminProjectsInput {
+  "Sets the number of projects to return"
+  limit: Int
+
+  "Offset for pagination"
+  offset: Int
+
+  "Set the order of the results"
+  sortKey: String
+
+  "URS ID to filter by"
+  ursId: String
+
+  "Obfuscated ID to filter by"
+  obfuscatedId: String
+}
+
 type AdminRetrieval {
   "ID of the retrieval"
   id: Int
@@ -238,11 +294,15 @@ type Query {
   "Retrieves admin preferences metrics"
   adminPreferencesMetrics: AdminPreferencesMetrics
 
+  "Retrieves admin project information"
+  adminProject(params: AdminProjectInput!): AdminProject
+
+  "Retrieves projects"
+  adminProjects(params: AdminProjectsInput): AdminProjects
+
   "Retrieves admin retrieval information"
   adminRetrieval(params: AdminRetrievalInput!): AdminRetrieval
 
   "Retrieves retrievals"
-  adminRetrievals(
-    params: AdminRetrievalsInput
-  ): AdminRetrievals
+  adminRetrievals(params: AdminRetrievalsInput): AdminRetrievals
 }
