@@ -18,8 +18,8 @@ describe('EmergencyNotification', () => {
   describe('when no notification exists', () => {
     beforeEach(() => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        emergencyNotification: '',
-        emergencyNotificationType: ''
+        emergencyNotification: 'false',
+        emergencyNotificationType: 'false'
       }))
     })
 

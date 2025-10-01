@@ -9,7 +9,7 @@ import Banner from '../Banner/Banner'
  */
 const EmergencyNotification = () => {
   const {
-    emergencyNotification,
+    emergencyNotification = 'false',
     emergencyNotificationType = 'error'
   } = getApplicationConfig()
 
@@ -17,7 +17,7 @@ const EmergencyNotification = () => {
   const [dismissed, setDismissed] = useState(false)
 
   // If there is no emergency notification or it has been dismissed, don't render anything.
-  if (!emergencyNotification || dismissed) {
+  if (emergencyNotification === 'false' || dismissed) {
     return null
   }
 
