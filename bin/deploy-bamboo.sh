@@ -37,6 +37,7 @@ config="`jq '.application.mapPointsSimplifyThreshold = $newValue' --arg newValue
 config="`jq '.application.nlpSearch = $newValue' --arg newValue $bamboo_NLP_SEARCH <<< $config`"
 config="`jq '.application.placeLabelsStyleUrl = $newValue' --arg newValue $bamboo_PLACE_LABELS_STYLE_URL <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
+config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
 config="`jq '.application.emergencyNotification = $newValue' --arg newValue $bamboo_EMERGENCY_NOTIFICATION <<< $config`"
 config="`jq '.application.emergencyNotificationType = $newValue' --arg newValue $bamboo_EMERGENCY_NOTIFICATION_TYPE <<< $config`"
 
