@@ -51,7 +51,9 @@
     "disableEddDownload": "false",
     "disableOrdering": "false",
     "disableSwodlr": "false",
-    "mapPointsSimplifyThreshold": 2000
+    "mapPointsSimplifyThreshold": 2000,
+    "emergencyNotification": "",
+    "emergencyNotificationType": ""
   },
   "environment": {
     "test": {

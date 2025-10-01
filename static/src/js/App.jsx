@@ -30,6 +30,7 @@ import PortalContainer from './containers/PortalContainer/PortalContainer'
 import AppLayout from './layouts/AppLayout/AppLayout'
 
 import GraphQlProvider from './providers/GraphQlProvider'
+import EmergencyNotification from './components/EmergencyNotification/EmergencyNotification'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -295,6 +296,7 @@ const App = () => {
 
   return (
     <ErrorBoundary>
+      <EmergencyNotification />
       <Provider store={store}>
         <GraphQlProvider>
           <ToastProvider ref={window.reactToastProvider}>
