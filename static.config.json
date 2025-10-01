@@ -52,8 +52,8 @@
     "disableOrdering": "false",
     "disableSwodlr": "false",
     "mapPointsSimplifyThreshold": 2000,
-    "emergencyNotification": "",
-    "emergencyNotificationType": ""
+    "emergencyNotification": "false",
+    "emergencyNotificationType": "error"
   },
   "environment": {
     "test": {
