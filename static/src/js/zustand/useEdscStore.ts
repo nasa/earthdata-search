@@ -47,7 +47,9 @@ const useEdscStore = create<EdscStore>()(
         ...createUiSlice(...args)
       }),
       {
-        name: 'edsc-store'
+        name: 'edsc-store',
+        // Enable the devtools in production environments
+        enabled: true
       }
     )
   )

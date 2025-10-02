@@ -113,7 +113,7 @@ const AccessMethod = ({
   const {
     addedGranuleIds = [],
     allIds: granulesAllIds = [],
-    byId: granulesMetadata
+    byId: granulesMetadata = {}
   } = projectCollectionGranules
 
   let granulesToDisplay = []
