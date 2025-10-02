@@ -144,7 +144,7 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the project page', () => {
     (useLocation as jest.Mock).mockReturnValue({
-      pathname: '/projects',
+      pathname: '/project',
       search: '?p=projectCollectionId'
     })
 
@@ -162,7 +162,7 @@ describe('TimelineContainer component', () => {
         onMetricsTimeline: expect.any(Function),
         onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
-        pathname: '/projects',
+        pathname: '/project',
         projectCollectionsIds: ['projectCollectionId'],
         showOverrideModal: true
       },

@@ -112,13 +112,7 @@ const SecondaryToolbar = ({
   const returnPath = window.location.href
   const { pathname, search } = location
   let isMapOverlay = false
-  let needsOverlayPaths = ['/', '/search']
-
-  // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
-  // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
-  if (pathname === '/projects' && search) {
-    needsOverlayPaths = [...needsOverlayPaths, '/projects']
-  }
+  const needsOverlayPaths = ['/', '/search', '/project']
 
   // Determine if the current page is a route that displays the map so the correct className can be set
   if (pathStartsWith(pathname, needsOverlayPaths)) {
@@ -172,7 +166,7 @@ const SecondaryToolbar = ({
       label="Back to Project"
       to={
         {
-          pathname: '/projects',
+          pathname: '/project',
           search: source
         }
       }
@@ -206,7 +200,7 @@ const SecondaryToolbar = ({
         type="button"
         to={
           {
-            pathname: '/projects',
+            pathname: '/project',
             search: location.search
           }
         }
@@ -402,12 +396,12 @@ const SecondaryToolbar = ({
   )
 
   const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/project', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
   const showStartTourButton = location.pathname === '/search'
 
   return (
     <nav className={secondaryToolbarClassnames}>
-      {isPath(location.pathname, ['/projects']) && backToSearchLink}
+      {isPath(location.pathname, ['/project']) && backToSearchLink}
       {isDownloadPathWithId(location.pathname) && backToProjectLink}
       <PortalFeatureContainer authentication>
         <>

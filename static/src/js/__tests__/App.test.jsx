@@ -85,6 +85,9 @@ describe('App component', () => {
                 path: '/search/*'
               }),
               expect.objectContaining({
+                path: '/project'
+              }),
+              expect.objectContaining({
                 path: '/projects'
               }),
               expect.objectContaining({

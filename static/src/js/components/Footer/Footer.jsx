@@ -21,7 +21,7 @@ const Footer = () => {
 
   const { footer = {} } = portal
 
-  const searchTimeVisible = isPath(pathname, ['/search', '/projects'])
+  const searchTimeVisible = isPath(pathname, ['/search', '/project'])
   const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
   const {

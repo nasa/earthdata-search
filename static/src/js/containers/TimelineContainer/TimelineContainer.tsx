@@ -48,8 +48,7 @@ interface TimelineContainerProps {
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   const location = useLocation()
   const {
-    pathname = '',
-    search: searchLocation = ''
+    pathname = ''
   } = location
 
   const {
@@ -65,7 +64,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
 
   // Determine the collectionMetadata the timeline should be displaying
   // Ensure that timeline does not appear on the `Saved Projects` page
-  const isProjectPage = isPath(pathname, ['/projects']) && (searchLocation.length > 0)
+  const isProjectPage = isPath(pathname, ['/project'])
   const isGranulesPage = isPath(pathname, ['/search/granules'])
 
   const collectionMetadata: CollectionsMetadata = {}

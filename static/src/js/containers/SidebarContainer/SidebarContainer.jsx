@@ -18,7 +18,7 @@ export const SidebarContainer = ({
     '/search',
     '/search/granules',
     '/search/subscriptions',
-    '/projects',
+    '/project',
     '/search/granules/collection-details',
     '/search/granules/granule-details',
     '/search/granules/subscriptions'

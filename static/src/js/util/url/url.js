@@ -379,6 +379,9 @@ export const encodeUrlQuery = (props) => {
  * URLs that don't use URL params
  * The saved projects page needs to be handled a little differently
  * because it shares the base url with the projects page.
+ *
+ * `/projects` is not here because it is possible to have parameters on that path
+ * that trigger the redirect to `/project`
  */
 export const urlPathsWithoutUrlParams = [
   /^\/admin/,

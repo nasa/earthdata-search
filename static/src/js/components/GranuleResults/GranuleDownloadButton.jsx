@@ -148,7 +148,7 @@ export const GranuleDownloadButton = ({
       }
       to={
         {
-          pathname: '/projects',
+          pathname: '/project',
           search: stringifiedProjectParams
         }
       }

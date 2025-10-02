@@ -132,7 +132,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   const location = useLocation()
   const { pathname } = location
-  const isProjectPage = isPath(pathname, ['/projects'])
+  const isProjectPage = isPath(pathname, ['/project'])
   const isFocusedCollectionPage = isPath(pathname, [
     '/search/granules',
     '/search/granules/collection-details'

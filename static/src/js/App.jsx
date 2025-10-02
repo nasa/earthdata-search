@@ -56,6 +56,7 @@ const EditSubscriptionModalContainer = lazy(() => import('./containers/EditSubsc
 const KeyboardShortcutsModalContainer = lazy(() => import('./containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
+const Projects = lazy(() => import('./routes/Projects/Projects'))
 const Search = lazy(() => import('./routes/Search/Search'))
 const SearchTour = lazy(() => import('./components/SearchTour/SearchTour'))
 const ShapefileDropzoneContainer = lazy(() => import('./containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'))
@@ -99,13 +100,23 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/projects',
+        path: '/project',
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
               <Project />
               <AboutCSDAModalContainer />
               <ChunkedOrderModalContainer />
+            </Suspense>
+          </AuthRequiredContainer>
+        )
+      },
+      {
+        path: '/projects',
+        element: (
+          <AuthRequiredContainer>
+            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+              <Projects />
             </Suspense>
           </AuthRequiredContainer>
         )
