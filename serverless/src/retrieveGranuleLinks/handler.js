@@ -135,7 +135,9 @@ const retrieveGranuleLinks = async (event, context) => {
 
           // Combine the `links` array from each object in `combinedOrderInformation`
           const combinedOrderInformationLinks = Object.values(combinedOrderInformation).flatMap(
-            (info) => info.orderInformation.links
+            // Using `|| []` will ensure we always return an array. This is important before the
+            // order information exists
+            (info) => info.orderInformation.links || []
           )
 
           // Fetch the Harmony links using the combined links
