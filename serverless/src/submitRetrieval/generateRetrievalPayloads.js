@@ -85,7 +85,10 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
         throw new Error('Swodlr too many granules at retrieval')
       }
 
-      conceptIds = [conceptId[pageNum]]
+      // Only slice concept IDs if we have them; otherwise keep the empty array
+      if (conceptId && conceptId.length > 0) {
+        conceptIds = [conceptId[pageNum]]
+      }
     }
 
     orderPayloads.push({
