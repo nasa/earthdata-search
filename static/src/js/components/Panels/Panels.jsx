@@ -61,8 +61,8 @@ export class Panels extends PureComponent {
     this.onWindowResize = this.onWindowResize.bind(this)
     this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
     this.onPanelHandleClickOrKeypress = this.onPanelHandleClickOrKeypress.bind(this)
-    this.onPanelHandleMouseOver = this.onPanelHandleMouseOver.bind(this)
-    this.onPanelHandleMouseOut = this.onPanelHandleMouseOut.bind(this)
+    this.onPanelHandleMouseEnter = this.onPanelHandleMouseEnter.bind(this)
+    this.onPanelHandleMouseLeave = this.onPanelHandleMouseLeave.bind(this)
     this.onUpdate = this.onUpdate.bind(this)
     this.disableHandleClickEvent = this.disableHandleClickEvent.bind(this)
     this.enableHandleClickEvent = this.enableHandleClickEvent.bind(this)
@@ -207,7 +207,7 @@ export class Panels extends PureComponent {
     onChangePanel(panelId)
   }
 
-  onPanelHandleMouseOver() {
+  onPanelHandleMouseEnter() {
     const { show } = this.state
 
     const nextHandleTooltipState = show ? 'Collapse' : 'Expand'
@@ -222,7 +222,7 @@ export class Panels extends PureComponent {
     }, 0)
   }
 
-  onPanelHandleMouseOut() {
+  onPanelHandleMouseLeave() {
     // Clear the timeout in case the tooltip state has not yet been updated.
     clearTimeout(this.handleTooltipCancelTimeout)
 
@@ -662,10 +662,10 @@ export class Panels extends PureComponent {
                 onMouseDown={this.onMouseDown}
                 onClick={this.onPanelHandleClickOrKeypress}
                 onKeyDown={this.onPanelHandleClickOrKeypress}
-                onMouseOver={this.onPanelHandleMouseOver}
-                onFocus={this.onPanelHandleMouseOver}
-                onMouseOut={this.onPanelHandleMouseOut}
-                onBlur={this.onPanelHandleMouseOut}
+                onMouseEnter={this.onPanelHandleMouseEnter}
+                onFocus={this.onPanelHandleMouseEnter}
+                onMouseLeave={this.onPanelHandleMouseLeave}
+                onBlur={this.onPanelHandleMouseLeave}
               />
             </OverlayTrigger>
           )
