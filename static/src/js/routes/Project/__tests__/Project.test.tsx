@@ -1,15 +1,22 @@
 import React from 'react'
 
 import { screen, waitFor } from '@testing-library/react'
+<<<<<<< HEAD
 // @ts-expect-error This file does not have types
+=======
+>>>>>>> 555489ed1 (EDSC-4536: Separate the project and saved projects routes)
 import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
+<<<<<<< HEAD
 import { mapDispatchToProps, Project } from '../Project'
 
 // @ts-expect-error This file does not have types
 import actions from '../../../actions'
+=======
+import { Project } from '../Project'
+>>>>>>> 555489ed1 (EDSC-4536: Separate the project and saved projects routes)
 
 import MapContainer from '../../../containers/MapContainer/MapContainer'
 import OverrideTemporalModalContainer from '../../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
@@ -61,6 +68,7 @@ const setup = setupTest({
   }
 })
 
+<<<<<<< HEAD
 describe('mapDispatchToProps', () => {
   test('onSubmitRetrieval calls actions.submitRetrieval', () => {
     const dispatch = jest.fn()
@@ -83,6 +91,8 @@ describe('mapDispatchToProps', () => {
   })
 })
 
+=======
+>>>>>>> 555489ed1 (EDSC-4536: Separate the project and saved projects routes)
 describe('Project component', () => {
   test('displays the ProjectCollectionsContainer', async () => {
     setup()
