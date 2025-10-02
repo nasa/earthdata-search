@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 
-import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
+import { RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 import * as urlQuery from '../urlQuery'
 import useEdscStore from '../../zustand/useEdscStore'
@@ -623,6 +623,9 @@ describe('changePath', () => {
         getProjectCollections: jest.fn(),
         getProjectGranules: jest.fn()
       },
+      savedProject: {
+        setProject: jest.fn()
+      },
       timeline: {
         getTimeline: jest.fn()
       }
@@ -634,14 +637,7 @@ describe('changePath', () => {
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          name: null,
-          projectId: '1',
-          path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
-        },
-        type: UPDATE_SAVED_PROJECT
-      })
+      expect(storeActions.length).toBe(0)
 
       expect(updateStoreMock).toHaveBeenCalledTimes(1)
       expect(updateStoreMock).toHaveBeenCalledWith(
@@ -690,8 +686,16 @@ describe('changePath', () => {
       const {
         collections,
         project,
+        savedProject,
         timeline
       } = zustandState
+
+      expect(savedProject.setProject).toHaveBeenCalledTimes(1)
+      expect(savedProject.setProject).toHaveBeenCalledWith({
+        id: '1',
+        name: null,
+        path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
+      })
 
       expect(collections.getCollections).toHaveBeenCalledTimes(1)
       expect(collections.getCollections).toHaveBeenCalledWith()
@@ -713,6 +717,9 @@ describe('changePath', () => {
     useEdscStore.setState({
       collections: {
         getCollections: jest.fn()
+      },
+      savedProject: {
+        setProject: jest.fn()
       },
       timeline: {
         getTimeline: jest.fn()
@@ -756,8 +763,11 @@ describe('changePath', () => {
     const zustandState = useEdscStore.getState()
     const {
       collections,
+      savedProject,
       timeline
     } = zustandState
+
+    expect(savedProject.setProject).toHaveBeenCalledTimes(0)
 
     expect(collections.getCollections).toHaveBeenCalledTimes(1)
     expect(collections.getCollections).toHaveBeenCalledWith()
@@ -1068,9 +1078,7 @@ describe('changeUrl', () => {
       test('calls replace when the pathname has not changed', () => {
         const newPath = '/search?p=C00001-EDSC'
 
-        const store = mockStore({
-          savedProject: {}
-        })
+        const store = mockStore()
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
@@ -1081,9 +1089,7 @@ describe('changeUrl', () => {
       test('calls push when the pathname has changed', () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
-        const store = mockStore({
-          savedProject: {}
-        })
+        const store = mockStore()
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
@@ -1107,27 +1113,32 @@ describe('changeUrl', () => {
           .post(/projects/)
           .reply(200, {
             project_id: 1,
-            path: '/search?p=C00001-EDSC'
+            path: '/search?p=C00001-EDSC&ff=Map%20Imagery'
           })
+
+        useEdscStore.setState((state) => {
+          /* eslint-disable no-param-reassign */
+          state.savedProject.setProject = jest.fn()
+          state.savedProject.project = {
+            id: '1',
+            path: '/search?p=C00001-EDSC'
+          }
+          /* eslint-enable no-param-reassign */
+        })
 
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
-        const store = mockStore({
-          savedProject: {
-            projectId: 1,
-            path: '/search?p=C00001-EDSC'
-          }
-        })
+        const store = mockStore()
 
-        await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
-          const storeActions = store.getActions()
-          expect(storeActions[0]).toEqual({
-            payload: {
-              projectId: 1,
-              path: '/search?p=C00001-EDSC'
-            },
-            type: UPDATE_SAVED_PROJECT
-          })
+        await store.dispatch(urlQuery.changeUrl(newPath))
+
+        const updatedStore = useEdscStore.getState()
+        const { savedProject } = updatedStore
+
+        expect(savedProject.setProject).toHaveBeenCalledTimes(1)
+        expect(savedProject.setProject).toHaveBeenCalledWith({
+          id: 1,
+          path: '/search?p=C00001-EDSC&ff=Map%20Imagery'
         })
       })
 
@@ -1139,45 +1150,59 @@ describe('changeUrl', () => {
             path: '/search?p=C00001-EDSC'
           })
 
-        const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
-
-        const store = mockStore({
-          savedProject: {
-            projectId: 1,
+        useEdscStore.setState((state) => {
+          /* eslint-disable no-param-reassign */
+          state.savedProject.setProject = jest.fn()
+          state.savedProject.project = {
+            id: '1',
             path: '/search?p=C00001-EDSC'
           }
+          /* eslint-enable no-param-reassign */
         })
 
-        await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
-          expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-          expect(routerHelper.router.navigate).toHaveBeenCalledWith('/search?projectId=2', { replace: true })
+        const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
-          const storeActions = store.getActions()
+        const store = mockStore()
 
-          expect(storeActions[0]).toEqual({
-            payload: {
-              projectId: 2,
-              path: '/search?p=C00001-EDSC'
-            },
-            type: UPDATE_SAVED_PROJECT
-          })
+        await store.dispatch(urlQuery.changeUrl(newPath))
+
+        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+        expect(routerHelper.router.navigate).toHaveBeenCalledWith('/search?projectId=2', { replace: true })
+
+        const updatedStore = useEdscStore.getState()
+        const { savedProject } = updatedStore
+
+        expect(savedProject.setProject).toHaveBeenCalledTimes(1)
+        expect(savedProject.setProject).toHaveBeenCalledWith({
+          id: 2,
+          path: '/search?p=C00001-EDSC'
         })
       })
 
       test('when the path has not changed', () => {
-        const newPath = '/search?p=C00001-EDSC'
-
-        const store = mockStore({
-          savedProject: {
-            projectId: 1,
+        useEdscStore.setState((state) => {
+          /* eslint-disable no-param-reassign */
+          state.savedProject.setProject = jest.fn()
+          state.savedProject.project = {
+            id: '1',
             path: '/search?p=C00001-EDSC'
           }
+          /* eslint-enable no-param-reassign */
         })
+
+        const newPath = '/search?p=C00001-EDSC'
+
+        const store = mockStore()
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
         const storeActions = store.getActions()
         expect(storeActions.length).toBe(0)
+
+        const updatedStore = useEdscStore.getState()
+        const { savedProject } = updatedStore
+
+        expect(savedProject.setProject).toHaveBeenCalledTimes(0)
       })
 
       test('handles an error updating the stored path', async () => {
@@ -1185,21 +1210,31 @@ describe('changeUrl', () => {
           .post(/projects/)
           .reply(500, { mock: 'error' })
 
+        useEdscStore.setState((state) => {
+          /* eslint-disable no-param-reassign */
+          state.savedProject.setProject = jest.fn()
+          state.savedProject.project = {
+            id: '1',
+            path: '/search?p=C00001-EDSC'
+          }
+          /* eslint-enable no-param-reassign */
+        })
+
         const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
 
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
-        const store = mockStore({
-          savedProject: {
-            projectId: 1,
-            path: '/search?p=C00001-EDSC'
-          }
-        })
+        const store = mockStore()
 
         await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
           const storeActions = store.getActions()
           expect(storeActions.length).toEqual(0)
         })
+
+        const updatedStore = useEdscStore.getState()
+        const { savedProject } = updatedStore
+
+        expect(savedProject.setProject).toHaveBeenCalledTimes(0)
 
         expect(handleErrorMock).toHaveBeenCalledTimes(1)
         expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({

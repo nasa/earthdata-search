@@ -383,7 +383,7 @@ export const encodeUrlQuery = (props) => {
 export const urlPathsWithoutUrlParams = [
   /^\/admin/,
   /^\/auth_callback/,
-  /^\/contact_info/,
+  /^\/contact-info/,
   /^\/downloads/,
   /^\/subscriptions/
 ]

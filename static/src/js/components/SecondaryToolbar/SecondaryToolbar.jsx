@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -33,6 +33,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 import './SecondaryToolbar.scss'
 
@@ -40,29 +41,34 @@ const SecondaryToolbar = ({
   authToken,
   location,
   onLogout,
-  onUpdateProjectName,
   projectCollectionIds,
   retrieval,
-  savedProject,
   ursProfile
 }) => {
-  const setRunTour = useEdscStore((state) => state.ui.tour.setRunTour)
-  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const {
+    setProjectName: updateProjectName,
+    setRunTour
+  } = useEdscStore((state) => ({
+    setProjectName: state.savedProject.setProjectName,
+    setRunTour: state.ui.tour.setRunTour
+  }))
 
-  const { name = '' } = savedProject
+  const name = useEdscStore(getSavedProjectName)
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   const [projectDropdownOpen, setProjectDropdownOpen] = useState(false)
   const [projectName, setProjectName] = useState(name)
   const [newProjectName, setNewProjectName] = useState('')
 
-  // Update project name when savedProject.name changes
-  useEffect(() => {
-    setProjectName(savedProject.name || '')
+  // TODO do I need this at all?
+  // // Update project name when savedProject.name changes
+  // useEffect(() => {
+  //   setProjectName(savedProject.name || '')
 
-    return () => {
-      setTimeout(() => {}, 0)
-    }
-  }, [savedProject.name])
+  //   return () => {
+  //     setTimeout(() => {}, 0)
+  //   }
+  // }, [savedProject.name])
 
   /**
    * Log the user out by calling the onLogout action
@@ -80,7 +86,7 @@ const SecondaryToolbar = ({
 
     setProjectName(newName)
 
-    onUpdateProjectName(newProjectName)
+    updateProjectName(newProjectName)
   }
 
   // Needed for Save Project so when the url updates with a project-id we don't refresh the page
@@ -419,15 +425,11 @@ SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
   onLogout: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({
     jsondata: PropTypes.shape({
       source: PropTypes.string
     })
-  }).isRequired,
-  savedProject: PropTypes.shape({
-    name: PropTypes.string
   }).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string

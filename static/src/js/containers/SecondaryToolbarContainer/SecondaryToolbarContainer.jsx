@@ -15,13 +15,11 @@ import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch) => ({
   onLogout: () => dispatch(actions.logout()),
-  onUpdateProjectName: (name) => dispatch(actions.updateProjectName(name)),
   onFetchContactInfo: () => dispatch(actions.fetchContactInfo())
 })
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
-  savedProject: state.savedProject,
   retrieval: state.retrieval,
   ursProfile: getUrsProfile(state)
 })
@@ -37,9 +35,7 @@ export const SecondaryToolbarContainer = (props) => {
     authToken,
     onFetchContactInfo,
     onLogout,
-    onUpdateProjectName,
     retrieval,
-    savedProject,
     ursProfile
   } = props
 
@@ -61,10 +57,8 @@ export const SecondaryToolbarContainer = (props) => {
       authToken={authToken}
       location={location}
       onLogout={onLogout}
-      onUpdateProjectName={onUpdateProjectName}
       projectCollectionIds={projectCollectionIds}
       retrieval={retrieval}
-      savedProject={savedProject}
       ursProfile={ursProfile}
     />
   )
@@ -74,9 +68,7 @@ SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired,
-  savedProject: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string
   }).isRequired

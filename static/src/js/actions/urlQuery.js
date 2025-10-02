@@ -150,11 +150,13 @@ export const changePath = (path = '') => async (dispatch) => {
       }
 
       // Save name, path and projectId into store
-      dispatch(actions.updateSavedProject({
-        path: projectPath,
+      const { savedProject } = zustandState
+      const { setProject } = savedProject
+      setProject({
+        id: projectId,
         name,
-        projectId
-      }))
+        path: projectPath
+      })
 
       decodedParams = decodeUrlParams(stringify(paramsObj))
       await dispatch(actions.updateStore(decodedParams))
@@ -278,11 +280,13 @@ const updateUrl = ({ options, oldPathname, newPathname }) => () => {
 export const changeUrl = (options) => (dispatch, getState) => {
   const state = getState()
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  const { savedProject } = zustandState
+  const { project, setProject } = savedProject
 
   const {
-    authToken,
-    savedProject
+    authToken
   } = state
 
   let newOptions = options
@@ -293,7 +297,7 @@ export const changeUrl = (options) => (dispatch, getState) => {
   if (typeof options === 'string') {
     [newPathname] = options.split('?')
 
-    const { projectId, name, path } = savedProject
+    const { id: projectId, name, path } = project
     if (projectId || options.length > 2000) {
       // Make sure the path has changed, and is not a path where we don't use params
       if (path !== newOptions && !isPath(newOptions, urlPathsWithoutUrlParams)) {
@@ -318,11 +322,12 @@ export const changeUrl = (options) => (dispatch, getState) => {
               routerHelper.router.navigate(newOptions, { replace: true })
             }
 
-            dispatch(actions.updateSavedProject({
-              path: projectPath,
+            // Save name, path and projectId into store
+            setProject({
+              id: newProjectId,
               name,
-              projectId: newProjectId
-            }))
+              path: projectPath
+            })
           })
           .catch((error) => {
             dispatch(actions.handleError({

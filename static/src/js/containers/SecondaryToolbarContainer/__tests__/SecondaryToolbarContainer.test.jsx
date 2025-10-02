@@ -25,10 +25,8 @@ const setup = setupTest({
   Component: SecondaryToolbarContainer,
   defaultProps: {
     authToken: 'mock-token',
-    savedProject: {},
     retrieval: {},
     onLogout: jest.fn(),
-    onUpdateProjectName: jest.fn(),
     onFetchContactInfo: jest.fn(),
     ursProfile: {}
   },
@@ -44,16 +42,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith()
-  })
-
-  test('onUpdateProjectName calls actions.updateProjectName', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateProjectName')
-
-    mapDispatchToProps(dispatch).onUpdateProjectName('name')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('name')
   })
 
   test('onFetchContactInfo calls actions.fetchContactInfo', () => {
@@ -74,13 +62,11 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      savedProject: {},
       retrieval: {}
     }
 
     const expectedState = {
       authToken: 'mock-token',
-      savedProject: {},
       retrieval: {},
       ursProfile: {}
     }
@@ -110,10 +96,8 @@ describe('SecondaryToolbarContainer component', () => {
         state: null
       },
       onLogout: expect.any(Function),
-      onUpdateProjectName: expect.any(Function),
       projectCollectionIds: [],
       retrieval: {},
-      savedProject: {},
       ursProfile: {}
     }, {})
   })

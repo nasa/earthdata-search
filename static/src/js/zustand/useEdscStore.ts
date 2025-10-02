@@ -19,6 +19,7 @@ import createPreferencesSlice from './slices/createPreferencesSlice'
 import createProjectPanelsSlice from './slices/createProjectPanelsSlice'
 import createProjectSlice from './slices/createProjectSlice'
 import createQuerySlice from './slices/createQuerySlice'
+import createSavedProjectSlice from './slices/createSavedProjectSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
@@ -42,6 +43,7 @@ const useEdscStore = create<EdscStore>()(
         ...createPreferencesSlice(...args),
         ...createProjectSlice(...args),
         ...createQuerySlice(...args),
+        ...createSavedProjectSlice(...args),
         ...createShapefileSlice(...args),
         ...createTimelineSlice(...args),
         ...createUiSlice(...args)

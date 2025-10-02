@@ -14,9 +14,12 @@ import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/Proj
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
+
 import Spinner from '../../components/Spinner/Spinner'
+
 import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsRequiringChunking } from '../../zustand/selectors/project'
+import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
@@ -27,16 +30,13 @@ const mapDispatchToProps = (dispatch) => ({
     (isOpen) => dispatch(actions.toggleChunkedOrderModal(isOpen))
 })
 
-const mapStateToProps = (state) => ({
-  name: state.savedProject.name
-})
-
 /**
  * The Project route component
 */
 export const Project = (props) => {
   const location = useLocation()
 
+  const name = useEdscStore(getSavedProjectName)
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
 
   const {
@@ -54,9 +54,6 @@ export const Project = (props) => {
     }
   }
 
-  const {
-    name
-  } = props
   const { search } = location
   const { edscHost } = getEnvironmentConfig()
 
@@ -110,9 +107,8 @@ export const Project = (props) => {
 }
 
 Project.propTypes = {
-  name: PropTypes.string.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Project)
+export default connect(null, mapDispatchToProps)(Project)

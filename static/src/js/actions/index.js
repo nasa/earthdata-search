@@ -54,7 +54,6 @@ import { getViewAllFacets } from './viewAllFacets'
 import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import { updateProjectName, updateSavedProject } from './savedProject'
 import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'
 import { collectionRelevancyMetrics } from './relevancy'
@@ -135,8 +134,6 @@ const actions = {
   updateAuthToken,
   updateFacets,
   updateNotificationLevel,
-  updateProjectName,
-  updateSavedProject,
   updateStore,
   updateSubscription,
   updateSubscriptionDisabledFields

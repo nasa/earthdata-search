@@ -50,9 +50,15 @@ jest.spyOn(document, 'querySelector').mockImplementation(() => ({
 const setup = setupTest({
   Component: Project,
   defaultProps: {
-    name: 'Test Project',
     onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
+  },
+  defaultZustandState: {
+    savedProject: {
+      project: {
+        name: 'Test Project'
+      }
+    }
   }
 })
 
