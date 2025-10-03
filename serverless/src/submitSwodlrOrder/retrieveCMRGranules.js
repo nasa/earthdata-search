@@ -12,18 +12,9 @@ export const retrieveCMRGranules = async ({
   accessToken,
   granuleParams
 }) => {
-  const normalizedParams = { ...granuleParams }
-
-  // Remove concept_id if empty. An empty concept_id array will cause CMR to reject
-  // the query. Removing the empty array allows CMR to search by collection_id
-  // and readable_granule_name instead.
-  if (normalizedParams.concept_id && normalizedParams.concept_id.length === 0) {
-    delete normalizedParams.concept_id
-  }
-
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
-    params: normalizedParams,
+    params: granuleParams,
     paramsSerializer: (params) => stringify(
       params,
       {
