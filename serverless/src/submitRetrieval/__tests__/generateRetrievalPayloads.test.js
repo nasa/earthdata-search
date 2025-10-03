@@ -150,6 +150,39 @@ describe('generateRetrievalPayloads', () => {
       }
       await expect(generateRetrievalPayloads(swodlrOrderPayload, { type: 'SWODLR' })).rejects.toEqual(new Error('Swodlr too many granules at retrieval'))
     })
+
+    test('when concept_id is empty, keeps it as an empty array instead of [undefined]', async () => {
+      const orderPayloads = await generateRetrievalPayloads(
+        {
+          id: 19,
+          access_method: {
+            type: 'SWODLR',
+            id: 'S10000001-EDSC',
+            url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+          },
+          collection_metadata: {},
+          granule_count: 1,
+          granule_params: {
+            concept_id: [],
+            echo_collection_id: 'C10000005-EDSC',
+            readable_granule_name: ['*_011_424_027*']
+          }
+        },
+        {
+          type: 'SWODLR'
+        }
+      )
+
+      expect(orderPayloads).toEqual([
+        {
+          concept_id: [],
+          echo_collection_id: 'C10000005-EDSC',
+          readable_granule_name: ['*_011_424_027*'],
+          page_num: 1,
+          page_size: 1
+        }
+      ])
+    })
   })
 
   test('returns the correct payload for a single page', async () => {
