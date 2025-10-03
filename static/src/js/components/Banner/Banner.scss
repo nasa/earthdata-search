@@ -4,6 +4,7 @@
 .banner {
   position: relative;
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   padding: bootstrap.$spacer * .825 2rem;
