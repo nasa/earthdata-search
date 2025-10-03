@@ -341,141 +341,210 @@ describe('retrieveGranuleLinks', () => {
     }))
   })
 
-  test('returns links from order_information for harmony orders with multiple jobs', async () => {
-    const expectedResponse = {
-      done: true,
-      links: [
-        'http://example.com/file1',
-        'http://example.com/file2',
-        'http://example.com/file3',
-        'http://example.com/file4'
-      ]
-    }
+  describe('harmony orders with multiple jobs', () => {
+    test('returns links from order_information for harmony orders with multiple jobs', async () => {
+      const expectedResponse = {
+        done: true,
+        links: [
+          'http://example.com/file1',
+          'http://example.com/file2',
+          'http://example.com/file3',
+          'http://example.com/file4'
+        ]
+      }
 
-    dbTracker.on('query', (query) => {
-      query.response([{
-        access_method: {
-          type: 'Harmony',
-          isValid: true
-        },
-        collection_id: 'C1214470488-ASF',
-        granule_params: {
-          exclude: {},
-          options: {},
-          page_num: 1,
-          temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
-          page_size: 20,
-          concept_id: [],
-          echo_collection_id: 'C1214470488-ASF',
-          two_d_coordinate_system: {}
-        },
-        collection_metadata: {
-          mock: 'metadata'
-        },
-        access_token: 'mock-access-token',
-        order_information: {
-          jobID: 'f2bf037d-25d3-473d-b2cd-7d6b4c62298f',
-          links: [
-            {
-              rel: 'data',
-              bbox: [-179.2, -55, 170.7, 81],
-              href: 'http://example.com/file1',
-              type: 'application/x-netcdf4',
-              title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
-              temporal: {
-                end: '2020-06-09T00:00:00.000Z',
-                start: '2020-06-08T00:00:00.000Z'
+      dbTracker.on('query', (query) => {
+        query.response([{
+          access_method: {
+            type: 'Harmony',
+            isValid: true
+          },
+          collection_id: 'C1214470488-ASF',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
+            page_size: 20,
+            concept_id: [],
+            echo_collection_id: 'C1214470488-ASF',
+            two_d_coordinate_system: {}
+          },
+          collection_metadata: {
+            mock: 'metadata'
+          },
+          access_token: 'mock-access-token',
+          order_information: {
+            jobID: 'f2bf037d-25d3-473d-b2cd-7d6b4c62298f',
+            links: [
+              {
+                rel: 'data',
+                bbox: [-179.2, -55, 170.7, 81],
+                href: 'http://example.com/file1',
+                type: 'application/x-netcdf4',
+                title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
+                temporal: {
+                  end: '2020-06-09T00:00:00.000Z',
+                  start: '2020-06-08T00:00:00.000Z'
+                }
+              },
+              {
+                rel: 'data',
+                bbox: [-179.2, -55, 170.7, 81],
+                href: 'http://example.com/file2',
+                type: 'application/x-netcdf4',
+                title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
+                temporal: {
+                  end: '2020-06-09T00:00:00.000Z',
+                  start: '2020-06-08T00:00:00.000Z'
+                }
+              },
+              {
+                rel: 'self',
+                href: 'https://harmony.earthdata.nasa.gov/jobs/f2bf037d-25d3-473d-b2cd-7d6b4c62298f?page=1&limit=2000',
+                type: 'application/json',
+                title: 'The current page'
               }
-            },
-            {
-              rel: 'data',
-              bbox: [-179.2, -55, 170.7, 81],
-              href: 'http://example.com/file2',
-              type: 'application/x-netcdf4',
-              title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
-              temporal: {
-                end: '2020-06-09T00:00:00.000Z',
-                start: '2020-06-08T00:00:00.000Z'
+            ]
+          }
+        }, {
+          access_method: {
+            type: 'Harmony',
+            isValid: true
+          },
+          collection_id: 'C1214470488-ASF',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
+            page_size: 20,
+            concept_id: [],
+            echo_collection_id: 'C1214470488-ASF',
+            two_d_coordinate_system: {}
+          },
+          collection_metadata: {
+            mock: 'metadata'
+          },
+          access_token: 'mock-access-token',
+          order_information: {
+            jobID: '1234qwer-25d3-473d-b2cd-7d6b4c62298f',
+            links: [
+              {
+                rel: 'data',
+                bbox: [-179.2, -55, 170.7, 81],
+                href: 'http://example.com/file3',
+                type: 'application/x-netcdf4',
+                title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
+                temporal: {
+                  end: '2020-06-09T00:00:00.000Z',
+                  start: '2020-06-08T00:00:00.000Z'
+                }
+              },
+              {
+                rel: 'data',
+                bbox: [-179.2, -55, 170.7, 81],
+                href: 'http://example.com/file4',
+                type: 'application/x-netcdf4',
+                title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
+                temporal: {
+                  end: '2020-06-09T00:00:00.000Z',
+                  start: '2020-06-08T00:00:00.000Z'
+                }
+              },
+              {
+                rel: 'self',
+                href: 'https://harmony.earthdata.nasa.gov/jobs/1234qwer-25d3-473d-b2cd-7d6b4c62298f?page=1&limit=2000',
+                type: 'application/json',
+                title: 'The current page'
               }
-            },
-            {
-              rel: 'self',
-              href: 'https://harmony.earthdata.nasa.gov/jobs/f2bf037d-25d3-473d-b2cd-7d6b4c62298f?page=1&limit=2000',
-              type: 'application/json',
-              title: 'The current page'
-            }
-          ]
+            ]
+          }
+        }])
+      })
+
+      const event = {
+        queryStringParameters: {
+          id: '1234567',
+          flattenLinks: true,
+          linkTypes: 'data,s3'
         }
-      }, {
-        access_method: {
-          type: 'Harmony',
-          isValid: true
-        },
-        collection_id: 'C1214470488-ASF',
-        granule_params: {
-          exclude: {},
-          options: {},
-          page_num: 1,
-          temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
-          page_size: 20,
-          concept_id: [],
-          echo_collection_id: 'C1214470488-ASF',
-          two_d_coordinate_system: {}
-        },
-        collection_metadata: {
-          mock: 'metadata'
-        },
-        access_token: 'mock-access-token',
-        order_information: {
-          jobID: '1234qwer-25d3-473d-b2cd-7d6b4c62298f',
-          links: [
-            {
-              rel: 'data',
-              bbox: [-179.2, -55, 170.7, 81],
-              href: 'http://example.com/file3',
-              type: 'application/x-netcdf4',
-              title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
-              temporal: {
-                end: '2020-06-09T00:00:00.000Z',
-                start: '2020-06-08T00:00:00.000Z'
-              }
-            },
-            {
-              rel: 'data',
-              bbox: [-179.2, -55, 170.7, 81],
-              href: 'http://example.com/file4',
-              type: 'application/x-netcdf4',
-              title: 'acos_LtCO2_200608_v210210_B9213A_201026001634s_subsetted.nc4',
-              temporal: {
-                end: '2020-06-09T00:00:00.000Z',
-                start: '2020-06-08T00:00:00.000Z'
-              }
-            },
-            {
-              rel: 'self',
-              href: 'https://harmony.earthdata.nasa.gov/jobs/1234qwer-25d3-473d-b2cd-7d6b4c62298f?page=1&limit=2000',
-              type: 'application/json',
-              title: 'The current page'
-            }
-          ]
-        }
-      }])
+      }
+
+      const response = await retrieveGranuleLinks(event, {})
+
+      expect(response).toEqual(expect.objectContaining({
+        body: JSON.stringify(expectedResponse),
+        statusCode: 200
+      }))
     })
 
-    const event = {
-      queryStringParameters: {
-        id: '1234567',
-        flattenLinks: true,
-        linkTypes: 'data,s3'
+    test('returns an empty array when the orders have not been submitted yet', async () => {
+      const expectedResponse = {
+        done: true
       }
-    }
 
-    const response = await retrieveGranuleLinks(event, {})
+      dbTracker.on('query', (query) => {
+        query.response([{
+          access_method: {
+            type: 'Harmony',
+            isValid: true
+          },
+          collection_id: 'C1214470488-ASF',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
+            page_size: 20,
+            concept_id: [],
+            echo_collection_id: 'C1214470488-ASF',
+            two_d_coordinate_system: {}
+          },
+          collection_metadata: {
+            mock: 'metadata'
+          },
+          access_token: 'mock-access-token',
+          order_information: {}
+        }, {
+          access_method: {
+            type: 'Harmony',
+            isValid: true
+          },
+          collection_id: 'C1214470488-ASF',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
+            page_size: 20,
+            concept_id: [],
+            echo_collection_id: 'C1214470488-ASF',
+            two_d_coordinate_system: {}
+          },
+          collection_metadata: {
+            mock: 'metadata'
+          },
+          access_token: 'mock-access-token',
+          order_information: {}
+        }])
+      })
 
-    expect(response).toEqual(expect.objectContaining({
-      body: JSON.stringify(expectedResponse),
-      statusCode: 200
-    }))
+      const event = {
+        queryStringParameters: {
+          id: '1234567',
+          flattenLinks: true,
+          linkTypes: 'data,s3'
+        }
+      }
+
+      const response = await retrieveGranuleLinks(event, {})
+
+      expect(response).toEqual(expect.objectContaining({
+        body: JSON.stringify(expectedResponse),
+        statusCode: 200
+      }))
+    })
   })
 
   test('returns an error', async () => {
