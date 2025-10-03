@@ -630,6 +630,8 @@ describe('createQuerySlice', () => {
 
       expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).toContain('granuleId')
 
+      expect(granules.granules.collectionConceptId).toBeNull()
+
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.hoverGranule', {
         granule: null
