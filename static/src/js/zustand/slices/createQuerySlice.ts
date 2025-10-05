@@ -248,6 +248,11 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         if (collection) {
           collection.granules.excludedGranuleIds.pop()
         }
+
+        // `granules.getGranules()` has logic to avoid making a duplicate request. In order to ensure
+        // the request is made after excluding a granule, reset the collectionConceptId here before
+        // calling `granules.getGranules()`
+        state.granules.granules.collectionConceptId = null
       })
 
       get().granules.getGranules()

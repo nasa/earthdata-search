@@ -726,6 +726,8 @@ describe('createQuerySlice', () => {
 
       expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).not.toContain('granuleId2')
 
+      expect(granules.granules.collectionConceptId).toBeNull()
+
       expect(granules.getGranules).toHaveBeenCalledTimes(1)
       expect(granules.getGranules).toHaveBeenCalledWith()
     })
