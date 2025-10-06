@@ -18,6 +18,7 @@ describe('retrieveCMRGranules', () => {
       .post('/search/granules.json', (body) => {
         const params = parseQueryString(body)
         expect(params.collection_concept_id).toBe('C2799438271-POCLOUD')
+        expect(params.readable_granule_name).toEqual(['*_011_424_027*'])
 
         return true
       })
@@ -37,7 +38,8 @@ describe('retrieveCMRGranules', () => {
     const collectionConceptId = 'C2799438271-POCLOUD'
 
     const granuleParams = {
-      collection_concept_id: collectionConceptId
+      collection_concept_id: collectionConceptId,
+      readable_granule_name: ['*_011_424_027*']
     }
 
     const accessToken = 'access-token'
