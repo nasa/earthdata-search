@@ -195,7 +195,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
+        expect(body).toBe('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGranulesBody),
@@ -250,7 +250,7 @@ test.describe('Path /search/granules', () => {
           const request = route.request()
           const body = request.postData()
 
-          expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
+          expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&sort_key=-start_date')
 
           route.fulfill({
             body: JSON.stringify(temporalGranulesBody),
@@ -308,7 +308,7 @@ test.describe('Path /search/granules', () => {
           const request = route.request()
           const body = request.postData()
 
-          expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
+          expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31&sort_key=-start_date')
 
           route.fulfill({
             body: JSON.stringify(recurringTemporalGranulesBody),
@@ -369,7 +369,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+        expect(body).toBe('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(browseOnlyGranulesBody),
@@ -424,7 +424,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20')
+        expect(body).toBe('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(onlineOnlyGranulesBody),
@@ -479,7 +479,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20')
+        expect(body).toBe('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(orbitNumberGranulesBody),
@@ -534,7 +534,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20')
+        expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGranulesBody),
@@ -589,7 +589,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20')
+        expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGranulesBody),
@@ -699,7 +699,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+        expect(body).toBe('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(cloudCoverGranulesBody),
@@ -754,7 +754,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+        expect(body).toBe('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(dayNightGranulesBody),
@@ -808,7 +808,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15')
+        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(gridCoordsGranulesBody),
@@ -877,7 +877,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z')
+        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(timelineGranulesBody),
@@ -1004,7 +1004,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
+        if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date') {
           await route.fulfill({
             body: JSON.stringify(projectGranuleGranulesBody),
             headers: {
@@ -1013,7 +1013,7 @@ test.describe('Path /search/granules', () => {
               'cmr-hits': cmrHits.toString()
             }
           })
-        } else if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS') {
+        } else if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS&sort_key=-start_date') {
           await route.fulfill({
             body: JSON.stringify(projectGranuleProjectGranuleBody),
             headers: {
