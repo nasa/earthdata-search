@@ -1,7 +1,14 @@
+import { granuleSortKeys } from '../../constants/granuleSortKeys'
 import isNumber from '../isNumber'
 
 import { encodeGranuleFilters, decodeGranuleFilters } from './granuleFiltersEncoders'
 
+export const initialGranuleQuery = {
+  excludedGranuleIds: [],
+  gridCoords: '',
+  pageNum: 1,
+  sortKey: granuleSortKeys.startDateDescending
+}
 /**
  * Encode a list of Granule IDs
  * @param {boolean} isOpenSearch Are the granules CWIC
@@ -448,10 +455,7 @@ export const decodeCollections = (params) => {
   ids.forEach((collectionId, index) => {
     // Default a collection granule query for each collectionId
     collectionGranuleQueryById[collectionId] = {
-      granules: {
-        pageNum: 1,
-        sortKey: '-start_date'
-      }
+      granules: initialGranuleQuery
     }
 
     // Compensate for the fact that we've already pulled
@@ -512,6 +516,7 @@ export const decodeCollections = (params) => {
       const { granules: granuleQuery } = collectionGranuleQuery
 
       const newGranuleQuery = {
+        ...initialGranuleQuery,
         ...granuleQuery,
         ...decodeGranuleFilters(pCollection)
       }

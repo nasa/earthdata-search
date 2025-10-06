@@ -12,6 +12,7 @@ import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import { initialState as initialQueryState } from '../../zustand/slices/createQuerySlice'
 
 import routerHelper from '../../router/router'
+import { initialGranuleQuery } from '../../util/url/collectionsEncoders'
 
 const mockStore = configureMockStore([thunk])
 
@@ -668,9 +669,7 @@ describe('changePath', () => {
             collection: {
               byId: {
                 'C00001-EDSC': {
-                  granules: {
-                    pageNum: 1
-                  }
+                  granules: initialGranuleQuery
                 }
               },
               hasGranulesOrCwic: true,
@@ -738,10 +737,7 @@ describe('changePath', () => {
         collection: {
           byId: {
             'C00001-EDSC': {
-              granules: {
-                pageNum: 1,
-                sortKey: '-start_date'
-              }
+              granules: initialGranuleQuery
             }
           },
           hasGranulesOrCwic: true,
