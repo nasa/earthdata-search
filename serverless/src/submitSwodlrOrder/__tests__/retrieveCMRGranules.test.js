@@ -1,4 +1,5 @@
 import nock from 'nock'
+import { parse as parseQueryString } from 'qs'
 
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
@@ -14,7 +15,13 @@ describe('retrieveCMRGranules', () => {
   test('retrieve cmr granules', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/search\/granules.json/)
+      .post('/search/granules.json', (body) => {
+        const params = parseQueryString(body)
+        expect(params.collection_concept_id).toBe('C2799438271-POCLOUD')
+        expect(params.readable_granule_name).toEqual(['*_011_424_027*'])
+
+        return true
+      })
       .reply(200, {
         feed: {
           entry: [{
@@ -31,7 +38,8 @@ describe('retrieveCMRGranules', () => {
     const collectionConceptId = 'C2799438271-POCLOUD'
 
     const granuleParams = {
-      collection_concept_id: collectionConceptId
+      collection_concept_id: collectionConceptId,
+      readable_granule_name: ['*_011_424_027*']
     }
 
     const accessToken = 'access-token'
@@ -61,7 +69,16 @@ describe('retrieveCMRGranules', () => {
   test('retrieves the granules with the added granule params', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/search\/granules.json/)
+      .post('/search/granules.json', (body) => {
+        const params = parseQueryString(body)
+        expect(params.concept_id).toEqual(['G2938390910-POCLOUD', 'G2938390924-POCLOUD'])
+        expect(params.echo_collection_id).toBe('C2799438271-POCLOUD')
+        expect(params.page_num).toBe('1')
+        expect(params.sort_key).toBe('-start_date')
+        expect(params.page_size).toBe('2000')
+
+        return true
+      })
       .reply(200, {
         feed: {
           entry: [{

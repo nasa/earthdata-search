@@ -12,19 +12,15 @@ export const retrieveCMRGranules = async ({
   accessToken,
   granuleParams
 }) => {
-  const { concept_id: granuleIds } = granuleParams
-
   const granuleResponse = await axios({
+    method: 'post',
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
-    params: { concept_id: granuleIds },
-    paramsSerializer: (params) => stringify(
-      params,
-      {
-        indices: false,
-        arrayFormat: 'brackets'
-      }
-    ),
+    data: stringify(granuleParams, {
+      indices: false,
+      arrayFormat: 'brackets'
+    }),
     headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
     }
