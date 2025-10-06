@@ -46,7 +46,7 @@ describe('submitSwodlrOrder', () => {
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/granules/)
+      .post(/search\/granules.json/)
       .reply(200, {
         feed: {
           entry: [{
@@ -234,7 +234,7 @@ describe('submitSwodlrOrder', () => {
   test('saves an error message if the create fails from an http error', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/granules/)
+      .post(/search\/granules.json/)
       .reply(500, {
         errorType: 'Error',
         errorMessage: 'Unknown Error',
@@ -306,7 +306,7 @@ describe('submitSwodlrOrder', () => {
   test('Doesnt submit download when there are too many granules', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/granules/)
+      .post(/search\/granules.json/)
       .reply(200, {
         feed: {
           entry: [
@@ -461,7 +461,7 @@ describe('submitSwodlrOrder', () => {
   test('saves an error message if the create fails in swodlr order', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/granules/)
+      .post(/search\/granules.json/)
       .reply(200, {
         feed: {
           entry: [{
