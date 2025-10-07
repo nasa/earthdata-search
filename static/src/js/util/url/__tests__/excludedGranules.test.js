@@ -4,6 +4,7 @@ import { emptyDecodedResult } from './url.mocks'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import { initialGranuleQuery } from '../collectionsEncoders'
 
 beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
@@ -25,8 +26,8 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {
-                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK'],
-                  pageNum: 1
+                  ...initialGranuleQuery,
+                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
                 }
               }
             }
@@ -48,8 +49,8 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {
-                  excludedGranuleIds: ['12345', '56789'],
-                  pageNum: 1
+                  ...initialGranuleQuery,
+                  excludedGranuleIds: ['12345', '56789']
                 }
               }
             }
@@ -85,6 +86,7 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {
+                  ...initialGranuleQuery,
                   excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
                 }
               }
@@ -121,8 +123,8 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {
-                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK'],
-                  pageNum: 1
+                  ...initialGranuleQuery,
+                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
                 }
               }
             }

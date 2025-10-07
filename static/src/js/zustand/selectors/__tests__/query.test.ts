@@ -18,7 +18,10 @@ import useEdscStore from '../../useEdscStore'
 // @ts-expect-error: This file does not have types
 import configureStore from '../../../store/configureStore'
 
-import { initialGranuleState, initialState } from '../../slices/createQuerySlice'
+import { initialState } from '../../slices/createQuerySlice'
+
+// @ts-expect-error: This file does not have types
+import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
 
@@ -67,7 +70,7 @@ describe('query selectors', () => {
           collection: {
             byId: {
               collectionId: {
-                granules: initialGranuleState
+                granules: initialGranuleQuery
               }
             }
           }
@@ -75,7 +78,7 @@ describe('query selectors', () => {
       }))
 
       const granuleQuery = getFocusedCollectionGranuleQuery(useEdscStore.getState())
-      expect(granuleQuery).toEqual(initialGranuleState)
+      expect(granuleQuery).toEqual(initialGranuleQuery)
     })
 
     test('returns an empty object when there is no focusedCollection', () => {
@@ -104,7 +107,7 @@ describe('query selectors', () => {
             byId: {
               collectionId: {
                 granules: {
-                  ...initialGranuleState,
+                  ...initialGranuleQuery,
                   browseOnly: true,
                   pageNum: 2,
                   sortKey: '-start_date'
@@ -152,7 +155,7 @@ describe('query selectors', () => {
             byId: {
               collectionId: {
                 granules: {
-                  ...initialGranuleState,
+                  ...initialGranuleQuery,
                   browseOnly: true,
                   pageNum: 2,
                   sortKey: '-start_date'

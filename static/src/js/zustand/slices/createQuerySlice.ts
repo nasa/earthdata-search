@@ -21,6 +21,9 @@ import { eventEmitter } from '../../events/events'
 
 import routerHelper, { type Router } from '../../router/router'
 
+// @ts-expect-error This file does not have types
+import { initialGranuleQuery } from '../../util/url/collectionsEncoders'
+
 const { collectionSearchResultsSortKey } = getApplicationConfig()
 
 export const initialState = {
@@ -41,13 +44,6 @@ export const initialState = {
   },
   selectedRegion: {},
   nlpCollection: null
-}
-
-export const initialGranuleState = {
-  excludedGranuleIds: [],
-  gridCoords: '',
-  pageNum: 1,
-  sortKey: '-start_date'
 }
 
 const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
@@ -117,7 +113,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
         if (!get().query.collection.byId[collectionId]) {
           state.query.collection.byId[collectionId] = {
-            granules: initialGranuleState
+            granules: initialGranuleQuery
           }
         }
 
@@ -125,11 +121,11 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
         if (isEmpty(prunedQuery)) {
           state.query.collection.byId[collectionId].granules = {
-            ...initialGranuleState
+            ...initialGranuleQuery
           }
         } else {
           state.query.collection.byId[collectionId].granules = {
-            ...initialGranuleState,
+            ...initialGranuleQuery,
             ...state.query.collection.byId[collectionId]?.granules,
             ...prunedQuery
           }
@@ -208,6 +204,8 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         // the request is made after excluding a granule, reset the collectionConceptId here before
         // calling `granules.getGranules()`
         state.granules.granules.collectionConceptId = null
+        state.granules.granules.items = []
+        state.query.collection.byId[collectionId].granules.pageNum = 1
       })
 
       get().granules.getGranules()
@@ -217,7 +215,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       set((state) => {
         state.query.collection.byId[collectionId] = {
           granules: {
-            ...initialGranuleState,
+            ...initialGranuleQuery,
             ...query
           }
         }
@@ -248,6 +246,13 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         if (collection) {
           collection.granules.excludedGranuleIds.pop()
         }
+
+        // `granules.getGranules()` has logic to avoid making a duplicate request. In order to ensure
+        // the request is made after excluding a granule, reset the collectionConceptId here before
+        // calling `granules.getGranules()`
+        state.granules.granules.collectionConceptId = null
+        state.granules.granules.items = []
+        state.query.collection.byId[collectionId].granules.pageNum = 1
       })
 
       get().granules.getGranules()

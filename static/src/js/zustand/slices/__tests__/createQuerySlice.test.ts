@@ -1,5 +1,5 @@
 import useEdscStore from '../../useEdscStore'
-import { initialGranuleState, initialState } from '../createQuerySlice'
+import { initialState } from '../createQuerySlice'
 
 // @ts-expect-error This file does not have types
 import configureStore from '../../../store/configureStore'
@@ -9,6 +9,9 @@ import actions from '../../../actions'
 
 import * as EventEmitter from '../../../events/events'
 import routerHelper from '../../../router/router'
+
+// @ts-expect-error This file does not have types
+import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
 
 jest.mock('../../../actions', () => ({
   getCollections: jest.fn(),
@@ -95,7 +98,7 @@ describe('createQuerySlice', () => {
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
-              ...initialGranuleState,
+              ...initialGranuleQuery,
               pageNum: 2
             }
           }
@@ -337,7 +340,7 @@ describe('createQuerySlice', () => {
         } = updatedState
 
         expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
-          ...initialGranuleState,
+          ...initialGranuleQuery,
           pageNum: 3
         })
 
@@ -360,7 +363,7 @@ describe('createQuerySlice', () => {
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
-              ...initialGranuleState,
+              ...initialGranuleQuery,
               pageNum: 2
             }
           }
@@ -381,7 +384,7 @@ describe('createQuerySlice', () => {
           query: updatedQuery
         } = updatedState
 
-        expect(updatedQuery.collection.byId.collectionId.granules).toEqual(initialGranuleState)
+        expect(updatedQuery.collection.byId.collectionId.granules).toEqual(initialGranuleQuery)
 
         expect(granules.granules.collectionConceptId).toEqual(null)
 
@@ -403,7 +406,7 @@ describe('createQuerySlice', () => {
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
-              ...initialGranuleState,
+              ...initialGranuleQuery,
               pageNum: 2
             }
           }
@@ -425,7 +428,7 @@ describe('createQuerySlice', () => {
         } = updatedState
 
         expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
-          ...initialGranuleState,
+          ...initialGranuleQuery,
           pageNum: 3
         })
 
@@ -451,7 +454,7 @@ describe('createQuerySlice', () => {
           state.project.collections.allIds = ['collectionId']
           state.query.collection.byId.collectionId = {
             granules: {
-              ...initialGranuleState,
+              ...initialGranuleQuery,
               pageNum: 2
             }
           }
@@ -473,7 +476,7 @@ describe('createQuerySlice', () => {
         } = updatedState
 
         expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
-          ...initialGranuleState,
+          ...initialGranuleQuery,
           pageNum: 3
         })
 
@@ -610,7 +613,7 @@ describe('createQuerySlice', () => {
       useEdscStore.setState((state) => {
         state.granules.getGranules = jest.fn()
         state.query.collection.byId.collectionId = {
-          granules: initialGranuleState
+          granules: initialGranuleQuery
         }
       })
 
@@ -629,8 +632,10 @@ describe('createQuerySlice', () => {
       } = updatedState
 
       expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).toContain('granuleId')
+      expect(updatedQuery.collection.byId.collectionId.granules.pageNum).toEqual(1)
 
       expect(granules.granules.collectionConceptId).toBeNull()
+      expect(granules.granules.items).toEqual([])
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.hoverGranule', {
@@ -663,7 +668,7 @@ describe('createQuerySlice', () => {
       } = updatedState
 
       expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
-        ...initialGranuleState,
+        ...initialGranuleQuery,
         ...granuleQuery
       })
     })
@@ -674,7 +679,7 @@ describe('createQuerySlice', () => {
       useEdscStore.setState((state) => {
         state.collections.getCollections = jest.fn()
         state.query.collection.byId.collectionId = {
-          granules: initialGranuleState
+          granules: initialGranuleQuery
         }
 
         state.shapefile.clearShapefile = jest.fn()
@@ -707,7 +712,7 @@ describe('createQuerySlice', () => {
         state.granules.getGranules = jest.fn()
         state.query.collection.byId.collectionId = {
           granules: {
-            ...initialGranuleState,
+            ...initialGranuleQuery,
             excludedGranuleIds: ['granuleId1', 'granuleId2']
           }
         }
@@ -725,6 +730,10 @@ describe('createQuerySlice', () => {
       } = updatedState
 
       expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).not.toContain('granuleId2')
+      expect(updatedQuery.collection.byId.collectionId.granules.pageNum).toEqual(1)
+
+      expect(granules.granules.collectionConceptId).toBeNull()
+      expect(granules.granules.items).toEqual([])
 
       expect(granules.getGranules).toHaveBeenCalledTimes(1)
       expect(granules.getGranules).toHaveBeenCalledWith()

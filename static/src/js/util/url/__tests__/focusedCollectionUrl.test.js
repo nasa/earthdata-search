@@ -4,6 +4,7 @@ import { emptyDecodedResult } from './url.mocks'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import { initialGranuleQuery } from '../collectionsEncoders'
 
 beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
@@ -23,10 +24,7 @@ describe('url#decodeUrlParams', () => {
           ...emptyDecodedResult.query.collection,
           byId: {
             collectionId: {
-              granules: {
-                pageNum: 1,
-                sortKey: '-start_date'
-              }
+              granules: initialGranuleQuery
             }
           }
         }
