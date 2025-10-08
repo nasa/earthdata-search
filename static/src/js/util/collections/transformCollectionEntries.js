@@ -48,7 +48,9 @@ export const transformCollectionEntries = (entries, earthdataEnvironment) => {
     // Retrieve collection thumbnail if it exists
     if (collection.id) {
       if (collection.browse_flag) {
-        transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}`
+        const browseRelName = 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+        const browseLink = collection.links.find((element) => element.rel === browseRelName)
+        transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}&browseImageUrl=${browseLink.href}`
       } else {
         transformedCollection.thumbnail = unavailableImg
         transformedCollection.isDefaultImage = true
