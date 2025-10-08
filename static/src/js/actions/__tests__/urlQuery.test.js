@@ -799,8 +799,8 @@ describe('changePath', () => {
       expect(collections.getCollections).toHaveBeenCalledTimes(1)
       expect(collections.getCollections).toHaveBeenCalledWith()
 
-      expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
-      expect(timeline.getTimeline).toHaveBeenCalledWith()
+      // Timeline should not be fetched when there's no collection or project collections
+      expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
 
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({

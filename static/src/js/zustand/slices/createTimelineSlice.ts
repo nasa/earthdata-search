@@ -86,6 +86,15 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
         startDate
       } = timelineParams
 
+      // Don't allow timeline requests when there are no collections
+      if (!conceptId || (Array.isArray(conceptId) && conceptId.length === 0)) {
+        set((state) => {
+          state.timeline.intervals = {}
+        })
+
+        return
+      }
+
       const requestObject = new TimelineRequest(authToken, earthdataEnvironment)
 
       cancelToken = requestObject.getCancelToken()
