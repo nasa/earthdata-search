@@ -252,6 +252,11 @@ describe('CollectionRequest#transformResponse', () => {
             browse_flag: true,
             id: 'collectionId',
             has_granules: false,
+            links: [{
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+              hreflang: 'en-US',
+              href: 'https://sample.nasa.gov/thumbnails/thumbnail.jpg'
+            }],
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
             }
@@ -271,10 +276,15 @@ describe('CollectionRequest#transformResponse', () => {
             hasMapImagery: true,
             id: 'collectionId',
             isOpenSearch: false,
+            links: [{
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+              hreflang: 'en-US',
+              href: 'https://sample.nasa.gov/thumbnails/thumbnail.jpg'
+            }],
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
             },
-            thumbnail: 'http://localhost:3000/scale/collections/collectionId?h=85&w=85&ee=prod'
+            thumbnail: 'http://localhost:3000/scale/collections/collectionId?h=85&w=85&ee=prod&browseImageUrl=https://sample.nasa.gov/thumbnails/thumbnail.jpg'
           }]
         }
       }

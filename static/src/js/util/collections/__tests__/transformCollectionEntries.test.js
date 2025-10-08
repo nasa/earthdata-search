@@ -42,7 +42,11 @@ describe('transformCollectionEntries', () => {
         collection_data_type: 'NEAR_REAL_TIME',
         organizations: ['NASA'],
         tags: [],
-        links: []
+        links: [{
+          rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+          hreflang: 'en-US',
+          href: 'https://sample.nasa.gov/thumbnails/thumbnail.jpg'
+        }]
       }
     ]
 
