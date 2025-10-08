@@ -38,6 +38,7 @@ const scaleImage = async (event) => {
     w = defaultWidth,
     return_default: returnDefault = 'true',
     imageSrc,
+    browseImageUrl,
     ee: earthdataEnvironment = determineEarthdataEnvironment()
   } = queryStringParameters || {}
 
@@ -77,7 +78,7 @@ const scaleImage = async (event) => {
       imageBuffer = originalImageFromCache
     } else {
       // Attempt to retrieve the url of a browse image for the provided concept and type
-      const imageUrl = await getImageUrlFromConcept(
+      const imageUrl = browseImageUrl || await getImageUrlFromConcept(
         conceptId,
         conceptType,
         cascadeConcepts,
