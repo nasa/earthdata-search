@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -58,17 +58,16 @@ const SecondaryToolbar = ({
 
   const [projectDropdownOpen, setProjectDropdownOpen] = useState(false)
   const [projectName, setProjectName] = useState(name)
-  const [newProjectName, setNewProjectName] = useState('')
 
-  // TODO do I need this at all?
-  // // Update project name when savedProject.name changes
-  // useEffect(() => {
-  //   setProjectName(savedProject.name || '')
+  // Update projectName when name changes
+  // This can happen when loading a project from the URL, after the response comes back from the API
+  useEffect(() => {
+    setProjectName(name || '')
 
-  //   return () => {
-  //     setTimeout(() => {}, 0)
-  //   }
-  // }, [savedProject.name])
+    return () => {
+      setTimeout(() => {}, 0)
+    }
+  }, [name])
 
   /**
    * Log the user out by calling the onLogout action
@@ -78,7 +77,7 @@ const SecondaryToolbar = ({
   }
 
   const handleNameSubmit = () => {
-    const newName = newProjectName || 'Untitled Project'
+    const newName = projectName || 'Untitled Project'
 
     setTimeout(() => {
       setProjectDropdownOpen(false)
@@ -86,7 +85,7 @@ const SecondaryToolbar = ({
 
     setProjectName(newName)
 
-    updateProjectName(newProjectName)
+    updateProjectName(newName)
   }
 
   // Needed for Save Project so when the url updates with a project-id we don't refresh the page
@@ -99,7 +98,7 @@ const SecondaryToolbar = ({
   }
 
   const onInputChange = (event) => {
-    setNewProjectName(event.target.value)
+    setProjectName(event.target.value)
   }
 
   const onToggleProjectDropdown = () => {
@@ -350,7 +349,7 @@ const SecondaryToolbar = ({
                 <FormControl
                   className="secondary-toolbar__project-name-input"
                   name="projectName"
-                  value={newProjectName}
+                  value={projectName}
                   placeholder="Untitled Project"
                   onChange={onInputChange}
                   onKeyPress={handleKeypress}
@@ -396,7 +395,7 @@ const SecondaryToolbar = ({
   )
 
   const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/project', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/project', '/downloads']) && (projectCollectionIds.length > 0 || name))
   const showStartTourButton = location.pathname === '/search'
 
   return (

@@ -31,9 +31,11 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes onlyEosdisCollections correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      onlyEosdisCollections: true
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        onlyEosdisCollections: true
+      },
+      pathname: '/path/here'
     }
 
     expect(encodeUrlQuery(props)).toEqual('/path/here?oe=t')

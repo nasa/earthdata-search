@@ -449,7 +449,7 @@ describe('GranuleResultsItem component', () => {
       await user.click(screen.getByRole('button', { name: 'Download granule data' }))
       await user.click(screen.getByRole('tab', { name: 'AWS S3 Access' }))
 
-      expect(screen.getByRole('button', { name: 'Copy to clipboard' }).textContent).toEqual('s3-region')
+      expect(screen.getByRole('button', { name: 'Copy region to clipboard' }).textContent).toEqual('s3-region')
       expect(screen.getByRole('link', { name: 'Get AWS S3 Credentials' })).toHaveProperty('href', 'http://example.com/creds')
       expect(screen.getByRole('link', { name: 'View Documentation' })).toHaveProperty('href', 'http://example.com/docs')
       expect(screen.getByRole('button', { name: 'Copy AWS S3 path to clipboard' }).textContent).toEqual('linkhref')

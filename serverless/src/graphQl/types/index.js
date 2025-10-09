@@ -3,6 +3,7 @@ import { DateTimeTypeDefinition, JSONDefinition } from 'graphql-scalars'
 
 import admin from './admin.graphql'
 import pageInfo from './pageInfo.graphql'
+import project from './project.graphql'
 import user from './user.graphql'
 
 const scalarTypeDefs = [
@@ -15,6 +16,7 @@ export default mergeTypeDefs(
     ...scalarTypeDefs,
     admin,
     pageInfo,
+    project,
     user
   ]
 )

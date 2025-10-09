@@ -38,7 +38,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode facets if no facets exist', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       scienceKeywordFacets: []
     }
@@ -47,7 +49,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('encodes scienceKeywordFacets correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       scienceKeywordFacets: [{
         topic: 'topic1',

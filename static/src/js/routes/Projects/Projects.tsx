@@ -1,4 +1,5 @@
 import React from 'react'
+// @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 import { Navigate, useLocation } from 'react-router-dom'
 
@@ -15,12 +16,19 @@ const { edscHost } = getEnvironmentConfig()
 */
 const Projects = () => {
   const location = useLocation()
-  const { search } = location
+  const { search = '' } = location
 
-  // If there are query parameters then redirect to /project keeping the parameters
-  // const searchParams = new URLSearchParams(window.location.search)
-  if (search) {
+  // If there is a project collection in the search params then redirect to /project keeping the parameters
+  const searchParams = new URLSearchParams(search)
+  const projectCollection = searchParams.get('p')?.split('!')[1]
+  if (projectCollection) {
     return <Navigate to={`/project${search}`} replace />
+  }
+
+  // If there is a search parameter that doesn't include the `p` parameter, then redirect to /projects
+  // without including the search params
+  if (search) {
+    return <Navigate to="/projects" replace />
   }
 
   return (

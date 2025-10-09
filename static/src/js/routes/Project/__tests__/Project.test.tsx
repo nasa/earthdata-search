@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { screen, waitFor } from '@testing-library/react'
+// @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'

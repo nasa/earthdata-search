@@ -29,7 +29,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode the value if there are no applied feature facets', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       featureFacets: {
         availableInEarthdataCloud: false,
@@ -43,7 +45,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('encodes featureFacets correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       featureFacets: {
         availableInEarthdataCloud: true,

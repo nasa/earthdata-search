@@ -50,8 +50,8 @@ const useEdscStore = create<EdscStore>()(
       }),
       {
         name: 'edsc-store',
-        // Enable the devtools in production environments
-        enabled: true
+        // Enable the devtools in non-test environments
+        enabled: process.env.NODE_ENV !== 'test'
       }
     )
   )

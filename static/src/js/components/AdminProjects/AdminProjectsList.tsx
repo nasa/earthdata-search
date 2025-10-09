@@ -28,7 +28,7 @@ import ADMIN_PROJECTS from '../../operations/queries/adminProjects'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
 
-import { type AdminProject } from '../../types/sharedTypes'
+import { type Project } from '../../types/sharedTypes'
 
 import 'rc-pagination/assets/index.css'
 import './AdminProjectsList.scss'
@@ -39,7 +39,7 @@ import './AdminProjectsList.scss'
 interface AdminProjectsQueryData {
   adminProjects: {
     /** Array of admin projects returned from the API */
-    adminProjects: AdminProject[]
+    adminProjects: Project[]
     /** Total count of projects matching the query */
     count: number
   }
@@ -232,7 +232,7 @@ const AdminProjectsList = () => {
               </thead>
               <tbody>
                 {
-                  adminProjects.map((project: AdminProject) => {
+                  adminProjects.map((project: Project) => {
                     const {
                       id, obfuscatedId, createdAt, user
                     } = project

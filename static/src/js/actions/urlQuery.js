@@ -1,5 +1,6 @@
 import { merge } from 'lodash-es'
 import { parse, stringify } from 'qs'
+import { gql } from '@apollo/client'
 
 import actions from './index'
 
@@ -13,13 +14,17 @@ import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironme
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
-import ProjectRequest from '../util/request/projectRequest'
 import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
+
 import useEdscStore from '../zustand/useEdscStore'
+
 import routerHelper from '../router/router'
+
+import createApolloClient from '../providers/getApolloClient'
+import GET_PROJECT from '../operations/queries/getProject'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -114,7 +119,10 @@ export const updateStore = ({
   }
 }
 
-export const changePath = (path = '') => async (dispatch) => {
+export const changePath = (path = '') => async (dispatch, getState) => {
+  const state = getState()
+  const { authToken } = state
+
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
@@ -124,18 +132,23 @@ export const changePath = (path = '') => async (dispatch) => {
 
   // If query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
-    const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
-
     const { projectId } = parse(queryString)
 
     try {
-      const projectResponse = await requestObject.fetch(projectId)
+      const apolloClient = createApolloClient(authToken)
+      const { data } = await apolloClient.query({
+        query: gql(GET_PROJECT),
+        variables: {
+          obfuscatedId: projectId
+        }
+      })
 
-      const { data } = projectResponse
+      const { project } = data
       const {
         name,
+        obfuscatedId: newProjectId,
         path: projectPath
-      } = data
+      } = project
 
       // In the event that the user has the earthdata environment set to the deployed environment
       // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
@@ -153,7 +166,7 @@ export const changePath = (path = '') => async (dispatch) => {
       const { savedProject } = zustandState
       const { setProject } = savedProject
       setProject({
-        id: projectId,
+        id: newProjectId,
         name,
         path: projectPath
       })
@@ -161,12 +174,13 @@ export const changePath = (path = '') => async (dispatch) => {
       decodedParams = decodeUrlParams(stringify(paramsObj))
       await dispatch(actions.updateStore(decodedParams))
     } catch (error) {
+      const { message } = error
+
       dispatch(actions.handleError({
-        error,
+        error: message,
         action: 'changePath',
         resource: 'project',
-        verb: 'updating',
-        requestObject
+        verb: 'updating'
       }))
     }
   } else {
@@ -277,82 +291,40 @@ const updateUrl = ({ options, oldPathname, newPathname }) => () => {
  * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
  * changeUrl({ pathname: '/a-new-url' })
  */
-export const changeUrl = (options) => (dispatch, getState) => {
-  const state = getState()
-
-  const zustandState = useEdscStore.getState()
-  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-  const { savedProject } = zustandState
-  const { project, setProject } = savedProject
-
-  const {
-    authToken
-  } = state
-
-  let newOptions = options
+export const changeUrl = (options) => (dispatch) => {
   const { location } = routerHelper.router.state
   const { pathname: oldPathname } = location
 
   let newPathname
+
   if (typeof options === 'string') {
     [newPathname] = options.split('?')
+    const newSearch = options.split('?')[1] || ''
 
-    const { id: projectId, name, path } = project
-    if (projectId || options.length > 2000) {
-      // Make sure the path has changed, and is not a path where we don't use params
-      if (path !== newOptions && !isPath(newOptions, urlPathsWithoutUrlParams)) {
-        const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
+    // Prevent loading from the urls that don't use URL params.
+    const stripParameters = (
+      isPath(newPathname, urlPathsWithoutUrlParams)
+      || isSavedProjectsPage({
+        pathname: newPathname,
+        search: newSearch
+      })
+    )
 
-        const projectResponse = requestObject.save({
-          authToken,
-          name,
-          path: newOptions,
-          projectId
-        })
-          .then((response) => {
-            const { data } = response
-            const {
-              project_id: newProjectId,
-              path: projectPath
-            } = data
-
-            newOptions = `${projectPath.split('?')[0]}?projectId=${newProjectId}`
-
-            if (projectId !== newProjectId) {
-              routerHelper.router.navigate(newOptions, { replace: true })
-            }
-
-            // Save name, path and projectId into store
-            setProject({
-              id: newProjectId,
-              name,
-              path: projectPath
-            })
-          })
-          .catch((error) => {
-            dispatch(actions.handleError({
-              error,
-              action: 'changeUrl',
-              resource: 'project',
-              verb: 'updating',
-              requestObject
-            }))
-          })
-
-        return projectResponse
-      }
-    } else {
-      dispatch(updateUrl({
-        options: newOptions,
-        oldPathname,
-        newPathname
-      }))
+    let newOptions = options
+    if (stripParameters) {
+      newOptions = newPathname
     }
+
+    dispatch(updateUrl({
+      options: newOptions,
+      oldPathname,
+      newPathname
+    }))
   } else {
     ({ pathname: newPathname } = options)
 
     dispatch(updateUrl({
-      options: newOptions,
+      options,
       oldPathname,
       newPathname
     }))

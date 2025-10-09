@@ -123,18 +123,16 @@ test.describe('page titles', () => {
       test.beforeEach(async ({ page }) => {
         const authHeaders = getAuthHeaders()
 
-        await page.route('**/projects', (route, request) => {
-          if (request.resourceType() === 'document') {
-            route.continue()
-
-            return
-          }
-
-          route.fulfill({
+        await page.route('**/graphql', async (route) => {
+          await route.fulfill({
             json: {
-              project_id: '1234',
-              name: 'Untitled Project',
-              path: '/projects'
+              data: {
+                createProject: {
+                  name: 'Untitled Project',
+                  obfuscatedId: '1234',
+                  path: '/projects'
+                }
+              }
             }
           })
         })

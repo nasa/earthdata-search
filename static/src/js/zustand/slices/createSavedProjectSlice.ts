@@ -1,15 +1,19 @@
+import { gql } from '@apollo/client'
+
 import routerHelper, { type Router } from '../../router/router'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { SavedProjectSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error Types are not defined for this module
-import ProjectRequest from '../../util/request/projectRequest'
+import getApolloClient from '../../providers/getApolloClient'
 
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error Types are not defined for this module
 import actions from '../../actions'
+
+import CREATE_PROJECT from '../../operations/mutations/createProject'
+import UPDATE_PROJECT from '../../operations/mutations/updateProject'
 
 const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get) => ({
   savedProject: {
@@ -25,7 +29,7 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
       })
     },
 
-    setProjectName: (name) => {
+    setProjectName: async (name) => {
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState
@@ -44,8 +48,6 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         id: savedProjectId
       } = previousProject
 
-      const earthdataEnvironment = getEarthdataEnvironment(currentState)
-
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname, search } = location
 
@@ -53,42 +55,51 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
       let realPath = path
       if (!path) realPath = pathname + search
 
-      const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
+      const apolloClient = getApolloClient(authToken)
 
-      requestObject.save({
-        authToken,
-        name,
-        path: realPath,
-        projectId: savedProjectId
-      })
-        .then((responseObject: unknown) => {
-          const { data } = responseObject as { data: { project_id: string; path: string } }
-          const {
-            project_id: projectId,
-            path: pathData
-          } = data
+      let mutation = CREATE_PROJECT
+      let mutationKey = 'createProject'
+      if (savedProjectId) {
+        mutation = UPDATE_PROJECT
+        mutationKey = 'updateProject'
+      }
 
-          get().savedProject.setProject({
-            id: projectId,
+      try {
+        const { data } = await apolloClient.mutate({
+          mutation: gql(mutation),
+          variables: {
             name,
-            path: pathData
-          })
-
-          // If the URL didn't contain a projectId before, change the URL to a project URL
-          if (search.indexOf('?projectId=') === -1) {
-            const router = routerHelper.router as Router
-            router.navigate(`${pathname}?projectId=${projectId}`, { replace: true })
+            path: realPath,
+            obfuscatedId: savedProjectId
           }
         })
-        .catch((error: Error) => {
-          reduxDispatch(actions.handleError({
-            error,
-            action: 'updateProjectName',
-            resource: 'project name',
-            verb: 'updating',
-            requestObject
-          }))
+
+        const { [mutationKey]: projectResponse } = data
+        const { obfuscatedId } = projectResponse
+
+        get().savedProject.setProject({
+          id: obfuscatedId,
+          name,
+          path: realPath
         })
+
+        // If the URL didn't contain a projectId before, change the URL to a project URL
+        if (search.indexOf('?projectId=') === -1) {
+          const router = routerHelper.router as Router
+          router.navigate(`${pathname}?projectId=${obfuscatedId}`, { replace: true })
+        }
+      } catch (error) {
+        const { message } = error as Error
+
+        if (message) {
+          reduxDispatch(actions.handleError({
+            error: message,
+            action: 'setProjectName',
+            resource: 'project name',
+            verb: 'updating'
+          }))
+        }
+      }
     },
 
     getProject: () => get().project

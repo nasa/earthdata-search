@@ -5,7 +5,7 @@ import { isFunction } from 'lodash-es'
 
 import { Copy } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import Button from '../Button/Button'
-import { addToast } from '../../util/addToast'
+import addToast from '../../util/addToast'
 
 import './CopyableText.scss'
 

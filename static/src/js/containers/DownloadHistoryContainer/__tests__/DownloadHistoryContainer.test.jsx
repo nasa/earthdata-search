@@ -4,7 +4,7 @@ import nock from 'nock'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { addToast } from '../../../util/addToast'
+import addToast from '../../../util/addToast'
 import actions from '../../../actions'
 import {
   DownloadHistoryContainer,
@@ -36,7 +36,8 @@ jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
 }))
 
 jest.mock('../../../util/addToast', () => ({
-  addToast: jest.fn()
+  __esModule: true,
+  default: jest.fn()
 }))
 
 jest.mock('../../../actions', () => ({

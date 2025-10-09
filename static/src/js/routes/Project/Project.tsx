@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+// @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
 // @ts-expect-error This file does not have types

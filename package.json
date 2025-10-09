@@ -82,7 +82,6 @@
     "@types/proj4": "^2.5.6",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
-    "@types/react-helmet": "^6.1.11",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-mock-store": "^1.5.0",
     "@welldone-software/why-did-you-render": "^7.0.1",

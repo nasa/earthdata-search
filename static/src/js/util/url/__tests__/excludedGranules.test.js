@@ -140,7 +140,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode collections if no collections exist', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: 'collectionId'
     }
@@ -150,7 +152,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('does not encode collections if no focusedCollection exist', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: null
     }
@@ -162,7 +166,9 @@ describe('url#encodeUrlQuery', () => {
     describe('CMR excludedGranules', () => {
       test('does not encode excludedGranules if no excludedGranules exist', () => {
         const props = {
-          hasGranulesOrCwic: true,
+          collectionsQuery: {
+            hasGranulesOrCwic: true
+          },
           pathname: '/path/here',
           focusedCollection: 'collectionId'
         }
@@ -177,10 +183,10 @@ describe('url#encodeUrlQuery', () => {
               isOpenSearch: false
             }
           },
-          hasGranulesOrCwic: true,
           pathname: '/path/here',
           focusedCollection: 'collectionId',
           collectionsQuery: {
+            hasGranulesOrCwic: true,
             byId: {
               collectionId: {
                 granules: {
@@ -198,7 +204,9 @@ describe('url#encodeUrlQuery', () => {
     describe('CWIC excludedGranules', () => {
       test('does not encode excludedGranules if no excludedGranules exist', () => {
         const props = {
-          hasGranulesOrCwic: true,
+          collectionsQuery: {
+            hasGranulesOrCwic: true
+          },
           pathname: '/path/here',
           collections: {
             allIds: ['collectionId'],
@@ -224,10 +232,10 @@ describe('url#encodeUrlQuery', () => {
               isOpenSearch: true
             }
           },
-          hasGranulesOrCwic: true,
           pathname: '/path/here',
           focusedCollection: 'collectionId',
           collectionsQuery: {
+            hasGranulesOrCwic: true,
             byId: {
               collectionId: {
                 granules: {
@@ -251,13 +259,13 @@ describe('url#encodeUrlQuery', () => {
             isOpenSearch: false
           }
         },
-        hasGranulesOrCwic: true,
         pathname: '/path/here',
         focusedCollection: null,
         projectCollections: {
           allIds: ['collectionId']
         },
         collectionsQuery: {
+          hasGranulesOrCwic: true,
           byId: {
             collectionId: {
               granules: {
@@ -280,13 +288,13 @@ describe('url#encodeUrlQuery', () => {
             isOpenSearch: false
           }
         },
-        hasGranulesOrCwic: true,
         pathname: '/path/here',
         focusedCollection: 'collectionId',
         projectCollections: {
           allIds: ['collectionId']
         },
         collectionsQuery: {
+          hasGranulesOrCwic: true,
           byId: {
             collectionId: {
               granules: {

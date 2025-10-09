@@ -1,4 +1,4 @@
-import { addToast } from '../addToast'
+import addToast from '../addToast'
 
 describe('addToast', () => {
   beforeEach(() => {

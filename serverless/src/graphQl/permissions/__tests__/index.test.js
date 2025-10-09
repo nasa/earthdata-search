@@ -1,4 +1,5 @@
 import {
+  allow,
   and,
   deny,
   shield
@@ -6,6 +7,7 @@ import {
 
 import isValidUser from '../rules/isValidUser'
 import isAdminUser from '../rules/isAdminUser'
+import userOwnsProject from '../rules/userOwnsProject'
 
 import buildPermissions from '../index'
 
@@ -42,8 +44,25 @@ describe('permissions', () => {
           adminRetrievals: and(
             isValidUser,
             isAdminUser
+          ),
+          project: allow,
+          projects: isValidUser
+        },
+        Mutation: {
+          '*': deny,
+          createProject: isValidUser,
+          deleteProject: and(
+            isValidUser,
+            userOwnsProject
+          ),
+          updateProject: and(
+            isValidUser,
+            userOwnsProject
           )
         }
+      },
+      {
+        allowExternalErrors: false
       }
     )
   })

@@ -333,25 +333,63 @@ export const decodeUrlParams = (paramString) => {
  * @return {String} URL encoded parameter string
  */
 export const encodeUrlQuery = (props) => {
+  // All of the collections query props are contained within collectionsQuery, but the logic for encoding
+  // the URL params is based on the individual props. So, pull those out and build the 'allProps' object
+  // to encode the URL
+  const { collectionsQuery: collectionsQueryProps = {} } = props
+  const {
+    spatial = {},
+    hasGranulesOrCwic,
+    keyword: keywordSearch,
+    onlyEosdisCollections,
+    overrideTemporal: overrideTemporalSearch,
+    sortKey,
+    tagKey,
+    temporal: temporalSearch
+  } = collectionsQueryProps
+  const {
+    boundingBox: boundingBoxSearch,
+    circle: circleSearch,
+    line: lineSearch,
+    point: pointSearch,
+    polygon: polygonSearch
+  } = spatial
+
+  const allProps = {
+    ...props,
+    boundingBoxSearch,
+    circleSearch,
+    collectionSortKey: sortKey,
+    hasGranulesOrCwic,
+    keywordSearch,
+    lineSearch,
+    onlyEosdisCollections,
+    overrideTemporalSearch,
+    pointSearch,
+    polygonSearch,
+    tagKey,
+    temporalSearch
+  }
+
   const query = {}
 
   Object.keys(urlDefs).forEach((longKey) => {
     const { shortKey } = urlDefs[longKey]
-    const value = urlDefs[longKey].encode(props[longKey])
+    const value = urlDefs[longKey].encode(allProps[longKey])
 
     query[shortKey] = value
   })
 
-  const mapParams = encodeMap(props.mapView, props.mapPreferences)
-  const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
-  const platformQuery = encodePlatforms(props.platformFacets)
-  const collectionsQuery = encodeCollections(props)
-  const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
-  const selectedRegion = encodeselectedRegion(props.selectedRegion)
-  const portalQuery = encodePortal(props.portalId)
+  const mapParams = encodeMap(allProps.mapView, allProps.mapPreferences)
+  const scienceKeywordQuery = encodeScienceKeywords(allProps.scienceKeywordFacets)
+  const platformQuery = encodePlatforms(allProps.platformFacets)
+  const collectionsQuery = encodeCollections(allProps)
+  const timelineQuery = encodeTimeline(allProps.timelineQuery, allProps.pathname)
+  const selectedRegion = encodeselectedRegion(allProps.selectedRegion)
+  const portalQuery = encodePortal(allProps.portalId)
   const collectionSortKey = encodeCollectionSortKey(
-    props.collectionSortKey,
-    props.collectionSortPreference
+    allProps.collectionSortKey,
+    allProps.collectionSortPreference
   )
 
   const encodedQuery = {
@@ -369,7 +407,7 @@ export const encodeUrlQuery = (props) => {
   const paramString = stringify(encodedQuery)
 
   // Return the full pathname + paramString
-  const { pathname } = props
+  const { pathname } = allProps
   const fullPath = pathname + paramString
 
   return fullPath
@@ -388,6 +426,7 @@ export const urlPathsWithoutUrlParams = [
   /^\/auth_callback/,
   /^\/contact-info/,
   /^\/downloads/,
+  /^\/preferences/,
   /^\/subscriptions/
 ]
 

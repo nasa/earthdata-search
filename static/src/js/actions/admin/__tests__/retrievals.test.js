@@ -2,16 +2,20 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 
-import * as addToast from '../../../util/addToast'
 import actions from '../../index'
 import { requeueOrder } from '../retrievals'
+
+import addToast from '../../../util/addToast'
+
+jest.mock('../../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
 const mockStore = configureMockStore([thunk])
 
 describe('requeueOrder', () => {
   test('sends request to requeue order', async () => {
-    const addToastMock = jest.spyOn(addToast, 'addToast')
-
     const orderId = 1234
 
     nock(/localhost/)
@@ -24,8 +28,8 @@ describe('requeueOrder', () => {
 
     await store.dispatch(requeueOrder(orderId))
 
-    expect(addToastMock).toHaveBeenCalledTimes(1)
-    expect(addToastMock).toHaveBeenCalledWith(
+    expect(addToast).toHaveBeenCalledTimes(1)
+    expect(addToast).toHaveBeenCalledWith(
       'Order Requeued for processing',
       {
         appearance: 'success',

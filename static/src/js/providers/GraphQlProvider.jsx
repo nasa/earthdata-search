@@ -1,18 +1,10 @@
 import React, { useMemo } from 'react'
-import {
-  ApolloClient,
-  ApolloLink,
-  ApolloProvider,
-  createHttpLink,
-  InMemoryCache
-} from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 
-import { setContext } from '@apollo/client/link/context'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { getClientId } from '../../../../sharedUtils/getClientId'
-import { getEnvironmentConfig } from '../../../../sharedUtils/config'
+import getApolloClient from './getApolloClient'
 
 /**
  * GraphQL Provider component that sets up ApolloClient
@@ -21,29 +13,11 @@ import { getEnvironmentConfig } from '../../../../sharedUtils/config'
  * @param {React.ReactNode} props.children The child components to be rendered within the provider
  * @returns {React.ReactNode} The ApolloProvider component with the configured client
 */
-const GraphQlProvider = ({ authToken, children }) => {
-  const cache = new InMemoryCache()
-
-  const { apiHost } = getEnvironmentConfig()
-
-  const httpLink = createHttpLink({
-    uri: `${apiHost}/graphql`
-  })
-
-  const client = useMemo(() => {
-    const authLink = setContext((_, { headers }) => ({
-      headers: {
-        ...headers,
-        'Client-Id': getClientId().client,
-        Authorization: `Bearer ${authToken}`
-      }
-    }))
-
-    return new ApolloClient({
-      cache,
-      link: ApolloLink.from([authLink, httpLink])
-    })
-  }, [authToken])
+export const GraphQlProvider = ({ authToken, children }) => {
+  const client = useMemo(
+    () => getApolloClient(authToken),
+    [authToken]
+  )
 
   return (
     <ApolloProvider client={client}>

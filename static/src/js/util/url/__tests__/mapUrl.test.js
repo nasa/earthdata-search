@@ -178,7 +178,9 @@ describe('decodes zoom correctly', () => {
 describe('url#encodeUrlQuery', () => {
   describe('map', () => {
     const defaultProps = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       mapView: {
         base: {

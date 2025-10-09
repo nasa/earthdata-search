@@ -1,4 +1,3 @@
-import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
@@ -13,6 +12,22 @@ import { initialState as initialQueryState } from '../../zustand/slices/createQu
 
 import routerHelper from '../../router/router'
 import { initialGranuleQuery } from '../../util/url/collectionsEncoders'
+import getApolloClient from '../../providers/getApolloClient'
+
+jest.mock('../../providers/getApolloClient', () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    query: jest.fn().mockResolvedValue({
+      data: {
+        project: {
+          obfuscatedId: '1',
+          name: null,
+          path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
+        }
+      }
+    })
+  })
+}))
 
 const mockStore = configureMockStore([thunk])
 
@@ -603,13 +618,6 @@ describe('updateStore', () => {
 
 describe('changePath', () => {
   test('retrieves path from database if there is a projectId', async () => {
-    nock(/localhost/)
-      .get(/projects/)
-      .reply(200, {
-        name: null,
-        path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
-      })
-
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
 
     useEdscStore.setState({
@@ -777,9 +785,11 @@ describe('changePath', () => {
   })
 
   test('handles an error fetching the project', async () => {
-    nock(/localhost/)
-      .get(/projects/)
-      .reply(500, { mock: 'error' })
+    getApolloClient.mockReturnValue({
+      query: jest.fn().mockImplementationOnce(() => {
+        throw new Error('Request failed with status code 500')
+      })
+    })
 
     const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
 
@@ -813,12 +823,12 @@ describe('changePath', () => {
       expect(timeline.getTimeline).toHaveBeenCalledWith()
 
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
+      expect(handleErrorMock).toHaveBeenCalledWith({
         action: 'changePath',
-        error: new Error('Request failed with status code 500'),
+        error: 'Request failed with status code 500',
         resource: 'project',
         verb: 'updating'
-      }))
+      })
     })
   })
 
@@ -1065,185 +1075,35 @@ describe('changePath', () => {
 
 describe('changeUrl', () => {
   describe('when called with a string', () => {
-    describe('when called without a projectId', () => {
-      beforeEach(() => {
-        routerHelper.router.state = {
-          location: {
-            pathname: '/search',
-            search: '?p=C00001-EDSC'
-          }
+    beforeEach(() => {
+      routerHelper.router.state = {
+        location: {
+          pathname: '/search',
+          search: '?p=C00001-EDSC'
         }
-      })
-
-      test('calls replace when the pathname has not changed', () => {
-        const newPath = '/search?p=C00001-EDSC'
-
-        const store = mockStore()
-
-        store.dispatch(urlQuery.changeUrl(newPath))
-
-        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-        expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath, { replace: true })
-      })
-
-      test('calls push when the pathname has changed', () => {
-        const newPath = '/search/granules?p=C00001-EDSC'
-
-        const store = mockStore()
-
-        store.dispatch(urlQuery.changeUrl(newPath))
-
-        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-        expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath)
-      })
+      }
     })
 
-    describe('when called with a projectId', () => {
-      beforeEach(() => {
-        routerHelper.router.state = {
-          location: {
-            pathname: '/search',
-            search: '?projectId=1'
-          }
-        }
-      })
+    test('calls replace when the pathname has not changed', () => {
+      const newPath = '/search?p=C00001-EDSC'
 
-      test('updates the stored path', async () => {
-        nock(/localhost/)
-          .post(/projects/)
-          .reply(200, {
-            project_id: 1,
-            path: '/search?p=C00001-EDSC&ff=Map%20Imagery'
-          })
+      const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          /* eslint-disable no-param-reassign */
-          state.savedProject.setProject = jest.fn()
-          state.savedProject.project = {
-            id: '1',
-            path: '/search?p=C00001-EDSC'
-          }
-          /* eslint-enable no-param-reassign */
-        })
+      store.dispatch(urlQuery.changeUrl(newPath))
 
-        const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath, { replace: true })
+    })
 
-        const store = mockStore()
+    test('calls push when the pathname has changed', () => {
+      const newPath = '/search/granules?p=C00001-EDSC'
 
-        await store.dispatch(urlQuery.changeUrl(newPath))
+      const store = mockStore()
 
-        const updatedStore = useEdscStore.getState()
-        const { savedProject } = updatedStore
+      store.dispatch(urlQuery.changeUrl(newPath))
 
-        expect(savedProject.setProject).toHaveBeenCalledTimes(1)
-        expect(savedProject.setProject).toHaveBeenCalledWith({
-          id: 1,
-          path: '/search?p=C00001-EDSC&ff=Map%20Imagery'
-        })
-      })
-
-      test('updates the url if a new projectId was created', async () => {
-        nock(/localhost/)
-          .post(/projects/)
-          .reply(200, {
-            project_id: 2,
-            path: '/search?p=C00001-EDSC'
-          })
-
-        useEdscStore.setState((state) => {
-          /* eslint-disable no-param-reassign */
-          state.savedProject.setProject = jest.fn()
-          state.savedProject.project = {
-            id: '1',
-            path: '/search?p=C00001-EDSC'
-          }
-          /* eslint-enable no-param-reassign */
-        })
-
-        const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
-
-        const store = mockStore()
-
-        await store.dispatch(urlQuery.changeUrl(newPath))
-
-        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-        expect(routerHelper.router.navigate).toHaveBeenCalledWith('/search?projectId=2', { replace: true })
-
-        const updatedStore = useEdscStore.getState()
-        const { savedProject } = updatedStore
-
-        expect(savedProject.setProject).toHaveBeenCalledTimes(1)
-        expect(savedProject.setProject).toHaveBeenCalledWith({
-          id: 2,
-          path: '/search?p=C00001-EDSC'
-        })
-      })
-
-      test('when the path has not changed', () => {
-        useEdscStore.setState((state) => {
-          /* eslint-disable no-param-reassign */
-          state.savedProject.setProject = jest.fn()
-          state.savedProject.project = {
-            id: '1',
-            path: '/search?p=C00001-EDSC'
-          }
-          /* eslint-enable no-param-reassign */
-        })
-
-        const newPath = '/search?p=C00001-EDSC'
-
-        const store = mockStore()
-
-        store.dispatch(urlQuery.changeUrl(newPath))
-
-        const storeActions = store.getActions()
-        expect(storeActions.length).toBe(0)
-
-        const updatedStore = useEdscStore.getState()
-        const { savedProject } = updatedStore
-
-        expect(savedProject.setProject).toHaveBeenCalledTimes(0)
-      })
-
-      test('handles an error updating the stored path', async () => {
-        nock(/localhost/)
-          .post(/projects/)
-          .reply(500, { mock: 'error' })
-
-        useEdscStore.setState((state) => {
-          /* eslint-disable no-param-reassign */
-          state.savedProject.setProject = jest.fn()
-          state.savedProject.project = {
-            id: '1',
-            path: '/search?p=C00001-EDSC'
-          }
-          /* eslint-enable no-param-reassign */
-        })
-
-        const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
-
-        const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
-
-        const store = mockStore()
-
-        await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
-          const storeActions = store.getActions()
-          expect(storeActions.length).toEqual(0)
-        })
-
-        const updatedStore = useEdscStore.getState()
-        const { savedProject } = updatedStore
-
-        expect(savedProject.setProject).toHaveBeenCalledTimes(0)
-
-        expect(handleErrorMock).toHaveBeenCalledTimes(1)
-        expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
-          action: 'changeUrl',
-          error: new Error('Request failed with status code 500'),
-          resource: 'project',
-          verb: 'updating'
-        }))
-      })
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath)
     })
   })
 

@@ -10,8 +10,13 @@ import {
   updateNotificationLevel
 } from '../contactInfo'
 
-import * as addToast from '../../util/addToast'
+import addToast from '../../util/addToast'
 import { testJwtToken } from './mocks'
+
+jest.mock('../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
 const mockStore = configureMockStore([thunk])
 
@@ -82,8 +87,6 @@ describe('fetchContactInfo', () => {
 
 describe('updateNotificationLevel', () => {
   test('calls updateContactInfo on success', async () => {
-    const addToastMock = jest.spyOn(addToast, 'addToast')
-
     nock(/localhost/)
       .post(/contact_info/)
       .reply(200, {
@@ -104,10 +107,11 @@ describe('updateNotificationLevel', () => {
         }
       })
 
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Notification Preference Level updated')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Notification Preference Level updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
     })
   })
 

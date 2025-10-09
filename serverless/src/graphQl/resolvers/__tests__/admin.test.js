@@ -3,6 +3,8 @@ import { gql } from '@apollo/client'
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
 import ADMIN_RETRIEVAL from '../../../../../static/src/js/operations/queries/adminRetrieval'
 import ADMIN_RETRIEVALS from '../../../../../static/src/js/operations/queries/adminRetrievals'
+import ADMIN_PROJECT from '../../../../../static/src/js/operations/queries/adminProject'
+import ADMIN_PROJECTS from '../../../../../static/src/js/operations/queries/adminProjects'
 import setupServer from './__mocks__/setupServer'
 
 describe('Admin Resolver', () => {
@@ -163,6 +165,405 @@ describe('Admin Resolver', () => {
         })
 
         expect(errors[0].message).toEqual(errorMessage)
+      })
+    })
+
+    describe('adminProject', () => {
+      test('returns results with all fields', async () => {
+        const databaseClient = {
+          getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+            id: 1,
+            name: 'Test Project',
+            path: '/search?ff=Test%20Project',
+            user_id: 1,
+            updated_at: '2023-06-27T20:22:47.400Z',
+            created_at: '2023-06-27T20:22:47.400Z'
+          }),
+          getUsersById: jest.fn().mockResolvedValue([
+            {
+              id: 1,
+              site_preferences: {},
+              urs_id: 'testuser',
+              urs_profile: {
+                sub: 'testuser'
+              },
+              updated_at: '2022-10-28T17:57:07.817Z',
+              created_at: '2022-10-28T17:57:07.817Z',
+              environment: 'prod'
+            }
+          ])
+        }
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: gql(ADMIN_PROJECT),
+          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledWith('test-obfuscated-id')
+        expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledTimes(1)
+
+        expect(data).toEqual({
+          adminProject: {
+            createdAt: '2023-06-27T20:22:47.400Z',
+            id: 1,
+            name: 'Test Project',
+            obfuscatedId: '4517239960',
+            path: '/search?ff=Test%20Project',
+            updatedAt: '2023-06-27T20:22:47.400Z',
+            user: {
+              id: 1,
+              ursId: 'testuser'
+            }
+          }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        const databaseClient = {
+          getProjectByObfuscatedId: jest.fn().mockImplementation(() => {
+            throw new Error('Something failed')
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: gql(ADMIN_PROJECT),
+          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        const errorMessage = 'Something failed'
+
+        expect(data).toEqual({
+          adminProject: null
+        })
+
+        expect(errors[0].message).toEqual(errorMessage)
+      })
+    })
+
+    describe('adminProjects', () => {
+      test('returns results with all fields', async () => {
+        const databaseClient = {
+          getProjects: jest.fn().mockResolvedValue([
+            {
+              id: 1,
+              user_id: 1,
+              total: 1,
+              name: 'Test Project',
+              path: '/search?ff=Test%20Project',
+              updated_at: '2023-06-27T20:22:47.400Z',
+              created_at: '2023-06-27T20:22:47.400Z'
+            }
+          ]),
+          getUsersById: jest.fn().mockResolvedValue([
+            {
+              id: 1,
+              site_preferences: {},
+              urs_id: 'testuser',
+              urs_profile: {
+                sub: 'testuser'
+              },
+              updated_at: '2022-10-28T17:57:07.817Z',
+              created_at: '2022-10-28T17:57:07.817Z',
+              environment: 'prod'
+            }
+          ])
+        }
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: gql(ADMIN_PROJECTS),
+          variables: {
+            params: {
+              limit: 2,
+              offset: 0
+            }
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.getProjects).toHaveBeenCalledWith({
+          limit: 2,
+          offset: 0
+        })
+
+        expect(databaseClient.getProjects).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getUsersById).toHaveBeenCalledWith([1])
+        expect(databaseClient.getUsersById).toHaveBeenCalledTimes(1)
+
+        expect(data).toEqual({
+          adminProjects: {
+            adminProjects: [{
+              createdAt: '2023-06-27T20:22:47.400Z',
+              id: 1,
+              name: 'Test Project',
+              obfuscatedId: '4517239960',
+              path: '/search?ff=Test%20Project',
+              updatedAt: '2023-06-27T20:22:47.400Z',
+              user: {
+                id: 1,
+                ursId: 'testuser'
+              }
+            }],
+            count: 1,
+            pageInfo: {
+              currentPage: 1,
+              hasNextPage: false,
+              hasPreviousPage: false,
+              pageCount: 1
+            }
+          }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        const databaseClient = {
+          getProjects: jest.fn().mockImplementation(() => {
+            throw new Error('Something failed')
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: gql(ADMIN_PROJECTS)
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        const errorMessage = 'Something failed'
+        expect(errors[0].message).toEqual(errorMessage)
+
+        expect(data).toEqual({
+          adminProjects: null
+        })
+      })
+
+      describe('when requesting retrievals from multiple users', () => {
+        test('batches requests for users and returns the expected results', async () => {
+          const databaseClient = {
+            getProjects: jest.fn().mockResolvedValue([
+              {
+                id: 1,
+                user_id: 1,
+                total: 2,
+                name: 'Test Project 1',
+                path: '/search?ff=Test%20Project%201',
+                updated_at: '2023-06-27T20:22:47.400Z',
+                created_at: '2023-06-27T20:22:47.400Z'
+              },
+              {
+                id: 2,
+                user_id: 2,
+                total: 2,
+                name: 'Test Project 2',
+                path: '/search?ff=Test%20Project%202',
+                updated_at: '2023-06-27T20:22:47.400Z',
+                created_at: '2023-06-27T20:22:47.400Z'
+              }
+            ]),
+            getUsersById: jest.fn().mockResolvedValue([
+              {
+                id: 1,
+                site_preferences: {},
+                urs_id: 'testuser',
+                urs_profile: {
+                  sub: 'testuser'
+                },
+                updated_at: '2022-10-28T17:57:07.817Z',
+                created_at: '2022-10-28T17:57:07.817Z',
+                environment: 'prod'
+              },
+              {
+                id: 2,
+                site_preferences: {},
+                urs_id: 'testuser2',
+                urs_profile: {
+                  sub: 'testuser2'
+                },
+                updated_at: '2022-10-28T17:57:07.817Z',
+                created_at: '2022-10-28T17:57:07.817Z',
+                environment: 'prod'
+              }
+            ])
+          }
+          const { contextValue, server } = setupServer({
+            databaseClient
+          })
+
+          const response = await server.executeOperation({
+            query: gql(ADMIN_PROJECTS),
+            variables: {
+              params: {
+                limit: 2,
+                offset: 0
+              }
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(databaseClient.getProjects).toHaveBeenCalledWith({
+            limit: 2,
+            offset: 0
+          })
+
+          expect(databaseClient.getProjects).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getUsersById).toHaveBeenCalledWith([1, 2])
+          expect(databaseClient.getUsersById).toHaveBeenCalledTimes(1)
+
+          expect(data).toEqual({
+            adminProjects: {
+              adminProjects: [{
+                createdAt: '2023-06-27T20:22:47.400Z',
+                id: 1,
+                name: 'Test Project 1',
+                obfuscatedId: '4517239960',
+                path: '/search?ff=Test%20Project%201',
+                updatedAt: '2023-06-27T20:22:47.400Z',
+                user: {
+                  id: 1,
+                  ursId: 'testuser'
+                }
+              }, {
+                createdAt: '2023-06-27T20:22:47.400Z',
+                id: 2,
+                name: 'Test Project 2',
+                obfuscatedId: '7023641925',
+                path: '/search?ff=Test%20Project%202',
+                updatedAt: '2023-06-27T20:22:47.400Z',
+                user: {
+                  id: 2,
+                  ursId: 'testuser2'
+                }
+              }],
+              count: 2,
+              pageInfo: {
+                currentPage: 1,
+                hasNextPage: false,
+                hasPreviousPage: false,
+                pageCount: 1
+              }
+            }
+          })
+        })
+      })
+
+      describe('when requesting multiple pages of results', () => {
+        test('returns paginated results', async () => {
+          const databaseClient = {
+            getProjects: jest.fn().mockResolvedValue([
+              {
+                id: 3,
+                user_id: 2,
+                total: 3,
+                name: 'Test Project 3',
+                path: '/search?ff=Test%20Project%203',
+                updated_at: '2023-06-27T20:22:47.400Z',
+                created_at: '2023-06-27T20:22:47.400Z'
+              }
+            ]),
+            getUsersById: jest.fn().mockResolvedValue([
+              {
+                id: 1,
+                site_preferences: {},
+                urs_id: 'testuser',
+                urs_profile: {
+                  sub: 'testuser'
+                },
+                updated_at: '2022-10-28T17:57:07.817Z',
+                created_at: '2022-10-28T17:57:07.817Z',
+                environment: 'prod'
+              },
+              {
+                id: 2,
+                site_preferences: {},
+                urs_id: 'testuser2',
+                urs_profile: {
+                  sub: 'testuser2'
+                },
+                updated_at: '2022-10-28T17:57:07.817Z',
+                created_at: '2022-10-28T17:57:07.817Z',
+                environment: 'prod'
+              }
+            ])
+          }
+          const { contextValue, server } = setupServer({
+            databaseClient
+          })
+
+          const response = await server.executeOperation({
+            query: gql(ADMIN_PROJECTS),
+            variables: {
+              params: {
+                limit: 2,
+                offset: 2
+              }
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(databaseClient.getProjects).toHaveBeenCalledWith({
+            limit: 2,
+            offset: 2
+          })
+
+          expect(databaseClient.getProjects).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getUsersById).toHaveBeenCalledWith([2])
+          expect(databaseClient.getUsersById).toHaveBeenCalledTimes(1)
+
+          expect(data).toEqual({
+            adminProjects: {
+              adminProjects: [{
+                createdAt: '2023-06-27T20:22:47.400Z',
+                id: 3,
+                name: 'Test Project 3',
+                obfuscatedId: '2057964173',
+                path: '/search?ff=Test%20Project%203',
+                updatedAt: '2023-06-27T20:22:47.400Z',
+                user: {
+                  id: 2,
+                  ursId: 'testuser2'
+                }
+              }],
+              count: 3,
+              pageInfo: {
+                currentPage: 2,
+                hasNextPage: false,
+                hasPreviousPage: true,
+                pageCount: 2
+              }
+            }
+          })
+        })
       })
     })
 

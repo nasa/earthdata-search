@@ -55,4 +55,16 @@ describe('getContext', () => {
       expect(user).toEqual(undefined)
     })
   })
+
+  describe('when there is no authorization header', () => {
+    test('should return the correct context with an undefined user', async () => {
+      const event = {
+        headers: {}
+      }
+
+      const { user } = await getContext({ event })
+
+      expect(user).toEqual(undefined)
+    })
+  })
 })
