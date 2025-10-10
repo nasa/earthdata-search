@@ -110,9 +110,12 @@ export const UrlQueryContainer = (props) => {
           path: projectPath
         } = savedProject
 
-        const shouldLoadParams = !isPath(nextPath, urlPathsWithoutUrlParams)
+        const shouldSaveProject = !isPath(nextPath, urlPathsWithoutUrlParams)
+          // We don't want projects to use the `/projects` path, but we don't want to add it to
+          // `urlPathsWithoutUrlParams` because that would affect other functionality
+          && !isPath(nextPath, [/^\/projects/])
 
-        if (projectId && shouldLoadParams) {
+        if (projectId && shouldSaveProject) {
           if (projectPath !== nextPath) {
             // If there is a projectId call updateProjectMutation
             updateProjectMutation({
@@ -145,7 +148,7 @@ export const UrlQueryContainer = (props) => {
 
             navigate(newUrl, { replace: true })
           }
-        } else if (nextPath.length > 2000 && shouldLoadParams) {
+        } else if (nextPath.length > 2000 && shouldSaveProject) {
           // If there is more than 2000 characters in the URL, call createProjectMutation
           createProjectMutation({
             variables: {

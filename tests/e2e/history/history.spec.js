@@ -141,7 +141,7 @@ test.describe('History', () => {
                 project: {
                   name: 'Test Project',
                   obfuscatedId: '9452013926',
-                  path: '/projects?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f&tl=1721757043!3!!&lat=0&long=0&zoom=2'
+                  path: '/project?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f'
                 }
               }
             }
@@ -155,7 +155,7 @@ test.describe('History', () => {
                 createProject: {
                   name: 'Test Project',
                   obfuscatedId: '9452013926',
-                  path: '/projects?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f&tl=1721757043!3!!&lat=0&long=0&zoom=2'
+                  path: '/project?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f'
                 }
               }
             }
