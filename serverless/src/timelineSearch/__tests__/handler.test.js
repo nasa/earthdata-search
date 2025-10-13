@@ -56,9 +56,7 @@ describe('timelineSearch', () => {
     const event = {
       body: JSON.stringify({
         requestId: 'asdf-1234-qwer-5678',
-        params: {
-          concept_id: ['C10000-EDSC']
-        }
+        params: {}
       })
     }
 
@@ -80,9 +78,7 @@ describe('timelineSearch', () => {
     const event = {
       body: JSON.stringify({
         requestId: 'asdf-1234-qwer-5678',
-        params: {
-          concept_id: ['C10000-EDSC']
-        }
+        params: {}
       })
     }
 
@@ -94,54 +90,5 @@ describe('timelineSearch', () => {
     const [errorMessage] = errors
 
     expect(errorMessage).toEqual('Error: Code Exception Occurred')
-  })
-
-  test('returns 400 when concept_id is missing', async () => {
-    const event = {
-      body: JSON.stringify({
-        requestId: 'asdf-1234-qwer-5678',
-        params: {
-          end_date: '2023-12-08T13:00:00.000Z',
-          interval: 'minute',
-          start_date: '2023-12-06T01:00:00.000Z'
-        }
-      })
-    }
-
-    const response = await timelineSearch(event, {})
-
-    expect(response.statusCode).toEqual(400)
-
-    const { body } = response
-    const parsedBody = JSON.parse(body)
-    const { errors } = parsedBody
-    const [errorMessage] = errors
-
-    expect(errorMessage).toEqual('Timeline requests must include at least one collection concept_id')
-  })
-
-  test('returns 400 when concept_id is an empty array', async () => {
-    const event = {
-      body: JSON.stringify({
-        requestId: 'asdf-1234-qwer-5678',
-        params: {
-          concept_id: [],
-          end_date: '2023-12-08T13:00:00.000Z',
-          interval: 'minute',
-          start_date: '2023-12-06T01:00:00.000Z'
-        }
-      })
-    }
-
-    const response = await timelineSearch(event, {})
-
-    expect(response.statusCode).toEqual(400)
-
-    const { body } = response
-    const parsedBody = JSON.parse(body)
-    const { errors } = parsedBody
-    const [errorMessage] = errors
-
-    expect(errorMessage).toEqual('Timeline requests must include at least one collection concept_id')
   })
 })

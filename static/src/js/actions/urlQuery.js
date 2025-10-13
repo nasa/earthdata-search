@@ -230,7 +230,7 @@ export const changePath = (path = '') => async (dispatch) => {
   }
 
   // Fetch collections in the project
-  const { focusedCollection, project = {} } = decodedParams || {}
+  const { project = {} } = decodedParams || {}
   const { collections: projectCollections = {} } = project
   const { allIds = [] } = projectCollections
 
@@ -247,12 +247,7 @@ export const changePath = (path = '') => async (dispatch) => {
   }
 
   const { getTimeline } = timeline
-
-  // Only fetch timeline data if there's a focused collection or project collections
-  // This prevents unbounded timeline requests to CMR without collection_id
-  if (focusedCollection || allIds.length > 0) {
-    getTimeline()
-  }
+  getTimeline()
 
   return null
 }

@@ -30,26 +30,11 @@ const timelineSearch = async (event) => {
 
   const { body, headers } = event
 
-  const { requestId, params: requestParams = {} } = JSON.parse(body)
+  const { requestId } = JSON.parse(body)
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
-
-  // Validate that concept_id is present and not empty
-  // This prevents unbounded timeline requests to CMR that search across all collections
-  const { concept_id: conceptId } = requestParams
-
-  if (!conceptId || (Array.isArray(conceptId) && conceptId.length === 0)) {
-    return {
-      isBase64Encoded: false,
-      statusCode: 400,
-      headers: defaultResponseHeaders,
-      body: JSON.stringify({
-        errors: ['Timeline requests must include at least one collection concept_id']
-      })
-    }
-  }
 
   try {
     return doSearchRequest({
