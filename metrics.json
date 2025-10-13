@@ -1641,5 +1641,123 @@
         }
       }
     }
+  },
+  "25.3.6": {
+    "version": "25.3.6-16",
+    "date": "2025-10-13",
+    "commit": "4860eaab467ce186741650c037dd654fe305eaf7",
+    "bundleSizeReport": {
+      "buildDetails": "\n> earthdata-search@1.0.0 build\n> vite build\n\nvite v6.3.6 building for production...\ntransforming...\n✓ 4140 modules transformed.\nrendering chunks...\ncomputing gzip size...\nstatic/dist/assets/logo-DBK9nthR.webp                                                      0.97 kB\nstatic/dist/assets/logo-CZz0VEVL.webp                                                      1.14 kB\nstatic/dist/assets/logo-Cycj4Zl7.webp                                                      1.33 kB\nstatic/dist/assets/logo-U_2b2F1P.webp                                                      1.37 kB\nstatic/dist/assets/logo-DrQyzv8O.webp                                                      1.54 kB\nstatic/dist/assets/logo-BtXPiD8D.webp                                                      1.81 kB\nstatic/dist/assets/logo-CBoC93bb.webp                                                      2.16 kB\nstatic/dist/assets/logo-DjzD1LMz.webp                                                      2.39 kB\nstatic/dist/assets/orange-bars-circle-D7AglAGM.webp                                        2.77 kB\nstatic/dist/assets/logo-mTUaHBfB.webp                                                      3.11 kB\nstatic/dist/assets/blue-bars-circle-BoIdEwIS.webp                                          3.67 kB\nstatic/dist/assets/logo-BRHnty9h.webp                                                      4.09 kB\nstatic/dist/assets/cryosphere-icon-DSWEvPIt.svg                                            4.11 kB │ gzip:   1.64 kB\nstatic/dist/assets/logo-m8iUFUyE.webp                                                      4.26 kB\nstatic/dist/assets/logo-BI7QOwpp.webp                                                      4.72 kB\nstatic/dist/assets/logo-CjKnSDvE.webp                                                      7.06 kB\nstatic/dist/index.html                                                                    13.22 kB │ gzip:   3.09 kB\nstatic/dist/assets/plate_carree_earth_scaled-RfqGhO39.png                                 18.14 kB\nstatic/dist/assets/tour-video-thumbnail-BxsZeqvq.webp                                     18.84 kB\nstatic/dist/assets/plate_carree_earth_scaled@2x-BIj0Wstc.png                              45.03 kB\nstatic/dist/assets/image-unavailable-CcXgOtQr.svg                                         52.20 kB │ gzip:  20.77 kB\nstatic/dist/assets/earthdata-search-og-image-Cs5RILJ1.webp                                92.82 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x-DdSR_KXb.webp      132.70 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x-CZbMhKXi.webp    224.17 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x-DFWWupvf.webp      381.18 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x-BwDp59vN.webp    464.37 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x-CeYlmMCD.webp    737.44 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x-tQ4uTIyn.webp  1,255.87 kB\nstatic/dist/assets/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x-BqbXRJmQ.webp  1,516.81 kB\nstatic/dist/assets/AdminRetrievalContainer-nNSujMnn.css                                    0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/AdminPreferencesMetrics-GkGryAtC.css                                    0.10 kB │ gzip:   0.11 kB\nstatic/dist/assets/ChunkedOrderModalContainer-DIli9vpQ.css                                 0.11 kB │ gzip:   0.10 kB\nstatic/dist/assets/TooManyPointsModalContainer-D8ufPyjz.css                                0.14 kB │ gzip:   0.12 kB\nstatic/dist/assets/AdminRetrievalsMetricsContainer-CT7bgXZt.css                            0.22 kB │ gzip:   0.13 kB\nstatic/dist/assets/AdminPage-D19229XC.css                                                  0.23 kB │ gzip:   0.16 kB\nstatic/dist/assets/CollapsePanel-4Z2ojUmq.css                                              0.24 kB │ gzip:   0.14 kB\nstatic/dist/assets/ContactInfo-C7Pr11wu.css                                                0.28 kB │ gzip:   0.18 kB\nstatic/dist/assets/DownloadHistoryContainer-D6NV7-Wg.css                                   0.42 kB │ gzip:   0.21 kB\nstatic/dist/assets/SubscriptionsQueryList---EobD-h.css                                     0.48 kB │ gzip:   0.24 kB\nstatic/dist/assets/ShapefileDropzoneContainer-BG7JE7Dj.css                                 0.53 kB │ gzip:   0.26 kB\nstatic/dist/assets/GranuleFiltersContainer-CfwvM6Mp.css                                    0.59 kB │ gzip:   0.27 kB\nstatic/dist/assets/ShapefileUploadModalContainer-CMzmPyoZ.css                              0.66 kB │ gzip:   0.32 kB\nstatic/dist/assets/Preferences-CNfW6AJC.css                                                0.67 kB │ gzip:   0.24 kB\nstatic/dist/assets/TextWindowActions-DJ3-SObR.css                                          0.85 kB │ gzip:   0.37 kB\nstatic/dist/assets/Skeleton-DtMOdDsM.css                                                   0.88 kB │ gzip:   0.34 kB\nstatic/dist/assets/getFilenameFromPath-BaShQZdF.css                                        0.93 kB │ gzip:   0.40 kB\nstatic/dist/assets/Subscriptions-whcrpTXZ.css                                              1.20 kB │ gzip:   0.38 kB\nstatic/dist/assets/CollectionDetailsHighlightsContainer-CHDYEfjF.css                       1.24 kB │ gzip:   0.44 kB\nstatic/dist/assets/GranuleResultsHighlights-BIY0O9bb.css                                   1.24 kB │ gzip:   0.41 kB\nstatic/dist/assets/EDSCModalContainer-D_JXXJBf.css                                         1.77 kB │ gzip:   0.59 kB\nstatic/dist/assets/AdminProjects-CZeT2VXI.css                                              1.98 kB │ gzip:   0.46 kB\nstatic/dist/assets/AdminRetrievals-DIdJ2AD-.css                                            2.02 kB │ gzip:   0.46 kB\nstatic/dist/assets/DeprecatedParameterModalContainer-nutVvbLm.css                          2.12 kB │ gzip:   0.93 kB\nstatic/dist/assets/EchoForm-VVUehB8V.css                                                   3.47 kB │ gzip:   1.06 kB\nstatic/dist/assets/SearchTour-AJompJPK.css                                                 4.82 kB │ gzip:   1.22 kB\nstatic/dist/assets/CollectionDetailsBody-D9OJSyWM.css                                      6.40 kB │ gzip:   1.43 kB\nstatic/dist/assets/index-BT4fduc3.css                                                      6.47 kB │ gzip:   1.24 kB\nstatic/dist/assets/OrderStatusContainer-DXgL9R4W.css                                       8.44 kB │ gzip:   1.93 kB\nstatic/dist/assets/SidebarContainer-VTybuLqi.css                                          10.37 kB │ gzip:   2.38 kB\nstatic/dist/assets/MapContainer-D_8Lr33g.css                                              16.96 kB │ gzip:   5.89 kB\nstatic/dist/assets/Project-D_Afhulk.css                                                   20.31 kB │ gzip:   4.10 kB\nstatic/dist/assets/Search-FTY0pAN5.css                                                    62.64 kB │ gzip:   9.54 kB\nstatic/dist/assets/index-BzkFCuBX.css                                                    339.57 kB │ gzip: 109.34 kB\nstatic/dist/assets/isLoggedIn-BJmJ_hIH.js                                                  0.05 kB │ gzip:   0.06 kB\nstatic/dist/assets/logo-BHeuky8i.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-C2M9lK3U.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-BbJQ0fWs.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-CW6PQqmQ.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-CM8gX-og.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-CGJHAKVD.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-DOLER09h.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-C6Ht_tBx.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-J7t-4CBp.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-CxvnVTz2.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-C9HDQHSy.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-IHV3gtAZ.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-Dedvhxzp.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-B0aFliGe.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo--kH-hKRS.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-Z4bYAKVs.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-nOuRrv94.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-DIxV4RPX.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-uABdcgsF.js                                                        0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/pluralize-49vSaAHF.js                                                   0.08 kB │ gzip:   0.09 kB\nstatic/dist/assets/commafy-BfQYQOA4.js                                                     0.14 kB │ gzip:   0.14 kB\nstatic/dist/assets/Table-BfAsy4IO.js                                                       0.60 kB │ gzip:   0.38 kB\nstatic/dist/assets/RelatedCollection-Dwl0So66.js                                           0.92 kB │ gzip:   0.52 kB\nstatic/dist/assets/humanizedQueryValueFormatters-CJ8vg_4_.js                               1.00 kB │ gzip:   0.54 kB\nstatic/dist/assets/DownloadsLayout-Ctwm6-ow.js                                             1.18 kB │ gzip:   0.38 kB\nstatic/dist/assets/AdminLayout-CA0cXQ_8.js                                                 1.38 kB │ gzip:   0.48 kB\nstatic/dist/assets/index-B-aVhXxY.js                                                       1.64 kB │ gzip:   0.94 kB\nstatic/dist/assets/Skeleton-Bv7gfk19.js                                                    1.71 kB │ gzip:   0.69 kB\nstatic/dist/assets/TooManyPointsModalContainer-DFUpKMsa.js                                 1.95 kB │ gzip:   0.78 kB\nstatic/dist/assets/DefinitionList-BTER1XFr.js                                              1.96 kB │ gzip:   0.56 kB\nstatic/dist/assets/AdminPage-CKjxzRBX.js                                                   2.09 kB │ gzip:   0.52 kB\nstatic/dist/assets/AdminIndex-CzeUaHTu.js                                                  2.80 kB │ gzip:   0.85 kB\nstatic/dist/assets/CollapsePanel-DJWy0ssp.js                                               2.89 kB │ gzip:   0.77 kB\nstatic/dist/assets/KeyboardShortcutsModalContainer-6j9yU3W8.js                             3.39 kB │ gzip:   1.06 kB\nstatic/dist/assets/AdminProject-JSRfPoli.js                                                3.86 kB │ gzip:   1.06 kB\nstatic/dist/assets/DeprecatedParameterModalContainer-DwxSheJv.js                           4.59 kB │ gzip:   1.51 kB\nstatic/dist/assets/EditSubscriptionModalContainer-LjpIRezk.js                              4.92 kB │ gzip:   1.34 kB\nstatic/dist/assets/ChunkedOrderModalContainer-BfgnDrfB.js                                  4.96 kB │ gzip:   1.46 kB\nstatic/dist/assets/AdminPreferencesMetrics-Dgu8nWhX.js                                     5.93 kB │ gzip:   1.07 kB\nstatic/dist/assets/AboutCSDAModalContainer-CiQovEW8.js                                     5.95 kB │ gzip:   1.31 kB\nstatic/dist/assets/ShapefileUploadModalContainer-9XAIYdqC.js                               6.04 kB │ gzip:   1.20 kB\nstatic/dist/assets/EarthdataDownloadRedirect-Bff8yUJL.js                                   6.25 kB │ gzip:   1.12 kB\nstatic/dist/assets/GranuleResultsHighlights-BgrOFaen.js                                    8.15 kB │ gzip:   1.57 kB\nstatic/dist/assets/EDSCModalContainer-cv3MKgRi.js                                          8.24 kB │ gzip:   1.91 kB\nstatic/dist/assets/DownloadHistoryContainer-CA9Wdvwt.js                                    8.54 kB │ gzip:   1.89 kB\nstatic/dist/assets/getFilenameFromPath-D2X6R3X0.js                                        10.00 kB │ gzip:   3.70 kB\nstatic/dist/assets/SubscriptionsQueryList-CYtcoonD.js                                     10.17 kB │ gzip:   2.37 kB\nstatic/dist/assets/Modal-BHtWp-ZJ.js                                                      10.75 kB │ gzip:   4.06 kB\nstatic/dist/assets/CollectionDetailsHighlightsContainer-DecweLty.js                       10.94 kB │ gzip:   1.37 kB\nstatic/dist/assets/AdminProjects-CVzY6SP-.js                                              11.16 kB │ gzip:   1.87 kB\nstatic/dist/assets/AdminRetrievalContainer-DvQWng9r.js                                    11.62 kB │ gzip:   2.13 kB\nstatic/dist/assets/AdminRetrievals-DKbg8e8C.js                                            11.67 kB │ gzip:   1.92 kB\nstatic/dist/assets/AboutCwicModalContainer-Bw4TgnUo.js                                    12.33 kB │ gzip:   2.38 kB\nstatic/dist/assets/ContactInfo-ch4LGpI7.js                                                14.32 kB │ gzip:   1.88 kB\nstatic/dist/assets/Subscriptions-ClEQQ8B_.js                                              14.77 kB │ gzip:   2.27 kB\nstatic/dist/assets/AdminRetrievalsMetricsContainer-ChzPlqgG.js                            14.85 kB │ gzip:   1.78 kB\nstatic/dist/assets/granules-nGamZw6E.js                                                   28.54 kB │ gzip:   8.67 kB\nstatic/dist/assets/styles-PSP3sQge.js                                                     31.70 kB │ gzip:  10.41 kB\nstatic/dist/assets/index-MIUNsMkF.js                                                      35.51 kB │ gzip:  12.88 kB\nstatic/dist/assets/useQuery-DldSiJDe.js                                                   36.36 kB │ gzip:  10.41 kB\nstatic/dist/assets/GranuleFiltersContainer-CTxYvuOR.js                                    41.08 kB │ gzip:   6.75 kB\nstatic/dist/assets/CollectionDetailsBody-BRFySaxW.js                                      49.22 kB │ gzip:   6.59 kB\nstatic/dist/assets/moment-zH0z38ay.js                                                     60.93 kB │ gzip:  19.77 kB\nstatic/dist/assets/SidebarContainer-DT6nPJ3K.js                                           80.17 kB │ gzip:  17.89 kB\nstatic/dist/assets/lodash-DMgbQ9uh.js                                                     91.87 kB │ gzip:  31.74 kB\nstatic/dist/assets/react-D4cQSAxo.js                                                      92.93 kB │ gzip:  30.67 kB\nstatic/dist/assets/OrderStatusContainer-C_RePvIt.js                                       98.23 kB │ gzip:  18.97 kB\nstatic/dist/assets/EchoForm-B6m3uNni.js                                                  108.62 kB │ gzip:  33.70 kB\nstatic/dist/assets/ShapefileDropzoneContainer-BPXtqmvm.js                                119.99 kB │ gzip:  40.34 kB\nstatic/dist/assets/SearchTour-52dwPP5I.js                                                142.77 kB │ gzip:  37.66 kB\nstatic/dist/assets/Preferences-CYSQQNGi.js                                               367.48 kB │ gzip: 114.88 kB\nstatic/dist/assets/Project-C7dph4Wq.js                                                   427.27 kB │ gzip: 121.96 kB\nstatic/dist/assets/edscUtils-vslqoCvY.js                                                 458.18 kB │ gzip: 144.36 kB\nstatic/dist/assets/Search-BAUd8JyY.js                                                    511.40 kB │ gzip: 111.48 kB\nstatic/dist/assets/index-COxds0PW.js                                                   1,284.66 kB │ gzip: 398.75 kB\nstatic/dist/assets/MapContainer-DHj3Rjya.js                                            1,332.31 kB │ gzip: 269.86 kB\n✓ built in 35.89s\n",
+      "buildTime": 35.89,
+      "numFiles": 140,
+      "totalSize": 11121.85,
+      "indexJsSize": 1321.81,
+      "indexJsGzipSize": 412.57,
+      "indexCssSize": 346.04,
+      "indexCssGzipSize": 110.58
+    },
+    "clocReport": {
+      "header": {
+        "cloc_url": "github.com/AlDanial/cloc",
+        "cloc_version": "2.06",
+        "elapsed_seconds": 8.54795384407043,
+        "n_files": 1663,
+        "n_lines": 208525,
+        "files_per_second": 194.549482874617,
+        "lines_per_second": 24394.7269491459,
+        "report_file": "clocReport.json"
+      },
+      "JavaScript": {
+        "nFiles": 785,
+        "blank": 11245,
+        "comment": 3745,
+        "code": 73760
+      },
+      "JSX": {
+        "nFiles": 445,
+        "blank": 10134,
+        "comment": 2400,
+        "code": 64102
+      },
+      "TypeScript": {
+        "nFiles": 205,
+        "blank": 4118,
+        "comment": 2805,
+        "code": 23086
+      },
+      "SCSS": {
+        "nFiles": 206,
+        "blank": 1748,
+        "comment": 93,
+        "code": 9800
+      },
+      "JSON": {
+        "nFiles": 3,
+        "blank": 0,
+        "comment": 0,
+        "code": 716
+      },
+      "GraphQL": {
+        "nFiles": 3,
+        "blank": 92,
+        "comment": 0,
+        "code": 236
+      },
+      "SVG": {
+        "nFiles": 14,
+        "blank": 0,
+        "comment": 1,
+        "code": 49
+      },
+      "Jupyter Notebook": {
+        "nFiles": 1,
+        "blank": 0,
+        "comment": 344,
+        "code": 43
+      },
+      "Text": {
+        "nFiles": 1,
+        "blank": 0,
+        "comment": 0,
+        "code": 8
+      },
+      "SUM": {
+        "blank": 27337,
+        "comment": 9388,
+        "code": 171800,
+        "nFiles": 1663
+      }
+    },
+    "testCoverageReport": 93.47,
+    "performanceReport": {
+      "uat": {
+        "desktop": {
+          "accessibilityScore": 92,
+          "bestPracticesScore": 96,
+          "cls": 0.02,
+          "date": "2025-10-13",
+          "fcp": 1252.59,
+          "inp": "No value",
+          "lcp": 1856.53,
+          "performanceScore": 57.99999999999999,
+          "seoScore": 83,
+          "strategy": "desktop",
+          "ttfb": 88
+        },
+        "mobile": {
+          "accessibilityScore": 88,
+          "bestPracticesScore": 96,
+          "cls": 0.03,
+          "date": "2025-10-13",
+          "fcp": 7559.44,
+          "inp": "No value",
+          "lcp": 14439.84,
+          "performanceScore": 42,
+          "seoScore": 83,
+          "strategy": "mobile",
+          "ttfb": 82
+        }
+      }
+    }
   }
 }
