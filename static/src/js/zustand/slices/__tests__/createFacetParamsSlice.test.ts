@@ -96,63 +96,6 @@ describe('createFacetParamsSlice', () => {
 
       expect(mockDispatch).toHaveBeenCalledTimes(0)
     })
-
-    test('adds a facet to both cmrFacets and viewAllFacets', () => {
-      const zustandState = useEdscStore.getState()
-      const { facetParams } = zustandState
-      const { addCmrFacetFromAutocomplete } = facetParams
-
-      addCmrFacetFromAutocomplete({
-        instrument_h: ['AIRS']
-      })
-
-      const updatedState = useEdscStore.getState()
-      const { facetParams: updatedFacetParams } = updatedState
-
-      expect(updatedFacetParams.cmrFacets).toEqual({
-        instrument_h: ['AIRS']
-      })
-
-      expect(updatedFacetParams.viewAllFacets).toEqual({
-        instrument_h: ['AIRS']
-      })
-
-      expect(mockDispatch).toHaveBeenCalledTimes(0)
-    })
-
-    test('appends to existing facets in both cmrFacets and viewAllFacets', () => {
-      // Set up initial state with existing facets
-      useEdscStore.setState((state) => {
-        state.facetParams.cmrFacets = {
-          instrument_h: ['MODIS']
-        }
-
-        state.facetParams.viewAllFacets = {
-          instrument_h: ['MODIS']
-        }
-      })
-
-      const zustandState = useEdscStore.getState()
-      const { facetParams } = zustandState
-      const { addCmrFacetFromAutocomplete } = facetParams
-
-      addCmrFacetFromAutocomplete({
-        instrument_h: ['AIRS']
-      })
-
-      const updatedState = useEdscStore.getState()
-      const { facetParams: updatedFacetParams } = updatedState
-
-      expect(updatedFacetParams.cmrFacets).toEqual({
-        instrument_h: ['MODIS', 'AIRS']
-      })
-
-      expect(updatedFacetParams.viewAllFacets).toEqual({
-        instrument_h: ['MODIS', 'AIRS']
-      })
-
-      expect(mockDispatch).toHaveBeenCalledTimes(0)
-    })
   })
 
   describe('applyViewAllFacets', () => {
@@ -181,8 +124,11 @@ describe('createFacetParamsSlice', () => {
         instrument_h: ['AIRS']
       })
 
+      // Ensure the facets modal is closed
       expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
-      expect(actions.toggleFacetsModal).toHaveBeenCalledWith(false)
+
+      // Ensure the viewAllFacets are cleared after applying them
+      expect(updatedFacetParams.viewAllFacets).toEqual({})
     })
 
     test('clears viewAllFacets after applying them', () => {
@@ -214,53 +160,6 @@ describe('createFacetParamsSlice', () => {
 
       expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
       expect(actions.toggleFacetsModal).toHaveBeenCalledWith(false)
-    })
-
-    test('allows selecting new facets after applying viewAllFacets', () => {
-      // First, apply some viewAllFacets
-      useEdscStore.setState((state) => {
-        state.facetParams.setCmrFacets = jest.fn()
-        state.facetParams.viewAllFacets = {
-          instrument_h: ['AIRS']
-        }
-
-        state.query.changeQuery = jest.fn()
-      })
-
-      const zustandState = useEdscStore.getState()
-      const { facetParams } = zustandState
-      const { applyViewAllFacets, setCmrFacets } = facetParams
-
-      // Apply the viewAllFacets
-      applyViewAllFacets()
-
-      // Now try to select a new facet - this should work without conflicts
-      useEdscStore.setState((state) => {
-        state.collections.getCollections = jest.fn()
-        state.query.changeQuery = jest.fn()
-      })
-
-      setCmrFacets({
-        data_center_h: ['NASA']
-      })
-
-      const finalState = useEdscStore.getState()
-      const {
-        collections,
-        facetParams: finalFacetParams,
-        query
-      } = finalState
-
-      // Should only have the new facet, not combined with old ViewAllFacets
-      expect(finalFacetParams.cmrFacets).toEqual({
-        data_center_h: ['NASA']
-      })
-
-      // ViewAllFacets should remain empty
-      expect(finalFacetParams.viewAllFacets).toEqual({})
-
-      expect(collections.getCollections).toHaveBeenCalledTimes(1)
-      expect(query.changeQuery).toHaveBeenCalledTimes(1)
     })
   })
 

@@ -39,17 +39,13 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       console.log('🚀 ~ file: createFacetParamsSlice.ts:39 ~ facetValue:', facetValue)
 
       set((state) => {
-        const updatedCmrFacets = {
+        state.facetParams.cmrFacets = {
           ...state.facetParams.cmrFacets,
           [facetType]: [
             ...(state.facetParams.cmrFacets[facetType] as CMRFacets[FacetKeys][] || []),
             facetValue
           ]
         }
-
-        // Update both cmrFacets and viewAllFacets to keep them in sync
-        state.facetParams.cmrFacets = updatedCmrFacets
-        state.facetParams.viewAllFacets = updatedCmrFacets
       })
     },
     applyViewAllFacets: () => {
