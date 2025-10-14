@@ -124,8 +124,8 @@ describe('createFacetParamsSlice', () => {
         instrument_h: ['AIRS']
       })
 
-      // Ensure the facets modal is closed
       expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
+      expect(actions.toggleFacetsModal).toHaveBeenCalledWith(false)
     })
 
     test('clears viewAllFacets after applying them', () => {
