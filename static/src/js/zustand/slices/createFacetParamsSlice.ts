@@ -36,7 +36,6 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
     addCmrFacetFromAutocomplete: (facet) => {
       const [facetType] = Object.keys(facet) as FacetKeys[]
       const facetValue = facet[facetType]
-      console.log('🚀 ~ file: createFacetParamsSlice.ts:39 ~ facetValue:', facetValue)
 
       set((state) => {
         state.facetParams.cmrFacets = {

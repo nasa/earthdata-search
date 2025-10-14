@@ -49,7 +49,6 @@ export const prepareCollectionParams = (state) => {
 
   const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
   const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults
-  console.log('🚀 ~ file: collections.js:52 ~ viewAllFacetsSearchResults:', viewAllFacetsSearchResults)
 
   // If we have an overrideTemporal use it, if not use temporal
   let temporalString
@@ -177,7 +176,6 @@ export const buildCollectionSearchParams = (params) => {
     viewAllFacets,
     viewAllFacetsCategory
   } = params
-  console.log('🚀 ~ file: collections.js:180 ~ viewAllFacetsCategory:', viewAllFacetsCategory)
 
   let facetsToSend = { ...cmrFacets }
 

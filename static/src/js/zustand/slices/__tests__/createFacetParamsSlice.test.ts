@@ -126,9 +126,6 @@ describe('createFacetParamsSlice', () => {
 
       // Ensure the facets modal is closed
       expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
-
-      // Ensure the viewAllFacets are cleared after applying them
-      expect(updatedFacetParams.viewAllFacets).toEqual({})
     })
 
     test('clears viewAllFacets after applying them', () => {
@@ -157,9 +154,6 @@ describe('createFacetParamsSlice', () => {
 
       // ViewAllFacets should be cleared after applying
       expect(updatedFacetParams.viewAllFacets).toEqual({})
-
-      expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
-      expect(actions.toggleFacetsModal).toHaveBeenCalledWith(false)
     })
   })
 
