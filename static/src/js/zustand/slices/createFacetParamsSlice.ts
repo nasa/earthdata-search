@@ -36,15 +36,20 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
     addCmrFacetFromAutocomplete: (facet) => {
       const [facetType] = Object.keys(facet) as FacetKeys[]
       const facetValue = facet[facetType]
+      console.log('🚀 ~ file: createFacetParamsSlice.ts:39 ~ facetValue:', facetValue)
 
       set((state) => {
-        state.facetParams.cmrFacets = {
+        const updatedCmrFacets = {
           ...state.facetParams.cmrFacets,
           [facetType]: [
             ...(state.facetParams.cmrFacets[facetType] as CMRFacets[FacetKeys][] || []),
             facetValue
           ]
         }
+
+        // Update both cmrFacets and viewAllFacets to keep them in sync
+        state.facetParams.cmrFacets = updatedCmrFacets
+        state.facetParams.viewAllFacets = updatedCmrFacets
       })
     },
     applyViewAllFacets: () => {
@@ -57,6 +62,11 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       const { setCmrFacets, viewAllFacets } = get().facetParams
 
       setCmrFacets(viewAllFacets)
+
+      // Clear viewAllFacets after applying them to prevent conflicts with future facet selections
+      set((state) => {
+        state.facetParams.viewAllFacets = {}
+      })
     },
     setFeatureFacets: (featureFacets) => {
       set((state) => {
@@ -84,8 +94,16 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
     setCmrFacets: (cmrFacets) => {
+      const { viewAllFacets } = get().facetParams
+
+      // We need to set all the facets which were
+      // set in the view all facets modal and the other facets
+      const combinedFacets = {
+        ...viewAllFacets,
+        ...cmrFacets
+      }
       set((state) => {
-        state.facetParams.cmrFacets = cmrFacets
+        state.facetParams.cmrFacets = combinedFacets
       })
 
       const {

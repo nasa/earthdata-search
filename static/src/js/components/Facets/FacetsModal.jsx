@@ -37,6 +37,7 @@ const FacetsModal = ({
     isLoading,
     selectedCategory
   } = viewAllFacets
+  console.log('🚀 ~ file: FacetsModal.jsx:40 ~ viewAllFacets:', viewAllFacets)
 
   const {
     applyViewAllFacets,
