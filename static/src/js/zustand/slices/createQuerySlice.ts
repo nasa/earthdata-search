@@ -80,6 +80,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         state.granules.granules.collectionConceptId = null
       })
 
+      // Fetch collections with the updated query parameters
       get().collections.getCollections()
 
       // If there is a focused collection, update it's granule search params

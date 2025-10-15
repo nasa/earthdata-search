@@ -171,7 +171,6 @@ describe('createFacetParamsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const {
-        collections,
         facetParams: updatedFacetParams,
         query
       } = updatedState
@@ -181,9 +180,6 @@ describe('createFacetParamsSlice', () => {
         customizable: false,
         mapImagery: false
       })
-
-      expect(collections.getCollections).toHaveBeenCalledTimes(1)
-      expect(collections.getCollections).toHaveBeenCalledWith()
 
       expect(query.changeQuery).toHaveBeenCalledTimes(1)
       expect(query.changeQuery).toHaveBeenCalledWith({
@@ -221,7 +217,6 @@ describe('createFacetParamsSlice', () => {
 
           const updatedState = useEdscStore.getState()
           const {
-            collections,
             facetParams: updatedFacetParams,
             query
           } = updatedState
@@ -229,9 +224,6 @@ describe('createFacetParamsSlice', () => {
           expect(updatedFacetParams.cmrFacets).toEqual({
             science_keywords_h: [{ topic: 'Agriculture' }]
           })
-
-          expect(collections.getCollections).toHaveBeenCalledTimes(1)
-          expect(collections.getCollections).toHaveBeenCalledWith()
 
           expect(query.changeQuery).toHaveBeenCalledTimes(1)
           expect(query.changeQuery).toHaveBeenCalledWith({
@@ -268,7 +260,6 @@ describe('createFacetParamsSlice', () => {
 
             const updatedState = useEdscStore.getState()
             const {
-              collections,
               facetParams: updatedFacetParams,
               query
             } = updatedState
@@ -276,9 +267,6 @@ describe('createFacetParamsSlice', () => {
             expect(updatedFacetParams.cmrFacets).toEqual({
               science_keywords_h: []
             })
-
-            expect(collections.getCollections).toHaveBeenCalledTimes(1)
-            expect(collections.getCollections).toHaveBeenCalledWith()
 
             expect(query.changeQuery).toHaveBeenCalledTimes(1)
             expect(query.changeQuery).toHaveBeenCalledWith({
@@ -316,7 +304,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -324,9 +311,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           platforms_h: [{ basis: 'Land-based+Platforms' }]
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -358,7 +342,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -366,9 +349,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           instrument_h: ['AIRS']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -400,7 +380,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -408,9 +387,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           data_center_h: ['Alaska+Satellite+Facility']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -442,7 +418,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -450,9 +425,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           project_h: ['ABoVE']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -484,7 +456,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -492,9 +463,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           processing_level_id_h: ['0+-+Raw+Data']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -526,7 +494,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -534,9 +501,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           granule_data_format_h: ['ASCII']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -568,7 +532,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -576,9 +539,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           two_d_coordinate_system_name: ['CALIPSO']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -610,7 +570,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -618,9 +577,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           horizontal_data_resolution_range: ['0+to+1+meter']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -652,7 +608,6 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
-          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
@@ -660,102 +615,6 @@ describe('createFacetParamsSlice', () => {
         expect(updatedFacetParams.cmrFacets).toEqual({
           latency: ['1+to+3+hours']
         })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
-
-        expect(query.changeQuery).toHaveBeenCalledTimes(1)
-        expect(query.changeQuery).toHaveBeenCalledWith({
-          collection: {
-            pageNum: 1
-          }
-        })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
-      })
-    })
-
-    describe('when combining viewAllFacets with cmrFacets', () => {
-      test('combines viewAllFacets and cmrFacets when setCmrFacets is called', () => {
-        useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
-          // Set up existing viewAllFacets
-          state.facetParams.viewAllFacets = {
-            instrument_h: ['AIRS']
-          }
-        })
-
-        const zustandState = useEdscStore.getState()
-        const { facetParams } = zustandState
-        const { setCmrFacets } = facetParams
-
-        // Call setCmrFacets with new facets
-        setCmrFacets({
-          science_keywords_h: [{ topic: 'Agriculture' }],
-          data_center_h: ['NASA']
-        })
-
-        const updatedState = useEdscStore.getState()
-        const {
-          collections,
-          facetParams: updatedFacetParams,
-          query
-        } = updatedState
-
-        // Should combine viewAllFacets with the new cmrFacets
-        expect(updatedFacetParams.cmrFacets).toEqual({
-          instrument_h: ['AIRS'],
-          science_keywords_h: [{ topic: 'Agriculture' }],
-          data_center_h: ['NASA']
-        })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
-
-        expect(query.changeQuery).toHaveBeenCalledTimes(1)
-        expect(query.changeQuery).toHaveBeenCalledWith({
-          collection: {
-            pageNum: 1
-          }
-        })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
-      })
-
-      test('handles empty viewAllFacets when combining', () => {
-        useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
-          // Set up empty viewAllFacets
-          state.facetParams.viewAllFacets = {}
-        })
-
-        const zustandState = useEdscStore.getState()
-        const { facetParams } = zustandState
-        const { setCmrFacets } = facetParams
-
-        // Call setCmrFacets with new facets
-        setCmrFacets({
-          science_keywords_h: [{ topic: 'Agriculture' }]
-        })
-
-        const updatedState = useEdscStore.getState()
-        const {
-          collections,
-          facetParams: updatedFacetParams,
-          query
-        } = updatedState
-
-        // Should only have the new cmrFacets when viewAllFacets is empty
-        expect(updatedFacetParams.cmrFacets).toEqual({
-          science_keywords_h: [{ topic: 'Agriculture' }]
-        })
-
-        expect(collections.getCollections).toHaveBeenCalledTimes(1)
-        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
