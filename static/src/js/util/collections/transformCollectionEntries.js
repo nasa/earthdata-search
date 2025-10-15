@@ -5,6 +5,9 @@ import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
 
+import {
+  getBrowseImageUrlFromConcept
+} from '../../../../../serverless/src/scaleImage/utils/cmr/getBrowseImageUrlFromConcept'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
@@ -13,7 +16,7 @@ import unavailableImg from '../../../assets/images/image-unavailable.svg'
  * @param {String} earthdataEnvironment - The Earthdata environment
  * @returns {Array} Transformed collection entries with camelCase keys
  */
-export const transformCollectionEntries = (entries, earthdataEnvironment) => {
+export const transformCollectionEntries = (entries) => {
   if (!Array.isArray(entries)) {
     return []
   }
@@ -48,9 +51,8 @@ export const transformCollectionEntries = (entries, earthdataEnvironment) => {
     // Retrieve collection thumbnail if it exists
     if (collection.id) {
       if (collection.browse_flag) {
-        const browseRelName = 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-        const browseLink = collection.links.find((element) => element.rel === browseRelName)
-        transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}&browseImageUrl=${browseLink.href}`
+        const imageUrl = getBrowseImageUrlFromConcept(collection)
+        transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale?h=${h}&w=${w}&imageSrc=${imageUrl}`
       } else {
         transformedCollection.thumbnail = unavailableImg
         transformedCollection.isDefaultImage = true

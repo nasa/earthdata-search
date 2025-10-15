@@ -34,8 +34,6 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly scaleApiGatewayResource: apigateway.CfnResource
 
-  public readonly scaleConceptTypeApiGatewayResource: apigateway.CfnResource
-
   public readonly shapefilesApiGatewayResource: apigateway.CfnResource
 
   constructor(scope: cdk.Stack, id: string, props: SharedApiGatewayResourcesProps) {
@@ -200,16 +198,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.scaleApiGatewayResource = scaleApiGatewayResource
-
-    /**
-     * Scale ConceptType API Gateway Resource
-     */
-    const scaleConceptTypeApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceScaleConceptType', {
-      parentId: scaleApiGatewayResource.ref,
-      pathPart: '{concept_type}',
-      restApiId: apiGatewayRestApi.ref
-    })
-    this.scaleConceptTypeApiGatewayResource = scaleConceptTypeApiGatewayResource
 
     /**
      * Shapefile API Gateway Resource
