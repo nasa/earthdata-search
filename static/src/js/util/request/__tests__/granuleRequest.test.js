@@ -109,7 +109,6 @@ describe('GranuleRequest#transformResponse', () => {
             id: 'granuleId',
             timeEnd: '2000-01-31T00:00:00.000Z',
             timeStart: '2000-01-01T00:00:00.000Z',
-            thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
             formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
             isOpenSearch: false,
             spatial: null
@@ -150,7 +149,6 @@ describe('GranuleRequest#transformResponse', () => {
               id: 'granuleId',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               points: ['0 10'],
@@ -200,7 +198,6 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: undefined,
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               spatial: null
@@ -228,7 +225,7 @@ describe('GranuleRequest#transformResponse', () => {
             time_start: '2000-01-01T00:00:00.000Z',
             links: [
               {
-                rel: '#browse',
+                rel: 'browse#',
                 href: 'https://test.com/browse/image/url.jpg'
               }
             ]
@@ -246,12 +243,12 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: 'https://test.com/browse/image/url.jpg',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
+              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://test.com/browse/image/url.jpg',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
                 {
-                  rel: '#browse',
+                  rel: 'browse#',
                   href: 'https://test.com/browse/image/url.jpg'
                 }
               ],
@@ -280,15 +277,15 @@ describe('GranuleRequest#transformResponse', () => {
             time_start: '2000-01-01T00:00:00.000Z',
             links: [
               {
-                rel: '#data',
+                rel: 'data#',
                 href: 'https://test.com/data.json'
               },
               {
-                rel: '#browse',
+                rel: 'browse#',
                 href: 'https://test.com/browse/image/first_url.jpg'
               },
               {
-                rel: '#browse',
+                rel: 'browse#',
                 href: 'https://test.com/browse/image/second_url.jpg'
               }
             ]
@@ -306,20 +303,20 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: 'https://test.com/browse/image/first_url.jpg',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
+              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://test.com/browse/image/first_url.jpg',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
                 {
-                  rel: '#data',
+                  rel: 'data#',
                   href: 'https://test.com/data.json'
                 },
                 {
-                  rel: '#browse',
+                  rel: 'browse#',
                   href: 'https://test.com/browse/image/first_url.jpg'
                 },
                 {
-                  rel: '#browse',
+                  rel: 'browse#',
                   href: 'https://test.com/browse/image/second_url.jpg'
                 }
               ],
@@ -348,15 +345,15 @@ describe('GranuleRequest#transformResponse', () => {
             time_start: '2000-01-01T00:00:00.000Z',
             links: [
               {
-                rel: '#data',
+                rel: 'data#',
                 href: 'https://test.com/data.json'
               },
               {
-                rel: '#browse',
+                rel: 'browse#',
                 href: 's3://test.com/browse/image/first_url.jpg'
               },
               {
-                rel: '#browse',
+                rel: 'browse#',
                 href: 'https://test.com/browse/image/second_url.jpg'
               }
             ]
@@ -374,20 +371,20 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: 'https://test.com/browse/image/second_url.jpg',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
+              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://test.com/browse/image/second_url.jpg',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
                 {
-                  rel: '#data',
+                  rel: 'data#',
                   href: 'https://test.com/data.json'
                 },
                 {
-                  rel: '#browse',
+                  rel: 'browse#',
                   href: 's3://test.com/browse/image/first_url.jpg'
                 },
                 {
-                  rel: '#browse',
+                  rel: 'browse#',
                   href: 'https://test.com/browse/image/second_url.jpg'
                 }
               ],
