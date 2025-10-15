@@ -284,7 +284,7 @@ describe('CollectionRequest#transformResponse', () => {
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
             },
-            thumbnail: 'http://localhost:3000/scale/collections/collectionId?h=85&w=85&ee=prod&browseImageUrl=https://sample.nasa.gov/thumbnails/thumbnail.jpg'
+            thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://sample.nasa.gov/thumbnails/thumbnail.jpg'
           }]
         }
       }
