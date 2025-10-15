@@ -2,13 +2,10 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { buildResponse } from './utils/buildResponse'
 import { downloadImageFromSource } from './utils/downloadImageFromSource'
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 
 import { cacheImage } from './utils/cache/cacheImage'
 import { generateCacheKey } from './utils/cache/generateCacheKey'
 import { getImageFromCache } from './utils/cache/getImageFromCache'
-
-import { getImageUrlFromConcept } from './utils/cmr/getImageUrlFromConcept'
 
 import { buildUnavailableImageBuffer } from './utils/sharp/buildUnavailableImageBuffer'
 
@@ -21,25 +18,16 @@ import { resizeImage } from './utils/sharp/resizeImage'
 const scaleImage = async (event) => {
   // Pull the path and query parameters from the http event
   const {
-    pathParameters,
     queryStringParameters
   } = event
-
-  const {
-    concept_id: conceptId,
-    concept_type: conceptType
-  } = pathParameters
 
   // Default the queryStringParameters because when none are provided the key is missing
   const { height: defaultHeight, width: defaultWidth } = getApplicationConfig().thumbnailSize
   const {
-    cascade_concepts: cascadeConcepts = 'true',
     h = defaultHeight,
     w = defaultWidth,
     return_default: returnDefault = 'true',
-    imageSrc,
-    browseImageUrl,
-    ee: earthdataEnvironment = determineEarthdataEnvironment()
+    imageSrc
   } = queryStringParameters || {}
 
   const width = parseInt(w, 10)
@@ -52,13 +40,27 @@ const scaleImage = async (event) => {
       height,
       width
     }
+
+    if (!imageSrc) {
+      // If there is no imageSrc and returnDefault is false, return a 404
+      let statusCode = 404
+
+      if (returnDefault === 'true') {
+        // If there is no image url found and returnDefault is true, return a 200 with the unavailable image
+        thumbnail = await buildUnavailableImageBuffer(height, width)
+        statusCode = 200
+      }
+
+      return buildResponse(thumbnail, statusCode)
+    }
+
     const useCache = process.env.USE_IMAGE_CACHE === 'true'
 
     // Optional imageSrc that gets passed when a granule image from one of many is specified
-    const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)
+    const cacheKey = generateCacheKey(imageSrc, dimensions)
 
     let originalImageFromCache = null
-    const originalCacheKey = generateCacheKey(conceptId, conceptType)
+    const originalCacheKey = generateCacheKey(imageSrc)
     if (useCache) {
       const imageFromCache = await getImageFromCache(cacheKey)
       if (imageFromCache) {
@@ -67,9 +69,7 @@ const scaleImage = async (event) => {
       }
 
       // Check for the original size image in the cache if a specific granule image is not being requested
-      if (!imageSrc) {
-        originalImageFromCache = await getImageFromCache(originalCacheKey)
-      }
+      originalImageFromCache = await getImageFromCache(originalCacheKey)
     }
 
     let imageBuffer
@@ -77,29 +77,7 @@ const scaleImage = async (event) => {
       // If the original image is cached, don't download it from the imageUrl, instead we just resize it
       imageBuffer = originalImageFromCache
     } else {
-      // Attempt to retrieve the url of a browse image for the provided concept and type
-      const imageUrl = browseImageUrl || await getImageUrlFromConcept(
-        conceptId,
-        conceptType,
-        cascadeConcepts,
-        imageSrc,
-        earthdataEnvironment
-      )
-
-      if (!imageUrl) {
-        // If there is no image url found and returnDefault is false, return a 404
-        let statusCode = 404
-
-        if (returnDefault === 'true') {
-          // If there is no image url found and returnDefault is true, return a 200 with the unavailable image
-          thumbnail = await buildUnavailableImageBuffer(height, width)
-          statusCode = 200
-        }
-
-        return buildResponse(thumbnail, statusCode)
-      }
-
-      imageBuffer = await downloadImageFromSource(imageUrl)
+      imageBuffer = await downloadImageFromSource(imageSrc)
 
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
