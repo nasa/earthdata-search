@@ -9,9 +9,11 @@ const UPDATE_PROJECT = `
       obfuscatedId: $obfuscatedId
       path: $path
     ) {
+      createdAt
       name
       obfuscatedId
       path
+      updatedAt
     }
   }
 `

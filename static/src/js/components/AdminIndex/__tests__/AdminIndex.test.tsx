@@ -2,6 +2,7 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import AdminIndex from '../AdminIndex'
+import { routes } from '../../../constants/routes'
 
 // Mock the PortalLinkContainer so it renders <a> and children.
 // Expects 'to' prop for href.
@@ -35,9 +36,9 @@ describe('Admin', () => {
     const portalLinks = screen.getAllByRole('link')
     expect(portalLinks).toHaveLength(4)
 
-    expect(screen.getByRole('link', { name: 'Retrievals' })).toHaveAttribute('href', '/admin/retrievals')
-    expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/admin/projects')
-    expect(screen.getByRole('link', { name: 'Retrieval Metrics' })).toHaveAttribute('href', '/admin/retrievals-metrics')
-    expect(screen.getByRole('link', { name: 'Preferences Metrics' })).toHaveAttribute('href', '/admin/preferences-metrics')
+    expect(screen.getByRole('link', { name: 'Retrievals' })).toHaveAttribute('href', routes.ADMIN_RETRIEVALS)
+    expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', routes.ADMIN_PROJECTS)
+    expect(screen.getByRole('link', { name: 'Retrieval Metrics' })).toHaveAttribute('href', routes.ADMIN_RETRIEVAL_METRICS)
+    expect(screen.getByRole('link', { name: 'Preferences Metrics' })).toHaveAttribute('href', routes.ADMIN_PREFERENCES_METRICS)
   })
 })

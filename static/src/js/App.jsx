@@ -32,6 +32,8 @@ import AppLayout from './layouts/AppLayout/AppLayout'
 import GraphQlProvider from './providers/GraphQlProvider'
 import EmergencyNotification from './components/EmergencyNotification/EmergencyNotification'
 
+import { routes } from './constants/routes'
+
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
 
@@ -71,7 +73,7 @@ const store = configureStore()
 
 const browserRouter = createBrowserRouter([
   {
-    path: '/',
+    path: routes.HOME,
     element: <AppLayout />,
     children: [
       {
@@ -83,7 +85,7 @@ const browserRouter = createBrowserRouter([
         element: <PortalContainer />
       },
       {
-        path: '/search/*',
+        path: `${routes.SEARCH}/*`,
         element: (
           <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
             <SearchTour />
@@ -100,7 +102,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/project',
+        path: routes.PROJECT,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -112,7 +114,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/projects',
+        path: routes.PROJECTS,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -122,7 +124,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/downloads',
+        path: routes.DOWNLOADS,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -142,7 +144,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/downloads/:id',
+            path: `${routes.DOWNLOADS}/:id`,
             async lazy() {
               const OrderStatusContainer = await import('./containers/OrderStatusContainer/OrderStatusContainer')
 
@@ -154,7 +156,7 @@ const browserRouter = createBrowserRouter([
         ]
       },
       {
-        path: '/contact-info',
+        path: routes.CONTACT_INFO,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -164,7 +166,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/preferences',
+        path: routes.PREFERENCES,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -174,7 +176,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/subscriptions',
+        path: routes.SUBSCRIPTIONS,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -184,7 +186,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/earthdata-download-callback',
+        path: routes.EARTHDATA_DOWNLOAD_CALLBACK,
         element: (
           <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
             <EarthdataDownloadRedirect />
@@ -192,7 +194,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/auth_callback',
+        path: routes.AUTH_CALLBACK,
         element: (
           <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
             <AuthCallbackContainer />
@@ -200,7 +202,7 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: '/admin',
+        path: routes.ADMIN,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
@@ -220,7 +222,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/retrievals',
+            path: routes.ADMIN_RETRIEVALS,
             async lazy() {
               const AdminRetrievals = await import('./components/AdminRetrievals/AdminRetrievals')
 
@@ -230,7 +232,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/retrievals/:obfuscatedId',
+            path: `${routes.ADMIN_RETRIEVALS}/:obfuscatedId`,
             async lazy() {
               const AdminRetrievalContainer = await import('./containers/AdminRetrievalContainer/AdminRetrievalContainer')
 
@@ -240,7 +242,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/projects',
+            path: routes.ADMIN_PROJECTS,
             async lazy() {
               const AdminProjects = await import('./components/AdminProjects/AdminProjects')
 
@@ -250,7 +252,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/projects/:obfuscatedId',
+            path: `${routes.ADMIN_PROJECTS}/:obfuscatedId`,
             async lazy() {
               const AdminProject = await import('./components/AdminProject/AdminProject')
 
@@ -260,7 +262,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/retrievals-metrics',
+            path: routes.ADMIN_RETRIEVAL_METRICS,
             async lazy() {
               const AdminRetrievalsMetricsContainer = await import('./containers/AdminRetrievalsMetricsContainer/AdminRetrievalsMetricsContainer')
 
@@ -270,7 +272,7 @@ const browserRouter = createBrowserRouter([
             }
           },
           {
-            path: '/admin/preferences-metrics',
+            path: routes.ADMIN_PREFERENCES_METRICS,
             async lazy() {
               const AdminPreferencesMetrics = await import('./components/AdminPreferencesMetrics/AdminPreferencesMetrics')
 

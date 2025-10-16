@@ -56,6 +56,8 @@ import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule
 import { getGranules } from '../../zustand/selectors/granules'
 import { getPreferences } from '../../zustand/selectors/preferences'
 
+import { routes } from '../../constants/routes'
+
 import './SearchPanels.scss'
 
 const { edscHost } = getEnvironmentConfig()
@@ -345,7 +347,7 @@ const SearchPanels = ({
               naked
               to={
                 {
-                  pathname: '/search/subscriptions',
+                  pathname: routes.COLLECTION_SUBSCRIPTIONS,
                   search: location.search
                 }
               }
@@ -366,7 +368,7 @@ const SearchPanels = ({
         title: 'Subscriptions',
         icon: Subscribe,
         link: {
-          pathname: '/search/granules/subscriptions',
+          pathname: routes.GRANULE_SUBSCRIPTIONS,
           search: location.search
         }
       }
@@ -461,7 +463,7 @@ const SearchPanels = ({
           {
             title: `Search Results (${commafy(collectionHits)} Collections)`,
             link: {
-              pathname: '/search',
+              pathname: routes.SEARCH,
               search: location.search
             },
             onClick: () => setCollectionId(null)
@@ -497,7 +499,7 @@ const SearchPanels = ({
             title: 'Collection Details',
             icon: AlertInformation,
             link: {
-              pathname: '/search/granules/collection-details',
+              pathname: routes.COLLECTION_DETAILS,
               search: location.search
             }
           },
@@ -523,7 +525,7 @@ const SearchPanels = ({
           {
             title: `Search Results (${commafy(collectionHits)} ${pluralize('Collection', collectionHits)})`,
             link: {
-              pathname: '/search',
+              pathname: routes.SEARCH,
               search: location.search
             },
             onClick: () => setCollectionId(null)
@@ -537,7 +539,7 @@ const SearchPanels = ({
             title: 'Granules',
             icon: FaMap,
             link: {
-              pathname: '/search/granules',
+              pathname: routes.GRANULES,
               search: location.search
             }
           },
@@ -563,7 +565,7 @@ const SearchPanels = ({
           {
             title: 'Search Results',
             link: {
-              pathname: '/search',
+              pathname: routes.SEARCH,
               search: location.search
             },
             onClick: () => setCollectionId(null)
@@ -571,7 +573,7 @@ const SearchPanels = ({
           {
             title: collectionTitle,
             link: {
-              pathname: '/search/granules',
+              pathname: routes.GRANULES,
               search: location.search
             },
             options: {
@@ -586,7 +588,7 @@ const SearchPanels = ({
             title: 'Granules',
             icon: FaMap,
             link: {
-              pathname: '/search/granules',
+              pathname: routes.GRANULES,
               search: location.search
             }
           },
@@ -594,7 +596,7 @@ const SearchPanels = ({
             title: 'Collection Details',
             icon: AlertInformation,
             link: {
-              pathname: '/search/granules/collection-details',
+              pathname: routes.COLLECTION_DETAILS,
               search: location.search
             }
           }
@@ -618,7 +620,7 @@ const SearchPanels = ({
           {
             title: 'Search Results',
             link: {
-              pathname: '/search',
+              pathname: routes.SEARCH,
               search: location.search
             },
             onClick: () => setCollectionId(null)
@@ -626,7 +628,7 @@ const SearchPanels = ({
           {
             title: collectionTitle,
             link: {
-              pathname: '/search/granules',
+              pathname: routes.GRANULES,
               search: location.search
             },
             options: {
@@ -641,7 +643,7 @@ const SearchPanels = ({
             title: 'Granules',
             icon: FaMap,
             link: {
-              pathname: '/search/granules',
+              pathname: routes.GRANULES,
               search: location.search
             }
           },
@@ -649,7 +651,7 @@ const SearchPanels = ({
             title: 'Collection Details',
             icon: AlertInformation,
             link: {
-              pathname: '/search/granules/collection-details',
+              pathname: routes.COLLECTION_DETAILS,
               search: location.search
             }
           }
@@ -677,7 +679,7 @@ const SearchPanels = ({
           {
             title: 'Search Results',
             link: {
-              pathname: '/search',
+              pathname: routes.SEARCH,
               search: location.search
             },
             onClick: () => setCollectionId(null)
@@ -720,31 +722,31 @@ const SearchPanels = ({
       activePanel = '0.5.0'
       appTitle = 'Dataset Search Subscriptions'
       appDescription = 'Subscribe to be notifed when new datasets become available'
-      appUrl = `${edscHost}/search/subscriptions`
+      appUrl = `${edscHost}${routes.COLLECTION_SUBSCRIPTIONS}`
       break
     case 'granules/subscriptions':
       activePanel = '0.4.0'
       if (collectionTitle) appTitle = `${collectionTitle} Subscriptions`
       if (collectionTitle) appDescription = `Subscribe to be notifed when new ${collectionTitle} data is available`
-      if (conceptId) appUrl = `${edscHost}/search/granules/subscriptions?p=${conceptId}`
+      if (conceptId) appUrl = `${edscHost}${routes.GRANULE_SUBSCRIPTIONS}?p=${conceptId}`
       break
     case 'granules/granule-details':
       activePanel = '0.3.0'
       if (granuleTitle) appTitle = `${granuleTitle} Details`
       if (granuleTitle) appDescription = `View ${granuleTitle} on Earthdata Search`
-      if (conceptId && granuleConceptId) appUrl = `${edscHost}/search/granules/granule-details?p=${conceptId}&g=${granuleConceptId}`
+      if (conceptId && granuleConceptId) appUrl = `${edscHost}${routes.GRANULE_DETAILS}?p=${conceptId}&g=${granuleConceptId}`
       break
     case 'granules/collection-details':
       activePanel = '0.2.0'
       if (collectionTitle) appTitle = `${collectionTitle} Details`
       if (collectionTitle) appDescription = `View ${collectionTitle} on Earthdata Search`
-      if (conceptId) appUrl = `${edscHost}/search/collection-details?p=${conceptId}`
+      if (conceptId) appUrl = `${edscHost}${routes.COLLECTION_DETAILS}?p=${conceptId}`
       break
     case 'granules':
       activePanel = '0.1.0'
       if (collectionTitle) appTitle = `${collectionTitle}`
       if (collectionTitle) appDescription = `Explore and access ${collectionTitle} data on Earthdata Search`
-      if (conceptId) appUrl = `${edscHost}/search/granules?p=${conceptId}`
+      if (conceptId) appUrl = `${edscHost}${routes.GRANULES}?p=${conceptId}`
       break
     default:
       activePanel = '0.0.0'

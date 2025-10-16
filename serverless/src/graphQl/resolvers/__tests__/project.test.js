@@ -8,7 +8,7 @@ import UPDATE_PROJECT from '../../../../../static/src/js/operations/mutations/up
 import GET_PROJECT from '../../../../../static/src/js/operations/queries/getProject'
 import GET_PROJECTS from '../../../../../static/src/js/operations/queries/getProjects'
 
-describe('Admin Resolver', () => {
+describe('Project Resolver', () => {
   describe('Query', () => {
     describe('project', () => {
       test('returns results with all fields', async () => {
@@ -40,9 +40,11 @@ describe('Admin Resolver', () => {
 
         expect(data).toEqual({
           project: {
+            createdAt: '2023-06-27T20:22:47.400Z',
             name: 'Test Project',
             obfuscatedId: '4517239960',
-            path: '/search?ff=Test%20Project'
+            path: '/search?ff=Test%20Project',
+            updatedAt: '2023-06-27T20:22:47.400Z'
           }
         })
       })
@@ -114,9 +116,11 @@ describe('Admin Resolver', () => {
 
           expect(data).toEqual({
             project: {
+              createdAt: '2023-06-27T20:22:47.400Z',
               name: 'Test Project',
               obfuscatedId: '7023641925',
-              path: '/search?ff=Test%20Project'
+              path: '/search?ff=Test%20Project',
+              updatedAt: '2023-06-27T20:22:47.400Z'
             }
           })
         })
@@ -293,7 +297,9 @@ describe('Admin Resolver', () => {
             id: 1,
             name: 'Test Project',
             path: '/test/project',
-            user_id: 1
+            user_id: 1,
+            created_at: '2025-09-16T20:59:44.874Z',
+            updated_at: '2025-09-16T20:59:44.874Z'
           })
         }
 
@@ -324,9 +330,11 @@ describe('Admin Resolver', () => {
 
         expect(data).toEqual({
           createProject: {
+            createdAt: '2025-09-16T20:59:44.874Z',
             obfuscatedId: '4517239960',
             name: 'Test Project',
-            path: '/test/project'
+            path: '/test/project',
+            updatedAt: '2025-09-16T20:59:44.874Z'
           }
         })
       })
@@ -461,7 +469,9 @@ describe('Admin Resolver', () => {
           updateProject: jest.fn().mockResolvedValue({
             id: 1,
             name: 'Updated Project',
-            path: '/updated/project'
+            path: '/updated/project',
+            created_at: '2025-09-16T20:59:44.874Z',
+            updated_at: '2025-09-16T20:59:44.874Z'
           })
         }
 
@@ -486,9 +496,11 @@ describe('Admin Resolver', () => {
 
         expect(data).toEqual({
           updateProject: {
+            createdAt: '2025-09-16T20:59:44.874Z',
             obfuscatedId: '4517239960',
             name: 'Updated Project',
-            path: '/updated/project'
+            path: '/updated/project',
+            updatedAt: '2025-09-16T20:59:44.874Z'
           }
         })
       })

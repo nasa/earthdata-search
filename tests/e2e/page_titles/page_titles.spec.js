@@ -128,7 +128,7 @@ test.describe('page titles', () => {
             json: {
               data: {
                 createProject: {
-                  name: 'Untitled Project',
+                  name: 'Test Project',
                   obfuscatedId: '1234',
                   path: '/projects'
                 }

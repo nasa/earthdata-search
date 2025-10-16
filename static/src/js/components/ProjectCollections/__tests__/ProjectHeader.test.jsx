@@ -49,15 +49,15 @@ describe('ProjectHeader component', () => {
       }
     })
 
-    expect(screen.getByRole('heading', { name: /test project/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /test project/i })).toHaveTextContent('test project')
+    expect(screen.getByRole('heading', { name: 'test project' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'test project' })).toHaveTextContent('test project')
   })
 
   test('renders title correctly when a name value is not defined', () => {
     setup()
 
-    expect(screen.getByRole('heading', { name: /untitled project/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /untitled project/i })).toHaveTextContent('Untitled Project')
+    expect(screen.getByRole('heading', { name: 'Untitled Project' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Untitled Project' })).toHaveTextContent('Untitled Project')
   })
 
   describe('when the collections are loading', () => {

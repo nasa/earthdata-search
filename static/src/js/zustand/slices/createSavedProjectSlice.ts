@@ -14,6 +14,7 @@ import actions from '../../actions'
 
 import CREATE_PROJECT from '../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../operations/mutations/updateProject'
+import GET_PROJECT from '../../operations/queries/getProject'
 
 const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get) => ({
   savedProject: {
@@ -75,12 +76,16 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         })
 
         const { [mutationKey]: projectResponse } = data
-        const { obfuscatedId } = projectResponse
+        const {
+          name: projectName,
+          obfuscatedId,
+          path: projectPath
+        } = projectResponse
 
         get().savedProject.setProject({
           id: obfuscatedId,
-          name,
-          path: realPath
+          name: projectName,
+          path: projectPath
         })
 
         // If the URL didn't contain a projectId before, change the URL to a project URL
@@ -102,7 +107,68 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
       }
     },
 
-    getProject: () => get().project
+    getProject: async (projectId) => {
+      const {
+        getState: reduxGetState
+      } = configureStore()
+      const reduxState = reduxGetState()
+
+      const {
+        authToken
+      } = reduxState
+
+      const apolloClient = getApolloClient(authToken)
+
+      try {
+        const { data } = await apolloClient.query({
+          query: gql(GET_PROJECT),
+          variables: {
+            obfuscatedId: projectId
+          }
+        })
+
+        const { project } = data
+        const {
+          name,
+          obfuscatedId: newProjectId,
+          path: projectPath
+        } = project
+
+        let updatedProjectPath = projectPath
+
+        // If projectPath starts with /projects change it to /project and navigate to that URL
+        if (projectPath.startsWith('/projects')) {
+          updatedProjectPath = projectPath.replace('/projects', '/project')
+
+          const newUrl = `${updatedProjectPath.split('?')[0]}?projectId=${newProjectId}`
+
+          const router = routerHelper.router as Router
+          router.navigate(newUrl, { replace: true })
+        }
+
+        // Save name, path and id into store
+        get().savedProject.setProject({
+          id: newProjectId,
+          name,
+          path: updatedProjectPath
+        })
+      } catch (error) {
+        const { message } = error as Error
+
+        if (message) {
+          const {
+            dispatch: reduxDispatch
+          } = configureStore()
+
+          reduxDispatch(actions.handleError({
+            error: message,
+            action: 'getProject',
+            resource: 'project',
+            verb: 'fetching'
+          }))
+        }
+      }
+    }
   }
 })
 

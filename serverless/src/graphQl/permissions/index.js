@@ -8,6 +8,7 @@ import {
 import isValidUser from './rules/isValidUser'
 import isAdminUser from './rules/isAdminUser'
 import userOwnsProject from './rules/userOwnsProject'
+import userOwnsProjectIfProjectOwned from './rules/userOwnsProjectIfProjectOwned'
 
 const buildPermissions = () => shield(
   {
@@ -40,15 +41,12 @@ const buildPermissions = () => shield(
     },
     Mutation: {
       '*': deny,
-      createProject: isValidUser,
+      createProject: allow,
       deleteProject: and(
         isValidUser,
         userOwnsProject
       ),
-      updateProject: and(
-        isValidUser,
-        userOwnsProject
-      )
+      updateProject: userOwnsProjectIfProjectOwned
     }
   },
   {

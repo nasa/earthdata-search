@@ -9,6 +9,7 @@ import setupTest from '../../../../jestConfigs/setupTest'
 
 import App from '../App'
 import GraphQlProvider from '../providers/GraphQlProvider'
+import { routes } from '../constants/routes'
 
 jest.mock('../../../../sharedUtils/config', () => ({
   getEnvironmentConfig: jest.fn().mockReturnValue({
@@ -73,7 +74,7 @@ describe('App component', () => {
       router: expect.objectContaining({
         routes: [
           expect.objectContaining({
-            path: '/',
+            path: routes.HOME,
             children: [
               expect.objectContaining({
                 index: true
@@ -82,71 +83,71 @@ describe('App component', () => {
                 path: '/portal/:portalId/*'
               }),
               expect.objectContaining({
-                path: '/search/*'
+                path: `${routes.SEARCH}/*`
               }),
               expect.objectContaining({
-                path: '/project'
+                path: routes.PROJECT
               }),
               expect.objectContaining({
-                path: '/projects'
+                path: routes.PROJECTS
               }),
               expect.objectContaining({
-                path: '/downloads',
+                path: routes.DOWNLOADS,
                 children: [
                   expect.objectContaining({
                     index: true,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/downloads/:id',
+                    path: `${routes.DOWNLOADS}/:id`,
                     lazy: expect.any(Function)
                   })
                 ]
               }),
               expect.objectContaining({
-                path: '/contact-info'
+                path: routes.CONTACT_INFO
               }),
               expect.objectContaining({
-                path: '/preferences'
+                path: routes.PREFERENCES
               }),
               expect.objectContaining({
-                path: '/subscriptions'
+                path: routes.SUBSCRIPTIONS
               }),
               expect.objectContaining({
-                path: '/earthdata-download-callback'
+                path: routes.EARTHDATA_DOWNLOAD_CALLBACK
               }),
               expect.objectContaining({
-                path: '/auth_callback'
+                path: routes.AUTH_CALLBACK
               }),
               expect.objectContaining({
-                path: '/admin',
+                path: routes.ADMIN,
                 children: [
                   expect.objectContaining({
                     index: true,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/retrievals',
+                    path: routes.ADMIN_RETRIEVALS,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/retrievals/:obfuscatedId',
+                    path: `${routes.ADMIN_RETRIEVALS}/:obfuscatedId`,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/projects',
+                    path: routes.ADMIN_PROJECTS,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/projects/:obfuscatedId',
+                    path: `${routes.ADMIN_PROJECTS}/:obfuscatedId`,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/retrievals-metrics',
+                    path: routes.ADMIN_RETRIEVAL_METRICS,
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/preferences-metrics',
+                    path: routes.ADMIN_PREFERENCES_METRICS,
                     lazy: expect.any(Function)
                   })
                 ]

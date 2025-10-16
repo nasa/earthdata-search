@@ -17,6 +17,9 @@ import actions from '../../actions'
 import { metricsMap } from '../../middleware/metrics/actions'
 
 import { eventEmitter } from '../../events/events'
+
+import Map from '../../components/Map/Map'
+
 // @ts-expect-error The file does not have types
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
 
@@ -26,11 +29,6 @@ import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 import buildGibsData from '../../util/map/buildGibsData'
-
-import projectionCodes from '../../constants/projectionCodes'
-
-import Map from '../../components/Map/Map'
-import { Colormap } from '../../types/sharedTypes'
 
 import {
   backgroundGranulePointStyle,
@@ -43,9 +41,10 @@ import {
   granulePointStyle
 } from '../../util/map/styles'
 
+import projectionCodes from '../../constants/projectionCodes'
 import spatialTypes from '../../constants/spatialTypes'
-
 import { mapEventTypes } from '../../constants/eventTypes'
+import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import {
@@ -61,6 +60,7 @@ import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
+  Colormap,
   ImageryLayers,
   ImageryLayerItem,
   MapGranule,
@@ -132,10 +132,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   const location = useLocation()
   const { pathname } = location
-  const isProjectPage = isPath(pathname, ['/project'])
+  const isProjectPage = isPath(pathname, [routes.PROJECT])
   const isFocusedCollectionPage = isPath(pathname, [
-    '/search/granules',
-    '/search/granules/collection-details'
+    routes.GRANULES,
+    routes.COLLECTION_DETAILS
   ])
 
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)

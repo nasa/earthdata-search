@@ -37,6 +37,7 @@ import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
 import GET_COLLECTION from '../../operations/queries/getCollection'
+import { routes } from '../../constants/routes'
 
 const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
   collection: {
@@ -67,7 +68,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
       if (!focusedCollectionId) {
         reduxDispatch(actions.changeUrl({
-          pathname: '/search',
+          pathname: routes.SEARCH,
           search
         }))
 
@@ -260,7 +261,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           })
 
           reduxDispatch(actions.changeUrl({
-            pathname: '/search',
+            pathname: routes.SEARCH,
             search
           }))
         }
@@ -288,7 +289,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname, search } = location
 
-      const isProjectPage = pathname.includes('/project')
+      const isProjectPage = pathname.includes(routes.PROJECT)
       if (!collectionId && isProjectPage) return
 
       if (!collectionId || collectionId === '') {
@@ -299,7 +300,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
         // If clearing the focused collection, redirect the user back to the search page
         reduxDispatch(actions.changeUrl({
-          pathname: '/search',
+          pathname: routes.SEARCH,
           search
         }))
       } else {
@@ -350,7 +351,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const { search } = location
 
       reduxDispatch(actions.changeUrl({
-        pathname: '/search/granules/collection-details',
+        pathname: routes.COLLECTION_DETAILS,
         search
       }))
     },
@@ -366,7 +367,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const { search } = location
 
       reduxDispatch(actions.changeUrl({
-        pathname: '/search/granules',
+        pathname: routes.GRANULES,
         search
       }))
     }

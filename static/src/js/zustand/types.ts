@@ -962,7 +962,7 @@ export type SavedProjectSlice = {
     /** Function to set the saved project name */
     setProjectName: (name: string) => void
     /** Function to get the saved project */
-    getProject: () => void
+    getProject: (projectId: string) => void
   }
 }
 

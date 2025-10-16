@@ -35,6 +35,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
+import { routes } from '../../constants/routes'
+
 import './SecondaryToolbar.scss'
 
 const SecondaryToolbar = ({
@@ -111,7 +113,7 @@ const SecondaryToolbar = ({
   const returnPath = window.location.href
   const { pathname, search } = location
   let isMapOverlay = false
-  const needsOverlayPaths = ['/', '/search', '/project']
+  const needsOverlayPaths = [routes.HOME, routes.SEARCH, routes.PROJECT]
 
   // Determine if the current page is a route that displays the map so the correct className can be set
   if (pathStartsWith(pathname, needsOverlayPaths)) {
@@ -144,7 +146,7 @@ const SecondaryToolbar = ({
       label="Back to Search"
       to={
         {
-          pathname: '/search',
+          pathname: routes.SEARCH,
           search: newSearch
         }
       }
@@ -165,7 +167,7 @@ const SecondaryToolbar = ({
       label="Back to Project"
       to={
         {
-          pathname: '/project',
+          pathname: routes.PROJECT,
           search: source
         }
       }
@@ -177,7 +179,7 @@ const SecondaryToolbar = ({
 
   const buildProjectLink = (isLoggedIn) => {
     if (!isLoggedIn) {
-      const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
+      const projectPath = `${window.location.protocol}//${window.location.host}${routes.PROJECT}${window.location.search}`
 
       return (
         <Button
@@ -199,7 +201,7 @@ const SecondaryToolbar = ({
         type="button"
         to={
           {
-            pathname: '/project',
+            pathname: routes.PROJECT,
             search: location.search
           }
         }
@@ -255,7 +257,7 @@ const SecondaryToolbar = ({
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <LinkContainer
-          to="/preferences"
+          to={routes.PREFERENCES}
         >
           <Dropdown.Item
             className="secondary-toolbar__preferences"
@@ -265,7 +267,7 @@ const SecondaryToolbar = ({
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to="/contact-info"
+          to={routes.CONTACT_INFO}
         >
           <Dropdown.Item
             className="secondary-toolbar__contact-info"
@@ -277,7 +279,7 @@ const SecondaryToolbar = ({
         <LinkContainer
           to={
             {
-              pathname: '/downloads',
+              pathname: routes.DOWNLOADS,
               search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
             }
           }
@@ -290,7 +292,7 @@ const SecondaryToolbar = ({
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to="/projects"
+          to={routes.PROJECTS}
         >
           <Dropdown.Item
             className="secondary-toolbar__saved-projects"
@@ -300,7 +302,7 @@ const SecondaryToolbar = ({
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to="/subscriptions"
+          to={routes.SUBSCRIPTIONS}
         >
           <Dropdown.Item
             className="secondary-toolbar__saved-subscriptions"
@@ -394,13 +396,19 @@ const SecondaryToolbar = ({
     </Dropdown>
   )
 
-  const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/project', '/downloads']) && (projectCollectionIds.length > 0 || name))
-  const showStartTourButton = location.pathname === '/search'
+  const showSaveProjectDropdown = pathStartsWith(location.pathname, [routes.SEARCH]) && loggedIn
+  const showViewProjectLink = (
+    !pathStartsWith(
+      location.pathname,
+      [routes.PROJECT, routes.DOWNLOADS]
+    )
+    && (projectCollectionIds.length > 0 || name)
+  )
+  const showStartTourButton = location.pathname === routes.SEARCH
 
   return (
     <nav className={secondaryToolbarClassnames}>
-      {isPath(location.pathname, ['/project']) && backToSearchLink}
+      {isPath(location.pathname, [routes.PROJECT]) && backToSearchLink}
       {isDownloadPathWithId(location.pathname) && backToProjectLink}
       <PortalFeatureContainer authentication>
         <>

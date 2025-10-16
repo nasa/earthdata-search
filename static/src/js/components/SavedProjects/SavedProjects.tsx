@@ -60,11 +60,17 @@ interface ProjectsQueryData {
 }
 
 interface SavedProjectsProps {
+  /** Function to handle errors */
   onHandleError: (params: {
+    /** The error that occurred */
     error: Error,
+    /** The action that caused the error */
     action: string,
+    /** The resource that was being acted upon when the error occurred */
     resource: string,
+    /** The verb describing the action */
     verb: string,
+    /** The type of notification to use */
     notificationType: 'banner' | 'toast'
   }) => void
 }
@@ -79,7 +85,6 @@ const SavedProjects: React.FC<SavedProjectsProps> = ({
 
   const pageSize = 20
 
-  // Const { data, error, loading } = useQuery<AdminProjectsQueryData>(gql(GET_PROJECTS), {
   const {
     data,
     error,

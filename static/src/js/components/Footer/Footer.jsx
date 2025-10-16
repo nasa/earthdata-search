@@ -11,6 +11,8 @@ import { FooterLink } from '../FooterLink/FooterLink'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 
+import { routes } from '../../constants/routes'
+
 import './Footer.scss'
 
 const Footer = () => {
@@ -21,7 +23,7 @@ const Footer = () => {
 
   const { footer = {} } = portal
 
-  const searchTimeVisible = isPath(pathname, ['/search', '/project'])
+  const searchTimeVisible = isPath(pathname, [routes.SEARCH, routes.PROJECT])
   const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
   const {

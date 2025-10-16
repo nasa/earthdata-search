@@ -1,6 +1,5 @@
 import { merge } from 'lodash-es'
 import { parse, stringify } from 'qs'
-import { gql } from '@apollo/client'
 
 import actions from './index'
 
@@ -22,9 +21,7 @@ import availablePortals from '../../../../portals/availablePortals.json'
 import useEdscStore from '../zustand/useEdscStore'
 
 import routerHelper from '../router/router'
-
-import createApolloClient from '../providers/getApolloClient'
-import GET_PROJECT from '../operations/queries/getProject'
+import { routes } from '../constants/routes'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -52,7 +49,7 @@ export const updateStore = ({
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
-    pathname !== '/'
+    pathname !== routes.HOME
     && !isPath(pathname, urlPathsWithoutUrlParams)
     && !isSavedProjectsPage(location)
   )
@@ -119,10 +116,7 @@ export const updateStore = ({
   }
 }
 
-export const changePath = (path = '') => async (dispatch, getState) => {
-  const state = getState()
-  const { authToken } = state
-
+export const changePath = (path = '') => async (dispatch) => {
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
@@ -134,55 +128,31 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   if (queryString && queryString.indexOf('projectId=') === 0) {
     const { projectId } = parse(queryString)
 
-    try {
-      const apolloClient = createApolloClient(authToken)
-      const { data } = await apolloClient.query({
-        query: gql(GET_PROJECT),
-        variables: {
-          obfuscatedId: projectId
-        }
-      })
+    const { savedProject } = useEdscStore.getState()
+    const { getProject } = savedProject
 
-      const { project } = data
-      const {
-        name,
-        obfuscatedId: newProjectId,
-        path: projectPath
-      } = project
+    // Fetch the project
+    await getProject(projectId)
 
-      // In the event that the user has the earthdata environment set to the deployed environment
-      // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
-      const [, projectQueryString] = projectPath.split('?')
+    // Get the updated project from the store
+    const { savedProject: updatedProject } = useEdscStore.getState()
+    const { project } = updatedProject
+    const { path: projectPath } = project
 
-      // Parse the query string into an object
-      const paramsObj = parse(projectQueryString, { parseArrays: false })
+    // In the event that the user has the earthdata environment set to the deployed environment
+    // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
+    const [, projectQueryString] = projectPath.split('?')
 
-      // If the earthdata environment variable
-      if (!Object.keys(paramsObj).includes('ee')) {
-        paramsObj.ee = earthdataEnvironment
-      }
+    // Parse the query string into an object
+    const paramsObj = parse(projectQueryString, { parseArrays: false })
 
-      // Save name, path and projectId into store
-      const { savedProject } = zustandState
-      const { setProject } = savedProject
-      setProject({
-        id: newProjectId,
-        name,
-        path: projectPath
-      })
-
-      decodedParams = decodeUrlParams(stringify(paramsObj))
-      await dispatch(actions.updateStore(decodedParams))
-    } catch (error) {
-      const { message } = error
-
-      dispatch(actions.handleError({
-        error: message,
-        action: 'changePath',
-        resource: 'project',
-        verb: 'updating'
-      }))
+    // If the earthdata environment variable
+    if (!Object.keys(paramsObj).includes('ee')) {
+      paramsObj.ee = earthdataEnvironment
     }
+
+    decodedParams = decodeUrlParams(stringify(paramsObj))
+    await dispatch(actions.updateStore(decodedParams))
   } else {
     decodedParams = decodeUrlParams(queryString)
 
@@ -202,7 +172,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
   if (
-    pathname.includes('/search')
+    pathname.includes(routes.SEARCH)
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
@@ -210,7 +180,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
     // Granules Search
     if (
-      pathname === '/search/granules'
+      pathname === routes.GRANULES
       || pathname.match(/\/portal\/\w*\/search\/granules$/)
     ) {
       getCollectionMetadata()
@@ -219,7 +189,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
     // Collection Details
     if (
-      pathname === '/search/granules/collection-details'
+      pathname === routes.COLLECTION_DETAILS
       || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
     ) {
       getCollectionMetadata()
@@ -228,7 +198,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
     // Subscription Details
     if (
-      pathname === '/search/granules/subscriptions'
+      pathname === routes.GRANULE_SUBSCRIPTIONS
       || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
     ) {
       getCollectionMetadata()
@@ -236,7 +206,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
 
     // Granule Details
     if (
-      pathname === '/search/granules/granule-details'
+      pathname === routes.GRANULE_DETAILS
       || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
     ) {
       getCollectionMetadata()

@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row'
 
 import AdminPage from '../AdminPage/AdminPage'
 import AdminProjectsList from './AdminProjectsList'
+import { routes } from '../../constants/routes'
 
 const AdminProjects = () => (
   <AdminPage
@@ -12,7 +13,7 @@ const AdminProjects = () => (
       [
         {
           name: 'Admin',
-          href: '/admin'
+          href: routes.ADMIN
         },
         {
           name: 'Projects',

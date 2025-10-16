@@ -3,6 +3,7 @@ import { screen, within } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import AdminPage from '../AdminPage'
+import { routes } from '../../../constants/routes'
 
 const setup = setupTest({
   Component: AdminPage,
@@ -32,7 +33,7 @@ describe('AdminPage component', () => {
         breadcrumbs: [{
           active: false,
           name: 'Admin Title',
-          href: '/admin'
+          href: routes.ADMIN
         }, {
           active: true,
           name: 'Retrievals'
@@ -47,7 +48,7 @@ describe('AdminPage component', () => {
 
     expect(within(breadcrumbs).getAllByRole('listitem').length).toEqual(2)
     expect(within(breadcrumbs).getAllByRole('listitem')[0]).toHaveTextContent('Admin')
-    expect(within(breadcrumbs).getByRole('link')).toHaveAttribute('href', '/admin')
+    expect(within(breadcrumbs).getByRole('link')).toHaveAttribute('href', routes.ADMIN)
     expect(within(breadcrumbs).getByText('Admin Title')).toBeInTheDocument()
     expect(within(breadcrumbs).getByRole('listitem', { current: 'page' })).toHaveTextContent('Retrievals')
     expect(within(breadcrumbs).getByText('Retrievals')).toBeInTheDocument()

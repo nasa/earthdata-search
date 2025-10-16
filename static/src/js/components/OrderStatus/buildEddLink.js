@@ -1,6 +1,7 @@
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 import { aggregatedOrderStatus } from '../../../../../sharedUtils/orderStatus'
+import { routes } from '../../constants/routes'
 
 /**
  * Builds a link to open Earthdata Download
@@ -58,7 +59,7 @@ const buildEddLink = ({
 
   // Build the eulaRedirectUrl to tell EDD how to get back after the user accepts a EULA
   const eulaCallback = 'earthdata-download://eulaCallback'
-  const eulaRedirectUrl = `${edscHost}/auth_callback?eddRedirect=${encodeURIComponent(eulaCallback)}`
+  const eulaRedirectUrl = `${edscHost}${routes.AUTH_CALLBACK}?eddRedirect=${encodeURIComponent(eulaCallback)}`
 
   const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&clientId=${getClientId().client}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
 

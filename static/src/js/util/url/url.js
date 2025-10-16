@@ -20,6 +20,7 @@ import { isPath } from '../isPath'
 import { deprecatedURLParameters } from '../../constants/deprecatedURLParameters'
 import { decodePortal, encodePortal } from './portalEncoders'
 import { decodeCollectionSortKey, encodeCollectionSortKey } from './collectionSortKeyEncoders'
+import { routes } from '../../constants/routes'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -422,12 +423,13 @@ export const encodeUrlQuery = (props) => {
  * that trigger the redirect to `/project`
  */
 export const urlPathsWithoutUrlParams = [
-  /^\/admin/,
-  /^\/auth_callback/,
-  /^\/contact-info/,
-  /^\/downloads/,
-  /^\/preferences/,
-  /^\/subscriptions/
+  new RegExp(`^${routes.ADMIN}`),
+  new RegExp(`^${routes.AUTH_CALLBACK}`),
+  new RegExp(`^${routes.CONTACT_INFO}`),
+  new RegExp(`^${routes.DOWNLOADS}`),
+  new RegExp(`^${routes.PREFERENCES}`),
+  new RegExp(`^${routes.SUBSCRIPTIONS}`),
+  new RegExp(`^${routes.PROJECTS}`)
 ]
 
 /**
@@ -437,5 +439,5 @@ export const urlPathsWithoutUrlParams = [
 export const isSavedProjectsPage = (location) => {
   const { pathname, search } = location
 
-  return isPath(pathname, ['/projects']) && search === ''
+  return isPath(pathname, [routes.PROJECTS]) && search === ''
 }

@@ -23,6 +23,7 @@ import routerHelper, { type Router } from '../../router/router'
 
 // @ts-expect-error This file does not have types
 import { initialGranuleQuery } from '../../util/url/collectionsEncoders'
+import { routes } from '../../constants/routes'
 
 const { collectionSearchResultsSortKey } = getApplicationConfig()
 
@@ -181,7 +182,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname } = location
 
-      if (isPath(pathname, ['/search/granules'])) {
+      if (isPath(pathname, [routes.GRANULES])) {
         get().granules.getGranules()
 
         get().timeline.getTimeline()

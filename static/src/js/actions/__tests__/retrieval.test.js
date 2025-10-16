@@ -10,6 +10,7 @@ import * as getApplicationConfig from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
 
 import routerHelper from '../../router/router'
+import { routes } from '../../constants/routes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -74,7 +75,7 @@ describe('submitRetrieval', () => {
       })
 
       expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-      expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7')
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(`${routes.DOWNLOADS}/7`)
 
       const { project } = useEdscStore.getState()
       const { submittedProject, submittingProject } = project
@@ -132,7 +133,7 @@ describe('submitRetrieval', () => {
     await store.dispatch(submitRetrieval())
 
     expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-    expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7?ee=prod')
+    expect(routerHelper.router.navigate).toHaveBeenCalledWith(`${routes.DOWNLOADS}/7?ee=prod`)
   })
 
   test('does not call updateCollectionResults on error', async () => {
@@ -236,7 +237,7 @@ describe('submitRetrieval', () => {
       })
 
       expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-      expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7')
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(`${routes.DOWNLOADS}/7`)
     })
 
     test('saves metrics for echo orders retrievals', async () => {
@@ -296,7 +297,7 @@ describe('submitRetrieval', () => {
       })
 
       expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
-      expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7')
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(`${routes.DOWNLOADS}/7`)
     })
 
     test('saves metrics for esi retrievals', async () => {

@@ -618,28 +618,35 @@ describe('updateStore', () => {
 
 describe('changePath', () => {
   test('retrieves path from database if there is a projectId', async () => {
-    const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
-
-    useEdscStore.setState({
-      collections: {
-        getCollections: jest.fn()
-      },
-      project: {
-        collections: {
-          allIds: ['C00001-EDSC']
-        },
-        getProjectCollections: jest.fn(),
-        getProjectGranules: jest.fn()
-      },
-      savedProject: {
-        setProject: jest.fn()
-      },
-      timeline: {
-        getTimeline: jest.fn()
+    const mockQuery = jest.fn().mockResolvedValue({
+      data: {
+        project: {
+          name: 'Test Project',
+          obfuscatedId: '12345',
+          path: '/search/granules?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
+        }
       }
     })
 
-    const newPath = '/search?projectId=1'
+    getApolloClient.mockReturnValue({
+      query: mockQuery
+    })
+
+    const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
+
+    useEdscStore.setState((state) => {
+      /* eslint-disable no-param-reassign */
+      state.collections.getCollections = jest.fn()
+
+      state.project.collections.allIds = ['C00001-EDSC']
+      state.project.getProjectCollections = jest.fn()
+      state.project.getProjectGranules = jest.fn()
+
+      state.timeline.getTimeline = jest.fn()
+      /* eslint-enable no-param-reassign */
+    })
+
+    const newPath = '/search?projectId=12345'
 
     const store = mockStore()
 
@@ -698,11 +705,10 @@ describe('changePath', () => {
         timeline
       } = zustandState
 
-      expect(savedProject.setProject).toHaveBeenCalledTimes(1)
-      expect(savedProject.setProject).toHaveBeenCalledWith({
-        id: '1',
-        name: null,
-        path: '/search?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
+      expect(savedProject.project).toEqual({
+        id: '12345',
+        name: 'Test Project',
+        path: '/search/granules?p=C00001-EDSC!C00001-EDSC&pg[1][v]=t'
       })
 
       expect(collections.getCollections).toHaveBeenCalledTimes(1)
@@ -782,54 +788,6 @@ describe('changePath', () => {
 
     expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
     expect(timeline.getTimeline).toHaveBeenCalledWith()
-  })
-
-  test('handles an error fetching the project', async () => {
-    getApolloClient.mockReturnValue({
-      query: jest.fn().mockImplementationOnce(() => {
-        throw new Error('Request failed with status code 500')
-      })
-    })
-
-    const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
-
-    useEdscStore.setState({
-      collections: {
-        getCollections: jest.fn()
-      },
-      timeline: {
-        getTimeline: jest.fn()
-      }
-    })
-
-    const newPath = '/search?projectId=1'
-
-    const store = mockStore()
-
-    await store.dispatch(urlQuery.changePath(newPath)).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions.length).toEqual(0)
-
-      const zustandState = useEdscStore.getState()
-      const {
-        collections,
-        timeline
-      } = zustandState
-
-      expect(collections.getCollections).toHaveBeenCalledTimes(1)
-      expect(collections.getCollections).toHaveBeenCalledWith()
-
-      expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
-      expect(timeline.getTimeline).toHaveBeenCalledWith()
-
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toHaveBeenCalledWith({
-        action: 'changePath',
-        error: 'Request failed with status code 500',
-        resource: 'project',
-        verb: 'updating'
-      })
-    })
   })
 
   describe('when a path is provided', () => {

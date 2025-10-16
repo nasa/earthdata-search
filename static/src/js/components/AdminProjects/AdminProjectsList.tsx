@@ -22,6 +22,7 @@ import Row from 'react-bootstrap/Row'
 
 import { adminSortKeys } from '../../constants/adminSortKeys'
 import requestDebounceDuration from '../../constants/requestDebounceDuration'
+import { routes } from '../../constants/routes'
 
 import ADMIN_PROJECTS from '../../operations/queries/adminProjects'
 
@@ -244,7 +245,7 @@ const AdminProjectsList = () => {
                         key={obfuscatedId}
                         onClick={
                           () => {
-                            navigate(`/admin/projects/${obfuscatedId}`)
+                            navigate(`${routes.ADMIN_PROJECTS}/${obfuscatedId}`)
                           }
                         }
                         role="button"

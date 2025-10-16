@@ -5,6 +5,7 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import WrappingContainer from '../WrappingContainer'
+import { routes } from '../../../constants/routes'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -35,7 +36,7 @@ describe('WrappingContainer component', () => {
   describe('when in a route that does not include the map', () => {
     test('does not render classname on saved projects', async () => {
       useLocation.mockReturnValue({
-        pathname: '/contact-info'
+        pathname: routes.CONTACT_INFO
       })
 
       setup()

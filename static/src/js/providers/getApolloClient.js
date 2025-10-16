@@ -30,7 +30,17 @@ const getApolloClient = (authToken) => {
   // Save the authToken to check if it changes next time
   previousAuthToken = authToken
 
-  const cache = new InMemoryCache()
+  // Create a new InMemoryCache instance
+  const cache = new InMemoryCache({
+    // These type policies ensure that Apollo Client can correctly identify and cache
+    // various types of objects based on their unique identifiers. This is necessary when the
+    // default 'id' field is not present or when a different field should be used as the identifier.
+    typePolicies: {
+      Project: {
+        keyFields: ['obfuscatedId']
+      }
+    }
+  })
 
   // Set the endpoint for the GraphQL API
   const httpLink = createHttpLink({

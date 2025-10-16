@@ -19,6 +19,7 @@ import type { CollectionMetadata, CollectionsMetadata } from '../../types/shared
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
+import { routes } from '../../constants/routes'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onToggleOverrideTemporalModal:
@@ -64,8 +65,8 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
 
   // Determine the collectionMetadata the timeline should be displaying
   // Ensure that timeline does not appear on the `Saved Projects` page
-  const isProjectPage = isPath(pathname, ['/project'])
-  const isGranulesPage = isPath(pathname, ['/search/granules'])
+  const isProjectPage = isPath(pathname, [routes.PROJECT])
+  const isGranulesPage = isPath(pathname, [routes.GRANULES])
 
   const collectionMetadata: CollectionsMetadata = {}
   const collectionsToRender = []

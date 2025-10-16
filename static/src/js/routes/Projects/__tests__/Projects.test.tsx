@@ -1,5 +1,4 @@
 import React from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
 
 import { waitFor } from '@testing-library/react'
 // @ts-expect-error This file does not have types
@@ -46,23 +45,6 @@ describe('Projects component', () => {
 
     expect(SavedProjectsContainer).toHaveBeenCalledTimes(1)
     expect(SavedProjectsContainer).toHaveBeenCalledWith({}, {})
-  })
-
-  describe('when loading the page with query parameters', () => {
-    test('redirects to the /project route', () => {
-      (useLocation as jest.Mock).mockReturnValueOnce({
-        pathname: '/projects',
-        search: '?p=!C1234-EDSC'
-      })
-
-      setup()
-
-      expect(Navigate).toHaveBeenCalledTimes(1)
-      expect(Navigate).toHaveBeenCalledWith({
-        replace: true,
-        to: '/project?p=!C1234-EDSC'
-      }, {})
-    })
   })
 
   // RTL Lazy loading issue with mocks between https://github.com/testing-library/react-testing-library/issues/716

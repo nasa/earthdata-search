@@ -7,9 +7,11 @@ const CREATE_PROJECT = `
       name: $name
       path: $path
     ) {
+      createdAt
       name
       obfuscatedId
       path
+      updatedAt
     }
   }
 `

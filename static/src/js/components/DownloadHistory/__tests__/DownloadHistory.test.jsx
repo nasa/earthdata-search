@@ -8,6 +8,7 @@ import * as AppConfig from '../../../../../../sharedUtils/config'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { DownloadHistory } from '../DownloadHistory'
+import { routes } from '../../../constants/routes'
 
 jest.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
   deployedEnvironment: jest.fn()
@@ -93,7 +94,7 @@ describe('DownloadHistory component', () => {
           expect.objectContaining({
             portalId: undefined,
             to: {
-              pathname: '/downloads/8069076',
+              pathname: `${routes.DOWNLOADS}/8069076`,
               search: ''
             },
             children: '1 collection'
@@ -126,7 +127,7 @@ describe('DownloadHistory component', () => {
           expect.objectContaining({
             portalId: undefined,
             to: {
-              pathname: '/downloads/8069076',
+              pathname: `${routes.DOWNLOADS}/8069076`,
               search: ''
             },
             children: 'Collection Title'
@@ -161,7 +162,7 @@ describe('DownloadHistory component', () => {
           expect.objectContaining({
             portalId: undefined,
             to: {
-              pathname: '/downloads/8069076',
+              pathname: `${routes.DOWNLOADS}/8069076`,
               search: ''
             },
             children: 'Collection Title and 1 other collection'
@@ -196,7 +197,7 @@ describe('DownloadHistory component', () => {
           expect.objectContaining({
             portalId: 'test',
             to: {
-              pathname: '/downloads/8069076',
+              pathname: `${routes.DOWNLOADS}/8069076`,
               search: '?ee=uat'
             },
             children: 'Collection Title'

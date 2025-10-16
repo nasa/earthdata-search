@@ -877,12 +877,12 @@ describe('SearchPanels component', () => {
 
       expect(helmet.metaTags[4]).toEqual({
         property: 'og:url',
-        content: 'https://search.earthdata.nasa.gov/search/collection-details?p=C1000-EDSC'
+        content: 'https://search.earthdata.nasa.gov/search/granules/collection-details?p=C1000-EDSC'
       })
 
       expect(helmet.linkTags[0]).toEqual({
         rel: 'canonical',
-        href: 'https://search.earthdata.nasa.gov/search/collection-details?p=C1000-EDSC'
+        href: 'https://search.earthdata.nasa.gov/search/granules/collection-details?p=C1000-EDSC'
       })
 
       expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)

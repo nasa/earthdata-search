@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom'
 import classNames from 'classnames'
 import { pathStartsWith } from '../../util/pathStartsWith'
 
+import { routes } from '../../constants/routes'
+
 import './WrappingContainer.scss'
 
 export const WrappingContainer = (props) => {
@@ -14,7 +16,7 @@ export const WrappingContainer = (props) => {
   const location = useLocation()
   const { pathname } = location
 
-  const isMapPage = ['/search', '/project']
+  const isMapPage = [routes.SEARCH, routes.PROJECT]
 
   let addMapPageStyles = false
 

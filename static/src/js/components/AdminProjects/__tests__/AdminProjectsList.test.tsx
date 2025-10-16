@@ -4,6 +4,7 @@ import { screen, within } from '@testing-library/react'
 import AdminProjectsList from '../AdminProjectsList'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_PROJECTS from '../../../operations/queries/adminProjects'
+import { routes } from '../../../constants/routes'
 
 const mockUseNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -96,7 +97,7 @@ describe('AdminProjectsList component', () => {
     await user.click(projectRow)
 
     expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/admin/projects/1109324645')
+    expect(mockUseNavigate).toHaveBeenCalledWith(`${routes.ADMIN_PROJECTS}/1109324645`)
   })
 
   test('pagination shows next page when enough results', async () => {

@@ -10,10 +10,13 @@ import {
   collectionRequestNonIndexedCmrKeys,
   granuleRequestNonIndexedCmrKeys
 } from '../../../../../sharedConstants/nonIndexedCmrKeys'
+import { routes } from '../../constants/routes'
+
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 import { queryToHumanizedList } from '../../util/queryToHumanizedList'
 import pluralize from '../../util/pluralize'
 import { removeDisabledFieldsFromQuery } from '../../util/subscriptions'
+import { formatDefaultSubscriptionName } from '../../util/formatDefaultSubscriptionName'
 
 import Button from '../Button/Button'
 import SubscriptionsListItem from './SubscriptionsListItem'
@@ -23,7 +26,6 @@ import SubscriptionsQueryList from '../SubscriptionsList/SubscriptionsQueryList'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './SubscriptionsBody.scss'
-import { formatDefaultSubscriptionName } from '../../util/formatDefaultSubscriptionName'
 
 /**
  * Renders SubscriptionsBody.
@@ -253,7 +255,7 @@ export const SubscriptionsBody = ({
               <div className="subscriptions-body__list-footer">
                 <PortalLinkContainer
                   className="subscriptions-body__view-all-subscriptions"
-                  to="/subscriptions"
+                  to={routes.SUBSCRIPTIONS}
                   type="button"
                   bootstrapVariant="light"
                   label="View All Subscriptions"
