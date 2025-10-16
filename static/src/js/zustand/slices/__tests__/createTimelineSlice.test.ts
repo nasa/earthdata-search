@@ -275,6 +275,49 @@ describe('createTimelineSlice', () => {
 
         expect(window.dataLayer.push).toHaveBeenCalledTimes(0)
       })
+
+      test('sets intervals to empty when conceptId is empty array', async () => {
+        configureStore.mockReturnValue({
+          getState: () => ({
+            authToken: 'mock-token'
+          })
+        })
+
+        useEdscStore.setState((state) => {
+          state.collection.collectionId = ''
+          state.timeline.query = {
+            endDate: '2009-12-01T23:59:59.000Z',
+            interval: TimelineInterval.Day,
+            startDate: '1979-01-01T00:00:00.000Z'
+          }
+
+          state.timeline.intervals = {
+            collectionId: [
+              [
+                1298937600,
+                1304208000,
+                3
+              ]
+            ]
+          }
+
+          state.project.collections.allIds = []
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { timeline } = zustandState
+        const { getTimeline } = timeline
+
+        await getTimeline()
+
+        await waitFor(() => {
+          const updatedState = useEdscStore.getState()
+          const { timeline: updatedTimeline } = updatedState
+          expect(updatedTimeline.intervals).toEqual({})
+        })
+
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(0)
+      })
     })
 
     describe('when there is a request error', () => {
