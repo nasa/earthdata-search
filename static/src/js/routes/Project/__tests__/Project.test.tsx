@@ -6,7 +6,10 @@ import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { Project } from '../Project'
+import { mapDispatchToProps, Project } from '../Project'
+
+// @ts-expect-error This file does not have types
+import actions from '../../../actions'
 
 import MapContainer from '../../../containers/MapContainer/MapContainer'
 import OverrideTemporalModalContainer from '../../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
@@ -56,6 +59,28 @@ const setup = setupTest({
       }
     }
   }
+})
+
+describe('mapDispatchToProps', () => {
+  test('onSubmitRetrieval calls actions.submitRetrieval', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'submitRetrieval')
+
+    mapDispatchToProps(dispatch).onSubmitRetrieval()
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith()
+  })
+
+  test('onToggleChunkedOrderModal calls actions.toggleChunkedOrderModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleChunkedOrderModal')
+
+    mapDispatchToProps(dispatch).onToggleChunkedOrderModal(true)
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
+  })
 })
 
 describe('Project component', () => {

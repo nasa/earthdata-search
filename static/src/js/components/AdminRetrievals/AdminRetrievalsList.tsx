@@ -110,7 +110,7 @@ const AdminRetrievalsList = () => {
 
     // If the current sort ky is -urs_id, return to default sort
     if (sortKeyString === adminSortKeys.ursIdAscending) {
-      setSortKey('')
+      setSortKey(undefined)
     }
   }, [sortKey])
 
@@ -130,7 +130,7 @@ const AdminRetrievalsList = () => {
 
     // If the current sort ky is -created_at, return to default sort
     if (sortKeyString === adminSortKeys.createdAtAscending) {
-      setSortKey('')
+      setSortKey(undefined)
     }
   }, [sortKey])
 

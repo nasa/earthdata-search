@@ -27,7 +27,7 @@ import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onSubmitRetrieval:
     () => dispatch(actions.submitRetrieval()),
   onToggleChunkedOrderModal:
