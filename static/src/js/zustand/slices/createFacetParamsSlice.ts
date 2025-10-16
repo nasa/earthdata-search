@@ -57,6 +57,12 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       const { setCmrFacets, viewAllFacets } = get().facetParams
 
       setCmrFacets(viewAllFacets)
+
+      // When sending these to CMR in static/src/js/util/collections.js we are overriding the cmrFacets
+      // with the viewAllFacets, so we need to clear the viewAllFacets after applying them
+      set((state) => {
+        state.facetParams.viewAllFacets = {}
+      })
     },
     setFeatureFacets: (featureFacets) => {
       set((state) => {
@@ -77,9 +83,6 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         }
       })
 
-      // Fetch collections with the updated feature facets
-      get().collections.getCollections()
-
       // Clear any subscription disabledFields
       reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
@@ -98,9 +101,6 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
           pageNum: 1
         }
       })
-
-      // Fetch collections with the updated feature facets
-      get().collections.getCollections()
 
       // Clear any subscription disabledFields
       reduxDispatch(actions.removeSubscriptionDisabledFields())
