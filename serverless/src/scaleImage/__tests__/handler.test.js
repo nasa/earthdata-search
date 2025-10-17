@@ -179,7 +179,7 @@ describe('scaleImage', () => {
   })
 
   describe('when an error occurs', () => {
-    test('when return_default is true', async () => {
+    test('when imageSrc is null', async () => {
       const responseBuffer = Buffer.from('test-image-contents')
 
       const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
@@ -187,30 +187,12 @@ describe('scaleImage', () => {
 
       const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
 
-      const event = {
-        queryStringParameters: {
-          return_default: 'true'
-        }
-      }
+      const event = {}
 
       await scaleImage(event, {})
 
       expect(buildUnavailableImageBufferMock).toBeCalledWith(85, 85)
       expect(buildResponseMock).toBeCalledWith(responseBuffer, 200)
-    })
-
-    test('when return_default is false', async () => {
-      const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
-
-      const event = {
-        queryStringParameters: {
-          return_default: 'false'
-        }
-      }
-
-      await scaleImage(event, {})
-
-      expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 404)
     })
   })
 })
