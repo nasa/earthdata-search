@@ -12,9 +12,7 @@ import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/p
 import { getTemporal } from '../../../../../sharedUtils/edscDate'
 
 import normalizeSpatial from '../map/normalizeSpatial'
-import {
-  getBrowseImageUrlFromConcept
-} from '../../../../../serverless/src/scaleImage/utils/cmr/getBrowseImageUrlFromConcept'
+import { getBrowseImageUrlFromConcept } from '../getBrowseImageUrlFromConcept'
 
 /**
  * Request object for granule specific requests
@@ -79,7 +77,7 @@ export default class GranuleRequest extends CmrRequest {
 
         if (browseUrl) {
           updatedGranule.browse_url = browseUrl
-          updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale?h=${height}&w=${width}&imageSrc=${browseUrl}`
+          updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale?h=${height}&w=${width}&imageSrc=${encodeURIComponent(browseUrl)}`
         }
       }
 

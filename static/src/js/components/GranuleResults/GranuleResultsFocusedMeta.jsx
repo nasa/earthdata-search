@@ -340,7 +340,7 @@ const GranuleResultsFocusedMeta = ({
                           'granule-results-focused-meta__thumb--is-active': activeBrowseImageIndex === i
                         }
                       ])
-                      const imgSrc = `${getEnvironmentConfig().apiHost}/scale?h=175&w=175&imageSrc=${href}`
+                      const imgSrc = `${getEnvironmentConfig().apiHost}/scale?h=175&w=175&imageSrc=${encodeURIComponent(href)}`
                       const key = `thumb-${href}-${i}`
 
                       return (
@@ -388,7 +388,7 @@ const GranuleResultsFocusedMeta = ({
                       }
                     ])
 
-                    const modalImage = `${getEnvironmentConfig().apiHost}/scale?h=538&w=538&imageSrc=${href}`
+                    const modalImage = `${getEnvironmentConfig().apiHost}/scale?h=538&w=538&imageSrc=${encodeURIComponent(href)}`
                     const key = `modal-${href}-${i}`
 
                     return (

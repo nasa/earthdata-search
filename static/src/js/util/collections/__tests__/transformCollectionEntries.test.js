@@ -60,7 +60,7 @@ describe('transformCollectionEntries', () => {
 
     // Check that thumbnail is set for collections with browse_flag
     expect(result[0]).toHaveProperty('thumbnail')
-    expect(result[0].thumbnail).toBe('http://localhost:3000/scale?h=85&w=85&imageSrc=https://sample.nasa.gov/thumbnails/thumbnail.jpg')
+    expect(result[0].thumbnail).toBe('http://localhost:3000/scale?h=85&w=85&imageSrc=https%3A%2F%2Fsample.nasa.gov%2Fthumbnails%2Fthumbnail.jpg')
 
     // Check that near real time flag is set
     expect(result[0]).toHaveProperty('isNrt', true)

@@ -1,4 +1,4 @@
-import { isLinkBrowse } from '../../../../../sharedUtils/isLinkBrowse'
+import { isLinkBrowse } from '../../../../sharedUtils/isLinkBrowse'
 
 /**
  * Search the provided CMR metadata for browse image urls
