@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
+import { routes } from '../../constants/routes'
 
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
@@ -27,7 +28,7 @@ export const AuthCallbackContainer = () => {
       eddRedirect,
       jwt = '',
       accessToken,
-      redirect = '/'
+      redirect = routes.HOME
     } = params
 
     let eddRedirectUrl = eddRedirect
@@ -51,7 +52,7 @@ export const AuthCallbackContainer = () => {
           // There is a bug in this redirect because UrlQueryContainer is triggering updates from both Redux and Zustand (for now). For some reason that is causing the URL to stay on /auth_callback instead of redirecting to /earthdata-download-callback.
 
           // This setTimeout should only be temporary, it should be removed once UrlQueryContainer is removed.
-          navigate('/earthdata-download-callback')
+          navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
         }, 0)
 
         return
@@ -63,7 +64,7 @@ export const AuthCallbackContainer = () => {
     }
 
     // Handle redirects
-    const invalidRedirectUrl = redirect !== '/' && !redirect.startsWith(edscHost)
+    const invalidRedirectUrl = redirect !== routes.HOME && !redirect.startsWith(edscHost)
 
     if (invalidRedirectUrl) {
       // Redirect to an error page or a safe location if the URL is not a relative path

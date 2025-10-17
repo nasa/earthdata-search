@@ -34,7 +34,9 @@ test.describe('When dontShowTour is set to false', () => {
       })
     })
 
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('search')
+    await initialMapPromise
   })
 
   test.describe('When clicking the "Skip for now" button', () => {
@@ -101,7 +103,9 @@ test.describe('When loading the page with dontShowTour preference set to true', 
       })
     })
 
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('search')
+    await initialMapPromise
   })
 
   test('should not see the tour when the page loads', async ({ page }) => {
@@ -128,14 +132,16 @@ test.describe('When logged in', () => {
       })
     })
 
-    await page.route(/graphql.*\/api/, async (route) => {
+    await page.route(/cmr-graphql-proxy/, async (route) => {
       await route.fulfill({
         json: getSubscriptionsGraphQlBody,
         headers: graphQlHeaders
       })
     })
 
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
     await page.goto('search')
+    await initialMapPromise
   })
 
   test('should see the additional tour steps for logged in users', async ({ page }) => {
@@ -205,7 +211,9 @@ test.describe('When not logged in', () => {
       })
     })
 
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('search')
+    await initialMapPromise
   })
 
   test('should navigate through the Joyride tour highlighting the correct parts of the page', async ({ page }) => {

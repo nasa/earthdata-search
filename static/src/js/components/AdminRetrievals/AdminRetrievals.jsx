@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row'
 
 import AdminPage from '../AdminPage/AdminPage'
 import AdminRetrievalsList from './AdminRetrievalsList'
+import { routes } from '../../constants/routes'
 
 const AdminRetrievals = () => (
   <AdminPage
@@ -12,7 +13,7 @@ const AdminRetrievals = () => (
       [
         {
           name: 'Admin',
-          href: '/admin'
+          href: routes.ADMIN
         },
         {
           name: 'Retrievals',

@@ -24,7 +24,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('given no query it returns no params', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here')

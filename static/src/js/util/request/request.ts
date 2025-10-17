@@ -8,6 +8,7 @@ import type {
   RequestParams,
   Response
 } from '../../types/sharedTypes'
+import { routes } from '../../constants/routes'
 
 const defaultTransformResponse = Array.isArray(axios.defaults.transformResponse)
   ? axios.defaults.transformResponse
@@ -303,7 +304,7 @@ export default class Request {
       // Determine the path to redirect to for logging in
       const returnPath = href
 
-      if (pathname.startsWith('/admin')) {
+      if (pathname.startsWith(routes.ADMIN)) {
         window.location.href = getEnvironmentConfig().edscHost
 
         return

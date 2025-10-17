@@ -2,6 +2,7 @@ import React from 'react'
 
 import AdminPage from '../AdminPage/AdminPage'
 import AdminProjectDetails from '../AdminProjectDetails/AdminProjectDetails'
+import { routes } from '../../constants/routes'
 
 /** A component that displays a admin project */
 export const AdminProject: React.FC = () => (
@@ -11,11 +12,11 @@ export const AdminProject: React.FC = () => (
       [
         {
           name: 'Admin',
-          href: '/admin'
+          href: routes.ADMIN
         },
         {
           name: 'Projects',
-          href: '/admin/projects'
+          href: routes.ADMIN_PROJECTS
         },
         {
           name: 'Project Details',

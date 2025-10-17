@@ -8,6 +8,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import { stringify } from '../../util/url/url'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { routes } from '../../constants/routes'
 
 export const RelatedCollection = ({
   className = '',
@@ -47,7 +48,7 @@ export const RelatedCollection = ({
       }
       to={
         {
-          pathname: '/search/granules',
+          pathname: routes.GRANULES,
           search: stringify({
             ...params,
             p

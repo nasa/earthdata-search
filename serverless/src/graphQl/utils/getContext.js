@@ -21,12 +21,15 @@ const getContext = async ({ event }) => {
   const { headers } = event
 
   const {
-    authorization: bearerToken
+    authorization: bearerToken = ''
   } = downcaseKeys(headers)
 
   const { userId } = await validateToken(bearerToken.split(' ')[1], env)
 
-  const user = await databaseClient.getUserById(userId)
+  let user
+
+  // If a userId was returned, get the user from the database
+  if (userId) user = await databaseClient.getUserById(userId)
 
   return {
     databaseClient,

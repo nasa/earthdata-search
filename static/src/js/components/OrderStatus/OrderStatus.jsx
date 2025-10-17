@@ -20,6 +20,8 @@ import { stringify } from '../../util/url/url'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
+import { routes } from '../../constants/routes'
+
 import './OrderStatus.scss'
 
 /**
@@ -146,14 +148,14 @@ export const OrderStatus = ({
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-      <a href={`${edscHost}/downloads/${paramsId}${eeLink}`}>
-        {`${edscHost}/downloads/${paramsId}${eeLink}`}
+      <a href={`${edscHost}${routes.DOWNLOADS}/${paramsId}${eeLink}`}>
+        {`${edscHost}${routes.DOWNLOADS}/${paramsId}${eeLink}`}
       </a>
       {' or the '}
       <PortalLinkContainer
         to={
           {
-            pathname: '/downloads',
+            pathname: routes.DOWNLOADS,
             search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
           }
         }
@@ -179,7 +181,7 @@ export const OrderStatus = ({
         <title>Download Status</title>
         <meta name="title" content="Download Status" />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}/downloads`} />
+        <link rel="canonical" href={`${edscHost}${routes.DOWNLOADS}`} />
       </Helmet>
       <div className="order-status">
         <Well className="order-status">
@@ -365,7 +367,7 @@ export const OrderStatus = ({
                   className="order-status__footer-link"
                   to={
                     {
-                      pathname: '/downloads',
+                      pathname: routes.DOWNLOADS,
                       search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
                     }
                   }

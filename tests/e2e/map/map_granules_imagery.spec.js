@@ -250,7 +250,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
       test.describe('when reordering layers', () => {
         test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
           // These layers are somewhat similar so we are zooming in here to make the difference
-        // when comparing the orders easier to see
+          // when comparing the orders easier to see
           const zoomedInMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
           await page.goto('/search/granules?p=C2930727817-LARC_CLOUD&pg[0][v]=f&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&tl=1724883938.647!4!!&lat=38.964887769762086&long=-114.57040117944547&zoom=7')
 
@@ -265,7 +265,16 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           const secondLayerTitle = page.getByText('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
           // Drag the second layer to the top (above the first layer)
-          await secondLayerTitle.dragTo(firstLayerTitle)
+          // Add delays between actions to allow for the drag and drop to register correctly
+          await secondLayerTitle.hover()
+          await page.mouse.down()
+          await page.waitForTimeout(100)
+
+          await firstLayerTitle.hover()
+          await page.waitForTimeout(100)
+          await page.mouse.up()
+
+          // Wait a moment for the reordering to be applied
           await page.waitForTimeout(500)
 
           // Verify the layers have been reordered by checking the layer titles

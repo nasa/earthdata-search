@@ -695,7 +695,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode project collections if no collections exist', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       collections: {
         allIds: [],
@@ -713,7 +715,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('correctly encodes project collections', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
@@ -731,7 +735,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('correctly encodes focusedCollection and project collections', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: 'collectionId1',
       projectCollections: {
@@ -749,7 +755,9 @@ describe('url#encodeUrlQuery', () => {
         collectionId1: {},
         collectionId2: {}
       },
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: null,
       projectCollections: {
@@ -774,7 +782,9 @@ describe('url#encodeUrlQuery', () => {
         collectionId1: {},
         collectionId2: {}
       },
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: null,
       projectCollections: {
@@ -802,7 +812,9 @@ describe('url#encodeUrlQuery', () => {
         collectionId1: {},
         collectionId2: {}
       },
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: null,
       projectCollections: {
@@ -830,7 +842,9 @@ describe('url#encodeUrlQuery', () => {
         collectionId1: {},
         collectionId2: {}
       },
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: null,
       projectCollections: {
@@ -860,7 +874,9 @@ describe('url#encodeUrlQuery', () => {
         collectionId1: {},
         collectionId2: {}
       },
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: null,
       projectCollections: {

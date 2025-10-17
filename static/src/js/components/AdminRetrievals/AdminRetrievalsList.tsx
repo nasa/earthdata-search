@@ -22,6 +22,7 @@ import Row from 'react-bootstrap/Row'
 
 import { adminSortKeys } from '../../constants/adminSortKeys'
 import requestDebounceDuration from '../../constants/requestDebounceDuration'
+import { routes } from '../../constants/routes'
 
 import ADMIN_RETRIEVALS from '../../operations/queries/adminRetrievals'
 
@@ -109,7 +110,7 @@ const AdminRetrievalsList = () => {
 
     // If the current sort ky is -urs_id, return to default sort
     if (sortKeyString === adminSortKeys.ursIdAscending) {
-      setSortKey('')
+      setSortKey(undefined)
     }
   }, [sortKey])
 
@@ -129,7 +130,7 @@ const AdminRetrievalsList = () => {
 
     // If the current sort ky is -created_at, return to default sort
     if (sortKeyString === adminSortKeys.createdAtAscending) {
-      setSortKey('')
+      setSortKey(undefined)
     }
   }, [sortKey])
 
@@ -255,7 +256,7 @@ const AdminRetrievalsList = () => {
                         key={obfuscatedId}
                         onClick={
                           () => {
-                            navigate(`/admin/retrievals/${obfuscatedId}`)
+                            navigate(`${routes.ADMIN_RETRIEVALS}/${obfuscatedId}`)
                           }
                         }
                         role="button"

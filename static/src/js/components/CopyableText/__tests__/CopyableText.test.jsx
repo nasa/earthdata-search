@@ -1,210 +1,151 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import {
+  createEvent,
+  fireEvent,
+  screen,
+  waitFor
+} from '@testing-library/react'
 
-import * as addToast from '../../../util/addToast'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import CopyableText from '../CopyableText'
 
-Enzyme.configure({ adapter: new Adapter() })
+import addToast from '../../../util/addToast'
 
-beforeEach(() => {
-  jest.clearAllMocks()
+jest.mock('../../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
-  Object.assign(navigator, {
-    clipboard: {}
-  })
+const setup = setupTest({
+  Component: CopyableText,
+  defaultProps: {
+    text: 'The text'
+  }
 })
-
-function setup(overrideProps) {
-  const props = {
-    ...overrideProps
-  }
-  const enzymeWrapper = shallow(<CopyableText {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
 
 describe('CopyableText', () => {
   test('renders the text', () => {
-    const { enzymeWrapper } = setup({
-      text: 'The text'
-    })
+    setup()
 
-    expect(enzymeWrapper.text()).toEqual('The text')
+    expect(screen.getByRole('button', { value: 'The text' })).toBeInTheDocument()
   })
 
   describe('when a classname is provided', () => {
     test('adds the classname', () => {
-      const { enzymeWrapper } = setup({
-        text: 'The text',
-        className: 'test-class'
+      setup({
+        overrideProps: {
+          className: 'test-class'
+        }
       })
 
-      expect(enzymeWrapper.props().className).toContain('test-class')
+      expect(screen.getByRole('button', { value: 'The text' })).toHaveClass('test-class')
     })
   })
 
   describe('when clicked', () => {
-    test('prevents event propagation', () => {
+    test('prevents event propagation', async () => {
       const stopPropagationMock = jest.fn()
-      Object.assign(navigator, {
-        clipboard: {
-          writeText: () => {}
-        }
-      })
 
-      const { enzymeWrapper } = setup({
-        text: 'The text',
-        className: 'test-class'
-      })
+      setup()
 
-      enzymeWrapper.simulate('click', {
-        stopPropagation: stopPropagationMock
-      })
+      const button = screen.getByRole('button', { value: 'The text' })
+
+      const clickEvent = createEvent.click(button)
+      clickEvent.stopPropagation = stopPropagationMock
+
+      fireEvent(button, clickEvent)
 
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      expect(stopPropagationMock).toHaveBeenCalledWith()
     })
 
     describe('when an onClick method is defined', () => {
-      test('calls the onClick method', () => {
-        const stopPropagationMock = jest.fn()
-        const onClickMock = jest.fn()
-        Object.assign(navigator, {
-          clipboard: {
-            writeText: () => {}
+      test('calls the onClick method', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            onClick: jest.fn()
           }
         })
 
-        const { enzymeWrapper } = setup({
-          text: 'The text',
-          className: 'test-class',
-          onClick: onClickMock
+        const button = screen.getByRole('button', { value: 'The text' })
+        await user.click(button)
+
+        await waitFor(() => {
+          expect(props.onClick).toHaveBeenCalledTimes(1)
         })
 
-        enzymeWrapper.simulate('click', {
-          stopPropagation: stopPropagationMock
-        })
-
-        expect(onClickMock).toHaveBeenCalledTimes(1)
+        expect(props.onClick).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'click'
+        }))
       })
     })
 
     describe('when the browser supports navigator.clipboard.writeText', () => {
       describe('when a success message is not defined', () => {
         test('does not display a toast', async () => {
-          const stopPropagationMock = jest.fn()
-          Object.assign(navigator, {
-            clipboard: {
-              writeText: () => {}
-            }
-          })
+          const { user } = setup()
 
-          const addToastMock = jest.spyOn(addToast, 'addToast')
+          const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
 
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class'
-          })
+          const button = screen.getByRole('button', { value: 'The text' })
+          await user.click(button)
 
-          await enzymeWrapper.simulate('click', {
-            stopPropagation: stopPropagationMock
-          })
+          expect(addToast).toHaveBeenCalledTimes(0)
 
-          expect(addToastMock).toHaveBeenCalledTimes(0)
+          expect(writeTextSpy).toHaveBeenCalledTimes(1)
+          expect(writeTextSpy).toHaveBeenCalledWith('The text')
         })
       })
 
       describe('when a success message is defined', () => {
         describe('when the success message is a string', () => {
           test('displays a toast', async () => {
-            const stopPropagationMock = jest.fn()
-            Object.assign(navigator, {
-              clipboard: {
-                writeText: () => {}
+            const { user } = setup({
+              overrideProps: {
+                successMessage: 'Copy successful'
               }
             })
 
-            const addToastMock = jest.spyOn(addToast, 'addToast')
+            const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
 
-            const { enzymeWrapper } = setup({
-              text: 'The text',
-              className: 'test-class',
-              successMessage: 'Copy successful'
-            })
+            const button = screen.getByRole('button', { value: 'The text' })
+            await user.click(button)
 
-            await enzymeWrapper.simulate('click', {
-              stopPropagation: stopPropagationMock
-            })
-
-            expect(addToastMock).toHaveBeenCalledTimes(1)
-            expect(addToastMock).toHaveBeenCalledWith(
+            expect(addToast).toHaveBeenCalledTimes(1)
+            expect(addToast).toHaveBeenCalledWith(
               'Copy successful',
               {
                 appearance: 'success',
                 autoDismiss: true
               }
             )
+
+            expect(writeTextSpy).toHaveBeenCalledTimes(1)
+            expect(writeTextSpy).toHaveBeenCalledWith('The text')
           })
         })
 
         describe('when the success message is a function', () => {
           test('passes arguments to the function', async () => {
-            const stopPropagationMock = jest.fn()
-            Object.assign(navigator, {
-              clipboard: {
-                writeText: () => {}
+            const successMessageMock = jest.fn(() => 'This is the success message')
+
+            const { user } = setup({
+              overrideProps: {
+                successMessage: successMessageMock
               }
             })
 
-            const successMessageMock = jest.fn(() => 'This is the success message')
+            const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
 
-            const { enzymeWrapper } = setup({
-              text: 'The text',
-              className: 'test-class',
-              successMessage: successMessageMock
-            })
-
-            await enzymeWrapper.simulate('click', {
-              stopPropagation: stopPropagationMock
-            })
+            const button = screen.getByRole('button', { value: 'The text' })
+            await user.click(button)
 
             expect(successMessageMock).toHaveBeenCalledTimes(1)
             expect(successMessageMock).toHaveBeenCalledWith({ text: 'The text' })
+
+            expect(writeTextSpy).toHaveBeenCalledTimes(1)
+            expect(writeTextSpy).toHaveBeenCalledWith('The text')
           })
-        })
-
-        test('displays a toast', async () => {
-          const stopPropagationMock = jest.fn()
-          Object.assign(navigator, {
-            clipboard: {
-              writeText: () => {}
-            }
-          })
-
-          const addToastMock = jest.spyOn(addToast, 'addToast')
-
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class',
-            successMessage: ({ text }) => `This is the success message: ${text}`
-          })
-
-          await enzymeWrapper.simulate('click', {
-            stopPropagation: stopPropagationMock
-          })
-
-          expect(addToastMock).toHaveBeenCalledTimes(1)
-          expect(addToastMock).toHaveBeenCalledWith(
-            'This is the success message: The text',
-            {
-              appearance: 'success',
-              autoDismiss: true
-            }
-          )
         })
       })
     })
@@ -212,40 +153,33 @@ describe('CopyableText', () => {
     describe('when the browser does not support navigator.clipboard.writeText', () => {
       describe('when a failure message is not defined', () => {
         test('does not display a toast', async () => {
-          const stopPropagationMock = jest.fn()
-          const addToastMock = jest.spyOn(addToast, 'addToast')
+          const { user } = setup()
 
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class'
-          })
+          const button = screen.getByRole('button', { value: 'The text' })
+          await user.click(button)
 
-          await enzymeWrapper.simulate('click', {
-            stopPropagation: stopPropagationMock
-          })
-
-          expect(addToastMock).toHaveBeenCalledTimes(0)
+          expect(addToast).toHaveBeenCalledTimes(0)
         })
       })
 
       describe('when a failure message is defined', () => {
         describe('when the success message is a string', () => {
           test('displays a toast', async () => {
-            const stopPropagationMock = jest.fn()
-            const addToastMock = jest.spyOn(addToast, 'addToast')
-
-            const { enzymeWrapper } = setup({
-              text: 'The text',
-              className: 'test-class',
-              failureMessage: 'Copy unsuccessful'
+            const { user } = setup({
+              overrideProps: {
+                failureMessage: 'Copy unsuccessful'
+              }
             })
 
-            await enzymeWrapper.simulate('click', {
-              stopPropagation: stopPropagationMock
+            jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
+              throw new Error('The clipboard API is not supported')
             })
 
-            expect(addToastMock).toHaveBeenCalledTimes(1)
-            expect(addToastMock).toHaveBeenCalledWith(
+            const button = screen.getByRole('button', { value: 'The text' })
+            await user.click(button)
+
+            expect(addToast).toHaveBeenCalledTimes(1)
+            expect(addToast).toHaveBeenCalledWith(
               'Copy unsuccessful',
               {
                 appearance: 'error',
@@ -257,41 +191,40 @@ describe('CopyableText', () => {
 
         describe('when the failure message is a function', () => {
           test('passes arguments to the function', async () => {
-            const stopPropagationMock = jest.fn()
-
-            const failureMessageMock = jest.fn(() => 'This is the failure message')
-
-            const { enzymeWrapper } = setup({
-              text: 'The text',
-              className: 'test-class',
-              failureMessage: failureMessageMock
+            const { props, user } = setup({
+              overrideProps: {
+                failureMessage: jest.fn(() => 'This is the failure message')
+              }
             })
 
-            await enzymeWrapper.simulate('click', {
-              stopPropagation: stopPropagationMock
+            jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
+              throw new Error('The clipboard API is not supported')
             })
 
-            expect(failureMessageMock).toHaveBeenCalledTimes(1)
-            expect(failureMessageMock).toHaveBeenCalledWith({ text: 'The text' })
+            const button = screen.getByRole('button', { value: 'The text' })
+            await user.click(button)
+
+            expect(props.failureMessage).toHaveBeenCalledTimes(1)
+            expect(props.failureMessage).toHaveBeenCalledWith({ text: 'The text' })
           })
         })
 
         test('displays a toast', async () => {
-          const stopPropagationMock = jest.fn()
-          const addToastMock = jest.spyOn(addToast, 'addToast')
-
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class',
-            failureMessage: ({ text }) => `This is the failure message: ${text}`
+          const { user } = setup({
+            overrideProps: {
+              failureMessage: ({ text }) => `This is the failure message: ${text}`
+            }
           })
 
-          await enzymeWrapper.simulate('click', {
-            stopPropagation: stopPropagationMock
+          jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
+            throw new Error('The clipboard API is not supported')
           })
 
-          expect(addToastMock).toHaveBeenCalledTimes(1)
-          expect(addToastMock).toHaveBeenCalledWith(
+          const button = screen.getByRole('button', { value: 'The text' })
+          await user.click(button)
+
+          expect(addToast).toHaveBeenCalledTimes(1)
+          expect(addToast).toHaveBeenCalledWith(
             'This is the failure message: The text',
             {
               appearance: 'error',
@@ -302,105 +235,43 @@ describe('CopyableText', () => {
       })
     })
 
-    describe('when textToCopy is not provided', () => {
-      test('copies the text to the clipboard', () => {
-        Object.assign(navigator, {
-          clipboard: {
-            writeText: () => {}
-          }
-        })
-
-        jest.spyOn(navigator.clipboard, 'writeText')
-
-        const { enzymeWrapper } = setup({
-          text: 'The text',
-          className: 'test-class'
-        })
-
-        enzymeWrapper.simulate('click', {
-          stopPropagation: () => {}
-        })
-
-        expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('The text')
-      })
-    })
-
     describe('when textToCopy is provided', () => {
       describe('when text is provided as a string', () => {
-        test('copies the text to the clipboard', () => {
-          Object.assign(navigator, {
-            clipboard: {
-              writeText: () => {}
+        test('copies the text to the clipboard', async () => {
+          const { user } = setup({
+            overrideProps: {
+              textToCopy: 'Some other text to copy'
             }
           })
 
-          jest.spyOn(navigator.clipboard, 'writeText')
+          const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
 
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class',
-            textToCopy: 'Some other text to copy'
-          })
+          const button = screen.getByRole('button', { value: 'The text' })
+          await user.click(button)
 
-          enzymeWrapper.simulate('click', {
-            stopPropagation: () => {}
-          })
-
-          expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
-          expect(navigator.clipboard.writeText).toHaveBeenCalledWith('Some other text to copy')
+          expect(writeTextSpy).toHaveBeenCalledTimes(1)
+          expect(writeTextSpy).toHaveBeenCalledWith('Some other text to copy')
         })
       })
 
       describe('when text is provided as function', () => {
-        test('calls the function with arguments', () => {
-          Object.assign(navigator, {
-            clipboard: {
-              writeText: () => {}
+        test('calls the function with arguments and copies the text to the clipboard', async () => {
+          const { props, user } = setup({
+            overrideProps: {
+              textToCopy: jest.fn(() => 'Some other text to copy')
             }
           })
 
-          jest.spyOn(navigator.clipboard, 'writeText')
+          const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
 
-          const textToCopyMock = jest.fn(() => 'Some other text to copy')
+          const button = screen.getByRole('button', { value: 'The text' })
+          await user.click(button)
 
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class',
-            textToCopy: textToCopyMock
-          })
+          expect(writeTextSpy).toHaveBeenCalledTimes(1)
+          expect(writeTextSpy).toHaveBeenCalledWith('Some other text to copy')
 
-          enzymeWrapper.simulate('click', {
-            stopPropagation: () => {}
-          })
-
-          expect(textToCopyMock).toHaveBeenCalledTimes(1)
-          expect(textToCopyMock).toHaveBeenCalledWith({ text: 'The text' })
-        })
-
-        test('copies the text to the clipboard', () => {
-          Object.assign(navigator, {
-            clipboard: {
-              writeText: () => {}
-            }
-          })
-
-          jest.spyOn(navigator.clipboard, 'writeText')
-
-          const textToCopyMock = jest.fn(({ text }) => `Some other text to copy: ${text}`)
-
-          const { enzymeWrapper } = setup({
-            text: 'The text',
-            className: 'test-class',
-            textToCopy: textToCopyMock
-          })
-
-          enzymeWrapper.simulate('click', {
-            stopPropagation: () => {}
-          })
-
-          expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
-          expect(navigator.clipboard.writeText).toHaveBeenCalledWith('Some other text to copy: The text')
+          expect(props.textToCopy).toHaveBeenCalledTimes(1)
+          expect(props.textToCopy).toHaveBeenCalledWith({ text: 'The text' })
         })
       })
     })

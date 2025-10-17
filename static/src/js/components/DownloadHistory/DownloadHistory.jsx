@@ -14,6 +14,8 @@ import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import { routes } from '../../constants/routes'
+
 import './DownloadHistory.scss'
 
 /**
@@ -63,7 +65,7 @@ export const DownloadHistory = ({
         <title>Download Status &amp; History</title>
         <meta name="title" content="Download Status &amp; History" />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}/downloads`} />
+        <link rel="canonical" href={`${edscHost}${routes.DOWNLOADS}`} />
       </Helmet>
       <h2 className="route-wrapper__page-heading">Download Status & History</h2>
       {
@@ -104,7 +106,7 @@ export const DownloadHistory = ({
                           portalId={portalId}
                           to={
                             {
-                              pathname: `/downloads/${id}`,
+                              pathname: `${routes.DOWNLOADS}/${id}`,
                               search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
                             }
                           }

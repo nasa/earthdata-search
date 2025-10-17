@@ -5,6 +5,7 @@ import Stack from 'react-bootstrap/Stack'
 import AdminPage from '../AdminPage/AdminPage'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import { routes } from '../../constants/routes'
 
 const Admin = () => (
   <AdminPage
@@ -24,28 +25,28 @@ const Admin = () => (
           <PortalLinkContainer
             type="button"
             bootstrapVariant="primary"
-            to="/admin/retrievals"
+            to={routes.ADMIN_RETRIEVALS}
           >
             Retrievals
           </PortalLinkContainer>
           <PortalLinkContainer
             type="button"
             bootstrapVariant="primary"
-            to="/admin/projects"
+            to={routes.ADMIN_PROJECTS}
           >
             Projects
           </PortalLinkContainer>
           <PortalLinkContainer
             type="button"
             bootstrapVariant="primary"
-            to="/admin/retrievals-metrics"
+            to={routes.ADMIN_RETRIEVAL_METRICS}
           >
             Retrieval Metrics
           </PortalLinkContainer>
           <PortalLinkContainer
             type="button"
             bootstrapVariant="primary"
-            to="/admin/preferences-metrics"
+            to={routes.ADMIN_PREFERENCES_METRICS}
           >
             Preferences Metrics
           </PortalLinkContainer>

@@ -8,13 +8,14 @@ import { gql } from '@apollo/client'
 import AdminRetrievalDetails from '../AdminRetrievalDetails'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_RETRIEVAL from '../../../operations/queries/adminRetrieval'
+import { routes } from '../../../constants/routes'
 
 const setup = setupTest({
   ComponentsByRoute: {
-    '/admin/retrievals/:obfuscatedId': AdminRetrievalDetails
+    [`${routes.ADMIN_RETRIEVALS}/:obfuscatedId`]: AdminRetrievalDetails
   },
   defaultPropsByRoute: {
-    '/admin/retrievals/:obfuscatedId': {
+    [`${routes.ADMIN_RETRIEVALS}/:obfuscatedId`]: {
       onRequeueOrder: jest.fn()
     }
   },
@@ -75,7 +76,7 @@ const setup = setupTest({
       }
     }
   ],
-  defaultRouterEntries: ['/admin/retrievals/06347346'],
+  defaultRouterEntries: [`${routes.ADMIN_RETRIEVALS}/06347346`],
   withRouter: true,
   withApolloClient: true
 })

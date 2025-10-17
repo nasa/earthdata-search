@@ -7,6 +7,7 @@ import AdminPage from '../AdminPage/AdminPage'
 import AdminRetrievalsMetricsList from './AdminRetrievalsMetricsList'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
 import setTemporalFilters from './setTemporalFilters'
+import { routes } from '../../constants/routes'
 
 const AdminRetrievalsMetrics = ({
   onFetchAdminRetrievalsMetrics,
@@ -34,7 +35,7 @@ const AdminRetrievalsMetrics = ({
         [
           {
             name: 'Admin',
-            href: '/admin'
+            href: routes.ADMIN
           },
           {
             name: 'Retrievals Metrics',

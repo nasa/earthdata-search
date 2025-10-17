@@ -8,14 +8,17 @@ import {
   handleError
 } from '../errors'
 
-import * as addToast from '../../util/addToast'
+import addToast from '../../util/addToast'
+
+jest.mock('../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
 const mockStore = configureMockStore([thunk])
 
 describe('addError', () => {
   test('should call addToast with correct params', async () => {
-    const addToastMock = jest.spyOn(addToast, 'addToast')
-
     const store = mockStore({})
     const toastPayload = {
       id: 1,
@@ -49,8 +52,9 @@ describe('addError', () => {
 
     // No action should be pushed
     expect(storeActions.length).toEqual(0)
-    expect(addToastMock).toHaveBeenCalledTimes(1)
-    expect(addToastMock).toHaveBeenCalledWith(toastPayload.message, {
+
+    expect(addToast).toHaveBeenCalledTimes(1)
+    expect(addToast).toHaveBeenCalledWith(toastPayload.message, {
       appearance: 'error',
       autoDismiss: false
     })

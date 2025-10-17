@@ -13,13 +13,15 @@ import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironme
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
-import ProjectRequest from '../util/request/projectRequest'
 import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
+
 import useEdscStore from '../zustand/useEdscStore'
+
 import routerHelper from '../router/router'
+import { routes } from '../constants/routes'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -47,7 +49,7 @@ export const updateStore = ({
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
-    pathname !== '/'
+    pathname !== routes.HOME
     && !isPath(pathname, urlPathsWithoutUrlParams)
     && !isSavedProjectsPage(location)
   )
@@ -124,49 +126,33 @@ export const changePath = (path = '') => async (dispatch) => {
 
   // If query string is a projectId, call getProject
   if (queryString && queryString.indexOf('projectId=') === 0) {
-    const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
-
     const { projectId } = parse(queryString)
 
-    try {
-      const projectResponse = await requestObject.fetch(projectId)
+    const { savedProject } = useEdscStore.getState()
+    const { getProject } = savedProject
 
-      const { data } = projectResponse
-      const {
-        name,
-        path: projectPath
-      } = data
+    // Fetch the project
+    await getProject(projectId)
 
-      // In the event that the user has the earthdata environment set to the deployed environment
-      // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
-      const [, projectQueryString] = projectPath.split('?')
+    // Get the updated project from the store
+    const { savedProject: updatedProject } = useEdscStore.getState()
+    const { project } = updatedProject
+    const { path: projectPath } = project
 
-      // Parse the query string into an object
-      const paramsObj = parse(projectQueryString, { parseArrays: false })
+    // In the event that the user has the earthdata environment set to the deployed environment
+    // the ee param will not exist, we need to ensure its provided on the `state` param for redirect purposes
+    const [, projectQueryString] = projectPath.split('?')
 
-      // If the earthdata environment variable
-      if (!Object.keys(paramsObj).includes('ee')) {
-        paramsObj.ee = earthdataEnvironment
-      }
+    // Parse the query string into an object
+    const paramsObj = parse(projectQueryString, { parseArrays: false })
 
-      // Save name, path and projectId into store
-      dispatch(actions.updateSavedProject({
-        path: projectPath,
-        name,
-        projectId
-      }))
-
-      decodedParams = decodeUrlParams(stringify(paramsObj))
-      await dispatch(actions.updateStore(decodedParams))
-    } catch (error) {
-      dispatch(actions.handleError({
-        error,
-        action: 'changePath',
-        resource: 'project',
-        verb: 'updating',
-        requestObject
-      }))
+    // If the earthdata environment variable
+    if (!Object.keys(paramsObj).includes('ee')) {
+      paramsObj.ee = earthdataEnvironment
     }
+
+    decodedParams = decodeUrlParams(stringify(paramsObj))
+    await dispatch(actions.updateStore(decodedParams))
   } else {
     decodedParams = decodeUrlParams(queryString)
 
@@ -186,7 +172,7 @@ export const changePath = (path = '') => async (dispatch) => {
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
   if (
-    pathname.includes('/search')
+    pathname.includes(routes.SEARCH)
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
@@ -194,7 +180,7 @@ export const changePath = (path = '') => async (dispatch) => {
 
     // Granules Search
     if (
-      pathname === '/search/granules'
+      pathname === routes.GRANULES
       || pathname.match(/\/portal\/\w*\/search\/granules$/)
     ) {
       getCollectionMetadata()
@@ -203,7 +189,7 @@ export const changePath = (path = '') => async (dispatch) => {
 
     // Collection Details
     if (
-      pathname === '/search/granules/collection-details'
+      pathname === routes.COLLECTION_DETAILS
       || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
     ) {
       getCollectionMetadata()
@@ -212,7 +198,7 @@ export const changePath = (path = '') => async (dispatch) => {
 
     // Subscription Details
     if (
-      pathname === '/search/granules/subscriptions'
+      pathname === routes.GRANULE_SUBSCRIPTIONS
       || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
     ) {
       getCollectionMetadata()
@@ -220,7 +206,7 @@ export const changePath = (path = '') => async (dispatch) => {
 
     // Granule Details
     if (
-      pathname === '/search/granules/granule-details'
+      pathname === routes.GRANULE_DETAILS
       || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
     ) {
       getCollectionMetadata()
@@ -275,79 +261,40 @@ const updateUrl = ({ options, oldPathname, newPathname }) => () => {
  * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
  * changeUrl({ pathname: '/a-new-url' })
  */
-export const changeUrl = (options) => (dispatch, getState) => {
-  const state = getState()
-
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
-
-  const {
-    authToken,
-    savedProject
-  } = state
-
-  let newOptions = options
+export const changeUrl = (options) => (dispatch) => {
   const { location } = routerHelper.router.state
   const { pathname: oldPathname } = location
 
   let newPathname
+
   if (typeof options === 'string') {
     [newPathname] = options.split('?')
+    const newSearch = options.split('?')[1] || ''
 
-    const { projectId, name, path } = savedProject
-    if (projectId || options.length > 2000) {
-      // Make sure the path has changed, and is not a path where we don't use params
-      if (path !== newOptions && !isPath(newOptions, urlPathsWithoutUrlParams)) {
-        const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
+    // Prevent loading from the urls that don't use URL params.
+    const stripParameters = (
+      isPath(newPathname, urlPathsWithoutUrlParams)
+      || isSavedProjectsPage({
+        pathname: newPathname,
+        search: newSearch
+      })
+    )
 
-        const projectResponse = requestObject.save({
-          authToken,
-          name,
-          path: newOptions,
-          projectId
-        })
-          .then((response) => {
-            const { data } = response
-            const {
-              project_id: newProjectId,
-              path: projectPath
-            } = data
-
-            newOptions = `${projectPath.split('?')[0]}?projectId=${newProjectId}`
-
-            if (projectId !== newProjectId) {
-              routerHelper.router.navigate(newOptions, { replace: true })
-            }
-
-            dispatch(actions.updateSavedProject({
-              path: projectPath,
-              name,
-              projectId: newProjectId
-            }))
-          })
-          .catch((error) => {
-            dispatch(actions.handleError({
-              error,
-              action: 'changeUrl',
-              resource: 'project',
-              verb: 'updating',
-              requestObject
-            }))
-          })
-
-        return projectResponse
-      }
-    } else {
-      dispatch(updateUrl({
-        options: newOptions,
-        oldPathname,
-        newPathname
-      }))
+    let newOptions = options
+    if (stripParameters) {
+      newOptions = newPathname
     }
+
+    dispatch(updateUrl({
+      options: newOptions,
+      oldPathname,
+      newPathname
+    }))
   } else {
     ({ pathname: newPathname } = options)
 
     dispatch(updateUrl({
-      options: newOptions,
+      options,
       oldPathname,
       newPathname
     }))

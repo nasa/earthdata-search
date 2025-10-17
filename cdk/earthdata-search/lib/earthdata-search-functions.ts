@@ -97,8 +97,6 @@ export class Functions extends Construct {
       contactInfoApiGatewayResource,
       granulesApiGatewayResource,
       opensearchApiGatewayResource,
-      projectsApiGatewayResource,
-      projectsIdApiGatewayResource,
       retrievalCollectionsApiGatewayResource,
       retrievalsApiGatewayResource,
       retrievalsIdApiGatewayResource,
@@ -282,47 +280,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/decodeId/handler.js',
       functionName: 'decodeId',
-      functionNamePrefix
-    })
-
-    /**
-     * Get Projects
-     */
-    const getProjectsNestedStack = new cdk.NestedStack(scope, 'GetProjectsNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getProjectsNestedStack, 'GetProjectsLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: projectsApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['GET'],
-        path: 'projects'
-      },
-      entry: '../../serverless/src/getProjects/handler.js',
-      functionName: 'getProjects',
-      functionNamePrefix
-    })
-
-    /**
-     * Delete Project
-     */
-    const deleteProjectNestedStack = new cdk.NestedStack(scope, 'DeleteProjectNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(deleteProjectNestedStack, 'DeleteProjectLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: projectsIdApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['DELETE'],
-        parentPath: 'projects',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/deleteProject/handler.js',
-      functionName: 'deleteProject',
       functionNamePrefix
     })
 
@@ -672,26 +629,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/getContactInfo/handler.js',
       functionName: 'getContactInfo',
-      functionNamePrefix
-    })
-
-    /**
-     * Get Project
-     */
-    const getProjectNestedStack = new cdk.NestedStack(scope, 'GetProjectNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getProjectNestedStack, 'GetProjectLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: projectsIdApiGatewayResource,
-        apiGatewayRestApi,
-        methods: ['GET'],
-        parentPath: 'projects',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/getProject/handler.js',
-      functionName: 'getProject',
       functionNamePrefix
     })
 
@@ -1080,25 +1017,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/saveContactInfo/handler.js',
       functionName: 'saveContactInfo',
-      functionNamePrefix
-    })
-
-    /**
-     * Save Project
-     */
-    const saveProjectNestedStack = new cdk.NestedStack(scope, 'SaveProjectNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(saveProjectNestedStack, 'SaveProjectLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: projectsApiGatewayResource,
-        apiGatewayRestApi,
-        methods: ['POST'],
-        path: 'projects'
-      },
-      entry: '../../serverless/src/saveProject/handler.js',
-      functionName: 'saveProject',
       functionNamePrefix
     })
 

@@ -10,12 +10,6 @@ jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: ProjectHeader,
-  defaultProps: {
-    onUpdateProjectName: jest.fn(),
-    savedProject: {
-      name: 'test project'
-    }
-  },
   defaultZustandState: {
     project: {
       collections: {
@@ -35,29 +29,35 @@ const setup = setupTest({
           }
         }
       }
+    },
+    savedProject: {
+      setProjectName: jest.fn()
     }
   }
 })
 
 describe('ProjectHeader component', () => {
   test('renders its title correctly', () => {
-    setup()
-
-    expect(screen.getByRole('heading', { name: /test project/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /test project/i })).toHaveTextContent('test project')
-  })
-
-  test('renders title correctly when a name value is not defined', () => {
     setup({
-      overrideProps: {
+      overrideZustandState: {
         savedProject: {
-          name: undefined
+          project: {
+            id: 1,
+            name: 'test project'
+          }
         }
       }
     })
 
-    expect(screen.getByRole('heading', { name: /untitled project/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /untitled project/i })).toHaveTextContent('Untitled Project')
+    expect(screen.getByRole('heading', { name: 'test project' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'test project' })).toHaveTextContent('test project')
+  })
+
+  test('renders title correctly when a name value is not defined', () => {
+    setup()
+
+    expect(screen.getByRole('heading', { name: 'Untitled Project' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Untitled Project' })).toHaveTextContent('Untitled Project')
   })
 
   describe('when the collections are loading', () => {
@@ -482,7 +482,16 @@ describe('ProjectHeader component', () => {
     })
 
     test('clicking on the project name enables editing', async () => {
-      const { user } = setup()
+      const { user } = setup({
+        overrideZustandState: {
+          savedProject: {
+            project: {
+              id: 1,
+              name: 'test project'
+            }
+          }
+        }
+      })
 
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
       expect(screen.getByTestId('edit_button')).toBeInTheDocument()
@@ -500,7 +509,16 @@ describe('ProjectHeader component', () => {
     })
 
     test('editing the text field changes the project name', async () => {
-      const { user } = setup()
+      const { user } = setup({
+        overrideZustandState: {
+          savedProject: {
+            project: {
+              id: 1,
+              name: 'test project'
+            }
+          }
+        }
+      })
 
       const textbox = screen.getByRole('textbox')
       await user.click(textbox)
@@ -514,7 +532,16 @@ describe('ProjectHeader component', () => {
     })
 
     test('clicking the edit button enables editing in the text field', async () => {
-      const { user } = setup()
+      const { user } = setup({
+        overrideZustandState: {
+          savedProject: {
+            project: {
+              id: 1,
+              name: 'test project'
+            }
+          }
+        }
+      })
 
       await user.click(screen.getByTestId('edit_button'))
       const textbox = screen.getByRole('textbox')
@@ -527,24 +554,44 @@ describe('ProjectHeader component', () => {
       expect(textbox.value).toBe('test projecta')
     })
 
-    test('clicking the submit button calls onUpdateProjectName', async () => {
-      const { props, user } = setup()
+    test('clicking the submit button calls setProjectName', async () => {
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          savedProject: {
+            project: {
+              id: 1,
+              name: 'test project'
+            },
+            setProjectName: jest.fn()
+          }
+        }
+      })
 
       await user.click(screen.getByTestId('edit_button'))
       await user.click(screen.getByTestId('submit_button'))
 
-      expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project')
+      expect(zustandState.savedProject.setProjectName).toHaveBeenCalledTimes(1)
+      expect(zustandState.savedProject.setProjectName).toHaveBeenCalledWith('test project')
     })
 
-    test('pressing enter while editing calls onUpdateProjectName', async () => {
-      const { props, user } = setup()
+    test('pressing enter while editing calls setProjectName', async () => {
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          savedProject: {
+            project: {
+              id: 1,
+              name: 'test project'
+            },
+            setProjectName: jest.fn()
+          }
+        }
+      })
 
       await user.click(screen.getByTestId('edit_button'))
       await user.keyboard('{Enter}')
 
-      expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project')
+      expect(zustandState.savedProject.setProjectName).toHaveBeenCalledTimes(1)
+      expect(zustandState.savedProject.setProjectName).toHaveBeenCalledWith('test project')
     })
   })
 })

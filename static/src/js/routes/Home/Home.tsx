@@ -59,7 +59,9 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
-import { PortalConfig } from '../../types/sharedTypes'
+import { routes } from '../../constants/routes'
+
+import type{ PortalConfig } from '../../types/sharedTypes'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
@@ -302,7 +304,16 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                       {' '}
                       platform on March 12, 2025
                     </p>
-                    <PortalLinkContainer className="focus-light" type="button" variant="hds-primary" dark to="/search/granules?p=C1378579425-LAADS&pg[0][v]=f&q=MOD02QKM&pg[0][gsk]=-start_date&sb[0]=-29.95172%2C11.43036%2C-16.57503%2C19.31775&qt=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z&tl=1347419148.752!5!!&lat=15.27060660&long=-22.78519821&zoom=6" updatePath>Explore this data on the map</PortalLinkContainer>
+                    <PortalLinkContainer
+                      className="focus-light"
+                      type="button"
+                      variant="hds-primary"
+                      dark
+                      to={`${routes.GRANULES}?p=C1378579425-LAADS&pg[0][v]=f&q=MOD02QKM&pg[0][gsk]=-start_date&sb[0]=-29.95172%2C11.43036%2C-16.57503%2C19.31775&qt=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z&tl=1347419148.752!5!!&lat=15.27060660&long=-22.78519821&zoom=6`}
+                      updatePath
+                    >
+                      Explore this data on the map
+                    </PortalLinkContainer>
                   </Popover.Body>
                 </Popover>
               )

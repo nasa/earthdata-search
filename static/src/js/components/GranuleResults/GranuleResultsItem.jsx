@@ -30,6 +30,8 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 
 import useEdscStore from '../../zustand/useEdscStore'
 
+import { routes } from '../../constants/routes'
+
 import './GranuleResultsItem.scss'
 
 /**
@@ -226,7 +228,7 @@ const GranuleResultsItem = forwardRef(({
             onClick={() => handleClickGranuleDetails(id)}
             to={
               {
-                pathname: '/search/granules/granule-details',
+                pathname: routes.GRANULE_DETAILS,
                 search: location.search
               }
             }

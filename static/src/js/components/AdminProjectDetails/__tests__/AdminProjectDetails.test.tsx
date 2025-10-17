@@ -3,10 +3,11 @@ import { gql } from '@apollo/client'
 import AdminProjectDetails from '../AdminProjectDetails'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_PROJECT from '../../../operations/queries/adminProject'
+import { routes } from '../../../constants/routes'
 
 const setup = setupTest({
   ComponentsByRoute: {
-    '/admin/projects/:obfuscatedId': AdminProjectDetails
+    [`${routes.ADMIN_PROJECTS}/:obfuscatedId`]: AdminProjectDetails
   },
   defaultApolloClientMocks: [
     {
@@ -36,7 +37,7 @@ const setup = setupTest({
       }
     }
   ],
-  defaultRouterEntries: ['/admin/projects/06347346'],
+  defaultRouterEntries: [`${routes.ADMIN_PROJECTS}/06347346`],
   withApolloClient: true,
   withRouter: true
 })

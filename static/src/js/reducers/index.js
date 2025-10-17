@@ -10,7 +10,6 @@ import facetsReducer from './facets'
 import granuleDownloadReducer from './granuleDownload'
 import regionResultsReducer from './regionResults'
 import retrievalReducer from './retrieval'
-import savedProjectReducer from './savedProject'
 import subscriptionsReducer from './subscriptions'
 import uiReducer from './ui'
 import userReducer from './user'
@@ -29,7 +28,6 @@ export default () => combineReducers({
     colormaps: colorMapsReducer
   }),
   retrieval: retrievalReducer,
-  savedProject: savedProjectReducer,
   searchResults: combineReducers({
     facets: facetsReducer,
     regions: regionResultsReducer,

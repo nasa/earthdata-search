@@ -60,59 +60,57 @@ export default class DatabaseClient {
   }
 
   /**
-   * Retrieves retrieval collections by their IDs
-   * @param {number[]} retrievalIds The IDs of the retrieval collections to retrieve
-   * @returns {Promise<Object>} A promise that resolves to the array of retrieval collection objects
+   * Creates a new project
+   * @param {Object} params - Parameters object
+   * @param {string} params.name - The name of the project
+   * @param {string} params.path - The path of the project
+   * @returns {Promise<Object>} A promise that resolves to the created project object
    */
-  async getRetrievalCollectionsByRetrievalId(retrievalIds) {
+  async createProject({
+    name,
+    path,
+    userId
+  }) {
     try {
       const db = await this.getDbConnection()
 
-      const result = await db('retrieval_collections')
-        .select(
-          'retrieval_collections.id',
-          'retrieval_collections.retrieval_id',
-          'retrieval_collections.access_method',
-          'retrieval_collections.collection_id',
-          'retrieval_collections.collection_metadata',
-          'retrieval_collections.granule_count',
-          'retrieval_collections.created_at',
-          'retrieval_collections.updated_at',
-          'retrieval_collections.granule_link_count'
-        )
-        .whereIn('retrieval_collections.retrieval_id', retrievalIds)
+      const [project] = await db('projects')
+        .insert({
+          name,
+          path,
+          user_id: userId
+        })
+        .returning('*')
 
-      return result
+      return project
     } catch {
-      const errorMessage = 'Failed to retrieve retrieval collections by ID'
+      const errorMessage = 'Failed to create project'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }
   }
 
   /**
-   * Retrieves retrieval orders by their IDs
-   * @param {number[]} retrievalCollectionIds The IDs of the retrieval orders to retrieve
-   * @returns {Promise<Object>} A promise that resolves to the array of retrieval collection objects
+   * Deletes a project
+   * @param {Object} params - Parameters object
+   * @param {string} params.obfuscatedId - The obfuscated ID of the project to delete
+   * @param {string} params.userId - The ID of the user who initiated the deletion
+   * @returns {Promise<number>} A promise that resolves to the number of rows deleted
    */
-  async getRetrievalOrdersByRetrievalCollectionId(retrievalCollectionIds) {
+  async deleteProject({ obfuscatedId, userId }) {
     try {
       const db = await this.getDbConnection()
 
-      const result = await db('retrieval_orders')
-        .select(
-          'retrieval_orders.id',
-          'retrieval_orders.retrieval_collection_id',
-          'retrieval_orders.type',
-          'retrieval_orders.state',
-          'retrieval_orders.order_information',
-          'retrieval_orders.order_number'
-        )
-        .whereIn('retrieval_orders.retrieval_collection_id', retrievalCollectionIds)
+      const result = await db('projects')
+        .where({
+          user_id: userId,
+          id: deobfuscateId(obfuscatedId)
+        })
+        .del()
 
       return result
     } catch {
-      const errorMessage = 'Failed to retrieve retrieval orders by ID'
+      const errorMessage = 'Failed to delete project'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }
@@ -203,7 +201,7 @@ export default class DatabaseClient {
       if (sortKey) {
         projectQuery = projectQuery.orderBy(...sortKeyParams[sortKey])
       } else {
-        projectQuery = projectQuery.orderBy('id', 'desc')
+        projectQuery = projectQuery.orderBy('projects.id', 'desc')
       }
 
       if (ursId) {
@@ -221,35 +219,6 @@ export default class DatabaseClient {
       })
     } catch {
       const errorMessage = 'Failed to retrieve user projects'
-      console.log(errorMessage)
-      throw new Error(errorMessage)
-    }
-  }
-
-  /**
-   * Retrieves a retrieval by its obfuscated ID
-   * @param {number} obfuscatedId The ID of the retrieval to retrieve
-   * @returns {Promise<Object>} A promise that resolves to the retrieval object
-   */
-  async getRetrievalByObfuscatedId(obfuscatedId) {
-    try {
-      const db = await this.getDbConnection()
-
-      return await db('retrievals')
-        .select(
-          'retrievals.id',
-          'retrievals.user_id',
-          'retrievals.jsondata',
-          'retrievals.environment',
-          'retrievals.created_at',
-          'retrievals.updated_at'
-        )
-        .where({
-          'retrievals.id': deobfuscateId(parseInt(obfuscatedId, 10))
-        })
-        .first()
-    } catch {
-      const errorMessage = 'Failed to retrieve retrieval by ID'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }
@@ -324,6 +293,94 @@ export default class DatabaseClient {
   }
 
   /**
+   * Retrieves a retrieval by its obfuscated ID
+   * @param {number} obfuscatedId The ID of the retrieval to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the retrieval object
+   */
+  async getRetrievalByObfuscatedId(obfuscatedId) {
+    try {
+      const db = await this.getDbConnection()
+
+      return await db('retrievals')
+        .select(
+          'retrievals.id',
+          'retrievals.user_id',
+          'retrievals.jsondata',
+          'retrievals.environment',
+          'retrievals.created_at',
+          'retrievals.updated_at'
+        )
+        .where({
+          'retrievals.id': deobfuscateId(parseInt(obfuscatedId, 10))
+        })
+        .first()
+    } catch {
+      const errorMessage = 'Failed to retrieve retrieval by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves retrieval collections by their IDs
+   * @param {number[]} retrievalIds The IDs of the retrieval collections to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the array of retrieval collection objects
+   */
+  async getRetrievalCollectionsByRetrievalId(retrievalIds) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('retrieval_collections')
+        .select(
+          'retrieval_collections.id',
+          'retrieval_collections.retrieval_id',
+          'retrieval_collections.access_method',
+          'retrieval_collections.collection_id',
+          'retrieval_collections.collection_metadata',
+          'retrieval_collections.granule_count',
+          'retrieval_collections.created_at',
+          'retrieval_collections.updated_at',
+          'retrieval_collections.granule_link_count'
+        )
+        .whereIn('retrieval_collections.retrieval_id', retrievalIds)
+
+      return result
+    } catch {
+      const errorMessage = 'Failed to retrieve retrieval collections by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves retrieval orders by their IDs
+   * @param {number[]} retrievalCollectionIds The IDs of the retrieval orders to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the array of retrieval collection objects
+   */
+  async getRetrievalOrdersByRetrievalCollectionId(retrievalCollectionIds) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('retrieval_orders')
+        .select(
+          'retrieval_orders.id',
+          'retrieval_orders.retrieval_collection_id',
+          'retrieval_orders.type',
+          'retrieval_orders.state',
+          'retrieval_orders.order_information',
+          'retrieval_orders.order_number'
+        )
+        .whereIn('retrieval_orders.retrieval_collection_id', retrievalCollectionIds)
+
+      return result
+    } catch {
+      const errorMessage = 'Failed to retrieve retrieval orders by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Retrieves a user by their ID
    * @param {number} userId The ID of the user to retrieve
    * @returns {Promise<Object>} A promise that resolves to the user object
@@ -363,6 +420,44 @@ export default class DatabaseClient {
         .whereIn('users.id', userIds)
     } catch {
       const errorMessage = 'Failed to retrieve users by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Updates a project
+   * @param {Object} params - Parameters object
+   * @param {string} params.obfuscatedId - The obfuscated ID of the project to update
+   * @param {string} params.name - The new name for the project
+   * @param {string} params.path - The new path for the project
+   * @param {number} params.userId - The ID of the user who owns the project
+   * @returns {Promise<Object>} A promise that resolves to the updated project object
+   */
+  async updateProject({
+    obfuscatedId,
+    name,
+    path,
+    userId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const [project] = await db('projects')
+        .where({
+          id: deobfuscateId(obfuscatedId),
+          user_id: userId
+        })
+        .update({
+          name,
+          path,
+          updated_at: new Date()
+        })
+        .returning('*')
+
+      return project
+    } catch {
+      const errorMessage = 'Failed to update project'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }

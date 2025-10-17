@@ -942,6 +942,30 @@ export type QuerySlice = {
   }
 }
 
+/** Represents a saved project */
+type SavedProject = {
+  /** The ID of the saved project */
+  id?: string
+  /** The name of the saved project */
+  name?: string
+  /** The path of the saved project */
+  path?: string
+}
+
+export type SavedProjectSlice = {
+  /** The Saved Project slice of the store */
+  savedProject: {
+    /** The saved project */
+    project: SavedProject
+    /** Function to set the saved project */
+    setProject: (project: SavedProject) => void
+    /** Function to set the saved project name */
+    setProjectName: (name: string) => void
+    /** Function to get the saved project */
+    getProject: (projectId: string) => void
+  }
+}
+
 type UpdateShapefileParams = {
   /** The shapefile id */
   shapefileId?: string
@@ -1089,6 +1113,7 @@ export type EdscStore =
   & PreferencesSlice
   & ProjectSlice
   & QuerySlice
+  & SavedProjectSlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice

@@ -15,6 +15,8 @@ import Button from '../Button/Button'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getGranuleId } from '../../zustand/selectors/granule'
 
+import { routes } from '../../constants/routes'
+
 import './CollectionDetails.scss'
 
 /**
@@ -133,7 +135,7 @@ export const CollectionDetails = ({
                         iconSize="14"
                         to={
                           {
-                            pathname: '/search/granules/granule-details',
+                            pathname: routes.GRANULE_DETAILS,
                             search: location.search
                           }
                         }

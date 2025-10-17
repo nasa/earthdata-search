@@ -18,6 +18,7 @@ const setupServer = ({
     loaders: getLoaders({ databaseClient }),
     bearerToken: 'token',
     user: {
+      id: 42,
       ursId: 'testuser'
     }
   }

@@ -172,29 +172,6 @@ type AdminRetrievalOrder {
   type: String
 }
 
-type AdminProject {
-  "ID of the project"
-  id: Int
-
-  "Obfuscated ID of the project"
-  obfuscatedId: String
-
-  "Name of the project"
-  name: String
-
-  "Path to the project"
-  path: String
-
-  "User who created the project"
-  user: User
-
-  "Timestamp of when the retrieval was last updated"
-  updatedAt: DateTime
-
-  "Timestamp of when the retrieval was created"
-  createdAt: DateTime
-}
-
 input AdminProjectInput {
   "Obfuscated ID to filter by"
   obfuscatedId: String
@@ -202,7 +179,7 @@ input AdminProjectInput {
 
 type AdminProjects {
   "List of projects"
-  adminProjects: [AdminProject]
+  adminProjects: [Project]
 
   "Pagination information"
   pageInfo: PageInfo
@@ -295,7 +272,7 @@ type Query {
   adminPreferencesMetrics: AdminPreferencesMetrics
 
   "Retrieves admin project information"
-  adminProject(params: AdminProjectInput!): AdminProject
+  adminProject(params: AdminProjectInput!): Project
 
   "Retrieves projects"
   adminProjects(params: AdminProjectsInput): AdminProjects

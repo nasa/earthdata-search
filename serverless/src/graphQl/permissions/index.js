@@ -1,4 +1,5 @@
 import {
+  allow,
   and,
   deny,
   shield
@@ -6,6 +7,8 @@ import {
 
 import isValidUser from './rules/isValidUser'
 import isAdminUser from './rules/isAdminUser'
+import userOwnsProject from './rules/userOwnsProject'
+import userOwnsProjectIfProjectOwned from './rules/userOwnsProjectIfProjectOwned'
 
 const buildPermissions = () => shield(
   {
@@ -32,12 +35,23 @@ const buildPermissions = () => shield(
       adminRetrievals: and(
         isValidUser,
         isAdminUser
-      )
+      ),
+      project: allow,
+      projects: isValidUser
+    },
+    Mutation: {
+      '*': deny,
+      createProject: allow,
+      deleteProject: and(
+        isValidUser,
+        userOwnsProject
+      ),
+      updateProject: userOwnsProjectIfProjectOwned
     }
-    // TODO When we add mutations here, we need to ensure we add a wildcard deny rule like we have for the Query
-    // Mutation: {
-    //   '*': deny
-    // }
+  },
+  {
+    // Only allow the external errors when running in the local DEV environment
+    allowExternalErrors: process.env.NODE_ENV === 'development'
   }
 )
 

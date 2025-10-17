@@ -17,6 +17,7 @@ import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/sel
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getGranuleIds } from '../../util/getGranuleIds'
 import { getGranules } from '../../zustand/selectors/granules'
+import { routes } from '../../constants/routes'
 
 const granuleListItemSkeletonStyle = {
   height: '99px'
@@ -163,7 +164,7 @@ const GranuleResultsHighlights = () => {
               className="granule-results-header__title-link granule-results-header__title-link-icon"
               to={
                 {
-                  pathname: '/search/granules',
+                  pathname: routes.GRANULES,
                   search: location.search
                 }
               }

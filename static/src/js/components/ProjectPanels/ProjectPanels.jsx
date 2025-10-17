@@ -27,6 +27,8 @@ import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
 
+import { routes } from '../../constants/routes'
+
 import './ProjectPanels.scss'
 
 /**
@@ -380,11 +382,11 @@ class ProjectPanels extends PureComponent {
                 <PortalLinkContainer
                   to={
                     {
-                      pathname: '/search/granules',
+                      pathname: routes.GRANULES,
                       search: newSearch
                     }
                   }
-                  onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
+                  onClick={() => { onChangePath(`${routes.GRANULES}${newSearch}`) }}
                 >
                   hosted in a NASA datacenter
                 </PortalLinkContainer>
@@ -397,11 +399,11 @@ class ProjectPanels extends PureComponent {
                 <PortalLinkContainer
                   to={
                     {
-                      pathname: '/search/granules',
+                      pathname: routes.GRANULES,
                       search: newSearch
                     }
                   }
-                  onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
+                  onClick={() => { onChangePath(`${routes.GRANULES}${newSearch}`) }}
                 >
                   hosted in the Earthdata Cloud
                 </PortalLinkContainer>

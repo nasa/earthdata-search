@@ -17,16 +17,9 @@ import './ProjectCollections.scss'
 /**
  * Renders ProjectCollections.
  * @param {Function} onMetricsDataAccess - Callback to log metrics events.
- * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
- * @param {Function} onUpdateProjectName - Callback to update the project name.
- * @param {Function} onViewCollectionDetails - Callback to view collection details.
- * @param {Function} onViewCollectionGranules - Callback to view collection granules.
- * @param {Object} savedProject - The saved project state.
  */
 const ProjectCollections = ({
-  onMetricsDataAccess,
-  onUpdateProjectName,
-  savedProject
+  onMetricsDataAccess
 }) => {
   const {
     panels: panelsData,
@@ -79,10 +72,7 @@ const ProjectCollections = ({
 
   return (
     <section className="project-collections">
-      <ProjectHeader
-        savedProject={savedProject}
-        onUpdateProjectName={onUpdateProjectName}
-      />
+      <ProjectHeader />
       <ProjectCollectionsList
         collectionsMetadata={projectCollectionsMetadata}
         onMetricsDataAccess={onMetricsDataAccess}
@@ -142,9 +132,7 @@ const ProjectCollections = ({
 }
 
 ProjectCollections.propTypes = {
-  onMetricsDataAccess: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired,
-  savedProject: PropTypes.shape({}).isRequired
+  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 export default ProjectCollections

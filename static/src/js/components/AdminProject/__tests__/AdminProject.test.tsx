@@ -6,6 +6,7 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import { AdminProject } from '../AdminProject'
 
 import AdminProjectDetails from '../../AdminProjectDetails/AdminProjectDetails'
+import { routes } from '../../../constants/routes'
 
 jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div />))
 
@@ -35,9 +36,9 @@ describe('AdminProject component', () => {
 
     expect(within(breadcrumbs).getAllByRole('listitem').length).toEqual(3)
     expect(within(breadcrumbs).getAllByRole('listitem')[0]).toHaveTextContent('Admin')
-    expect(within(within(breadcrumbs).getAllByRole('listitem')[0]).getByRole('link')).toHaveAttribute('href', '/admin')
+    expect(within(within(breadcrumbs).getAllByRole('listitem')[0]).getByRole('link')).toHaveAttribute('href', routes.ADMIN)
     expect(within(breadcrumbs).getAllByRole('listitem')[1]).toHaveTextContent('Projects')
-    expect(within(within(breadcrumbs).getAllByRole('listitem')[1]).getByRole('link')).toHaveAttribute('href', '/admin/projects')
+    expect(within(within(breadcrumbs).getAllByRole('listitem')[1]).getByRole('link')).toHaveAttribute('href', routes.ADMIN_PROJECTS)
     expect(within(breadcrumbs).getByRole('listitem', { current: 'page' })).toHaveTextContent('Project Details')
   })
 

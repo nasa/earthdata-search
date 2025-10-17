@@ -126,7 +126,8 @@ describe('Footer component', () => {
     describe('when on the project page', () => {
       test('displays search time', () => {
         useLocation.mockReturnValue({
-          pathname: '/projects'
+          pathname: '/project',
+          search: '?p=C1234-EDSC'
         })
 
         setup()

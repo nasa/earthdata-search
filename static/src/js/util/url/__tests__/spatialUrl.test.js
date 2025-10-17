@@ -102,36 +102,52 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes pointSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      pointSearch: ['0,0']
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        spatial: {
+          point: ['0,0']
+        }
+      },
+      pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?sp[0]=0%2C0')
   })
 
   test('encodes boundingBoxSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      boundingBoxSearch: ['0,10,20,30']
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        spatial: {
+          boundingBox: ['0,10,20,30']
+        }
+      },
+      pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?sb[0]=0%2C10%2C20%2C30')
   })
 
   test('encodes polygonSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      polygonSearch: ['-77,38,-77,38,-76,38,-77,38']
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        spatial: {
+          polygon: ['-77,38,-77,38,-76,38,-77,38']
+        }
+      },
+      pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?polygon[0]=-77%2C38%2C-77%2C38%2C-76%2C38%2C-77%2C38')
   })
 
   test('encodes circleSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      circleSearch: ['0,0,20000']
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        spatial: {
+          circle: ['0,0,20000']
+        }
+      },
+      pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?circle[0]=0%2C0%2C20000')
   })

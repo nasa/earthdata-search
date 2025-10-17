@@ -19,6 +19,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import renderTooltip from '../../util/renderTooltip'
 
+import { routes } from '../../constants/routes'
+
 import './SubscriptionsListTable.scss'
 
 /**
@@ -125,7 +127,7 @@ const SubscriptionsListTable = ({
                         type="button"
                         to={
                           {
-                            pathname: subscriptionType === 'granule' ? '/search/granules/subscriptions' : '/search/subscriptions',
+                            pathname: subscriptionType === 'granule' ? routes.GRANULE_SUBSCRIPTIONS : routes.COLLECTION_SUBSCRIPTIONS,
                             search: subscriptionType === 'granule' ? `?p=${collectionConceptId}` : ''
                           }
                         }

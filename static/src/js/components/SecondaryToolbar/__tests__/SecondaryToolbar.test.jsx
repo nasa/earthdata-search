@@ -33,13 +33,16 @@ const setup = setupTest({
       pathname: '/search'
     },
     projectCollectionIds: [],
-    savedProject: {},
     retrieval: {},
     onLogout: jest.fn(),
-    onUpdateProjectName: jest.fn(),
     onChangePath: jest.fn(),
     ursProfile: {
       first_name: 'First Name'
+    }
+  },
+  defaultZustandState: {
+    savedProject: {
+      setProjectName: jest.fn()
     }
   },
   withRouter: true
@@ -292,8 +295,8 @@ describe('SecondaryToolbar component', () => {
       expect(await screen.findByText('Create a project with your current search')).toBeVisible()
     })
 
-    test('clicking the save button sets the state and calls onUpdateProjectName', async () => {
-      const { props, user } = setup({
+    test('clicking the save button sets the state and calls setProjectName', async () => {
+      const { user, zustandState } = setup({
         overrideProps: {
           authToken: 'fakeauthkey'
         }
@@ -310,8 +313,8 @@ describe('SecondaryToolbar component', () => {
       const saveProjectNameButton = screen.getByRole('button', { name: 'Save project name' })
       await user.click(saveProjectNameButton)
 
-      expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project name')
+      expect(zustandState.savedProject.setProjectName).toHaveBeenCalledTimes(1)
+      expect(zustandState.savedProject.setProjectName).toHaveBeenCalledWith('test project name')
     })
   })
 

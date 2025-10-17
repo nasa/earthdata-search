@@ -13,6 +13,8 @@ import TemporalSelectionDropdownToggle from './TemporalSelectionDropdownToggle'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
 
+import { routes } from '../../constants/routes'
+
 import './TemporalSelectionDropdown.scss'
 
 /**
@@ -54,7 +56,7 @@ const TemporalSelectionDropdown = ({
 
   const location = useLocation()
   const { pathname } = location
-  const isHomePage = pathname === '/'
+  const isHomePage = pathname === routes.HOME
 
   useEffect(() => {
     setTemporal(temporalSearch)

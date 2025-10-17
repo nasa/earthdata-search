@@ -5,7 +5,7 @@
  * @see https://github.com/jossmac/react-toast-notifications#toast-props
  * @description Renders a toast notification.
  */
-export const addToast = (content, options) => {
+const addToast = (content, options) => {
   try {
     // The add method referenced from the ToastProvider in App.js
     const { add } = window.reactToastProvider.current

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import AdminRetrievalDetails from '../AdminRetrievalDetails/AdminRetrievalDetails'
 import AdminPage from '../AdminPage/AdminPage'
+import { routes } from '../../constants/routes'
 
 const AdminRetrieval = ({
   obfuscatedId,
@@ -14,11 +15,11 @@ const AdminRetrieval = ({
       [
         {
           name: 'Admin',
-          href: '/admin'
+          href: routes.ADMIN
         },
         {
           name: 'Retrievals',
-          href: '/admin/retrievals'
+          href: routes.ADMIN_RETRIEVALS
         },
         {
           name: 'Retrieval Details',

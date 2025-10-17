@@ -14,8 +14,6 @@ export interface SharedApiGatewayResourcesProps {
 export class SharedApiGatewayResources extends Construct {
   public readonly adminApiGatewayResource: apigateway.CfnResource
 
-  public readonly adminProjectsApiGatewayResource: apigateway.CfnResource
-
   public readonly collectionsApiGatewayResource: apigateway.CfnResource
 
   public readonly colormapsApiGatewayResource: apigateway.CfnResource
@@ -27,10 +25,6 @@ export class SharedApiGatewayResources extends Construct {
   public readonly granulesApiGatewayResource: apigateway.CfnResource
 
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
-
-  public readonly projectsApiGatewayResource: apigateway.CfnResource
-
-  public readonly projectsIdApiGatewayResource: apigateway.CfnResource
 
   public readonly retrievalCollectionsApiGatewayResource: apigateway.CfnResource
 
@@ -61,25 +55,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.adminApiGatewayResource = adminApiGatewayResource
-
-    /**
-     * Admin Projects API Gateway Resource
-     */
-    const adminProjectsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceAdminProjects', {
-      parentId: adminApiGatewayResource.ref,
-      pathPart: 'projects',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'AdminProjectsOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: adminProjectsApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET'],
-      name: 'AdminProjects'
-    })
-
-    this.adminProjectsApiGatewayResource = adminProjectsApiGatewayResource
 
     /**
      * Collections API Gateway Resource
@@ -167,44 +142,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.opensearchApiGatewayResource = opensearchApiGatewayResource
-
-    /**
-     * Projects API Gateway Resource
-     */
-    const projectsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceProjects', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'projects',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'ProjectsOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: projectsApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET', 'POST'],
-      name: 'Projects'
-    })
-
-    this.projectsApiGatewayResource = projectsApiGatewayResource
-
-    /**
-     * Projects ID API Gateway Resource
-     */
-    const projectsIdApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceProjectsIdVar', {
-      parentId: projectsApiGatewayResource?.ref,
-      pathPart: '{id}',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'ProjectsIdVarOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: projectsIdApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET', 'DELETE'],
-      name: 'ProjectsIdVar'
-    })
-
-    this.projectsIdApiGatewayResource = projectsIdApiGatewayResource
 
     /**
      * Retrieval Collection API Gateway Resource

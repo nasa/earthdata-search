@@ -1,10 +1,9 @@
-import React from 'react'
-import { render } from '@testing-library/react'
 import * as tinyCookie from 'tiny-cookie'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
-import useEdscStore from '../../../zustand/useEdscStore'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -12,11 +11,20 @@ jest.mock('tiny-cookie', () => ({
   get: jest.fn()
 }))
 
-const setup = (props) => {
-  render(
-    <AuthTokenContainer {...props} />
-  )
-}
+const setup = setupTest({
+  Component: AuthTokenContainer,
+  defaultProps: {
+    children: 'children',
+    onSetContactInfoFromJwt: jest.fn(),
+    onSetUserFromJwt: jest.fn(),
+    onUpdateAuthToken: jest.fn()
+  },
+  defaultZustandState: {
+    preferences: {
+      setPreferencesFromJwt: jest.fn()
+    }
+  }
+})
 
 describe('mapDispatchToProps', () => {
   test('onSetContactInfoFromJwt calls actions.setContactInfoFromJwt', () => {
@@ -25,8 +33,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSetContactInfoFromJwt('mock-token')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('mock-token')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('mock-token')
   })
 
   test('onSetUserFromJwt calls actions.setUserFromJwt', () => {
@@ -35,8 +43,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSetUserFromJwt('mock-token')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('mock-token')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('mock-token')
   })
 
   test('onUpdateAuthToken calls actions.updateAuthToken', () => {
@@ -45,8 +53,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAuthToken('mock-token')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('mock-token')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('mock-token')
   })
 })
 
@@ -62,22 +70,7 @@ describe('AuthTokenContainer component', () => {
       disableDatabaseComponents: 'false'
     }))
 
-    const mockSetPreferencesFromJwt = jest.fn()
-    useEdscStore.setState((state) => ({
-      ...state,
-      preferences: {
-        ...state.preferences,
-        setPreferencesFromJwt: mockSetPreferencesFromJwt
-      }
-    }))
-
-    const props = {
-      children: 'children',
-      onSetContactInfoFromJwt: jest.fn(),
-      onSetUserFromJwt: jest.fn(),
-      onUpdateAuthToken: jest.fn()
-    }
-    setup(props)
+    const { props, zustandState } = setup()
 
     expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
     expect(props.onUpdateAuthToken).toHaveBeenCalledWith('token')
@@ -85,8 +78,8 @@ describe('AuthTokenContainer component', () => {
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalledTimes(1)
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalledWith('token')
 
-    expect(mockSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
-    expect(mockSetPreferencesFromJwt).toHaveBeenCalledWith('token')
+    expect(zustandState.preferences.setPreferencesFromJwt).toHaveBeenCalledTimes(1)
+    expect(zustandState.preferences.setPreferencesFromJwt).toHaveBeenCalledWith('token')
 
     expect(props.onSetUserFromJwt).toHaveBeenCalledTimes(1)
     expect(props.onSetUserFromJwt).toHaveBeenCalledWith('token')
@@ -104,13 +97,7 @@ describe('AuthTokenContainer component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      const props = {
-        children: 'children',
-        onSetContactInfoFromJwt: jest.fn(),
-        onSetUserFromJwt: jest.fn(),
-        onUpdateAuthToken: jest.fn()
-      }
-      setup(props)
+      const { props } = setup()
 
       expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
       expect(props.onUpdateAuthToken).toHaveBeenCalledWith('')

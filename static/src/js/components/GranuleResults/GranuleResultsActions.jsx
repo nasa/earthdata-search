@@ -27,6 +27,8 @@ import ExternalLink from '../ExternalLink/ExternalLink'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionSubscriptions } from '../../zustand/selectors/collection'
 
+import { routes } from '../../constants/routes'
+
 import './GranuleResultsActions.scss'
 
 /**
@@ -175,7 +177,7 @@ const GranuleResultsActions = ({
                 badge={subscriptions.length ? `${subscriptions.length}` : false}
                 to={
                   {
-                    pathname: '/search/granules/subscriptions',
+                    pathname: routes.GRANULE_SUBSCRIPTIONS,
                     search: location.search
                   }
                 }

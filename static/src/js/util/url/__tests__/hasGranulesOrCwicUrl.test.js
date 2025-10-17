@@ -45,7 +45,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode the value if true', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here')
@@ -53,7 +55,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('encodes the value if undefined', () => {
     const props = {
-      hasGranulesOrCwic: undefined,
+      collectionsQuery: {
+        hasGranulesOrCwic: undefined
+      },
       pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?ac=true')

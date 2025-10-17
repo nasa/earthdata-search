@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -33,6 +33,9 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getSavedProjectName } from '../../zustand/selectors/savedProject'
+
+import { routes } from '../../constants/routes'
 
 import './SecondaryToolbar.scss'
 
@@ -40,29 +43,33 @@ const SecondaryToolbar = ({
   authToken,
   location,
   onLogout,
-  onUpdateProjectName,
   projectCollectionIds,
   retrieval,
-  savedProject,
   ursProfile
 }) => {
-  const setRunTour = useEdscStore((state) => state.ui.tour.setRunTour)
-  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const {
+    setProjectName: updateProjectName,
+    setRunTour
+  } = useEdscStore((state) => ({
+    setProjectName: state.savedProject.setProjectName,
+    setRunTour: state.ui.tour.setRunTour
+  }))
 
-  const { name = '' } = savedProject
+  const name = useEdscStore(getSavedProjectName)
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   const [projectDropdownOpen, setProjectDropdownOpen] = useState(false)
   const [projectName, setProjectName] = useState(name)
-  const [newProjectName, setNewProjectName] = useState('')
 
-  // Update project name when savedProject.name changes
+  // Update projectName when name changes
+  // This can happen when loading a project from the URL, after the response comes back from the API
   useEffect(() => {
-    setProjectName(savedProject.name || '')
+    setProjectName(name || '')
 
     return () => {
       setTimeout(() => {}, 0)
     }
-  }, [savedProject.name])
+  }, [name])
 
   /**
    * Log the user out by calling the onLogout action
@@ -72,7 +79,7 @@ const SecondaryToolbar = ({
   }
 
   const handleNameSubmit = () => {
-    const newName = newProjectName || 'Untitled Project'
+    const newName = projectName || 'Untitled Project'
 
     setTimeout(() => {
       setProjectDropdownOpen(false)
@@ -80,7 +87,7 @@ const SecondaryToolbar = ({
 
     setProjectName(newName)
 
-    onUpdateProjectName(newProjectName)
+    updateProjectName(newName)
   }
 
   // Needed for Save Project so when the url updates with a project-id we don't refresh the page
@@ -93,7 +100,7 @@ const SecondaryToolbar = ({
   }
 
   const onInputChange = (event) => {
-    setNewProjectName(event.target.value)
+    setProjectName(event.target.value)
   }
 
   const onToggleProjectDropdown = () => {
@@ -106,13 +113,7 @@ const SecondaryToolbar = ({
   const returnPath = window.location.href
   const { pathname, search } = location
   let isMapOverlay = false
-  let needsOverlayPaths = ['/', '/search']
-
-  // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
-  // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
-  if (pathname === '/projects' && search) {
-    needsOverlayPaths = [...needsOverlayPaths, '/projects']
-  }
+  const needsOverlayPaths = [routes.HOME, routes.SEARCH, routes.PROJECT]
 
   // Determine if the current page is a route that displays the map so the correct className can be set
   if (pathStartsWith(pathname, needsOverlayPaths)) {
@@ -145,7 +146,7 @@ const SecondaryToolbar = ({
       label="Back to Search"
       to={
         {
-          pathname: '/search',
+          pathname: routes.SEARCH,
           search: newSearch
         }
       }
@@ -166,7 +167,7 @@ const SecondaryToolbar = ({
       label="Back to Project"
       to={
         {
-          pathname: '/projects',
+          pathname: routes.PROJECT,
           search: source
         }
       }
@@ -178,7 +179,7 @@ const SecondaryToolbar = ({
 
   const buildProjectLink = (isLoggedIn) => {
     if (!isLoggedIn) {
-      const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
+      const projectPath = `${window.location.protocol}//${window.location.host}${routes.PROJECT}${window.location.search}`
 
       return (
         <Button
@@ -200,7 +201,7 @@ const SecondaryToolbar = ({
         type="button"
         to={
           {
-            pathname: '/projects',
+            pathname: routes.PROJECT,
             search: location.search
           }
         }
@@ -256,7 +257,7 @@ const SecondaryToolbar = ({
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <LinkContainer
-          to="/preferences"
+          to={routes.PREFERENCES}
         >
           <Dropdown.Item
             className="secondary-toolbar__preferences"
@@ -266,7 +267,7 @@ const SecondaryToolbar = ({
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to="/contact-info"
+          to={routes.CONTACT_INFO}
         >
           <Dropdown.Item
             className="secondary-toolbar__contact-info"
@@ -278,7 +279,7 @@ const SecondaryToolbar = ({
         <LinkContainer
           to={
             {
-              pathname: '/downloads',
+              pathname: routes.DOWNLOADS,
               search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
             }
           }
@@ -291,7 +292,7 @@ const SecondaryToolbar = ({
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to="/projects"
+          to={routes.PROJECTS}
         >
           <Dropdown.Item
             className="secondary-toolbar__saved-projects"
@@ -301,7 +302,7 @@ const SecondaryToolbar = ({
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to="/subscriptions"
+          to={routes.SUBSCRIPTIONS}
         >
           <Dropdown.Item
             className="secondary-toolbar__saved-subscriptions"
@@ -350,7 +351,7 @@ const SecondaryToolbar = ({
                 <FormControl
                   className="secondary-toolbar__project-name-input"
                   name="projectName"
-                  value={newProjectName}
+                  value={projectName}
                   placeholder="Untitled Project"
                   onChange={onInputChange}
                   onKeyPress={handleKeypress}
@@ -395,13 +396,19 @@ const SecondaryToolbar = ({
     </Dropdown>
   )
 
-  const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
-  const showStartTourButton = location.pathname === '/search'
+  const showSaveProjectDropdown = pathStartsWith(location.pathname, [routes.SEARCH]) && loggedIn
+  const showViewProjectLink = (
+    !pathStartsWith(
+      location.pathname,
+      [routes.PROJECT, routes.DOWNLOADS]
+    )
+    && (projectCollectionIds.length > 0 || name)
+  )
+  const showStartTourButton = location.pathname === routes.SEARCH
 
   return (
     <nav className={secondaryToolbarClassnames}>
-      {isPath(location.pathname, ['/projects']) && backToSearchLink}
+      {isPath(location.pathname, [routes.PROJECT]) && backToSearchLink}
       {isDownloadPathWithId(location.pathname) && backToProjectLink}
       <PortalFeatureContainer authentication>
         <>
@@ -419,15 +426,11 @@ SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
   onLogout: PropTypes.func.isRequired,
-  onUpdateProjectName: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({
     jsondata: PropTypes.shape({
       source: PropTypes.string
     })
-  }).isRequired,
-  savedProject: PropTypes.shape({
-    name: PropTypes.string
   }).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string

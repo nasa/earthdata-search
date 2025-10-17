@@ -31,9 +31,11 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes keywordSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      tagKey: 'test.key'
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        tagKey: 'test.key'
+      },
+      pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?tag_key=test.key')
   })
