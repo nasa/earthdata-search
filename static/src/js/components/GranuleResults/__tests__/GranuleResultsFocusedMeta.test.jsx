@@ -584,7 +584,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           expect(image).toBeInTheDocument()
           expect(EDSCImage).toHaveBeenLastCalledWith(expect.objectContaining({
-            src: expect.stringContaining('/scale?h=538&w=538&imageSrc=http://test.com/test.jpg')
+            src: expect.stringContaining('/scale?h=538&w=538&imageSrc=http%3A%2F%2Ftest.com%2Ftest.jpg')
           }), {})
         })
 
