@@ -102,7 +102,7 @@ export class Functions extends Construct {
       retrievalCollectionsApiGatewayResource,
       retrievalsApiGatewayResource,
       retrievalsIdApiGatewayResource,
-      scaleConceptTypeApiGatewayResource,
+      scaleApiGatewayResource,
       shapefilesApiGatewayResource
     } = sharedResources
 
@@ -1119,11 +1119,10 @@ export class Functions extends Construct {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
+        apiGatewayResource: scaleApiGatewayResource,
         apiGatewayRestApi,
         methods: ['GET'],
-        parentId: scaleConceptTypeApiGatewayResource.ref,
-        parentPath: 'scale',
-        path: '{concept_id}'
+        path: 'scale'
       },
       entry: '../../serverless/src/scaleImage/handler.js',
       functionName: 'scaleImage',
