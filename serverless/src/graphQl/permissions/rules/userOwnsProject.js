@@ -1,7 +1,7 @@
 import { rule } from 'graphql-shield'
 
 /**
- * Checks if the user has admin privileges
+ * Checks if the user owns the project requested
  * @returns {boolean} true if the user is valid, false otherwise
  */
 const userOwnsProject = rule()(async (parent, args, context) => {

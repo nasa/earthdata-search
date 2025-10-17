@@ -15,13 +15,14 @@ import Timeline from '../../../components/Timeline/Timeline'
 // @ts-expect-error The file does not have types
 import * as metricsTimeline from '../../../middleware/metrics/actions'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import { routes } from '../../../constants/routes'
 
 jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div />))
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn().mockReturnValue({
-    pathname: '/search',
+    pathname: routes.SEARCH,
     search: '?p=C123456-EDSC',
     hash: '',
     state: null,
@@ -117,7 +118,7 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the search page', () => {
     (useLocation as jest.Mock).mockReturnValue({
-      pathname: '/search/granules'
+      pathname: routes.GRANULES
     })
 
     setup()
@@ -134,7 +135,7 @@ describe('TimelineContainer component', () => {
         onMetricsTimeline: expect.any(Function),
         onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
-        pathname: '/search/granules',
+        pathname: routes.GRANULES,
         projectCollectionsIds: ['projectCollectionId'],
         showOverrideModal: false
       },
@@ -144,7 +145,7 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the project page', () => {
     (useLocation as jest.Mock).mockReturnValue({
-      pathname: '/project',
+      pathname: routes.PROJECT,
       search: '?p=projectCollectionId'
     })
 
@@ -162,7 +163,7 @@ describe('TimelineContainer component', () => {
         onMetricsTimeline: expect.any(Function),
         onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
-        pathname: '/project',
+        pathname: routes.PROJECT,
         projectCollectionsIds: ['projectCollectionId'],
         showOverrideModal: true
       },
@@ -172,7 +173,7 @@ describe('TimelineContainer component', () => {
 
   test('Does not show the timeline if it is on the saved projects page', () => {
     (useLocation as jest.Mock).mockReturnValue({
-      pathname: '/projects',
+      pathname: routes.PROJECTS,
       search: ''
     })
 

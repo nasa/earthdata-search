@@ -12,12 +12,15 @@ const userOwnsProjectIfProjectOwned = rule()(async (parent, args, context) => {
 
   const project = await databaseClient.getProjectByObfuscatedId(obfuscatedId)
 
+  // If there is no project, return false
   if (!project) return false
 
   const { user_id: projectUserId } = project
 
+  // If the project is not owned and there is no current user, return true
   if (!projectUserId && !currentUserId) return true
 
+  // Does the user own the project?
   return projectUserId === currentUserId
 })
 
