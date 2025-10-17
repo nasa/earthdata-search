@@ -243,7 +243,7 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: 'https://test.com/browse/image/url.jpg',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://test.com/browse/image/url.jpg',
+              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https%3A%2F%2Ftest.com%2Fbrowse%2Fimage%2Furl.jpg',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
@@ -303,7 +303,7 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: 'https://test.com/browse/image/first_url.jpg',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://test.com/browse/image/first_url.jpg',
+              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https%3A%2F%2Ftest.com%2Fbrowse%2Fimage%2Ffirst_url.jpg',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
@@ -371,7 +371,7 @@ describe('GranuleRequest#transformResponse', () => {
               browseUrl: 'https://test.com/browse/image/second_url.jpg',
               timeEnd: '2000-01-31T00:00:00.000Z',
               timeStart: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https://test.com/browse/image/second_url.jpg',
+              thumbnail: 'http://localhost:3000/scale?h=85&w=85&imageSrc=https%3A%2F%2Ftest.com%2Fbrowse%2Fimage%2Fsecond_url.jpg',
               formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
