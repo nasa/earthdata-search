@@ -42,16 +42,14 @@ const scaleImage = async (event) => {
 
     if (!imageSrc) {
     // If there is no imageSrc throw an error
-      console.log('imageSrc is required')
       throw new Error('imageSrc is required')
     }
 
-    const decodedImageSrc = decodeURIComponent(imageSrc)
     const useCache = process.env.USE_IMAGE_CACHE === 'true'
-    const cacheKey = generateCacheKey(decodedImageSrc, dimensions)
+    const cacheKey = generateCacheKey(imageSrc, dimensions)
 
     let originalImageFromCache = null
-    const originalCacheKey = generateCacheKey(decodedImageSrc)
+    const originalCacheKey = generateCacheKey(imageSrc)
     if (useCache) {
       const imageFromCache = await getImageFromCache(cacheKey)
       if (imageFromCache) {
@@ -68,7 +66,7 @@ const scaleImage = async (event) => {
       // If the original image is cached, don't download it from the imageUrl, instead we just resize it
       imageBuffer = originalImageFromCache
     } else {
-      imageBuffer = await downloadImageFromSource(decodedImageSrc)
+      imageBuffer = await downloadImageFromSource(imageSrc)
 
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
