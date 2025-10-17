@@ -26,7 +26,6 @@ const scaleImage = async (event) => {
   const {
     h = defaultHeight,
     w = defaultWidth,
-    return_default: returnDefault = 'true',
     imageSrc
   } = queryStringParameters || {}
 
@@ -42,25 +41,17 @@ const scaleImage = async (event) => {
     }
 
     if (!imageSrc) {
-      // If there is no imageSrc and returnDefault is false, return a 404
-      let statusCode = 404
-
-      if (returnDefault === 'true') {
-        // If there is no image url found and returnDefault is true, return a 200 with the unavailable image
-        thumbnail = await buildUnavailableImageBuffer(height, width)
-        statusCode = 200
-      }
-
-      return buildResponse(thumbnail, statusCode)
+    // If there is no imageSrc throw an error
+      console.log('imageSrc is required')
+      throw new Error('imageSrc is required')
     }
 
+    const decodedImageSrc = decodeURIComponent(imageSrc)
     const useCache = process.env.USE_IMAGE_CACHE === 'true'
-
-    // Optional imageSrc that gets passed when a granule image from one of many is specified
-    const cacheKey = generateCacheKey(imageSrc, dimensions)
+    const cacheKey = generateCacheKey(decodedImageSrc, dimensions)
 
     let originalImageFromCache = null
-    const originalCacheKey = generateCacheKey(imageSrc)
+    const originalCacheKey = generateCacheKey(decodedImageSrc)
     if (useCache) {
       const imageFromCache = await getImageFromCache(cacheKey)
       if (imageFromCache) {
@@ -77,7 +68,7 @@ const scaleImage = async (event) => {
       // If the original image is cached, don't download it from the imageUrl, instead we just resize it
       imageBuffer = originalImageFromCache
     } else {
-      imageBuffer = await downloadImageFromSource(imageSrc)
+      imageBuffer = await downloadImageFromSource(decodedImageSrc)
 
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
@@ -95,9 +86,7 @@ const scaleImage = async (event) => {
   } catch (error) {
     console.log(`Error occurred running the scale image handler ${error.toString()}`)
 
-    if (returnDefault === 'true') {
-      thumbnail = await buildUnavailableImageBuffer(height, width)
-    }
+    thumbnail = await buildUnavailableImageBuffer(height, width)
 
     // TODO if the axios call is set to 500 here even though its an error the front end will fail
     return buildResponse(thumbnail, 200)

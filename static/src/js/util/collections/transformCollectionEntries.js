@@ -5,9 +5,7 @@ import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
 
-import {
-  getBrowseImageUrlFromConcept
-} from '../../../../../serverless/src/scaleImage/utils/cmr/getBrowseImageUrlFromConcept'
+import { getBrowseImageUrlFromConcept } from '../getBrowseImageUrlFromConcept'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
@@ -52,7 +50,7 @@ export const transformCollectionEntries = (entries) => {
     if (collection.id) {
       if (collection.browse_flag) {
         const imageUrl = getBrowseImageUrlFromConcept(collection)
-        transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale?h=${h}&w=${w}&imageSrc=${imageUrl}`
+        transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale?h=${h}&w=${w}&imageSrc=${encodeURIComponent(imageUrl)}`
       } else {
         transformedCollection.thumbnail = unavailableImg
         transformedCollection.isDefaultImage = true
