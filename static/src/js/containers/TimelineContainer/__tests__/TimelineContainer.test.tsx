@@ -22,7 +22,7 @@ jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div />))
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn().mockReturnValue({
-    pathname: routes.SEARCH,
+    pathname: '/search',
     search: '?p=C123456-EDSC',
     hash: '',
     state: null,
