@@ -1,0 +1,79 @@
+type Project {
+  "ID of the project"
+  id: Int!
+
+  "Obfuscated ID of the project"
+  obfuscatedId: String!
+
+  "Name of the project"
+  name: String
+
+  "Path of the project"
+  path: String!
+
+  "Timestamp of when the project was created"
+  createdAt: DateTime
+
+  "Timestamp of when the project was last updated"
+  updatedAt: DateTime!
+
+  "User who created the project"
+  user: User
+}
+
+type Projects {
+  "List of projects"
+  projects: [Project]
+
+  "Pagination information"
+  pageInfo: PageInfo
+
+  "Total count of projects"
+  count: Int
+}
+
+type Query {
+  "Retrieves a list of projects"
+  projects(
+    "Sets the number of projects to return"
+    limit: Int
+
+    "Offset for pagination"
+    offset: Int
+  ): Projects
+
+  "Retrieves a single project by its obfuscated ID"
+  project(
+    "Obfuscated ID of the project"
+    obfuscatedId: String!
+  ): Project
+}
+
+type Mutation {
+  "Creates a new project"
+  createProject(
+    "Name of the project"
+    name: String
+
+    "Path of the project"
+    path: String
+  ): Project
+
+  "Updates an existing project"
+  updateProject(
+    "Obfuscated ID of the project"
+    obfuscatedId: String!
+
+    "Name of the project"
+    name: String,
+
+    "Path of the project"
+    path: String
+  ): Project
+
+  "Deletes a project"
+  deleteProject(
+    "Obfuscated ID of the project to delete"
+    obfuscatedId: String!
+  ): Boolean
+}

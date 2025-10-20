@@ -109,9 +109,9 @@
       }
     },
     {
-      // Allow param reassignment in the zustand/slices files (this is handled correctly by immer)
+      // Allow param reassignment in the zustand files (this is handled correctly by immer)
       "files": [
-        "static/src/js/zustand/slices/**/*.ts"
+        "static/src/js/zustand/**/*.ts"
       ],
       "rules": {
         "no-param-reassign": [

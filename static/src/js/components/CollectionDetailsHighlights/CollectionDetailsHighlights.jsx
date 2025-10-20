@@ -12,6 +12,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
+import { routes } from '../../constants/routes'
+
 import './CollectionDetailsHighlights.scss'
 
 export const granuleListTotalStyle = {
@@ -182,7 +184,7 @@ export const CollectionDetailsHighlights = ({
           className="collection-details-header__title-link collection-details-header__title-link-icon"
           to={
             {
-              pathname: '/search/granules/collection-details',
+              pathname: routes.COLLECTION_DETAILS,
               search: location.search
             }
           }

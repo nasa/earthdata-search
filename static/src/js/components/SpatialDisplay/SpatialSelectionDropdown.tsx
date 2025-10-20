@@ -22,6 +22,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
+import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
@@ -50,7 +51,7 @@ const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
 
   const location = useLocation()
   const { pathname } = location
-  const isHomePage = pathname === '/'
+  const isHomePage = pathname === routes.HOME
 
   const onItemClick = (spatialType: string) => {
     // Sends metrics for spatial selection usage

@@ -1,4 +1,4 @@
-import { addToast } from '../../util/addToast'
+import addToast from '../../util/addToast'
 import RetrievalRequest from '../../util/request/admin/retrievalRequest'
 
 import actions from '../index'

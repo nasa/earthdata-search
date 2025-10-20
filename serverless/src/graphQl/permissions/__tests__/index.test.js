@@ -1,4 +1,5 @@
 import {
+  allow,
   and,
   deny,
   shield
@@ -6,8 +7,10 @@ import {
 
 import isValidUser from '../rules/isValidUser'
 import isAdminUser from '../rules/isAdminUser'
+import userOwnsProject from '../rules/userOwnsProject'
 
 import buildPermissions from '../index'
+import userOwnsProjectIfProjectOwned from '../rules/userOwnsProjectIfProjectOwned'
 
 jest.mock('graphql-shield', () => ({
   ...jest.requireActual('graphql-shield'),
@@ -42,8 +45,22 @@ describe('permissions', () => {
           adminRetrievals: and(
             isValidUser,
             isAdminUser
-          )
+          ),
+          project: allow,
+          projects: isValidUser
+        },
+        Mutation: {
+          '*': deny,
+          createProject: allow,
+          deleteProject: and(
+            isValidUser,
+            userOwnsProject
+          ),
+          updateProject: userOwnsProjectIfProjectOwned
         }
+      },
+      {
+        allowExternalErrors: false
       }
     )
   })

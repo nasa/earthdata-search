@@ -12,14 +12,14 @@ import ADMIN_PROJECT from '../../operations/queries/adminProject'
 import Spinner from '../Spinner/Spinner'
 import DefinitionList from '../DefinitionList/DefinitionList'
 
-import { type AdminProject } from '../../types/sharedTypes'
+import { type Project } from '../../types/sharedTypes'
 
 /**
  * Admin Project GraphQL query result type
  */
 interface AdminProjectQueryData {
   /** Admin project details returned from the API */
-  adminProject: AdminProject
+  adminProject: Project
 }
 
 export const AdminProjectDetails = () => {

@@ -31,6 +31,7 @@ import advancedSearchFields from '../../data/advancedSearchFields'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { routes } from '../../constants/routes'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
@@ -128,7 +129,7 @@ export const Search = () => {
         >
           <Routes>
             <Route
-              path="/granules/collection-details"
+              path={routes.COLLECTION_DETAILS.replace(routes.SEARCH, '')}
               element={
                 (
                   <SidebarSection
@@ -143,11 +144,11 @@ export const Search = () => {
               }
             />
             <Route
-              path="/granules"
+              path={routes.GRANULES.replace(routes.SEARCH, '')}
               element={granuleFiltersSidebar}
             />
             <Route
-              path="/granules/granule-details"
+              path={routes.GRANULE_DETAILS.replace(routes.SEARCH, '')}
               element={
                 (
                   <SidebarSection
@@ -162,7 +163,7 @@ export const Search = () => {
               }
             />
             <Route
-              path="/granules/subscriptions"
+              path={routes.GRANULE_SUBSCRIPTIONS.replace(routes.SEARCH, '')}
               element={granuleFiltersSidebar}
             />
             <Route

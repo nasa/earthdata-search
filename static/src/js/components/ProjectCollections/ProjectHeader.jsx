@@ -4,7 +4,6 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { PropTypes } from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
@@ -23,26 +22,34 @@ import Skeleton from '../Skeleton/Skeleton'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 import './ProjectHeader.scss'
 
 /**
  * Renders ProjectHeader.
- * @param {function} onUpdateProjectName - Function to updated the saved project name
- * @param {object} savedProject - Saved Project information (name) passed from redux store
  */
 
-export const ProjectHeader = memo(({
-  onUpdateProjectName,
-  savedProject
-}) => {
+export const ProjectHeader = memo(() => {
+  const setProjectName = useEdscStore((state) => state.savedProject.setProjectName)
+  const projectName = useEdscStore(getSavedProjectName)
+
   const projectCollections = useEdscStore((state) => state.project.collections)
   const projectTitleInput = useRef()
   const projectTitleText = useRef()
 
-  const { name = '' } = savedProject
   const [isEditingName, setIsEditingName] = useState(false)
-  const [projectName, setProjectName] = useState(name || 'Untitled Project')
+  const [name, setName] = useState(projectName || 'Untitled Project')
+
+  // Update projectName when name changes
+  // This can happen when loading a project from the URL, after the response comes back from the API
+  useEffect(() => {
+    setName(projectName || 'Untitled Project')
+
+    return () => {
+      setTimeout(() => {}, 0)
+    }
+  }, [projectName])
 
   const renderInput = (() => {
     const input = projectTitleInput.current
@@ -69,11 +76,12 @@ export const ProjectHeader = memo(({
   }, [isEditingName])
 
   const handleNameSubmit = (() => {
-    const newName = projectName || 'Untitled Project'
-    setProjectName(newName)
+    const newName = name || 'Untitled Project'
+    setName(newName)
     setIsEditingName(false)
     renderInput()
-    onUpdateProjectName(projectName)
+
+    setProjectName(newName)
   })
 
   const handleKeypress = ((event) => {
@@ -97,7 +105,7 @@ export const ProjectHeader = memo(({
   })
 
   const onInputChange = ((event) => {
-    setProjectName(event.target.value)
+    setName(event.target.value)
     renderInput()
   })
 
@@ -163,7 +171,7 @@ export const ProjectHeader = memo(({
                 data-testid="project-header__span"
                 onKeyDown={handleNameKeyPress}
               >
-                {projectName}
+                {name}
               </span>
             </h2>
           </div>
@@ -171,7 +179,7 @@ export const ProjectHeader = memo(({
             <input
               className="project-header__title"
               name="projectName"
-              value={projectName}
+              value={name}
               onFocus={handleOnFocus}
               onChange={onInputChange}
               onKeyDown={handleKeypress}
@@ -265,12 +273,5 @@ export const ProjectHeader = memo(({
 })
 
 ProjectHeader.displayName = 'ProjectHeader'
-
-ProjectHeader.propTypes = {
-  onUpdateProjectName: PropTypes.func.isRequired,
-  savedProject: PropTypes.shape({
-    name: PropTypes.string
-  }).isRequired
-}
 
 export default ProjectHeader

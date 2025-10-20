@@ -555,15 +555,15 @@ export type NlpCollectionQuery = {
  */
 
 /** A user */
-export interface AdminUser {
+export interface User {
   /** Unique identifier for the user */
   id: string
   /** URS username of the user */
   ursId: string
 }
 
-/** An admin project */
-export interface AdminProject {
+/** A project */
+export interface Project {
   /** Unique identifier for the project */
   id: string
   /** Human-readable project name */
@@ -573,7 +573,7 @@ export interface AdminProject {
   /** Source path or query string for the project */
   path: string
   /** User who owns the project */
-  user: AdminUser
+  user: User
   /** ISO timestamp when the project was updated */
   updatedAt: string
   /** ISO timestamp when the project was created */
@@ -635,5 +635,5 @@ export interface AdminRetrieval {
   /** ISO timestamp when the retrieval was created */
   createdAt: string
   /** User who owns the retrieval */
-  user: AdminUser
+  user: User
 }

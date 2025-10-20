@@ -10,7 +10,7 @@ import CopyableText from '../CopyableText/CopyableText'
 import EDSCTabs from '../EDSCTabs/EDSCTabs'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
-import { addToast } from '../../util/addToast'
+import addToast from '../../util/addToast'
 import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
 import './GranuleResultsDataLinksButton.scss'
@@ -131,7 +131,7 @@ export const GranuleResultsDataLinksButton = ({
                   <CopyableText
                     className="granule-results-data-links-button__menu-panel-value"
                     text={region}
-                    label="Copy to clipboard"
+                    label="Copy region to clipboard"
                     successMessage="Copied the AWS S3 region"
                     failureMessage="Could not copy the AWS S3 region"
                   />
@@ -146,7 +146,7 @@ export const GranuleResultsDataLinksButton = ({
                         <CopyableText
                           className="granule-results-data-links-button__menu-panel-value"
                           text={bucketAndObjPrefix}
-                          label="Copy to clipboard"
+                          label="Copy bucket/object prefix to clipboard"
                           successMessage="Copied the AWS S3 Bucket/Object Prefix"
                           failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
                         />

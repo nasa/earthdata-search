@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { isPath } from '../../util/isPath'
 
 import Sidebar from '../../components/Sidebar/Sidebar'
+import { routes } from '../../constants/routes'
 
 export const SidebarContainer = ({
   children,
@@ -15,13 +16,13 @@ export const SidebarContainer = ({
   const { pathname } = location
 
   const sidebarVisible = isPath(pathname, [
-    '/search',
-    '/search/granules',
-    '/search/subscriptions',
-    '/projects',
-    '/search/granules/collection-details',
-    '/search/granules/granule-details',
-    '/search/granules/subscriptions'
+    routes.SEARCH,
+    routes.GRANULES,
+    routes.COLLECTION_SUBSCRIPTIONS,
+    routes.PROJECT,
+    routes.COLLECTION_DETAILS,
+    routes.GRANULE_DETAILS,
+    routes.GRANULE_SUBSCRIPTIONS
   ])
 
   return (

@@ -10,7 +10,7 @@ import actions from '../../actions'
 
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 import RetrievalRequest from '../../util/request/retrievalRequest'
-import { addToast } from '../../util/addToast'
+import addToast from '../../util/addToast'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'

@@ -26,7 +26,9 @@ test.describe('Panel Behavior', () => {
       })
     })
 
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('/search')
+    await initialMapPromise
   })
 
   test('is present by default on page load', async ({ page }) => {

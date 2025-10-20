@@ -20,6 +20,7 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import GranuleResultsDownloadNotebookButton from './GranuleResultsDownloadNotebookButton'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { routes } from '../../constants/routes'
 
 const GranuleResultsTableHeaderCell = (props) => {
   const setGranuleId = useEdscStore((state) => state.granule.setGranuleId)
@@ -168,7 +169,7 @@ const GranuleResultsTableHeaderCell = (props) => {
             }
             to={
               {
-                pathname: '/search/granules/granule-details',
+                pathname: routes.GRANULE_DETAILS,
                 search: location.search
               }
             }

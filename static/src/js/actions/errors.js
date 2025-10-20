@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { REMOVE_ERROR, ADD_ERROR } from '../constants/actionTypes'
 
-import { addToast } from '../util/addToast'
+import addToast from '../util/addToast'
 import { displayNotificationType } from '../constants/enums'
 import { parseError } from '../../../../sharedUtils/parseError'
 

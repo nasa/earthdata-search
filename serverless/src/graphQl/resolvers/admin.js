@@ -68,22 +68,6 @@ export default {
       }
     }
   },
-  AdminProject: {
-    user: async (parent, args, context) => {
-      const { loaders } = context
-
-      // Use the users dataloader to fetch the user for the project using the userId
-      // from the parent AdminProject
-      const loaderData = await loaders.users.load(parent.userId)
-
-      return camelcaseKeys(loaderData, { deep: true })
-    },
-    obfuscatedId: async (parent) => {
-      const { id } = parent
-
-      return obfuscateId(id)
-    }
-  },
   AdminRetrieval: {
     user: async (parent, args, context) => {
       const { loaders } = context

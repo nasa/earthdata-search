@@ -1,50 +1,57 @@
 import React, { lazy, Suspense } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { Dispatch } from 'redux'
+// @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
+// @ts-expect-error This file does not have types
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+// @ts-expect-error This file does not have types
 import actions from '../../actions'
 
+// @ts-expect-error This file does not have types
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 import ProjectCollectionsContainer
+  // @ts-expect-error This file does not have types
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
+// @ts-expect-error This file does not have types
 import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
-import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
+
 import Spinner from '../../components/Spinner/Spinner'
+
 import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsRequiringChunking } from '../../zustand/selectors/project'
+import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onSubmitRetrieval:
     () => dispatch(actions.submitRetrieval()),
   onToggleChunkedOrderModal:
-    (isOpen) => dispatch(actions.toggleChunkedOrderModal(isOpen))
+    (isOpen: boolean) => dispatch(actions.toggleChunkedOrderModal(isOpen))
 })
 
-const mapStateToProps = (state) => ({
-  name: state.savedProject.name
-})
+const { edscHost } = getEnvironmentConfig()
+
+interface ProjectProps {
+  onSubmitRetrieval: () => void
+  onToggleChunkedOrderModal: (isOpen: boolean) => void
+}
 
 /**
  * The Project route component
 */
-export const Project = (props) => {
-  const location = useLocation()
-
+export const Project: React.FC<ProjectProps> = ({
+  onSubmitRetrieval,
+  onToggleChunkedOrderModal
+}) => {
+  const name = useEdscStore(getSavedProjectName)
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
 
-  const {
-    onSubmitRetrieval,
-    onToggleChunkedOrderModal
-  } = props
-
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (Object.keys(projectCollectionsRequiringChunking).length > 0) {
@@ -52,33 +59,6 @@ export const Project = (props) => {
     } else {
       onSubmitRetrieval()
     }
-  }
-
-  const {
-    name
-  } = props
-  const { search } = location
-  const { edscHost } = getEnvironmentConfig()
-
-  // If there are no params in the URL, show the saved projects page
-  if (search === '') {
-    return (
-      <>
-        <Helmet>
-          <title>Saved Projects</title>
-          <meta data-testid="meta-title" name="title" content="Saved Projects" />
-          <meta data-testid="meta-robots" name="robots" content="noindex, nofollow" />
-          <link data-testid="canonical-link" rel="canonical" href={`${edscHost}`} />
-        </Helmet>
-        <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
-          <div className="route-wrapper__content">
-            <div className="route-wrapper__content-inner">
-              <SavedProjectsContainer />
-            </div>
-          </div>
-        </div>
-      </>
-    )
   }
 
   // Show the project page
@@ -90,6 +70,7 @@ export const Project = (props) => {
         <meta name="robots" content="noindex, nofollow" />
         <link rel="canonical" href={`${edscHost}`} />
       </Helmet>
+
       <form
         id="form__project"
         onSubmit={handleSubmit}
@@ -102,6 +83,7 @@ export const Project = (props) => {
         </SidebarContainer>
         <OverrideTemporalModalContainer />
       </form>
+
       <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
         <EdscMapContainer />
       </Suspense>
@@ -109,10 +91,4 @@ export const Project = (props) => {
   )
 }
 
-Project.propTypes = {
-  name: PropTypes.string.isRequired,
-  onToggleChunkedOrderModal: PropTypes.func.isRequired,
-  onSubmitRetrieval: PropTypes.func.isRequired
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Project)
+export default connect(null, mapDispatchToProps)(Project)

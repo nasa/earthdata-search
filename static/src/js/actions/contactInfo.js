@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-import { addToast } from '../util/addToast'
+import addToast from '../util/addToast'
 import ContactInfoRequest from '../util/request/contactInfoRequest'
 
 import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'

@@ -34,12 +34,18 @@ import {
 
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
-import * as addToast from '../../util/addToast'
+import addToast from '../../util/addToast'
+
 import {
   getCollectionSubscriptionQueryString,
   getGranuleSubscriptionQueryString
 } from '../../zustand/selectors/query'
 import useEdscStore from '../../zustand/useEdscStore'
+
+jest.mock('../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
 jest.mock('../../zustand/selectors/query', () => ({
   getCollectionSubscriptionQueryString: jest.fn().mockImplementation(() => {}),
@@ -107,7 +113,6 @@ describe('createSubscription', () => {
     }))
 
     const getGranuleSubscriptionsMock = jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
-    const addToastMock = jest.spyOn(addToast, 'addToast')
 
     getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
@@ -170,10 +175,12 @@ describe('createSubscription', () => {
     })
 
     await store.dispatch(createSubscription('test granule subscription', 'granule')).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription created', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+
       expect(getGranuleSubscriptionsMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -185,7 +192,6 @@ describe('createSubscription', () => {
     }))
 
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
-    const addToastMock = jest.spyOn(addToast, 'addToast')
 
     getCollectionSubscriptionQueryString.mockReturnValue('options[temporal][limit_to_granules]=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
@@ -246,10 +252,12 @@ describe('createSubscription', () => {
     })
 
     await store.dispatch(createSubscription('test collection subscription', 'collection')).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription created', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+
       expect(getSubscriptionsMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -261,7 +269,6 @@ describe('createSubscription', () => {
         graphQlHost: 'https://graphql.example.com'
       }))
 
-      const addToastMock = jest.spyOn(addToast, 'addToast')
       jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
       getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
@@ -327,10 +334,11 @@ describe('createSubscription', () => {
       })
 
       await store.dispatch(createSubscription('test granule subscription 2', 'granule')).then(() => {
-        expect(addToastMock.mock.calls.length).toBe(1)
-        expect(addToastMock.mock.calls[0][0]).toEqual('Subscription created')
-        expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-        expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+        expect(addToast).toHaveBeenCalledTimes(1)
+        expect(addToast).toHaveBeenCalledWith('Subscription created', {
+          appearance: 'success',
+          autoDismiss: true
+        })
       })
     })
   })
@@ -718,8 +726,6 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    const addToastMock = jest.spyOn(addToast, 'addToast')
-
     nock(/localhost/)
       .post(/graphql/)
       .reply(200, {
@@ -741,10 +747,11 @@ describe('deleteSubscription', () => {
         payload: 'SUB1000-EDSC'
       })
 
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription removed')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription removed', {
+        appearance: 'success',
+        autoDismiss: true
+      })
     })
   })
 
@@ -753,8 +760,6 @@ describe('deleteSubscription', () => {
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
     }))
-
-    const addToastMock = jest.spyOn(addToast, 'addToast')
 
     nock(/localhost/)
       .post(/graphql/)
@@ -802,10 +807,11 @@ describe('deleteSubscription', () => {
         }
       })
 
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription removed')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription removed', {
+        appearance: 'success',
+        autoDismiss: true
+      })
     })
   })
 
@@ -856,7 +862,6 @@ describe('updateSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    const addToastMock = jest.spyOn(addToast, 'addToast')
     const getGranuleSubscriptionsMock = jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
@@ -892,10 +897,11 @@ describe('updateSubscription', () => {
       },
       shouldUpdateQuery: true
     })).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
 
       expect(getGranuleSubscriptionsMock.mock.calls.length).toBe(1)
       expect(getGranuleSubscriptionsMock.mock.calls[0][1]).toBe()
@@ -908,7 +914,6 @@ describe('updateSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    const addToastMock = jest.spyOn(addToast, 'addToast')
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
@@ -944,10 +949,11 @@ describe('updateSubscription', () => {
       },
       shouldUpdateQuery: true
     })).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
 
       expect(getSubscriptionsMock.mock.calls.length).toBe(1)
       expect(getSubscriptionsMock.mock.calls[0][0]).toBe('collection')
@@ -961,7 +967,6 @@ describe('updateSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    const addToastMock = jest.spyOn(addToast, 'addToast')
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
@@ -997,10 +1002,11 @@ describe('updateSubscription', () => {
       },
       shouldUpdateQuery: false
     })).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Subscription updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
 
       expect(getSubscriptionsMock.mock.calls.length).toBe(1)
       expect(getSubscriptionsMock.mock.calls[0][0]).toBe('collection')

@@ -1,3 +1,4 @@
+import { routes } from '../constants/routes'
 import routerHelper from '../router/router'
 import getObjectKeyByValue from './object'
 
@@ -57,7 +58,7 @@ export const prepareTimelineParams = (state) => {
 
   const { location } = routerHelper.router.state
   const { pathname } = location
-  const isProjectPage = pathname.startsWith('/project')
+  const isProjectPage = pathname.startsWith(routes.PROJECT)
 
   let conceptIds = []
 

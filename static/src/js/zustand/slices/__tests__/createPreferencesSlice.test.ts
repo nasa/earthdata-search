@@ -11,7 +11,7 @@ import { initialState } from '../createPreferencesSlice'
 import type { PreferencesData } from '../../types'
 
 // @ts-expect-error The file does not have types
-import { addToast } from '../../../util/addToast'
+import addToast from '../../../util/addToast'
 import PreferencesRequest from '../../../util/request/preferencesRequest'
 
 // @ts-expect-error The file does not have types

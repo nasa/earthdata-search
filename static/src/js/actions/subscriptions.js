@@ -17,7 +17,7 @@ import {
 import { displayNotificationType } from '../constants/enums'
 import { getUsername } from '../selectors/user'
 
-import { addToast } from '../util/addToast'
+import addToast from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import GraphQlRequest from '../util/request/graphQlRequest'
 

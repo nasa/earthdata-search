@@ -31,9 +31,11 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('encodes keywordSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      keywordSearch: 'keyword'
+      collectionsQuery: {
+        hasGranulesOrCwic: true,
+        keyword: 'keyword'
+      },
+      pathname: '/path/here'
     }
     expect(encodeUrlQuery(props)).toEqual('/path/here?q=keyword')
   })

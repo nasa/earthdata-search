@@ -16,12 +16,7 @@ jest.mock('../ProjectHeader', () => jest.fn(() => <div />))
 const setup = setupTest({
   Component: ProjectCollections,
   defaultProps: {
-    savedProject: {
-      projectId: 1,
-      name: 'test name'
-    },
-    onMetricsDataAccess: jest.fn(),
-    onUpdateProjectName: jest.fn()
+    onMetricsDataAccess: jest.fn()
   },
   defaultZustandState: {
     collection: {
@@ -57,6 +52,15 @@ const setup = setupTest({
       removeProjectCollection: jest.fn(),
       toggleCollectionVisibility: jest.fn()
     },
+    projectPanels: {
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: false
+      },
+      setActivePanel: jest.fn(),
+      setIsOpen: jest.fn(),
+      setPanelSection: jest.fn()
+    },
     query: {
       collection: {
         byId: {
@@ -69,15 +73,6 @@ const setup = setupTest({
         },
         pageNum: 1
       }
-    },
-    projectPanels: {
-      panels: {
-        activePanel: '0.0.0',
-        isOpen: false
-      },
-      setActivePanel: jest.fn(),
-      setIsOpen: jest.fn(),
-      setPanelSection: jest.fn()
     }
   },
   withRedux: true
@@ -88,13 +83,7 @@ describe('ProjectCollectionsList component', () => {
     setup()
 
     expect(ProjectHeader).toHaveBeenCalledTimes(1)
-    expect(ProjectHeader).toHaveBeenCalledWith({
-      onUpdateProjectName: expect.any(Function),
-      savedProject: {
-        name: 'test name',
-        projectId: 1
-      }
-    }, {})
+    expect(ProjectHeader).toHaveBeenCalledWith({}, {})
 
     expect(ProjectCollectionsList).toHaveBeenCalledTimes(1)
     expect(ProjectCollectionsList).toHaveBeenCalledWith({

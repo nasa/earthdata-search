@@ -78,7 +78,7 @@ describe('GranuleDownloadButton component', () => {
       expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
       expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/projects?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery')
+      expect(props.onChangePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery')
     })
   })
 
@@ -118,7 +118,7 @@ describe('GranuleDownloadButton component', () => {
         expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
         expect(props.onChangePath).toHaveBeenCalledTimes(1)
-        expect(props.onChangePath).toHaveBeenCalledWith('/projects?p=collectionId!collectionId&ff=Map%20Imagery&pg[1][v]=t')
+        expect(props.onChangePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&ff=Map%20Imagery&pg[1][v]=t')
       })
     })
 
@@ -167,7 +167,7 @@ describe('GranuleDownloadButton component', () => {
         expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
         expect(props.onChangePath).toHaveBeenCalledTimes(1)
-        expect(props.onChangePath).toHaveBeenCalledWith('/projects?p=collectionId!collectionId&pg[1][gsk]=start_date&pg[1][v]=t&ff=Map%20Imagery')
+        expect(props.onChangePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&pg[1][gsk]=start_date&pg[1][v]=t&ff=Map%20Imagery')
       })
     })
   })

@@ -89,7 +89,9 @@ describe('url#decodeUrlParams', () => {
 describe('url#encodeUrlQuery', () => {
   test('does not encode collections if no collections exist', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: 'collectionId'
     }
@@ -99,7 +101,9 @@ describe('url#encodeUrlQuery', () => {
 
   test('does not encode collections if no focusedCollection exist', () => {
     const props = {
-      hasGranulesOrCwic: true,
+      collectionsQuery: {
+        hasGranulesOrCwic: true
+      },
       pathname: '/path/here',
       focusedCollection: ''
     }
@@ -111,7 +115,9 @@ describe('url#encodeUrlQuery', () => {
     describe('CMR removed granules', () => {
       test('does not encode removed granules if no removed granules exist', () => {
         const props = {
-          hasGranulesOrCwic: true,
+          collectionsQuery: {
+            hasGranulesOrCwic: true
+          },
           pathname: '/path/here',
           focusedCollection: 'collectionId'
         }
@@ -126,7 +132,9 @@ describe('url#encodeUrlQuery', () => {
               isOpenSearch: false
             }
           },
-          hasGranulesOrCwic: true,
+          collectionsQuery: {
+            hasGranulesOrCwic: true
+          },
           pathname: '/path/here',
           focusedCollection: 'collectionId',
           projectCollections: {
@@ -148,7 +156,9 @@ describe('url#encodeUrlQuery', () => {
     describe('CWIC removed granules', () => {
       test('does not encode removed granules if no removed granules exist', () => {
         const props = {
-          hasGranulesOrCwic: true,
+          collectionsQuery: {
+            hasGranulesOrCwic: true
+          },
           pathname: '/path/here',
           focusedCollection: 'collectionId'
         }
@@ -162,7 +172,9 @@ describe('url#encodeUrlQuery', () => {
               isOpenSearch: true
             }
           },
-          hasGranulesOrCwic: true,
+          collectionsQuery: {
+            hasGranulesOrCwic: true
+          },
           pathname: '/path/here',
           focusedCollection: 'collectionId',
           projectCollections: {
@@ -190,7 +202,9 @@ describe('url#encodeUrlQuery', () => {
             isOpenSearch: false
           }
         },
-        hasGranulesOrCwic: true,
+        collectionsQuery: {
+          hasGranulesOrCwic: true
+        },
         pathname: '/path/here',
         focusedCollection: '',
         projectCollections: {
@@ -217,7 +231,9 @@ describe('url#encodeUrlQuery', () => {
             isOpenSearch: false
           }
         },
-        hasGranulesOrCwic: true,
+        collectionsQuery: {
+          hasGranulesOrCwic: true
+        },
         pathname: '/path/here',
         focusedCollection: 'collectionId',
         projectCollections: {

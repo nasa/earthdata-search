@@ -15,6 +15,7 @@ import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 import { setupTests } from '../../support/setupTests'
+import { isGetProjectQuery } from '../../support/isGetProjectQuery'
 
 const conceptId = 'C1214470488-ASF'
 
@@ -130,23 +131,36 @@ test.describe('History', () => {
         })
       })
 
-      await page.route(/projects$/, async (route) => {
-        await route.fulfill({
-          json: {
-            name: 'Test Project',
-            path: '/projects?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f&tl=1721757043!3!!&lat=0&long=0&zoom=2',
-            project_id: '9452013926'
-          }
-        })
-      })
+      await page.route('**/graphql', async (route) => {
+        const { query } = JSON.parse(route.request().postData())
 
-      await page.route(/projects\/9452013926/, async (route) => {
-        await route.fulfill({
-          json: {
-            name: 'Test Project',
-            path: '/projects?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f&tl=1721757043!3!!&lat=0&long=0&zoom=2'
-          }
-        })
+        if (isGetProjectQuery(route, '9452013926')) {
+          await route.fulfill({
+            json: {
+              data: {
+                project: {
+                  name: 'Test Project',
+                  obfuscatedId: '9452013926',
+                  path: '/project?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f'
+                }
+              }
+            }
+          })
+        }
+
+        if (query.includes('mutation CreateProject')) {
+          await route.fulfill({
+            json: {
+              data: {
+                createProject: {
+                  name: 'Test Project',
+                  obfuscatedId: '9452013926',
+                  path: '/project?p=C1214470488-ASF!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f'
+                }
+              }
+            }
+          })
+        }
       })
 
       await page.route(/retrievals/, async (route) => {
@@ -213,7 +227,7 @@ test.describe('History', () => {
       await expect(page.getByRole('link', { name: downloadLinks[0] })).toBeVisible()
 
       // Click the Back to Project button
-      const projectsPromise = page.waitForResponse(/projects\/\d+/)
+      const projectsPromise = page.waitForResponse('**/graphql')
       await page.getByRole('button', { name: 'Back to Project' }).click()
       await projectsPromise
 
@@ -221,7 +235,7 @@ test.describe('History', () => {
       await expect(page.getByRole('button', { name: 'Download project data' })).toBeEnabled()
 
       // We want to make sure that the project is not updated when the back button is pressed
-      await page.route(/projects$/, async () => {
+      await page.route('**/graphql', async () => {
         expect('This route should not be called again').toEqual(true)
       })
 

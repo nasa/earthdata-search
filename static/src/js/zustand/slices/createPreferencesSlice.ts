@@ -16,7 +16,7 @@ import PreferencesRequest from '../../util/request/preferencesRequest'
 // @ts-expect-error The file does not have types
 import { updateAuthTokenFromHeaders } from '../../actions/authToken'
 // @ts-expect-error The file does not have types
-import { addToast } from '../../util/addToast'
+import addToast from '../../util/addToast'
 // @ts-expect-error The file does not have types
 import { displayNotificationType } from '../../constants/enums'
 // @ts-expect-error The file does not have types

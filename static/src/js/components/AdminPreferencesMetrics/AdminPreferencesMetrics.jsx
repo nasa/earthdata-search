@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row'
 
 import AdminPage from '../AdminPage/AdminPage'
 import AdminPreferencesMetricsList from './AdminPreferencesMetricsList'
+import { routes } from '../../constants/routes'
 
 const AdminPreferencesMetrics = () => (
   <AdminPage
@@ -12,7 +13,7 @@ const AdminPreferencesMetrics = () => (
       [
         {
           name: 'Admin',
-          href: '/admin'
+          href: routes.ADMIN
         },
         {
           name: 'Preferences Metrics',

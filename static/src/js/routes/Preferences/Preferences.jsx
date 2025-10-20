@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 import PreferencesForm from '../../components/Preferences/PreferencesForm'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { routes } from '../../constants/routes'
 
 /**
  * The Preferences route component
@@ -17,7 +18,7 @@ export const Preferences = () => {
         <title>Preferences</title>
         <meta name="title" content="Preferences" />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}/preferences`} />
+        <link rel="canonical" href={`${edscHost}${routes.PREFERENCES}`} />
       </Helmet>
       <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
         <div className="route-wrapper__content">

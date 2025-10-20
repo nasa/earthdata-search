@@ -10,6 +10,7 @@ import { prepareRetrievalParams } from '../util/retrievals'
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 import routerHelper from '../router/router'
+import { routes } from '../constants/routes'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -102,7 +103,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
       const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
-      routerHelper.router.navigate(`/downloads/${retrievalId}${eeLink}`)
+      routerHelper.router.navigate(`${routes.DOWNLOADS}/${retrievalId}${eeLink}`)
     })
     .catch((error) => {
       dispatch(handleError({
