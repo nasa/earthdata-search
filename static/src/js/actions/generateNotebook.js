@@ -1,6 +1,5 @@
 import { GENERATE_NOTEBOOK_FINISHED, GENERATE_NOTEBOOK_STARTED } from '../constants/actionTypes'
 import GenerateNotebookRequest from '../util/request/generateNotebookRequest'
-import { handleError } from './errors'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
@@ -25,7 +24,9 @@ export const generateNotebook = (params) => (dispatch, getState) => {
 
   const state = getState()
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const {
     authToken
@@ -58,11 +59,11 @@ export const generateNotebook = (params) => (dispatch, getState) => {
     .catch((error) => {
       dispatch(onGenerateNotebookFinished(granuleId))
 
-      dispatch(handleError({
+      zustandState.errors.handleError({
         error,
         action: 'generateNotebook',
         generateNotebookRequestObject
-      }))
+      })
     })
 
   return response

@@ -299,6 +299,11 @@ describe('createPreferencesSlice', () => {
       }
       const mockError = new Error('Request failed')
 
+      const localMockHandleError = jest.fn()
+      useEdscStore.setState((state) => {
+        state.errors.handleError = localMockHandleError
+      })
+
       mockGetState.mockReturnValue({
         authToken: mockAuthToken,
         earthdataEnvironment: mockEarthdataEnvironment
@@ -312,13 +317,13 @@ describe('createPreferencesSlice', () => {
 
       const finalState = useEdscStore.getState().preferences
       expect(finalState.isSubmitting).toBe(false)
-      expect(mockHandleError).toHaveBeenCalledWith({
+      expect(localMockHandleError).toHaveBeenCalledTimes(1)
+      expect(localMockHandleError).toHaveBeenCalledWith(expect.objectContaining({
         error: mockError,
         action: 'updatePreferences',
         resource: 'preferences',
-        requestObject: null,
         notificationType: 'toast'
-      })
+      }))
     })
 
     test('merges server response with existing preferences', async () => {

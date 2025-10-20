@@ -1,7 +1,6 @@
 import { EXPORT_FINISHED, EXPORT_STARTED } from '../constants/actionTypes'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import ExportSearchRequest from '../util/request/exportSearchRequest'
-import { handleError } from './errors'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
@@ -25,7 +24,9 @@ export const exportSearch = (format) => (dispatch, getState) => {
 
   const state = getState()
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const collectionParams = prepareCollectionParams(state)
 
@@ -101,14 +102,14 @@ export const exportSearch = (format) => (dispatch, getState) => {
     .catch((error) => {
       dispatch(onExportFinished(format))
 
-      dispatch(handleError({
+      zustandState.errors.handleError({
         error,
         action: 'exportSearch',
         resource: 'collections',
         graphQlRequestObject,
         showAlertButton: true,
         title: 'Something went wrong exporting your search'
-      }))
+      })
     })
 
   return response

@@ -18,9 +18,6 @@ import { prepareTimelineParams } from '../../util/timeline'
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../store/configureStore'
 
-// @ts-expect-error Types are not defined for this module
-import actions from '../../actions'
-
 import { TimelineResponseData } from '../../types/sharedTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionsQuery } from '../selectors/query'
@@ -48,7 +45,6 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
       }
 
       const {
-        dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
@@ -127,14 +123,14 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
         .catch(async (error) => {
           if (isCancel(error)) return
 
-          reduxDispatch(actions.handleError({
+          currentState.errors.handleError({
             error,
             action: 'getTimeline',
             resource: 'timeline',
             requestObject,
             showAlertButton: true,
             title: 'Something went wrong fetching timeline data'
-          }))
+          })
         })
     }
   }

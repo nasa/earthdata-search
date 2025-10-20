@@ -11,6 +11,7 @@ import {
 } from '../contactInfo'
 
 import addToast from '../../util/addToast'
+import useEdscStore from '../../zustand/useEdscStore'
 import { testJwtToken } from './mocks'
 
 jest.mock('../../util/addToast', () => ({
@@ -126,15 +127,24 @@ describe('updateNotificationLevel', () => {
       .post(/error_logger/)
       .reply(200)
 
+    const mockHandleError = jest.fn()
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = mockHandleError
+    })
+
     const store = mockStore({
       authToken: 'mockToken',
       contactInfo: {}
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(updateNotificationLevel('INFO')).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(mockHandleError).toHaveBeenCalledTimes(1)
+      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+        action: 'updateNotificationLevel',
+        resource: 'contactInfo',
+        verb: 'updating'
+      }))
     })
   })
 })

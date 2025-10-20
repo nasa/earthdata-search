@@ -9,9 +9,6 @@ import getApolloClient from '../../providers/getApolloClient'
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../store/configureStore'
 
-// @ts-expect-error Types are not defined for this module
-import actions from '../../actions'
-
 import CREATE_PROJECT from '../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../operations/mutations/updateProject'
 import GET_PROJECT from '../../operations/queries/getProject'
@@ -32,7 +29,6 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
     setProjectName: async (name) => {
       const {
-        dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
@@ -97,12 +93,12 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         const { message } = error as Error
 
         if (message) {
-          reduxDispatch(actions.handleError({
+          currentState.errors.handleError({
             error: message,
             action: 'setProjectName',
             resource: 'project name',
             verb: 'updating'
-          }))
+          })
         }
       }
     },

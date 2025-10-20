@@ -135,14 +135,14 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
           state.granule.granuleId = null
         })
 
-        reduxDispatch(actions.handleError({
+        currentState.errors.handleError({
           error,
           action: 'getGranuleMetadata',
           resource: 'granule',
           requestObject: graphQlRequestObject,
           showAlertButton: true,
           title: 'Something went wrong fetching granule metadata'
-        }))
+        })
       }
     },
 

@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 // @ts-expect-error The file does not have types
 import AuthTokenContainer from '../../containers/AuthTokenContainer/AuthTokenContainer'
 // @ts-expect-error The file does not have types
-import ErrorBannerContainer from '../../containers/ErrorBannerContainer/ErrorBannerContainer'
+import ErrorBanner from '../../components/ErrorBanner/ErrorBanner'
 // @ts-expect-error The file does not have types
 import Footer from '../../components/Footer/Footer'
 // @ts-expect-error The file does not have types
@@ -25,7 +25,7 @@ const AppLayout = () => (
     <PortalContainer />
     <HistoryContainer />
     <MetricsContainer />
-    <ErrorBannerContainer />
+    <ErrorBanner />
     <AuthTokenContainer>
       <UrlQueryContainer>
         <WrappingContainer>

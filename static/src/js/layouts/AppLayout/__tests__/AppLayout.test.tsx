@@ -8,7 +8,7 @@ import AppLayout from '../AppLayout'
 // @ts-expect-error The file does not have types
 import AuthTokenContainer from '../../../containers/AuthTokenContainer/AuthTokenContainer'
 // @ts-expect-error The file does not have types
-import ErrorBannerContainer from '../../../containers/ErrorBannerContainer/ErrorBannerContainer'
+import ErrorBanner from '../../../components/ErrorBanner/ErrorBanner'
 // @ts-expect-error The file does not have types
 import Footer from '../../../components/Footer/Footer'
 // @ts-expect-error The file does not have types
@@ -25,7 +25,7 @@ import UrlQueryContainer from '../../../containers/UrlQueryContainer/UrlQueryCon
 import WrappingContainer from '../../../containers/WrappingContainer/WrappingContainer'
 
 jest.mock('../../../containers/AuthTokenContainer/AuthTokenContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/ErrorBannerContainer/ErrorBannerContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+jest.mock('../../../components/ErrorBanner/ErrorBanner', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../components/Footer/Footer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/HistoryContainer/HistoryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/MetricsContainer/MetricsContainer', () => jest.fn(({ children }) => <div>{children}</div>))
@@ -53,8 +53,8 @@ describe('AppLayout', () => {
     expect(MetricsContainer).toHaveBeenCalledTimes(1)
     expect(MetricsContainer).toHaveBeenCalledWith({}, {})
 
-    expect(ErrorBannerContainer).toHaveBeenCalledTimes(1)
-    expect(ErrorBannerContainer).toHaveBeenCalledWith({}, {})
+    expect(ErrorBanner).toHaveBeenCalledTimes(1)
+    expect(ErrorBanner).toHaveBeenCalledWith({}, {})
 
     expect(AuthTokenContainer).toHaveBeenCalledTimes(1)
     expect(AuthTokenContainer).toHaveBeenCalledWith(

@@ -6,8 +6,6 @@ import React, {
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import actions from '../../actions'
-
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 import RetrievalRequest from '../../util/request/retrievalRequest'
 import addToast from '../../util/addToast'
@@ -19,13 +17,10 @@ export const mapStateToProps = (state) => ({
   authToken: state.authToken
 })
 
-export const mapDispatchToProps = (dispatch) => ({
-  dispatchHandleError: (errorConfig) => dispatch(actions.handleError(errorConfig))
-})
+export const mapDispatchToProps = () => ({})
 
 export const DownloadHistoryContainer = ({
-  authToken,
-  dispatchHandleError
+  authToken
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const [retrievalHistory, setRetrievalHistory] = useState([])
@@ -58,7 +53,7 @@ export const DownloadHistoryContainer = ({
         isLoaded: false
       })
 
-      dispatchHandleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'fetchRetrievalHistory',
         resource: 'retrieval history',
@@ -66,7 +61,7 @@ export const DownloadHistoryContainer = ({
         notificationType: 'banner'
       })
     }
-  }, [authToken, earthdataEnvironment, dispatchHandleError])
+  }, [authToken, earthdataEnvironment])
 
   const handleDeleteRetrieval = useCallback(async (retrievalId) => {
     if (!authToken) return
@@ -84,7 +79,7 @@ export const DownloadHistoryContainer = ({
           autoDismiss: true
         })
       } catch (error) {
-        dispatchHandleError({
+        useEdscStore.getState().errors.handleError({
           error,
           action: 'handleDeleteRetrieval',
           resource: 'retrieval',
@@ -93,7 +88,7 @@ export const DownloadHistoryContainer = ({
         })
       }
     }
-  }, [authToken, earthdataEnvironment, dispatchHandleError])
+  }, [authToken, earthdataEnvironment])
 
   useEffect(() => {
     if (authToken) {
@@ -113,8 +108,7 @@ export const DownloadHistoryContainer = ({
 }
 
 DownloadHistoryContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  dispatchHandleError: PropTypes.func.isRequired
+  authToken: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)

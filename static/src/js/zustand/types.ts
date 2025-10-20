@@ -99,6 +99,61 @@ export type EarthdataEnvironmentSlice = {
   }
 }
 
+/** Error object structure */
+type ErrorObject = {
+  /** Unique identifier for the error */
+  id: string
+  /** The error message */
+  message: string
+  /** The notification type for the error */
+  notificationType?: string
+  /** Flag to show alert button in the error banner */
+  showAlertButton?: boolean
+  /** The error title */
+  title?: string
+}
+
+/** Parameters for handleError action */
+type HandleErrorParams = {
+  /** The error object */
+  error: unknown
+  /** The error message */
+  message?: string
+  /** The action that caused the error */
+  action?: string
+  /** The resource that caused the error */
+  resource?: string
+  /** The verb describing the action */
+  verb?: string
+  /** The notification type */
+  notificationType?: string
+  /** The request object */
+  requestObject?: {
+    /** The request ID */
+    requestId?: string
+  }
+  /** An optional error action to dispatch */
+  errorAction?: (message: string) => void
+  /** Flag to show alert button */
+  showAlertButton?: boolean
+  /** The error title */
+  title?: string
+}
+
+export type ErrorsSlice = {
+  /** The Errors Slice of the store */
+  errors: {
+    /** The list of errors */
+    errorsList: ErrorObject[]
+    /** Function to add an error */
+    addError: (error: ErrorObject) => void
+    /** Function to remove an error */
+    removeError: (id: string) => void
+    /** Function to handle an error */
+    handleError: (params: HandleErrorParams) => void
+  }
+}
+
 type FeatureFacets = {
   /** Flag if the facet is available in Earthdata Cloud */
   availableInEarthdataCloud: boolean
@@ -1103,6 +1158,7 @@ export type EdscStore =
   & DataQualitySummariesSlice
   & EarthdataDownloadRedirectSlice
   & EarthdataEnvironmentSlice
+  & ErrorsSlice
   & FacetParamsSlice
   & GranuleSlice
   & GranulesSlice

@@ -10,11 +10,7 @@ import {
   updateViewAllFacets
 } from '../viewAllFacets'
 
-import { handleError } from '../errors'
-
-jest.mock('../errors', () => ({
-  handleError: jest.fn(() => jest.fn())
-}))
+import useEdscStore from '../../zustand/useEdscStore'
 
 import {
   ERRORED_VIEW_ALL_FACETS,
@@ -265,6 +261,12 @@ describe('getViewAllFacets', () => {
       .post(/error_logger/)
       .reply(200)
 
+    const mockHandleError = jest.fn()
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = mockHandleError
+    })
+
     const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
 
     // MockStore with initialState
@@ -311,8 +313,8 @@ describe('getViewAllFacets', () => {
         }
       })
 
-      expect(handleError).toHaveBeenCalledTimes(1)
-      expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
+      expect(mockHandleError).toHaveBeenCalledTimes(1)
+      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getViewAllFacets',
         resource: 'facets',
         showAlertButton: true,

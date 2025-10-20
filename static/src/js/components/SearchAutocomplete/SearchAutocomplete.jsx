@@ -26,8 +26,7 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 import './SearchAutocomplete.scss'
 
 const SearchAutocomplete = ({
-  authToken,
-  handleError
+  authToken
 }) => {
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: initialKeyword } = collectionQuery
@@ -143,7 +142,7 @@ const SearchAutocomplete = ({
       setIsLoaded(false)
       setIsLoading(false)
 
-      handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'fetchAutocomplete',
         resource: 'suggestions',
@@ -152,7 +151,7 @@ const SearchAutocomplete = ({
         title: 'Something went wrong fetching search suggestions'
       })
     }
-  }, [])
+  }, [authToken, earthdataEnvironment])
 
   /**
    * Action for selecting an autocomplete suggestion
@@ -369,8 +368,7 @@ const SearchAutocomplete = ({
 }
 
 SearchAutocomplete.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  handleError: PropTypes.func.isRequired
+  authToken: PropTypes.string.isRequired
 }
 
 export default SearchAutocomplete

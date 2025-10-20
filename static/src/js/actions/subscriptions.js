@@ -237,12 +237,19 @@ export const getSubscriptions = (
       loaded: false
     }))
 
+    dispatch(onSubscriptionsErrored(
+      [
+        {
+          message: 'Something went wrong fetching subscriptions'
+        }
+      ]
+    ))
+
     dispatch(actions.handleError({
       error,
       action: 'fetchSubscriptions',
       resource: 'subscription',
       requestObject: graphQlRequestObject,
-      errorAction: onSubscriptionsErrored,
       showAlertButton: true,
       title: 'Something went wrong fetching subscriptions'
     }))

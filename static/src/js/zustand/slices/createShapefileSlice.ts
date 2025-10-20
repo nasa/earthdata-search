@@ -2,11 +2,6 @@ import { ImmerStateCreator, ShapefileSlice } from '../types'
 
 import ShapefileRequest from '../../util/request/shapefileRequest'
 
-// @ts-expect-error Types are not defined for this module
-import actions from '../../actions'
-
-// @ts-expect-error Types are not defined for this module
-import configureStore from '../../store/configureStore'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const initialState = {
@@ -34,13 +29,11 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
     },
 
     fetchShapefile: async (shapefileId) => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
+      const zustandState = get()
 
-      get().shapefile.setLoading()
+      zustandState.shapefile.setLoading()
 
-      const earthdataEnvironment = getEarthdataEnvironment(get())
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
       const requestObject = new ShapefileRequest(earthdataEnvironment)
 
@@ -49,12 +42,12 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
           get().shapefile.updateShapefile(responseObject.data)
         })
         .catch((error) => {
-          reduxDispatch(actions.handleError({
+          get().errors.handleError({
             error,
             action: 'fetchShapefile',
             resource: 'shapefile',
             requestObject
-          }))
+          })
         })
     },
 
@@ -65,17 +58,15 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
         file
       } = data
 
-      get().shapefile.updateShapefile({
+      const zustandState = get()
+
+      zustandState.shapefile.updateShapefile({
         file,
         shapefileName,
         shapefileSize
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
-      const earthdataEnvironment = getEarthdataEnvironment(get())
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
       const requestObject = new ShapefileRequest(earthdataEnvironment)
 
@@ -86,12 +77,12 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
           get().shapefile.updateShapefile({ shapefileId })
         })
         .catch((error) => {
-          reduxDispatch(actions.handleError({
+          get().errors.handleError({
             error,
             action: 'saveShapefile',
             resource: 'shapefile',
             requestObject
-          }))
+          })
         })
     },
 

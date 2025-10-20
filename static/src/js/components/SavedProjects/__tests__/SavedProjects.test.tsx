@@ -9,6 +9,7 @@ import DELETE_PROJECT from '../../../operations/mutations/deleteProject'
 
 // @ts-expect-error This file does not have types
 import addToast from '../../../util/addToast'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 jest.mock('../../../util/addToast', () => ({
   __esModule: true,
@@ -23,9 +24,6 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 
 const setup = setupTest({
   Component: SavedProjects,
-  defaultProps: {
-    onHandleError: jest.fn()
-  },
   defaultApolloClientMocks: [{
     request: {
       query: gql(GET_PROJECTS),
@@ -207,8 +205,8 @@ describe('SavedProjects component', () => {
     })
 
     describe('when the delete fails', () => {
-      test('calls onHandleError', async () => {
-        const { props, user } = setup({
+      test('calls handleError', async () => {
+        const { user } = setup({
           overrideApolloClientMocks: [{
             request: {
               query: gql(GET_PROJECTS),
@@ -250,13 +248,19 @@ describe('SavedProjects component', () => {
           name: /remove project/i
         })
 
+        const mockHandleError = jest.fn()
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.errors.handleError = mockHandleError
+        })
+
         await user.click(deleteButton)
 
-        expect(props.onHandleError).toHaveBeenCalledTimes(1)
-        expect(props.onHandleError).toHaveBeenCalledWith(
+        expect(mockHandleError).toHaveBeenCalledTimes(1)
+        expect(mockHandleError).toHaveBeenCalledWith(
           {
             action: 'handleDeleteSavedProject',
-            error: new Error('Failed to remove project'),
+            error: expect.any(Error),
             notificationType: 'banner',
             resource: 'project',
             verb: 'deleting'

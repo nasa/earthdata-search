@@ -9,7 +9,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getSelectedRegionQuery } from '../../zustand/selectors/query'
 
 export const mapDispatchToProps = (dispatch) => ({
-  handleError: (error) => dispatch(actions.handleError(error)),
   onToggleAdvancedSearchModal:
     (state) => dispatch(actions.toggleAdvancedSearchModal(state))
 })
@@ -23,7 +22,6 @@ export const mapStateToProps = (state) => ({
 export const SearchFormContainer = (props) => {
   const {
     authToken,
-    handleError,
     onToggleAdvancedSearchModal
   } = props
   const clearFilters = useEdscStore((state) => state.query.clearFilters)
@@ -32,7 +30,6 @@ export const SearchFormContainer = (props) => {
   return (
     <SearchForm
       authToken={authToken}
-      handleError={handleError}
       onClearFilters={clearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
       selectedRegion={selectedRegion}
@@ -42,7 +39,6 @@ export const SearchFormContainer = (props) => {
 
 SearchFormContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  handleError: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 

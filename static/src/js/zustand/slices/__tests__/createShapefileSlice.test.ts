@@ -9,9 +9,6 @@ import ShapefileRequest from '../../../util/request/shapefileRequest'
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../../store/configureStore'
 
-// @ts-expect-error Types are not defined for this module
-import actions from '../../../actions'
-
 import { ShapefileFile } from '../../../types/sharedTypes'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -142,11 +139,7 @@ describe('createShapefileSlice', () => {
 
     describe('when the shapefile fails to fetch', () => {
       test('sets the error state', async () => {
-        const handleErrorMock = jest.spyOn(actions, 'handleError')
-
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             earthdataEnvironment: 'prod'
           })
@@ -157,6 +150,14 @@ describe('createShapefileSlice', () => {
           .reply(500, {
             message: 'Error fetching shapefile'
           })
+
+        nock(/localhost/)
+          .post(/error_logger/)
+          .reply(200)
+
+        useEdscStore.setState((state) => {
+          state.errors.handleError = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { shapefile } = zustandState
@@ -178,11 +179,18 @@ describe('createShapefileSlice', () => {
           })
         })
 
+        const { errors } = useEdscStore.getState()
+
         await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(1)
+          expect(errors.handleError).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
+        expect(errors.handleError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          action: 'fetchShapefile',
+          resource: 'shapefile',
+          requestObject: expect.any(ShapefileRequest)
+        })
 
         expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
         expect(window.dataLayer.push).toHaveBeenCalledWith({
@@ -190,14 +198,6 @@ describe('createShapefileSlice', () => {
           timingEventCategory: 'ajax',
           timingEventValue: expect.any(Number),
           timingEventVar: 'http://localhost:3000/shapefiles/12345'
-        })
-
-        expect(handleErrorMock).toHaveBeenCalledTimes(1)
-        expect(handleErrorMock).toHaveBeenCalledWith({
-          error: expect.any(Error),
-          action: 'fetchShapefile',
-          resource: 'shapefile',
-          requestObject: expect.any(ShapefileRequest)
         })
       })
     })
@@ -256,11 +256,7 @@ describe('createShapefileSlice', () => {
 
     describe('when the shapefile fails to save', () => {
       test('sets the error state', async () => {
-        const handleErrorMock = jest.spyOn(actions, 'handleError')
-
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             earthdataEnvironment: 'prod'
           })
@@ -271,6 +267,14 @@ describe('createShapefileSlice', () => {
           .reply(500, {
             message: 'Error saving shapefile'
           })
+
+        nock(/localhost/)
+          .post(/error_logger/)
+          .reply(200)
+
+        useEdscStore.setState((state) => {
+          state.errors.handleError = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { shapefile } = zustandState
@@ -298,11 +302,18 @@ describe('createShapefileSlice', () => {
           })
         })
 
+        const { errors } = useEdscStore.getState()
+
         await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(1)
+          expect(errors.handleError).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
+        expect(errors.handleError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          action: 'saveShapefile',
+          resource: 'shapefile',
+          requestObject: expect.any(ShapefileRequest)
+        })
 
         expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
         expect(window.dataLayer.push).toHaveBeenCalledWith({
@@ -310,14 +321,6 @@ describe('createShapefileSlice', () => {
           timingEventCategory: 'ajax',
           timingEventValue: expect.any(Number),
           timingEventVar: 'http://localhost:3000/shapefiles'
-        })
-
-        expect(handleErrorMock).toHaveBeenCalledTimes(1)
-        expect(handleErrorMock).toHaveBeenCalledWith({
-          error: expect.any(Error),
-          action: 'saveShapefile',
-          resource: 'shapefile',
-          requestObject: expect.any(ShapefileRequest)
         })
       })
     })

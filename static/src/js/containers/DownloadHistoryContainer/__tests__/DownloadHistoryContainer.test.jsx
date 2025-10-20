@@ -5,12 +5,8 @@ import nock from 'nock'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import addToast from '../../../util/addToast'
-import actions from '../../../actions'
-import {
-  DownloadHistoryContainer,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../DownloadHistoryContainer'
+import useEdscStore from '../../../zustand/useEdscStore'
+import { DownloadHistoryContainer, mapStateToProps } from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
 
 jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
@@ -40,31 +36,11 @@ jest.mock('../../../util/addToast', () => ({
   default: jest.fn()
 }))
 
-jest.mock('../../../actions', () => ({
-  handleError: jest.fn((errorConfig) => ({
-    type: 'HANDLE_ERROR',
-    errorConfig
-  }))
-}))
-
 const setup = setupTest({
   Component: DownloadHistoryContainer,
   defaultProps: {
-    authToken: 'testToken',
-    dispatchHandleError: jest.fn()
+    authToken: 'testToken'
   }
-})
-
-describe('mapDispatchToProps', () => {
-  test('dispatchHandleError calls actions.handleError', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'handleError')
-
-    mapDispatchToProps(dispatch).dispatchHandleError({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('mapStateToProps', () => {
@@ -186,23 +162,36 @@ describe('DownloadHistoryContainer component', () => {
       .delete(/retrievals\/8069076/)
       .replyWithError('Connection error')
 
-    const { props, user } = setup()
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const { user } = setup()
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: '8069076' })).toBeInTheDocument()
     })
 
+    const mockHandleError = jest.fn()
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = mockHandleError
+    })
+
     await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
 
     await waitFor(() => {
-      expect(props.dispatchHandleError).toHaveBeenCalledWith(
+      expect(mockHandleError).toHaveBeenCalledWith(
         expect.objectContaining({
           error: expect.any(Error),
-          action: 'handleDeleteRetrieval'
+          action: 'handleDeleteRetrieval',
+          resource: 'retrieval',
+          verb: 'deleting',
+          notificationType: 'banner'
         })
       )
     })
 
-    expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+    expect(mockHandleError).toHaveBeenCalledTimes(1)
   })
 })

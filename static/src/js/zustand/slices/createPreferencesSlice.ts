@@ -19,8 +19,6 @@ import { updateAuthTokenFromHeaders } from '../../actions/authToken'
 import addToast from '../../util/addToast'
 // @ts-expect-error The file does not have types
 import { displayNotificationType } from '../../constants/enums'
-// @ts-expect-error The file does not have types
-import actions from '../../actions'
 
 import projectionCodes from '../../constants/projectionCodes'
 import mapLayers from '../../constants/mapLayers'
@@ -218,15 +216,12 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
           state.preferences.isSubmitting = false
         })
 
-        const { dispatch: reduxDispatch } = configureStore()
-
-        reduxDispatch(actions.handleError({
+        get().errors.handleError({
           error,
           action: 'updatePreferences',
           resource: 'preferences',
-          requestObject: null,
           notificationType: displayNotificationType.toast
-        }))
+        })
       }
     }
   }

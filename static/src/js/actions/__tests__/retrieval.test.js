@@ -147,10 +147,7 @@ describe('submitRetrieval', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({
-      authToken: 'mockToken'
-    })
-
+    const mockHandleError = jest.fn()
     useEdscStore.setState((state) => ({
       project: {
         ...state.project,
@@ -172,14 +169,25 @@ describe('submitRetrieval', () => {
         },
         submittedProject: jest.fn(),
         submittingProject: jest.fn()
+      },
+      errors: {
+        ...state.errors,
+        handleError: mockHandleError
       }
     }))
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+    const store = mockStore({
+      authToken: 'mockToken'
+    })
 
     await store.dispatch(submitRetrieval())
 
-    expect(consoleMock).toHaveBeenCalledTimes(1)
+    expect(mockHandleError).toHaveBeenCalledTimes(1)
+    expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+      action: 'submitRetrieval',
+      resource: 'retrieval',
+      verb: 'submitting'
+    }))
   })
 
   describe('metricsDataAccess', () => {
@@ -727,10 +735,7 @@ describe('fetchRetrieval', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({
-      authToken: 'mockToken'
-    })
-
+    const mockHandleError = jest.fn()
     useEdscStore.setState((state) => ({
       project: {
         ...state.project,
@@ -748,14 +753,24 @@ describe('fetchRetrieval', () => {
           allIds: ['collectionId']
         }
       },
+      errors: {
+        ...state.errors,
+        handleError: mockHandleError
+      },
       submittedProject: jest.fn(),
       submittingProject: jest.fn()
     }))
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+    const store = mockStore({
+      authToken: 'mockToken'
+    })
 
     await store.dispatch(fetchRetrieval(7)).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(mockHandleError).toHaveBeenCalledTimes(1)
+      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+        action: 'fetchRetrieval',
+        resource: 'retrieval'
+      }))
     })
   })
 })

@@ -1,25 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
-import actions from '../../actions'
 
 import SavedProjects from '../../components/SavedProjects/SavedProjects'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onHandleError: (errorConfig) => dispatch(actions.handleError(errorConfig))
-})
+export const mapDispatchToProps = () => ({})
 
-export const SavedProjectsContainer = ({
-  onHandleError
-}) => (
-  <SavedProjects
-    onHandleError={onHandleError}
-  />
+export const SavedProjectsContainer = () => (
+  <SavedProjects />
 )
 
-SavedProjectsContainer.propTypes = {
-  onHandleError: PropTypes.func.isRequired
-}
+SavedProjectsContainer.propTypes = {}
 
 export default connect(null, mapDispatchToProps)(SavedProjectsContainer)

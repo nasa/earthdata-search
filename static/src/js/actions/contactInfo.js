@@ -5,8 +5,6 @@ import ContactInfoRequest from '../util/request/contactInfoRequest'
 
 import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'
 
-import { handleError } from './errors'
-
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
@@ -60,12 +58,12 @@ export const fetchContactInfo = () => (dispatch, getState) => {
  * @param {String} level New order notification level
  */
 export const updateNotificationLevel = (level) => (dispatch, getState) => {
-  const state = getState()
+  const zustandState = useEdscStore.getState()
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const { authToken } = state
+  const { authToken } = getState()
 
   // Build the CMR-ordering preferences object
   const preferences = {
@@ -88,13 +86,13 @@ export const updateNotificationLevel = (level) => (dispatch, getState) => {
       })
     })
     .catch((error) => {
-      dispatch(handleError({
+      zustandState.errors.handleError({
         error,
         action: 'updateNotificationLevel',
         resource: 'contactInfo',
         verb: 'updating',
         requestObject
-      }))
+      })
     })
 
   return response
