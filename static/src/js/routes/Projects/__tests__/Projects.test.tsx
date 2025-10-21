@@ -1,13 +1,8 @@
 import React from 'react'
-<<<<<<< HEAD
-
-import { waitFor } from '@testing-library/react'
-// @ts-expect-error This file does not have types
-=======
 import { Navigate, useLocation } from 'react-router-dom'
 
 import { waitFor } from '@testing-library/react'
->>>>>>> 555489ed1 (EDSC-4536: Separate the project and saved projects routes)
+// @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -53,8 +48,6 @@ describe('Projects component', () => {
     expect(SavedProjectsContainer).toHaveBeenCalledWith({}, {})
   })
 
-<<<<<<< HEAD
-=======
   describe('when loading the page with query parameters', () => {
     test('redirects to the /project route', () => {
       (useLocation as jest.Mock).mockReturnValueOnce({
@@ -72,7 +65,6 @@ describe('Projects component', () => {
     })
   })
 
->>>>>>> 555489ed1 (EDSC-4536: Separate the project and saved projects routes)
   // RTL Lazy loading issue with mocks between https://github.com/testing-library/react-testing-library/issues/716
   describe('when rendering', () => {
     test('should render helmet data', async () => {
