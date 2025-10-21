@@ -151,7 +151,7 @@ const SearchAutocomplete = ({
         title: 'Something went wrong fetching search suggestions'
       })
     }
-  }, [authToken, earthdataEnvironment])
+  }, [])
 
   /**
    * Action for selecting an autocomplete suggestion
