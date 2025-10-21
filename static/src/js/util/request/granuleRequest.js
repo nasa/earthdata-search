@@ -72,7 +72,6 @@ export default class GranuleRequest extends CmrRequest {
       const { height, width } = thumbnailSize
 
       if (id) {
-        // Retrieve collection thumbnail if it exists
         const browseUrl = getBrowseImageUrlFromConcept(granule)
 
         if (browseUrl) {
