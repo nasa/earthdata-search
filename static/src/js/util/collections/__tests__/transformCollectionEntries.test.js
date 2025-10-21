@@ -42,7 +42,11 @@ describe('transformCollectionEntries', () => {
         collection_data_type: 'NEAR_REAL_TIME',
         organizations: ['NASA'],
         tags: [],
-        links: []
+        links: [{
+          rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+          hreflang: 'en-US',
+          href: 'https://sample.nasa.gov/thumbnails/thumbnail.jpg'
+        }]
       }
     ]
 
@@ -56,7 +60,7 @@ describe('transformCollectionEntries', () => {
 
     // Check that thumbnail is set for collections with browse_flag
     expect(result[0]).toHaveProperty('thumbnail')
-    expect(result[0].thumbnail).toContain('collection-1')
+    expect(result[0].thumbnail).toBe('http://localhost:3000/scale?h=85&w=85&imageSrc=https%3A%2F%2Fsample.nasa.gov%2Fthumbnails%2Fthumbnail.jpg')
 
     // Check that near real time flag is set
     expect(result[0]).toHaveProperty('isNrt', true)

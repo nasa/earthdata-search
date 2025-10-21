@@ -12,6 +12,7 @@ import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/p
 import { getTemporal } from '../../../../../sharedUtils/edscDate'
 
 import normalizeSpatial from '../map/normalizeSpatial'
+import { getBrowseImageUrlFromConcept } from '../getBrowseImageUrlFromConcept'
 
 /**
  * Request object for granule specific requests
@@ -42,8 +43,6 @@ export default class GranuleRequest extends CmrRequest {
   transformResponse(data) {
     super.transformResponse(data)
 
-    const { earthdataEnvironment } = this
-
     // If the response status code is not 200, return unaltered data
     // If the status code is 200, it doesn't exist in the response
     const { statusCode = 200 } = data
@@ -56,8 +55,7 @@ export default class GranuleRequest extends CmrRequest {
       const {
         id,
         time_start: timeStart,
-        time_end: timeEnd,
-        links
+        time_end: timeEnd
       } = granule
 
       const updatedGranule = granule
@@ -74,30 +72,12 @@ export default class GranuleRequest extends CmrRequest {
       const { height, width } = thumbnailSize
 
       if (id) {
-        // Retrieve collection thumbnail if it exists
-        updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale/granules/${id}?h=${height}&w=${width}&ee=${earthdataEnvironment}`
-      }
+        const browseUrl = getBrowseImageUrlFromConcept(granule)
 
-      if (links && links.length > 0) {
-        let browseUrl
-
-        // Pick the first 'browse' link to use as the browseUrl
-        links.some((link) => {
-          const {
-            href,
-            rel
-          } = link
-
-          if (rel.indexOf('browse') > -1 && href.startsWith('https://')) {
-            browseUrl = href
-
-            return true
-          }
-
-          return false
-        })
-
-        updatedGranule.browse_url = browseUrl
+        if (browseUrl) {
+          updatedGranule.browse_url = browseUrl
+          updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale?h=${height}&w=${width}&imageSrc=${encodeURIComponent(browseUrl)}`
+        }
       }
 
       // Create a GeoJSON representation of the granule spatial
