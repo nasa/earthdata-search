@@ -195,6 +195,18 @@ export type GranulesMetadata = {
   [key: string]: GranuleMetadata
 }
 
+export type ProjectionCode = keyof typeof crsProjections
+
+export type GibsDataByCollection = {
+  /** The collection id */
+  [collectionId: string]: {
+    /** The map layers for the collection */
+    layers: MapLayer[]
+    /** The projection for the collection */
+    projection: ProjectionCode
+  }
+}
+
 export type GibsData = {
   /** The format of the GIBS product */
   format?: string
@@ -223,8 +235,6 @@ export type MapGranule = {
   collectionId: string
   /** The temporal value formatted for display */
   formattedTemporal: string
-  /** The GIBS metadata */
-  gibsData: GibsData[]
   /** The granule id */
   granuleId: string
   /** The granule style */
@@ -233,6 +243,8 @@ export type MapGranule = {
   highlightedStyle: Style
   /** The spatial value for the granule */
   spatial: GeoJsonObject
+  /** The time value for the granule */
+  time: string
 }
 export type ColormapScale = {
   /** The scale object contains colors and labels */
@@ -346,8 +358,6 @@ export type PortalConfig = {
     showTophat: boolean
   }
 }
-
-export type ProjectionCode = keyof typeof crsProjections
 
 /** CMR specific headers */
 export interface CmrHeaders {

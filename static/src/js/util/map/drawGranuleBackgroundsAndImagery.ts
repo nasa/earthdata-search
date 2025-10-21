@@ -32,7 +32,7 @@ import { getTileGrid } from './getTileGrid'
 import drawOutline from './drawOutline'
 
 import projectionCodes from '../../constants/projectionCodes'
-import { MapGranule } from '../../types/sharedTypes'
+import { GibsDataByCollection, MapGranule } from '../../types/sharedTypes'
 
 const tileLayerCache: LRUCache<TileLayer> = new LRUCache(100)
 const imageryCache: LRUCache<HTMLImageElement> = new LRUCache(100)
@@ -67,6 +67,7 @@ const onTileLayerPostrender = (event: RenderEvent) => {
  * Draws the outlines of the granules on the map with the `background` style applied. If gibsData is provided,
  * it will also draw the granule imagery on the map.
  * @param {Object} params
+ * @param {Object} params.gibsDataByCollection Gibs Data object that is keyed by Collection Id and contains layers and projection info
  * @param {Object} params.granuleImageryLayerGroup OL Layer Group to add the granule imagery layers to
  * @param {Array} params.granulesMetadata Granule metadata to draw
  * @param {Object} params.map OL Map to draw the granules on
@@ -74,12 +75,15 @@ const onTileLayerPostrender = (event: RenderEvent) => {
  * @param {String} params.projectionCode Projection Code for the current map projection
  */
 const drawGranuleBackgroundsAndImagery = ({
+  gibsDataByCollection,
   granuleImageryLayerGroup,
   granulesMetadata,
   map,
   projectionCode,
   vectorSource
 }: {
+  /** GIBS Data object keyed by collection ID */
+  gibsDataByCollection: GibsDataByCollection
   /** The OL Layer Group to add the granule imagery layers to */
   granuleImageryLayerGroup: LayerGroup
   /** The granule metadata to draw */
@@ -102,11 +106,11 @@ const drawGranuleBackgroundsAndImagery = ({
       backgroundGranuleStyle,
       collectionId,
       formattedTemporal,
-      gibsData,
       granuleId,
       granuleStyle,
       highlightedStyle,
-      spatial
+      spatial,
+      time
     } = granule
 
     // If the granule has no spatial, return
@@ -139,8 +143,9 @@ const drawGranuleBackgroundsAndImagery = ({
       // Add the feature to the vector source
       vectorSource.addFeature(backgroundFeature)
 
-      // If the granule has no GIBS data, return without drawing imagery
-      if (!gibsData || gibsData.length === 0) return
+      // If the collection has no GIBS data, return without drawing imagery
+      const gibsData = gibsDataByCollection[collectionId]
+      if (!gibsData) return
 
       // There are a few things we need to keep in mind when drawing the granule imagery:
       // 1. The granule imagery is served by GIBS in tiles, but we only show the imagery that is contained
@@ -219,10 +224,25 @@ const drawGranuleBackgroundsAndImagery = ({
 
       const geometryToClip = granuleDiffMultiPolygon as OlMultiPolygon
 
-      // Create imagery layers for each GIBS data item
-      gibsData.forEach((gibsDataItem) => {
+      // Create imagery layers for each GIBS layer item
+      gibsData.layers.forEach((gibsLayer) => {
+        // If the GIBS layer is "subdaily", use the full timeStart (date and time).
+        // Otherwise, use only the date part of timeStart.
+        const gibsTime = gibsLayer.layerPeriod?.toLowerCase() === 'subdaily'
+          ? time
+          : time.substring(0, 10)
+
         // Create a cache key for the layer.
-        const cacheKey = `${granuleId}-${gibsDataItem.product}-${gibsDataItem.time}-${projectionCode}`
+        const cacheKey = `${granuleId}-${gibsLayer.product}-${gibsTime}-${projectionCode}`
+
+        let resolution
+        if (gibsData.projection === projectionCodes.antarctic) {
+          resolution = 'antarcticResolution'
+        } else if (gibsData.projection === projectionCodes.arctic) {
+          resolution = 'arcticResolution'
+        } else {
+          resolution = 'geographicResolution'
+        }
 
         let imageryLayer: TileLayer
         if (tileLayerCache.containsKey(cacheKey)) {
@@ -244,13 +264,13 @@ const drawGranuleBackgroundsAndImagery = ({
             zIndex: 3,
             source: new WMTS({
               crossOrigin: 'anonymous',
-              format: `image/${gibsDataItem.format}`,
+              format: `image/${gibsLayer.format}`,
               interpolate: false,
-              layer: gibsDataItem.product,
-              matrixSet: gibsDataItem.resolution,
+              layer: gibsLayer.product,
+              matrixSet: resolution,
               projection: crsProjections[projectionCode],
               style: 'default',
-              tileGrid: getTileGrid(projectionCode, gibsDataItem.resolution),
+              tileGrid: getTileGrid(projectionCode, resolution),
               tileLoadFunction: (tile, src) => {
                 // We are caching the images retrieved from GIBS so we don't have to reload them
                 // every time we redraw the granules.
@@ -296,7 +316,7 @@ const drawGranuleBackgroundsAndImagery = ({
                   }
                 }
               },
-              url: gibsDataItem.url,
+              url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${gibsData.projection}/best/wmts.cgi?TIME=${gibsTime}`,
               wrapX: false
             })
           })
@@ -306,13 +326,13 @@ const drawGranuleBackgroundsAndImagery = ({
         }
 
         // Store the product information in the layer properties for layer visibility toggling
-        imageryLayer.set('product', gibsDataItem.product)
-        imageryLayer.set('title', gibsDataItem.title)
+        imageryLayer.set('product', gibsLayer.product)
+        imageryLayer.set('title', gibsLayer.title)
         imageryLayer.set('granuleId', granuleId)
 
         // Set the visibility and opacity based on the Zustand state
-        imageryLayer.setVisible(gibsDataItem.visible ?? false)
-        imageryLayer.setOpacity(gibsDataItem.opacity ?? 1)
+        imageryLayer.setVisible(gibsLayer.isVisible ?? false)
+        imageryLayer.setOpacity(gibsLayer.opacity ?? 1)
 
         // Add the event listeners to the layer
         const prerenderKey = imageryLayer.on(
