@@ -12,7 +12,8 @@ export const buildResponse = (imageBuffer, statusCode = 200) => {
     statusCode,
     headers: {
       'Content-Type': 'image/png',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'max-age=604800, public' // Cache for 1 week
     },
     body: base64Image
   }

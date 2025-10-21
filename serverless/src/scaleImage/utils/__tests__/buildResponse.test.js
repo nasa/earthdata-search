@@ -11,7 +11,8 @@ describe('buildResponse', () => {
       statusCode: 200,
       headers: {
         'Content-Type': 'image/png',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'max-age=604800, public'
       },
       body: 'dGVzdC1pbWFnZS1jb250ZW50cw=='
     })
@@ -27,7 +28,8 @@ describe('buildResponse', () => {
       statusCode: 404,
       headers: {
         'Content-Type': 'image/png',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'max-age=604800, public'
       },
       body: ''
     })
