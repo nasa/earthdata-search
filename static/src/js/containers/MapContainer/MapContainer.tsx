@@ -28,7 +28,8 @@ import { projectionConfigs } from '../../util/map/crs'
 // @ts-expect-error The file does not have types
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
-import buildGibsData from '../../util/map/buildGibsData'
+
+import projectionCodes from '../../constants/projectionCodes'
 
 import {
   backgroundGranulePointStyle,
@@ -41,7 +42,6 @@ import {
   granulePointStyle
 } from '../../util/map/styles'
 
-import projectionCodes from '../../constants/projectionCodes'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 import { routes } from '../../constants/routes'
@@ -61,6 +61,7 @@ import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
   Colormap,
+  GibsDataByCollection,
   ImageryLayers,
   ImageryLayerItem,
   MapGranule,
@@ -403,6 +404,22 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     return imageryLayersObject
   }, [colormapsMetadata, layersForProjection])
 
+  // Create an object for GIBS data keyed by collectionId
+  // if no layersForProjection, then return no GIBS data
+  const gibsDataByCollection = useMemo(() => {
+    const result: GibsDataByCollection = {}
+
+    // Check if focusedCollectionId exists and layersForProjection has elements
+    if (focusedCollectionId && layersForProjection.length > 0) {
+      result[focusedCollectionId] = {
+        layers: layersForProjection,
+        projection
+      }
+    }
+
+    return result
+  }, [focusedCollectionId, layersForProjection])
+
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
   // granules that are removed are drawn with a deemphasized style.
@@ -444,8 +461,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
       const {
         formattedTemporal,
-        spatial = {},
-        timeStart
+        spatial = {}
       } = granule
 
       // If the granule does not have spatial, don't draw it
@@ -468,18 +484,15 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
           : deemphisizedGranuleStyle(index)
       }
 
-      // Create GIBS data for each available GIBS layer using the new function
-      const granuleGibsData = buildGibsData(layersForProjection, projection, timeStart)
-
       granulesToDraw.push({
         backgroundGranuleStyle: granule.backgroundGranuleStyle,
         collectionId,
         formattedTemporal,
-        gibsData: granuleGibsData,
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,
-        spatial: granule.spatial
+        spatial: granule.spatial,
+        time: granule.timeStart
       })
     })
   }
@@ -526,12 +539,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     <Map
       base={base}
       center={center}
-      setGranuleId={setGranuleId}
-      imageryLayers={imageryLayers}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
+      gibsDataByCollection={gibsDataByCollection}
       granules={granulesToDraw}
       granulesKey={granulesKey}
+      imageryLayers={imageryLayers}
       isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
       nlpCollection={nlpCollection}
@@ -541,6 +554,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       onClearShapefile={onClearShapefile}
       onDrawEnd={handleDrawEnd}
       onExcludeGranule={onExcludeGranule}
+      onMapReady={setMapReady}
       onMetricsMap={onMetricsMap}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       onToggleShapefileUploadModal={onToggleShapefileUploadModal}
@@ -549,10 +563,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       overlays={overlays}
       projectionCode={projection}
       rotation={rotation}
+      setGranuleId={setGranuleId}
       shapefile={memoizedShapefile}
       spatialSearch={spatialSearch}
       zoom={zoom}
-      onMapReady={setMapReady}
     />
   )
 }
