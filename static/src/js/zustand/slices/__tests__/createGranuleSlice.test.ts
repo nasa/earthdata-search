@@ -299,13 +299,13 @@ describe('createGranuleSlice', () => {
 
         await getGranuleMetadata()
 
-        const { granule: updatedGranule } = useEdscStore.getState()
+        const { granule: updatedGranule, errors } = useEdscStore.getState()
         expect(updatedGranule.granuleId).toEqual(null)
 
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith(expect.objectContaining({
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
           action: 'getGranuleMetadata',
           error: expect.any(Error),
           resource: 'granule',
