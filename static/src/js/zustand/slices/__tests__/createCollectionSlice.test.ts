@@ -1027,7 +1027,8 @@ describe('createCollectionSlice', () => {
 
       const {
         collection: updatedCollection,
-        granules
+        granules,
+        errors
       } = useEdscStore.getState()
 
       expect(updatedCollection.collectionMetadata).toEqual({})
@@ -1038,8 +1039,8 @@ describe('createCollectionSlice', () => {
       expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
       expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-      expect(actions.handleError).toHaveBeenCalledTimes(1)
-      expect(actions.handleError).toHaveBeenCalledWith(
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getCollectionMetadata',
           error: expect.any(Error),
