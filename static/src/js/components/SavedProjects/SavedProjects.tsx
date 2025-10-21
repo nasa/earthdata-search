@@ -32,6 +32,7 @@ import DELETE_PROJECT from '../../operations/mutations/deleteProject'
 import GET_PROJECTS from '../../operations/queries/getProjects'
 
 import { type Project } from '../../types/sharedTypes'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import 'rc-pagination/assets/index.css'
 import './SavedProjects.scss'
@@ -59,28 +60,10 @@ interface ProjectsQueryData {
   }
 }
 
-interface SavedProjectsProps {
-  /** Function to handle errors */
-  onHandleError: (params: {
-    /** The error that occurred */
-    error: Error,
-    /** The action that caused the error */
-    action: string,
-    /** The resource that was being acted upon when the error occurred */
-    resource: string,
-    /** The verb describing the action */
-    verb: string,
-    /** The type of notification to use */
-    notificationType: 'banner' | 'toast'
-  }) => void
-}
-
 /**
  * Renders a list of saved projects with pagination
  */
-const SavedProjects: React.FC<SavedProjectsProps> = ({
-  onHandleError
-}) => {
+const SavedProjects: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
   const pageSize = 20
@@ -118,7 +101,7 @@ const SavedProjects: React.FC<SavedProjectsProps> = ({
           refetch()
         },
         onError: (mutationError) => {
-          onHandleError({
+          useEdscStore.getState().errors.handleError({
             error: mutationError,
             action: 'handleDeleteSavedProject',
             resource: 'project',

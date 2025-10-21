@@ -6,9 +6,6 @@ import useEdscStore from '../../useEdscStore'
 import configureStore from '../../../store/configureStore'
 
 // @ts-expect-error Types are not defined for this module
-import actions from '../../../actions'
-
-// @ts-expect-error Types are not defined for this module
 import getApolloClient from '../../../providers/getApolloClient'
 import CREATE_PROJECT from '../../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../../operations/mutations/updateProject'
@@ -25,10 +22,6 @@ jest.mock('../../../providers/getApolloClient', () => ({
 }))
 
 jest.mock('../../../store/configureStore', () => jest.fn())
-
-jest.mock('../../../actions', () => ({
-  handleError: jest.fn()
-}))
 
 describe('createSavedProjectSlice', () => {
   test('sets the default state', () => {
@@ -221,6 +214,12 @@ describe('createSavedProjectSlice', () => {
           }
         }
 
+        const mockHandleError = jest.fn()
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.errors.handleError = mockHandleError
+        })
+
         const zustandState = useEdscStore.getState()
         const { savedProject } = zustandState
         const { setProjectName } = savedProject
@@ -236,8 +235,8 @@ describe('createSavedProjectSlice', () => {
           }
         })
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith({
+        expect(mockHandleError).toHaveBeenCalledTimes(1)
+        expect(mockHandleError).toHaveBeenCalledWith({
           action: 'setProjectName',
           error: 'Mock mutation error',
           resource: 'project name',
@@ -302,6 +301,12 @@ describe('createSavedProjectSlice', () => {
           })
         })
 
+        const mockHandleError = jest.fn()
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.errors.handleError = mockHandleError
+        })
+
         const zustandState = useEdscStore.getState()
         const { savedProject } = zustandState
         const { getProject } = savedProject
@@ -316,8 +321,8 @@ describe('createSavedProjectSlice', () => {
           }
         })
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith({
+        expect(mockHandleError).toHaveBeenCalledTimes(1)
+        expect(mockHandleError).toHaveBeenCalledWith({
           action: 'getProject',
           error: 'Mock query error',
           resource: 'project',

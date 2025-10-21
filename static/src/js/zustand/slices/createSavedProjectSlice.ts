@@ -152,16 +152,13 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         const { message } = error as Error
 
         if (message) {
-          const {
-            dispatch: reduxDispatch
-          } = configureStore()
-
-          reduxDispatch(actions.handleError({
+          const currentState = get()
+          currentState.errors.handleError({
             error: message,
             action: 'getProject',
             resource: 'project',
             verb: 'fetching'
-          }))
+          })
         }
       }
     }
