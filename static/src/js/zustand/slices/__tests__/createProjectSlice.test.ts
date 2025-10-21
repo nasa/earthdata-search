@@ -39,6 +39,7 @@ beforeEach(() => {
 
   useEdscStore.setState((state) => {
     state.dataQualitySummaries.setDataQualitySummaries = jest.fn()
+    state.errors.handleError = jest.fn()
   })
 })
 
@@ -290,8 +291,9 @@ describe('createProjectSlice', () => {
         const result = await project.getProjectCollections()
         expect(result).toBeNull()
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
           error: expect.any(Error),
           resource: 'saved access configurations'
@@ -1024,8 +1026,9 @@ describe('createProjectSlice', () => {
         const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
         expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
           error: expect.any(Error),
           resource: 'saved access configurations'
@@ -1067,8 +1070,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
           error: expect.any(Error),
           resource: 'project collections',
@@ -1384,8 +1388,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectGranules()
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith({
           action: 'getProjectGranules',
           resource: 'granules',
           error: expect.any(Error),

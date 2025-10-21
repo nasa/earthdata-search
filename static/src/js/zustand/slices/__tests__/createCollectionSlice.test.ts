@@ -68,6 +68,10 @@ describe('createCollectionSlice', () => {
         },
         subscribe: jest.fn()
       }
+
+      useEdscStore.setState((state) => {
+        state.errors.handleError = jest.fn()
+      })
     })
 
     describe('when metadata has already been retrieved from graphql', () => {

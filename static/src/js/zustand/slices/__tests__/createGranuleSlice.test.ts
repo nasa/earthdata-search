@@ -94,6 +94,10 @@ describe('createGranuleSlice', () => {
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
+
+      useEdscStore.setState((state) => {
+        state.errors.handleError = jest.fn()
+      })
     })
 
     describe('when metadata has already been retrieved from graphql', () => {

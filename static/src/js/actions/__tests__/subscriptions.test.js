@@ -569,20 +569,12 @@ describe('getSubscriptions', () => {
       })
 
       expect(storeActions[4]).toEqual({
-        type: ADD_ERROR,
-        payload: expect.objectContaining({
-          notificationType: 'banner',
-          title: 'Something went wrong fetching subscriptions'
-        })
-      })
-
-      expect(storeActions[4].payload.message).toBeDefined()
-      expect(storeActions[4].payload.showAlertButton).toBe(true)
-      expect(storeActions[4].payload.title).toBe('Something went wrong fetching subscriptions')
-
-      expect(storeActions[5]).toEqual({
         type: ERRORED_SUBSCRIPTIONS,
-        payload: 'Error: Token does not exist'
+        payload: expect.arrayContaining([
+          expect.objectContaining({
+            message: expect.any(String)
+          })
+        ])
       })
 
       expect(handleErrorMock).toHaveBeenCalledTimes(1)

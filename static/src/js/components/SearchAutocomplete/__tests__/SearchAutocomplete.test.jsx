@@ -3,12 +3,12 @@ import nock from 'nock'
 
 import SearchAutocomplete from '../SearchAutocomplete'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const setup = setupTest({
   Component: SearchAutocomplete,
   defaultProps: {
-    authToken: '',
-    handleError: jest.fn()
+    authToken: ''
   },
   defaultReduxState: {
     authToken: ''
@@ -19,6 +19,9 @@ const setup = setupTest({
     },
     collection: {
       setCollectionId: jest.fn()
+    },
+    errors: {
+      handleError: jest.fn()
     }
   }
 })
@@ -78,7 +81,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('calls handleError when autocomplete API returns an error', async () => {
-      const { props, user } = setup()
+      const { user } = setup()
 
       nock(/localhost/)
         .post(/autocomplete$/)
@@ -92,11 +95,13 @@ describe('SearchAutocomplete', () => {
       // So only one request is made
       await user.type(input, 'tes')
 
+      const { errors } = useEdscStore.getState()
+
       await waitFor(() => {
-        expect(props.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.handleError).toHaveBeenCalledWith(expect.objectContaining({
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchAutocomplete',
         resource: 'suggestions',
         showAlertButton: true,
@@ -120,8 +125,17 @@ describe('SearchAutocomplete', () => {
         }
       })
 
+      // Mock autocomplete requests for each letter typed
       nock(/localhost/)
-        .post(/autocomplete$/)
+        .post(/autocomplete$/, (body) => body.params.q === 'MOD')
+        .reply(200, { feed: { entry: [] } })
+
+      nock(/localhost/)
+        .post(/autocomplete$/, (body) => body.params.q === 'MODI')
+        .reply(200, { feed: { entry: [] } })
+
+      nock(/localhost/)
+        .post(/autocomplete$/, (body) => body.params.q === 'MODIS')
         .reply(200, {
           feed: {
             entry: [{
