@@ -11,7 +11,6 @@ import regionResultsReducer from './regionResults'
 import retrievalReducer from './retrieval'
 import subscriptionsReducer from './subscriptions'
 import uiReducer from './ui'
-import userReducer from './user'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 
 export default () => combineReducers({
@@ -32,6 +31,5 @@ export default () => combineReducers({
     viewAllFacets: viewAllFacetsRequestReducer
   }),
   subscriptions: subscriptionsReducer,
-  ui: uiReducer,
-  user: userReducer
+  ui: uiReducer
 })

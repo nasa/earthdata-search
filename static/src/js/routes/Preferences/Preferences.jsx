@@ -1,15 +1,24 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
 import PreferencesForm from '../../components/Preferences/PreferencesForm'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { routes } from '../../constants/routes'
+import actions from '../../actions'
+
+export const mapDispatchToProps = (dispatch) => ({
+  onHandleError: (data) => dispatch(actions.handleError(data))
+})
 
 /**
  * The Preferences route component
 */
-export const Preferences = () => {
+export const Preferences = ({
+  onHandleError
+}) => {
   const { edscHost } = getEnvironmentConfig()
 
   return (
@@ -24,7 +33,7 @@ export const Preferences = () => {
         <div className="route-wrapper__content">
           <div className="route-wrapper__content-inner">
             <div className="preferences">
-              <PreferencesForm />
+              <PreferencesForm onHandleError={onHandleError} />
             </div>
           </div>
         </div>
@@ -33,4 +42,8 @@ export const Preferences = () => {
   )
 }
 
-export default Preferences
+Preferences.propTypes = {
+  onHandleError: PropTypes.func.isRequired
+}
+
+export default connect(null, mapDispatchToProps)(Preferences)

@@ -89,8 +89,8 @@ test.describe('page titles', () => {
   })
 
   test.describe('when signed in', () => {
-    test.beforeEach(async ({ context }) => {
-      await login(context)
+    test.beforeEach(async ({ context, page }) => {
+      await login(page, context)
     })
 
     test.describe('when managing preferences', () => {

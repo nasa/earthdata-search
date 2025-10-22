@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { login } from '../../support/login'
+import { login, sitePreferences } from '../../support/login'
 import { testJwtToken } from '../../support/getJwtToken'
 import { setupTests } from '../../support/setupTests'
 
@@ -32,11 +32,42 @@ test.describe('Authentication', () => {
       })
     })
 
-    await page.route(/graphql.*\/api/, async (route) => {
-      await route.fulfill({
-        json: getSubscriptionsGraphQlBody,
-        headers: graphQlHeaders
-      })
+    await page.route(/graphql/, async (route) => {
+      const request = JSON.parse(route.request().postData())
+
+      // Apollo Client calls have the query here
+      let { query } = request
+
+      if (!query) {
+        // Axios GraphQL calls have the query here
+        const { data } = request;
+        ({ query } = data)
+      }
+
+      if (query.includes('query GetUser')) {
+        await route.fulfill({
+          json: {
+            data: {
+              user: {
+                id: '1',
+                sitePreferences,
+                ursId: 'testuser',
+                ursProfile: {
+                  firstName: 'test'
+                }
+              }
+            }
+          },
+          headers: graphQlHeaders
+        })
+      }
+
+      if (query.includes('query GetSubscriptions')) {
+        await route.fulfill({
+          json: getSubscriptionsGraphQlBody,
+          headers: graphQlHeaders
+        })
+      }
     })
   })
 
@@ -58,7 +89,7 @@ test.describe('Authentication', () => {
   test('sets auth cookie', async ({ page, context }) => {
     await expect((await context.cookies()).length).toEqual(0)
 
-    await login(context)
+    await login(page, context)
 
     await expect((await context.cookies())).toEqual([
       expect.objectContaining({

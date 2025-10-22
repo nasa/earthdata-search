@@ -16,7 +16,6 @@ import createGranulesSlice from './slices/createGranulesSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
 import createPortalSlice from './slices/createPortalSlice'
-import createPreferencesSlice from './slices/createPreferencesSlice'
 import createProjectPanelsSlice from './slices/createProjectPanelsSlice'
 import createProjectSlice from './slices/createProjectSlice'
 import createQuerySlice from './slices/createQuerySlice'
@@ -24,6 +23,7 @@ import createSavedProjectSlice from './slices/createSavedProjectSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
+import createUserSlice from './slices/createUserSlice'
 
 const useEdscStore = create<EdscStore>()(
   immer(
@@ -42,13 +42,13 @@ const useEdscStore = create<EdscStore>()(
         ...createMapSlice(...args),
         ...createProjectPanelsSlice(...args),
         ...createPortalSlice(...args),
-        ...createPreferencesSlice(...args),
         ...createProjectSlice(...args),
         ...createQuerySlice(...args),
         ...createSavedProjectSlice(...args),
         ...createShapefileSlice(...args),
         ...createTimelineSlice(...args),
-        ...createUiSlice(...args)
+        ...createUiSlice(...args),
+        ...createUserSlice(...args)
       }),
       {
         name: 'edsc-store',

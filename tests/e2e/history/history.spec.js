@@ -89,7 +89,7 @@ test.describe('History', () => {
       })
     })
 
-    await login(context)
+    await login(page, context)
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
     await page.goto('/search')

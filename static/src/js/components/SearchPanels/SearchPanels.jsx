@@ -54,7 +54,7 @@ import {
 import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getGranules } from '../../zustand/selectors/granules'
-import { getPreferences } from '../../zustand/selectors/preferences'
+import { getSitePreferences } from '../../zustand/selectors/user'
 
 import { routes } from '../../constants/routes'
 
@@ -93,7 +93,7 @@ const SearchPanels = ({
   const granuleMetadata = useEdscStore(getFocusedGranule)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const granules = useEdscStore(getGranules)
-  const preferences = useEdscStore(getPreferences)
+  const sitePreferences = useEdscStore(getSitePreferences)
   const {
     changeGranuleQuery,
     changeQuery,
@@ -113,8 +113,9 @@ const SearchPanels = ({
 
   const {
     collectionListView,
-    granuleListView
-  } = preferences
+    granuleListView,
+    panelState
+  } = sitePreferences
 
   const [collectionPanelView, setCollectionPanelView] = useState(
     defaultPanelStateFromProps(collectionListView)
@@ -141,8 +142,6 @@ const SearchPanels = ({
     isLoaded: collectionSearchIsLoaded,
     items: collectionItems
   } = collections
-
-  const { panelState } = preferences
 
   const {
     conceptId,

@@ -11,9 +11,6 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import { getUsername } from '../../selectors/user'
-
-// @ts-expect-error This file does not have types
 import actions from '../../actions'
 
 // @ts-expect-error This file does not have types
@@ -74,6 +71,7 @@ import type {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
+import { getUsername } from '../selectors/user'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -207,9 +205,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       } = reduxState
       // If the user isn't logged in, return null
       if (!authToken) return null
-      const username = getUsername(reduxState)
 
       const currentState = get()
+      const username = getUsername(currentState)
       const earthdataEnvironment = getEarthdataEnvironment(currentState)
       const collectionsMetadata = getCollectionsMetadata(currentState)
 

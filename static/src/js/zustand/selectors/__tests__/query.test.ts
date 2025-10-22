@@ -82,7 +82,7 @@ describe('query selectors', () => {
     })
 
     test('returns an empty object when there is no focusedCollection', () => {
-      const granuleQuery = getFocusedCollectionGranuleQuery(useEdscStore.getState())
+      const granuleQuery = getFocusedCollectionGranuleQuery(useEdscStore.getInitialState())
       expect(granuleQuery).toEqual({})
     })
   })

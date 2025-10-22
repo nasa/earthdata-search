@@ -17,7 +17,7 @@ test.describe('Download spec', () => {
       context
     })
 
-    await login(context)
+    await login(page, context)
 
     const authHeaders = getAuthHeaders()
 

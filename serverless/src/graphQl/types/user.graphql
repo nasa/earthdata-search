@@ -2,6 +2,25 @@ type User {
   "The unique identifier for the user"
   id: Int
 
+  "The user's EDSC preferences"
+  sitePreferences: JSON
+
+  "The URS profile for the user"
+  ursProfile: JSON
+
   "The URS ID for the user"
   ursId: String
+}
+
+type Query {
+  "Retrieve the current user"
+  user: User
+}
+
+type Mutation {
+  "Update the current user's EDSC preferences"
+  updatePreferences(
+    "The new preferences to set for the user"
+    preferences: JSON!
+  ): User
 }

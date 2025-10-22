@@ -1,38 +1,71 @@
 import React, { useEffect, useState } from 'react'
-
+import PropTypes from 'prop-types'
+import { gql, useMutation } from '@apollo/client'
 import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
 
-import useEdscStore from '../../zustand/useEdscStore'
-import { getPreferences } from '../../zustand/selectors/preferences'
 import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
+
 import Button from '../Button/Button'
 import PreferencesRadioField from './PreferencesRadioField'
 import PreferencesNumberField from './PreferencesNumberField'
 import PreferencesMultiSelectField from './PreferencesMultiSelectField'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getSitePreferences } from '../../zustand/selectors/user'
+
+import UPDATE_PREFERENCES from '../../operations/mutations/updatePreferences'
+
+import addToast from '../../util/addToast'
+import { displayNotificationType } from '../../constants/enums'
 
 import './PreferencesForm.scss'
 
 /**
  * Renders the Preferences form
  */
-const PreferencesForm = () => {
-  const {
-    preferencesData,
-    isSubmitting,
-    submitAndUpdatePreferences
-  } = useEdscStore((state) => ({
-    preferencesData: getPreferences(state),
-    isSubmitting: state.preferences.isSubmitting,
-    submitAndUpdatePreferences: state.preferences.submitAndUpdatePreferences
-  }))
+const PreferencesForm = ({
+  onHandleError
+}) => {
+  const sitePreferences = useEdscStore(getSitePreferences)
+  const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
 
-  const [formData, setFormData] = useState(preferencesData)
+  const [formData, setFormData] = useState(sitePreferences)
 
   useEffect(() => {
-    setFormData(preferencesData)
-  }, [preferencesData])
+    setFormData(sitePreferences)
+  }, [sitePreferences])
+
+  const [updatePreferences, { loading }] = useMutation(gql(UPDATE_PREFERENCES))
+
+  const handleSubmit = async ({ formData: newFormData }) => {
+    updatePreferences({
+      variables: {
+        preferences: newFormData
+      },
+      onCompleted: (data) => {
+        const { updatePreferences: updatedUser } = data
+        const { sitePreferences: updatedPreferences } = updatedUser
+
+        setSitePreferences(updatedPreferences)
+
+        addToast('Preferences saved!', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      },
+      onError: (error) => {
+        onHandleError({
+          error,
+          action: 'updatePreferences',
+          resource: 'preferences',
+          requestObject: null,
+          notificationType: displayNotificationType.toast
+        })
+      }
+    })
+  }
 
   const onChange = (data) => {
     const { formData: newFormData } = data
@@ -63,7 +96,7 @@ const PreferencesForm = () => {
         formData={formData}
         liveValidate
         onChange={onChange}
-        onSubmit={submitAndUpdatePreferences}
+        onSubmit={handleSubmit}
         schema={schema}
         transformErrors={transformErrors}
         uiSchema={uiSchema}
@@ -75,7 +108,7 @@ const PreferencesForm = () => {
             label="Submit"
             type="submit"
             bootstrapVariant="primary"
-            spinner={isSubmitting}
+            spinner={loading}
           >
             Submit
           </Button>
@@ -83,6 +116,10 @@ const PreferencesForm = () => {
       </Form>
     </div>
   )
+}
+
+PreferencesForm.propTypes = {
+  onHandleError: PropTypes.func.isRequired
 }
 
 export default PreferencesForm

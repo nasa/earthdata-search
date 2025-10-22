@@ -1,11 +1,16 @@
 import { screen } from '@testing-library/react'
+import { gql } from '@apollo/client'
 
 import PreferencesForm from '../PreferencesForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import UPDATE_PREFERENCES from '../../../operations/mutations/updatePreferences'
+import addToast from '../../../util/addToast'
+
+jest.mock('../../../util/addToast')
 
 const defaultZustandState = {
-  preferences: {
-    preferences: {
+  user: {
+    sitePreferences: {
       panelState: 'default',
       collectionListView: 'default',
       granuleListView: 'default',
@@ -24,14 +29,17 @@ const defaultZustandState = {
         zoom: 3
       }
     },
-    isSubmitting: false,
-    submitAndUpdatePreferences: jest.fn()
+    setSitePreferences: jest.fn()
   }
 }
 
 const setup = setupTest({
   Component: PreferencesForm,
-  defaultZustandState
+  defaultProps: {
+    onHandleError: jest.fn()
+  },
+  defaultZustandState,
+  withApolloClient: true
 })
 
 describe('PreferencesForm component', () => {
@@ -82,47 +90,158 @@ describe('PreferencesForm component', () => {
     expect(screen.getByText(/Overlay Layers/i)).toBeInTheDocument()
   })
 
-  test('allows user to change form values', async () => {
-    const { user } = setup()
+  describe('when submitting the form', () => {
+    test('submits the form successfully', async () => {
+      const { user } = setup({
+        overrideApolloClientMocks: [
+          {
+            request: {
+              query: gql(UPDATE_PREFERENCES),
+              variables: {
+                preferences: {
+                  collectionSort: '-score',
+                  granuleSort: '-start_date',
+                  panelState: 'collapsed',
+                  collectionListView: 'default',
+                  granuleListView: 'default',
+                  mapView: {
+                    latitude: 45,
+                    longitude: -95,
+                    zoom: 3,
+                    projection: 'epsg3413',
+                    baseLayer: 'worldImagery',
+                    overlayLayers: ['bordersRoads', 'placeLabels'],
+                    rotation: 0
+                  }
+                }
+              }
+            },
+            result: {
+              data: {
+                updatePreferences: {
+                  id: 42,
+                  sitePreferences: {
+                    panelState: 'collapsed',
+                    collectionListView: 'default',
+                    granuleListView: 'default',
+                    collectionSort: '-score',
+                    granuleSort: '-start_date',
+                    mapView: {
+                      baseLayer: 'worldImagery',
+                      latitude: 45,
+                      longitude: -95,
+                      overlayLayers: [
+                        'bordersRoads',
+                        'placeLabels'
+                      ],
+                      projection: 'epsg3413',
+                      rotation: 0,
+                      zoom: 3
+                    }
+                  },
+                  ursId: 'testuser',
+                  ursProfile: null
+                }
+              }
+            }
+          }
+        ]
+      })
 
-    const collapsedPanelOption = screen.getByLabelText('Collapsed', { selector: '[name="panelState"]' })
-    expect(collapsedPanelOption).not.toBeChecked()
+      const collapsedPanelOption = screen.getByLabelText('Collapsed', { selector: '[name="panelState"]' })
+      expect(collapsedPanelOption).not.toBeChecked()
 
-    await user.click(collapsedPanelOption)
-    expect(collapsedPanelOption).toBeChecked()
+      await user.click(collapsedPanelOption)
+      expect(collapsedPanelOption).toBeChecked()
 
-    const relevanceOption = screen.getByLabelText('Relevance', { selector: '[name="collectionSort"]' })
-    expect(relevanceOption).not.toBeChecked()
+      const relevanceOption = screen.getByLabelText('Relevance', { selector: '[name="collectionSort"]' })
+      expect(relevanceOption).not.toBeChecked()
 
-    await user.click(relevanceOption)
-    expect(relevanceOption).toBeChecked()
+      await user.click(relevanceOption)
+      expect(relevanceOption).toBeChecked()
 
-    const newestFirstOption = screen.getByLabelText('Start Date, Newest First', { selector: '[name="granuleSort"]' })
-    expect(newestFirstOption).not.toBeChecked()
+      const newestFirstOption = screen.getByLabelText('Start Date, Newest First', { selector: '[name="granuleSort"]' })
+      expect(newestFirstOption).not.toBeChecked()
 
-    await user.click(newestFirstOption)
-    expect(newestFirstOption).toBeChecked()
+      await user.click(newestFirstOption)
+      expect(newestFirstOption).toBeChecked()
 
-    const numberInputs = screen.getAllByRole('spinbutton')
-    const latitudeInput = numberInputs.find((input) => input.name === 'latitude')
+      const numberInputs = screen.getAllByRole('spinbutton')
+      const latitudeInput = numberInputs.find((input) => input.name === 'latitude')
 
-    await user.clear(latitudeInput)
-    await user.type(latitudeInput, '45')
-    expect(latitudeInput).toHaveValue(45)
+      await user.clear(latitudeInput)
+      await user.type(latitudeInput, '45')
+      expect(latitudeInput).toHaveValue(45)
 
-    const longitudeInput = numberInputs.find((input) => input.name === 'longitude')
+      const longitudeInput = numberInputs.find((input) => input.name === 'longitude')
 
-    await user.clear(longitudeInput)
-    await user.type(longitudeInput, '-95')
-    expect(longitudeInput).toHaveValue(-95)
+      await user.clear(longitudeInput)
+      await user.type(longitudeInput, '-95')
+      expect(longitudeInput).toHaveValue(-95)
 
-    const polarProjection = screen.getByLabelText('North Polar Stereographic', { selector: '[name="projection"]' })
-    expect(polarProjection).not.toBeChecked()
+      const polarProjection = screen.getByLabelText('North Polar Stereographic', { selector: '[name="projection"]' })
+      expect(polarProjection).not.toBeChecked()
 
-    await user.click(polarProjection)
-    expect(polarProjection).toBeChecked()
+      await user.click(polarProjection)
+      expect(polarProjection).toBeChecked()
 
-    const submitButton = screen.getByRole('button', { name: /submit/i })
-    expect(submitButton).not.toBeDisabled()
+      const submitButton = screen.getByRole('button', { name: /submit/i })
+      expect(submitButton).not.toBeDisabled()
+
+      await user.click(submitButton)
+
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Preferences saved!', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+
+    describe('when the mutation fails', () => {
+      test('calls onHandleError', async () => {
+        const { props, user } = setup({
+          overrideApolloClientMocks: [
+            {
+              request: {
+                query: gql(UPDATE_PREFERENCES),
+                variables: {
+                  preferences: {
+                    collectionSort: 'default',
+                    granuleSort: 'default',
+                    panelState: 'default',
+                    collectionListView: 'default',
+                    granuleListView: 'default',
+                    mapView: {
+                      latitude: 0,
+                      longitude: 0,
+                      zoom: 3,
+                      projection: 'epsg4326',
+                      baseLayer: 'worldImagery',
+                      overlayLayers: ['bordersRoads', 'placeLabels'],
+                      rotation: 0
+                    }
+                  }
+                }
+              },
+              error: new Error('GraphQL error')
+            }
+          ]
+        })
+
+        const submitButton = screen.getByRole('button', { name: /submit/i })
+        expect(submitButton).not.toBeDisabled()
+
+        await user.click(submitButton)
+
+        expect(props.onHandleError).toHaveBeenCalledTimes(1)
+        expect(props.onHandleError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          action: 'updatePreferences',
+          resource: 'preferences',
+          requestObject: null,
+          notificationType: 'toast'
+        })
+      })
+    })
   })
 })

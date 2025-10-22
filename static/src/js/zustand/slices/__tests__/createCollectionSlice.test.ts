@@ -1180,7 +1180,7 @@ describe('createCollectionSlice', () => {
       test('updates the collection and calls getCollectionMetadata', async () => {
         useEdscStore.setState((state) => {
           state.collection.getCollectionMetadata = jest.fn()
-          state.preferences.preferences.granuleSort = '-start_date'
+          state.user.sitePreferences.granuleSort = '-start_date'
           state.query.initializeGranuleQuery = jest.fn()
           state.timeline.getTimeline = jest.fn()
         })

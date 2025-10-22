@@ -47,7 +47,8 @@ describe('permissions', () => {
             isAdminUser
           ),
           project: allow,
-          projects: isValidUser
+          projects: isValidUser,
+          user: isValidUser
         },
         Mutation: {
           '*': deny,
@@ -56,6 +57,7 @@ describe('permissions', () => {
             isValidUser,
             userOwnsProject
           ),
+          updatePreferences: isValidUser,
           updateProject: userOwnsProjectIfProjectOwned
         }
       },

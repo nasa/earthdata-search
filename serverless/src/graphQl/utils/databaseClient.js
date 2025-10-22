@@ -392,7 +392,9 @@ export default class DatabaseClient {
       return await db('users')
         .select(
           'users.id',
-          'users.urs_id'
+          'users.site_preferences',
+          'users.urs_id',
+          'users.urs_profile'
         )
         .where({ 'users.id': userId })
         .first()
@@ -458,6 +460,38 @@ export default class DatabaseClient {
       return project
     } catch {
       const errorMessage = 'Failed to update project'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Updates the site preferences for a user
+   * @param {Object} params - Parameters object
+   * @param {string} params.userId - The user ID to update
+   * @param {Object} params.sitePreferences - The site preferences to update
+   * @returns {Promise<Array>} A promise that resolves to an array containing the updated user object
+   */
+  async updateSitePreferences({ userId, sitePreferences }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const [user] = await db('users')
+        .where({ id: userId })
+        .update({
+          site_preferences: sitePreferences,
+          updated_at: new Date()
+        })
+        .returning([
+          'id',
+          'site_preferences',
+          'urs_id',
+          'urs_profile'
+        ])
+
+      return user
+    } catch {
+      const errorMessage = 'Failed to update site preferences'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }

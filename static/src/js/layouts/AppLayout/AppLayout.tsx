@@ -19,6 +19,7 @@ import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContaine
 import UrlQueryContainer from '../../containers/UrlQueryContainer/UrlQueryContainer'
 // @ts-expect-error The file does not have types
 import WrappingContainer from '../../containers/WrappingContainer/WrappingContainer'
+import UserContainer from '../../containers/UserContainer/UserContainer'
 
 const AppLayout = () => (
   <>
@@ -27,13 +28,15 @@ const AppLayout = () => (
     <MetricsContainer />
     <ErrorBanner />
     <AuthTokenContainer>
-      <UrlQueryContainer>
-        <WrappingContainer>
-          <SecondaryToolbarContainer />
-          <Outlet />
-        </WrappingContainer>
-        <Footer />
-      </UrlQueryContainer>
+      <UserContainer>
+        <UrlQueryContainer>
+          <WrappingContainer>
+            <SecondaryToolbarContainer />
+            <Outlet />
+          </WrappingContainer>
+          <Footer />
+        </UrlQueryContainer>
+      </UserContainer>
     </AuthTokenContainer>
   </>
 )

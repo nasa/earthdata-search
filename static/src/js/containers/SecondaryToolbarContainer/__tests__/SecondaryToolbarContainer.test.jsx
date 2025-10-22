@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { waitFor } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
@@ -27,7 +26,6 @@ const setup = setupTest({
     authToken: 'mock-token',
     retrieval: {},
     onLogout: jest.fn(),
-    onFetchContactInfo: jest.fn(),
     ursProfile: {}
   },
   withRouter: true
@@ -39,16 +37,6 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'logout')
 
     mapDispatchToProps(dispatch).onLogout()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith()
-  })
-
-  test('onFetchContactInfo calls actions.fetchContactInfo', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchContactInfo')
-
-    mapDispatchToProps(dispatch).onFetchContactInfo()
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith()
@@ -77,13 +65,7 @@ describe('mapStateToProps', () => {
 
 describe('SecondaryToolbarContainer component', () => {
   test('passes its props and renders a single SearchForm component', async () => {
-    const { props } = setup()
-
-    await waitFor(() => {
-      expect(props.onFetchContactInfo).toHaveBeenCalledTimes(1)
-    })
-
-    expect(props.onFetchContactInfo).toHaveBeenCalledWith()
+    setup()
 
     expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
     expect(SecondaryToolbar).toHaveBeenCalledWith({
@@ -109,9 +91,8 @@ describe('if the secondaryToolbar should be disabled', () => {
       disableDatabaseComponents: 'true'
     }))
 
-    const { props } = setup()
+    setup()
 
-    expect(props.onFetchContactInfo).toHaveBeenCalledTimes(0)
     expect(SecondaryToolbar).toHaveBeenCalledTimes(0)
   })
 })

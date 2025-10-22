@@ -112,7 +112,7 @@ describe('project selectors', () => {
       expect(result).toEqual({ id: 'collection1' })
     })
 
-    test('returns an empty object if no focused collection exists', () => {
+    test('returns an empty object if the focused collection is not in the project', () => {
       useEdscStore.setState(() => ({
         collection: {
           collectionId: 'collection3' // Not in project collections
@@ -126,6 +126,11 @@ describe('project selectors', () => {
       }))
 
       const result = getFocusedProjectCollection(useEdscStore.getState())
+      expect(result).toEqual({})
+    })
+
+    test('returns an empty object if no focused collection exists', () => {
+      const result = getFocusedProjectCollection(useEdscStore.getInitialState())
       expect(result).toEqual({})
     })
   })

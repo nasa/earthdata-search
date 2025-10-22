@@ -1,4 +1,8 @@
-import { getCollections, getCollectionsPageInfo } from '../collections'
+import {
+  getCollections,
+  getCollectionsById,
+  getCollectionsPageInfo
+} from '../collections'
 
 import useEdscStore from '../../useEdscStore'
 
@@ -60,6 +64,47 @@ describe('collections selectors', () => {
         isLoaded: true,
         isLoading: false,
         loadTime: 100
+      })
+    })
+  })
+
+  describe('getCollectionsById', () => {
+    test('returns the collections keyed by their ID', () => {
+      useEdscStore.setState(() => ({
+        collections: {
+          collections: {
+            count: 2,
+            isLoaded: true,
+            isLoading: false,
+            loadTime: 200,
+            items: [
+              {
+                id: 'collection1',
+                title: 'Collection 1',
+                description: 'Description for Collection 1'
+              },
+              {
+                id: 'collection2',
+                title: 'Collection 2',
+                description: 'Description for Collection 2'
+              }
+            ]
+          }
+        }
+      }))
+
+      const result = getCollectionsById(useEdscStore.getState())
+      expect(result).toEqual({
+        collection1: {
+          id: 'collection1',
+          title: 'Collection 1',
+          description: 'Description for Collection 1'
+        },
+        collection2: {
+          id: 'collection2',
+          title: 'Collection 2',
+          description: 'Description for Collection 2'
+        }
       })
     })
   })

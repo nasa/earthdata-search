@@ -15,7 +15,6 @@ import {
 } from '../constants/actionTypes'
 
 import { displayNotificationType } from '../constants/enums'
-import { getUsername } from '../selectors/user'
 
 import addToast from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
@@ -28,6 +27,7 @@ import {
   getCollectionSubscriptionQueryString,
   getGranuleSubscriptionQueryString
 } from '../zustand/selectors/query'
+import { getUsername } from '../zustand/selectors/user'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -92,7 +92,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
 
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-  const username = getUsername(state)
+  const username = getUsername(zustandState)
 
   let subscriptionQuery
 
@@ -175,9 +175,10 @@ export const getSubscriptions = (
     authToken
   } = state
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
-  const username = getUsername(state)
+  // Retrieve data using selectors
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  const username = getUsername(zustandState)
 
   dispatch(onSubscriptionsLoading())
   dispatch(startSubscriptionsTimer())
@@ -270,14 +271,14 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
 
   let collectionConceptId = collectionId
 
-  // Retrieve data from Redux using selectors
+  // Retrieve data using selectors
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  const username = getUsername(zustandState)
+
   if (collectionId == null) {
     collectionConceptId = getCollectionId(zustandState)
   }
-
-  const username = getUsername(state)
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
@@ -412,8 +413,7 @@ export const updateSubscription = ({
   const state = getState()
 
   const zustandState = useEdscStore.getState()
-
-  const username = getUsername(state)
+  const username = getUsername(zustandState)
 
   const {
     collectionConceptId,

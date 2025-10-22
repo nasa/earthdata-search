@@ -30,13 +30,13 @@ import configureStore from '../../store/configureStore'
 // @ts-expect-error There are no types for this file
 import actions from '../../actions'
 
-// @ts-expect-error There are no types for this file
-import { getUsername } from '../../selectors/user'
-
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
+import { getSitePreferences, getUsername } from '../selectors/user'
+
 import GET_COLLECTION from '../../operations/queries/getCollection'
+
 import { routes } from '../../constants/routes'
 
 const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
@@ -64,7 +64,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const focusedCollectionId = getCollectionId(zustandState)
       const focusedCollectionMetadata = getFocusedCollectionMetadata(zustandState)
 
-      const username = getUsername(reduxState)
+      const username = getUsername(zustandState)
 
       if (!focusedCollectionId) {
         reduxDispatch(actions.changeUrl({
@@ -305,13 +305,13 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         }))
       } else {
         // Initialize a nested query element for the new focused collection
+        const currentState = get()
         const {
-          preferences,
           query,
           timeline
-        } = get()
-        const { preferences: preferencesValues } = preferences
-        const { granuleSort: granuleSortPreference } = preferencesValues
+        } = currentState
+
+        const { granuleSort: granuleSortPreference } = getSitePreferences(currentState)
 
         const granuleQuery = {} as GranuleQuery
 

@@ -9,9 +9,7 @@ import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
 export const createJwtToken = (user, earthdataEnvironment) => {
   const {
     id,
-    urs_id: username,
-    site_preferences: preferences,
-    urs_profile: ursProfile = {}
+    urs_id: username
   } = user
 
   const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
@@ -19,11 +17,6 @@ export const createJwtToken = (user, earthdataEnvironment) => {
   return jwt.sign({
     id,
     username,
-    preferences,
-    ursProfile: {
-      email_address: ursProfile.email_address,
-      first_name: ursProfile.first_name
-    },
     earthdataEnvironment
   }, secret)
 }
