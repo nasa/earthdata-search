@@ -8,8 +8,6 @@ import {
   UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE
 } from '../../constants/actionTypes'
 
-import actions from '../index'
-
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 

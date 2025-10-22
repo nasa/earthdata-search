@@ -125,7 +125,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         }))
 
         zustandState.errors.handleError({
-          error,
+          error: error as Error,
           action: 'getCollections',
           resource: 'collections',
           requestObject,
@@ -169,7 +169,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         })
 
         zustandState.errors.handleError({
-          error,
+          error: error as Error,
           action: 'getNlpCollections',
           resource: 'nlpSearch',
           requestObject: nlpRequest,

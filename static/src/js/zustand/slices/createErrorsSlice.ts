@@ -12,7 +12,7 @@ import { parseError } from '../../../../../sharedUtils/parseError'
 import LoggerRequest from '../../util/request/loggerRequest'
 import routerHelper from '../../router/router'
 
-const createErrorsSlice: ImmerStateCreator<ErrorsSlice> = (set, get) => ({
+const createErrorsSlice: ImmerStateCreator<ErrorsSlice> = (set) => ({
   errors: {
     errorsList: [],
 

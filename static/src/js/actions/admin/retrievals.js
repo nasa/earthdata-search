@@ -1,8 +1,6 @@
 import addToast from '../../util/addToast'
 import RetrievalRequest from '../../util/request/admin/retrievalRequest'
 
-import actions from '../index'
-
 import { displayNotificationType } from '../../constants/enums'
 
 import useEdscStore from '../../zustand/useEdscStore'

@@ -5,8 +5,6 @@ import {
   SET_RETRIEVAL_COLLECTION_LOADING
 } from '../constants/actionTypes'
 
-import actions from './index'
-
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 

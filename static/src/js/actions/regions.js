@@ -1,5 +1,3 @@
-import actions from './index'
-
 import {
   UPDATE_REGION_RESULTS,
   LOADING_REGIONS,

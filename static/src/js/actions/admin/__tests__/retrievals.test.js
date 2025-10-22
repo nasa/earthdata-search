@@ -2,10 +2,10 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 
-import actions from '../../index'
 import { requeueOrder } from '../retrievals'
 
 import addToast from '../../../util/addToast'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 jest.mock('../../../util/addToast', () => ({
   __esModule: true,
@@ -39,8 +39,10 @@ describe('requeueOrder', () => {
   })
 
   test('calls handleError when there is an error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     const orderId = 1234
 
@@ -58,13 +60,12 @@ describe('requeueOrder', () => {
 
     await store.dispatch(requeueOrder(orderId))
 
-    expect(handleErrorMock).toHaveBeenCalledTimes(1)
-    expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
+    const { errors } = useEdscStore.getState()
+    expect(errors.handleError).toHaveBeenCalledTimes(1)
+    expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
       action: 'requeueOrder',
       notificationType: 'toast',
       resource: 'admin retrievals'
     }))
-
-    expect(consoleMock).toHaveBeenCalledTimes(1)
   })
 })

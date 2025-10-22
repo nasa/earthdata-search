@@ -94,7 +94,7 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
         if (message) {
           zustandState.errors.handleError({
-            error: message,
+            error: error as Error,
             action: 'setProjectName',
             resource: 'project name',
             verb: 'updating'
@@ -153,7 +153,7 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
         if (message) {
           get().errors.handleError({
-            error: message,
+            error: error as Error,
             action: 'getProject',
             resource: 'project',
             verb: 'fetching'

@@ -85,7 +85,7 @@ export const interpolatePolygon = (coordinates: { lng: number, lat: number }[]) 
     } catch (error) {
       useEdscStore.getState().errors.handleError({
         action: 'interpolatePolygon',
-        error,
+        error: error as Error,
         message: `Error interpolating points: start: ${coordinate}, end: ${nextCoordinate}. All coordiates: ${JSON.stringify(coordinates)}. Full error: ${error}`,
         notificationType: 'none'
       })

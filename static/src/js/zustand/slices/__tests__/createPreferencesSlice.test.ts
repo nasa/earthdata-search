@@ -28,7 +28,6 @@ jest.mock('../../../util/addToast')
 const mockJwt = jwt as jest.Mocked<typeof jwt>
 const mockConfigureStore = configureStore as jest.MockedFunction<typeof configureStore>
 const mockPreferencesRequest = PreferencesRequest as jest.MockedClass<typeof PreferencesRequest>
-const mockActions = actions as jest.Mocked<typeof actions>
 const mockAddToast = addToast as jest.MockedFunction<typeof addToast>
 
 describe('createPreferencesSlice', () => {

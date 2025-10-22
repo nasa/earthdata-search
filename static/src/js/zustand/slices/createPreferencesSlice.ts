@@ -217,7 +217,7 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
         })
 
         get().errors.handleError({
-          error,
+          error: error as Error,
           action: 'updatePreferences',
           resource: 'preferences',
           notificationType: displayNotificationType.toast

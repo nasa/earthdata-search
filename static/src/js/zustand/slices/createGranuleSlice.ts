@@ -136,7 +136,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
         })
 
         currentState.errors.handleError({
-          error,
+          error: error as Error,
           action: 'getGranuleMetadata',
           resource: 'granule',
           requestObject: graphQlRequestObject,

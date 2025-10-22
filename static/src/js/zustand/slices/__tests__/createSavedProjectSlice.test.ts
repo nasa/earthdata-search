@@ -238,7 +238,7 @@ describe('createSavedProjectSlice', () => {
         expect(errors.handleError).toHaveBeenCalledTimes(1)
         expect(errors.handleError).toHaveBeenCalledWith({
           action: 'setProjectName',
-          error: 'Mock mutation error',
+          error: new Error('Mock mutation error'),
           resource: 'project name',
           verb: 'updating'
         })
@@ -324,7 +324,7 @@ describe('createSavedProjectSlice', () => {
         expect(errors.handleError).toHaveBeenCalledTimes(1)
         expect(errors.handleError).toHaveBeenCalledWith({
           action: 'getProject',
-          error: 'Mock query error',
+          error: new Error('Mock query error'),
           resource: 'project',
           verb: 'fetching'
         })

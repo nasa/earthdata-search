@@ -1,7 +1,6 @@
 import 'array-foreach-async'
 import { stringify } from 'qs'
 
-import actions from './index'
 import {
   SET_GRANULE_LINKS_LOADED,
   SET_GRANULE_LINKS_LOADING,

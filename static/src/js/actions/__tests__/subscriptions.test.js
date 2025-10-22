@@ -344,7 +344,10 @@ describe('createSubscription', () => {
 
   describe('when the subscription fails to create', () => {
     test('calls handleError', async () => {
-      const handleErrorMock = jest.spyOn(actions, 'handleError')
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.errors.handleError = jest.fn()
+      })
 
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
         cmrHost: 'https://cmr.example.com',
@@ -381,18 +384,15 @@ describe('createSubscription', () => {
         }
       })
 
-      const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
       await store.dispatch(createSubscription('granule')).then(() => {
-        expect(handleErrorMock).toHaveBeenCalledTimes(1)
-        expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
           action: 'createSubscription',
           resource: 'subscription',
           showAlertButton: true,
           title: 'Something went wrong creating your subscription'
         }))
-
-        expect(consoleMock).toHaveBeenCalledTimes(1)
       })
     })
   })
@@ -531,7 +531,10 @@ describe('getSubscriptions', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
@@ -554,8 +557,6 @@ describe('getSubscriptions', () => {
       authToken: 'token'
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(getSubscriptions('granule', false)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_SUBSCRIPTIONS })
@@ -576,13 +577,12 @@ describe('getSubscriptions', () => {
         ])
       })
 
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchSubscriptions',
         resource: 'subscription'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })
@@ -671,7 +671,10 @@ describe('getGranuleSubscriptions', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
@@ -694,18 +697,15 @@ describe('getGranuleSubscriptions', () => {
       authToken: 'token'
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(getGranuleSubscriptions()).then(() => {
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getGranuleSubscriptions',
         resource: 'subscription',
         showAlertButton: true,
         title: 'Something went wrong fetching granule subscriptions'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })
@@ -807,7 +807,10 @@ describe('deleteSubscription', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
@@ -830,18 +833,15 @@ describe('deleteSubscription', () => {
       authToken: 'token'
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(deleteSubscription()).then(() => {
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'deleteSubscription',
         resource: 'subscription',
         showAlertButton: true,
         title: 'Something went wrong deleting your subscription'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })
@@ -1006,7 +1006,10 @@ describe('updateSubscription', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
@@ -1038,8 +1041,6 @@ describe('updateSubscription', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(updateSubscription({
       subscription: {
         conceptId: 'SUB1000-EDSC',
@@ -1050,15 +1051,14 @@ describe('updateSubscription', () => {
       },
       shouldUpdateQuery: true
     })).then(() => {
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'updateSubscription',
         resource: 'subscription',
         showAlertButton: true,
         title: 'Something went wrong updating your subscription'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

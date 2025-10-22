@@ -124,7 +124,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
           if (isCancel(error)) return
 
           currentState.errors.handleError({
-            error,
+            error: error as Error,
             action: 'getTimeline',
             resource: 'timeline',
             requestObject,

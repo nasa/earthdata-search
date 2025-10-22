@@ -267,7 +267,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         }
       } catch (error) {
         zustandState.errors.handleError({
-          error,
+          error: error as Error,
           action: 'getCollectionMetadata',
           resource: 'collection',
           requestObject: graphQlRequestObject,

@@ -265,7 +265,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         savedAccessConfigs = data
       } catch (error) {
         currentState.errors.handleError({
-          error,
+          error: error as Error,
           action: 'getProjectCollections',
           resource: 'saved access configurations'
         })
@@ -459,7 +459,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         }))
       } catch (error) {
         currentState.errors.handleError({
-          error,
+          error: error as Error,
           action: 'getProjectCollections',
           resource: 'project collections',
           showAlertButton: true,
@@ -597,7 +597,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             get().project.stopProjectGranulesTimer(collectionId)
 
             currentState.errors.handleError({
-              error,
+              error: error as Error,
               action: 'getProjectGranules',
               resource: 'granules',
               requestObject,
