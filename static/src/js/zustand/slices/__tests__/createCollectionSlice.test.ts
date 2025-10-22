@@ -815,7 +815,6 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenCalledTimes(1)
           expect(granules.getGranules).toHaveBeenCalledWith()
 
-          expect(actions.handleError).toHaveBeenCalledTimes(0)
           expect(actions.getColorMap).toHaveBeenCalledTimes(0)
         })
       })

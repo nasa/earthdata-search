@@ -3,12 +3,12 @@ import React from 'react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-import { ErrorBanner } from '../ErrorBanner'
+import ErrorBanner from '../ErrorBanner'
 import { Banner } from '../../Banner/Banner'
 import { displayNotificationType } from '../../../constants/enums'
 
 jest.mock('../../Banner/Banner', () => ({
-  Banner: jest.fn(() => <div data-testid="banner" />)
+  Banner: jest.fn(() => <div />)
 }))
 
 const setup = setupTest({
@@ -24,10 +24,6 @@ const setup = setupTest({
       removeError: jest.fn()
     }
   }
-})
-
-beforeEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('When the database is disabled', () => {
@@ -81,12 +77,10 @@ describe('ErrorBanner component', () => {
   })
 
   test('removeError is called when onClose is triggered', () => {
-    const mockRemoveError = jest.fn()
-
-    setup({
+    const { zustandState } = setup({
       overrideZustandState: {
         errors: {
-          removeError: mockRemoveError
+          removeError: jest.fn()
         }
       }
     })
@@ -100,7 +94,7 @@ describe('ErrorBanner component', () => {
     // Trigger the onClose callback
     onClose()
 
-    expect(mockRemoveError).toHaveBeenCalledTimes(1)
-    expect(mockRemoveError).toHaveBeenCalledWith(1)
+    expect(zustandState.errors.removeError).toHaveBeenCalledTimes(1)
+    expect(zustandState.errors.removeError).toHaveBeenCalledWith(1)
   })
 })

@@ -39,11 +39,9 @@ describe('requeueOrder', () => {
   })
 
   test('calls handleError when there is an error', async () => {
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: jest.fn()
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     const orderId = 1234

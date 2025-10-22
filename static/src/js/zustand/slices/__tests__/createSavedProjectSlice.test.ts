@@ -215,7 +215,6 @@ describe('createSavedProjectSlice', () => {
         }
 
         useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
           state.errors.handleError = jest.fn()
         })
 
@@ -302,7 +301,6 @@ describe('createSavedProjectSlice', () => {
         })
 
         useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
           state.errors.handleError = jest.fn()
         })
 

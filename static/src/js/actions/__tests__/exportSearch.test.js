@@ -134,12 +134,9 @@ describe('exportSearch', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const mockHandleError = jest.fn()
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: mockHandleError
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     const store = mockStore({
@@ -158,8 +155,9 @@ describe('exportSearch', () => {
         payload: 'json'
       })
 
-      expect(mockHandleError).toHaveBeenCalledTimes(1)
-      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'exportSearch',
         resource: 'collections',
         showAlertButton: true,

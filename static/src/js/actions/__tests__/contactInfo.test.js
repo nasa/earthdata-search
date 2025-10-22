@@ -127,12 +127,9 @@ describe('updateNotificationLevel', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const mockHandleError = jest.fn()
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: mockHandleError
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     const store = mockStore({
@@ -141,8 +138,9 @@ describe('updateNotificationLevel', () => {
     })
 
     await store.dispatch(updateNotificationLevel('INFO')).then(() => {
-      expect(mockHandleError).toHaveBeenCalledTimes(1)
-      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'updateNotificationLevel',
         resource: 'contactInfo',
         verb: 'updating'

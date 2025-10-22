@@ -261,12 +261,9 @@ describe('getViewAllFacets', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const mockHandleError = jest.fn()
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: mockHandleError
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
@@ -315,8 +312,9 @@ describe('getViewAllFacets', () => {
         }
       })
 
-      expect(mockHandleError).toHaveBeenCalledTimes(1)
-      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getViewAllFacets',
         resource: 'facets',
         showAlertButton: true,

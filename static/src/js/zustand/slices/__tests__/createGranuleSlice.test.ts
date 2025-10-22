@@ -120,7 +120,6 @@ describe('createGranuleSlice', () => {
         await getGranuleMetadata()
 
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
-        expect(actions.handleError).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -198,7 +197,6 @@ describe('createGranuleSlice', () => {
           })
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(0)
-          expect(actions.handleError).toHaveBeenCalledTimes(0)
         })
 
         describe('when the requested granule is opensearch', () => {
@@ -223,7 +221,6 @@ describe('createGranuleSlice', () => {
             await getGranuleMetadata()
 
             expect(actions.changeUrl).toHaveBeenCalledTimes(0)
-            expect(actions.handleError).toHaveBeenCalledTimes(0)
           })
         })
       })
@@ -264,8 +261,6 @@ describe('createGranuleSlice', () => {
 
           const { granule: updatedGranule } = useEdscStore.getState()
           expect(updatedGranule.granuleId).toEqual(null)
-
-          expect(actions.handleError).toHaveBeenCalledTimes(0)
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(1)
           expect(actions.changeUrl).toHaveBeenCalledWith({

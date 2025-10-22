@@ -348,11 +348,9 @@ describe('createSubscription', () => {
 
   describe('when the subscription fails to create', () => {
     test('calls handleError', async () => {
-      useEdscStore.setState({
-        errors: {
-          ...useEdscStore.getState().errors,
-          handleError: jest.fn()
-        }
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.errors.handleError = jest.fn()
       })
 
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -539,11 +537,9 @@ describe('getSubscriptions', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: jest.fn()
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -682,11 +678,9 @@ describe('getGranuleSubscriptions', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: jest.fn()
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -820,11 +814,9 @@ describe('deleteSubscription', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: jest.fn()
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -1021,11 +1013,9 @@ describe('updateSubscription', () => {
   })
 
   test('calls handleError when graphql throws an http error', async () => {
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: jest.fn()
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({

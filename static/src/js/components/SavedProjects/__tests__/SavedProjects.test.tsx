@@ -258,7 +258,7 @@ describe('SavedProjects component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledWith(
           {
             action: 'handleDeleteSavedProject',
-            error: expect.any(Error),
+            error: new Error('Failed to remove project'),
             notificationType: 'banner',
             resource: 'project',
             verb: 'deleting'

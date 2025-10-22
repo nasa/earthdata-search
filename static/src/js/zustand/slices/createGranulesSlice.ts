@@ -179,7 +179,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
           state.granules.granules.isLoaded = false
         })
 
-        get().errors.handleError({
+        currentState.errors.handleError({
           error: error as Error,
           action: 'getGranules',
           resource: 'granules',

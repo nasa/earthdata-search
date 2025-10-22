@@ -113,11 +113,9 @@ describe('getRegions', () => {
   })
 
   test('does not call updateRegionResults on error', async () => {
-    useEdscStore.setState({
-      errors: {
-        ...useEdscStore.getState().errors,
-        handleError: jest.fn()
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
     })
 
     const errorPayload = {

@@ -17,8 +17,6 @@ export const mapStateToProps = (state) => ({
   authToken: state.authToken
 })
 
-export const mapDispatchToProps = () => ({})
-
 export const DownloadHistoryContainer = ({
   authToken
 }) => {
@@ -112,4 +110,4 @@ DownloadHistoryContainer.propTypes = {
   authToken: PropTypes.string.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)
+export default connect(mapStateToProps)(DownloadHistoryContainer)

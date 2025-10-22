@@ -81,7 +81,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('calls handleError when autocomplete API returns an error', async () => {
-      const { user } = setup()
+      const { user, zustandState } = setup()
 
       nock(/localhost/)
         .post(/autocomplete$/)
@@ -95,13 +95,11 @@ describe('SearchAutocomplete', () => {
       // So only one request is made
       await user.type(input, 'tes')
 
-      const { errors } = useEdscStore.getState()
-
       await waitFor(() => {
-        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
       })
 
-      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchAutocomplete',
         resource: 'suggestions',
         showAlertButton: true,
@@ -125,9 +123,17 @@ describe('SearchAutocomplete', () => {
         }
       })
 
-      // Mock autocomplete requests for each letter typed
       nock(/localhost/)
         .post(/autocomplete$/)
+        .reply(200, {
+          feed: {
+            entry: [{
+              type: 'platform',
+              fields: 'MODIS',
+              value: 'MODIS'
+            }]
+          }
+        })
 
       const input = screen.getByRole('textbox')
 

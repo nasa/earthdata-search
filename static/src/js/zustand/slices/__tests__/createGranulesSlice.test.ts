@@ -102,8 +102,6 @@ describe('createGranulesSlice', () => {
 
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
-
-      expect(actions.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('calls lambda to get authenticated granules', async () => {
@@ -150,8 +148,6 @@ describe('createGranulesSlice', () => {
 
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
-
-      expect(actions.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('substitutes MBR for polygon in opensearch granule searches', async () => {
@@ -211,8 +207,6 @@ describe('createGranulesSlice', () => {
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
-
-      expect(actions.handleError).toHaveBeenCalledTimes(0)
 
       expect(cwicRequestMock).toHaveBeenCalledTimes(1)
       expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')

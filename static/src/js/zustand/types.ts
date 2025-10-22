@@ -132,8 +132,6 @@ type HandleErrorParams = {
     /** The request ID */
     requestId?: string
   }
-  /** An optional error action to dispatch */
-  errorAction?: (message: string) => void
   /** Flag to show alert button */
   showAlertButton?: boolean
   /** The error title */

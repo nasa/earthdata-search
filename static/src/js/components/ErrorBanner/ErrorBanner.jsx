@@ -5,7 +5,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { Banner } from '../Banner/Banner'
 import useEdscStore from '../../zustand/useEdscStore'
 
-export const ErrorBanner = () => {
+const ErrorBanner = () => {
   const errors = useEdscStore((state) => state.errors.errorsList)
   const removeError = useEdscStore((state) => state.errors.removeError)
 
@@ -45,7 +45,5 @@ export const ErrorBanner = () => {
     />
   )
 }
-
-ErrorBanner.propTypes = {}
 
 export default ErrorBanner
