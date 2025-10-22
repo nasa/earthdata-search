@@ -16,8 +16,6 @@ import PreferencesRequest from '../../../util/request/preferencesRequest'
 
 // @ts-expect-error The file does not have types
 import configureStore from '../../../store/configureStore'
-// @ts-expect-error The file does not have types
-import actions from '../../../actions'
 
 jest.mock('jsonwebtoken')
 jest.mock('../../../store/configureStore')
