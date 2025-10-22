@@ -322,7 +322,6 @@ describe('createTimelineSlice', () => {
           .post(/error_logger/)
           .reply(200)
 
-        const mockHandleError = jest.fn()
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'collectionId'
           state.timeline.query = {
@@ -331,7 +330,7 @@ describe('createTimelineSlice', () => {
             startDate: '1979-01-01T00:00:00.000Z'
           }
 
-          state.errors.handleError = mockHandleError
+          state.errors.handleError = jest.fn()
         })
 
         const mockDispatch = jest.fn()
@@ -353,11 +352,12 @@ describe('createTimelineSlice', () => {
 
         await getTimeline()
 
+        const { errors } = useEdscStore.getState()
         await waitFor(() => {
-          expect(mockHandleError).toHaveBeenCalledTimes(1)
+          expect(errors.handleError).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+        expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
           error: expect.any(Error),
           action: 'getTimeline',
           resource: 'timeline',

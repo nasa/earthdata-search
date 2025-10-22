@@ -1,48 +1,30 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import { ErrorBanner } from '../ErrorBanner'
-import Banner from '../../Banner/Banner'
+import { Banner } from '../../Banner/Banner'
 import { displayNotificationType } from '../../../constants/enums'
-import useEdscStore from '../../../zustand/useEdscStore'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../Banner/Banner', () => ({
+  Banner: jest.fn(() => <div data-testid="banner" />)
+}))
 
-jest.mock('../../../zustand/useEdscStore')
-
-const mockRemoveError = jest.fn()
-
-function setup(overrideState = {}) {
-  const defaultState = {
-    errorsList: [{
-      id: 1,
-      title: 'title',
-      message: 'message',
-      notificationType: displayNotificationType.banner
-    }]
-  }
-
-  const state = {
-    ...defaultState,
-    ...overrideState
-  }
-
-  useEdscStore.mockImplementation((selector) => selector({
+const setup = setupTest({
+  Component: ErrorBanner,
+  defaultZustandState: {
     errors: {
-      errorsList: state.errorsList,
-      removeError: mockRemoveError
+      errorsList: [{
+        id: 1,
+        title: 'title',
+        message: 'message',
+        notificationType: displayNotificationType.banner
+      }],
+      removeError: jest.fn()
     }
-  }))
-
-  const enzymeWrapper = shallow(<ErrorBanner />)
-
-  return {
-    enzymeWrapper
   }
-}
+})
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -54,39 +36,69 @@ describe('When the database is disabled', () => {
       disableDatabaseComponents: 'true'
     }))
 
-    const { enzymeWrapper } = setup({
-      errorsList: [{
-        id: 1,
-        title: 'example of database refusal error',
-        message: 'connect ECONNREFUSED port 12212 this error',
-        notificationType: displayNotificationType.banner
-      }]
+    setup({
+      overrideZustandState: {
+        errors: {
+          errorsList: [{
+            id: 1,
+            title: 'example of database refusal error',
+            message: 'connect ECONNREFUSED port 12212 this error',
+            notificationType: displayNotificationType.banner
+          }]
+        }
+      }
     })
 
-    expect(enzymeWrapper.find(Banner).length).toBe(0)
+    expect(Banner).toHaveBeenCalledTimes(0)
   })
 })
 
 describe('ErrorBanner component', () => {
   test('passes its props and renders a single ErrorBanner component', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(Banner).length).toBe(1)
-    expect(enzymeWrapper.find(Banner).props().title).toEqual('title')
-    expect(enzymeWrapper.find(Banner).props().message).toEqual('message')
-    expect(typeof enzymeWrapper.find(Banner).props().onClose).toEqual('function')
+    expect(Banner).toHaveBeenCalledTimes(1)
+    expect(Banner).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'title',
+        message: 'message',
+        onClose: expect.any(Function)
+      }),
+      {}
+    )
   })
 
   test('does not render an ErrorBanner with no errors', () => {
-    const { enzymeWrapper } = setup({ errorsList: [] })
+    setup({
+      overrideZustandState: {
+        errors: {
+          errorsList: []
+        }
+      }
+    })
 
-    expect(enzymeWrapper.find(Banner).length).toBe(0)
+    expect(Banner).toHaveBeenCalledTimes(0)
   })
 
   test('removeError is called when onClose is triggered', () => {
-    const { enzymeWrapper } = setup()
+    const mockRemoveError = jest.fn()
 
-    enzymeWrapper.find(Banner).prop('onClose')()
+    setup({
+      overrideZustandState: {
+        errors: {
+          removeError: mockRemoveError
+        }
+      }
+    })
+
+    expect(Banner).toHaveBeenCalledTimes(1)
+
+    // Get the onClose function from the Banner mock call
+    const bannerProps = Banner.mock.calls[0][0]
+    const { onClose } = bannerProps
+
+    // Trigger the onClose callback
+    onClose()
 
     expect(mockRemoveError).toHaveBeenCalledTimes(1)
     expect(mockRemoveError).toHaveBeenCalledWith(1)

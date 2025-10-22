@@ -37,8 +37,8 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         authToken
       } = reduxState
 
-      const currentState = get()
-      const { savedProject } = currentState
+      const zustandState = get()
+      const { savedProject } = zustandState
       const { project: previousProject } = savedProject
       const {
         path,
@@ -93,7 +93,7 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         const { message } = error as Error
 
         if (message) {
-          currentState.errors.handleError({
+          zustandState.errors.handleError({
             error: message,
             action: 'setProjectName',
             resource: 'project name',
@@ -152,8 +152,7 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         const { message } = error as Error
 
         if (message) {
-          const currentState = get()
-          currentState.errors.handleError({
+          get().errors.handleError({
             error: message,
             action: 'getProject',
             resource: 'project',

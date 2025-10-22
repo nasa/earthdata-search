@@ -58,12 +58,12 @@ export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
       dispatch(setAdminRetrievalsMetrics(results))
     })
     .catch((error) => {
-      dispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'fetchAdminRetrievalsMetrics',
         resource: 'admin retrievals metrics',
         requestObject
-      }))
+      })
     })
 
   return response

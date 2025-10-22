@@ -41,6 +41,8 @@ export const ProjectHeader = memo(() => {
   const [isEditingName, setIsEditingName] = useState(false)
   const [name, setName] = useState(projectName || 'Untitled Project')
 
+  // Update projectName when name changes
+  // This can happen when loading a project from the URL, after the response comes back from the API
   useEffect(() => {
     setName(projectName || 'Untitled Project')
 

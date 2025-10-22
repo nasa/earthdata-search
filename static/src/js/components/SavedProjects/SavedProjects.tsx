@@ -65,6 +65,7 @@ interface ProjectsQueryData {
  */
 const SavedProjects: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const handleError = useEdscStore((state) => state.errors.handleError)
 
   const pageSize = 20
 
@@ -101,7 +102,7 @@ const SavedProjects: React.FC = () => {
           refetch()
         },
         onError: (mutationError) => {
-          useEdscStore.getState().errors.handleError({
+          handleError({
             error: mutationError,
             action: 'handleDeleteSavedProject',
             resource: 'project',

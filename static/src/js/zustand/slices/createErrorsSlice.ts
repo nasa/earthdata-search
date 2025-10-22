@@ -16,24 +16,6 @@ const createErrorsSlice: ImmerStateCreator<ErrorsSlice> = (set, get) => ({
   errors: {
     errorsList: [],
 
-    // Move this code down to where it's called
-    addError: (payload) => {
-      const { notificationType = 'none' } = payload
-
-      if (notificationType === 'banner') {
-        set((state) => {
-          state.errors.errorsList.push(payload)
-        })
-      } else if (notificationType === 'toast') {
-        const { message } = payload
-
-        addToast(message, {
-          appearance: 'error',
-          autoDismiss: false
-        })
-      }
-    },
-
     removeError: (id) => {
       set((state) => {
         state.errors.errorsList = state.errors.errorsList.filter((error) => error.id !== id)
@@ -66,13 +48,24 @@ const createErrorsSlice: ImmerStateCreator<ErrorsSlice> = (set, get) => ({
 
       const [defaultErrorMessage = message] = parsedError
 
-      get().errors.addError({
+      const errorPayload = {
         id: requestId,
         title: title || `Error ${verb} ${resource}`,
         message: defaultErrorMessage,
         notificationType,
         showAlertButton
-      })
+      }
+
+      if (notificationType === 'banner') {
+        set((state) => {
+          state.errors.errorsList.push(errorPayload)
+        })
+      } else if (notificationType === 'toast') {
+        addToast(errorPayload.message, {
+          appearance: 'error',
+          autoDismiss: false
+        })
+      }
 
       console.error(`Action [${action}] failed: ${defaultErrorMessage}`)
 

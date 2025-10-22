@@ -42,7 +42,7 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
           get().shapefile.updateShapefile(responseObject.data)
         })
         .catch((error) => {
-          get().errors.handleError({
+          zustandState.errors.handleError({
             error,
             action: 'fetchShapefile',
             resource: 'shapefile',
@@ -77,7 +77,7 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
           get().shapefile.updateShapefile({ shapefileId })
         })
         .catch((error) => {
-          get().errors.handleError({
+          zustandState.errors.handleError({
             error,
             action: 'saveShapefile',
             resource: 'shapefile',

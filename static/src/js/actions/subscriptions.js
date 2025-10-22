@@ -144,7 +144,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
       dispatch(actions.getGranuleSubscriptions())
     }
   } catch (error) {
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'createSubscription',
       resource: 'subscription',
@@ -152,7 +152,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
       notificationType: displayNotificationType.toast,
       showAlertButton: true,
       title: 'Something went wrong creating your subscription'
-    }))
+    })
   }
 
   return response
@@ -245,14 +245,14 @@ export const getSubscriptions = (
       ]
     ))
 
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'fetchSubscriptions',
       resource: 'subscription',
       requestObject: graphQlRequestObject,
       showAlertButton: true,
       title: 'Something went wrong fetching subscriptions'
-    }))
+    })
   }
 
   return response
@@ -319,14 +319,14 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
 
     return response
   } catch (error) {
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'getGranuleSubscriptions',
       resource: 'subscription',
       requestObject: graphQlRequestObject,
       showAlertButton: true,
       title: 'Something went wrong fetching granule subscriptions'
-    }))
+    })
 
     return null
   }
@@ -388,7 +388,7 @@ export const deleteSubscription = (
       autoDismiss: true
     })
   } catch (error) {
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'deleteSubscription',
       resource: 'subscription',
@@ -396,7 +396,7 @@ export const deleteSubscription = (
       graphQlRequestObject,
       showAlertButton: true,
       title: 'Something went wrong deleting your subscription'
-    }))
+    })
   }
 
   return response
@@ -481,7 +481,7 @@ export const updateSubscription = ({
       dispatch(actions.getGranuleSubscriptions())
     }
   } catch (error) {
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'updateSubscription',
       resource: 'subscription',
@@ -489,7 +489,7 @@ export const updateSubscription = ({
       graphQlRequestObject,
       showAlertButton: true,
       title: 'Something went wrong updating your subscription'
-    }))
+    })
   }
 
   return response

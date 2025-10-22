@@ -45,13 +45,15 @@ const SearchAutocomplete = ({
     setCollectionId,
     changeQuery,
     earthdataEnvironment,
-    setOpenFacetGroup
+    setOpenFacetGroup,
+    handleError
   } = useEdscStore((state) => ({
     addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
     setCollectionId: state.collection.setCollectionId,
     changeQuery: state.query.changeQuery,
     earthdataEnvironment: getEarthdataEnvironment(state),
-    setOpenFacetGroup: state.home.setOpenFacetGroup
+    setOpenFacetGroup: state.home.setOpenFacetGroup,
+    handleError: state.errors.handleError
   }))
 
   // Update local state when initial keyword changes
@@ -142,7 +144,7 @@ const SearchAutocomplete = ({
       setIsLoaded(false)
       setIsLoading(false)
 
-      useEdscStore.getState().errors.handleError({
+      handleError({
         error,
         action: 'fetchAutocomplete',
         resource: 'suggestions',

@@ -116,7 +116,7 @@ type ErrorObject = {
 /** Parameters for handleError action */
 type HandleErrorParams = {
   /** The error object */
-  error: unknown
+  error: Error
   /** The error message */
   message?: string
   /** The action that caused the error */
@@ -145,8 +145,6 @@ export type ErrorsSlice = {
   errors: {
     /** The list of errors */
     errorsList: ErrorObject[]
-    /** Function to add an error */
-    addError: (error: ErrorObject) => void
     /** Function to remove an error */
     removeError: (id: string) => void
     /** Function to handle an error */

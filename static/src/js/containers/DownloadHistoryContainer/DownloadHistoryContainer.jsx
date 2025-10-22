@@ -23,6 +23,7 @@ export const DownloadHistoryContainer = ({
   authToken
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const handleError = useEdscStore((state) => state.errors.handleError)
   const [retrievalHistory, setRetrievalHistory] = useState([])
   const [retrievalHistoryLoadingState, setRetrievalHistoryLoadingState] = useState({
     isLoading: false,
@@ -53,7 +54,7 @@ export const DownloadHistoryContainer = ({
         isLoaded: false
       })
 
-      useEdscStore.getState().errors.handleError({
+      handleError({
         error,
         action: 'fetchRetrievalHistory',
         resource: 'retrieval history',
@@ -79,7 +80,7 @@ export const DownloadHistoryContainer = ({
           autoDismiss: true
         })
       } catch (error) {
-        useEdscStore.getState().errors.handleError({
+        handleError({
           error,
           action: 'handleDeleteRetrieval',
           resource: 'retrieval',

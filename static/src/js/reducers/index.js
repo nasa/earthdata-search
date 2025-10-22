@@ -5,7 +5,6 @@ import adminRetrievalsMetricsReducer from './admin/retrievalsMetrics'
 import authTokenReducer from './authToken'
 import colorMapsReducer from './colorMaps'
 import contactInfoReducer from './contactInfo'
-import errorsReducer from './errors'
 import facetsReducer from './facets'
 import granuleDownloadReducer from './granuleDownload'
 import regionResultsReducer from './regionResults'
@@ -22,7 +21,6 @@ export default () => combineReducers({
   }),
   authToken: authTokenReducer,
   contactInfo: contactInfoReducer,
-  errors: errorsReducer,
   granuleDownload: granuleDownloadReducer,
   metadata: combineReducers({
     colormaps: colorMapsReducer

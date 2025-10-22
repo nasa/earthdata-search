@@ -141,7 +141,6 @@ describe('createPreferencesSlice', () => {
     let mockGetState: jest.Mock
     let mockDispatch: jest.Mock
     let mockPreferencesRequestInstance: { update: jest.Mock }
-    let mockHandleError: jest.Mock
 
     beforeEach(() => {
       mockGetState = jest.fn()
@@ -149,8 +148,6 @@ describe('createPreferencesSlice', () => {
       mockPreferencesRequestInstance = {
         update: jest.fn()
       }
-
-      mockHandleError = jest.fn()
 
       mockConfigureStore.mockReturnValue({
         getState: mockGetState,
@@ -161,7 +158,6 @@ describe('createPreferencesSlice', () => {
         () => mockPreferencesRequestInstance as unknown as PreferencesRequest
       )
 
-      mockActions.handleError = mockHandleError
       mockAddToast.mockClear()
     })
 
@@ -299,9 +295,8 @@ describe('createPreferencesSlice', () => {
       }
       const mockError = new Error('Request failed')
 
-      const localMockHandleError = jest.fn()
       useEdscStore.setState((state) => {
-        state.errors.handleError = localMockHandleError
+        state.errors.handleError = jest.fn()
       })
 
       mockGetState.mockReturnValue({
@@ -317,8 +312,10 @@ describe('createPreferencesSlice', () => {
 
       const finalState = useEdscStore.getState().preferences
       expect(finalState.isSubmitting).toBe(false)
-      expect(localMockHandleError).toHaveBeenCalledTimes(1)
-      expect(localMockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         error: mockError,
         action: 'updatePreferences',
         resource: 'preferences',

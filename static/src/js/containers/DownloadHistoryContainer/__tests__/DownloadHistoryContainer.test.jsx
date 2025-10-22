@@ -5,7 +5,6 @@ import nock from 'nock'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import addToast from '../../../util/addToast'
-import useEdscStore from '../../../zustand/useEdscStore'
 import { DownloadHistoryContainer, mapStateToProps } from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
 
@@ -166,32 +165,32 @@ describe('DownloadHistoryContainer component', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const { user } = setup()
+    const { user, zustandState } = setup({
+      overrideZustandState: {
+        errors: {
+          handleError: jest.fn()
+        }
+      }
+    })
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: '8069076' })).toBeInTheDocument()
     })
 
-    const mockHandleError = jest.fn()
-    useEdscStore.setState((state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.errors.handleError = mockHandleError
-    })
-
     await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
 
     await waitFor(() => {
-      expect(mockHandleError).toHaveBeenCalledWith(
-        expect.objectContaining({
-          error: expect.any(Error),
-          action: 'handleDeleteRetrieval',
-          resource: 'retrieval',
-          verb: 'deleting',
-          notificationType: 'banner'
-        })
-      )
+      expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
     })
 
-    expect(mockHandleError).toHaveBeenCalledTimes(1)
+    expect(zustandState.errors.handleError).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: expect.any(Error),
+        action: 'handleDeleteRetrieval',
+        resource: 'retrieval',
+        verb: 'deleting',
+        notificationType: 'banner'
+      })
+    )
   })
 })

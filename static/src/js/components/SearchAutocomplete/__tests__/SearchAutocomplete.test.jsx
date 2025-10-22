@@ -127,24 +127,7 @@ describe('SearchAutocomplete', () => {
 
       // Mock autocomplete requests for each letter typed
       nock(/localhost/)
-        .post(/autocomplete$/, (body) => body.params.q === 'MOD')
-        .reply(200, { feed: { entry: [] } })
-
-      nock(/localhost/)
-        .post(/autocomplete$/, (body) => body.params.q === 'MODI')
-        .reply(200, { feed: { entry: [] } })
-
-      nock(/localhost/)
-        .post(/autocomplete$/, (body) => body.params.q === 'MODIS')
-        .reply(200, {
-          feed: {
-            entry: [{
-              type: 'platform',
-              fields: 'MODIS',
-              value: 'MODIS'
-            }]
-          }
-        })
+        .post(/autocomplete$/)
 
       const input = screen.getByRole('textbox')
 

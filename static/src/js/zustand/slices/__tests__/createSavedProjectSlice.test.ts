@@ -214,10 +214,9 @@ describe('createSavedProjectSlice', () => {
           }
         }
 
-        const mockHandleError = jest.fn()
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.errors.handleError = mockHandleError
+          state.errors.handleError = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -235,8 +234,9 @@ describe('createSavedProjectSlice', () => {
           }
         })
 
-        expect(mockHandleError).toHaveBeenCalledTimes(1)
-        expect(mockHandleError).toHaveBeenCalledWith({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith({
           action: 'setProjectName',
           error: 'Mock mutation error',
           resource: 'project name',
@@ -301,10 +301,9 @@ describe('createSavedProjectSlice', () => {
           })
         })
 
-        const mockHandleError = jest.fn()
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.errors.handleError = mockHandleError
+          state.errors.handleError = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -321,8 +320,9 @@ describe('createSavedProjectSlice', () => {
           }
         })
 
-        expect(mockHandleError).toHaveBeenCalledTimes(1)
-        expect(mockHandleError).toHaveBeenCalledWith({
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith({
           action: 'getProject',
           error: 'Mock query error',
           resource: 'project',

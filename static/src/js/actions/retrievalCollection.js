@@ -45,12 +45,12 @@ export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'fetchRetrievalCollection',
         resource: 'collection',
         requestObject
-      }))
+      })
     })
 
   return response

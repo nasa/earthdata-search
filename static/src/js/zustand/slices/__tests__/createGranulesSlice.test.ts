@@ -227,14 +227,13 @@ describe('createGranulesSlice', () => {
         .post(/error_logger/)
         .reply(200)
 
-      const mockHandleError = jest.fn()
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
         state.collection.collectionMetadata.collectionId = {
           conceptId: 'collectionId'
         }
 
-        state.errors.handleError = mockHandleError
+        state.errors.handleError = jest.fn()
       })
 
       mockGetState.mockReturnValue({
@@ -244,8 +243,9 @@ describe('createGranulesSlice', () => {
       const { granules } = useEdscStore.getState()
       await granules.getGranules()
 
-      expect(mockHandleError).toHaveBeenCalledTimes(1)
-      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getGranules',
         error: expect.any(Error),
         resource: 'granules',

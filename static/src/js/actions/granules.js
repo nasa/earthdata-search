@@ -128,14 +128,14 @@ export const fetchGranuleLinks = (
       params.pageNum = currentPage
     }
   } catch (error) {
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'fetchGranuleLinks',
       resource: 'granule links',
       requestObject,
       showAlertButton: true,
       title: 'Something went wrong fetching granule links'
-    }))
+    })
   }
 
   return response
