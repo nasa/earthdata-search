@@ -147,9 +147,9 @@ describe('submitRetrieval', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const mockHandleError = jest.fn()
-    useEdscStore.setState((state) => ({
-      project: {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.project = {
         ...state.project,
         collections: {
           byId: {
@@ -169,12 +169,11 @@ describe('submitRetrieval', () => {
         },
         submittedProject: jest.fn(),
         submittingProject: jest.fn()
-      },
-      errors: {
-        ...state.errors,
-        handleError: mockHandleError
       }
-    }))
+
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     const store = mockStore({
       authToken: 'mockToken'
@@ -182,8 +181,9 @@ describe('submitRetrieval', () => {
 
     await store.dispatch(submitRetrieval())
 
-    expect(mockHandleError).toHaveBeenCalledTimes(1)
-    expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+    const { errors } = useEdscStore.getState()
+    expect(errors.handleError).toHaveBeenCalledTimes(1)
+    expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
       action: 'submitRetrieval',
       resource: 'retrieval',
       verb: 'submitting'
@@ -735,9 +735,9 @@ describe('fetchRetrieval', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const mockHandleError = jest.fn()
-    useEdscStore.setState((state) => ({
-      project: {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.project = {
         ...state.project,
         collections: {
           byId: {
@@ -751,23 +751,23 @@ describe('fetchRetrieval', () => {
             }
           },
           allIds: ['collectionId']
-        }
-      },
-      errors: {
-        ...state.errors,
-        handleError: mockHandleError
-      },
-      submittedProject: jest.fn(),
-      submittingProject: jest.fn()
-    }))
+        },
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }
+
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     const store = mockStore({
       authToken: 'mockToken'
     })
 
     await store.dispatch(fetchRetrieval(7)).then(() => {
-      expect(mockHandleError).toHaveBeenCalledTimes(1)
-      expect(mockHandleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchRetrieval',
         resource: 'retrieval'
       }))

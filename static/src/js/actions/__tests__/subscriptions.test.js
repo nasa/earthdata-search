@@ -155,11 +155,9 @@ describe('createSubscription', () => {
         }
       })
 
-    useEdscStore.setState({
-      collection: {
-        ...useEdscStore.getState().collection,
-        collectionId: 'collectionId'
-      }
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
@@ -316,11 +314,9 @@ describe('createSubscription', () => {
           }
         })
 
-      useEdscStore.setState({
-        collection: {
-          ...useEdscStore.getState().collection,
-          collectionId: 'collectionId'
-        }
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.collectionId = 'collectionId'
       })
 
       const store = mockStore({
@@ -370,11 +366,9 @@ describe('createSubscription', () => {
         .post(/error_logger/)
         .reply(200)
 
-      useEdscStore.setState({
-        collection: {
-          ...useEdscStore.getState().collection,
-          collectionId: 'collectionId'
-        }
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.collectionId = 'collectionId'
       })
 
       const store = mockStore({
@@ -616,12 +610,11 @@ describe('getGranuleSubscriptions', () => {
           }
         })
 
-      useEdscStore.setState({
-        collection: {
-          ...useEdscStore.getState().collection,
-          collectionId: 'C10000000000-EDSC',
-          updateGranuleSubscriptions: jest.fn()
-        }
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.collectionId = 'C10000000000-EDSC'
+        // eslint-disable-next-line no-param-reassign
+        state.collection.updateGranuleSubscriptions = jest.fn()
       })
 
       const store = mockStore({
@@ -657,11 +650,9 @@ describe('getGranuleSubscriptions', () => {
           }
         })
 
-      useEdscStore.setState({
-        collection: {
-          ...useEdscStore.getState().collection,
-          updateGranuleSubscriptions: jest.fn()
-        }
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.updateGranuleSubscriptions = jest.fn()
       })
 
       const store = mockStore({
