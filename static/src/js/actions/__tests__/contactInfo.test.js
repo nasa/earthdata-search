@@ -128,9 +128,11 @@ describe('updateNotificationLevel', () => {
       .reply(200)
 
     const mockHandleError = jest.fn()
-    useEdscStore.setState((state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.errors.handleError = mockHandleError
+    useEdscStore.setState({
+      errors: {
+        ...useEdscStore.getState().errors,
+        handleError: mockHandleError
+      }
     })
 
     const store = mockStore({
