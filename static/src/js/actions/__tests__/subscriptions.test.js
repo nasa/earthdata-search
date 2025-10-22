@@ -570,11 +570,9 @@ describe('getSubscriptions', () => {
 
       expect(storeActions[4]).toEqual({
         type: ERRORED_SUBSCRIPTIONS,
-        payload: expect.arrayContaining([
-          expect.objectContaining({
-            message: expect.any(String)
-          })
-        ])
+        payload: [{
+          message: 'Something went wrong fetching subscriptions'
+        }]
       })
 
       const { errors } = useEdscStore.getState()
