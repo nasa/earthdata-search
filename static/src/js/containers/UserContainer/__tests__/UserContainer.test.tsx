@@ -14,6 +14,9 @@ import GET_USER from '../../../operations/queries/getUser'
 
 // @ts-expect-error The file does not have types
 import actions from '../../../actions/index'
+import Spinner from '../../../components/Spinner/Spinner'
+
+jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
 
 jest.mock('tiny-cookie', () => ({
   remove: jest.fn().mockReturnValue('')
@@ -106,7 +109,7 @@ describe('UserContainer', () => {
   })
 
   describe('when an authToken and user data are provided', () => {
-    test('does not render child components', () => {
+    test('renders a spinner', () => {
       setup({
         overrideProps: {
           authToken: 'test-auth-token'
@@ -124,6 +127,12 @@ describe('UserContainer', () => {
       })
 
       expect(screen.queryByText('Child Component')).not.toBeInTheDocument()
+
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        className: 'root__spinner spinner spinner--dots spinner--small',
+        type: 'dots'
+      }, {})
     })
   })
 

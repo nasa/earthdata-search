@@ -13,6 +13,8 @@ import actions from '../../actions/index'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
+import Spinner from '../../components/Spinner/Spinner'
+
 import type { UrsProfile } from '../../types/sharedTypes'
 
 // @ts-expect-error Don't want to define types for all of Redux
@@ -99,7 +101,14 @@ export const UserContainer: React.FC<UserContainerProps> = ({
   }, [data])
 
   // If the request is loading, or we have an authToken but no data yet, don't render children
-  if (loading || (authToken && !data)) return null
+  if (loading || (authToken && !data)) {
+    return (
+      <Spinner
+        className="root__spinner spinner spinner--dots spinner--small"
+        type="dots"
+      />
+    )
+  }
 
   // Render the child components
   return children

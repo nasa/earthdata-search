@@ -37,10 +37,10 @@ const PreferencesForm = ({
     setFormData(sitePreferences)
   }, [sitePreferences])
 
-  const [updatePreferences, { loading }] = useMutation(gql(UPDATE_PREFERENCES))
+  const [updatePreferencesMutation, { loading }] = useMutation(gql(UPDATE_PREFERENCES))
 
   const handleSubmit = async ({ formData: newFormData }) => {
-    updatePreferences({
+    updatePreferencesMutation({
       variables: {
         preferences: newFormData
       },
