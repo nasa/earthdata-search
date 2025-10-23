@@ -103,13 +103,19 @@ describe('mapStateToProps', () => {
 
 describe('UserContainer', () => {
   test('renders child components when no authToken is provided', () => {
+    const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem')
+
     setup()
 
     expect(screen.getByText('Child Component')).toBeInTheDocument()
+
+    expect(localStorageGetItemSpy).toHaveBeenCalledTimes(0)
   })
 
   describe('when an authToken and user data are provided', () => {
     test('renders a spinner', () => {
+      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+
       setup({
         overrideProps: {
           authToken: 'test-auth-token'
@@ -133,11 +139,50 @@ describe('UserContainer', () => {
         className: 'root__spinner spinner spinner--dots spinner--small',
         type: 'dots'
       }, {})
+
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+    })
+  })
+
+  describe('when localstorage has user data', () => {
+    test('restores user data from localstorage', () => {
+      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify({
+        sitePreferences: {
+          mock: 'preferences'
+        },
+        ursProfile: {
+          firstName: 'test'
+        }
+      }))
+
+      const { props, zustandState } = setup({
+        overrideProps: {
+          authToken: 'test-auth-token'
+        }
+      })
+
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+
+      expect(zustandState.user.setSitePreferences).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.setSitePreferences).toHaveBeenCalledWith({
+        mock: 'preferences'
+      })
+
+      expect(props.onUpdateContactInfo).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateContactInfo).toHaveBeenCalledWith({
+        ursProfile: {
+          firstName: 'test'
+        }
+      })
     })
   })
 
   describe('when an authToken and user data are provided', () => {
     test('updates store and renders child components', async () => {
+      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+
       const { props, zustandState } = setup({
         overrideProps: {
           authToken: 'test-auth-token'
@@ -161,6 +206,9 @@ describe('UserContainer', () => {
 
       expect(await screen.findByText('Child Component')).toBeInTheDocument()
 
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+
       expect(props.onUpdateContactInfo).toHaveBeenCalledTimes(1)
       expect(props.onUpdateContactInfo).toHaveBeenCalledWith({ ursProfile: {} })
 
@@ -175,6 +223,8 @@ describe('UserContainer', () => {
   describe('when the getUser query returns an error', () => {
     test('handles the error, removes the authToken, and redirects to /search', async () => {
       const removeSpy = jest.spyOn(tinyCookie, 'remove')
+      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+      const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
 
       const { props } = setup({
         overrideProps: {
@@ -188,6 +238,9 @@ describe('UserContainer', () => {
         }]
       })
 
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+
       await waitFor(() => {
         expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
       })
@@ -196,6 +249,9 @@ describe('UserContainer', () => {
 
       expect(removeSpy).toHaveBeenCalledTimes(1)
       expect(removeSpy).toHaveBeenCalledWith('authToken')
+
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('edscUser')
 
       expect(props.onHandleError).toHaveBeenCalledTimes(1)
       expect(props.onHandleError).toHaveBeenCalledWith({

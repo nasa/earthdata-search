@@ -41,6 +41,9 @@ export const logout = () => (dispatch, getState) => {
       // Remove the auth cookie
       remove('authToken')
 
+      // Clear the user information from local storage
+      localStorage.removeItem('edscUser')
+
       // Redirect to root url
       window.location.assign(`/search?ee=${earthdataEnvironment}`)
     })

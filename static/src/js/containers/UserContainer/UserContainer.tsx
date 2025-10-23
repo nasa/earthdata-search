@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { connect } from 'react-redux'
 import type { Dispatch } from 'redux'
@@ -60,8 +60,31 @@ export const UserContainer: React.FC<UserContainerProps> = ({
 
   const navigate = useNavigate()
 
+  const [preferencesLoaded, setPreferencesLoaded] = useState(false)
+
+  // When the page loads, check local storage for user information
+  useEffect(() => {
+    if (authToken) {
+      const localUser = localStorage.getItem('edscUser')
+
+      // If the user information exists in local storage, update the state
+      if (localUser) {
+        const {
+          sitePreferences,
+          ursProfile
+        } = JSON.parse(localUser)
+
+        setSitePreferences(sitePreferences)
+        onUpdateContactInfo({ ursProfile })
+
+        // Set the preferences as loaded to unblock the rest of the application
+        setPreferencesLoaded(true)
+      }
+    }
+  }, [authToken])
+
   // Fetch the user data when we have an authToken
-  const { data, loading, error } = useQuery(gql(GET_USER), {
+  const { data, error } = useQuery(gql(GET_USER), {
     skip: !authToken
   })
 
@@ -72,6 +95,9 @@ export const UserContainer: React.FC<UserContainerProps> = ({
 
       // Update the authToken in Redux
       onUpdateAuthToken('')
+
+      // Clear the user information from local storage
+      localStorage.removeItem('edscUser')
 
       // Show an error banner
       onHandleError({
@@ -94,14 +120,24 @@ export const UserContainer: React.FC<UserContainerProps> = ({
         ursId
       } = user
 
+      // Update the state with the user information
       setSitePreferences(sitePreferences)
       setUsername(ursId)
       onUpdateContactInfo({ ursProfile })
+
+      // Save the user information to local storage
+      localStorage.setItem('edscUser', JSON.stringify({
+        sitePreferences,
+        ursProfile
+      }))
+
+      setPreferencesLoaded(true)
     }
   }, [data])
 
-  // If the request is loading, or we have an authToken but no data yet, don't render children
-  if (loading || (authToken && !data)) {
+  // If the user is logged in, but doesn't have preferences from either local storage
+  // or the API, show a spinner
+  if (authToken && !preferencesLoaded) {
     return (
       <Spinner
         className="root__spinner spinner spinner--dots spinner--small"

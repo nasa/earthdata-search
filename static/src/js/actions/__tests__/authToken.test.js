@@ -86,10 +86,14 @@ describe('logout', () => {
     window.location = { assign: jest.fn() }
 
     const removeMock = jest.spyOn(tinyCookie, 'remove')
+    const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
 
     await store.dispatch(logout()).then(() => {
       expect(removeMock).toHaveBeenCalledTimes(1)
       expect(removeMock).toHaveBeenCalledWith('authToken')
+
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('edscUser')
 
       expect(window.location.assign).toHaveBeenCalledTimes(1)
       expect(window.location.assign).toHaveBeenCalledWith('/search?ee=prod')
