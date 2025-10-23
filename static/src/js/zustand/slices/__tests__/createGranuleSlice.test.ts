@@ -265,13 +265,13 @@ describe('createGranuleSlice', () => {
           const { granule: updatedGranule } = useEdscStore.getState()
           expect(updatedGranule.granuleId).toEqual(null)
 
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
+
           expect(actions.changeUrl).toHaveBeenCalledTimes(1)
           expect(actions.changeUrl).toHaveBeenCalledWith({
             pathname: '/search',
             search: '?some=testparams'
           })
-
-          expect(errors.handleError).toHaveBeenCalledTimes(0)
         })
       })
     })
