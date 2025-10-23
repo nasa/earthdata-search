@@ -81,9 +81,10 @@ describe('createGranulesSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
+        state.errors.handleError = jest.fn()
       })
 
-      const { granules } = useEdscStore.getState()
+      const { granules, errors } = useEdscStore.getState()
       await granules.getGranules()
 
       const { granules: updatedGranules } = useEdscStore.getState()
@@ -102,6 +103,8 @@ describe('createGranulesSlice', () => {
 
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
+
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('calls lambda to get authenticated granules', async () => {
@@ -176,13 +179,15 @@ describe('createGranulesSlice', () => {
         state.query.collection.spatial = {
           polygon: ['-77,38,-77,38,-76,38,-77,38']
         }
+
+        state.errors.handleError = jest.fn()
       })
 
       mockGetState.mockReturnValue({
         authToken: 'mock-token'
       })
 
-      const { granules } = useEdscStore.getState()
+      const { granules, errors } = useEdscStore.getState()
       await granules.getGranules()
 
       const { granules: updatedGranules } = useEdscStore.getState()
@@ -214,6 +219,8 @@ describe('createGranulesSlice', () => {
 
       expect(cwicRequestMock).toHaveBeenCalledTimes(1)
       expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
+
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('does not update the store on error', async () => {
