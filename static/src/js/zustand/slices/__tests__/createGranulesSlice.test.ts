@@ -127,6 +127,7 @@ describe('createGranulesSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
+        state.errors.handleError = jest.fn()
       })
 
       const { granules } = useEdscStore.getState()
@@ -148,6 +149,9 @@ describe('createGranulesSlice', () => {
 
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
+
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('substitutes MBR for polygon in opensearch granule searches', async () => {

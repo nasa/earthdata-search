@@ -114,12 +114,13 @@ describe('createGranuleSlice', () => {
           authToken: ''
         })
 
-        const { granule } = useEdscStore.getState()
+        const { granule, errors } = useEdscStore.getState()
         const { getGranuleMetadata } = granule
 
         await getGranuleMetadata()
 
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
+        expect(errors.handleError).toHaveBeenCalledTimes(0)
       })
     })
 
