@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
-import { login } from '../../support/login'
+import { MockGetUserRoute, login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 
 import collectionsGraphQlJson from './__mocks__/collections_graphql.json'
@@ -124,17 +124,36 @@ test.describe('page titles', () => {
         const authHeaders = getAuthHeaders()
 
         await page.route('**/graphql', async (route) => {
-          await route.fulfill({
-            json: {
-              data: {
-                createProject: {
-                  name: 'Test Project',
-                  obfuscatedId: '1234',
-                  path: '/projects'
+          const request = JSON.parse(route.request().postData())
+
+          // Apollo Client calls have the query here
+          let { query } = request
+
+          if (!query) {
+            // Axios GraphQL calls have the query here
+            const { data } = request;
+            ({ query } = data)
+          }
+
+          if (query.includes('query GetUser')) {
+            await MockGetUserRoute(route)
+          }
+
+          if (query.includes('createProject')) {
+            await route.fulfill({
+              json: {
+                data: {
+                  createProject: {
+                    createdAt: '2025-01-01T00:00:00Z',
+                    name: 'Test Project',
+                    obfuscatedId: '1234',
+                    path: '/projects',
+                    updatedAt: '2025-01-01T00:00:00Z'
+                  }
                 }
               }
-            }
-          })
+            })
+          }
         })
 
         await page.route(/saved_access_configs/, async (route) => {
@@ -171,7 +190,7 @@ test.describe('page titles', () => {
 
       test.describe('when renaming an unnamed project', () => {
         test('shows the default title then updates to the saved name', async ({ page }) => {
-          await page.goto('/projects?p=!C1443528505-LAADS')
+          await page.goto('/project?p=!C1443528505-LAADS')
 
           await expect(page).toHaveTitle('Untitled Project - Earthdata Search')
 
@@ -248,11 +267,28 @@ test.describe('page titles', () => {
 
     test.describe('when managing subscriptions', () => {
       test('shows the subscriptions title', async ({ page }) => {
-        await page.route(/graphql/, (route) => {
-          route.fulfill({
-            json: subscriptionsResponse,
-            headers: subscriptionsHeaders
-          })
+        await page.route(/graphql/, async (route) => {
+          const request = JSON.parse(route.request().postData())
+
+          // Apollo Client calls have the query here
+          let { query } = request
+
+          if (!query) {
+            // Axios GraphQL calls have the query here
+            const { data } = request;
+            ({ query } = data)
+          }
+
+          if (query.includes('query GetUser')) {
+            await MockGetUserRoute(route)
+          }
+
+          if (query.includes('getSubscriptions')) {
+            await route.fulfill({
+              json: subscriptionsResponse,
+              headers: subscriptionsHeaders
+            })
+          }
         })
 
         await page.goto('/subscriptions')

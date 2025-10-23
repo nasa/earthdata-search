@@ -20,6 +20,24 @@ export const sitePreferences = {
   }
 }
 
+export const MockGetUserRoute = async (route) => route.fulfill({
+  json: {
+    data: {
+      user: {
+        id: '1',
+        sitePreferences,
+        ursId: 'testuser',
+        ursProfile: {
+          firstName: 'test'
+        }
+      }
+    }
+  },
+  headers: {
+    'content-type': 'application/json'
+  }
+})
+
 /**
  * Sets a cookie that will result in the user being logged in for a test
  */
@@ -28,23 +46,7 @@ export const login = async (page, context) => {
     const { query } = JSON.parse(route.request().postData())
 
     if (query.includes('query GetUser')) {
-      await route.fulfill({
-        json: {
-          data: {
-            user: {
-              id: '1',
-              sitePreferences,
-              ursId: 'testuser',
-              ursProfile: {
-                firstName: 'test'
-              }
-            }
-          }
-        },
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
+      await MockGetUserRoute(route)
     }
   })
 
