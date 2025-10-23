@@ -3,7 +3,6 @@ import nock from 'nock'
 
 import SearchAutocomplete from '../SearchAutocomplete'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import useEdscStore from '../../../zustand/useEdscStore'
 
 const setup = setupTest({
   Component: SearchAutocomplete,
