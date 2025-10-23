@@ -217,10 +217,10 @@ describe('createGranulesSlice', () => {
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
 
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
+
       expect(cwicRequestMock).toHaveBeenCalledTimes(1)
       expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
-
-      expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('does not update the store on error', async () => {
