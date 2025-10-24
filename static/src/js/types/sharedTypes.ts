@@ -195,16 +195,9 @@ export type GranulesMetadata = {
   [key: string]: GranuleMetadata
 }
 
-export type ProjectionCode = keyof typeof crsProjections
-
-export type GibsDataByCollection = {
-  /** The collection id */
-  [collectionId: string]: {
-    /** The map layers for the collection */
-    layers: MapLayer[]
-    /** The projection for the collection */
-    projection: ProjectionCode
-  }
+export type GibsLayersByCollection = {
+  /** The MapLayers associated with a Collection Id */
+  [collectionId: string]: MapLayer[]
 }
 
 export type GibsData = {
@@ -358,6 +351,8 @@ export type PortalConfig = {
     showTophat: boolean
   }
 }
+
+export type ProjectionCode = keyof typeof crsProjections
 
 /** CMR specific headers */
 export interface CmrHeaders {
