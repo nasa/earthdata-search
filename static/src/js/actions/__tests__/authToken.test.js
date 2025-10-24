@@ -14,6 +14,7 @@ import {
   updateAuthToken,
   updateAuthTokenFromHeaders
 } from '../authToken'
+import { localStorageKeys } from '../../constants/localStorageKeys'
 
 const mockStore = configureMockStore([thunk])
 
@@ -93,7 +94,7 @@ describe('logout', () => {
       expect(removeMock).toHaveBeenCalledWith('authToken')
 
       expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('edscUser')
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       expect(window.location.assign).toHaveBeenCalledTimes(1)
       expect(window.location.assign).toHaveBeenCalledWith('/search?ee=prod')

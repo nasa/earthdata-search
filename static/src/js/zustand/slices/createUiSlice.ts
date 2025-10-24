@@ -1,3 +1,4 @@
+import { localStorageKeys } from '../../constants/localStorageKeys'
 import { ImmerStateCreator, UiSlice } from '../types'
 
 const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
@@ -30,7 +31,7 @@ const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
         })
       },
       onSearchLoaded: () => {
-        const hasUserDisabledTour = localStorage.getItem('dontShowTour') === 'true'
+        const hasUserDisabledTour = localStorage.getItem(localStorageKeys.dontShowTour) === 'true'
         const shouldShowTour = !hasUserDisabledTour
 
         set((state) => {

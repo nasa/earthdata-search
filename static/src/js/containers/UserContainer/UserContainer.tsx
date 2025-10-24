@@ -15,6 +15,8 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 
 import Spinner from '../../components/Spinner/Spinner'
 
+import { localStorageKeys } from '../../constants/localStorageKeys'
+
 import type { UrsProfile } from '../../types/sharedTypes'
 
 // @ts-expect-error Don't want to define types for all of Redux
@@ -65,7 +67,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
   // When the page loads, check local storage for user information
   useEffect(() => {
     if (authToken) {
-      const localUser = localStorage.getItem('edscUser')
+      const localUser = localStorage.getItem(localStorageKeys.user)
 
       // If the user information exists in local storage, update the state
       if (localUser) {
@@ -97,7 +99,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
       onUpdateAuthToken('')
 
       // Clear the user information from local storage
-      localStorage.removeItem('edscUser')
+      localStorage.removeItem(localStorageKeys.user)
 
       // Show an error banner
       onHandleError({
@@ -126,7 +128,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
       onUpdateContactInfo({ ursProfile })
 
       // Save the user information to local storage
-      localStorage.setItem('edscUser', JSON.stringify({
+      localStorage.setItem(localStorageKeys.user, JSON.stringify({
         sitePreferences,
         ursProfile
       }))

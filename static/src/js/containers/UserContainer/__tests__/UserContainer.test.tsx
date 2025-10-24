@@ -16,6 +16,8 @@ import GET_USER from '../../../operations/queries/getUser'
 import actions from '../../../actions/index'
 import Spinner from '../../../components/Spinner/Spinner'
 
+import { localStorageKeys } from '../../../constants/localStorageKeys'
+
 jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
 
 jest.mock('tiny-cookie', () => ({
@@ -141,7 +143,7 @@ describe('UserContainer', () => {
       }, {})
 
       expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
     })
   })
 
@@ -163,7 +165,7 @@ describe('UserContainer', () => {
       })
 
       expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       expect(zustandState.user.setSitePreferences).toHaveBeenCalledTimes(1)
       expect(zustandState.user.setSitePreferences).toHaveBeenCalledWith({
@@ -207,7 +209,7 @@ describe('UserContainer', () => {
       expect(await screen.findByText('Child Component')).toBeInTheDocument()
 
       expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       expect(props.onUpdateContactInfo).toHaveBeenCalledTimes(1)
       expect(props.onUpdateContactInfo).toHaveBeenCalledWith({ ursProfile: {} })
@@ -239,7 +241,7 @@ describe('UserContainer', () => {
       })
 
       expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageGetItemSpy).toHaveBeenCalledWith('edscUser')
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       await waitFor(() => {
         expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
@@ -251,7 +253,7 @@ describe('UserContainer', () => {
       expect(removeSpy).toHaveBeenCalledWith('authToken')
 
       expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith('edscUser')
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       expect(props.onHandleError).toHaveBeenCalledTimes(1)
       expect(props.onHandleError).toHaveBeenCalledWith({

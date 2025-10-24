@@ -1,6 +1,7 @@
 import { set, remove } from 'tiny-cookie'
 
 import { UPDATE_AUTH } from '../constants/actionTypes'
+import { localStorageKeys } from '../constants/localStorageKeys'
 
 import LogoutRequest from '../util/request/logoutRequest'
 
@@ -42,7 +43,7 @@ export const logout = () => (dispatch, getState) => {
       remove('authToken')
 
       // Clear the user information from local storage
-      localStorage.removeItem('edscUser')
+      localStorage.removeItem(localStorageKeys.user)
 
       // Redirect to root url
       window.location.assign(`/search?ee=${earthdataEnvironment}`)
