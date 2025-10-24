@@ -9,6 +9,9 @@ import addToast from '../../../util/addToast'
 jest.mock('../../../util/addToast')
 
 const defaultZustandState = {
+  errors: {
+    handleError: jest.fn()
+  },
   user: {
     sitePreferences: {
       panelState: 'default',
@@ -35,9 +38,6 @@ const defaultZustandState = {
 
 const setup = setupTest({
   Component: PreferencesForm,
-  defaultProps: {
-    onHandleError: jest.fn()
-  },
   defaultZustandState,
   withApolloClient: true
 })
@@ -199,7 +199,7 @@ describe('PreferencesForm component', () => {
 
     describe('when the mutation fails', () => {
       test('calls onHandleError', async () => {
-        const { props, user } = setup({
+        const { user, zustandState } = setup({
           overrideApolloClientMocks: [
             {
               request: {
@@ -233,8 +233,8 @@ describe('PreferencesForm component', () => {
 
         await user.click(submitButton)
 
-        expect(props.onHandleError).toHaveBeenCalledTimes(1)
-        expect(props.onHandleError).toHaveBeenCalledWith({
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           error: expect.any(Error),
           action: 'updatePreferences',
           resource: 'preferences',

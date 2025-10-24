@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { gql, useMutation } from '@apollo/client'
 import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
@@ -25,11 +24,10 @@ import './PreferencesForm.scss'
 /**
  * Renders the Preferences form
  */
-const PreferencesForm = ({
-  onHandleError
-}) => {
+const PreferencesForm = () => {
   const sitePreferences = useEdscStore(getSitePreferences)
   const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
+  const handleError = useEdscStore((state) => state.errors.handleError)
 
   const [formData, setFormData] = useState(sitePreferences)
 
@@ -56,7 +54,7 @@ const PreferencesForm = ({
         })
       },
       onError: (error) => {
-        onHandleError({
+        handleError({
           error,
           action: 'updatePreferences',
           resource: 'preferences',
@@ -116,10 +114,6 @@ const PreferencesForm = ({
       </Form>
     </div>
   )
-}
-
-PreferencesForm.propTypes = {
-  onHandleError: PropTypes.func.isRequired
 }
 
 export default PreferencesForm

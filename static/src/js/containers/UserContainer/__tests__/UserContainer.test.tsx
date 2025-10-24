@@ -35,11 +35,13 @@ const setup = setupTest({
   defaultProps: {
     authToken: '',
     children: <div>Child Component</div>,
-    onHandleError: jest.fn(),
     onUpdateAuthToken: jest.fn(),
     onUpdateContactInfo: jest.fn()
   },
   defaultZustandState: {
+    errors: {
+      handleError: jest.fn()
+    },
     user: {
       setSitePreferences: jest.fn(),
       setUsername: jest.fn()
@@ -50,16 +52,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onHandleError calls actions.handleError', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'handleError')
-
-    mapDispatchToProps(dispatch).onHandleError({ mock: 'error' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'error' })
-  })
-
   test('onUpdateAuthToken calls actions.updateAuthToken', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAuthToken')
@@ -228,7 +220,7 @@ describe('UserContainer', () => {
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
       const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
 
-      const { props } = setup({
+      const { props, zustandState } = setup({
         overrideProps: {
           authToken: 'test-auth-token'
         },
@@ -255,8 +247,8 @@ describe('UserContainer', () => {
       expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
       expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
-      expect(props.onHandleError).toHaveBeenCalledTimes(1)
-      expect(props.onHandleError).toHaveBeenCalledWith({
+      expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith({
         error: expect.any(Error),
         action: 'getUser query',
         title: 'Something went wrong while logging in'

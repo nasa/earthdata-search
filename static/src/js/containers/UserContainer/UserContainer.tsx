@@ -29,7 +29,6 @@ type ContactInfo = {
 }
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onHandleError: (errorConfig: unknown) => dispatch(actions.handleError(errorConfig)),
   onUpdateAuthToken:
     (token: string) => dispatch(actions.updateAuthToken(token)),
   onUpdateContactInfo:
@@ -41,8 +40,6 @@ interface UserContainerProps {
   authToken: string
   /** The child components */
   children: React.ReactNode
-  /** Function to handle errors */
-  onHandleError: (errorConfig: unknown) => void
   /** Function to update the authentication token */
   onUpdateAuthToken: (token: string) => void
   /** Function to update the user's contact information */
@@ -52,13 +49,13 @@ interface UserContainerProps {
 export const UserContainer: React.FC<UserContainerProps> = ({
   authToken,
   children,
-  onHandleError,
   onUpdateAuthToken,
   onUpdateContactInfo
 }) => {
   const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
   const setUsername = useEdscStore((state) => state.user.setUsername)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const handleError = useEdscStore((state) => state.errors.handleError)
 
   const navigate = useNavigate()
 
@@ -102,7 +99,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
       localStorage.removeItem(localStorageKeys.user)
 
       // Show an error banner
-      onHandleError({
+      handleError({
         error,
         action: 'getUser query',
         title: 'Something went wrong while logging in'

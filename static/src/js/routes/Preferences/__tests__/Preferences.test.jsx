@@ -3,11 +3,9 @@ import Helmet from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { mapDispatchToProps, Preferences } from '../Preferences'
+import Preferences from '../Preferences'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import PreferencesForm from '../../../components/Preferences/PreferencesForm'
-
-import actions from '../../../actions'
 
 jest.mock('../../../components/Preferences/PreferencesForm', () => jest.fn(() => <div />))
 
@@ -16,22 +14,7 @@ beforeEach(() => {
 })
 
 const setup = setupTest({
-  Component: Preferences,
-  defaultProps: {
-    onHandleError: jest.fn()
-  }
-})
-
-describe('mapDispatchToProps', () => {
-  test('onHandleError calls actions.handleError', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'handleError')
-
-    mapDispatchToProps(dispatch).onHandleError({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
+  Component: Preferences
 })
 
 describe('Preferences component', () => {
@@ -59,8 +42,6 @@ describe('Preferences component', () => {
     ])
 
     expect(PreferencesForm).toHaveBeenCalledTimes(1)
-    expect(PreferencesForm).toHaveBeenCalledWith({
-      onHandleError: expect.any(Function)
-    }, {})
+    expect(PreferencesForm).toHaveBeenCalledWith({}, {})
   })
 })
