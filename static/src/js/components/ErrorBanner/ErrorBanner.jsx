@@ -22,6 +22,7 @@ const ErrorBanner = () => {
 
   const { disableDatabaseComponents } = getApplicationConfig()
 
+  // Suppress error if it is a result of the database being under maintenance
   const regex = /connect ECONNREFUSED/
   const dbConnectionError = regex.test(error.message)
 

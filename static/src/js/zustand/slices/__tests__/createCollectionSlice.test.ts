@@ -795,7 +795,8 @@ describe('createCollectionSlice', () => {
 
           const {
             collection: updatedCollection,
-            granules
+            granules,
+            errors
           } = useEdscStore.getState()
 
           expect(updatedCollection.collectionId).toEqual(null)
@@ -814,6 +815,8 @@ describe('createCollectionSlice', () => {
 
           expect(granules.getGranules).toHaveBeenCalledTimes(1)
           expect(granules.getGranules).toHaveBeenCalledWith()
+
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
 
           expect(actions.getColorMap).toHaveBeenCalledTimes(0)
         })
