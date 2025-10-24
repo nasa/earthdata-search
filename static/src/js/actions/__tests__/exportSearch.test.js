@@ -8,11 +8,7 @@ import {
   exportSearch
 } from '../exportSearch'
 
-import { handleError } from '../errors'
-
-jest.mock('../errors', () => ({
-  handleError: jest.fn(() => jest.fn())
-}))
+import useEdscStore from '../../zustand/useEdscStore'
 
 import { EXPORT_FINISHED, EXPORT_STARTED } from '../../constants/actionTypes'
 
@@ -138,6 +134,11 @@ describe('exportSearch', () => {
       .post(/error_logger/)
       .reply(200)
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
+
     const store = mockStore({
       authToken: ''
     })
@@ -154,8 +155,9 @@ describe('exportSearch', () => {
         payload: 'json'
       })
 
-      expect(handleError).toHaveBeenCalledTimes(1)
-      expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'exportSearch',
         resource: 'collections',
         showAlertButton: true,

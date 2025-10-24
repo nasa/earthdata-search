@@ -16,8 +16,6 @@ import PreferencesRequest from '../../../util/request/preferencesRequest'
 
 // @ts-expect-error The file does not have types
 import configureStore from '../../../store/configureStore'
-// @ts-expect-error The file does not have types
-import actions from '../../../actions'
 
 jest.mock('jsonwebtoken')
 jest.mock('../../../store/configureStore')
@@ -28,7 +26,6 @@ jest.mock('../../../util/addToast')
 const mockJwt = jwt as jest.Mocked<typeof jwt>
 const mockConfigureStore = configureStore as jest.MockedFunction<typeof configureStore>
 const mockPreferencesRequest = PreferencesRequest as jest.MockedClass<typeof PreferencesRequest>
-const mockActions = actions as jest.Mocked<typeof actions>
 const mockAddToast = addToast as jest.MockedFunction<typeof addToast>
 
 describe('createPreferencesSlice', () => {
@@ -141,7 +138,6 @@ describe('createPreferencesSlice', () => {
     let mockGetState: jest.Mock
     let mockDispatch: jest.Mock
     let mockPreferencesRequestInstance: { update: jest.Mock }
-    let mockHandleError: jest.Mock
 
     beforeEach(() => {
       mockGetState = jest.fn()
@@ -149,8 +145,6 @@ describe('createPreferencesSlice', () => {
       mockPreferencesRequestInstance = {
         update: jest.fn()
       }
-
-      mockHandleError = jest.fn()
 
       mockConfigureStore.mockReturnValue({
         getState: mockGetState,
@@ -161,7 +155,6 @@ describe('createPreferencesSlice', () => {
         () => mockPreferencesRequestInstance as unknown as PreferencesRequest
       )
 
-      mockActions.handleError = mockHandleError
       mockAddToast.mockClear()
     })
 
@@ -299,6 +292,10 @@ describe('createPreferencesSlice', () => {
       }
       const mockError = new Error('Request failed')
 
+      useEdscStore.setState((state) => {
+        state.errors.handleError = jest.fn()
+      })
+
       mockGetState.mockReturnValue({
         authToken: mockAuthToken,
         earthdataEnvironment: mockEarthdataEnvironment
@@ -312,13 +309,15 @@ describe('createPreferencesSlice', () => {
 
       const finalState = useEdscStore.getState().preferences
       expect(finalState.isSubmitting).toBe(false)
-      expect(mockHandleError).toHaveBeenCalledWith({
+
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         error: mockError,
         action: 'updatePreferences',
         resource: 'preferences',
-        requestObject: null,
         notificationType: 'toast'
-      })
+      }))
     })
 
     test('merges server response with existing preferences', async () => {

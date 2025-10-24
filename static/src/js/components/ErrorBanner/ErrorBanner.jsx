@@ -1,24 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-import actions from '../../actions/index'
-import { Banner } from '../../components/Banner/Banner'
+import { Banner } from '../Banner/Banner'
+import useEdscStore from '../../zustand/useEdscStore'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onRemoveError: (id) => dispatch(actions.removeError(id))
-})
+const ErrorBanner = () => {
+  const errors = useEdscStore((state) => state.errors.errorsList)
+  const removeError = useEdscStore((state) => state.errors.removeError)
 
-export const mapStateToProps = (state) => ({
-  errors: state.errors
-})
-
-export const ErrorBannerContainer = ({
-  errors = [],
-  onRemoveError
-}) => {
   if (!errors || errors.length === 0) return null
 
   const [error] = errors
@@ -43,7 +33,7 @@ export const ErrorBannerContainer = ({
   }
 
   const onClose = () => {
-    onRemoveError(id)
+    removeError(id)
   }
 
   return (
@@ -57,9 +47,4 @@ export const ErrorBannerContainer = ({
   )
 }
 
-ErrorBannerContainer.propTypes = {
-  errors: PropTypes.arrayOf(PropTypes.shape({})),
-  onRemoveError: PropTypes.func.isRequired
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ErrorBannerContainer)
+export default ErrorBanner

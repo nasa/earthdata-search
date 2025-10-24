@@ -7,8 +7,7 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 const setup = setupTest({
   Component: SearchAutocomplete,
   defaultProps: {
-    authToken: '',
-    handleError: jest.fn()
+    authToken: ''
   },
   defaultReduxState: {
     authToken: ''
@@ -19,6 +18,9 @@ const setup = setupTest({
     },
     collection: {
       setCollectionId: jest.fn()
+    },
+    errors: {
+      handleError: jest.fn()
     }
   }
 })
@@ -78,7 +80,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('calls handleError when autocomplete API returns an error', async () => {
-      const { props, user } = setup()
+      const { user, zustandState } = setup()
 
       nock(/localhost/)
         .post(/autocomplete$/)
@@ -93,10 +95,10 @@ describe('SearchAutocomplete', () => {
       await user.type(input, 'tes')
 
       await waitFor(() => {
-        expect(props.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.handleError).toHaveBeenCalledWith(expect.objectContaining({
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchAutocomplete',
         resource: 'suggestions',
         showAlertButton: true,

@@ -198,7 +198,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
     getProjectCollections: async () => {
       const {
-        dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
@@ -265,11 +264,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         const { data } = savedAccessConfigsResponse
         savedAccessConfigs = data
       } catch (error) {
-        reduxDispatch(actions.handleError({
-          error,
+        currentState.errors.handleError({
+          error: error as Error,
           action: 'getProjectCollections',
           resource: 'saved access configurations'
-        }))
+        })
 
         // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
         if (error instanceof AxiosError && error.response?.status === 401) {
@@ -459,13 +458,13 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           return response
         }))
       } catch (error) {
-        reduxDispatch(actions.handleError({
-          error,
+        currentState.errors.handleError({
+          error: error as Error,
           action: 'getProjectCollections',
           resource: 'project collections',
           showAlertButton: true,
           title: 'Something went wrong fetching collection metadata'
-        }))
+        })
       }
 
       return null
@@ -597,14 +596,14 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
             get().project.stopProjectGranulesTimer(collectionId)
 
-            reduxDispatch(actions.handleError({
-              error,
+            currentState.errors.handleError({
+              error: error as Error,
               action: 'getProjectGranules',
               resource: 'granules',
               requestObject,
               showAlertButton: true,
               title: 'Something went wrong fetching granule metadata'
-            }))
+            })
           })
 
         return response

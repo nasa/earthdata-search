@@ -27,10 +27,7 @@ import {
   PolygonString
 } from '../../types/sharedTypes'
 
-// @ts-expect-error The file does not have types
-import configureStore from '../../store/configureStore'
-// @ts-expect-error The file does not have types
-import actions from '../../actions'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const { mapPointsSimplifyThreshold } = getApplicationConfig()
 
@@ -86,16 +83,12 @@ export const interpolatePolygon = (coordinates: { lng: number, lat: number }[]) 
         })
       })
     } catch (error) {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
-      reduxDispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         action: 'interpolatePolygon',
-        error,
+        error: error as Error,
         message: `Error interpolating points: start: ${coordinate}, end: ${nextCoordinate}. All coordiates: ${JSON.stringify(coordinates)}. Full error: ${error}`,
         notificationType: 'none'
-      }))
+      })
     }
   }
 

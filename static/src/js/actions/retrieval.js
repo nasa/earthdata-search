@@ -3,7 +3,6 @@ import { SET_RETRIEVAL_LOADING, UPDATE_RETRIEVAL } from '../constants/actionType
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
-import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { prepareRetrievalParams } from '../util/retrievals'
 
@@ -27,7 +26,9 @@ export const updateRetrieval = (retrievalData) => ({
 export const submitRetrieval = () => (dispatch, getState) => {
   const state = getState()
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const { authToken } = state
 
@@ -37,7 +38,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     collections: projectCollections,
     submittedProject,
     submittingProject
-  } = useEdscStore.getState().project
+  } = zustandState.project
   const {
     allIds: projectCollectionsIds,
     byId: projectCollectionsById
@@ -106,13 +107,13 @@ export const submitRetrieval = () => (dispatch, getState) => {
       routerHelper.router.navigate(`${routes.DOWNLOADS}/${retrievalId}${eeLink}`)
     })
     .catch((error) => {
-      dispatch(handleError({
+      zustandState.errors.handleError({
         error,
         action: 'submitRetrieval',
         resource: 'retrieval',
         verb: 'submitting',
         requestObject
-      }))
+      })
     })
 
   return response
@@ -125,7 +126,9 @@ export const submitRetrieval = () => (dispatch, getState) => {
 export const fetchRetrieval = (id) => (dispatch, getState) => {
   const state = getState()
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const { authToken } = state
 
@@ -162,12 +165,12 @@ export const fetchRetrieval = (id) => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(handleError({
+      zustandState.errors.handleError({
         error,
         action: 'fetchRetrieval',
         resource: 'retrieval',
         requestObject
-      }))
+      })
     })
 
   return response

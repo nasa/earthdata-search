@@ -5,8 +5,7 @@ import { Helmet } from 'react-helmet'
 // @ts-expect-error This file does not have types
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
-// @ts-expect-error This file does not have types
-import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
+import SavedProjects from '../../components/SavedProjects/SavedProjects'
 
 const { edscHost } = getEnvironmentConfig()
 
@@ -25,7 +24,7 @@ const Projects = () => (
     <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
       <div className="route-wrapper__content">
         <div className="route-wrapper__content-inner">
-          <SavedProjectsContainer />
+          <SavedProjects />
         </div>
       </div>
     </div>

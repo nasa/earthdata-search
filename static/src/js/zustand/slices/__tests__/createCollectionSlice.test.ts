@@ -68,6 +68,10 @@ describe('createCollectionSlice', () => {
         },
         subscribe: jest.fn()
       }
+
+      useEdscStore.setState((state) => {
+        state.errors.handleError = jest.fn()
+      })
     })
 
     describe('when metadata has already been retrieved from graphql', () => {
@@ -791,7 +795,8 @@ describe('createCollectionSlice', () => {
 
           const {
             collection: updatedCollection,
-            granules
+            granules,
+            errors
           } = useEdscStore.getState()
 
           expect(updatedCollection.collectionId).toEqual(null)
@@ -811,7 +816,8 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenCalledTimes(1)
           expect(granules.getGranules).toHaveBeenCalledWith()
 
-          expect(actions.handleError).toHaveBeenCalledTimes(0)
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
+
           expect(actions.getColorMap).toHaveBeenCalledTimes(0)
         })
       })
@@ -1023,7 +1029,8 @@ describe('createCollectionSlice', () => {
 
       const {
         collection: updatedCollection,
-        granules
+        granules,
+        errors
       } = useEdscStore.getState()
 
       expect(updatedCollection.collectionMetadata).toEqual({})
@@ -1034,8 +1041,8 @@ describe('createCollectionSlice', () => {
       expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
       expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-      expect(actions.handleError).toHaveBeenCalledTimes(1)
-      expect(actions.handleError).toHaveBeenCalledWith(
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getCollectionMetadata',
           error: expect.any(Error),

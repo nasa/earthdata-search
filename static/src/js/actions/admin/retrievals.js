@@ -1,8 +1,6 @@
 import addToast from '../../util/addToast'
 import RetrievalRequest from '../../util/request/admin/retrievalRequest'
 
-import actions from '../index'
-
 import { displayNotificationType } from '../../constants/enums'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -29,13 +27,13 @@ export const requeueOrder = (orderId) => (dispatch, getState) => {
       })
     })
     .catch((error) => {
-      dispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'requeueOrder',
         resource: 'admin retrievals',
         requestObject,
         notificationType: displayNotificationType.toast
-      }))
+      })
     })
 
   return response

@@ -147,12 +147,9 @@ describe('submitRetrieval', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({
-      authToken: 'mockToken'
-    })
-
-    useEdscStore.setState((state) => ({
-      project: {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.project = {
         ...state.project,
         collections: {
           byId: {
@@ -173,13 +170,24 @@ describe('submitRetrieval', () => {
         submittedProject: jest.fn(),
         submittingProject: jest.fn()
       }
-    }))
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
+
+    const store = mockStore({
+      authToken: 'mockToken'
+    })
 
     await store.dispatch(submitRetrieval())
 
-    expect(consoleMock).toHaveBeenCalledTimes(1)
+    const { errors } = useEdscStore.getState()
+    expect(errors.handleError).toHaveBeenCalledTimes(1)
+    expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
+      action: 'submitRetrieval',
+      resource: 'retrieval',
+      verb: 'submitting'
+    }))
   })
 
   describe('metricsDataAccess', () => {
@@ -727,12 +735,9 @@ describe('fetchRetrieval', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({
-      authToken: 'mockToken'
-    })
-
-    useEdscStore.setState((state) => ({
-      project: {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.project = {
         ...state.project,
         collections: {
           byId: {
@@ -746,16 +751,26 @@ describe('fetchRetrieval', () => {
             }
           },
           allIds: ['collectionId']
-        }
-      },
-      submittedProject: jest.fn(),
-      submittingProject: jest.fn()
-    }))
+        },
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
+
+    const store = mockStore({
+      authToken: 'mockToken'
+    })
 
     await store.dispatch(fetchRetrieval(7)).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
+        action: 'fetchRetrieval',
+        resource: 'retrieval'
+      }))
     })
   })
 })

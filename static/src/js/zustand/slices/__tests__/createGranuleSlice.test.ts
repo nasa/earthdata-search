@@ -94,6 +94,10 @@ describe('createGranuleSlice', () => {
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
+
+      useEdscStore.setState((state) => {
+        state.errors.handleError = jest.fn()
+      })
     })
 
     describe('when metadata has already been retrieved from graphql', () => {
@@ -110,13 +114,13 @@ describe('createGranuleSlice', () => {
           authToken: ''
         })
 
-        const { granule } = useEdscStore.getState()
+        const { granule, errors } = useEdscStore.getState()
         const { getGranuleMetadata } = granule
 
         await getGranuleMetadata()
 
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
-        expect(actions.handleError).toHaveBeenCalledTimes(0)
+        expect(errors.handleError).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -141,7 +145,7 @@ describe('createGranuleSlice', () => {
             authToken: ''
           })
 
-          const { granule } = useEdscStore.getState()
+          const { granule, errors } = useEdscStore.getState()
           const { getGranuleMetadata } = granule
 
           await getGranuleMetadata()
@@ -194,7 +198,7 @@ describe('createGranuleSlice', () => {
           })
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(0)
-          expect(actions.handleError).toHaveBeenCalledTimes(0)
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
         })
 
         describe('when the requested granule is opensearch', () => {
@@ -213,13 +217,13 @@ describe('createGranuleSlice', () => {
               authToken: ''
             })
 
-            const { granule } = useEdscStore.getState()
+            const { granule, errors } = useEdscStore.getState()
             const { getGranuleMetadata } = granule
 
             await getGranuleMetadata()
 
             expect(actions.changeUrl).toHaveBeenCalledTimes(0)
-            expect(actions.handleError).toHaveBeenCalledTimes(0)
+            expect(errors.handleError).toHaveBeenCalledTimes(0)
           })
         })
       })
@@ -253,7 +257,7 @@ describe('createGranuleSlice', () => {
             authToken: ''
           })
 
-          const { granule } = useEdscStore.getState()
+          const { granule, errors } = useEdscStore.getState()
           const { getGranuleMetadata } = granule
 
           await getGranuleMetadata()
@@ -261,7 +265,7 @@ describe('createGranuleSlice', () => {
           const { granule: updatedGranule } = useEdscStore.getState()
           expect(updatedGranule.granuleId).toEqual(null)
 
-          expect(actions.handleError).toHaveBeenCalledTimes(0)
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(1)
           expect(actions.changeUrl).toHaveBeenCalledWith({
@@ -295,13 +299,13 @@ describe('createGranuleSlice', () => {
 
         await getGranuleMetadata()
 
-        const { granule: updatedGranule } = useEdscStore.getState()
+        const { granule: updatedGranule, errors } = useEdscStore.getState()
         expect(updatedGranule.granuleId).toEqual(null)
 
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
 
-        expect(actions.handleError).toHaveBeenCalledTimes(1)
-        expect(actions.handleError).toHaveBeenCalledWith(expect.objectContaining({
+        expect(errors.handleError).toHaveBeenCalledTimes(1)
+        expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
           action: 'getGranuleMetadata',
           error: expect.any(Error),
           resource: 'granule',

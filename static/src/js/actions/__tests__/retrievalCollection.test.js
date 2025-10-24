@@ -13,7 +13,7 @@ import {
   updateRetrievalCollection
 } from '../retrievalCollection'
 
-import actions from '..'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -74,7 +74,10 @@ describe('fetchRetrievalCollection', () => {
   })
 
   test('does not call updateRegionResults on error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     nock(/localhost/)
       .get(/retrieval_collections\/1234/)
@@ -88,8 +91,6 @@ describe('fetchRetrievalCollection', () => {
       authToken: 'token'
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(fetchRetrievalCollection(1234)).then(() => {
       const storeActions = store.getActions()
 
@@ -98,13 +99,12 @@ describe('fetchRetrievalCollection', () => {
         payload: { id: 1234 }
       })
 
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchRetrievalCollection',
         resource: 'collection'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

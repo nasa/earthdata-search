@@ -23,9 +23,6 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 
 const setup = setupTest({
   Component: SavedProjects,
-  defaultProps: {
-    onHandleError: jest.fn()
-  },
   defaultApolloClientMocks: [{
     request: {
       query: gql(GET_PROJECTS),
@@ -207,8 +204,8 @@ describe('SavedProjects component', () => {
     })
 
     describe('when the delete fails', () => {
-      test('calls onHandleError', async () => {
-        const { props, user } = setup({
+      test('calls handleError', async () => {
+        const { user, zustandState } = setup({
           overrideApolloClientMocks: [{
             request: {
               query: gql(GET_PROJECTS),
@@ -241,7 +238,12 @@ describe('SavedProjects component', () => {
             result: {
               errors: [new Error('Failed to remove project')]
             }
-          }]
+          }],
+          overrideZustandState: {
+            errors: {
+              handleError: jest.fn()
+            }
+          }
         })
 
         window.confirm = jest.fn(() => true)
@@ -252,8 +254,8 @@ describe('SavedProjects component', () => {
 
         await user.click(deleteButton)
 
-        expect(props.onHandleError).toHaveBeenCalledTimes(1)
-        expect(props.onHandleError).toHaveBeenCalledWith(
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledWith(
           {
             action: 'handleDeleteSavedProject',
             error: new Error('Failed to remove project'),

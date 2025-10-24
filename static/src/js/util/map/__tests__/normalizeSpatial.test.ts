@@ -1,11 +1,6 @@
 import normalizeSpatial from '../normalizeSpatial'
 
-// @ts-expect-error The file does not have types
-import configureStore from '../../../store/configureStore'
-// @ts-expect-error The file does not have types
-import actions from '../../../actions'
-
-jest.mock('../../../store/configureStore', () => jest.fn())
+import useEdscStore from '../../../zustand/useEdscStore'
 
 describe('normalizeSpatial', () => {
   describe('when the granule has no spatial information', () => {
@@ -537,11 +532,9 @@ describe('normalizeSpatial', () => {
 
     describe('when the polygon has points that can not be interpolated', () => {
       test('returns a geojson multi polygon of the original points and logs the error', () => {
-        const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => {})
-        const mockDispatch = jest.fn()
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({})
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.errors.handleError = jest.fn()
         })
 
         const granule = {
@@ -571,15 +564,17 @@ describe('normalizeSpatial', () => {
           type: 'Feature'
         })
 
-        expect(handleErrorMock).toHaveBeenCalledTimes(2)
-        expect(handleErrorMock).toHaveBeenNthCalledWith(1, {
+        const { errors } = useEdscStore.getState()
+
+        expect(errors.handleError).toHaveBeenCalledTimes(2)
+        expect(errors.handleError).toHaveBeenNthCalledWith(1, {
           action: 'interpolatePolygon',
           error: expect.any(Error),
           message: expect.stringContaining('Error interpolating points: start: 180,-90, end: 180,90. All coordiates: [{"lat":-90,"lng":-180},{"lat":-90,"lng":180},{"lat":90,"lng":180},{"lat":90,"lng":-180},{"lat":-90,"lng":-180}].'),
           notificationType: 'none'
         })
 
-        expect(handleErrorMock).toHaveBeenNthCalledWith(2, {
+        expect(errors.handleError).toHaveBeenNthCalledWith(2, {
           action: 'interpolatePolygon',
           error: expect.any(Error),
           message: expect.stringContaining('Error interpolating points: start: -180,90, end: -180,-90. All coordiates: [{"lat":-90,"lng":-180},{"lat":-90,"lng":180},{"lat":90,"lng":180},{"lat":90,"lng":-180},{"lat":-90,"lng":-180}].'),

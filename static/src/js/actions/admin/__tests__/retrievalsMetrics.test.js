@@ -2,7 +2,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 
-import actions from '../../index'
 import {
   fetchAdminRetrievalsMetrics,
   setAdminRetrievalsMetrics,
@@ -18,6 +17,8 @@ import {
   UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
   UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE
 } from '../../../constants/actionTypes'
+
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -162,8 +163,10 @@ describe('fetchAdminRetrievalsMetrics', () => {
   })
 
   test('calls handleError when there is an error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     nock(/localhost/)
       .get(/admin\/retrievals_metrics/)
@@ -189,12 +192,11 @@ describe('fetchAdminRetrievalsMetrics', () => {
       type: SET_ADMIN_RETRIEVALS_METRICS_LOADING
     })
 
-    expect(handleErrorMock).toHaveBeenCalledTimes(1)
-    expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
+    const { errors } = useEdscStore.getState()
+    expect(errors.handleError).toHaveBeenCalledTimes(1)
+    expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
       action: 'fetchAdminRetrievalsMetrics',
       resource: 'admin retrievals metrics'
     }))
-
-    expect(consoleMock).toHaveBeenCalledTimes(1)
   })
 })

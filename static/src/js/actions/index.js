@@ -55,7 +55,6 @@ import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
 import { fetchRetrievalCollection } from './retrievalCollection'
 import { handleAlert } from './alerts'
-import { handleError, removeError } from './errors'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
   fetchContactInfo,
@@ -98,12 +97,10 @@ const actions = {
   getSubscriptions,
   getViewAllFacets,
   handleAlert,
-  handleError,
   logout,
   onFacetsErrored,
   onFacetsLoaded,
   onFacetsLoading,
-  removeError,
   removeSubscriptionDisabledFields,
   requeueOrder,
   setColorMapsErrored,

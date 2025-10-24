@@ -266,14 +266,14 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           }))
         }
       } catch (error) {
-        reduxDispatch(actions.handleError({
-          error,
+        zustandState.errors.handleError({
+          error: error as Error,
           action: 'getCollectionMetadata',
           resource: 'collection',
           requestObject: graphQlRequestObject,
           showAlertButton: true,
           title: 'Something went wrong fetching the collection metadata'
-        }))
+        })
       }
     },
 

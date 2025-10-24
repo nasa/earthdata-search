@@ -9,9 +9,6 @@ import getApolloClient from '../../providers/getApolloClient'
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../store/configureStore'
 
-// @ts-expect-error Types are not defined for this module
-import actions from '../../actions'
-
 import CREATE_PROJECT from '../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../operations/mutations/updateProject'
 import GET_PROJECT from '../../operations/queries/getProject'
@@ -32,7 +29,6 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
     setProjectName: async (name) => {
       const {
-        dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
@@ -41,8 +37,8 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         authToken
       } = reduxState
 
-      const currentState = get()
-      const { savedProject } = currentState
+      const zustandState = get()
+      const { savedProject } = zustandState
       const { project: previousProject } = savedProject
       const {
         path,
@@ -97,12 +93,12 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         const { message } = error as Error
 
         if (message) {
-          reduxDispatch(actions.handleError({
-            error: message,
+          zustandState.errors.handleError({
+            error: error as Error,
             action: 'setProjectName',
             resource: 'project name',
             verb: 'updating'
-          }))
+          })
         }
       }
     },
@@ -156,16 +152,12 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
         const { message } = error as Error
 
         if (message) {
-          const {
-            dispatch: reduxDispatch
-          } = configureStore()
-
-          reduxDispatch(actions.handleError({
-            error: message,
+          get().errors.handleError({
+            error: error as Error,
             action: 'getProject',
             resource: 'project',
             verb: 'fetching'
-          }))
+          })
         }
       }
     }

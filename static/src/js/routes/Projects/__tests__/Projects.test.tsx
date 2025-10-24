@@ -8,10 +8,9 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import Projects from '../Projects'
 
-// @ts-expect-error This file does not have types
-import SavedProjectsContainer from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
+import SavedProjects from '../../../components/SavedProjects/SavedProjects'
 
-jest.mock('../../../containers/SavedProjectsContainer/SavedProjectsContainer', () => jest.fn(() => <div />))
+jest.mock('../../../components/SavedProjects/SavedProjects', () => jest.fn(() => <div />))
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -40,11 +39,11 @@ const setup = setupTest({
 })
 
 describe('Projects component', () => {
-  test('displays the SavedProjectsContainer', async () => {
+  test('displays the SavedProjects component', async () => {
     setup()
 
-    expect(SavedProjectsContainer).toHaveBeenCalledTimes(1)
-    expect(SavedProjectsContainer).toHaveBeenCalledWith({}, {})
+    expect(SavedProjects).toHaveBeenCalledTimes(1)
+    expect(SavedProjects).toHaveBeenCalledWith({}, {})
   })
 
   // RTL Lazy loading issue with mocks between https://github.com/testing-library/react-testing-library/issues/716

@@ -5,8 +5,6 @@ import {
   SET_RETRIEVAL_COLLECTION_LOADING
 } from '../constants/actionTypes'
 
-import actions from './index'
-
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
@@ -45,12 +43,12 @@ export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'fetchRetrievalCollection',
         resource: 'collection',
         requestObject
-      }))
+      })
     })
 
   return response

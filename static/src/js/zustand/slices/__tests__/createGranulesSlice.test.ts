@@ -81,9 +81,10 @@ describe('createGranulesSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
+        state.errors.handleError = jest.fn()
       })
 
-      const { granules } = useEdscStore.getState()
+      const { granules, errors } = useEdscStore.getState()
       await granules.getGranules()
 
       const { granules: updatedGranules } = useEdscStore.getState()
@@ -103,7 +104,7 @@ describe('createGranulesSlice', () => {
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
 
-      expect(actions.handleError).toHaveBeenCalledTimes(0)
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('calls lambda to get authenticated granules', async () => {
@@ -129,6 +130,7 @@ describe('createGranulesSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
+        state.errors.handleError = jest.fn()
       })
 
       const { granules } = useEdscStore.getState()
@@ -151,7 +153,8 @@ describe('createGranulesSlice', () => {
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
 
-      expect(actions.handleError).toHaveBeenCalledTimes(0)
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
     test('substitutes MBR for polygon in opensearch granule searches', async () => {
@@ -176,13 +179,15 @@ describe('createGranulesSlice', () => {
         state.query.collection.spatial = {
           polygon: ['-77,38,-77,38,-76,38,-77,38']
         }
+
+        state.errors.handleError = jest.fn()
       })
 
       mockGetState.mockReturnValue({
         authToken: 'mock-token'
       })
 
-      const { granules } = useEdscStore.getState()
+      const { granules, errors } = useEdscStore.getState()
       await granules.getGranules()
 
       const { granules: updatedGranules } = useEdscStore.getState()
@@ -212,7 +217,7 @@ describe('createGranulesSlice', () => {
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
 
-      expect(actions.handleError).toHaveBeenCalledTimes(0)
+      expect(errors.handleError).toHaveBeenCalledTimes(0)
 
       expect(cwicRequestMock).toHaveBeenCalledTimes(1)
       expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
@@ -232,6 +237,8 @@ describe('createGranulesSlice', () => {
         state.collection.collectionMetadata.collectionId = {
           conceptId: 'collectionId'
         }
+
+        state.errors.handleError = jest.fn()
       })
 
       mockGetState.mockReturnValue({
@@ -241,8 +248,9 @@ describe('createGranulesSlice', () => {
       const { granules } = useEdscStore.getState()
       await granules.getGranules()
 
-      expect(actions.handleError).toHaveBeenCalledTimes(1)
-      expect(actions.handleError).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getGranules',
         error: expect.any(Error),
         resource: 'granules',

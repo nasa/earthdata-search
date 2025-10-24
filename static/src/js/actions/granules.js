@@ -1,7 +1,6 @@
 import 'array-foreach-async'
 import { stringify } from 'qs'
 
-import actions from './index'
 import {
   SET_GRANULE_LINKS_LOADED,
   SET_GRANULE_LINKS_LOADING,
@@ -128,14 +127,14 @@ export const fetchGranuleLinks = (
       params.pageNum = currentPage
     }
   } catch (error) {
-    dispatch(actions.handleError({
+    useEdscStore.getState().errors.handleError({
       error,
       action: 'fetchGranuleLinks',
       resource: 'granule links',
       requestObject,
       showAlertButton: true,
       title: 'Something went wrong fetching granule links'
-    }))
+    })
   }
 
   return response

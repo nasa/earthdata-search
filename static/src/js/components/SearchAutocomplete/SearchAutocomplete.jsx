@@ -26,8 +26,7 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 import './SearchAutocomplete.scss'
 
 const SearchAutocomplete = ({
-  authToken,
-  handleError
+  authToken
 }) => {
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: initialKeyword } = collectionQuery
@@ -46,13 +45,15 @@ const SearchAutocomplete = ({
     setCollectionId,
     changeQuery,
     earthdataEnvironment,
-    setOpenFacetGroup
+    setOpenFacetGroup,
+    handleError
   } = useEdscStore((state) => ({
     addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
     setCollectionId: state.collection.setCollectionId,
     changeQuery: state.query.changeQuery,
     earthdataEnvironment: getEarthdataEnvironment(state),
-    setOpenFacetGroup: state.home.setOpenFacetGroup
+    setOpenFacetGroup: state.home.setOpenFacetGroup,
+    handleError: state.errors.handleError
   }))
 
   // Update local state when initial keyword changes
@@ -369,8 +370,7 @@ const SearchAutocomplete = ({
 }
 
 SearchAutocomplete.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  handleError: PropTypes.func.isRequired
+  authToken: PropTypes.string.isRequired
 }
 
 export default SearchAutocomplete

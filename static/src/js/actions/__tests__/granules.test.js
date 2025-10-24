@@ -2,11 +2,10 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import actions from '../index'
-
 import { fetchGranuleLinks, updateGranuleLinks } from '../granules'
 
 import { UPDATE_GRANULE_LINKS } from '../../constants/actionTypes'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -357,7 +356,10 @@ describe('fetchGranuleLinks', () => {
   })
 
   test('handles an error when fetching links', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     nock(/localhost/)
       .get(/granule_links/)
@@ -392,18 +394,15 @@ describe('fetchGranuleLinks', () => {
       granule_count: 5
     }
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(fetchGranuleLinks(params, ['data', 's3'])).then(() => {
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchGranuleLinks',
         resource: 'granule links',
         showAlertButton: true,
         title: 'Something went wrong fetching granule links'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

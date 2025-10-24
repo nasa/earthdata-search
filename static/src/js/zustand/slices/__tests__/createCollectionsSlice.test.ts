@@ -191,6 +191,7 @@ describe('createCollectionsSlice', () => {
           hasAllMetadata: true
         }
 
+        state.errors.handleError = jest.fn()
         state.granules.getGranules = jest.fn()
       })
 
@@ -204,7 +205,8 @@ describe('createCollectionsSlice', () => {
       await getCollections()
 
       const {
-        collections: updatedCollections
+        collections: updatedCollections,
+        errors
       } = useEdscStore.getState()
 
       expect(updatedCollections.collections).toEqual({
@@ -223,8 +225,8 @@ describe('createCollectionsSlice', () => {
 
       expect(actions.updateFacets).toHaveBeenCalledTimes(0)
 
-      expect(actions.handleError).toHaveBeenCalledTimes(1)
-      expect(actions.handleError).toHaveBeenCalledWith(
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getCollections',
           error: expect.any(Error),
@@ -374,12 +376,17 @@ describe('createCollectionsSlice', () => {
         .get(/search\/nlp\/query\.json/)
         .reply(500, { error: 'Server error' })
 
+      nock(/localhost/)
+        .post(/error_logger/)
+        .reply(200)
+
       mockGetState.mockReturnValue({
         authToken: 'test-token'
       })
 
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'error query' }
+        state.errors.handleError = jest.fn()
       })
 
       const { collections } = useEdscStore.getState()
@@ -387,8 +394,10 @@ describe('createCollectionsSlice', () => {
 
       await getNlpCollections()
 
-      expect(actions.handleError).toHaveBeenCalledTimes(1)
-      expect(actions.handleError).toHaveBeenCalledWith(
+      const { errors } = useEdscStore.getState()
+
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getNlpCollections',
           resource: 'nlpSearch',

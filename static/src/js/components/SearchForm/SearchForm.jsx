@@ -59,7 +59,6 @@ class SearchForm extends Component {
   render() {
     const {
       authToken,
-      handleError,
       selectedRegion
     } = this.props
 
@@ -76,7 +75,6 @@ class SearchForm extends Component {
         <div className="search-form__primary">
           <SearchAutocomplete
             authToken={authToken}
-            handleError={handleError}
           />
         </div>
         <div className="search-form__secondary">
@@ -127,7 +125,6 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = {
   authToken: PropTypes.string.isRequired,
-  handleError: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
   selectedRegion: PropTypes.shape({}).isRequired

@@ -16,22 +16,11 @@ const setup = setupTest({
   Component: SearchFormContainer,
   defaultProps: {
     authToken: '',
-    handleError: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('handleError calls actions.handleError', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'handleError')
-
-    mapDispatchToProps(dispatch).handleError({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onToggleAdvancedSearchModal calls actions.toggleAdvancedSearchModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleAdvancedSearchModal')
@@ -69,7 +58,6 @@ describe('SearchFormContainer component', () => {
     expect(SearchForm).toHaveBeenCalledTimes(1)
     expect(SearchForm).toHaveBeenCalledWith({
       authToken: props.authToken,
-      handleError: props.handleError,
       onClearFilters: expect.any(Function),
       onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal,
       selectedRegion: {}

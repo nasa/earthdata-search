@@ -20,7 +20,6 @@ import Spinner from '../../../components/Spinner/Spinner'
 jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer', () => jest.fn(() => <div />))
-jest.mock('../../../containers/SavedProjectsContainer/SavedProjectsContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/SidebarContainer/SidebarContainer', () => jest.fn(() => <button type="submit">Submit</button>))
 jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
 

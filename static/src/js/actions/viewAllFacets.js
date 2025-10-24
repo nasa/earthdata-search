@@ -9,8 +9,6 @@ import {
   UPDATE_VIEW_ALL_FACETS
 } from '../constants/actionTypes'
 
-import { handleError } from './errors'
-
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
@@ -45,10 +43,12 @@ export const onViewAllFacetsErrored = () => ({
 export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const state = getState()
 
+  const zustandState = useEdscStore.getState()
+
   const { authToken } = state
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   dispatch(onViewAllFacetsLoading(category))
   dispatch(toggleFacetsModal(true))
@@ -90,14 +90,14 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
         loaded: false
       }))
 
-      dispatch(handleError({
+      zustandState.errors.handleError({
         error,
         action: 'getViewAllFacets',
         resource: 'facets',
         requestObject,
         showAlertButton: true,
         title: 'Something went wrong fetching all filter options'
-      }))
+      })
     })
 
   return response

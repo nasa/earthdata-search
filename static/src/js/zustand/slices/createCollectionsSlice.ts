@@ -47,7 +47,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
-      const earthdataEnvironment = getEarthdataEnvironment(get())
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
       // If cancel token is set, cancel the previous request(s)
       if (cancelToken) {
@@ -124,22 +124,19 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           loaded: false
         }))
 
-        reduxDispatch(actions.handleError({
-          error,
+        zustandState.errors.handleError({
+          error: error as Error,
           action: 'getCollections',
           resource: 'collections',
           requestObject,
           showAlertButton: true,
           title: 'Something went wrong fetching collection search results'
-        }))
+        })
       }
     },
 
     getNlpCollections: async () => {
-      const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
-      } = configureStore()
+      const { getState: reduxGetState } = configureStore()
       const reduxState = reduxGetState()
       const zustandState = get()
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
@@ -171,14 +168,14 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           state.collections.collections.isLoaded = false
         })
 
-        reduxDispatch(actions.handleError({
-          error,
+        zustandState.errors.handleError({
+          error: error as Error,
           action: 'getNlpCollections',
           resource: 'nlpSearch',
           requestObject: nlpRequest,
           showAlertButton: true,
           title: 'Something went wrong fetching collection search results'
-        }))
+        })
       }
     }
   }

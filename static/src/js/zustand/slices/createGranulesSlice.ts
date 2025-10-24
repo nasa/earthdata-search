@@ -179,14 +179,14 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
           state.granules.granules.isLoaded = false
         })
 
-        reduxDispatch(actions.handleError({
-          error,
+        currentState.errors.handleError({
+          error: error as Error,
           action: 'getGranules',
           resource: 'granules',
           requestObject,
           showAlertButton: true,
           title: 'Something went wrong fetching granule search results'
-        }))
+        })
       }
     }
   }

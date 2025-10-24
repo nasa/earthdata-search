@@ -19,7 +19,7 @@ import {
   UPDATE_REGION_RESULTS
 } from '../../constants/actionTypes'
 
-import actions from '..'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -113,7 +113,10 @@ describe('getRegions', () => {
   })
 
   test('does not call updateRegionResults on error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.errors.handleError = jest.fn()
+    })
 
     const errorPayload = {
       errors: ['Your query has returned 16575 results (> 100). If you\'re searching a specific HUC, use the parameter \'exact=True\'.Otherwise, refine your search to return less results, or head here: https://water.usgs.gov/GIS/huc.html to download mass HUC data.']
@@ -145,8 +148,6 @@ describe('getRegions', () => {
       }
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(getRegions()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_REGIONS })
@@ -162,14 +163,13 @@ describe('getRegions', () => {
         payload: { loaded: false }
       })
 
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getRegions',
         notificationType: 'none',
         resource: 'regions'
       }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

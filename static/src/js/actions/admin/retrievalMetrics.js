@@ -8,8 +8,6 @@ import {
   UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE
 } from '../../constants/actionTypes'
 
-import actions from '../index'
-
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
@@ -58,12 +56,12 @@ export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
       dispatch(setAdminRetrievalsMetrics(results))
     })
     .catch((error) => {
-      dispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'fetchAdminRetrievalsMetrics',
         resource: 'admin retrievals metrics',
         requestObject
-      }))
+      })
     })
 
   return response

@@ -7,10 +7,6 @@ import useEdscStore from '../../useEdscStore'
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../../store/configureStore'
 
-// @ts-expect-error Types are not defined for this module
-import actions from '../../../actions'
-
-import TimelineRequest from '../../../util/request/timelineRequest'
 import routerHelper from '../../../router/router'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -322,9 +318,23 @@ describe('createTimelineSlice', () => {
 
     describe('when there is a request error', () => {
       test('dispatches an error action', async () => {
-        const handleErrorMock = jest.spyOn(actions, 'handleError')
+        nock(/localhost/)
+          .post(/error_logger/)
+          .reply(200)
+
+        useEdscStore.setState((state) => {
+          state.collection.collectionId = 'collectionId'
+          state.timeline.query = {
+            endDate: '2009-12-01T23:59:59.000Z',
+            interval: TimelineInterval.Day,
+            startDate: '1979-01-01T00:00:00.000Z'
+          }
+
+          state.errors.handleError = jest.fn()
+        })
 
         const mockDispatch = jest.fn()
+
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
@@ -336,26 +346,24 @@ describe('createTimelineSlice', () => {
           .post(/granules\/timeline/)
           .reply(500)
 
-        useEdscStore.setState((state) => {
-          state.collection.collectionId = 'collectionId'
-          state.timeline.query = {
-            endDate: '2009-12-01T23:59:59.000Z',
-            interval: TimelineInterval.Day,
-            startDate: '1979-01-01T00:00:00.000Z'
-          }
-        })
-
         const zustandState = useEdscStore.getState()
         const { timeline } = zustandState
         const { getTimeline } = timeline
 
         await getTimeline()
 
+        const { errors } = useEdscStore.getState()
         await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(1)
+          expect(errors.handleError).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
+        expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({
+          error: expect.any(Error),
+          action: 'getTimeline',
+          resource: 'timeline',
+          showAlertButton: true,
+          title: 'Something went wrong fetching timeline data'
+        }))
 
         expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
         expect(window.dataLayer.push).toHaveBeenCalledWith({
@@ -363,16 +371,6 @@ describe('createTimelineSlice', () => {
           timingEventCategory: 'ajax',
           timingEventValue: expect.any(Number),
           timingEventVar: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
-        })
-
-        expect(handleErrorMock).toHaveBeenCalledTimes(1)
-        expect(handleErrorMock).toHaveBeenCalledWith({
-          error: expect.any(Error),
-          action: 'getTimeline',
-          resource: 'timeline',
-          requestObject: expect.any(TimelineRequest),
-          showAlertButton: true,
-          title: 'Something went wrong fetching timeline data'
         })
 
         const updatedState = useEdscStore.getState()

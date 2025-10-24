@@ -1,5 +1,3 @@
-import actions from './index'
-
 import {
   UPDATE_REGION_RESULTS,
   LOADING_REGIONS,
@@ -92,13 +90,13 @@ export const getRegions = () => (dispatch) => {
         loaded: false
       }))
 
-      dispatch(actions.handleError({
+      useEdscStore.getState().errors.handleError({
         error,
         action: 'getRegions',
         resource: 'regions',
         notificationType: displayNotificationType.none,
         requestObject
-      }))
+      })
     })
 
   return response
