@@ -1105,24 +1105,5 @@ export class Functions extends Construct {
       functionName: 'timelineSearch',
       functionNamePrefix
     })
-
-    /**
-     * Update Preferences
-     */
-    const updatePreferencesNestedStack = new cdk.NestedStack(scope, 'UpdatePreferencesNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(updatePreferencesNestedStack, 'UpdatePreferencesLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['POST'],
-        path: 'preferences'
-      },
-      entry: '../../serverless/src/updatePreferences/handler.js',
-      functionName: 'updatePreferences',
-      functionNamePrefix
-    })
   }
 }

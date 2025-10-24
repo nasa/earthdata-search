@@ -18,7 +18,7 @@ import {
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
 import { getGranuleId } from '../../zustand/selectors/granule'
-import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
+import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/user'
 
 import CREATE_PROJECT from '../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../operations/mutations/updateProject'

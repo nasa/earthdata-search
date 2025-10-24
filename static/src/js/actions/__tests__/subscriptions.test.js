@@ -158,6 +158,8 @@ describe('createSubscription', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
       state.collection.collectionId = 'collectionId'
+      // eslint-disable-next-line no-param-reassign
+      state.user.username = 'testUser'
     })
 
     const store = mockStore({
@@ -167,9 +169,6 @@ describe('createSubscription', () => {
           collection: {},
           granule: {}
         }
-      },
-      user: {
-        username: 'testUser'
       }
     })
 
@@ -237,6 +236,11 @@ describe('createSubscription', () => {
         }
       })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.user.username = 'testUser'
+    })
+
     const store = mockStore({
       authToken: 'token',
       subscriptions: {
@@ -244,9 +248,6 @@ describe('createSubscription', () => {
           collection: {},
           granule: {}
         }
-      },
-      user: {
-        username: 'testUser'
       }
     })
 
@@ -317,6 +318,8 @@ describe('createSubscription', () => {
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
         state.collection.collectionId = 'collectionId'
+        // eslint-disable-next-line no-param-reassign
+        state.user.username = 'testUser'
       })
 
       const store = mockStore({
@@ -326,9 +329,6 @@ describe('createSubscription', () => {
             collection: {},
             granule: {}
           }
-        },
-        user: {
-          username: 'testUser'
         }
       })
 
@@ -378,9 +378,6 @@ describe('createSubscription', () => {
             collection: {},
             granule: {}
           }
-        },
-        user: {
-          username: 'testUser'
         }
       })
 
@@ -870,9 +867,6 @@ describe('updateSubscription', () => {
           collection: {},
           granule: {}
         }
-      },
-      user: {
-        username: 'testUser'
       }
     })
 
@@ -922,9 +916,6 @@ describe('updateSubscription', () => {
           collection: {},
           granule: {}
         }
-      },
-      user: {
-        username: 'testUser'
       }
     })
 
@@ -975,9 +966,6 @@ describe('updateSubscription', () => {
           collection: {},
           granule: {}
         }
-      },
-      user: {
-        username: 'testUser'
       }
     })
 
@@ -1033,9 +1021,6 @@ describe('updateSubscription', () => {
           collection: {},
           granule: {}
         }
-      },
-      user: {
-        username: 'testUser'
       }
     })
 

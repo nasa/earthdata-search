@@ -123,7 +123,7 @@ test.describe('When logged in', () => {
       dontShowTour: true
     })
 
-    await login(context)
+    await login(page, context)
 
     await page.route(/collections$/, async (route) => {
       await route.fulfill({

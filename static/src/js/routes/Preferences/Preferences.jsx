@@ -9,7 +9,7 @@ import { routes } from '../../constants/routes'
 /**
  * The Preferences route component
 */
-export const Preferences = () => {
+const Preferences = () => {
   const { edscHost } = getEnvironmentConfig()
 
   return (

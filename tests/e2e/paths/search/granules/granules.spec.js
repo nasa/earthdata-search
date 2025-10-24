@@ -1147,7 +1147,7 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 229
 
-      await login(context)
+      await login(page, context)
 
       await page.route('**/collections', async (route) => {
         const request = route.request()

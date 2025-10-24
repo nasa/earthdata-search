@@ -23,6 +23,7 @@ import SecondaryToolbarContainer from '../../../containers/SecondaryToolbarConta
 import UrlQueryContainer from '../../../containers/UrlQueryContainer/UrlQueryContainer'
 // @ts-expect-error The file does not have types
 import WrappingContainer from '../../../containers/WrappingContainer/WrappingContainer'
+import UserContainer from '../../../containers/UserContainer/UserContainer'
 
 jest.mock('../../../containers/AuthTokenContainer/AuthTokenContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../components/ErrorBanner/ErrorBanner', () => jest.fn(({ children }) => <div>{children}</div>))
@@ -33,6 +34,7 @@ jest.mock('../../../containers/PortalContainer/PortalContainer', () => jest.fn((
 jest.mock('../../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/WrappingContainer/WrappingContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+jest.mock('../../../containers/UserContainer/UserContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -58,6 +60,14 @@ describe('AppLayout', () => {
 
     expect(AuthTokenContainer).toHaveBeenCalledTimes(1)
     expect(AuthTokenContainer).toHaveBeenCalledWith(
+      {
+        children: expect.anything()
+      },
+      {}
+    )
+
+    expect(UserContainer).toHaveBeenCalledTimes(1)
+    expect(UserContainer).toHaveBeenCalledWith(
       {
         children: expect.anything()
       },

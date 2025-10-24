@@ -1135,7 +1135,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users"."id", "users"."urs_id" from "users" where "users"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."site_preferences", "users"."urs_id", "users"."urs_profile" from "users" where "users"."id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
     })
 
@@ -1150,7 +1150,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users"."id", "users"."urs_id" from "users" where "users"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."site_preferences", "users"."urs_id", "users"."urs_profile" from "users" where "users"."id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -1285,6 +1285,64 @@ describe('DatabaseClient', () => {
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to update project')
+    })
+  })
+
+  describe('updateSitePreferences', () => {
+    test('updates the site preferences', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          site_preferences: { mock: 'preferences' },
+          urs_id: 'testuser',
+          urs_profile: {},
+          updated_at: '2025-01-01T00:00:00.000Z',
+          created_at: '2025-01-01T00:00:00.000Z',
+          environment: 'prod'
+        }])
+      })
+
+      const user = await databaseClient.updateSitePreferences({
+        userId: 1,
+        sitePreferences: { mock: 'preferences' }
+      })
+
+      expect(user).toBeDefined()
+      expect(user).toEqual({
+        created_at: '2025-01-01T00:00:00.000Z',
+        environment: 'prod',
+        id: 1,
+        site_preferences: { mock: 'preferences' },
+        updated_at: '2025-01-01T00:00:00.000Z',
+        urs_id: 'testuser',
+        urs_profile: {}
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('update "users" set "site_preferences" = $1, "updated_at" = $2 where "id" = $3 returning "id", "site_preferences", "urs_id", "urs_profile"')
+      expect(queries[0].bindings).toEqual([{ mock: 'preferences' }, new Date(mockToday), 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.updateSitePreferences({
+        userId: 1,
+        sitePreferences: { mock: 'preferences' }
+      })).rejects.toThrow('Failed to update site preferences')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('update "users" set "site_preferences" = $1, "updated_at" = $2 where "id" = $3 returning "id", "site_preferences", "urs_id", "urs_profile"')
+      expect(queries[0].bindings).toEqual([{ mock: 'preferences' }, new Date(mockToday), 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to update site preferences')
     })
   })
 })

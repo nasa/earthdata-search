@@ -107,7 +107,7 @@ const SecondaryToolbar = ({
     setProjectDropdownOpen(!projectDropdownOpen)
   }
 
-  const { first_name: firstName = '' } = ursProfile
+  const { firstName = '' } = ursProfile
 
   const loggedIn = authToken !== ''
   const returnPath = window.location.href
@@ -433,7 +433,7 @@ SecondaryToolbar.propTypes = {
     })
   }).isRequired,
   ursProfile: PropTypes.shape({
-    first_name: PropTypes.string
+    firstName: PropTypes.string
   }).isRequired
 }
 

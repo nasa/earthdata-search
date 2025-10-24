@@ -7,6 +7,8 @@ import TourSteps from './TourSteps'
 import { isLoggedIn } from '../../util/isLoggedIn'
 import useEdscStore from '../../zustand/useEdscStore'
 
+import { localStorageKeys } from '../../constants/localStorageKeys'
+
 const SearchTour = () => {
   const { runTour, setRunTour } = useEdscStore((state) => ({
     runTour: state.ui.tour.runTour,
@@ -17,13 +19,13 @@ const SearchTour = () => {
 
   const TOTAL_STEPS = loggedIn ? 13 : 12
 
-  const [isChecked, setIsChecked] = useState(localStorage.getItem('dontShowTour') === 'true')
+  const [isChecked, setIsChecked] = useState(localStorage.getItem(localStorageKeys.dontShowTour) === 'true')
   const [stepIndex, setStepIndex] = useState(0)
 
   const handleCheckboxChange = (e) => {
     const newChecked = e.target.checked
     setIsChecked(newChecked)
-    localStorage.setItem('dontShowTour', newChecked.toString())
+    localStorage.setItem(localStorageKeys.dontShowTour, newChecked.toString())
   }
 
   useEffect(() => {

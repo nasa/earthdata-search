@@ -366,59 +366,6 @@ export type MapSlice = {
   }
 }
 
-export type PanelState = 'default' | 'collapsed' | 'open' | 'fullWidth'
-export type ListView = 'default' | 'list' | 'table'
-export type CollectionSort = 'default' | '-score' | '-usage_score' | '-create-data-date' | 'start_date' | '-ongoing'
-export type GranuleSort = 'default' | '-start_date' | 'start_date' | '-end_date' | 'end_date'
-export type BaseLayer = 'worldImagery' | 'trueColor' | 'landWaterMap'
-export type OverlayLayer = 'bordersRoads' | 'coastlines' | 'placeLabels'
-
-export type PreferencesData = {
-  /** The state of the panels */
-  panelState: PanelState
-  /** The view mode for collection lists */
-  collectionListView: ListView
-  /** The view mode for granule lists */
-  granuleListView: ListView
-  /** The sort preference for collections */
-  collectionSort: CollectionSort
-  /** The sort preference for granules */
-  granuleSort: GranuleSort
-  /** The map view preferences */
-  mapView: {
-    /** The zoom level of the map */
-    zoom: number
-    /** The latitude center of the map */
-    latitude: number
-    /** The base layer identifier for the map */
-    baseLayer: BaseLayer
-    /** The longitude center of the map */
-    longitude: number
-    /** The projection code for the map */
-    projection: ProjectionCode
-    /** Array of overlay layer identifiers */
-    overlayLayers: OverlayLayer[]
-    /** The rotation of the map in degrees */
-    rotation: number
-  }
-}
-
-export type PreferencesSlice = {
-  /** The Preferences Slice of the store */
-  preferences: {
-    /** The preference settings values */
-    preferences: PreferencesData
-    /** Flag indicating if preferences are currently being submitted */
-    isSubmitting: boolean
-    /** Flag indicating if preferences have been submitted */
-    isSubmitted: boolean
-    /** Function to set preferences from JWT token */
-    setPreferencesFromJwt: (jwtToken: string) => void
-    /** Function to submit preference form data and save to the server */
-    submitAndUpdatePreferences: (data: { formData: PreferencesData }) => Promise<void>
-  }
-}
-
 /** Represents the panel section (first part) in the activePanel string, e.g., '0' in '0.5.2' */
 type PanelsPanel = `${number}`
 
@@ -1148,6 +1095,57 @@ export type UiSlice = {
   }
 }
 
+export type PanelState = 'default' | 'collapsed' | 'open' | 'fullWidth'
+export type ListView = 'default' | 'list' | 'table'
+export type CollectionSort = 'default' | '-score' | '-usage_score' | '-create-data-date' | 'start_date' | '-ongoing'
+export type GranuleSort = 'default' | '-start_date' | 'start_date' | '-end_date' | 'end_date'
+export type BaseLayer = 'worldImagery' | 'trueColor' | 'landWaterMap'
+export type OverlayLayer = 'bordersRoads' | 'coastlines' | 'placeLabels'
+
+export type PreferencesData = {
+  /** The state of the panels */
+  panelState: PanelState
+  /** The view mode for collection lists */
+  collectionListView: ListView
+  /** The view mode for granule lists */
+  granuleListView: ListView
+  /** The sort preference for collections */
+  collectionSort: CollectionSort
+  /** The sort preference for granules */
+  granuleSort: GranuleSort
+  /** The map view preferences */
+  mapView: {
+    /** The zoom level of the map */
+    zoom: number
+    /** The latitude center of the map */
+    latitude: number
+    /** The base layer identifier for the map */
+    baseLayer: BaseLayer
+    /** The longitude center of the map */
+    longitude: number
+    /** The projection code for the map */
+    projection: ProjectionCode
+    /** Array of overlay layer identifiers */
+    overlayLayers: OverlayLayer[]
+    /** The rotation of the map in degrees */
+    rotation: number
+  }
+}
+
+export type UserSlice = {
+  /** The User Slice of the store */
+  user: {
+    /** The user's site preferences */
+    sitePreferences: PreferencesData
+    /** Function to set the user's site preferences */
+    setSitePreferences: (sitePreferences: PreferencesData) => void
+    /** The username of the user */
+    username?: string
+    /** Function to set the username of the user */
+    setUsername: (username: string) => void
+  }
+}
+
 export type EdscStore =
   CollectionSlice
   & CollectionsSlice
@@ -1162,12 +1160,12 @@ export type EdscStore =
   & MapSlice
   & PanelsSlice
   & PortalSlice
-  & PreferencesSlice
   & ProjectSlice
   & QuerySlice
   & SavedProjectSlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice
+  & UserSlice
 
 export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

@@ -58,7 +58,7 @@ import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
   fetchContactInfo,
-  setContactInfoFromJwt,
+  updateContactInfo,
   updateNotificationLevel
 } from './contactInfo'
 import {
@@ -71,7 +71,6 @@ import {
   updateSubscription,
   updateSubscriptionDisabledFields
 } from './subscriptions'
-import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
 
@@ -84,8 +83,8 @@ const actions = {
   deleteCollectionSubscription,
   deleteSubscription,
   exportSearch,
-  fetchContactInfo,
   fetchAdminRetrievalsMetrics,
+  fetchContactInfo,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
@@ -106,8 +105,6 @@ const actions = {
   setColorMapsErrored,
   setColorMapsLoaded,
   setColorMapsLoading,
-  setContactInfoFromJwt,
-  setUserFromJwt,
   submitRetrieval,
   toggleAboutCSDAModal,
   toggleAboutCwicModal,
@@ -126,9 +123,10 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  updateAdminRetrievalsMetricsStartDate,
   updateAdminRetrievalsMetricsEndDate,
+  updateAdminRetrievalsMetricsStartDate,
   updateAuthToken,
+  updateContactInfo,
   updateFacets,
   updateNotificationLevel,
   updateStore,

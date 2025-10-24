@@ -5,14 +5,12 @@ import nock from 'nock'
 import { UPDATE_CONTACT_INFO } from '../../constants/actionTypes'
 import {
   fetchContactInfo,
-  setContactInfoFromJwt,
   updateContactInfo,
   updateNotificationLevel
 } from '../contactInfo'
 
 import addToast from '../../util/addToast'
 import useEdscStore from '../../zustand/useEdscStore'
-import { testJwtToken } from './mocks'
 
 jest.mock('../../util/addToast', () => ({
   __esModule: true,
@@ -29,32 +27,6 @@ describe('updateContactInfo', () => {
       payload
     }
     expect(updateContactInfo(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('setContactInfoFromJwt', () => {
-  test('should create an action to update the store', () => {
-    const contactInfo = {
-      ursProfile: {
-        first_name: 'test'
-      }
-    }
-
-    const store = mockStore({})
-    store.dispatch(setContactInfoFromJwt(testJwtToken))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: UPDATE_CONTACT_INFO,
-      payload: contactInfo
-    })
-  })
-
-  test('does not create an action if payload doesn\'t exist', () => {
-    const store = mockStore({})
-    store.dispatch(setContactInfoFromJwt())
-    const storeActions = store.getActions()
-    expect(storeActions.length).toBe(0)
   })
 })
 

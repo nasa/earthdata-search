@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
@@ -14,8 +14,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onLogout: () => dispatch(actions.logout()),
-  onFetchContactInfo: () => dispatch(actions.fetchContactInfo())
+  onLogout: () => dispatch(actions.logout())
 })
 
 export const mapStateToProps = (state) => ({
@@ -33,20 +32,12 @@ export const SecondaryToolbarContainer = (props) => {
 
   const {
     authToken,
-    onFetchContactInfo,
     onLogout,
     retrieval,
     ursProfile
   } = props
 
   const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
-
-  useEffect(() => {
-    // If we have a authToken, but no ursProfile, request the contact info
-    if (secondaryToolbarEnabled && authToken && !(ursProfile && ursProfile.first_name)) {
-      onFetchContactInfo()
-    }
-  }, [secondaryToolbarEnabled])
 
   if (!secondaryToolbarEnabled) {
     return null
@@ -66,7 +57,6 @@ export const SecondaryToolbarContainer = (props) => {
 
 SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({

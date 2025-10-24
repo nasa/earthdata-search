@@ -67,7 +67,7 @@ test.describe('Harmony with MBR', () => {
           })
         })
 
-        await login(context)
+        await login(page, context)
       })
 
       test.describe('when Enable Spatial Subsetting is selected on load', () => {

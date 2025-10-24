@@ -36,31 +36,11 @@ describe('util#createJwtToken', () => {
     const result = createJwtToken(user, 'prod')
     const decoded = jwt.decode(result)
 
-    expect(decoded).toEqual(expect.objectContaining({
+    expect(decoded).toEqual({
       id: 1,
-      preferences: {
-        mapView: {
-          zoom: 4,
-          latitude: 39,
-          baseLayer: mapLayers.worldImagery,
-          longitude: -95,
-          projection: projectionCodes.geographic,
-          overlayLayers: [
-            mapLayers.bordersRoads,
-            mapLayers.placeLabels
-          ]
-        },
-        panelState: 'default',
-        granuleSort: 'default',
-        collectionSort: 'default',
-        granuleListView: 'default',
-        collectionListView: 'default'
-      },
       username: 'testuser',
-      ursProfile: {
-        email_address: 'test@example.com',
-        first_name: 'test'
-      }
-    }))
+      earthdataEnvironment: 'prod',
+      iat: decoded.iat
+    })
   })
 })

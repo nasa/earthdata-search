@@ -14,6 +14,7 @@ import {
   updateAuthToken,
   updateAuthTokenFromHeaders
 } from '../authToken'
+import { localStorageKeys } from '../../constants/localStorageKeys'
 
 const mockStore = configureMockStore([thunk])
 
@@ -86,10 +87,14 @@ describe('logout', () => {
     window.location = { assign: jest.fn() }
 
     const removeMock = jest.spyOn(tinyCookie, 'remove')
+    const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
 
     await store.dispatch(logout()).then(() => {
       expect(removeMock).toHaveBeenCalledTimes(1)
       expect(removeMock).toHaveBeenCalledWith('authToken')
+
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       expect(window.location.assign).toHaveBeenCalledTimes(1)
       expect(window.location.assign).toHaveBeenCalledWith('/search?ee=prod')

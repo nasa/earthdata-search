@@ -37,7 +37,7 @@ const setup = setupTest({
     onLogout: jest.fn(),
     onChangePath: jest.fn(),
     ursProfile: {
-      first_name: 'First Name'
+      firstName: 'First Name'
     }
   },
   defaultZustandState: {

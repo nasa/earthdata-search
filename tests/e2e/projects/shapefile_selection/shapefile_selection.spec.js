@@ -62,7 +62,7 @@ test.describe('Shapefile Selection on Project Page', () => {
       })
     })
 
-    await login(context)
+    await login(page, context)
 
     // Wait for the tiles at the right zoom level to load
     const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3\/3/)

@@ -37,7 +37,8 @@ const buildPermissions = () => shield(
         isAdminUser
       ),
       project: allow,
-      projects: isValidUser
+      projects: isValidUser,
+      user: isValidUser
     },
     Mutation: {
       '*': deny,
@@ -46,6 +47,7 @@ const buildPermissions = () => shield(
         isValidUser,
         userOwnsProject
       ),
+      updatePreferences: isValidUser,
       updateProject: userOwnsProjectIfProjectOwned
     }
   },

@@ -209,7 +209,6 @@ describe('SearchPanels component', () => {
             },
             overrideRouterEntries: ['/search']
           })
-          console.log(zustandState.query.collection)
 
           const sortSelect = screen.getByRole('button', { name: 'Sort: Relevance' })
           await user.click(sortSelect)
@@ -363,8 +362,8 @@ describe('SearchPanels component', () => {
         test('updates CollectionResultsBodyContainer', async () => {
           const { user } = setup({
             overrideZustandState: {
-              preferences: {
-                preferences: {
+              user: {
+                sitePreferences: {
                   collectionListView: 'table'
                 }
               }
@@ -656,8 +655,8 @@ describe('SearchPanels component', () => {
         test('updates GranuleResultsBodyContainer', async () => {
           const { user } = setup({
             overrideZustandState: {
-              preferences: {
-                preferences: {
+              user: {
+                sitePreferences: {
                   granuleListView: 'table'
                 }
               }
