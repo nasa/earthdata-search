@@ -1,8 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-import { localStorageKeys } from '../../static/src/js/constants/localStorageKeys'
-
 const getImageFileName = (url) => {
   let filename
   // For the arcgis images, don't return the real image, just mock a single image that will repeat
@@ -91,12 +89,12 @@ export const setupTests = async ({
 }) => {
   // Set the 'dontShowTour' flag in localStorage
   await context.addInitScript((value) => {
-    const previousValue = window.localStorage.getItem(localStorageKeys.dontShowTour)
+    const previousValue = window.localStorage.getItem('dontShowTour')
 
     // If we already provided a value, we don't want to overwrite any changes that have been made
     if (previousValue) return
 
-    window.localStorage.setItem(localStorageKeys.dontShowTour, value)
+    window.localStorage.setItem('dontShowTour', value)
   }, dontShowTour.toString())
 
   // Prevent loading of images and map tiles to speed up tests
