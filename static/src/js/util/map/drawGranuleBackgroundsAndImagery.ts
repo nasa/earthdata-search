@@ -143,9 +143,11 @@ const drawGranuleBackgroundsAndImagery = ({
       // Add the feature to the vector source
       vectorSource.addFeature(backgroundFeature)
 
+      const gibsDataObject = gibsDataByCollection[collectionId] || {}
+      const { layers: gibsData = [] } = gibsDataObject
+
       // If the collection has no GIBS data, return without drawing imagery
-      const gibsData = gibsDataByCollection[collectionId]
-      if (!gibsData) return
+      if (!gibsData || gibsData.length === 0) return
 
       // There are a few things we need to keep in mind when drawing the granule imagery:
       // 1. The granule imagery is served by GIBS in tiles, but we only show the imagery that is contained
@@ -225,7 +227,7 @@ const drawGranuleBackgroundsAndImagery = ({
       const geometryToClip = granuleDiffMultiPolygon as OlMultiPolygon
 
       // Create imagery layers for each GIBS layer item
-      gibsData.layers.forEach((gibsLayer) => {
+      gibsData.forEach((gibsLayer) => {
         // If the GIBS layer is "subdaily", use the full timeStart (date and time).
         // Otherwise, use only the date part of timeStart.
         const gibsTime = gibsLayer.layerPeriod?.toLowerCase() === 'subdaily'
@@ -235,13 +237,13 @@ const drawGranuleBackgroundsAndImagery = ({
         // Create a cache key for the layer.
         const cacheKey = `${granuleId}-${gibsLayer.product}-${gibsTime}-${projectionCode}`
 
-        let resolution
-        if (gibsData.projection === projectionCodes.antarctic) {
-          resolution = 'antarcticResolution'
-        } else if (gibsData.projection === projectionCodes.arctic) {
-          resolution = 'arcticResolution'
+        let resolution: string
+        if (gibsDataObject.projection === projectionCodes.antarctic) {
+          resolution = `${gibsLayer.antarctic_resolution}`
+        } else if (gibsDataObject.projection === projectionCodes.arctic) {
+          resolution = `${gibsLayer.arctic_resolution}`
         } else {
-          resolution = 'geographicResolution'
+          resolution = `${gibsLayer.geographic_resolution}`
         }
 
         let imageryLayer: TileLayer
@@ -316,7 +318,7 @@ const drawGranuleBackgroundsAndImagery = ({
                   }
                 }
               },
-              url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${gibsData.projection}/best/wmts.cgi?TIME=${gibsTime}`,
+              url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${gibsDataObject.projection}/best/wmts.cgi?TIME=${gibsTime}`,
               wrapX: false
             })
           })
