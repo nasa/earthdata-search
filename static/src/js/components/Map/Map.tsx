@@ -89,7 +89,7 @@ import { eventEmitter } from '../../events/events'
 import 'ol/ol.css'
 import './Map.scss'
 import {
-  GibsDataByCollection,
+  GibsLayersByCollection,
   GranuleMetadata,
   ImageryLayers,
   MapGranule,
@@ -286,8 +286,8 @@ interface MapProps {
   focusedCollectionId: string
   /** The ID of the focused granule */
   focusedGranuleId: string
-  /** The GIBS data keyed by collectionID */
-  gibsDataByCollection: GibsDataByCollection
+  /** The GIBS layers keyed by collectionID */
+  gibsLayersByCollection: GibsLayersByCollection
   /** The granules to render on the map */
   granules: MapGranule[]
   /** The key to determine if the granules have changed */
@@ -358,7 +358,7 @@ interface MapProps {
  * @param {String} params.granulesKey Key to determine if the granules have changed
  * @param {String} params.focusedCollectionId Collection ID of the focused collection
  * @param {String} params.focusedGranuleId Granule ID of the focused granule
- * @param {Object} params.gibsDataByCollection Gibs Data object that is keyed by Collection Id and contains layers and projection info
+ * @param {Object} params.gibsLayersByCollection Gibs layers object that is keyed by Collection Id and contains layers and projection info
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  * @param {Function} params.onChangeQuery Function to call when the query is changed
@@ -382,7 +382,7 @@ const Map: React.FC<MapProps> = ({
   center,
   focusedCollectionId = '',
   focusedGranuleId = '',
-  gibsDataByCollection,
+  gibsLayersByCollection,
   granules = [],
   granulesKey,
   imageryLayers,
@@ -1014,7 +1014,7 @@ const Map: React.FC<MapProps> = ({
 
     // Draw the granule backgrounds
     drawGranuleBackgroundsAndImagery({
-      gibsDataByCollection,
+      gibsLayersByCollection,
       granuleImageryLayerGroup,
       granulesMetadata: granules,
       map: mapRef.current as OlMap,

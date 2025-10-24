@@ -29,8 +29,6 @@ import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 
-import projectionCodes from '../../constants/projectionCodes'
-
 import {
   backgroundGranulePointStyle,
   backgroundGranuleStyle,
@@ -42,6 +40,7 @@ import {
   granulePointStyle
 } from '../../util/map/styles'
 
+import projectionCodes from '../../constants/projectionCodes'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 import { routes } from '../../constants/routes'
@@ -61,7 +60,7 @@ import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
   Colormap,
-  GibsDataByCollection,
+  GibsLayersByCollection,
   ImageryLayers,
   ImageryLayerItem,
   MapGranule,
@@ -404,17 +403,14 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     return imageryLayersObject
   }, [colormapsMetadata, layersForProjection])
 
-  // Create an object for GIBS data keyed by collectionId
+  // Create an object for GIBS layers keyed by collectionId
   // if no layersForProjection, then return no GIBS data
-  const gibsDataByCollection = useMemo(() => {
-    const result: GibsDataByCollection = {}
+  const gibsLayersByCollection = useMemo(() => {
+    const result: GibsLayersByCollection = {}
 
     // Check if focusedCollectionId exists and layersForProjection has elements
     if (focusedCollectionId && layersForProjection.length > 0) {
-      result[focusedCollectionId] = {
-        layers: layersForProjection,
-        projection
-      }
+      result[focusedCollectionId] = layersForProjection
     }
 
     return result
@@ -541,7 +537,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       center={center}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
-      gibsDataByCollection={gibsDataByCollection}
+      gibsLayersByCollection={gibsLayersByCollection}
       granules={granulesToDraw}
       granulesKey={granulesKey}
       imageryLayers={imageryLayers}

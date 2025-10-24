@@ -198,6 +198,20 @@ Test coverage will be updated in the coverage directory to see breakdown use
 
     open coverage/lcov-report/index.html
 
+### Run the Automated [Playwright](https://playwright.dev/) tests
+
+To run Playwright tests, you must first install Playwright:
+
+    npx playwright install  
+
+To run Playwright in `ui` mode:
+
+    npm run playwright:ui
+
+To run Playwright tests in headless mode:
+
+    npm run playwright
+
 ### Deployment
 
 When the time comes to deploy the application, first ensure that you have the required ENV vars set:
