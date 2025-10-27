@@ -18,6 +18,10 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly colormapsApiGatewayResource: apigateway.CfnResource
 
+  public readonly conceptsApiGatewayResource: apigateway.CfnResource
+
+  public readonly granulesApiGatewayResource: apigateway.CfnResource
+
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
 
   public readonly retrievalCollectionsApiGatewayResource: apigateway.CfnResource
@@ -67,15 +71,6 @@ export class SharedApiGatewayResources extends Construct {
 
     this.collectionsApiGatewayResource = collectionsApiGatewayResource
 
-    /**
-     * Colormaps API Gateway Resource
-     */
-    const colormapsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceColormaps', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'colormaps',
-      restApiId: apiGatewayRestApi.ref
-    })
-    this.colormapsApiGatewayResource = colormapsApiGatewayResource
 
     /**
      * OpenSearch API Gateway Resource
