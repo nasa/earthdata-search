@@ -5,7 +5,7 @@ import nock from 'nock'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import addToast from '../../../util/addToast'
-import { DownloadHistoryContainer, mapStateToProps } from '../DownloadHistoryContainer'
+import DownloadHistoryContainer from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
 
 jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
@@ -37,23 +37,11 @@ jest.mock('../../../util/addToast', () => ({
 
 const setup = setupTest({
   Component: DownloadHistoryContainer,
-  defaultProps: {
-    authToken: 'testToken'
+  defaultZustandState: {
+    user: {
+      authToken: 'testToken'
+    }
   }
-})
-
-describe('mapStateToProps', () => {
-  test('should return the authToken and earthdataEnvironment from the state', () => {
-    const mockState = {
-      authToken: 'testTokenFromState'
-    }
-
-    const expectedProps = {
-      authToken: 'testTokenFromState'
-    }
-
-    expect(mapStateToProps(mockState)).toEqual(expectedProps)
-  })
 })
 
 describe('DownloadHistoryContainer component', () => {
@@ -110,21 +98,22 @@ describe('DownloadHistoryContainer component', () => {
 
   test('handles the case when authToken is not provided', async () => {
     setup({
-      overrideProps: {
-        authToken: ''
+      overrideZustandState: {
+        user: {
+          authToken: null
+        }
       }
     })
 
     expect(screen.getByRole('heading', { name: 'Download Status & History' })).toBeInTheDocument()
 
-    expect(DownloadHistory).toHaveBeenCalledWith(
-      expect.objectContaining({
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: false,
-        retrievalHistory: []
-      }),
-      {}
-    )
+    expect(DownloadHistory).toHaveBeenCalledWith({
+      earthdataEnvironment: 'prod',
+      onDeleteRetrieval: expect.any(Function),
+      retrievalHistoryLoading: false,
+      retrievalHistoryLoaded: false,
+      retrievalHistory: []
+    }, {})
 
     expect(DownloadHistory).toHaveBeenCalledTimes(1)
   })

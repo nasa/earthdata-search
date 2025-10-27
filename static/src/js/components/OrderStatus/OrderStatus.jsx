@@ -18,6 +18,7 @@ import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { stringify } from '../../util/url/url'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getAuthToken } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import { routes } from '../../constants/routes'
@@ -27,7 +28,6 @@ import './OrderStatus.scss'
 /**
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.authToken - The authToken for the logged in user.
  * @param {Object} props.granuleDownload - Data pertaining to the status of the granule download for a retrieval collection.
  * @param {Function} props.onChangePath - Selects an access method.
  * @param {Function} props.onFetchRetrieval - Fetches a retrieval from the database.
@@ -38,7 +38,6 @@ import './OrderStatus.scss'
 
  */
 export const OrderStatus = ({
-  authToken,
   granuleDownload,
   onChangePath,
   onFetchRetrieval,
@@ -51,6 +50,8 @@ export const OrderStatus = ({
 }) => {
   const params = useParams()
   const { id: paramsId } = params
+
+  const authToken = useEdscStore(getAuthToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   useEffect(() => {
@@ -206,7 +207,6 @@ export const OrderStatus = ({
             {
               isLoaded && (
                 <OrderStatusList
-                  authToken={authToken}
                   collections={allCollections}
                   earthdataEnvironment={earthdataEnvironment}
                   granuleDownload={granuleDownload}
@@ -384,7 +384,6 @@ export const OrderStatus = ({
 }
 
 OrderStatus.propTypes = {
-  authToken: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,

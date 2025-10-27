@@ -1,6 +1,6 @@
 import React from 'react'
 import { startCase } from 'lodash-es'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import Table from 'react-bootstrap/Table'
 
@@ -75,7 +75,7 @@ const createPreferencesTable = (preferences) => {
 }
 
 const AdminPreferencesMetricsList = () => {
-  const { data, error, loading } = useQuery(gql(ADMIN_PREFERENCES_METRICS))
+  const { data, error, loading } = useQuery(ADMIN_PREFERENCES_METRICS)
 
   return (
     <div>

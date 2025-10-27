@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
-import AuthTokenContainer from '../../containers/AuthTokenContainer/AuthTokenContainer'
+import AuthToken from '../../components/AuthToken/AuthToken'
 // @ts-expect-error The file does not have types
 import ErrorBanner from '../../components/ErrorBanner/ErrorBanner'
 // @ts-expect-error The file does not have types
@@ -19,7 +19,7 @@ import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContaine
 import UrlQueryContainer from '../../containers/UrlQueryContainer/UrlQueryContainer'
 // @ts-expect-error The file does not have types
 import WrappingContainer from '../../containers/WrappingContainer/WrappingContainer'
-import UserContainer from '../../containers/UserContainer/UserContainer'
+import UserLoader from '../../components/UserLoader/UserLoader'
 
 const AppLayout = () => (
   <>
@@ -27,8 +27,8 @@ const AppLayout = () => (
     <HistoryContainer />
     <MetricsContainer />
     <ErrorBanner />
-    <AuthTokenContainer>
-      <UserContainer>
+    <AuthToken>
+      <UserLoader>
         <UrlQueryContainer>
           <WrappingContainer>
             <SecondaryToolbarContainer />
@@ -36,8 +36,8 @@ const AppLayout = () => (
           </WrappingContainer>
           <Footer />
         </UrlQueryContainer>
-      </UserContainer>
-    </AuthTokenContainer>
+      </UserLoader>
+    </AuthToken>
   </>
 )
 

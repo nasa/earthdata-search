@@ -1,4 +1,6 @@
-const GET_PROJECTS = `
+import { gql } from '@apollo/client'
+
+const GET_PROJECTS = gql`
   query GetProjects($limit: Int, $offset: Int) {
     projects(limit: $limit, offset: $offset) {
       projects {

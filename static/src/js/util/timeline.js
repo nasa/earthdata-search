@@ -49,7 +49,6 @@ export const zoomLevelDifference = (startDate, endDate) => {
  */
 export const prepareTimelineParams = (state) => {
   const {
-    authToken,
     collectionQuery,
     focusedCollection,
     projectCollections,
@@ -100,7 +99,6 @@ export const prepareTimelineParams = (state) => {
   }
 
   return {
-    authToken,
     boundingBox,
     conceptId: conceptIds,
     endDate,

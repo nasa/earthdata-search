@@ -1,4 +1,6 @@
-const UPDATE_PROJECT = `
+import { gql } from '@apollo/client'
+
+const UPDATE_PROJECT = gql`
   mutation UpdateProject(
     $name: String
     $obfuscatedId: String!

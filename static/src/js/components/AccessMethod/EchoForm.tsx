@@ -8,7 +8,9 @@ import EDSCEchoform from '@edsc/echoforms'
 import { mbr } from '@edsc/geo-utils'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import {
+import { getUrsProfile } from '../../zustand/selectors/user'
+
+import type {
   Spatial,
   Temporal,
   UrsProfile
@@ -30,8 +32,6 @@ export interface EchoFormProps {
   spatial: Spatial
   /** The temporal object, if applied */
   temporal: Temporal
-  /** The URS profile for the user */
-  ursProfile: UrsProfile
   /** A callback called when the access method is updated */
   onUpdateAccessMethod: (data: {
     collectionId: string
@@ -62,9 +62,10 @@ export const EchoForm: React.FC<EchoFormProps> = ({
   rawModel = null,
   spatial,
   temporal,
-  ursProfile,
   onUpdateAccessMethod
 }) => {
+  const ursProfile = useEdscStore(getUrsProfile)
+
   // Get the MBR of the spatial for prepopulated values
   const getMbr = (spatialObject: Spatial) => {
     const {
@@ -114,7 +115,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
   }
 
   const getEmailPrepopulateValues = (ursProfileObject: UrsProfile) => {
-    const { email_address: emailAddress } = ursProfileObject
+    const { emailAddress } = ursProfileObject
 
     return {
       EMAIL: emailAddress

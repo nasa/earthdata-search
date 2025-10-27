@@ -136,8 +136,22 @@ export interface Temporal {
 
 /** The URS profile for the user */
 export interface UrsProfile {
+  /** The affiliation of the user from the URS profile */
+  affiliation?: string
+  /** The country of the user from the URS profile */
+  country?: string
   /** The email address of the user from the URS profile */
-  email_address: EmailAddressString
+  emailAddress: EmailAddressString
+  /** The first name of the user from the URS profile */
+  firstName: string
+  /** The last name of the user from the URS profile */
+  lastName?: string
+  /** The organization of the user from the URS profile */
+  organization?: string
+  /** The study area of the user from the URS profile */
+  studyArea?: string
+  /** The user type of the user from the URS profile */
+  userType?: string
 }
 
 /** The Collection Metadata */

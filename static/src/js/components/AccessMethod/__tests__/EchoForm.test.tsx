@@ -22,10 +22,14 @@ const setup = setupTest({
     shapefileId: null,
     spatial: {},
     temporal: {},
-    ursProfile: {
-      email_address: ''
-    },
     onUpdateAccessMethod: jest.fn()
+  },
+  defaultZustandState: {
+    user: {
+      ursProfile: {
+        emailAddress: 'test@example.com'
+      }
+    }
   }
 })
 

@@ -1,17 +1,15 @@
-import { gql } from '@apollo/client'
-
 import routerHelper, { type Router } from '../../router/router'
 import { SavedProjectSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error Types are not defined for this module
 import getApolloClient from '../../providers/getApolloClient'
 
-// @ts-expect-error Types are not defined for this module
-import configureStore from '../../store/configureStore'
-
 import CREATE_PROJECT from '../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../operations/mutations/updateProject'
 import GET_PROJECT from '../../operations/queries/getProject'
+
+import { getAuthToken, getEdlToken } from '../selectors/user'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get) => ({
   savedProject: {
@@ -28,16 +26,11 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
     },
 
     setProjectName: async (name) => {
-      const {
-        getState: reduxGetState
-      } = configureStore()
-      const reduxState = reduxGetState()
-
-      const {
-        authToken
-      } = reduxState
-
       const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const edlToken = getEdlToken(zustandState)
+
       const { savedProject } = zustandState
       const { project: previousProject } = savedProject
       const {
@@ -52,7 +45,11 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
       let realPath = path
       if (!path) realPath = pathname + search
 
-      const apolloClient = getApolloClient(authToken)
+      const apolloClient = getApolloClient({
+        authToken,
+        earthdataEnvironment,
+        edlToken
+      })
 
       let mutation = CREATE_PROJECT
       let mutationKey = 'createProject'
@@ -63,7 +60,7 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
       try {
         const { data } = await apolloClient.mutate({
-          mutation: gql(mutation),
+          mutation,
           variables: {
             name,
             path: realPath,
@@ -104,20 +101,20 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
     },
 
     getProject: async (projectId) => {
-      const {
-        getState: reduxGetState
-      } = configureStore()
-      const reduxState = reduxGetState()
+      const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const edlToken = getEdlToken(zustandState)
 
-      const {
-        authToken
-      } = reduxState
-
-      const apolloClient = getApolloClient(authToken)
+      const apolloClient = getApolloClient({
+        authToken,
+        earthdataEnvironment,
+        edlToken
+      })
 
       try {
         const { data } = await apolloClient.query({
-          query: gql(GET_PROJECT),
+          query: GET_PROJECT,
           variables: {
             obfuscatedId: projectId
           }

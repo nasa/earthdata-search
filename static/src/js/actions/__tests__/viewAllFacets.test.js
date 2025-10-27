@@ -150,18 +150,21 @@ describe('getViewAllFacets', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: '',
       searchResults: {
         facets: {},
         viewAllFacets: {}
       }
     })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.user.authToken = undefined
+    })
+
     // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
       expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
       expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
-        authToken: '',
         searchResults: {
           facets: {},
           viewAllFacets: { selectedCategory: 'Instruments' }
@@ -207,18 +210,21 @@ describe('getViewAllFacets', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'token',
       searchResults: {
         facets: {},
         viewAllFacets: {}
       }
     })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.user.authToken = 'token'
+    })
+
     // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
       expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
       expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
-        authToken: 'token',
         searchResults: {
           facets: {},
           viewAllFacets: { selectedCategory: 'Instruments' }
@@ -270,18 +276,21 @@ describe('getViewAllFacets', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: '',
       searchResults: {
         facets: {},
         viewAllFacets: {}
       }
     })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.user.authToken = undefined
+    })
+
     // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
       expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
       expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
-        authToken: '',
         searchResults: {
           facets: {},
           viewAllFacets: { selectedCategory: 'Instruments' }

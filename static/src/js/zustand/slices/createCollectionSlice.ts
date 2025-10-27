@@ -33,7 +33,11 @@ import actions from '../../actions'
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
-import { getSitePreferences, getUsername } from '../selectors/user'
+import {
+  getAuthToken,
+  getSitePreferences,
+  getUsername
+} from '../selectors/user'
 
 import GET_COLLECTION from '../../operations/queries/getCollection'
 
@@ -46,19 +50,14 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
     getCollectionMetadata: async () => {
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
-
-      const {
-        authToken
-      } = reduxState
 
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
       const zustandState = get()
+      const authToken = getAuthToken(zustandState)
       const collectionsQuery = getCollectionsQuery(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const focusedCollectionId = getCollectionId(zustandState)
@@ -305,13 +304,13 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         }))
       } else {
         // Initialize a nested query element for the new focused collection
-        const currentState = get()
+        const zustandState = get()
         const {
           query,
           timeline
-        } = currentState
+        } = zustandState
 
-        const { granuleSort: granuleSortPreference } = getSitePreferences(currentState)
+        const { granuleSort: granuleSortPreference } = getSitePreferences(zustandState)
 
         const granuleQuery = {} as GranuleQuery
 

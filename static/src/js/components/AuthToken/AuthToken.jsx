@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
-import { connect } from 'react-redux'
-
-import actions from '../../actions/index'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onUpdateAuthToken:
-    (token) => dispatch(actions.updateAuthToken(token))
-})
-
-export const AuthTokenContainer = ({
-  children,
-  onUpdateAuthToken
+const AuthToken = ({
+  children
 }) => {
+  const setAuthToken = useEdscStore((state) => state.user.setAuthToken)
+
   // `firstLoadFinished` ensures that we don't render the children until we've checked for a token
   // This prevents child components from rendering and making requests with an empty token but
   // an `authToken` cookie does exist
@@ -29,14 +23,14 @@ export const AuthTokenContainer = ({
     if (disableDatabaseComponents === 'true') {
       // If we have set `disableDatabaseComponents` to true, we need to clear the authToken
       // This will ensure that the user does not send requests to our API (which uses the database)
-      onUpdateAuthToken('')
+      setAuthToken(undefined)
 
       return
     }
 
     const jwtToken = get('authToken')
 
-    onUpdateAuthToken(jwtToken || '')
+    setAuthToken(jwtToken)
   }, [])
 
   if (!firstLoadFinished) return null
@@ -44,9 +38,8 @@ export const AuthTokenContainer = ({
   return children
 }
 
-AuthTokenContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  onUpdateAuthToken: PropTypes.func.isRequired
+AuthToken.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(AuthTokenContainer)
+export default AuthToken

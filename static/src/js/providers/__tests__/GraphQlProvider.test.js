@@ -1,63 +1,56 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { act, screen } from '@testing-library/react'
 import {
   ApolloClient,
+  ApolloLink,
   ApolloProvider,
-  InMemoryCache,
-  createHttpLink
+  InMemoryCache
 } from '@apollo/client'
 import setupTest from '../../../../../jestConfigs/setupTest'
-import { GraphQlProvider } from '../GraphQlProvider'
+import GraphQlProvider from '../GraphQlProvider'
+import useEdscStore from '../../zustand/useEdscStore'
 
-jest.mock('@apollo/client', () => ({
-  ApolloProvider: jest.fn(({ children }) => <div>{children}</div>),
-  ApolloClient: jest.fn().mockImplementation(),
-  InMemoryCache: jest.fn().mockImplementation(),
-  createHttpLink: jest.fn().mockReturnValue('httpLink'),
-  ApolloLink: {
-    from: jest.fn().mockImplementation((links) => links)
+jest.mock('@apollo/client', () => {
+  const actual = jest.requireActual('@apollo/client')
+
+  return {
+    ...actual,
+    ApolloProvider: jest.fn(({ children }) => <div>{children}</div>),
+    ApolloClient: jest.fn().mockImplementation()
   }
-}))
-
-jest.mock('@apollo/client/link/context', () => ({
-  setContext: jest.fn().mockReturnValue('authLink')
-}))
+})
 
 jest.mock('../../../../../sharedUtils/config', () => ({
   ...jest.requireActual('../../../../../sharedUtils/config'),
   getEnvironmentConfig: jest.fn().mockReturnValue({
-    apiHost: 'http://test.com'
+    apiHost: 'http://test.com/api',
+    cmrHost: 'http://test.com/cmr',
+    graphQlHost: 'http://test.com/graphql'
   })
 }))
 
 const setup = setupTest({
   Component: GraphQlProvider,
   defaultProps: {
-    authToken: 'Bearer token',
     children: <div>Child Component</div>
+  },
+  defaultZustandState: {
+    user: {
+      authToken: 'token'
+    }
   }
 })
 
 describe('GraphQlProvider', () => {
-  let rerender
-
   beforeEach(() => {
-    ({ rerender } = setup())
+    setup()
   })
 
   test('creates an ApolloClient and renders the children', () => {
-    expect(createHttpLink).toHaveBeenCalledTimes(1)
-    expect(createHttpLink).toHaveBeenCalledWith({
-      uri: 'http://test.com/graphql'
-    })
-
     expect(ApolloClient).toHaveBeenCalledTimes(1)
     expect(ApolloClient).toHaveBeenCalledWith({
       cache: expect.any(InMemoryCache),
-      link: [
-        'authLink',
-        'httpLink'
-      ]
+      link: expect.any(ApolloLink)
     })
 
     expect(ApolloProvider).toHaveBeenCalledTimes(1)
@@ -73,28 +66,26 @@ describe('GraphQlProvider', () => {
     test('does not create a new ApolloClient', () => {
       setup()
 
-      expect(createHttpLink).toHaveBeenCalledTimes(0)
       expect(ApolloClient).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when rendering again with a different authToken', () => {
-    test('creates a new ApolloClient', () => {
+    test('creates a new ApolloClient', async () => {
       jest.clearAllMocks()
 
-      rerender(
-        <GraphQlProvider authToken="Bearer newToken">
-          <div>Child Component</div>
-        </GraphQlProvider>
-      )
+      // Update the authToken in the store
+      await act(async () => {
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.user.authToken = 'newToken'
+        })
+      })
 
       expect(ApolloClient).toHaveBeenCalledTimes(1)
       expect(ApolloClient).toHaveBeenCalledWith({
         cache: expect.any(InMemoryCache),
-        link: [
-          'authLink',
-          'httpLink'
-        ]
+        link: expect.any(ApolloLink)
       })
     })
   })

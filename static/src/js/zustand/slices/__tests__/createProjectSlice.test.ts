@@ -247,9 +247,7 @@ describe('createProjectSlice', () => {
       test('returns null', async () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: ''
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         const zustandState = useEdscStore.getState()
@@ -276,13 +274,12 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1', 'collectionId2']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -358,13 +355,12 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1', 'collectionId2']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -556,9 +552,7 @@ describe('createProjectSlice', () => {
       test('adds access methods with the saved access config', async () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         nock(/localhost/)
@@ -666,6 +660,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -707,9 +702,7 @@ describe('createProjectSlice', () => {
       test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
@@ -790,6 +783,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['C10000000000-EDSC']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -818,9 +812,7 @@ describe('createProjectSlice', () => {
       test('adds access methods and updates collection metadata', async () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
@@ -869,6 +861,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -908,13 +901,12 @@ describe('createProjectSlice', () => {
       test('does not fetch access methods or metadata', async () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = []
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -986,13 +978,12 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -1056,13 +1047,12 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -1086,9 +1076,7 @@ describe('createProjectSlice', () => {
       test('sets the data quality summaries for the collection', async () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: 'mockAuthToken'
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         nock(/localhost/)
@@ -1130,6 +1118,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
+          state.user.authToken = 'mockAuthToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -1181,9 +1170,7 @@ describe('createProjectSlice', () => {
 
       configureStore.mockReturnValue({
         dispatch: jest.fn(),
-        getState: () => ({
-          authToken: ''
-        })
+        getState: jest.fn().mockReturnValue({})
       })
 
       useEdscStore.setState((state) => {
@@ -1242,9 +1229,7 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: ''
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
@@ -1305,9 +1290,7 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: ''
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
@@ -1366,9 +1349,7 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: ''
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {
@@ -1438,9 +1419,7 @@ describe('createProjectSlice', () => {
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
-          getState: () => ({
-            authToken: ''
-          })
+          getState: jest.fn().mockReturnValue({})
         })
 
         useEdscStore.setState((state) => {

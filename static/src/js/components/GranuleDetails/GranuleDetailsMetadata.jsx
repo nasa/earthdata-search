@@ -10,11 +10,12 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './GranuleDetailsMetadata.scss'
+import { getAuthToken } from '../../zustand/selectors/user'
 
 export const GranuleDetailsMetadata = ({
-  authToken = '',
   metadataUrls = null
 }) => {
+  const authToken = useEdscStore(getAuthToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   const metdataUrlKeys = [
@@ -43,7 +44,7 @@ export const GranuleDetailsMetadata = ({
                       const { title, href } = metadataUrl
 
                       let cmrGranulesUrl = href
-                      if (authToken !== '') {
+                      if (authToken) {
                         // If an auth token is provided route the request through Lambda
                         cmrGranulesUrl = buildAuthenticatedRedirectUrl(
                           encodeURIComponent(href),
@@ -81,7 +82,6 @@ export const GranuleDetailsMetadata = ({
 }
 
 GranuleDetailsMetadata.propTypes = {
-  authToken: PropTypes.string,
   metadataUrls: PropTypes.shape({})
 }
 

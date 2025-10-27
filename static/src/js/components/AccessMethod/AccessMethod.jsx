@@ -44,7 +44,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
  * @param {String} props.spatial - The spatial constraints if applied.
  * @param {String} props.temporal - The temporal constraints if applied.
- * @param {String} props.ursProfile - Response object from URS profile.
 */
 const AccessMethod = ({
   accessMethods = {},
@@ -58,8 +57,7 @@ const AccessMethod = ({
   },
   selectedAccessMethod = null,
   spatial = {},
-  temporal,
-  ursProfile
+  temporal
 }) => {
   const {
     setShowMbr,
@@ -731,7 +729,6 @@ const AccessMethod = ({
                         rawModel={rawModel}
                         spatial={spatial}
                         temporal={temporal}
-                        ursProfile={ursProfile}
                         onUpdateAccessMethod={onUpdateAccessMethod}
                       />
                     </Suspense>
@@ -1021,9 +1018,6 @@ AccessMethod.propTypes = {
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
-  }).isRequired,
-  ursProfile: PropTypes.shape({
-    email_address: PropTypes.string
   }).isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})

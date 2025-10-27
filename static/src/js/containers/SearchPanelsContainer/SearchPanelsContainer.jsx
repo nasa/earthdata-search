@@ -11,7 +11,6 @@ import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
 export const mapStateToProps = (state) => ({
-  authToken: state.authToken,
   collectionSubscriptions: getCollectionSubscriptions(state),
   isExportRunning: state.ui.export.isExportRunning
 })
@@ -37,7 +36,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.match - Router match state
  */
 export const SearchPanelsContainer = ({
-  authToken,
   collectionSubscriptions,
   isExportRunning,
   onChangePath,
@@ -52,7 +50,6 @@ export const SearchPanelsContainer = ({
       element={
         (
           <SearchPanels
-            authToken={authToken}
             collectionSubscriptions={collectionSubscriptions}
             isExportRunning={isExportRunning}
             onChangePath={onChangePath}
@@ -69,7 +66,6 @@ export const SearchPanelsContainer = ({
 )
 
 SearchPanelsContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isExportRunning: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,

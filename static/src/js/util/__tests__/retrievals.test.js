@@ -1,9 +1,6 @@
 import routerHelper from '../../router/router'
-import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
-
-jest.mock('../../store/configureStore', () => jest.fn())
 
 beforeEach(() => {
   routerHelper.router.state = {
@@ -108,18 +105,9 @@ describe('retrievals', () => {
       }
     })
 
-    const reduxState = {
-      authToken: 'auth-token'
-    }
-
-    configureStore.mockReturnValue({
-      getState: () => reduxState
-    })
-
-    const response = prepareRetrievalParams(reduxState)
+    const response = prepareRetrievalParams()
 
     expect(response).toEqual({
-      authToken: 'auth-token',
       collections: [{
         access_method: {
           mbr: {
@@ -257,18 +245,9 @@ describe('retrievals', () => {
       }
     })
 
-    const reduxState = {
-      authToken: 'auth-token'
-    }
-
-    configureStore.mockReturnValue({
-      getState: () => reduxState
-    })
-
-    const response = prepareRetrievalParams(reduxState)
+    const response = prepareRetrievalParams()
 
     expect(response).toEqual({
-      authToken: 'auth-token',
       collections: [{
         access_method: {
           mbr: {

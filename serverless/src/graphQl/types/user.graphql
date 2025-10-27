@@ -18,6 +18,9 @@ type Query {
 }
 
 type Mutation {
+  "Logout the current user"
+  logout: Boolean
+
   "Update the current user's EDSC preferences"
   updatePreferences(
     "The new preferences to set for the user"

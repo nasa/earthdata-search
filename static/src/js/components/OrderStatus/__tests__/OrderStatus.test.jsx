@@ -25,6 +25,11 @@ jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 const setup = setupTest({
   Component: OrderStatus,
   defaultProps: retrievalStatusProps,
+  defaultZustandState: {
+    user: {
+      authToken: 'testToken'
+    }
+  },
   withRedux: true,
   withRouter: true
 })

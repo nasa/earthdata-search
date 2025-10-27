@@ -7,6 +7,7 @@ import {
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+import { getAuthToken } from '../zustand/selectors/user'
 
 export const setRetrievalCollectionLoading = (retrievalCollection) => ({
   type: SET_RETRIEVAL_COLLECTION_LOADING,
@@ -21,13 +22,10 @@ export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
 /**
  * Fetch order data for an order
  */
-export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
-  const state = getState()
-
-  const { authToken } = state
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+export const fetchRetrievalCollection = (id) => (dispatch) => {
+  const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   dispatch(setRetrievalCollectionLoading({ id }))
 

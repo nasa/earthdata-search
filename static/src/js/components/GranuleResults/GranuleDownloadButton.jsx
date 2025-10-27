@@ -8,7 +8,6 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { commafy } from '../../util/commafy'
-import { isLoggedIn } from '../../util/isLoggedIn'
 import { stringify } from '../../util/url/url'
 import renderTooltip from '../../util/renderTooltip'
 
@@ -17,10 +16,11 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getAuthToken } from '../../zustand/selectors/user'
+
 import { routes } from '../../constants/routes'
 
 export const GranuleDownloadButton = ({
-  authToken,
   badge = null,
   buttonText,
   focusedCollectionId,
@@ -32,6 +32,8 @@ export const GranuleDownloadButton = ({
   tooManyGranules
 }) => {
   const location = useLocation()
+
+  const authToken = useEdscStore(getAuthToken)
   const addProjectCollection = useEdscStore((state) => state.project.addProjectCollection)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
@@ -121,7 +123,7 @@ export const GranuleDownloadButton = ({
     variant: 'full'
   }
 
-  if (!isLoggedIn(authToken)) {
+  if (!authToken) {
     const projectPath = `${window.location.protocol}//${window.location.host}${routes.PROJECTS}${stringifiedProjectParams}`
 
     return (
@@ -160,7 +162,6 @@ export const GranuleDownloadButton = ({
 }
 
 GranuleDownloadButton.propTypes = {
-  authToken: PropTypes.string.isRequired,
   badge: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node

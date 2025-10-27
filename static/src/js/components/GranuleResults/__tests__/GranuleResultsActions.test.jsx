@@ -23,7 +23,6 @@ const setup = setupTest({
   defaultProps: {
     addedGranuleIds: [],
     allGranulesInProject: false,
-    authToken: 'token',
     focusedCollectionId: 'collectionId',
     focusedProjectCollection: {
       granules: {
@@ -40,9 +39,6 @@ const setup = setupTest({
     onSetActivePanelSection: jest.fn(),
     removedGranuleIds: [],
     searchGranuleCount: 5000
-  },
-  defaultReduxState: {
-    authToken: 'token'
   },
   defaultZustandState: {
     collection: {

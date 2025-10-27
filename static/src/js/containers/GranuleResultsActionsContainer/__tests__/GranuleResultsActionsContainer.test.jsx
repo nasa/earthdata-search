@@ -6,7 +6,6 @@ import * as metricsActions from '../../../middleware/metrics/actions'
 
 import {
   mapDispatchToProps,
-  mapStateToProps,
   GranuleResultsActionsContainer
 } from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
@@ -20,7 +19,6 @@ jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest
 const setup = setupTest({
   Component: GranuleResultsActionsContainer,
   defaultProps: {
-    authToken: 'token',
     onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn()
   },
@@ -84,20 +82,6 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      authToken: 'token'
-    }
-
-    const expectedState = {
-      authToken: 'token'
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('GranuleResultsActionsContainer component', () => {
   test('passes its props and renders a single GranuleResultsActions component', () => {
     setup()
@@ -105,7 +89,6 @@ describe('GranuleResultsActionsContainer component', () => {
     expect(GranuleResultsActions).toHaveBeenCalledTimes(1)
     expect(GranuleResultsActions).toHaveBeenCalledWith({
       addedGranuleIds: [],
-      authToken: 'token',
       focusedCollectionId: 'collectionId',
       focusedProjectCollection: {
         accessMethods: {},

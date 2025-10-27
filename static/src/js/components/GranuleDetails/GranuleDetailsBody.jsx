@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 
@@ -13,12 +12,8 @@ import './GranuleDetailsBody.scss'
 
 /**
  * Renders GranuleDetailsBody.
- * @param {Object} props - The props passed into the component.
- * @param {String} props.authToken - The authToken for the logged in user
  */
-const GranuleDetailsBody = ({
-  authToken = null
-}) => {
+const GranuleDetailsBody = () => {
   const granuleMetadata = useEdscStore(getFocusedGranule)
   const { metadataUrls } = granuleMetadata
 
@@ -33,17 +28,12 @@ const GranuleDetailsBody = ({
         </Tab>
         <Tab eventKey="metadata" title="Metadata">
           <GranuleDetailsMetadata
-            authToken={authToken}
             metadataUrls={metadataUrls}
           />
         </Tab>
       </Tabs>
     </div>
   )
-}
-
-GranuleDetailsBody.propTypes = {
-  authToken: PropTypes.string
 }
 
 export default GranuleDetailsBody

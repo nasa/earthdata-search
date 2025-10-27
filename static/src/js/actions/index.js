@@ -25,7 +25,6 @@ import {
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks
 } from './granules'
-import { logout, updateAuthToken } from './authToken'
 import {
   changeUrl,
   changePath,
@@ -57,11 +56,6 @@ import { fetchRetrievalCollection } from './retrievalCollection'
 import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
-  fetchContactInfo,
-  updateContactInfo,
-  updateNotificationLevel
-} from './contactInfo'
-import {
   createSubscription,
   deleteCollectionSubscription,
   deleteSubscription,
@@ -84,7 +78,6 @@ const actions = {
   deleteSubscription,
   exportSearch,
   fetchAdminRetrievalsMetrics,
-  fetchContactInfo,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
@@ -96,7 +89,6 @@ const actions = {
   getSubscriptions,
   getViewAllFacets,
   handleAlert,
-  logout,
   onFacetsErrored,
   onFacetsLoaded,
   onFacetsLoading,
@@ -125,10 +117,7 @@ const actions = {
   toggleTooManyPointsModal,
   updateAdminRetrievalsMetricsEndDate,
   updateAdminRetrievalsMetricsStartDate,
-  updateAuthToken,
-  updateContactInfo,
   updateFacets,
-  updateNotificationLevel,
   updateStore,
   updateSubscription,
   updateSubscriptionDisabledFields

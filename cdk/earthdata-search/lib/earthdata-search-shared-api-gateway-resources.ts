@@ -20,8 +20,6 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly conceptsApiGatewayResource: apigateway.CfnResource
 
-  public readonly contactInfoApiGatewayResource: apigateway.CfnResource
-
   public readonly granulesApiGatewayResource: apigateway.CfnResource
 
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
@@ -92,25 +90,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.conceptsApiGatewayResource = conceptsApiGatewayResource
-
-    /**
-     * Contact Info Gateway Resource
-     */
-    const contactInfoApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceAdminContactInfo', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'contact_info',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'ContactInfoOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: contactInfoApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET', 'POST'],
-      name: 'ContactInfo'
-    })
-
-    this.contactInfoApiGatewayResource = contactInfoApiGatewayResource
 
     /**
      * Granules API Gateway Resource

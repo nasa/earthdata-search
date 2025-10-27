@@ -116,6 +116,28 @@ export default class DatabaseClient {
     }
   }
 
+  async deleteUserTokens({
+    earthdataEnvironment,
+    userId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('user_tokens')
+        .where({
+          user_id: userId,
+          environment: earthdataEnvironment
+        })
+        .del()
+
+      return result
+    } catch {
+      const errorMessage = 'Failed to delete user tokens'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
   /**
    * Retrieves preferences for all users
    * @returns {Promise<Array>} A promise that resolves to an array of user preferences

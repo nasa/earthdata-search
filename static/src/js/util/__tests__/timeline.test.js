@@ -169,7 +169,6 @@ describe('calculateTimelineParams', () => {
 describe('prepareTimelineParams', () => {
   const setup = (overrides = {}) => {
     const baseStateWithOverrides = {
-      authToken: 'test-auth-token',
       collectionQuery: {
         spatial: {}
       },
@@ -225,7 +224,6 @@ describe('prepareTimelineParams', () => {
     const result = prepareTimelineParams(state)
 
     expect(result).toEqual({
-      authToken: 'test-auth-token',
       conceptId: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC'],
       endDate: '2023-01-01T00:00:00Z',
       interval: 'day',
@@ -250,7 +248,6 @@ describe('prepareTimelineParams', () => {
     const result = prepareTimelineParams(state)
 
     expect(result).toEqual({
-      authToken: 'test-auth-token',
       conceptId: ['C100000-EDSC'],
       endDate: '2023-01-01T00:00:00Z',
       interval: 'day',
@@ -279,7 +276,6 @@ describe('prepareTimelineParams', () => {
     const result = prepareTimelineParams(state)
 
     expect(result).toEqual({
-      authToken: 'test-auth-token',
       boundingBox: ['-180,90,180,-90'],
       conceptId: ['C100000-EDSC'],
       endDate: '2023-01-01T00:00:00Z',

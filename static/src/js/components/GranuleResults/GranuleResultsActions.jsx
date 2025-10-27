@@ -43,7 +43,6 @@ import './GranuleResultsActions.scss'
  * @param {Function} props.onChangePath - Callback to change the path.
  */
 const GranuleResultsActions = ({
-  authToken,
   addedGranuleIds,
   focusedCollectionId,
   focusedProjectCollection,
@@ -139,7 +138,6 @@ const GranuleResultsActions = ({
 
   const downloadButton = (
     <GranuleDownloadButton
-      authToken={authToken}
       badge={badge}
       buttonText={buttonText}
       focusedCollectionId={focusedCollectionId}
@@ -241,7 +239,6 @@ const GranuleResultsActions = ({
 }
 
 GranuleResultsActions.propTypes = {
-  authToken: PropTypes.string.isRequired,
   addedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({}).isRequired,

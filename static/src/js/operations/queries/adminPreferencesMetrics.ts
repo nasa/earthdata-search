@@ -1,4 +1,6 @@
-const ADMIN_PREFERENCES_METRICS = `
+import { gql } from '@apollo/client'
+
+const ADMIN_PREFERENCES_METRICS = gql`
     query AdminPreferencesMetrics {
       adminPreferencesMetrics {
         baseLayer {

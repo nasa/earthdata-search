@@ -26,10 +26,8 @@ jest.mock('../../../actions', () => ({
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 const mockDispatch = jest.fn()
-const mockGetState = jest.fn()
 configureStore.mockReturnValue({
-  dispatch: mockDispatch,
-  getState: mockGetState
+  dispatch: mockDispatch
 })
 
 describe('createCollectionSlice', () => {
@@ -86,10 +84,6 @@ describe('createCollectionSlice', () => {
           state.granules.getGranules = jest.fn()
         })
 
-        mockGetState.mockReturnValue({
-          authToken: ''
-        })
-
         const { collection } = useEdscStore.getState()
         const { getCollectionMetadata } = collection
 
@@ -135,10 +129,6 @@ describe('createCollectionSlice', () => {
 
         useEdscStore.setState((state) => {
           state.granules.getGranules = jest.fn()
-        })
-
-        mockGetState.mockReturnValue({
-          authToken: ''
         })
 
         const { collection } = useEdscStore.getState()
@@ -189,10 +179,6 @@ describe('createCollectionSlice', () => {
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
             state.granules.getGranules = jest.fn()
-          })
-
-          mockGetState.mockReturnValue({
-            authToken: ''
           })
 
           const { collection } = useEdscStore.getState()
@@ -328,10 +314,6 @@ describe('createCollectionSlice', () => {
               }
             })
 
-            mockGetState.mockReturnValue({
-              authToken: ''
-            })
-
             const { collection } = useEdscStore.getState()
             const { getCollectionMetadata } = collection
 
@@ -465,10 +447,6 @@ describe('createCollectionSlice', () => {
               state.query.collection.spatial = {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
-            })
-
-            mockGetState.mockReturnValue({
-              authToken: ''
             })
 
             const { collection } = useEdscStore.getState()
@@ -622,10 +600,6 @@ describe('createCollectionSlice', () => {
             state.collection.collectionId = 'C10000000000-EDSC'
             state.granules.getGranules = jest.fn()
             state.map.setMapLayers = jest.fn()
-          })
-
-          mockGetState.mockReturnValue({
-            authToken: ''
           })
 
           const { collection, map } = useEdscStore.getState()
@@ -784,10 +758,6 @@ describe('createCollectionSlice', () => {
             state.granules.getGranules = jest.fn()
           })
 
-          mockGetState.mockReturnValue({
-            authToken: ''
-          })
-
           const { collection } = useEdscStore.getState()
           const { getCollectionMetadata } = collection
 
@@ -848,10 +818,6 @@ describe('createCollectionSlice', () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
           state.granules.getGranules = jest.fn()
-        })
-
-        mockGetState.mockReturnValue({
-          authToken: ''
         })
 
         const { collection } = useEdscStore.getState()
@@ -961,10 +927,6 @@ describe('createCollectionSlice', () => {
           state.granules.getGranules = jest.fn()
         })
 
-        mockGetState.mockReturnValue({
-          authToken: ''
-        })
-
         const expectedItems = [
           { conceptId: 'V10000000000-EDSC' },
           { conceptId: 'V10000000001-EDSC' },
@@ -1012,10 +974,6 @@ describe('createCollectionSlice', () => {
       nock(/localhost/)
         .post(/error_logger/)
         .reply(200)
-
-      mockGetState.mockReturnValue({
-        authToken: ''
-      })
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'C10000000000-EDSC'
@@ -1079,10 +1037,6 @@ describe('createCollectionSlice', () => {
           state.timeline.getTimeline = jest.fn()
         })
 
-        mockGetState.mockReturnValue({
-          authToken: ''
-        })
-
         const zustandState = useEdscStore.getState()
         const {
           collection,
@@ -1133,10 +1087,6 @@ describe('createCollectionSlice', () => {
           state.granule.setGranuleId = jest.fn()
           state.query.changeGranuleQuery = jest.fn()
           state.timeline.getTimeline = jest.fn()
-        })
-
-        mockGetState.mockReturnValue({
-          authToken: ''
         })
 
         const zustandState = useEdscStore.getState()
@@ -1239,10 +1189,6 @@ describe('createCollectionSlice', () => {
           state.timeline.getTimeline = jest.fn()
         })
 
-        mockGetState.mockReturnValue({
-          authToken: ''
-        })
-
         const zustandState = useEdscStore.getState()
         const {
           collection,
@@ -1338,10 +1284,6 @@ describe('createCollectionSlice', () => {
         state.collection.setCollectionId = jest.fn()
       })
 
-      mockGetState.mockReturnValue({
-        authToken: ''
-      })
-
       const zustandState = useEdscStore.getState()
       const { collection } = zustandState
       const { setCollectionId, viewCollectionDetails } = collection
@@ -1374,10 +1316,6 @@ describe('createCollectionSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.setCollectionId = jest.fn()
-      })
-
-      mockGetState.mockReturnValue({
-        authToken: ''
       })
 
       const zustandState = useEdscStore.getState()

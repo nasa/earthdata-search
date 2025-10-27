@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
 import actions from '../../actions/index'
 
@@ -113,8 +113,8 @@ export const UrlQueryContainer = (props) => {
     onChangePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
-  const [createProjectMutation] = useMutation(gql(CREATE_PROJECT))
-  const [updateProjectMutation] = useMutation(gql(UPDATE_PROJECT))
+  const [createProjectMutation] = useMutation(CREATE_PROJECT)
+  const [updateProjectMutation] = useMutation(UPDATE_PROJECT)
 
   // When the Zustand state changes, encode the values and call onChangeUrl to update the URL
   useEffect(() => {

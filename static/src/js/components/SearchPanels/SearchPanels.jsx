@@ -18,15 +18,12 @@ import { commafy } from '../../util/commafy'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { granuleSortKeys } from '../../constants/granuleSortKeys'
-import { isLoggedIn } from '../../util/isLoggedIn'
 import { pluralize } from '../../util/pluralize'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import CollectionDetailsBodyContainer from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
-import GranuleDetailsBodyContainer
-  from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
 import GranuleResultsFocusedMetaContainer
@@ -39,11 +36,12 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import GranuleDetailsBody from '../GranuleDetails/GranuleDetailsBody'
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollections } from '../../zustand/selectors/collections'
@@ -54,7 +52,7 @@ import {
 import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getGranules } from '../../zustand/selectors/granules'
-import { getSitePreferences } from '../../zustand/selectors/user'
+import { getAuthToken, getSitePreferences } from '../../zustand/selectors/user'
 
 import { routes } from '../../constants/routes'
 
@@ -77,7 +75,6 @@ const defaultPanelStateFromProps = (value) => {
 }
 
 const SearchPanels = ({
-  authToken,
   collectionSubscriptions,
   isExportRunning,
   onExport,
@@ -85,6 +82,7 @@ const SearchPanels = ({
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal
 }) => {
+  const authToken = useEdscStore(getAuthToken)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const collections = useEdscStore(getCollections)
@@ -124,7 +122,7 @@ const SearchPanels = ({
     defaultPanelStateFromProps(granuleListView)
   )
 
-  const loggedIn = isLoggedIn(authToken)
+  const loggedIn = !!authToken
 
   const {
     pageNum: granulesPageNum = 1,
@@ -603,7 +601,7 @@ const SearchPanels = ({
       }
     >
       <PanelItem>
-        <GranuleDetailsBodyContainer />
+        <GranuleDetailsBody />
       </PanelItem>
     </PanelGroup>
   )
@@ -801,7 +799,6 @@ const SearchPanels = ({
 }
 
 SearchPanels.propTypes = {
-  authToken: PropTypes.string.isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isExportRunning: PropTypes.shape({
     csv: PropTypes.bool,

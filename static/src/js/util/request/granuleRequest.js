@@ -19,6 +19,7 @@ import { getBrowseImageUrlFromConcept } from '../getBrowseImageUrlFromConcept'
  */
 export default class GranuleRequest extends CmrRequest {
   constructor(authToken, earthdataEnvironment) {
+    console.log('🚀 ~ granuleRequest.js:22 ~ GranuleRequest ~ constructor ~ authToken:', authToken)
     if (authToken && authToken !== '') {
       super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
-import { gql } from '@apollo/client'
 
 import SavedProjects from '../SavedProjects'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -25,7 +24,7 @@ const setup = setupTest({
   Component: SavedProjects,
   defaultApolloClientMocks: [{
     request: {
-      query: gql(GET_PROJECTS),
+      query: GET_PROJECTS,
       variables: {
         limit: 20,
         offset: 0
@@ -79,7 +78,7 @@ describe('SavedProjects component', () => {
       setup({
         overrideApolloClientMocks: [{
           request: {
-            query: gql(GET_PROJECTS),
+            query: GET_PROJECTS,
             variables: {
               limit: 20,
               offset: 0
@@ -128,7 +127,7 @@ describe('SavedProjects component', () => {
         const { user } = setup({
           overrideApolloClientMocks: [{
             request: {
-              query: gql(GET_PROJECTS),
+              query: GET_PROJECTS,
               variables: {
                 limit: 20,
                 offset: 0
@@ -150,7 +149,7 @@ describe('SavedProjects component', () => {
             }
           }, {
             request: {
-              query: gql(DELETE_PROJECT),
+              query: DELETE_PROJECT,
               variables: {
                 obfuscatedId: '8069076'
               }
@@ -162,7 +161,7 @@ describe('SavedProjects component', () => {
             }
           }, {
             request: {
-              query: gql(GET_PROJECTS),
+              query: GET_PROJECTS,
               variables: {
                 limit: 20,
                 offset: 0
@@ -208,7 +207,7 @@ describe('SavedProjects component', () => {
         const { user, zustandState } = setup({
           overrideApolloClientMocks: [{
             request: {
-              query: gql(GET_PROJECTS),
+              query: GET_PROJECTS,
               variables: {
                 limit: 20,
                 offset: 0
@@ -230,7 +229,7 @@ describe('SavedProjects component', () => {
             }
           }, {
             request: {
-              query: gql(DELETE_PROJECT),
+              query: DELETE_PROJECT,
               variables: {
                 obfuscatedId: '8069076'
               }

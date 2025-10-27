@@ -4,6 +4,7 @@ import { screen, within } from '@testing-library/react'
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import LOGOUT from '../../../operations/mutations/logout'
 
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
   const mockPortalFeatureContainer = jest.fn(({ children }) => (
@@ -28,23 +29,21 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
 const setup = setupTest({
   Component: SecondaryToolbar,
   defaultProps: {
-    authToken: '',
     location: {
       pathname: '/search'
     },
     projectCollectionIds: [],
-    retrieval: {},
-    onLogout: jest.fn(),
-    onChangePath: jest.fn(),
-    ursProfile: {
-      firstName: 'First Name'
-    }
+    retrieval: {}
   },
   defaultZustandState: {
     savedProject: {
       setProjectName: jest.fn()
+    },
+    user: {
+      logout: jest.fn()
     }
   },
+  withApolloClient: true,
   withRouter: true
 })
 
@@ -93,8 +92,13 @@ describe('SecondaryToolbar component', () => {
 
     test('should render the user and project name dropdowns', () => {
       setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -106,8 +110,13 @@ describe('SecondaryToolbar component', () => {
 
     test('should not render the login button', () => {
       setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -115,10 +124,27 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('clicking the logout button should call handleLogout', async () => {
-      const { props, user } = setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
-        }
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
+        },
+        overrideApolloClientMocks: [
+          {
+            request: {
+              query: LOGOUT
+            },
+            result: {
+              data: {
+                logout: true
+              }
+            }
+          }
+        ]
       })
 
       const usermenuButton = screen.getByRole('button', { name: 'First Name' })
@@ -127,17 +153,20 @@ describe('SecondaryToolbar component', () => {
       const logoutButton = screen.getByRole('button', { name: 'Logout' })
       await user.click(logoutButton)
 
-      expect(props.onLogout).toHaveBeenCalledTimes(1)
-      expect(props.onLogout).toHaveBeenCalledWith()
+      expect(zustandState.user.logout).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.logout).toHaveBeenCalledWith()
     })
 
     describe('Download Status and History link', () => {
       test('adds the ee param if the earthdataEnvironment is different than the deployed environment', async () => {
         const { user } = setup({
-          overrideProps: {
-            authToken: 'fakeauthkey'
-          },
           overrideZustandState: {
+            user: {
+              authToken: 'fakeauthkey',
+              ursProfile: {
+                firstName: 'First Name'
+              }
+            },
             earthdataEnvironment: {
               currentEnvironment: 'uat'
             }
@@ -153,8 +182,13 @@ describe('SecondaryToolbar component', () => {
 
       test('does not add the ee param if the earthdataEnvironment is the deployed environment', async () => {
         const { user } = setup({
-          overrideProps: {
-            authToken: 'fakeauthkey'
+          overrideZustandState: {
+            user: {
+              authToken: 'fakeauthkey',
+              ursProfile: {
+                firstName: 'First Name'
+              }
+            }
           }
         })
 
@@ -170,8 +204,13 @@ describe('SecondaryToolbar component', () => {
   describe('#handleKeypress', () => {
     test('calls stopPropagation and preventDefault on Enter press', async () => {
       const { user } = setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -197,8 +236,13 @@ describe('SecondaryToolbar component', () => {
 
     test('does not call stopPropagation and preventDefault on a non-\'Enter\' press', async () => {
       const { user } = setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -270,8 +314,13 @@ describe('SecondaryToolbar component', () => {
 
     test('clicking the save project dropdown sets the state', async () => {
       const { user } = setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -284,8 +333,13 @@ describe('SecondaryToolbar component', () => {
 
     test('hovering over saved project renders the tool-tip', async () => {
       const { user } = setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -297,8 +351,13 @@ describe('SecondaryToolbar component', () => {
 
     test('clicking the save button sets the state and calls setProjectName', async () => {
       const { user, zustandState } = setup({
-        overrideProps: {
-          authToken: 'fakeauthkey'
+        overrideZustandState: {
+          user: {
+            authToken: 'fakeauthkey',
+            ursProfile: {
+              firstName: 'First Name'
+            }
+          }
         }
       })
 
@@ -368,8 +427,13 @@ describe('SecondaryToolbar component', () => {
     describe('while the user is logged in', () => {
       test('tour button renders', () => {
         setup({
-          overrideProps: {
-            authToken: 'fakeauthkey'
+          overrideZustandState: {
+            user: {
+              authToken: 'fakeauthkey',
+              ursProfile: {
+                firstName: 'First Name'
+              }
+            }
           }
         })
 

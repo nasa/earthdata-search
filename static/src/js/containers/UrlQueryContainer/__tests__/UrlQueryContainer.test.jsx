@@ -1,7 +1,6 @@
 import { act, waitFor } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
-import { gql } from '@apollo/client'
 import actions from '../../../actions'
 import { UrlQueryContainer, mapDispatchToProps } from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
@@ -139,7 +138,7 @@ describe('UrlQueryContainer', () => {
           },
           overrideApolloClientMocks: [{
             request: {
-              query: gql(UPDATE_PROJECT),
+              query: UPDATE_PROJECT,
               variables: {
                 obfuscatedId: '2057964173',
                 path: '/search/granules?p=C00001-EDSC&ee=prod&zoom=8'
@@ -274,7 +273,7 @@ describe('UrlQueryContainer', () => {
             },
             overrideApolloClientMocks: [{
               request: {
-                query: gql(CREATE_PROJECT),
+                query: CREATE_PROJECT,
                 variables: {
                   path: `/search/granules?p=C00001-EDSC&ee=prod&polygon[0]=${hugePolygonEncoded}`
                 }

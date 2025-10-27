@@ -14,7 +14,8 @@ import {
   SubscriptionResponse,
   Temporal,
   TimelineIntervals,
-  VariableMetadata
+  VariableMetadata,
+  UrsProfile
 } from '../types/sharedTypes'
 
 export type CollectionSlice = {
@@ -1135,14 +1136,29 @@ export type PreferencesData = {
 export type UserSlice = {
   /** The User Slice of the store */
   user: {
+    /** The user's EDL token */
+    edlToken: string | null
+
     /** The user's site preferences */
     sitePreferences: PreferencesData
     /** Function to set the user's site preferences */
     setSitePreferences: (sitePreferences: PreferencesData) => void
+
+    /** The user's authentication token */
+    authToken: string | null
+    setAuthToken: (authToken: string | null) => void
+
     /** The username of the user */
-    username?: string
+    username: string | null
     /** Function to set the username of the user */
-    setUsername: (username: string) => void
+    setUsername: (username: string | null) => void
+
+    /** The user's URS profile */
+    ursProfile: UrsProfile | null
+    setUrsProfile: (ursProfile: UrsProfile | null) => void
+
+    /** Function to log out the user */
+    logout: () => void
   }
 }
 

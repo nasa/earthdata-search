@@ -33,6 +33,9 @@ import buildEddLink from './buildEddLink'
 
 import ProgressRing from '../ProgressRing/ProgressRing'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getAuthToken } from '../../zustand/selectors/user'
+
 import './OrderStatusItem.scss'
 
 const { orderStatusRefreshTime, orderStatusRefreshTimeCreating } = getApplicationConfig()
@@ -52,7 +55,6 @@ let intervalId = null
  * @param {Function} params.onFetchRetrievalCollectionGranuleLinks - Callback function to fetch download links for a retrieval collection.
 */
 export const OrderStatusItem = ({
-  authToken,
   collection,
   defaultOpen = false,
   earthdataEnvironment,
@@ -62,6 +64,7 @@ export const OrderStatusItem = ({
   onFetchRetrievalCollectionGranuleLinks,
   onToggleAboutCSDAModal
 }) => {
+  const authToken = useEdscStore(getAuthToken)
   const [opened, setOpened] = useState(defaultOpen)
 
   const shouldRefresh = () => {
@@ -576,7 +579,6 @@ export const OrderStatusItem = ({
 }
 
 OrderStatusItem.propTypes = {
-  authToken: PropTypes.string.isRequired,
   collection: PropTypes.shape({
     access_method: PropTypes.shape({
       type: PropTypes.string

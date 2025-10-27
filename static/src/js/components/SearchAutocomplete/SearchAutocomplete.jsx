@@ -4,7 +4,6 @@ import React, {
   useCallback,
   useEffect
 } from 'react'
-import PropTypes from 'prop-types'
 import { isCancel } from 'axios'
 import { isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
@@ -20,14 +19,14 @@ import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import { mapAutocompleteToFacets } from '../../util/mapAutocompleteToFacets'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getAuthToken } from '../../zustand/selectors/user'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './SearchAutocomplete.scss'
 
-const SearchAutocomplete = ({
-  authToken
-}) => {
+const SearchAutocomplete = () => {
+  const authToken = useEdscStore(getAuthToken)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: initialKeyword } = collectionQuery
 
@@ -367,10 +366,6 @@ const SearchAutocomplete = ({
       </Button>
     </>
   )
-}
-
-SearchAutocomplete.propTypes = {
-  authToken: PropTypes.string.isRequired
 }
 
 export default SearchAutocomplete

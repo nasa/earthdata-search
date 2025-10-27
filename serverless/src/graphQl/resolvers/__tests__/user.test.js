@@ -1,5 +1,3 @@
-import { gql } from '@apollo/client'
-
 import setupServer from './__mocks__/setupServer'
 import GET_USER from '../../../../../static/src/js/operations/queries/getUser'
 import UPDATE_PREFERENCES from '../../../../../static/src/js/operations/mutations/updatePreferences'
@@ -13,7 +11,7 @@ describe('User resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_USER)
+          query: GET_USER
         }, {
           contextValue
         })
@@ -59,7 +57,7 @@ describe('User resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(UPDATE_PREFERENCES),
+          query: UPDATE_PREFERENCES,
           variables: {
             preferences: {
               collectionSort: '-score',
@@ -127,7 +125,7 @@ describe('User resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(UPDATE_PREFERENCES),
+            query: UPDATE_PREFERENCES,
             variables: {
               preferences: {
                 invalidPreference: true

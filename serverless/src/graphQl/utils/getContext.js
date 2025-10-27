@@ -1,5 +1,6 @@
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { validateToken } from '../../util/authorizer/validateToken'
+import { determineEarthdataEnvironment } from '../../util/determineEarthdataEnvironment'
 import { downcaseKeys } from '../../util/downcaseKeys'
 import getLoaders from './getLoaders'
 import DatabaseClient from './databaseClient'
@@ -31,8 +32,11 @@ const getContext = async ({ event }) => {
   // If a userId was returned, get the user from the database
   if (userId) user = await databaseClient.getUserById(userId)
 
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
   return {
     databaseClient,
+    earthdataEnvironment,
     bearerToken,
     loaders,
     user

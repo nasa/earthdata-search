@@ -3,7 +3,10 @@ import {
   getMapPreferences,
   getCollectionSortPreference,
   getUser,
-  getUsername
+  getUsername,
+  getAuthToken,
+  getEdlToken,
+  getUrsProfile
 } from '../user'
 
 import mapLayers from '../../../constants/mapLayers'
@@ -18,10 +21,16 @@ jest.mock('../../../store/configureStore')
 describe('getUser', () => {
   test('returns user slice from the zustand state', () => {
     expect(getUser(useEdscStore.getState())).toEqual({
+      authToken: null,
+      edlToken: null,
       sitePreferences: initialSitePreferences,
-      username: undefined,
+      username: null,
+      ursProfile: null,
+      logout: expect.any(Function),
+      setAuthToken: expect.any(Function),
       setSitePreferences: expect.any(Function),
-      setUsername: expect.any(Function)
+      setUsername: expect.any(Function),
+      setUrsProfile: expect.any(Function)
     })
   })
 })
@@ -33,6 +42,26 @@ describe('getUsername', () => {
     })
 
     expect(getUsername(useEdscStore.getState())).toEqual('test_user')
+  })
+})
+
+describe('getAuthToken', () => {
+  test('returns authToken from the zustand state', () => {
+    useEdscStore.setState((state) => {
+      state.user.authToken = 'test_auth_token'
+    })
+
+    expect(getAuthToken(useEdscStore.getState())).toEqual('test_auth_token')
+  })
+})
+
+describe('getEdlToken', () => {
+  test('returns edlToken from the zustand state', () => {
+    useEdscStore.setState((state) => {
+      state.user.edlToken = 'test_edl_token'
+    })
+
+    expect(getEdlToken(useEdscStore.getState())).toEqual('test_edl_token')
   })
 })
 
@@ -90,5 +119,21 @@ describe('getCollectionSortPreference', () => {
     })
 
     expect(getCollectionSortPreference(useEdscStore.getState())).toEqual('-usage_score')
+  })
+})
+
+describe('getUrsProfile', () => {
+  test('returns ursProfile from the zustand state', () => {
+    useEdscStore.setState((state) => {
+      state.user.ursProfile = {
+        emailAddress: 'test@example.com',
+        firstName: 'Test'
+      }
+    })
+
+    expect(getUrsProfile(useEdscStore.getState())).toEqual({
+      emailAddress: 'test@example.com',
+      firstName: 'Test'
+    })
   })
 })

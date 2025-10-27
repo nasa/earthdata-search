@@ -278,7 +278,6 @@ class ProjectPanels extends PureComponent {
       projectCollectionsMetadata,
       spatial,
       temporal,
-      ursProfile,
       overrideTemporal
     } = this.props
 
@@ -577,7 +576,6 @@ class ProjectPanels extends PureComponent {
               selectedAccessMethod={selectedAccessMethod}
               spatial={spatial}
               temporal={preferredTemporal}
-              ursProfile={ursProfile}
               projectCollection={projectCollection}
             />
           </PanelItem>
@@ -699,10 +697,7 @@ ProjectPanels.propTypes = {
   }).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   spatial: PropTypes.shape({}).isRequired,
-  temporal: PropTypes.shape({}).isRequired,
-  ursProfile: PropTypes.shape({
-    email_address: PropTypes.string
-  }).isRequired
+  temporal: PropTypes.shape({}).isRequired
 }
 
 export default ProjectPanels
