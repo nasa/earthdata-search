@@ -43,6 +43,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   collectionId,
   imageryLayers
 }) => {
+  console.log('🚀 ~ file: LayerPicker.tsx:46 ~ imageryLayers:', imageryLayers)
   // State for whether the layer-picker is open or hidden
   const [layersHidden, setLayersHidden] = useState(false)
 

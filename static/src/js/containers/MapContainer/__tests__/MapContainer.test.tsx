@@ -67,7 +67,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      colormapsMetadata: {},
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false
     }

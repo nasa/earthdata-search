@@ -92,7 +92,6 @@ export class Functions extends Construct {
     const {
       adminApiGatewayResource,
       collectionsApiGatewayResource,
-      colormapsApiGatewayResource,
       conceptsApiGatewayResource,
       granulesApiGatewayResource,
       opensearchApiGatewayResource,
@@ -591,25 +590,6 @@ export class Functions extends Construct {
       }
     })
 
-    /**
-     * Get Color Map
-     */
-    const getColorMapNestedStack = new cdk.NestedStack(scope, 'GetColorMapNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getColorMapNestedStack, 'GetColorMapLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        methods: ['GET'],
-        parentId: colormapsApiGatewayResource.ref,
-        parentPath: 'colormaps',
-        path: '{product}'
-      },
-      entry: '../../serverless/src/getColorMap/handler.js',
-      functionName: 'getColorMap',
-      functionNamePrefix
-    })
 
     /**
      * Get Retrieval

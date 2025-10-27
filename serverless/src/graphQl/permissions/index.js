@@ -38,7 +38,9 @@ const buildPermissions = () => shield(
       ),
       project: allow,
       projects: isValidUser,
-      user: isValidUser
+      user: isValidUser,
+      colormap: allow,
+      colormaps: allow
     },
     Mutation: {
       '*': deny,

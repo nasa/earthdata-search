@@ -1,8 +1,12 @@
+import { gql } from '@apollo/client'
+import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 import type {
   CollectionSlice,
   GranuleQuery,
   ImmerStateCreator
 } from '../types'
+// @ts-expect-error There are no types for this file
+import getApolloClient from '../../providers/getApolloClient'
 
 import routerHelper, { type Router } from '../../router/router'
 
@@ -189,16 +193,71 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // Look and see if there are any gibs tags
           // If there are, check to see if the colormaps associated with the productids in the tags exists.
           // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
+          console.log('🚀 ~ file: createCollectionSlice.ts:197 ~ tags:', tags)
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
-          if (gibsTags && gibsTags.length > 0) {
-            // Update the map layers with the gibs tags
-            get().map.setMapLayers(focusedCollectionId, gibsTags)
+          console.log('🚀 ~ file: createCollectionSlice.ts:198 ~ gibsTags:', gibsTags)
+          // Update the map layers with the gibs tags
 
-            // Load each colormap
-            gibsTags.forEach((gibsTag: { product: string }) => {
-              const { product } = gibsTag
-              reduxDispatch(actions.getColorMap({ product }))
-            })
+          let colormaps = null
+          if (gibsTags && gibsTags.length > 0) {
+            get().map.setMapLayers(focusedCollectionId, gibsTags)
+            console.log('🚀 ~ file: createCollectionSlice.ts:199 ~ gibsTags:', gibsTags)
+            // Update the map layers with the gibs tags
+
+            const products = gibsTags.map((gibsTag: { product: string }) => gibsTag.product)
+
+            try {
+              const apolloClient = getApolloClient(authToken)
+              console.log('🚀 ~ file: createCollectionSlice.ts:213 ~ apolloClient:', !!apolloClient)
+              console.log('🚀 ~ file: createCollectionSlice.ts:214 ~ products:', products)
+
+              console.log('🚀 ~ file: createCollectionSlice.ts:216 ~ GraphQL query:', GET_COLORMAPS)
+              console.log('🚀 ~ file: createCollectionSlice.ts:217 ~ variables:', { products })
+
+              let colormapsData = []
+              try {
+                const { data: colormapsResponse, errors } = await apolloClient.query({
+                  query: gql(GET_COLORMAPS),
+                  variables: { products },
+                  errorPolicy: 'all'
+                })
+
+                console.log('🚀 ~ file: createCollectionSlice.ts:223 ~ colormapsResponse:', colormapsResponse)
+                console.log('🚀 ~ file: createCollectionSlice.ts:224 ~ errors:', errors)
+                colormapsData = colormapsResponse?.colormaps || []
+              } catch (apolloError) {
+                console.error('🚀 ~ file: createCollectionSlice.ts:227 ~ Apollo Client Error:', apolloError)
+                throw apolloError
+              }
+
+              console.log('🚀 ~ file: createCollectionSlice.ts:232 ~ colormapsData:', colormapsData)
+
+              if (colormapsData && colormapsData.length > 0) {
+                console.log('🚀 ~ file: createCollectionSlice.ts:236 ~ colormapsData:', colormapsData)
+                // Store colormaps in the collection metadata
+                const colormapsMetadata: Record<string, unknown> = {}
+                colormapsData.forEach((colormap: { product: string; jsonData: unknown }) => {
+                  if (colormap.jsonData) {
+                    colormapsMetadata[colormap.product] = colormap.jsonData
+                  }
+                })
+
+                console.log('🚀 ~ file: createCollectionSlice.ts:256 ~ colormapsMetadata:', colormapsMetadata)
+
+                // Update collection metadata with colormap data
+                colormaps = colormapsMetadata
+                // Set((state) => {
+                // state.collection.collectionMetadata[conceptId].colormaps = colormapsMetadata
+
+                // If (state.collection.collectionMetadata[conceptId]) {
+                //   debugger
+                //   state.collection.collectionMetadata[conceptId].colormaps = colormapsMetadata
+                // }
+                // })
+              }
+            } catch (error) {
+              console.error('Error loading colormaps:', error)
+            }
           }
 
           // Formats the metadata returned from graphql for use throughout the application
@@ -216,6 +275,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             cloudHosted,
             coordinateSystem,
             conceptId,
+            colormaps,
             consortiums: consortiums || [],
             dataCenter,
             duplicateCollections,

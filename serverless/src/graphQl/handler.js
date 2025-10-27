@@ -35,9 +35,33 @@ export default startServerAndCreateLambdaHandler(
   server,
   handlers.createAPIGatewayProxyEventRequestHandler(),
   {
-    context: getContext,
+    context: async (params) => {
+      console.log('🚀 ~ GraphQL Handler ~ context params:', {
+        eventKeys: Object.keys(params.event || {}),
+        contextKeys: Object.keys(params.context || {}),
+        httpMethod: params.event?.httpMethod,
+        path: params.event?.path,
+        headers: params.event?.headers
+      })
+
+      const context = await getContext(params)
+      console.log('🚀 ~ GraphQL Handler ~ context created:', {
+        databaseClientAvailable: !!context.databaseClient,
+        userAvailable: !!context.user,
+        bearerTokenLength: context.bearerToken?.length || 0,
+        loadersKeys: Object.keys(context.loaders || {})
+      })
+
+      return context
+    },
     middleware: [
       () => async (result) => {
+        console.log('🚀 ~ GraphQL Handler ~ middleware result:', {
+          statusCode: result.statusCode,
+          headersKeys: Object.keys(result.headers || {}),
+          bodyLength: result.body?.length || 0
+        })
+
         const { headers } = result
         // eslint-disable-next-line no-param-reassign
         result.headers = {
@@ -52,6 +76,8 @@ export default startServerAndCreateLambdaHandler(
             'X-Request-Id'
           ].join(', ')
         }
+
+        console.log('🚀 ~ GraphQL Handler ~ headers updated:', Object.keys(result.headers))
       }
     ]
   }
