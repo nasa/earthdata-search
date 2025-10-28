@@ -5,7 +5,17 @@ const GET_USER = gql`
     user {
       id
       sitePreferences
-      ursProfile
+      ursProfile {
+        affiliation
+        country
+        emailAddress
+        firstName
+        lastName
+        organization
+        studyArea
+        uid
+        userType
+      }
       ursId
     }
   }

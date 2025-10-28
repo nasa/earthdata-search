@@ -1,6 +1,7 @@
 import setupServer from './__mocks__/setupServer'
 import GET_USER from '../../../../../static/src/js/operations/queries/getUser'
 import UPDATE_PREFERENCES from '../../../../../static/src/js/operations/mutations/updatePreferences'
+import LOGOUT from '../../../../../static/src/js/operations/mutations/logout'
 
 describe('User resolver', () => {
   describe('Query', () => {
@@ -31,6 +32,30 @@ describe('User resolver', () => {
   })
 
   describe('Mutation', () => {
+    describe('logout', () => {
+      test('deletes the user tokens', async () => {
+        const { contextValue, server } = setupServer({
+          databaseClient: {
+            deleteUserTokens: jest.fn().mockResolvedValue(1)
+          }
+        })
+
+        const response = await server.executeOperation({
+          query: LOGOUT
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        expect(errors).toBeUndefined()
+
+        expect(data).toEqual({
+          logout: true
+        })
+      })
+    })
+
     describe('updatePreferences', () => {
       test('updates the user site preferences and returns the updated user', async () => {
         const databaseClient = {

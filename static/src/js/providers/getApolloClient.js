@@ -90,7 +90,7 @@ const getApolloClient = ({
     (operation) => operation.getContext().clientName === apolloClientNames.CMR_ORDERING,
     edlTokenAuthLink.concat(cmrOrderingLink),
     // Default to the cmrGraphqlLink
-    authLink.concat(cmrGraphqlLink)
+    edlTokenAuthLink.concat(cmrGraphqlLink)
   )
 
   // Create a new ApolloClient instance

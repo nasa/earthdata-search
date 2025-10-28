@@ -1146,6 +1146,7 @@ export type UserSlice = {
 
     /** The user's authentication token */
     authToken: string | null
+    /** Function to set the user's authentication token */
     setAuthToken: (authToken: string | null) => void
 
     /** The username of the user */
@@ -1155,6 +1156,7 @@ export type UserSlice = {
 
     /** The user's URS profile */
     ursProfile: UrsProfile | null
+    /** Function to set the user's URS profile */
     setUrsProfile: (ursProfile: UrsProfile | null) => void
 
     /** Function to log out the user */

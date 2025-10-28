@@ -158,7 +158,7 @@ describe('UserLoader', () => {
                 id: '123',
                 sitePreferences: {},
                 ursId: 'test-user',
-                ursProfile: {}
+                ursProfile: null
               }
             }
           }
@@ -171,7 +171,7 @@ describe('UserLoader', () => {
       expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       expect(zustandState.user.setUrsProfile).toHaveBeenCalledTimes(1)
-      expect(zustandState.user.setUrsProfile).toHaveBeenCalledWith({})
+      expect(zustandState.user.setUrsProfile).toHaveBeenCalledWith(null)
 
       expect(zustandState.user.setSitePreferences).toHaveBeenCalledTimes(1)
       expect(zustandState.user.setSitePreferences).toHaveBeenCalledWith({})

@@ -116,6 +116,13 @@ export default class DatabaseClient {
     }
   }
 
+  /**
+   * Deletes user tokens for a specific user and environment
+   * @param {Object} params
+   * @param {string} params.earthdataEnvironment - The Earthdata environment
+   * @param {string} params.userId - The ID of the user
+   * @returns {Promise<number>} A promise that resolves to the number of rows deleted
+   */
   async deleteUserTokens({
     earthdataEnvironment,
     userId

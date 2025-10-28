@@ -51,7 +51,6 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
       const zustandState = get()
       const authToken = getAuthToken(zustandState)
-      console.log('🚀 ~ createGranulesSlice.ts:54 ~ createGranulesSlice ~ authToken:', authToken)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const collectionId = getCollectionId(zustandState)
       const collectionMetadata = getFocusedCollectionMetadata(zustandState)

@@ -5,7 +5,17 @@ const UPDATE_PREFERENCES = gql`
     updatePreferences(preferences: $preferences) {
       id
       sitePreferences
-      ursProfile
+      ursProfile {
+        affiliation
+        country
+        emailAddress
+        firstName
+        lastName
+        organization
+        studyArea
+        uid
+        userType
+      }
       ursId
     }
   }

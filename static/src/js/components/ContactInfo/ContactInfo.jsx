@@ -17,8 +17,9 @@ import { apolloClientNames } from '../../constants/apolloClientNames'
 import GET_CMR_ORDERING_USER from '../../operations/queries/getCmrOrderingUser'
 import UPDATE_CMR_ORDERING_USER from '../../operations/mutations/updateCmrOrderingUser'
 
-import './ContactInfo.scss'
 import addToast from '../../util/addToast'
+
+import './ContactInfo.scss'
 
 const ContactInfo = () => {
   const ursProfile = useEdscStore(getUrsProfile)

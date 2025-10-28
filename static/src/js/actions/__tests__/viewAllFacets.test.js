@@ -158,7 +158,7 @@ describe('getViewAllFacets', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = undefined
+      state.user.authToken = null
     })
 
     // Call the dispatch
@@ -284,7 +284,7 @@ describe('getViewAllFacets', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = undefined
+      state.user.authToken = null
     })
 
     // Call the dispatch

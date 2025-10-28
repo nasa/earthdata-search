@@ -60,6 +60,9 @@ export const getCollectionSortPreference = (state: EdscStore) => {
   return preferences.collectionSort
 }
 
+/**
+ * Get URS profile from Zustand store
+ */
 export const getUrsProfile = (state: EdscStore) => {
   const user = getUser(state)
 
