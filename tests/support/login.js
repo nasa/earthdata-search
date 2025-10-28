@@ -28,7 +28,15 @@ export const MockGetUserRoute = async (route) => route.fulfill({
         sitePreferences,
         ursId: 'testuser',
         ursProfile: {
-          firstName: 'test'
+          affiliation: 'OTHER',
+          country: 'United States',
+          emailAddress: 'test@example.com',
+          firstName: 'test',
+          lastName: 'user',
+          organization: null,
+          studyArea: 'Other',
+          uid: 'testuser',
+          userType: 'Public User'
         }
       }
     }
