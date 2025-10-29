@@ -7,6 +7,10 @@ import {
 import { setupTests } from '../../support/setupTests'
 
 import commonHeaders from './__mocks__/common_collections.headers.json'
+import allProjectionsCollectionGraphql from './__mocks__/gibs/all_projections_collection_graphql.body.json'
+import allProjectionsCollections from './__mocks__/gibs/all_projections_collections.body.json'
+import antarcticGranules from './__mocks__/gibs/antarctic_granules.body.json'
+import arcticGranules from './__mocks__/gibs/arctic_granules.body.json'
 import gibsCollectionGraphQlBody from './__mocks__/gibs/collection_graphql.body.json'
 import gibsCollectionGraphQlHeaders from './__mocks__/gibs/graphql.headers.json'
 import gibsCollectionsBody from './__mocks__/gibs/collections.body.json'
@@ -309,6 +313,98 @@ test.describe('Map: imagery and layer-picker interactions', () => {
             clip: screenshotClip,
             maxDiffPixelRatio: 0.05
           })
+        })
+      })
+    })
+
+    test.describe('when granules have antarctic gibs imagery', () => {
+      test.beforeEach(async ({ page }) => {
+        const conceptId = 'C3091256524-NSIDC_CPRD'
+        await interceptUnauthenticatedCollections({
+          page,
+          body: allProjectionsCollections,
+          headers: commonHeaders
+        })
+
+        await page.route(/search\/granules.json/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === `echo_collection_id=${conceptId}&page_num=1&page_size=20&point[]=166,-77&sort_key=-start_date`) {
+            await route.fulfill({
+              json: antarcticGranules,
+              headers: gibsGranulesHeaders
+            })
+          }
+        })
+
+        await page.route(/api$/, async (route) => {
+          if (isGetCollectionQuery(route, conceptId)) {
+            await route.fulfill({
+              json: allProjectionsCollectionGraphql,
+              headers: gibsCollectionGraphQlHeaders
+            })
+          }
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
+        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&sp[0]=166%2C-77&lat=-77&long=166&projection=EPSG%3A3031&zoom=5')
+
+        await initialMapPromise
+      })
+
+      test('loads the antarctic projection correctly', async ({ page }) => {
+        await page.getByRole('button', { name: 'Hide Snow Cover (Normalized' }).click()
+      })
+
+      test('draws the imagery of the focused granule', async ({ page }) => {
+        await expect(page).toHaveScreenshot('gibs-antarctic-projection.png', {
+          clip: screenshotClip
+        })
+      })
+    })
+
+    test.describe('when granules have arctic gibs imagery', () => {
+      test.beforeEach(async ({ page }) => {
+        const conceptId = 'C3091256524-NSIDC_CPRD'
+        await interceptUnauthenticatedCollections({
+          page,
+          body: allProjectionsCollections,
+          headers: commonHeaders
+        })
+
+        await page.route(/search\/granules.json/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === `echo_collection_id=${conceptId}&page_num=1&page_size=20&point[]=-44,67&sort_key=-start_date`) {
+            await route.fulfill({
+              json: arcticGranules,
+              headers: gibsGranulesHeaders
+            })
+          }
+        })
+
+        await page.route(/api$/, async (route) => {
+          if (isGetCollectionQuery(route, conceptId)) {
+            await route.fulfill({
+              json: allProjectionsCollectionGraphql,
+              headers: gibsCollectionGraphQlHeaders
+            })
+          }
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
+        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&sp[0]=-44%2C67&lat=64&long=-34&projection=EPSG%3A3413&zoom=3')
+
+        await initialMapPromise
+      })
+
+      test('loads the arctic projection correctly', async ({ page }) => {
+        await page.getByRole('button', { name: 'Hide Snow Cover (Normalized' }).click()
+      })
+
+      test('draws the imagery of the focused granule', async ({ page }) => {
+        await expect(page).toHaveScreenshot('gibs-arctic-projection.png', {
+          clip: screenshotClip
         })
       })
     })
