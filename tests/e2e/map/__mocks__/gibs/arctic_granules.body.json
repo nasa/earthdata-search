@@ -1,0 +1,2035 @@
+{
+  "feed": {
+    "updated": "2025-10-29T13:16:19.183Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C3091256524-NSIDC_CPRD&page_num=1&page_size=20&point[]=-44,67&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "producer_granule_id": "MYD10A1.A2025299.h16v02.061.2025301033634.hdf",
+        "time_start": "2025-10-26T00:00:00.000Z",
+        "updated": "2025-10-28T03:43:07.937Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025299.h16v02.061.2025301033634.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-26T23:59:59.000Z",
+        "id": "G3834165816-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.536491394042969",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025299.h16v02.061.2025301033634.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/26/MYD10A1.A2025299.h16v02.061.2025301033634.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025299.h16v02.061.2025301033634.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/26/MYD10A1.A2025299.h16v02.061.2025301033634.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/26/MYD10A1.A2025299.h16v02.061.2025301033634.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/26/MYD10A1.A2025299.h16v02.061.2025301033634.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/26/MYD10A1.A2025299.h16v02.061.2025301033634.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/26/MYD10A1.A2025299.h16v02.061.2025301033634.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025298.h16v02.061.2025300032533.hdf",
+        "time_start": "2025-10-25T00:00:00.000Z",
+        "updated": "2025-10-27T03:30:05.626Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025298.h16v02.061.2025300032533.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-25T23:59:59.000Z",
+        "id": "G3833088481-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.476914405822754",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025298.h16v02.061.2025300032533.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/25/MYD10A1.A2025298.h16v02.061.2025300032533.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025298.h16v02.061.2025300032533.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/25/MYD10A1.A2025298.h16v02.061.2025300032533.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/25/MYD10A1.A2025298.h16v02.061.2025300032533.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/25/MYD10A1.A2025298.h16v02.061.2025300032533.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/25/MYD10A1.A2025298.h16v02.061.2025300032533.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/25/MYD10A1.A2025298.h16v02.061.2025300032533.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025297.h16v02.061.2025299035005.hdf",
+        "time_start": "2025-10-24T00:00:00.000Z",
+        "updated": "2025-10-26T04:01:02.313Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025297.h16v02.061.2025299035005.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-24T23:59:59.000Z",
+        "id": "G3832383848-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.625287055969238",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025297.h16v02.061.2025299035005.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/24/MYD10A1.A2025297.h16v02.061.2025299035005.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025297.h16v02.061.2025299035005.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/24/MYD10A1.A2025297.h16v02.061.2025299035005.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/24/MYD10A1.A2025297.h16v02.061.2025299035005.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/24/MYD10A1.A2025297.h16v02.061.2025299035005.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/24/MYD10A1.A2025297.h16v02.061.2025299035005.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/24/MYD10A1.A2025297.h16v02.061.2025299035005.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025296.h16v02.061.2025298034306.hdf",
+        "time_start": "2025-10-23T00:00:00.000Z",
+        "updated": "2025-10-27T17:39:15.305Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025296.h16v02.061.2025298034306.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-23T23:59:59.000Z",
+        "id": "G3833714130-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.157721519470215",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025296.h16v02.061.2025298034306.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/23/MYD10A1.A2025296.h16v02.061.2025298034306.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025296.h16v02.061.2025298034306.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/23/MYD10A1.A2025296.h16v02.061.2025298034306.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/23/MYD10A1.A2025296.h16v02.061.2025298034306.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/23/MYD10A1.A2025296.h16v02.061.2025298034306.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/23/MYD10A1.A2025296.h16v02.061.2025298034306.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/23/MYD10A1.A2025296.h16v02.061.2025298034306.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "title": "OPeNDAP request URL (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.earthdata.nasa.gov/collections/C3091256524-NSIDC_CPRD/granules/MYD10A1.A2025296.h16v02.061.2025298034306.hdf"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025295.h16v02.061.2025297034307.hdf",
+        "time_start": "2025-10-22T00:00:00.000Z",
+        "updated": "2025-10-24T03:49:03.033Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025295.h16v02.061.2025297034307.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-22T23:59:59.000Z",
+        "id": "G3829620773-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.371730804443359",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025295.h16v02.061.2025297034307.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/22/MYD10A1.A2025295.h16v02.061.2025297034307.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025295.h16v02.061.2025297034307.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/22/MYD10A1.A2025295.h16v02.061.2025297034307.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/22/MYD10A1.A2025295.h16v02.061.2025297034307.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/22/MYD10A1.A2025295.h16v02.061.2025297034307.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/22/MYD10A1.A2025295.h16v02.061.2025297034307.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/22/MYD10A1.A2025295.h16v02.061.2025297034307.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025294.h16v02.061.2025296032858.hdf",
+        "time_start": "2025-10-21T00:00:00.000Z",
+        "updated": "2025-10-23T03:34:01.470Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025294.h16v02.061.2025296032858.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-21T23:59:59.000Z",
+        "id": "G3827513901-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.091462135314941",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025294.h16v02.061.2025296032858.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/21/MYD10A1.A2025294.h16v02.061.2025296032858.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025294.h16v02.061.2025296032858.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/21/MYD10A1.A2025294.h16v02.061.2025296032858.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/21/MYD10A1.A2025294.h16v02.061.2025296032858.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/21/MYD10A1.A2025294.h16v02.061.2025296032858.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/21/MYD10A1.A2025294.h16v02.061.2025296032858.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/21/MYD10A1.A2025294.h16v02.061.2025296032858.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025293.h16v02.061.2025295033824.hdf",
+        "time_start": "2025-10-20T00:00:00.000Z",
+        "updated": "2025-10-22T03:48:10.731Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025293.h16v02.061.2025295033824.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-20T23:59:59.000Z",
+        "id": "G3825467255-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.023991584777832",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025293.h16v02.061.2025295033824.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/20/MYD10A1.A2025293.h16v02.061.2025295033824.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025293.h16v02.061.2025295033824.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/20/MYD10A1.A2025293.h16v02.061.2025295033824.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/20/MYD10A1.A2025293.h16v02.061.2025295033824.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/20/MYD10A1.A2025293.h16v02.061.2025295033824.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/20/MYD10A1.A2025293.h16v02.061.2025295033824.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/20/MYD10A1.A2025293.h16v02.061.2025295033824.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025292.h16v02.061.2025294041714.hdf",
+        "time_start": "2025-10-19T00:00:00.000Z",
+        "updated": "2025-10-21T04:22:00.009Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025292.h16v02.061.2025294041714.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-19T23:59:59.000Z",
+        "id": "G3823651281-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.020169258117676",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025292.h16v02.061.2025294041714.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/19/MYD10A1.A2025292.h16v02.061.2025294041714.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025292.h16v02.061.2025294041714.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/19/MYD10A1.A2025292.h16v02.061.2025294041714.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/19/MYD10A1.A2025292.h16v02.061.2025294041714.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/19/MYD10A1.A2025292.h16v02.061.2025294041714.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/19/MYD10A1.A2025292.h16v02.061.2025294041714.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/19/MYD10A1.A2025292.h16v02.061.2025294041714.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025291.h16v02.061.2025294031131.hdf",
+        "time_start": "2025-10-18T00:00:00.000Z",
+        "updated": "2025-10-21T03:21:01.567Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025291.h16v02.061.2025294031131.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-18T23:59:59.000Z",
+        "id": "G3823582462-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.306310653686523",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025291.h16v02.061.2025294031131.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/18/MYD10A1.A2025291.h16v02.061.2025294031131.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025291.h16v02.061.2025294031131.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/18/MYD10A1.A2025291.h16v02.061.2025294031131.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/18/MYD10A1.A2025291.h16v02.061.2025294031131.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/18/MYD10A1.A2025291.h16v02.061.2025294031131.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/18/MYD10A1.A2025291.h16v02.061.2025294031131.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/18/MYD10A1.A2025291.h16v02.061.2025294031131.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025290.h16v02.061.2025294170907.hdf",
+        "time_start": "2025-10-17T00:00:00.000Z",
+        "updated": "2025-10-21T17:14:02.140Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025290.h16v02.061.2025294170907.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-17T23:59:59.000Z",
+        "id": "G3824645499-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.074924468994141",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025290.h16v02.061.2025294170907.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/17/MYD10A1.A2025290.h16v02.061.2025294170907.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025290.h16v02.061.2025294170907.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/17/MYD10A1.A2025290.h16v02.061.2025294170907.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/17/MYD10A1.A2025290.h16v02.061.2025294170907.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/17/MYD10A1.A2025290.h16v02.061.2025294170907.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/17/MYD10A1.A2025290.h16v02.061.2025294170907.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/17/MYD10A1.A2025290.h16v02.061.2025294170907.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025289.h16v02.061.2025291033155.hdf",
+        "time_start": "2025-10-16T00:00:00.000Z",
+        "updated": "2025-10-18T03:36:00.718Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025289.h16v02.061.2025291033155.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-16T23:59:59.000Z",
+        "id": "G3819523593-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.9148359298706055",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025289.h16v02.061.2025291033155.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/16/MYD10A1.A2025289.h16v02.061.2025291033155.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025289.h16v02.061.2025291033155.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/16/MYD10A1.A2025289.h16v02.061.2025291033155.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/16/MYD10A1.A2025289.h16v02.061.2025291033155.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/16/MYD10A1.A2025289.h16v02.061.2025291033155.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/16/MYD10A1.A2025289.h16v02.061.2025291033155.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/16/MYD10A1.A2025289.h16v02.061.2025291033155.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025288.h16v02.061.2025290042841.hdf",
+        "time_start": "2025-10-15T00:00:00.000Z",
+        "updated": "2025-10-17T04:41:02.446Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025288.h16v02.061.2025290042841.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-15T23:59:59.000Z",
+        "id": "G3817658180-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.50076961517334",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025288.h16v02.061.2025290042841.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/15/MYD10A1.A2025288.h16v02.061.2025290042841.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025288.h16v02.061.2025290042841.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/15/MYD10A1.A2025288.h16v02.061.2025290042841.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/15/MYD10A1.A2025288.h16v02.061.2025290042841.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/15/MYD10A1.A2025288.h16v02.061.2025290042841.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/15/MYD10A1.A2025288.h16v02.061.2025290042841.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/15/MYD10A1.A2025288.h16v02.061.2025290042841.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025287.h16v02.061.2025289035052.hdf",
+        "time_start": "2025-10-14T00:00:00.000Z",
+        "updated": "2025-10-16T03:55:01.418Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025287.h16v02.061.2025289035052.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-14T23:59:59.000Z",
+        "id": "G3815689513-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.457736968994141",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025287.h16v02.061.2025289035052.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/14/MYD10A1.A2025287.h16v02.061.2025289035052.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025287.h16v02.061.2025289035052.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/14/MYD10A1.A2025287.h16v02.061.2025289035052.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/14/MYD10A1.A2025287.h16v02.061.2025289035052.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/14/MYD10A1.A2025287.h16v02.061.2025289035052.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/14/MYD10A1.A2025287.h16v02.061.2025289035052.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/14/MYD10A1.A2025287.h16v02.061.2025289035052.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025286.h16v02.061.2025289215659.hdf",
+        "time_start": "2025-10-13T00:00:00.000Z",
+        "updated": "2025-10-16T22:06:01.951Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025286.h16v02.061.2025289215659.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-13T23:59:59.000Z",
+        "id": "G3817187391-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.504458427429199",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025286.h16v02.061.2025289215659.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/13/MYD10A1.A2025286.h16v02.061.2025289215659.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025286.h16v02.061.2025289215659.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/13/MYD10A1.A2025286.h16v02.061.2025289215659.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/13/MYD10A1.A2025286.h16v02.061.2025289215659.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/13/MYD10A1.A2025286.h16v02.061.2025289215659.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/13/MYD10A1.A2025286.h16v02.061.2025289215659.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/13/MYD10A1.A2025286.h16v02.061.2025289215659.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025285.h16v02.061.2025288050556.hdf",
+        "time_start": "2025-10-12T00:00:00.000Z",
+        "updated": "2025-10-15T05:12:01.630Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025285.h16v02.061.2025288050556.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-12T23:59:59.000Z",
+        "id": "G3813924069-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.973494529724121",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025285.h16v02.061.2025288050556.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/12/MYD10A1.A2025285.h16v02.061.2025288050556.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025285.h16v02.061.2025288050556.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/12/MYD10A1.A2025285.h16v02.061.2025288050556.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/12/MYD10A1.A2025285.h16v02.061.2025288050556.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/12/MYD10A1.A2025285.h16v02.061.2025288050556.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/12/MYD10A1.A2025285.h16v02.061.2025288050556.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/12/MYD10A1.A2025285.h16v02.061.2025288050556.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025284.h16v02.061.2025286032803.hdf",
+        "time_start": "2025-10-11T00:00:00.000Z",
+        "updated": "2025-10-13T03:33:02.535Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025284.h16v02.061.2025286032803.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-11T23:59:59.000Z",
+        "id": "G3809935055-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.004678726196289",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025284.h16v02.061.2025286032803.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/11/MYD10A1.A2025284.h16v02.061.2025286032803.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025284.h16v02.061.2025286032803.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/11/MYD10A1.A2025284.h16v02.061.2025286032803.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/11/MYD10A1.A2025284.h16v02.061.2025286032803.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/11/MYD10A1.A2025284.h16v02.061.2025286032803.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/11/MYD10A1.A2025284.h16v02.061.2025286032803.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/11/MYD10A1.A2025284.h16v02.061.2025286032803.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025283.h16v02.061.2025285032909.hdf",
+        "time_start": "2025-10-10T00:00:00.000Z",
+        "updated": "2025-10-12T03:34:03.356Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025283.h16v02.061.2025285032909.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-10T23:59:59.000Z",
+        "id": "G3808181110-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.723633766174316",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025283.h16v02.061.2025285032909.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/10/MYD10A1.A2025283.h16v02.061.2025285032909.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025283.h16v02.061.2025285032909.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/10/MYD10A1.A2025283.h16v02.061.2025285032909.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/10/MYD10A1.A2025283.h16v02.061.2025285032909.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/10/MYD10A1.A2025283.h16v02.061.2025285032909.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/10/MYD10A1.A2025283.h16v02.061.2025285032909.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/10/MYD10A1.A2025283.h16v02.061.2025285032909.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025282.h16v02.061.2025284031238.hdf",
+        "time_start": "2025-10-09T00:00:00.000Z",
+        "updated": "2025-10-11T03:22:03.760Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025282.h16v02.061.2025284031238.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-09T23:59:59.000Z",
+        "id": "G3806458173-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "5.106372833251953",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025282.h16v02.061.2025284031238.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/09/MYD10A1.A2025282.h16v02.061.2025284031238.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025282.h16v02.061.2025284031238.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/09/MYD10A1.A2025282.h16v02.061.2025284031238.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/09/MYD10A1.A2025282.h16v02.061.2025284031238.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/09/MYD10A1.A2025282.h16v02.061.2025284031238.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/09/MYD10A1.A2025282.h16v02.061.2025284031238.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/09/MYD10A1.A2025282.h16v02.061.2025284031238.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025281.h16v02.061.2025283032933.hdf",
+        "time_start": "2025-10-08T00:00:00.000Z",
+        "updated": "2025-10-10T03:40:02.414Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025281.h16v02.061.2025283032933.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-08T23:59:59.000Z",
+        "id": "G3804325509-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.791015625",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025281.h16v02.061.2025283032933.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/08/MYD10A1.A2025281.h16v02.061.2025283032933.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025281.h16v02.061.2025283032933.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/08/MYD10A1.A2025281.h16v02.061.2025283032933.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/08/MYD10A1.A2025281.h16v02.061.2025283032933.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/08/MYD10A1.A2025281.h16v02.061.2025283032933.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/08/MYD10A1.A2025281.h16v02.061.2025283032933.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/08/MYD10A1.A2025281.h16v02.061.2025283032933.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD10A1.A2025280.h16v02.061.2025282040734.hdf",
+        "time_start": "2025-10-07T00:00:00.000Z",
+        "updated": "2025-10-09T04:17:01.862Z",
+        "dataset_id": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+        "data_center": "NSIDC_CPRD",
+        "title": "MYD10A1.A2025280.h16v02.061.2025282040734.hdf",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2025-10-07T23:59:59.000Z",
+        "id": "G3801521269-NSIDC_CPRD",
+        "original_format": "ECHO10",
+        "granule_size": "4.981374740600586",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "59.6087 -39.8727 59.6195 -19.7527 70.0475 -29.17 69.9719 -58.8 59.6087 -39.8727"
+          ]
+        ],
+        "collection_concept_id": "C3091256524-NSIDC_CPRD",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025280.h16v02.061.2025282040734.hdf",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/07/MYD10A1.A2025280.h16v02.061.2025282040734.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "Download MYD10A1.A2025280.h16v02.061.2025282040734.hdf.xml",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/07/MYD10A1.A2025280.h16v02.061.2025282040734.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-protected/MODIS/MYD10A1/61/2025/10/07/MYD10A1.A2025280.h16v02.061.2025282040734.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access via S3 to the granule",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/07/MYD10A1.A2025280.h16v02.061.2025282040734.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/07/MYD10A1.A2025280.h16v02.061.2025282040734.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "(METADATA)",
+            "hreflang": "en-US",
+            "href": "s3://nsidc-cumulus-prod-public/MODIS/MYD10A1/61/2025/10/07/MYD10A1.A2025280.h16v02.061.2025282040734.hdf.xml"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+          }
+        ]
+      }
+    ]
+  }
+}
