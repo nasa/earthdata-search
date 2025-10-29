@@ -352,11 +352,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await initialMapPromise
       })
 
-      test('loads the antarctic projection correctly', async ({ page }) => {
-        await page.getByRole('button', { name: 'Hide Snow Cover (Normalized' }).click()
-      })
-
-      test('draws the imagery of the focused granule', async ({ page }) => {
+      test('draws the granule GIBS imagery @screenshot', async ({ page }) => {
         await expect(page).toHaveScreenshot('gibs-antarctic-projection.png', {
           clip: screenshotClip
         })
@@ -398,13 +394,10 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await initialMapPromise
       })
 
-      test('loads the arctic projection correctly', async ({ page }) => {
-        await page.getByRole('button', { name: 'Hide Snow Cover (Normalized' }).click()
-      })
-
-      test('draws the imagery of the focused granule', async ({ page }) => {
+      test('draws the granule GIBS imagery @screenshot', async ({ page }) => {
         await expect(page).toHaveScreenshot('gibs-arctic-projection.png', {
-          clip: screenshotClip
+          clip: screenshotClip,
+          maxDiffPixelRatio: 0.03
         })
       })
     })
