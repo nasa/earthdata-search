@@ -329,10 +329,16 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.route(/search\/granules.json/, async (route) => {
           const query = route.request().postData()
 
-          if (query === `echo_collection_id=${conceptId}&page_num=1&page_size=20&point[]=166,-77&sort_key=-start_date`) {
+          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=MYD10A1.A2025014.h22v16.061.2025016045026.hdf&sort_key=-start_date`) {
             await route.fulfill({
               json: antarcticGranules,
-              headers: gibsGranulesHeaders
+              headers: {
+                'access-control-expose-headers': 'cmr-hits',
+                'cmr-hits': '1',
+                'cmr-request-id': 'a147eaf4-ae99-440e-aef5-e0a8208d6167',
+                'cmr-took': '451',
+                'content-type': 'application/json;charset=utf-8'
+              }
             })
           }
         })
@@ -346,10 +352,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily.*TileMatrix=0&TileCol=1&TileRow=1/)
-        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&sp[0]=166%2C-77&lat=-77&long=166&projection=EPSG%3A3031&zoom=5')
+        await page.route(/colormaps\/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/TIME=2025-01-14&layer=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/)
+        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&pg[0][id]=MYD10A1.A2025014.h22v16.061.2025016045026.hdf&lat=-74&long=155&projection=EPSG%3A3031&zoom=5')
 
         await initialMapPromise
+
+        // Close the layer picker to emphasize the map in the screenshot
+        await page.keyboard.press('l')
       })
 
       test('draws the granule GIBS imagery @screenshot', async ({ page }) => {
@@ -371,10 +386,16 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.route(/search\/granules.json/, async (route) => {
           const query = route.request().postData()
 
-          if (query === `echo_collection_id=${conceptId}&page_num=1&page_size=20&point[]=-44,67&sort_key=-start_date`) {
+          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=MYD10A1.A2025301.h11v02.061.2025303033037.hdf&sort_key=-start_date`) {
             await route.fulfill({
               json: arcticGranules,
-              headers: gibsGranulesHeaders
+              headers: {
+                'access-control-expose-headers': 'cmr-hits',
+                'cmr-hits': '1',
+                'cmr-request-id': 'a147eaf4-ae99-440e-aef5-e0a8208d6167',
+                'cmr-took': '451',
+                'content-type': 'application/json;charset=utf-8'
+              }
             })
           }
         })
@@ -388,16 +409,24 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily.*TileMatrix=0&TileCol=-1&TileRow=2/)
-        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&sp[0]=-44%2C67&lat=64&long=-34&projection=EPSG%3A3413&zoom=3')
+        await page.route(/colormaps\/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/TIME=2025-10-28&layer=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/)
+        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&pg[0][id]=MYD10A1.A2025301.h11v02.061.2025303033037.hdf&lat=66&long=-135&projection=EPSG%3A3413&zoom=6')
 
         await initialMapPromise
+
+        // Close the layer picker to emphasize the map in the screenshot
+        await page.keyboard.press('l')
       })
 
       test('draws the granule GIBS imagery @screenshot', async ({ page }) => {
         await expect(page).toHaveScreenshot('gibs-arctic-projection.png', {
-          clip: screenshotClip,
-          maxDiffPixelRatio: 0.03
+          clip: screenshotClip
         })
       })
     })
