@@ -346,7 +346,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
+        const initialMapPromise = page.waitForResponse(/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily.*TileMatrix=0&TileCol=1&TileRow=1/)
         await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&sp[0]=166%2C-77&lat=-77&long=166&projection=EPSG%3A3031&zoom=5')
 
         await initialMapPromise
@@ -388,7 +388,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
+        const initialMapPromise = page.waitForResponse(/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily.*TileMatrix=0&TileCol=-1&TileRow=2/)
         await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&sp[0]=-44%2C67&lat=64&long=-34&projection=EPSG%3A3413&zoom=3')
 
         await initialMapPromise
