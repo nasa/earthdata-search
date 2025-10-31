@@ -1,0 +1,486 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "This global Level-3 (L3) data set provides a daily composite of snow cover and albedo derived from the 'MODIS/Aqua Snow Cover 5-Min L2 Swath 500m' data set (DOI:10.5067/MODIS/MYD10_L2.061). Each data granule is a 10°x10° tile projected to a 500 m sinusoidal grid.\n\nThe terms \"Version 61\" and \"Collection 6.1\" are used interchangeably in reference to this release of MODIS data.",
+      "archiveAndDistributionInformation": {
+        "fileDistributionInformation": [
+          {
+            "formatType": "Native",
+            "format": "HDF-EOS2",
+            "formatDescription": "HTTPS 3.5 MB"
+          }
+        ]
+      },
+      "associatedDois": null,
+      "boxes": [
+        "-90 -180 90 180"
+      ],
+      "cloudHosted": true,
+      "conceptId": "C3091256524-NSIDC_CPRD",
+      "coordinateSystem": "CARTESIAN",
+      "consortiums": [
+        "GEOSS",
+        "EOSDIS"
+      ],
+      "dataCenter": "NSIDC_CPRD",
+      "dataCenters": [
+        {
+          "roles": [
+            "ARCHIVER"
+          ],
+          "shortName": "NASA NSIDC DAAC",
+          "contactInformation": {
+            "relatedUrls": [
+              {
+                "description": "Archiving Data Center",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://nsidc.org/daac"
+              }
+            ],
+            "contactMechanisms": [
+              {
+                "type": "Telephone",
+                "value": "1 303 492 6199"
+              },
+              {
+                "type": "Email",
+                "value": "nsidc@nsidc.org"
+              }
+            ],
+            "addresses": [
+              {
+                "streetAddresses": [
+                  "National Snow and Ice Data Center",
+                  "CIRES, 449 UCB",
+                  "University of Colorado"
+                ],
+                "city": "Boulder",
+                "stateProvince": "CO",
+                "country": "USA",
+                "postalCode": "80309-0449"
+              }
+            ]
+          }
+        },
+        {
+          "roles": [
+            "DISTRIBUTOR"
+          ],
+          "shortName": "NASA NSIDC DAAC",
+          "contactInformation": {
+            "relatedUrls": [
+              {
+                "description": "Archiving Data Center",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://nsidc.org/daac"
+              }
+            ],
+            "contactMechanisms": [
+              {
+                "type": "Telephone",
+                "value": "1 303 492 6199"
+              },
+              {
+                "type": "Email",
+                "value": "nsidc@nsidc.org"
+              }
+            ],
+            "addresses": [
+              {
+                "streetAddresses": [
+                  "National Snow and Ice Data Center",
+                  "CIRES, 449 UCB",
+                  "University of Colorado"
+                ],
+                "city": "Boulder",
+                "stateProvince": "CO",
+                "country": "USA",
+                "postalCode": "80309-0449"
+              }
+            ]
+          }
+        },
+        {
+          "roles": [
+            "PROCESSOR"
+          ],
+          "shortName": "NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS",
+          "contactInformation": {
+            "relatedUrls": [
+              {
+                "description": "Originating Data Center",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://modaps.modaps.eosdis.nasa.gov/"
+              }
+            ]
+          }
+        },
+        {
+          "roles": [
+            "ORIGINATOR"
+          ],
+          "shortName": "NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS",
+          "contactInformation": {
+            "relatedUrls": [
+              {
+                "description": "Originating Data Center",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://modaps.modaps.eosdis.nasa.gov/"
+              }
+            ]
+          }
+        }
+      ],
+      "directDistributionInformation": {
+        "region": "us-west-2",
+        "s3BucketAndObjectPrefixNames": [
+          "nsidc-cumulus-prod-protected/MODIS/MYD10A1/61",
+          "nsidc-cumulus-prod-public/MODIS/MYD10A1/61"
+        ],
+        "s3CredentialsApiEndpoint": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentials",
+        "s3CredentialsApiDocumentationUrl": "https://data.nsidc.earthdatacloud.nasa.gov/s3credentialsREADME"
+      },
+      "doi": {
+        "doi": "10.5067/MODIS/MYD10A1.061"
+      },
+      "duplicateCollections": {
+        "count": 1,
+        "items": [
+          {
+            "id": "C1646610079-NSIDC_ECS"
+          }
+        ]
+      },
+      "hasGranules": true,
+      "lines": null,
+      "nativeDataFormats": [
+        "HDF-EOS2"
+      ],
+      "points": null,
+      "polygons": null,
+      "relatedUrls": [
+        {
+          "description": "NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "subtype": "Earthdata Search",
+          "url": "https://search.earthdata.nasa.gov/search/granules?p=C3091256524-NSIDC_CPRD",
+          "getData": {
+            "format": "Not provided",
+            "size": 0,
+            "unit": "KB"
+          }
+        },
+        {
+          "description": "Direct download via HTTPS protocol.",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "subtype": "DIRECT DOWNLOAD",
+          "url": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3091256524-NSIDC_CPRD",
+          "getData": {
+            "format": "Not provided",
+            "size": 0,
+            "unit": "KB"
+          }
+        },
+        {
+          "description": "Search and filter data files using a map-based interface",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "subtype": "Data Access Tool",
+          "url": "https://nsidc.org/data/data-access-tool/MYD10A1/versions/61/",
+          "getData": {
+            "format": "Not provided",
+            "size": 0,
+            "unit": "KB"
+          }
+        },
+        {
+          "description": "This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "subtype": "WORLDVIEW",
+          "url": "https://worldview.earthdata.nasa.gov/?v=-200,-82,159,84&l=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily,Coastlines_15m,MODIS_Terra_CorrectedReflectance_TrueColor"
+        },
+        {
+          "description": "Provides access to data, documentation, tools, citation information, support, and other resources.",
+          "urlContentType": "CollectionURL",
+          "type": "DATA SET LANDING PAGE",
+          "url": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+        },
+        {
+          "description": "Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "GENERAL DOCUMENTATION",
+          "url": "https://doi.org/10.5067/MODIS/MYD10A1.061"
+        }
+      ],
+      "relatedCollections": {
+        "count": 0,
+        "items": []
+      },
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ALBEDO"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "SNOW COVER"
+        }
+      ],
+      "shortName": "MYD10A1",
+      "spatialExtent": {
+        "spatialCoverageType": "HORIZONTAL",
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "CARTESIAN",
+            "boundingRectangles": [
+              {
+                "westBoundingCoordinate": -180,
+                "northBoundingCoordinate": 90,
+                "eastBoundingCoordinate": 180,
+                "southBoundingCoordinate": -90
+              }
+            ]
+          },
+          "resolutionAndCoordinateSystem": {
+            "horizontalDataResolution": {
+              "griddedResolutions": [
+                {
+                  "xdimension": 500,
+                  "ydimension": 500,
+                  "unit": "Meters"
+                }
+              ]
+            }
+          }
+        },
+        "granuleSpatialRepresentation": "GEODETIC"
+      },
+      "tags": {
+        "edsc.extra.serverless.collection_capabilities": {
+          "data": {
+            "cloud_cover": false,
+            "day_night_flag": true,
+            "granule_online_access_flag": true,
+            "orbit_calculated_spatial_domains": true,
+            "updated_at": "2025-10-28T12:34:27.902Z"
+          }
+        },
+        "edsc.extra.serverless.gibs": {
+          "data": [
+            {
+              "antarctic": true,
+              "group": "overlays",
+              "product": "MODIS_Aqua_L3_NDSI_Snow_Cover_Daily",
+              "antarctic_resolution": "500m",
+              "layerPeriod": "Daily",
+              "updated_at": "2025-10-28T12:45:18.999Z",
+              "arctic": true,
+              "title": "Snow Cover (Normalized Difference Snow Index, L3, Daily)",
+              "source": "Aqua / MODIS",
+              "match": {
+                "time_start": ">=2002-07-04T00:00:00Z",
+                "day_night_flag": "day"
+              },
+              "geographic": true,
+              "arctic_resolution": "500m",
+              "format": "png",
+              "geographic_resolution": "500m"
+            }
+          ]
+        }
+      },
+      "temporalExtents": [
+        {
+          "endsAtPresentFlag": false,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2002-07-04T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "timeStart": "2002-07-04T00:00:00.000Z",
+      "timeEnd": null,
+      "tilingIdentificationSystems": [
+        {
+          "tilingIdentificationSystemName": "MODIS Tile SIN",
+          "coordinate1": {
+            "minimumValue": 0,
+            "maximumValue": 35
+          },
+          "coordinate2": {
+            "minimumValue": 0,
+            "maximumValue": 17
+          }
+        }
+      ],
+      "title": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid V061",
+      "versionId": "61",
+      "services": {
+        "count": 2,
+        "items": [
+          {
+            "conceptId": "S3107386427-NSIDC_CPRD",
+            "longName": "HTTPS File System",
+            "name": "NSIDC_CPRD_HTTPS_File_System",
+            "type": "NOT PROVIDED",
+            "url": {
+              "urlValue": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/"
+            },
+            "serviceOptions": null,
+            "supportedOutputProjections": null,
+            "supportedReformattings": null
+          },
+          {
+            "conceptId": "S2472217299-NSIDC_CPRD",
+            "longName": "NASA Earthdata Cloud (AWS S3)",
+            "name": "NSIDC_CPRD_S3",
+            "type": "NOT PROVIDED",
+            "url": {
+              "urlValue": "s3://nsidc-cumulus-prod-protected/"
+            },
+            "serviceOptions": null,
+            "supportedOutputProjections": null,
+            "supportedReformattings": null
+          }
+        ]
+      },
+      "granules": {
+        "count": 2582172,
+        "items": [
+          {
+            "conceptId": "G3091511525-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091511557-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091511598-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091511600-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091511612-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091511659-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513151-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513157-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513161-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513182-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513210-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513212-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513213-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513233-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513242-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513260-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513266-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513306-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513318-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3091513327-NSIDC_CPRD",
+            "onlineAccessFlag": true
+          }
+        ]
+      },
+      "subscriptions": {
+        "count": 0,
+        "items": []
+      },
+      "tools": {
+        "count": 5,
+        "items": [
+          {
+            "longName": "earthaccess",
+            "name": "NSIDC_CPRD_EARTHACCESS",
+            "potentialAction": null
+          },
+          {
+            "longName": "AppEEARS",
+            "name": "NSIDC_ECS_APPEEARS",
+            "potentialAction": null
+          },
+          {
+            "longName": "Data Access Tool",
+            "name": "NSIDC_ECS_Data_Access_Tool",
+            "potentialAction": null
+          },
+          {
+            "longName": "NASA Earthdata Search",
+            "name": "NSIDC_ECS_NASA_Earthdata_Search",
+            "potentialAction": null
+          },
+          {
+            "longName": "NASA Worldview",
+            "name": "NSIDC_ECS_WORLDVIEW",
+            "potentialAction": null
+          }
+        ]
+      },
+      "variables": {
+        "count": 0,
+        "cursor": null,
+        "items": []
+      }
+    }
+  }
+}
