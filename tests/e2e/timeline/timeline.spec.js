@@ -31,7 +31,7 @@ test.describe('Timeline spec', () => {
       })
     })
 
-    await page.route(/cmr-graphql-proxy/, async (route) => {
+    await page.route(/graphql.*\/api/, async (route) => {
       await route.fulfill({
         json: collectionsGraphJson.body,
         headers: authHeaders

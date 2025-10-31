@@ -1,53 +1,26 @@
 import jwt from 'jsonwebtoken'
 import jwksClient from 'jwks-rsa'
+import { getEarthdataConfig } from '../../../../sharedUtils/config'
 
-const SIT_JWK_URL = 'https://sit.urs.earthdata.nasa.gov/.well-known/edl_sit_jwks.json'
-const UAT_JWK_URL = 'https://uat.urs.earthdata.nasa.gov/.well-known/edl_uat_jwks.json'
-const PROD_JWK_URL = 'https://urs.earthdata.nasa.gov/.well-known/edl_ops_jwks.json'
-
-const pubKey = async (keyFilePath, kid) => {
+/**
+ * Retrieves the public key for a given key ID from a JWKS endpoint
+ */
+const pubKey = async (uri, keyId) => {
   const client = jwksClient({
     strictSsl: true,
-    jwksUri: keyFilePath
+    jwksUri: uri
   })
 
-  const key = await client.getSigningKey(kid)
+  const key = await client.getSigningKey(keyId)
 
   return key.getPublicKey()
 }
 
-let sitKey
-let uatKey
-let prodKey
-
-const getKey = async (environment) => {
-  switch (environment) {
-    case 'sit':
-      if (!sitKey) {
-        sitKey = await pubKey(SIT_JWK_URL, 'edljwtpubkey_sit')
-      }
-
-      return sitKey
-    case 'uat':
-      if (!uatKey) {
-        uatKey = await pubKey(UAT_JWK_URL, 'edljwtpubkey_uat')
-      }
-
-      return uatKey
-    case 'prod':
-      if (!prodKey) {
-        prodKey = await pubKey(PROD_JWK_URL, 'edljwtpubkey_ops')
-      }
-
-      return prodKey
-    default:
-      throw new Error(`Unknown environment: ${environment}`)
-  }
+const keys = {
+  sit: null,
+  uat: null,
+  prod: null
 }
-
-const sitIssuer = 'https://sit.urs.earthdata.nasa.gov'
-const uatIssuer = 'https://uat.urs.earthdata.nasa.gov'
-const prodIssuer = 'https://urs.earthdata.nasa.gov'
 
 /**
  * Validates a users EDL token, attempts to refresh the token if needed
@@ -61,19 +34,17 @@ export const validateToken = async (edlToken, earthdataEnvironment) => {
     return false
   }
 
-  const key = await getKey(earthdataEnvironment)
-  let issuer = prodIssuer
-  if (earthdataEnvironment === 'sit') {
-    issuer = sitIssuer
+  const {
+    edlHost: issuer,
+    edlJwk,
+    edlJwkId
+  } = getEarthdataConfig(earthdataEnvironment)
+
+  if (!keys[earthdataEnvironment]) {
+    keys[earthdataEnvironment] = await pubKey(edlJwk, edlJwkId)
   }
 
-  if (earthdataEnvironment === 'uat') {
-    issuer = uatIssuer
-  }
-
-  if (earthdataEnvironment === 'prod') {
-    issuer = prodIssuer
-  }
+  const key = keys[earthdataEnvironment]
 
   jwt.verify(
     edlToken,

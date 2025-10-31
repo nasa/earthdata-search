@@ -162,7 +162,7 @@ test.describe('page titles', () => {
           })
         })
 
-        await page.route(/cmr-graphql-proxy$/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           route.fulfill({
             headers: authHeaders,
             json: collectionsGraphQlJson.body

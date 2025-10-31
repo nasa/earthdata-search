@@ -15,7 +15,8 @@ import {
   Temporal,
   TimelineIntervals,
   VariableMetadata,
-  UrsProfile
+  UrsProfile,
+  ShapefileRequestParams
 } from '../types/sharedTypes'
 
 export type CollectionSlice = {
@@ -978,17 +979,6 @@ type UpdateShapefileParams = {
   file?: ShapefileFile
 }
 
-type SaveShapefileParams = {
-  /** The user's edlToken */
-  edlToken: string
-  /** The shapefile filename */
-  filename: string
-  /** The shapefile size */
-  size: string
-  /** The shapefile contents */
-  file: ShapefileFile
-}
-
 export type ShapefileSlice = {
   /** The Shapefile Slice of the store */
   shapefile: {
@@ -1017,7 +1007,7 @@ export type ShapefileSlice = {
     /** Function to clear the shapefile */
     clearShapefile: () => void
     /** Function to save the shapefile */
-    saveShapefile: (data: SaveShapefileParams) => Promise<void>
+    saveShapefile: (data: ShapefileRequestParams) => Promise<void>
     /** Function to fetch the shapefile */
     fetchShapefile: (shapefileId: string) => Promise<void>
   }

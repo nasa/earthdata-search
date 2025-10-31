@@ -50,8 +50,9 @@ export const MockGetUserRoute = async (route) => route.fulfill({
  * Sets a cookie that will result in the user being logged in for a test
  */
 export const login = async (page, context) => {
-  await page.route(/graphql$/, async (route) => {
-    const { query } = JSON.parse(route.request().postData())
+  await page.route('http://localhost:3001/graphql', async (route) => {
+    const request = JSON.parse(route.request().postData())
+    const { query } = request
 
     if (query.includes('query GetUser')) {
       await MockGetUserRoute(route)

@@ -8,7 +8,6 @@ import {
   badOrderPayload
 } from './mocks'
 import * as generateRetrievalPayloads from '../generateRetrievalPayloads'
-import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 
 let dbConnectionToMock
 let dbTracker
@@ -25,11 +24,6 @@ jest.mock('@aws-sdk/client-sqs', () => ({
 }))
 
 beforeEach(() => {
-  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({
-    jwtToken: '2e8e995e7511c2c6620336797b',
-    userId: 1
-  }))
-
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',

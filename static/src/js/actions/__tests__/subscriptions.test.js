@@ -115,10 +115,9 @@ describe('createSubscription', () => {
 
     getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
-    nock(/localhost/)
-      .post(/graphql/, (body) => {
-        const { data } = body
-        const { variables } = data
+    nock(/graphql/)
+      .post(/api/, (body) => {
+        const { variables } = body
         const { params } = variables
         const {
           collectionConceptId,
@@ -194,10 +193,9 @@ describe('createSubscription', () => {
 
     getCollectionSubscriptionQueryString.mockReturnValue('options[temporal][limit_to_granules]=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
-    nock(/localhost/)
-      .post(/graphql/, (body) => {
-        const { data } = body
-        const { variables } = data
+    nock(/graphql/)
+      .post(/api/, (body) => {
+        const { variables } = body
         const { params } = variables
         const {
           name,
@@ -275,10 +273,9 @@ describe('createSubscription', () => {
 
       getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
-      nock(/localhost/)
-        .post(/graphql/, (body) => {
-          const { data } = body
-          const { variables } = data
+      nock(/graphql/)
+        .post(/api/, (body) => {
+          const { variables } = body
           const { params } = variables
           const {
             collectionConceptId,
@@ -357,8 +354,8 @@ describe('createSubscription', () => {
         graphQlHost: 'https://graphql.example.com'
       }))
 
-      nock(/localhost/)
-        .post(/graphql/)
+      nock(/graphql/)
+        .post(/api/)
         .reply(200, {
           errors: [{
             message: 'The Provider Id [EDSC] and Subscription Name [Test Name] combination must be unique for a given native-id.'
@@ -408,8 +405,8 @@ describe('getSubscriptions', () => {
           graphQlHost: 'https://graphql.example.com'
         }))
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               subscriptions: {
@@ -489,8 +486,8 @@ describe('getSubscriptions', () => {
           graphQlHost: 'https://graphql.example.com'
         }))
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               subscriptions: {
@@ -548,8 +545,8 @@ describe('getSubscriptions', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -608,7 +605,7 @@ describe('getGranuleSubscriptions', () => {
         opensearchRoot: 'https://cmr.example.com'
       }))
 
-      nock(/graph/)
+      nock(/graphql/)
         .post(/api/)
         .reply(200, {
           data: {
@@ -648,7 +645,7 @@ describe('getGranuleSubscriptions', () => {
         opensearchRoot: 'https://cmr.example.com'
       }))
 
-      nock(/graph/)
+      nock(/graphql/)
         .post(/api/)
         .reply(200, {
           data: {
@@ -689,8 +686,8 @@ describe('getGranuleSubscriptions', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -728,8 +725,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           deleteSubscription: {
@@ -766,8 +763,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           deleteSubscription: {
@@ -834,8 +831,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -875,8 +872,8 @@ describe('updateSubscription', () => {
 
     const getGranuleSubscriptionsMock = jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           updateSubscription: {
@@ -928,8 +925,8 @@ describe('updateSubscription', () => {
 
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           updateSubscription: {
@@ -982,8 +979,8 @@ describe('updateSubscription', () => {
 
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           updateSubscription: {
@@ -1039,8 +1036,8 @@ describe('updateSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'

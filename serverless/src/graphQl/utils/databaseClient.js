@@ -405,6 +405,11 @@ export default class DatabaseClient {
     }
   }
 
+  /**
+   * Retrieves the user by the provided `where` clause
+   * @param {Object} where `where` clause to filter the user
+   * @returns {Promise<Object>} A promise that resolves to the user object
+   */
   async getUserWhere(where) {
     try {
       const db = await this.getDbConnection()

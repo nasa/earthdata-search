@@ -5,7 +5,7 @@ import { get } from 'tiny-cookie'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
 
-const AuthToken = ({
+const EdlTokenLoader = ({
   children
 }) => {
   const setEdlToken = useEdscStore((state) => state.user.setEdlToken)
@@ -38,8 +38,8 @@ const AuthToken = ({
   return children
 }
 
-AuthToken.propTypes = {
+EdlTokenLoader.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default AuthToken
+export default EdlTokenLoader

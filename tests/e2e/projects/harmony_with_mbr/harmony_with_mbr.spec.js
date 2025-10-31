@@ -50,7 +50,7 @@ test.describe('Harmony with MBR', () => {
           })
         })
 
-        await page.route(/cmr-graphql-proxy/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           await route.fulfill({
             json: collectionsGraphQlBody,
             headers: authHeaders

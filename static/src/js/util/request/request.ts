@@ -1,4 +1,4 @@
-import axios, { CancelTokenSource } from 'axios'
+import axios, { AxiosError, CancelTokenSource } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
 // @ts-expect-error Types are not defined for this module
@@ -130,9 +130,7 @@ export default class Request {
       }
 
       // Transform the provided data before we send it to it's endpoint
-      const newData = this.transformData(filteredData)
-
-      return newData
+      return this.transformData(filteredData)
     }
 
     return null
@@ -155,8 +153,6 @@ export default class Request {
       timingEventValue: timing
     })
 
-    this.handleUnauthorized(data)
-
     return data
   }
 
@@ -170,7 +166,7 @@ export default class Request {
     this.startTimer()
     this.setFullUrl(url)
 
-    return axios({
+    const axiosObject = axios({
       method: 'post',
       baseURL: this.baseUrl,
       url,
@@ -184,6 +180,12 @@ export default class Request {
       ),
       cancelToken: this.cancelToken.token
     })
+
+    axiosObject.catch((error) => {
+      this.handleUnauthorized(error)
+    })
+
+    return axiosObject
   }
 
   /**
@@ -232,7 +234,13 @@ export default class Request {
       }
     }
 
-    return axios(requestOptions)
+    const axiosObject = axios(requestOptions)
+
+    axiosObject.catch((error) => {
+      this.handleUnauthorized(error)
+    })
+
+    return axiosObject
   }
 
   /**
@@ -277,7 +285,13 @@ export default class Request {
       }
     }
 
-    return axios(requestOptions)
+    const axiosObject = axios(requestOptions)
+
+    axiosObject.catch((error) => {
+      this.handleUnauthorized(error)
+    })
+
+    return axiosObject
   }
 
   /*
@@ -292,8 +306,8 @@ export default class Request {
   /**
    * Handle an unauthorized response
    */
-  handleUnauthorized(data: Response) {
-    if (data.statusCode === 401 || data.message === 'Unauthorized') {
+  handleUnauthorized(error: AxiosError) {
+    if ((error.response && error.response.status === 401) || error.message === 'Unauthorized') {
       const { href, pathname } = window.location
       // Determine the path to redirect to for logging in
       const returnPath = href

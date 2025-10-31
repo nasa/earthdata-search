@@ -2,7 +2,7 @@ import * as tinyCookie from 'tiny-cookie'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import AuthToken from '../AuthToken'
+import EdlTokenLoader from '../EdlTokenLoader'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -11,7 +11,7 @@ jest.mock('tiny-cookie', () => ({
 }))
 
 const setup = setupTest({
-  Component: AuthToken,
+  Component: EdlTokenLoader,
   defaultProps: {
     children: 'children'
   },
@@ -22,7 +22,7 @@ const setup = setupTest({
   }
 })
 
-describe('AuthToken component', () => {
+describe('EdlTokenLoader component', () => {
   test('should call setEdlToken when mounted', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'edlToken') return 'token'
