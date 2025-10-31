@@ -50,8 +50,6 @@ class LegendControl extends Control {
   public render() {
     const isEmpty = this.imageryLayers.layerData.length === 0
     if (isEmpty) {
-      console.log('imagery layers are empty for some reason')
-
       return
     }
 

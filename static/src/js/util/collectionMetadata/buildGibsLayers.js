@@ -9,7 +9,7 @@ export const buildGibsLayers = (collectionJson) => {
 
   const { tags } = collectionJson
 
-  // Extract the gibs tags from the collection metadata
+  // Exract the gibs tags from the collection metadata
   const gibsTag = getValueForTag('gibs', tags)
 
   // If there is no gibs tag, return a human readable string

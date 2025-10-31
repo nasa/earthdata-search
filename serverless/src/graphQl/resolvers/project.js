@@ -8,7 +8,6 @@ export default {
       const { databaseClient, user = {} } = context
       const { id: currentUserId } = user
       const { obfuscatedId } = args
-      console.log('🚀 ~ file: project.js:11 ~ obfuscatedId:', obfuscatedId)
 
       let project = await databaseClient.getProjectByObfuscatedId(obfuscatedId)
 
@@ -110,7 +109,6 @@ export default {
   Project: {
     obfuscatedId: async (parent) => {
       const { id } = parent
-      console.log('🚀 ~ file: project.js:113 ~ id:', id)
 
       return obfuscateId(id)
     },

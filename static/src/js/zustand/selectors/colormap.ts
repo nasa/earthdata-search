@@ -14,9 +14,7 @@ export const getColormapsMetadata = (state: EdscStore) => {
     return {}
   }
 
-  console.log('🚀 ~ file: colormap.ts:11 ~ collectionMetadata:', collectionMetadata)
   const { colormaps = {} } = collectionMetadata[collectionId]
-  console.log('🚀 ~ file: colormap.ts:18 ~ colormaps:', colormaps)
 
   return colormaps
 }
