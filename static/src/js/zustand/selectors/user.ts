@@ -7,15 +7,6 @@ import { EdscStore } from '../types'
 export const getUser = (state: EdscStore) => state.user
 
 /**
- * Retrieve user's authToken from Zustand store
- */
-export const getAuthToken = (state: EdscStore) => {
-  const user = getUser(state)
-
-  return user.authToken
-}
-
-/**
  * Retrieve user's edlToken from Zustand store
  */
 export const getEdlToken = (state: EdscStore) => {

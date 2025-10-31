@@ -2,8 +2,7 @@ import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { getJwtToken } from '../util/getJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { parseError } from '../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
 
@@ -27,9 +26,7 @@ const cmrGraphQlProxy = async (event, context) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const jwtToken = getJwtToken(event)
-
-  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+  const { jwtToken } = getAuthorizerContext(event)
 
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
@@ -44,7 +41,7 @@ const cmrGraphQlProxy = async (event, context) => {
         variables
       },
       headers: {
-        Authorization: `Bearer ${echoToken}`,
+        Authorization: `Bearer ${jwtToken}`,
         'X-Request-Id': requestId
       }
     })

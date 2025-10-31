@@ -17,15 +17,15 @@ const setup = setupTest({
   },
   defaultZustandState: {
     user: {
-      setAuthToken: jest.fn()
+      setEdlToken: jest.fn()
     }
   }
 })
 
 describe('AuthToken component', () => {
-  test('should call setAuthToken when mounted', () => {
+  test('should call setEdlToken when mounted', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-      if (param === 'authToken') return 'token'
+      if (param === 'edlToken') return 'token'
 
       return ''
     })
@@ -36,14 +36,14 @@ describe('AuthToken component', () => {
 
     const { zustandState } = setup()
 
-    expect(zustandState.user.setAuthToken).toHaveBeenCalledTimes(1)
-    expect(zustandState.user.setAuthToken).toHaveBeenCalledWith('token')
+    expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
+    expect(zustandState.user.setEdlToken).toHaveBeenCalledWith('token')
   })
 
   describe('when disableDatabaseComponents is true', () => {
-    test('should call setAuthToken with an empty string', () => {
+    test('should call setEdlToken with an empty string', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-        if (param === 'authToken') return 'token'
+        if (param === 'edlToken') return 'token'
 
         return ''
       })
@@ -54,8 +54,8 @@ describe('AuthToken component', () => {
 
       const { zustandState } = setup()
 
-      expect(zustandState.user.setAuthToken).toHaveBeenCalledTimes(1)
-      expect(zustandState.user.setAuthToken).toHaveBeenCalledWith(undefined)
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledWith(null)
     })
   })
 })

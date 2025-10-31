@@ -223,7 +223,7 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
-          authToken: 'mockAuthToken',
+          edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
           file: mockshapefile
@@ -281,7 +281,7 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
-          authToken: 'mockAuthToken',
+          edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
           file: mockshapefile

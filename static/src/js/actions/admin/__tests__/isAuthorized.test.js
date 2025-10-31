@@ -27,7 +27,7 @@ describe('adminIsAuthorized', () => {
       .reply(200, { authorized: true })
 
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     await store.dispatch(adminIsAuthorized()).then(() => {

@@ -12,7 +12,7 @@ import { getEarthdataConfig, getEnvironmentConfig } from '../../../../sharedUtil
 import { apolloClientNames } from '../constants/apolloClientNames'
 
 let client = null
-let previousAuthToken = null
+let previousEdlToken = null
 
 const { apiHost } = getEnvironmentConfig()
 
@@ -22,24 +22,22 @@ const { apiHost } = getEnvironmentConfig()
  * This is useful for using the ApolloClient outside a React component, such as in
  * Redux actions.
  * @param {Object} params
- * @param {String} params.authToken User's auth token
  * @param {String} params.earthdataEnvironment The Earthdata environment (e.g., "prod", "uat", "sit")
  * @param {String} params.edlToken User's EDL token
  */
 const getApolloClient = ({
-  authToken,
   earthdataEnvironment,
   edlToken
 }) => {
   const { cmrHost, graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
-  // If the client has already been created with the same authToken, return it
-  // The authToken will change when the cookie has been loaded, so we need to create a new client
+  // If the client has already been created with the same edlToken, return it
+  // The edlToken will change when the cookie has been loaded, so we need to create a new client
   // when the token changes.
-  if (client && previousAuthToken === authToken) return client
+  if (client && previousEdlToken === edlToken) return client
 
-  // Save the authToken to check if it changes next time
-  previousAuthToken = authToken
+  // Save the edlToken to check if it changes next time
+  previousEdlToken = edlToken
 
   // Create a new InMemoryCache instance
   const cache = new InMemoryCache({
@@ -53,19 +51,12 @@ const getApolloClient = ({
     }
   })
 
-  // Create the authLink with the provided authToken
-  const authLink = setContext((_, { headers }) => ({
-    headers: {
-      ...headers,
-      'Client-Id': getClientId().client,
-      Authorization: `Bearer ${authToken}`
-    }
-  }))
-
   // Create the authLink with the provided edlToken
   const edlTokenAuthLink = setContext((_, { headers }) => ({
     headers: {
       ...headers,
+      'Client-Id': getClientId().client,
+      'Earthdata-ENV': earthdataEnvironment,
       Authorization: `Bearer ${edlToken}`
     }
   }))
@@ -102,7 +93,7 @@ const getApolloClient = ({
         || operation.getContext().clientName === apolloClientNames.CMR_GRAPHQL,
       cmrLinks,
       // Default to the edscLink
-      authLink.concat(edscLink)
+      edlTokenAuthLink.concat(edscLink)
     )
   })
 

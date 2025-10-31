@@ -1,10 +1,7 @@
 import CollectionRequest from '../collectionRequest'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
+jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
 describe('CollectionRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
@@ -12,15 +9,13 @@ describe('CollectionRequest#constructor', () => {
     const request = new CollectionRequest(token)
 
     expect(request.authenticated).toBeTruthy()
-    expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost:3000')
-    expect(request.searchPath).toEqual('collections')
+    expect(request.edlToken).toEqual(token)
+    expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
+    expect(request.searchPath).toEqual('search/collections.json')
   })
 
   test('sets the default values when unauthenticated', () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
-
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -30,7 +25,7 @@ describe('CollectionRequest#constructor', () => {
 
 describe('CollectionRequest#permittedCmrKeys', () => {
   test('returns an array of collection CMR keys', () => {
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
@@ -85,7 +80,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
 
 describe('CollectionRequest#nonIndexedKeys', () => {
   test('returns an array of collection CMR keys', () => {
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     expect(request.nonIndexedKeys()).toEqual([
       'bounding_box',
@@ -124,7 +119,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('returns transformed data', () => {
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     const data = {
       feed: {
@@ -159,7 +154,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('return data with isOpenSearch flag correctly', () => {
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     const data = {
       feed: {
@@ -204,7 +199,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('return data with isCSDA flag correctly', () => {
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     const data = {
       feed: {
@@ -241,7 +236,7 @@ describe('CollectionRequest#transformResponse', () => {
     test('when an image is defined', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new CollectionRequest(undefined, 'prod')
+      const request = new CollectionRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -293,7 +288,7 @@ describe('CollectionRequest#transformResponse', () => {
     })
 
     test('when an image is not defined', () => {
-      const request = new CollectionRequest(undefined, 'prod')
+      const request = new CollectionRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -333,7 +328,7 @@ describe('CollectionRequest#transformResponse', () => {
   })
 
   test('returns data if response is not successful', () => {
-    const request = new CollectionRequest(undefined, 'prod')
+    const request = new CollectionRequest(null, 'prod')
 
     const data = {
       errors: ['HTTP Request Error']

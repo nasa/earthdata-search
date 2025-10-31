@@ -393,7 +393,8 @@ export type ShapefileFile = FeatureCollection & {
 }
 
 export type ShapefileRequestParams = {
-  authToken: string
+  earthdataEnvironment: string
+  edlToken: string | null
   file: ShapefileFile
   filename: string
   size: string
@@ -476,7 +477,7 @@ export type Shapefile = {
 /** Redux state types */
 export type ReduxState = {
   /** The auth token */
-  authToken: string
+  edlToken: string
   /** The Earthdata Environment */
   earthdataEnvironment: string
 }

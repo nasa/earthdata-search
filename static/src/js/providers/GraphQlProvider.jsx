@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import getApolloClient from './getApolloClient'
 
 import useEdscStore from '../zustand/useEdscStore'
-import { getAuthToken, getEdlToken } from '../zustand/selectors/user'
+import { getEdlToken } from '../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 /**
@@ -16,17 +16,15 @@ import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironme
  * @returns {React.ReactNode} The ApolloProvider component with the configured client
 */
 const GraphQlProvider = ({ children }) => {
-  const authToken = useEdscStore(getAuthToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const edlToken = useEdscStore(getEdlToken)
 
   const client = useMemo(
     () => getApolloClient({
-      authToken,
       earthdataEnvironment,
       edlToken
     }),
-    [authToken, earthdataEnvironment, edlToken]
+    [edlToken, earthdataEnvironment, edlToken]
   )
 
   return (

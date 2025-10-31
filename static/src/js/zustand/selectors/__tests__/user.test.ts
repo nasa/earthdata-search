@@ -4,7 +4,6 @@ import {
   getCollectionSortPreference,
   getUser,
   getUsername,
-  getAuthToken,
   getEdlToken,
   getUrsProfile
 } from '../user'
@@ -21,13 +20,12 @@ jest.mock('../../../store/configureStore')
 describe('getUser', () => {
   test('returns user slice from the zustand state', () => {
     expect(getUser(useEdscStore.getState())).toEqual({
-      authToken: null,
       edlToken: null,
       sitePreferences: initialSitePreferences,
       username: null,
       ursProfile: null,
       logout: expect.any(Function),
-      setAuthToken: expect.any(Function),
+      setEdlToken: expect.any(Function),
       setSitePreferences: expect.any(Function),
       setUsername: expect.any(Function),
       setUrsProfile: expect.any(Function)
@@ -45,13 +43,13 @@ describe('getUsername', () => {
   })
 })
 
-describe('getAuthToken', () => {
-  test('returns authToken from the zustand state', () => {
+describe('getEdlToken', () => {
+  test('returns edlToken from the zustand state', () => {
     useEdscStore.setState((state) => {
-      state.user.authToken = 'test_auth_token'
+      state.user.edlToken = 'test_auth_token'
     })
 
-    expect(getAuthToken(useEdscStore.getState())).toEqual('test_auth_token')
+    expect(getEdlToken(useEdscStore.getState())).toEqual('test_auth_token')
   })
 })
 

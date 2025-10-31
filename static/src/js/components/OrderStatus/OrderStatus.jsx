@@ -18,7 +18,7 @@ import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { stringify } from '../../util/url/url'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import { routes } from '../../constants/routes'
@@ -51,16 +51,16 @@ export const OrderStatus = ({
   const params = useParams()
   const { id: paramsId } = params
 
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   useEffect(() => {
-    if (authToken !== '') {
+    if (edlToken !== '') {
       const { id: retrievalId } = params
 
-      onFetchRetrieval(retrievalId, authToken)
+      onFetchRetrieval(retrievalId, edlToken)
     }
-  }, [authToken])
+  }, [edlToken])
 
   const {
     collections,

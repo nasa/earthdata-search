@@ -14,7 +14,7 @@ import actions from '../../actions'
 
 import GET_GRANULE from '../../operations/queries/getGranule'
 
-import { getAuthToken } from '../selectors/user'
+import { getEdlToken } from '../selectors/user'
 import { getFocusedGranule, getGranuleId } from '../selectors/granule'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionMetadata } from '../selectors/collection'
@@ -32,7 +32,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
       } = configureStore()
 
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const granuleId = getGranuleId(zustandState)
       const collectionMetadata = getFocusedCollectionMetadata(zustandState)
@@ -49,7 +49,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
       const { hasAllMetadata = false } = focusedGranuleMetadata
       if (hasAllMetadata) return
 
-      const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+      const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
       try {
         const response = await graphQlRequestObject.search(GET_GRANULE, {

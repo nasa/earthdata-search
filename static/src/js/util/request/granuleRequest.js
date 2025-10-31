@@ -18,17 +18,14 @@ import { getBrowseImageUrlFromConcept } from '../getBrowseImageUrlFromConcept'
  * Request object for granule specific requests
  */
 export default class GranuleRequest extends CmrRequest {
-  constructor(authToken, earthdataEnvironment) {
-    if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+  constructor(edlToken, earthdataEnvironment) {
+    super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
+    this.searchPath = 'search/granules.json'
+
+    if (edlToken) {
       this.authenticated = true
-      this.authToken = authToken
-      this.searchPath = 'granules'
-    } else {
-      super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
-
-      this.searchPath = 'search/granules.json'
+      this.edlToken = edlToken
     }
   }
 

@@ -1,8 +1,7 @@
-import { buildAuthenticatedRedirectUrl } from '../url/buildAuthenticatedRedirectUrl'
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
-export const buildUrls = (json, authToken, earthdataEnvironment) => {
+export const buildUrls = (json, edlToken, earthdataEnvironment) => {
   const {
     conceptId: collectionId,
     shortName: providedCollectionShortName,
@@ -52,9 +51,9 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
     // Direct CMR URL
     let url = `${cmrHost}/search/concepts/${collectionId}.${type.ext}`
 
-    if (authToken) {
-      // If an auth token is provided route the request through Lambda
-      url = buildAuthenticatedRedirectUrl(encodeURIComponent(url), authToken, earthdataEnvironment)
+    if (edlToken) {
+      // If an auth token is provided add it as a query param
+      url += `?token=Bearer%20${edlToken}`
     }
 
     urls[type.ext] = {
@@ -83,13 +82,9 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
   } else if (json.hasGranules) {
     let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
 
-    if (authToken) {
-      // If an auth token is provided route the request through Lambda
-      cmrGranulesUrl = buildAuthenticatedRedirectUrl(
-        encodeURIComponent(cmrGranulesUrl),
-        authToken,
-        earthdataEnvironment
-      )
+    if (edlToken) {
+      // If an auth token is provided add it as a query param
+      cmrGranulesUrl += `?token=Bearer%20${edlToken}`
     }
 
     urls.granuleDatasource = {

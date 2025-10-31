@@ -117,9 +117,6 @@ describe('App component', () => {
                 path: routes.EARTHDATA_DOWNLOAD_CALLBACK
               }),
               expect.objectContaining({
-                path: routes.AUTH_CALLBACK
-              }),
-              expect.objectContaining({
                 path: routes.ADMIN,
                 children: [
                   expect.objectContaining({
@@ -153,6 +150,9 @@ describe('App component', () => {
                 ]
               })
             ]
+          }),
+          expect.objectContaining({
+            path: routes.AUTH_CALLBACK
           }),
           expect.objectContaining({
             path: '*'

@@ -24,8 +24,8 @@ export default class Request {
   /** If the request is for an authenticated user */
   authenticated: boolean
 
-  /** The user's authToken */
-  authToken: string | undefined
+  /** The user's edlToken */
+  edlToken: string | undefined
 
   /** The base URL for the request */
   baseUrl: string
@@ -72,14 +72,14 @@ export default class Request {
   }
 
   /**
-   * Getter for the authToken. Returns an empty string if the request is optionallyAuthenticated
+   * Getter for the edlToken. Returns an empty string if the request is optionallyAuthenticated
    */
-  getAuthToken() {
-    if (this.optionallyAuthenticated && !this.authToken) {
+  getEdlToken() {
+    if (this.optionallyAuthenticated && !this.edlToken) {
       return ''
     }
 
-    return this.authToken
+    return this.edlToken
   }
 
   /**
@@ -115,22 +115,14 @@ export default class Request {
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
 
-    if (
-      this.earthdataEnvironment
-      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
-    ) {
-      // eslint-disable-next-line no-param-reassign
-      headers['Earthdata-ENV'] = this.earthdataEnvironment
-    }
-
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer ${this.getAuthToken()}`
+      headers.Authorization = `Bearer ${this.getEdlToken()}`
     }
 
     if (data) {
       // POST requests to Lambda use a JSON string
-      if (this.authenticated || this.lambda) {
+      if (this.lambda) {
         return JSON.stringify({
           params: filteredData,
           requestId: this.requestId
@@ -138,7 +130,9 @@ export default class Request {
       }
 
       // Transform the provided data before we send it to it's endpoint
-      return this.transformData(filteredData)
+      const newData = this.transformData(filteredData)
+
+      return newData
     }
 
     return null
@@ -220,14 +214,14 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer ${this.getAuthToken()}`
+          Authorization: `Bearer ${this.getEdlToken()}`
         }
       }
     }
 
     if (
       this.earthdataEnvironment
-      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
+      && (this.lambda)
     ) {
       requestOptions = {
         ...requestOptions,
@@ -265,7 +259,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer ${this.getAuthToken()}`
+          Authorization: `Bearer ${this.getEdlToken()}`
         }
       }
     }

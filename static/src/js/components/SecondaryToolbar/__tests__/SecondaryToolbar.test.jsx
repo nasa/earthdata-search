@@ -4,7 +4,6 @@ import { screen, within } from '@testing-library/react'
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import LOGOUT from '../../../operations/mutations/logout'
 
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
   const mockPortalFeatureContainer = jest.fn(({ children }) => (
@@ -94,7 +93,7 @@ describe('SecondaryToolbar component', () => {
       setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -112,7 +111,7 @@ describe('SecondaryToolbar component', () => {
       setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -123,28 +122,16 @@ describe('SecondaryToolbar component', () => {
       expect(screen.queryByRole('button', { name: 'Log In' })).not.toBeInTheDocument()
     })
 
-    test('clicking the logout button should call handleLogout', async () => {
+    test('clicking the logout button should call logout', async () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
           }
-        },
-        overrideApolloClientMocks: [
-          {
-            request: {
-              query: LOGOUT
-            },
-            result: {
-              data: {
-                logout: true
-              }
-            }
-          }
-        ]
+        }
       })
 
       const usermenuButton = screen.getByRole('button', { name: 'First Name' })
@@ -162,7 +149,7 @@ describe('SecondaryToolbar component', () => {
         const { user } = setup({
           overrideZustandState: {
             user: {
-              authToken: 'fakeauthkey',
+              edlToken: 'fakeauthkey',
               ursProfile: {
                 firstName: 'First Name'
               }
@@ -184,7 +171,7 @@ describe('SecondaryToolbar component', () => {
         const { user } = setup({
           overrideZustandState: {
             user: {
-              authToken: 'fakeauthkey',
+              edlToken: 'fakeauthkey',
               ursProfile: {
                 firstName: 'First Name'
               }
@@ -206,7 +193,7 @@ describe('SecondaryToolbar component', () => {
       const { user } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -238,7 +225,7 @@ describe('SecondaryToolbar component', () => {
       const { user } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -316,7 +303,7 @@ describe('SecondaryToolbar component', () => {
       const { user } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -335,7 +322,7 @@ describe('SecondaryToolbar component', () => {
       const { user } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -353,7 +340,7 @@ describe('SecondaryToolbar component', () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'fakeauthkey',
+            edlToken: 'fakeauthkey',
             ursProfile: {
               firstName: 'First Name'
             }
@@ -429,7 +416,7 @@ describe('SecondaryToolbar component', () => {
         setup({
           overrideZustandState: {
             user: {
-              authToken: 'fakeauthkey',
+              edlToken: 'fakeauthkey',
               ursProfile: {
                 firstName: 'First Name'
               }

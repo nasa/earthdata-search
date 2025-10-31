@@ -19,14 +19,14 @@ import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import { mapAutocompleteToFacets } from '../../util/mapAutocompleteToFacets'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './SearchAutocomplete.scss'
 
 const SearchAutocomplete = () => {
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: initialKeyword } = collectionQuery
 
@@ -119,7 +119,7 @@ const SearchAutocomplete = () => {
     setIsLoading(true)
     setIsLoaded(false)
 
-    const requestObject = new AutocompleteRequest(authToken, earthdataEnvironment)
+    const requestObject = new AutocompleteRequest(edlToken, earthdataEnvironment)
 
     cancelTokenRef.current = requestObject.getCancelToken()
 

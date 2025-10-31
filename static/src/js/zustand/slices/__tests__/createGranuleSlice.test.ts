@@ -111,7 +111,7 @@ describe('createGranuleSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: ''
+          edlToken: ''
         })
 
         const { granule, errors } = useEdscStore.getState()
@@ -142,7 +142,7 @@ describe('createGranuleSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: ''
+            edlToken: ''
           })
 
           const { granule, errors } = useEdscStore.getState()
@@ -214,7 +214,7 @@ describe('createGranuleSlice', () => {
             })
 
             mockGetState.mockReturnValue({
-              authToken: ''
+              edlToken: ''
             })
 
             const { granule, errors } = useEdscStore.getState()
@@ -254,7 +254,7 @@ describe('createGranuleSlice', () => {
           }
 
           mockGetState.mockReturnValue({
-            authToken: ''
+            edlToken: ''
           })
 
           const { granule, errors } = useEdscStore.getState()
@@ -291,7 +291,7 @@ describe('createGranuleSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: ''
+          edlToken: ''
         })
 
         const { granule } = useEdscStore.getState()

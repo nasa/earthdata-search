@@ -3,7 +3,7 @@ import { mbr } from '@edsc/geo-utils'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { buildParams } from '../util/cmr/buildParams'
-import { getJwtToken } from '../util/getJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 
 /**
  * Fetches opendap access method links from CMR
@@ -101,8 +101,10 @@ export const fetchOpendapLinks = async ({
     'variables'
   ]
 
+  const { jwtToken } = getAuthorizerContext(event)
+
   const response = await doSearchRequest({
-    jwtToken: getJwtToken(event),
+    jwtToken,
     path: `/service-bridge/ous/collection/${collectionId}`,
     params: buildParams({
       body: JSON.stringify({ params: ousPayload }),

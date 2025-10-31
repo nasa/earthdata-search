@@ -1,10 +1,7 @@
 import GranuleRequest from '../granuleRequest'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
+jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
 describe('GranuleRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
@@ -12,15 +9,13 @@ describe('GranuleRequest#constructor', () => {
     const request = new GranuleRequest(token)
 
     expect(request.authenticated).toBeTruthy()
-    expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost:3000')
-    expect(request.searchPath).toEqual('granules')
+    expect(request.edlToken).toEqual(token)
+    expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
+    expect(request.searchPath).toEqual('search/granules.json')
   })
 
   test('sets the default values when unauthenticated', () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
-
-    const request = new GranuleRequest(undefined, 'prod')
+    const request = new GranuleRequest(null, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -30,7 +25,7 @@ describe('GranuleRequest#constructor', () => {
 
 describe('GranuleRequest#permittedCmrKeys', () => {
   test('returns an array of timeline CMR keys', () => {
-    const request = new GranuleRequest(undefined, 'prod')
+    const request = new GranuleRequest(null, 'prod')
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
@@ -61,7 +56,7 @@ describe('GranuleRequest#permittedCmrKeys', () => {
 
 describe('GranuleRequest#nonIndexedKeys', () => {
   test('returns an array of timeline CMR keys', () => {
-    const request = new GranuleRequest(undefined, 'prod')
+    const request = new GranuleRequest(null, 'prod')
 
     expect(request.nonIndexedKeys()).toEqual([
       'bounding_box',
@@ -85,7 +80,7 @@ describe('GranuleRequest#transformResponse', () => {
   test('returns transformed data', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-    const request = new GranuleRequest(undefined, 'prod')
+    const request = new GranuleRequest(null, 'prod')
 
     const data = {
       feed: {
@@ -124,7 +119,7 @@ describe('GranuleRequest#transformResponse', () => {
     test('returns the spatial data as geojson', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new GranuleRequest(undefined, 'prod')
+      const request = new GranuleRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -173,7 +168,7 @@ describe('GranuleRequest#transformResponse', () => {
     test('when the granule has no browse image link', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new GranuleRequest(undefined, 'prod')
+      const request = new GranuleRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -212,7 +207,7 @@ describe('GranuleRequest#transformResponse', () => {
     test('when the granule has a browse image link', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new GranuleRequest(undefined, 'prod')
+      const request = new GranuleRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -264,7 +259,7 @@ describe('GranuleRequest#transformResponse', () => {
     test('when the granule has multiple browse image links it uses the first URL', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new GranuleRequest(undefined, 'prod')
+      const request = new GranuleRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -332,7 +327,7 @@ describe('GranuleRequest#transformResponse', () => {
     test('when the granule has multiple browse image link protocols it uses the first https URL', () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-      const request = new GranuleRequest(undefined, 'prod')
+      const request = new GranuleRequest(null, 'prod')
 
       const data = {
         feed: {
@@ -399,7 +394,7 @@ describe('GranuleRequest#transformResponse', () => {
   })
 
   test('returns data if response is not successful', () => {
-    const request = new GranuleRequest(undefined, 'prod')
+    const request = new GranuleRequest(null, 'prod')
 
     const data = {
       statusCode: 404

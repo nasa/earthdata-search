@@ -5,10 +5,14 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import type { RequestParams } from '../../types/sharedTypes'
 
 export default class ShapefileRequest extends Request {
-  constructor(earthdataEnvironment: string) {
+  constructor(edlToken: string | null, earthdataEnvironment: string) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
+    if (edlToken) {
+      this.authenticated = true
+      this.edlToken = edlToken
+    }
   }
 
   fetch(shapefileId: string) {

@@ -34,7 +34,7 @@ import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
 import {
-  getAuthToken,
+  getEdlToken,
   getSitePreferences,
   getUsername
 } from '../selectors/user'
@@ -57,7 +57,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const { search } = location
 
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const collectionsQuery = getCollectionsQuery(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const focusedCollectionId = getCollectionId(zustandState)
@@ -108,7 +108,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       // Retrieve the default CMR tags to provide to the collection request
       const { defaultCmrSearchTags, maxCmrPageSize } = getApplicationConfig()
 
-      const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+      const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
       try {
         const response = await graphQlRequestObject.search(GET_COLLECTION, {
@@ -204,7 +204,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // Formats the metadata returned from graphql for use throughout the application
           const focusedMetadata = createFocusedCollectionMetadata(
             collection,
-            authToken,
+            edlToken,
             earthdataEnvironment
           )
 

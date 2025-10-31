@@ -979,8 +979,8 @@ type UpdateShapefileParams = {
 }
 
 type SaveShapefileParams = {
-  /** The user's authToken */
-  authToken: string
+  /** The user's edlToken */
+  edlToken: string
   /** The shapefile filename */
   filename: string
   /** The shapefile size */
@@ -1138,16 +1138,13 @@ export type UserSlice = {
   user: {
     /** The user's EDL token */
     edlToken: string | null
+    /** Function to set the user's EDL token */
+    setEdlToken: (edlToken: string | null) => void
 
     /** The user's site preferences */
     sitePreferences: PreferencesData
     /** Function to set the user's site preferences */
     setSitePreferences: (sitePreferences: PreferencesData) => void
-
-    /** The user's authentication token */
-    authToken: string | null
-    /** Function to set the user's authentication token */
-    setAuthToken: (authToken: string | null) => void
 
     /** The username of the user */
     username: string | null

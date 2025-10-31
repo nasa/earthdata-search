@@ -1,10 +1,6 @@
-import { getJwtToken } from '../getJwtToken'
+import { getAuthorizerContext } from '../getAuthorizerContext'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
-describe('util#getJwtToken', () => {
+describe('util#getAuthorizerContext', () => {
   test('correctly returns the JWT token when one is already set', () => {
     const token = '123.456.789'
 
@@ -16,6 +12,8 @@ describe('util#getJwtToken', () => {
       }
     }
 
-    expect(getJwtToken(event)).toEqual('123.456.789')
+    expect(getAuthorizerContext(event)).toEqual({
+      jwtToken: token
+    })
   })
 })

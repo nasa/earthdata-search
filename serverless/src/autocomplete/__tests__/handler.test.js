@@ -2,8 +2,7 @@ import nock from 'nock'
 
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as doSearchRequest from '../../util/cmr/doSearchRequest'
-import * as getEchoToken from '../../util/urs/getEchoToken'
-import * as getJwtToken from '../../util/getJwtToken'
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 
 import autocomplete from '../handler'
 
@@ -11,8 +10,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => '1234-abcd-5678-efgh')
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ jwtToken: 'mockJwt' }))
 })
 
 describe('autocomplete', () => {
@@ -30,8 +28,8 @@ describe('autocomplete', () => {
 
     await autocomplete(event, {})
 
-    expect(mock).toBeCalledTimes(1)
-    expect(mock).toBeCalledWith({
+    expect(mock).toHaveBeenCalledTimes(1)
+    expect(mock).toHaveBeenCalledWith({
       jwtToken: 'mockJwt',
       earthdataEnvironment: 'prod',
       method: 'get',

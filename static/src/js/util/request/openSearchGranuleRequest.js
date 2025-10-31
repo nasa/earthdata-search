@@ -9,7 +9,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import normalizeSpatial from '../map/normalizeSpatial'
 
 export default class OpenSearchGranuleRequest extends Request {
-  constructor(authToken, earthdataEnvironment, collectionId) {
+  constructor(edlToken, earthdataEnvironment, collectionId) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
@@ -20,9 +20,9 @@ export default class OpenSearchGranuleRequest extends Request {
       removeNSPrefix: true
     })
 
-    if (authToken && authToken !== '') {
+    if (edlToken && edlToken !== '') {
       this.authenticated = true
-      this.authToken = authToken
+      this.edlToken = edlToken
     } else {
       this.optionallyAuthenticated = true
     }

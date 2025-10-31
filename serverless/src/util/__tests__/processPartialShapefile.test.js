@@ -1,7 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as createLimitedShapefile from '../createLimitedShapefile'
 
 import { processPartialShapefile } from '../processPartialShapefile'
@@ -9,13 +8,6 @@ import { processPartialShapefile } from '../processPartialShapefile'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
-    clientId: 'clientId',
-    secret: 'jwt-secret'
-  }))
-
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
 })

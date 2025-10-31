@@ -119,113 +119,57 @@ describe('createTimelineSlice', () => {
       }
     })
 
-    describe('when the user is not logged in', () => {
-      test('calls cmr to set the intervals', async () => {
-        nock(/cmr/)
-          .post(/granules\/timeline/)
-          .reply(200, [{
-            'concept-id': 'collectionId',
-            intervals: [
-              [
-                1298937600,
-                1304208000,
-                3
-              ]
+    test('calls cmr to set the intervals', async () => {
+      nock(/cmr/)
+        .post(/granules\/timeline/)
+        .reply(200, [{
+          'concept-id': 'collectionId',
+          intervals: [
+            [
+              1298937600,
+              1304208000,
+              3
             ]
-          }])
+          ]
+        }])
 
-        useEdscStore.setState((state) => {
-          state.collection.collectionId = 'collectionId'
-          state.timeline.query = {
-            endDate: '2009-12-01T23:59:59.000Z',
-            interval: TimelineInterval.Day,
-            startDate: '1979-01-01T00:00:00.000Z'
-          }
-        })
+      useEdscStore.setState((state) => {
+        state.collection.collectionId = 'collectionId'
+        state.timeline.query = {
+          endDate: '2009-12-01T23:59:59.000Z',
+          interval: TimelineInterval.Day,
+          startDate: '1979-01-01T00:00:00.000Z'
+        }
 
-        const zustandState = useEdscStore.getState()
-        const { timeline } = zustandState
-        const { getTimeline } = timeline
+        state.user.edlToken = 'mock-token'
+      })
 
-        await getTimeline()
+      const zustandState = useEdscStore.getState()
+      const { timeline } = zustandState
+      const { getTimeline } = timeline
 
-        await waitFor(() => {
-          const updatedState = useEdscStore.getState()
-          const { timeline: updatedTimeline } = updatedState
-          expect(updatedTimeline.intervals).toEqual({
-            collectionId: [
-              [
-                1298937600,
-                1304208000,
-                3
-              ]
+      await getTimeline()
+
+      await waitFor(() => {
+        const updatedState = useEdscStore.getState()
+        const { timeline: updatedTimeline } = updatedState
+        expect(updatedTimeline.intervals).toEqual({
+          collectionId: [
+            [
+              1298937600,
+              1304208000,
+              3
             ]
-          })
-        })
-
-        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
-        expect(window.dataLayer.push).toHaveBeenCalledWith({
-          event: 'timing',
-          timingEventCategory: 'ajax',
-          timingEventValue: expect.any(Number),
-          timingEventVar: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
+          ]
         })
       })
-    })
 
-    describe('when the user is logged in', () => {
-      test('calls lambda to set the intervals', async () => {
-        nock(/localhost/)
-          .post(/granules\/timeline/)
-          .reply(200, [{
-            'concept-id': 'collectionId',
-            intervals: [
-              [
-                1298937600,
-                1304208000,
-                3
-              ]
-            ]
-          }])
-
-        useEdscStore.setState((state) => {
-          state.collection.collectionId = 'collectionId'
-          state.timeline.query = {
-            endDate: '2009-12-01T23:59:59.000Z',
-            interval: TimelineInterval.Day,
-            startDate: '1979-01-01T00:00:00.000Z'
-          }
-
-          state.user.authToken = 'mock-token'
-        })
-
-        const zustandState = useEdscStore.getState()
-        const { timeline } = zustandState
-        const { getTimeline } = timeline
-
-        await getTimeline()
-
-        await waitFor(() => {
-          const updatedState = useEdscStore.getState()
-          const { timeline: updatedTimeline } = updatedState
-          expect(updatedTimeline.intervals).toEqual({
-            collectionId: [
-              [
-                1298937600,
-                1304208000,
-                3
-              ]
-            ]
-          })
-        })
-
-        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
-        expect(window.dataLayer.push).toHaveBeenCalledWith({
-          event: 'timing',
-          timingEventCategory: 'ajax',
-          timingEventValue: expect.any(Number),
-          timingEventVar: 'http://localhost:3000/granules/timeline'
-        })
+      expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+      expect(window.dataLayer.push).toHaveBeenCalledWith({
+        event: 'timing',
+        timingEventCategory: 'ajax',
+        timingEventValue: expect.any(Number),
+        timingEventVar: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
       })
     })
 
@@ -242,7 +186,7 @@ describe('createTimelineSlice', () => {
             ]
           }
 
-          state.user.authToken = 'mock-token'
+          state.user.edlToken = 'mock-token'
         })
 
         const zustandState = useEdscStore.getState()
@@ -280,7 +224,7 @@ describe('createTimelineSlice', () => {
           }
 
           state.project.collections.allIds = []
-          state.user.authToken = 'mock-token'
+          state.user.edlToken = 'mock-token'
         })
 
         const zustandState = useEdscStore.getState()

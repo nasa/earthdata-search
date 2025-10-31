@@ -3,11 +3,12 @@ import Request from './request'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class RetrievalRequest extends Request {
-  constructor(authToken, earthdataEnvironment) {
+  constructor(edlToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.authenticated = true
-    this.authToken = authToken
+    this.lambda = true
+    this.edlToken = edlToken
   }
 
   all() {

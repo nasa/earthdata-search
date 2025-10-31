@@ -30,13 +30,19 @@ const AutocompleteSuggestion = ({ suggestion }) => {
             <div className="autocomplete-suggestion__suggestions-hierarchy">
               <span>
                 {
-                  hierarchy.map((parent) => (
-                    <React.Fragment key={`${value}-${parent}`}>
-                      {parent}
-                      <EDSCIcon icon={ArrowChevronRight} size="10" />
-                      {' '}
-                    </React.Fragment>
-                  ))
+                  hierarchy.map((parent, index) => {
+                    // Build a key using the value, and elements of the hierarchy up to the current index
+                    const currentHierarchy = hierarchy.slice(0, index + 1).join('-')
+                    const key = `${value}-${currentHierarchy}`
+
+                    return (
+                      <React.Fragment key={key}>
+                        {parent}
+                        <EDSCIcon icon={ArrowChevronRight} size="10" />
+                        {' '}
+                      </React.Fragment>
+                    )
+                  })
                 }
               </span>
             </div>

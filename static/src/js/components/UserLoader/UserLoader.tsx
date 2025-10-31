@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import GET_USER from '../../operations/queries/getUser'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import Spinner from '../Spinner/Spinner'
@@ -21,8 +21,8 @@ interface UserLoaderProps {
 export const UserLoader: React.FC<UserLoaderProps> = ({
   children
 }) => {
-  const authToken = useEdscStore(getAuthToken)
-  const setAuthToken = useEdscStore((state) => state.user.setAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
+  const setEdlToken = useEdscStore((state) => state.user.setEdlToken)
   const setUrsProfile = useEdscStore((state) => state.user.setUrsProfile)
   const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
   const setUsername = useEdscStore((state) => state.user.setUsername)
@@ -35,7 +35,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
 
   // When the page loads, check local storage for user information
   useEffect(() => {
-    if (authToken) {
+    if (edlToken) {
       const localUser = localStorage.getItem(localStorageKeys.user)
 
       // If the user information exists in local storage, update the state
@@ -52,20 +52,20 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
         setPreferencesLoaded(true)
       }
     }
-  }, [authToken])
+  }, [edlToken])
 
-  // Fetch the user data when we have an authToken
+  // Fetch the user data when we have an edlToken
   const { data, error } = useQuery(GET_USER, {
-    skip: !authToken
+    skip: !edlToken
   })
 
   useEffect(() => {
     if (error) {
-      // Delete the authToken cookie
-      remove('authToken')
+      // Delete the edlToken cookie
+      remove('edlToken')
 
       // Update the store
-      setAuthToken(null)
+      setEdlToken(null)
       setUrsProfile(null)
 
       // Clear the user information from local storage
@@ -109,7 +109,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
 
   // If the user is logged in, but doesn't have preferences from either local storage
   // or the API, show a spinner
-  if (authToken && !preferencesLoaded) {
+  if (edlToken && !preferencesLoaded) {
     return (
       <Spinner
         className="root__spinner spinner spinner--dots spinner--small"

@@ -8,11 +8,11 @@ import useEdscStore from '../../zustand/useEdscStore'
 const AuthToken = ({
   children
 }) => {
-  const setAuthToken = useEdscStore((state) => state.user.setAuthToken)
+  const setEdlToken = useEdscStore((state) => state.user.setEdlToken)
 
   // `firstLoadFinished` ensures that we don't render the children until we've checked for a token
   // This prevents child components from rendering and making requests with an empty token but
-  // an `authToken` cookie does exist
+  // an `edlToken` cookie does exist
   const [firstLoadFinished, setFirstLoadFinished] = useState(false)
 
   const { disableDatabaseComponents } = getApplicationConfig()
@@ -21,16 +21,16 @@ const AuthToken = ({
     setFirstLoadFinished(true)
 
     if (disableDatabaseComponents === 'true') {
-      // If we have set `disableDatabaseComponents` to true, we need to clear the authToken
+      // If we have set `disableDatabaseComponents` to true, we need to clear the edlToken
       // This will ensure that the user does not send requests to our API (which uses the database)
-      setAuthToken(undefined)
+      setEdlToken(null)
 
       return
     }
 
-    const jwtToken = get('authToken')
+    const jwtToken = get('edlToken')
 
-    setAuthToken(jwtToken)
+    setEdlToken(jwtToken)
   }, [])
 
   if (!firstLoadFinished) return null

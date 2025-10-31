@@ -27,7 +27,7 @@ const setup = setupTest({
   defaultProps: retrievalStatusProps,
   defaultZustandState: {
     user: {
-      authToken: 'testToken'
+      edlToken: 'testToken'
     }
   },
   withRedux: true,

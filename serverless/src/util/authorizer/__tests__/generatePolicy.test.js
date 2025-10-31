@@ -3,11 +3,21 @@ import { generatePolicy } from '../generatePolicy'
 describe('generatePolicy', () => {
   describe('when a jwtToken is provided', () => {
     test('policy includes the provided token', () => {
-      const response = generatePolicy('testuser', 'jwtToken', {}, 'test-resource')
+      const response = generatePolicy({
+        earthdataEnvironment: 'sit',
+        effect: {},
+        jwtToken: 'jwtToken',
+        resource: 'test-resource',
+        userId: 1,
+        username: 'testuser'
+      })
 
       expect(response).toEqual({
         context: {
-          jwtToken: 'jwtToken'
+          earthdataEnvironment: 'sit',
+          jwtToken: 'jwtToken',
+          userId: 1,
+          username: 'testuser'
         },
         policyDocument: {
           Statement: [
@@ -26,7 +36,11 @@ describe('generatePolicy', () => {
 
   describe('when a jwtToken is not provided', () => {
     test('policy does not include the token', () => {
-      const response = generatePolicy('testuser', undefined, {}, 'test-resource')
+      const response = generatePolicy({
+        effect: {},
+        resource: 'test-resource',
+        username: 'testuser'
+      })
 
       expect(response).toEqual({
         policyDocument: {
@@ -46,7 +60,10 @@ describe('generatePolicy', () => {
 
   describe('when no resource is provided', () => {
     test('policy does not include a policy document', () => {
-      const response = generatePolicy('testuser', undefined, {}, undefined)
+      const response = generatePolicy({
+        effect: {},
+        username: 'testuser'
+      })
 
       expect(response).toEqual({
         principalId: 'testuser'
@@ -56,7 +73,10 @@ describe('generatePolicy', () => {
 
   describe('when no effect is provided', () => {
     test('policy does not include a policy document', () => {
-      const response = generatePolicy('testuser', undefined, undefined, 'test-resource')
+      const response = generatePolicy({
+        resource: 'test-resource',
+        username: 'testuser'
+      })
 
       expect(response).toEqual({
         principalId: 'testuser'

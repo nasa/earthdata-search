@@ -1,21 +1,19 @@
 import nock from 'nock'
 
-import * as getJwtToken from '../../util/getJwtToken'
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import * as getEchoToken from '../../util/urs/getEchoToken'
 
-import graphQlProxy from '../handler'
+import cmrGraphQlProxy from '../handler'
 
 beforeEach(() => {
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => '1234-abcd-5678-efgh')
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ jwtToken: 'mockJwt' }))
 
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
     graphQlHost: 'http://graphql.example.com'
   }))
 })
 
-describe('graphQlProxy', () => {
+describe('cmrGraphQlProxy', () => {
   describe('when graphQl returns a successful 200', () => {
     test('returns the result', async () => {
       nock(/graphql/)
@@ -48,7 +46,7 @@ describe('graphQlProxy', () => {
         })
       }
 
-      const response = await graphQlProxy(event, {})
+      const response = await cmrGraphQlProxy(event, {})
 
       expect(response.statusCode).toEqual(200)
     })
@@ -113,7 +111,7 @@ describe('graphQlProxy', () => {
         })
       }
 
-      const response = await graphQlProxy(event, {})
+      const response = await cmrGraphQlProxy(event, {})
 
       expect(response.statusCode).toEqual(200)
 
@@ -171,7 +169,7 @@ describe('graphQlProxy', () => {
       })
     }
 
-    const response = await graphQlProxy(event, {})
+    const response = await cmrGraphQlProxy(event, {})
 
     expect(response.statusCode).toEqual(500)
 

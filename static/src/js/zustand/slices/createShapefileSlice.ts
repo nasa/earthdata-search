@@ -3,6 +3,7 @@ import { ImmerStateCreator, ShapefileSlice } from '../types'
 import ShapefileRequest from '../../util/request/shapefileRequest'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getEdlToken } from '../selectors/user'
 
 export const initialState = {
   isErrored: false,
@@ -33,9 +34,10 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
 
       zustandState.shapefile.setLoading()
 
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-      const requestObject = new ShapefileRequest(earthdataEnvironment)
+      const requestObject = new ShapefileRequest(edlToken, earthdataEnvironment)
 
       requestObject.fetch(shapefileId)
         .then((responseObject) => {
@@ -66,11 +68,16 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
         shapefileSize
       })
 
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-      const requestObject = new ShapefileRequest(earthdataEnvironment)
+      const requestObject = new ShapefileRequest(edlToken, earthdataEnvironment)
 
-      requestObject.save(data)
+      requestObject.save({
+        ...data,
+        earthdataEnvironment,
+        edlToken
+      })
         .then((responseObject) => {
           const { shapefile_id: shapefileId } = responseObject.data
 

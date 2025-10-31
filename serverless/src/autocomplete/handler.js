@@ -2,7 +2,7 @@ import { buildParams } from '../util/cmr/buildParams'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
-import { getJwtToken } from '../util/getJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -27,9 +27,11 @@ const autocomplete = async (event) => {
     'type'
   ]
 
+  const { jwtToken } = getAuthorizerContext(event)
+
   try {
     const results = await doSearchRequest({
-      jwtToken: getJwtToken(event),
+      jwtToken,
       method: 'get',
       path: '/search/autocomplete',
       params: buildParams({

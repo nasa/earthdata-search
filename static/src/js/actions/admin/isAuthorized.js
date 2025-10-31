@@ -4,7 +4,7 @@ import { SET_ADMIN_IS_AUTHORIZED } from '../../constants/actionTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 export const updateIsAuthorized = (isAuthorized) => ({
   type: SET_ADMIN_IS_AUTHORIZED,
@@ -13,10 +13,10 @@ export const updateIsAuthorized = (isAuthorized) => ({
 
 export const adminIsAuthorized = () => (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
 
   const response = requestObject.isAuthorized()
     .then(() => {

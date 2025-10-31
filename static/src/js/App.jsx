@@ -194,14 +194,6 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: routes.AUTH_CALLBACK,
-        element: (
-          <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-            <AuthCallbackContainer />
-          </Suspense>
-        )
-      },
-      {
         path: routes.ADMIN,
         element: (
           <AuthRequiredContainer>
@@ -284,6 +276,14 @@ const browserRouter = createBrowserRouter([
         ]
       }
     ]
+  },
+  {
+    path: routes.AUTH_CALLBACK,
+    element: (
+      <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+        <AuthCallbackContainer />
+      </Suspense>
+    )
   },
   {
     path: '*',
