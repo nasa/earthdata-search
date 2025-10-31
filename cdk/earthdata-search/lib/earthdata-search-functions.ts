@@ -667,25 +667,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * CMR GraphQL Proxy
-     */
-    const cmrGraphQlProxyNestedStack = new cdk.NestedStack(scope, 'CmrGraphQlProxyNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(cmrGraphQlProxyNestedStack, 'GraphQlLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlOptionalAuthorizer,
-        methods: ['POST'],
-        path: 'cmr-graphql-proxy'
-      },
-      entry: '../../serverless/src/cmrGraphQlProxy/handler.js',
-      functionName: 'cmrGraphQlProxy',
-      functionNamePrefix
-    })
-
-    /**
      * Migrate Database
      */
     const migrateDatabaseNestedStack = new cdk.NestedStack(scope, 'MigrateDatabaseNestedStack')

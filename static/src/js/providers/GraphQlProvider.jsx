@@ -20,11 +20,25 @@ const GraphQlProvider = ({ children }) => {
   const edlToken = useEdscStore(getEdlToken)
 
   const client = useMemo(
-    () => getApolloClient({
+    () => {
+      let earthdataEnvironmentToUse = earthdataEnvironment
+
+      // If ee is in the URL, use that value for `earthdataEnvironment`
+      if (window.location.search) {
+        const urlParams = new URLSearchParams(window.location.search)
+        earthdataEnvironmentToUse = urlParams.get('ee') || earthdataEnvironment
+      }
+
+      return getApolloClient({
+        earthdataEnvironment: earthdataEnvironmentToUse,
+        edlToken
+      })
+    },
+    [
       earthdataEnvironment,
-      edlToken
-    }),
-    [edlToken, earthdataEnvironment, edlToken]
+      edlToken,
+      window.location.search
+    ]
   )
 
   return (

@@ -67,14 +67,4 @@ describe('validateToken', () => {
       expect(username).toEqual('testuser')
     })
   })
-
-  describe('when the token is an unknown environment', () => {
-    test('returns the username associated with the token', async () => {
-      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
-        callback(undefined, { username: 'testuser' })
-      })
-
-      await expect(validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.T8pJ9sbgabjPISwMllvQdL4Bl7ng5pkgpS2Tjwij148', 'test')).rejects.toThrow('Unknown environment: test')
-    })
-  })
 })

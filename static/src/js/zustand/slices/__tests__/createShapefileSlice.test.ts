@@ -223,6 +223,7 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
+          earthdataEnvironment: 'prod',
           edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
@@ -281,6 +282,7 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
+          earthdataEnvironment: 'prod',
           edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',

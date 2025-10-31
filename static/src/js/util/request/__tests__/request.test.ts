@@ -1,10 +1,7 @@
+import { AxiosError } from 'axios'
 import Request from '../request'
 
 const baseUrl = 'http://example.com'
-
-beforeEach(() => {
-  jest.restoreAllMocks()
-})
 
 describe('Request#constructor', () => {
   test('sets the default values', () => {
@@ -61,10 +58,8 @@ describe('Request#transformRequest', () => {
 })
 
 describe('Request#transformResponse', () => {
-  test('calls handleUnauthorized and returns data', () => {
+  test('returns data', () => {
     const request = new Request(baseUrl, 'prod')
-
-    const handleUnauthorizedMock = jest.spyOn(Request.prototype, 'handleUnauthorized').mockImplementation()
 
     const data = {
       data: [{
@@ -90,9 +85,6 @@ describe('Request#transformResponse', () => {
       message: 'OK',
       headers: {}
     })
-
-    expect(handleUnauthorizedMock).toHaveBeenCalledTimes(1)
-    expect(handleUnauthorizedMock).toHaveBeenCalledWith(data)
 
     expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
     expect(window.dataLayer.push).toHaveBeenCalledWith({
@@ -141,17 +133,19 @@ describe('Request#handleUnauthorized', () => {
 
   test('redirects if the response is unauthorized', () => {
     const request = new Request(baseUrl, 'prod')
-    const data = {
-      data: {},
-      statusCode: 401,
-      message: 'Unauthorized',
-      headers: {}
-    }
+
     const returnPath = 'http://example.com/test/path'
 
     window.location.href = returnPath
 
-    request.handleUnauthorized(data)
+    request.handleUnauthorized({
+      response: {
+        status: 401
+      },
+      message: 'Unauthorized',
+      headers: {}
+    } as unknown as AxiosError)
+
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
@@ -161,11 +155,12 @@ describe('Request#handleUnauthorized', () => {
     const beforeHref = window.location.href
 
     request.handleUnauthorized({
-      data: {},
-      statusCode: 200,
+      response: {
+        status: 200
+      },
       message: 'OK',
       headers: {}
-    })
+    } as unknown as AxiosError)
 
     expect(window.location.href).toEqual(beforeHref)
   })

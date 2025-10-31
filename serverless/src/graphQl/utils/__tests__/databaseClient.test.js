@@ -1158,6 +1158,58 @@ describe('DatabaseClient', () => {
     })
   })
 
+  describe('getUserWhere', () => {
+    test('retrieves the user by where clause', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          site_preferences: {},
+          urs_id: 'testuser',
+          urs_profile: {},
+          updated_at: '2025-01-01T00:00:00.000Z',
+          created_at: '2025-01-01T00:00:00.000Z',
+          environment: 'prod'
+        }])
+      })
+
+      const user = await databaseClient.getUserWhere({ id: 1 })
+
+      expect(user).toBeDefined()
+      expect(user).toEqual({
+        id: 1,
+        site_preferences: {},
+        urs_id: 'testuser',
+        urs_profile: {},
+        updated_at: '2025-01-01T00:00:00.000Z',
+        created_at: '2025-01-01T00:00:00.000Z',
+        environment: 'prod'
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."site_preferences", "users"."urs_id", "users"."urs_profile" from "users" where "id" = $1 limit $2')
+      expect(queries[0].bindings).toEqual([1, 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getUserWhere({ id: 1 })).rejects.toThrow('Failed to retrieve user using where object')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "users"."id", "users"."site_preferences", "users"."urs_id", "users"."urs_profile" from "users" where "id" = $1 limit $2')
+      expect(queries[0].bindings).toEqual([1, 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user using where object')
+    })
+  })
+
   describe('getUsersById', () => {
     test('retrieves the users', async () => {
       dbTracker.on('query', (query) => {

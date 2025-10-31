@@ -34,6 +34,12 @@ jest.mock('../../../actions', () => ({
   toggleSpatialPolygonWarning: jest.fn()
 }))
 
+jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
+  cmrHost: 'https://cmr.example.com',
+  graphQlHost: 'https://graphql.example.com',
+  opensearchRoot: 'https://cmr.example.com/opensearch'
+}))
+
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
 
@@ -259,6 +265,24 @@ describe('createProjectSlice', () => {
     })
 
     describe('when the the saved access configs request returns a 401', () => {
+      const originalWindowLocation = window.location
+
+      beforeEach(() => {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          enumerable: true,
+          value: new URL(window.location.href)
+        })
+      })
+
+      afterEach(() => {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          enumerable: true,
+          value: originalWindowLocation
+        })
+      })
+
       test('returns null', async () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
@@ -295,6 +319,8 @@ describe('createProjectSlice', () => {
           error: expect.any(Error),
           resource: 'saved access configurations'
         })
+
+        expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%2F')
       })
     })
 
@@ -304,8 +330,8 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {})
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               collections: {
@@ -440,31 +466,31 @@ describe('createProjectSlice', () => {
             tools: { items: [{ name: 'SOTO' }] },
             urls: {
               atom: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.atom?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId1.atom?token=Bearer%20mockEdlToken',
                 title: 'ATOM'
               },
               dif: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.dif?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId1.dif?token=Bearer%20mockEdlToken',
                 title: 'DIF'
               },
               echo10: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.echo10?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId1.echo10?token=Bearer%20mockEdlToken',
                 title: 'ECHO10'
               },
               html: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.html?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId1.html?token=Bearer%20mockEdlToken',
                 title: 'HTML'
               },
               iso19115: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.iso19115?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId1.iso19115?token=Bearer%20mockEdlToken',
                 title: 'ISO19115'
               },
               native: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.native?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId1.native?token=Bearer%20mockEdlToken',
                 title: 'Native'
               },
               osdd: {
-                href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId1',
+                href: 'https://cmr.example.com/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId1',
                 title: 'OSDD'
               }
             },
@@ -513,31 +539,31 @@ describe('createProjectSlice', () => {
             tools: { items: [] },
             urls: {
               atom: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.atom?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId2.atom?token=Bearer%20mockEdlToken',
                 title: 'ATOM'
               },
               dif: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.dif?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId2.dif?token=Bearer%20mockEdlToken',
                 title: 'DIF'
               },
               echo10: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.echo10?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId2.echo10?token=Bearer%20mockEdlToken',
                 title: 'ECHO10'
               },
               html: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.html?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId2.html?token=Bearer%20mockEdlToken',
                 title: 'HTML'
               },
               iso19115: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.iso19115?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId2.iso19115?token=Bearer%20mockEdlToken',
                 title: 'ISO19115'
               },
               native: {
-                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.native?token=Bearer%20mockEdlToken',
+                href: 'https://cmr.example.com/search/concepts/collectionId2.native?token=Bearer%20mockEdlToken',
                 title: 'Native'
               },
               osdd: {
-                href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId2',
+                href: 'https://cmr.example.com/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId2',
                 title: 'OSDD'
               }
             },
@@ -572,8 +598,8 @@ describe('createProjectSlice', () => {
             }
           })
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               collections: {
@@ -705,12 +731,6 @@ describe('createProjectSlice', () => {
           getState: jest.fn().mockReturnValue({})
         })
 
-        jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
-          cmrHost: 'https://cmr.example.com',
-          graphQlHost: 'https://graphql.example.com',
-          opensearchRoot: 'https://cmr.example.com'
-        }))
-
         jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
           maxCmrPageSize: '1',
           defaultCmrSearchTags: [
@@ -745,8 +765,8 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {})
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               collections: {
@@ -765,16 +785,16 @@ describe('createProjectSlice', () => {
             'jwt-token': 'token'
           })
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               variables: varResults[1].variables
             }
           })
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               variables: varResults[2].variables
@@ -815,17 +835,12 @@ describe('createProjectSlice', () => {
           getState: jest.fn().mockReturnValue({})
         })
 
-        jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
-          cmrHost: 'https://cmr.earthdata.nasa.gov',
-          opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
-        }))
-
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               collections: {
@@ -944,8 +959,8 @@ describe('createProjectSlice', () => {
           .post(/error_logger/)
           .reply(200)
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               collections: {
@@ -1033,8 +1048,8 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {})
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(500, {
             message: 'Request failed with status code 500',
             name: 'AxiosError',
@@ -1083,8 +1098,8 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {})
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               collections: {
