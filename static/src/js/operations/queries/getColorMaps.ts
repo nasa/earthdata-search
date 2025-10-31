@@ -1,4 +1,6 @@
-const GET_COLORMAPS = `
+import { gql } from '@apollo/client'
+
+const GET_COLORMAPS = gql`
   query GetColorMaps($products: [String!]!) {
     colormaps(products: $products) {
       id

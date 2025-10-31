@@ -378,7 +378,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       const productColormap = colormapsMetadata[product]
       console.log('🚀 ~ file: MapContainer.tsx:378 ~ colormapsMetadata[product]:', colormapsMetadata[product])
 
-      // imageryLayersObject.layerData.push({
+      // ImageryLayersObject.layerData.push({
       //   ...layer
       // } as ImageryLayerItem)
 

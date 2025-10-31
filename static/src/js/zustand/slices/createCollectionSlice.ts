@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client'
 import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 import type {
   CollectionSlice,
@@ -198,16 +197,19 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           console.log('🚀 ~ file: createCollectionSlice.ts:198 ~ gibsTags:', gibsTags)
           // Update the map layers with the gibs tags
 
-          let colormaps = null
+          let colormaps = {}
           if (gibsTags && gibsTags.length > 0) {
             get().map.setMapLayers(focusedCollectionId, gibsTags)
-            console.log('🚀 ~ file: createCollectionSlice.ts:199 ~ gibsTags:', gibsTags)
             // Update the map layers with the gibs tags
-
             const products = gibsTags.map((gibsTag: { product: string }) => gibsTag.product)
+            const edlToken = getEdlToken(zustandState)
 
             try {
-              const apolloClient = getApolloClient(authToken)
+              const apolloClient = getApolloClient({
+                authToken,
+                earthdataEnvironment,
+                edlToken
+              })
               console.log('🚀 ~ file: createCollectionSlice.ts:213 ~ apolloClient:', !!apolloClient)
               console.log('🚀 ~ file: createCollectionSlice.ts:214 ~ products:', products)
 
@@ -215,9 +217,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
               console.log('🚀 ~ file: createCollectionSlice.ts:217 ~ variables:', { products })
 
               let colormapsData = []
+              // TODO do we need the errorpolicy
               try {
                 const { data: colormapsResponse, errors } = await apolloClient.query({
-                  query: gql(GET_COLORMAPS),
+                  query: GET_COLORMAPS,
                   variables: { products },
                   errorPolicy: 'all'
                 })
