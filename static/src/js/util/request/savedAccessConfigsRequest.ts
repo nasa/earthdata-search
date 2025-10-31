@@ -3,11 +3,12 @@ import Request from './request'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class SavedAccessConfigsRequest extends Request {
-  constructor(authToken: string, earthdataEnvironment: string) {
+  constructor(edlToken: string, earthdataEnvironment: string) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.authenticated = true
-    this.authToken = authToken
+    this.lambda = true
+    this.edlToken = edlToken
     this.searchPath = 'saved_access_configs'
   }
 }

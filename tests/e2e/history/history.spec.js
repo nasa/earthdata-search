@@ -32,7 +32,7 @@ test.describe('History', () => {
       context
     })
 
-    await page.route(/collections$/, async (route) => {
+    await page.route(/collections\.json/, async (route) => {
       await route.fulfill({
         json: collectionsSearchBody,
         headers: {
@@ -42,7 +42,7 @@ test.describe('History', () => {
       })
     })
 
-    await page.route(/granules$/, async (route) => {
+    await page.route(/granules\.json/, async (route) => {
       await route.fulfill({
         json: granulesBody,
         headers: {
@@ -58,8 +58,8 @@ test.describe('History', () => {
       })
     })
 
-    await page.route('**/cmr-graphql-proxy', async (route) => {
-      const { query } = JSON.parse(route.request().postData()).data
+    await page.route(/graphql.*\/api/, async (route) => {
+      const { query } = JSON.parse(route.request().postData())
 
       if (query.includes('query GetSubscriptions')) {
         await route.fulfill({

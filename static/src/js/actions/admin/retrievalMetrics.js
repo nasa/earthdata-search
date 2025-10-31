@@ -10,7 +10,7 @@ import {
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 export const setAdminRetrievalsMetrics = (retrievalsMetrics) => ({
   type: SET_ADMIN_RETRIEVALS_METRICS,
@@ -32,7 +32,7 @@ export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
   const state = getState()
 
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const { admin } = state
@@ -42,7 +42,7 @@ export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
 
   dispatch(setAdminRetrievalsMetricsLoading())
 
-  const requestObject = new RetrievalsMetricsRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalsMetricsRequest(edlToken, earthdataEnvironment)
 
   const requestOpts = {
     start_date: startDate,

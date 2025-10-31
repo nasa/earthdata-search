@@ -81,9 +81,7 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
 
   // Add the authorizer response to the request context if it exists
   if (authorizerResponse?.context) {
-    event.requestContext.authorizer = {
-      jwtToken: authorizerResponse?.context?.jwtToken
-    }
+    event.requestContext.authorizer = authorizerResponse?.context
   }
 
   console.log(`Calling lambda: ${method.lambdaFunction.functionName}`)

@@ -6,7 +6,7 @@ import { routes } from '../../constants/routes'
 /**
  * Builds a link to open Earthdata Download
  * @param {Object} params
- * @param {String} params.authToken The users authentication token
+ * @param {String} params.edlToken The users authentication token
  * @param {Object} params.collection The collection object
  * @param {Array} params.downloadUrls The download urls
  * @param {String} params.earthdataEnvironment The Earthdata environment to link to
@@ -14,7 +14,7 @@ import { routes } from '../../constants/routes'
  * @returns {String} The link to open Earthdata Download
  */
 const buildEddLink = ({
-  authToken,
+  edlToken,
   collection,
   downloadUrls,
   earthdataEnvironment,
@@ -61,7 +61,7 @@ const buildEddLink = ({
   const eulaCallback = 'earthdata-download://eulaCallback'
   const eulaRedirectUrl = `${edscHost}${routes.AUTH_CALLBACK}?eddRedirect=${encodeURIComponent(eulaCallback)}`
 
-  const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&clientId=${getClientId().client}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
+  const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&clientId=${getClientId().client}&token=Bearer ${edlToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
 
   return link
 }

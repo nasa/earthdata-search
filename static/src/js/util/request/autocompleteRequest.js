@@ -5,14 +5,14 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
  * Request object for autocomplete requests
  */
 export default class AutocompleteRequest extends CmrRequest {
-  constructor(authToken, earthdataEnvironment) {
+  constructor(edlToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
 
-    if (authToken && authToken !== '') {
+    if (edlToken && edlToken !== '') {
       this.authenticated = true
-      this.authToken = authToken
+      this.edlToken = edlToken
     } else {
       this.optionallyAuthenticated = true
     }

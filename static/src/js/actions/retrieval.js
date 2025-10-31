@@ -10,7 +10,7 @@ import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 import routerHelper from '../router/router'
 import { routes } from '../constants/routes'
-import { getAuthToken } from '../zustand/selectors/user'
+import { getEdlToken } from '../zustand/selectors/user'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -26,10 +26,10 @@ export const updateRetrieval = (retrievalData) => ({
  */
 export const submitRetrieval = () => (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
 
   const {
     collections: projectCollections,
@@ -122,12 +122,12 @@ export const submitRetrieval = () => (dispatch) => {
  */
 export const fetchRetrieval = (id) => (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   dispatch(setRetrievalLoading())
 
-  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
 
   const response = requestObject.fetch(id)
     .then((responseObject) => {

@@ -158,67 +158,7 @@ describe('getViewAllFacets', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = null
-    })
-
-    // Call the dispatch
-    await store.dispatch(getViewAllFacets('Instruments')).then(() => {
-      expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
-      expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
-        searchResults: {
-          facets: {},
-          viewAllFacets: { selectedCategory: 'Instruments' }
-        }
-      })
-
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: LOADING_VIEW_ALL_FACETS,
-        payload: {
-          selectedCategory: 'Instruments'
-        }
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: TOGGLE_VIEW_ALL_FACETS_MODAL,
-        payload: true
-      })
-
-      expect(storeActions[2]).toEqual({
-        type: LOADED_VIEW_ALL_FACETS,
-        payload: {
-          loaded: true
-        }
-      })
-
-      expect(storeActions[3]).toEqual({
-        type: UPDATE_VIEW_ALL_FACETS,
-        payload: facetsPayload
-      })
-    })
-  })
-
-  test('calls lambda to get the authenticated View All Facets', async () => {
-    nock(/localhost/)
-      .post(/collections/)
-      .reply(200, stubResponse, {
-        'cmr-hits': 1,
-        'jwt-token': 'token'
-      })
-
-    const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
-
-    // MockStore with initialState
-    const store = mockStore({
-      searchResults: {
-        facets: {},
-        viewAllFacets: {}
-      }
-    })
-
-    useEdscStore.setState((state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     // Call the dispatch
@@ -284,7 +224,7 @@ describe('getViewAllFacets', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = null
+      state.user.edlToken = null
     })
 
     // Call the dispatch

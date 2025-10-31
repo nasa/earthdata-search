@@ -1,11 +1,9 @@
 import { keyBy } from 'lodash-es'
 
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
 import { parseError } from '../../../sharedUtils/parseError'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
@@ -23,18 +21,14 @@ export default async function getRetrieval(event, context) {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { headers, pathParameters } = event
-
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
+    const { pathParameters } = event
 
     const { id: providedRetrieval } = pathParameters
 
     // Decode the provided retrieval id
     const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
-    const jwtToken = getJwtToken(event)
-
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    const { userId } = getAuthorizerContext(event)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()

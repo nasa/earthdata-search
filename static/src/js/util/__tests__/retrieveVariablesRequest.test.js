@@ -59,7 +59,7 @@ describe('retrieveVariablesRequest', () => {
     }))
 
     const store = mockStore({
-      authToken: '',
+      edlToken: '',
       focusedCollection: 'C10000000000-EDSC',
       metadata: {
         collections: {
@@ -150,7 +150,7 @@ describe('retrieveVariablesRequest', () => {
     }))
 
     const store = mockStore({
-      authToken: '',
+      edlToken: '',
       focusedCollection: 'C10000000000-EDSC',
       metadata: {
         collections: {
@@ -247,7 +247,7 @@ describe('retrieveVariablesRequest', () => {
     }))
 
     const store = mockStore({
-      authToken: '',
+      edlToken: '',
       focusedCollection: 'C10000000000-EDSC',
       metadata: {
         collections: {

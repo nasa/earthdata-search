@@ -35,7 +35,7 @@ describe('AuthRequiredContainer component', () => {
 
   test('should redirect if there is no auth cookie', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-      if (param === 'authToken') return null
+      if (param === 'edlToken') return null
 
       return null
     })
@@ -52,7 +52,7 @@ describe('AuthRequiredContainer component', () => {
 
   test('should render children if there is an auth cookie', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-      if (param === 'authToken') return 'token'
+      if (param === 'edlToken') return 'token'
 
       return null
     })
@@ -65,7 +65,7 @@ describe('AuthRequiredContainer component', () => {
   describe('when redirect is set to false', () => {
     test('should not redirect if there is no auth cookie', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-        if (param === 'authToken') return null
+        if (param === 'edlToken') return null
 
         return null
       })
@@ -86,7 +86,7 @@ describe('AuthRequiredContainer component', () => {
 
     test('should not render the children', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-        if (param === 'authToken') return null
+        if (param === 'edlToken') return null
 
         return null
       })
@@ -123,7 +123,7 @@ describe('AuthRequiredContainer component', () => {
       setup()
 
       expect(tinyCookie.remove).toHaveBeenCalledTimes(1)
-      expect(tinyCookie.remove).toHaveBeenCalledWith('authToken')
+      expect(tinyCookie.remove).toHaveBeenCalledWith('edlToken')
     })
   })
 })

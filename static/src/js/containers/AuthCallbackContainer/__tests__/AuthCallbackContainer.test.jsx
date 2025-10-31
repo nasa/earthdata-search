@@ -40,7 +40,7 @@ describe('AuthCallbackContainer component', () => {
 
   test('sets the auth cookie and redirects', () => {
     useLocation.mockReturnValue({
-      search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
+      search: '?edlToken=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
     })
 
     const setSpy = jest.spyOn(tinyCookie, 'set')
@@ -50,7 +50,7 @@ describe('AuthCallbackContainer component', () => {
     setup()
 
     expect(setSpy).toHaveBeenCalledTimes(1)
-    expect(setSpy).toHaveBeenCalledWith('authToken', 'mockjwttoken')
+    expect(setSpy).toHaveBeenCalledWith('edlToken', 'mockjwttoken')
 
     expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/search'])
@@ -58,7 +58,7 @@ describe('AuthCallbackContainer component', () => {
 
   test('updates zustand and redirects to earthdata-download-callback for authCallback', () => {
     useLocation.mockReturnValue({
-      search: '?jwt=mockjwttoken&accessToken=mock-token&redirect=earthdata-download%3A%2F%2FauthCallback'
+      search: '?edlToken=mockjwttoken&redirect=earthdata-download%3A%2F%2FauthCallback'
     })
 
     const setSpy = jest.spyOn(tinyCookie, 'set')
@@ -75,7 +75,7 @@ describe('AuthCallbackContainer component', () => {
     const { setRedirectUrl } = earthdataDownloadRedirect
 
     expect(setRedirectUrl).toHaveBeenCalledTimes(1)
-    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mock-token')
+    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mockjwttoken')
   })
 
   test('updates zustand and redirects to earthdata-download-callback for eulaCallback', () => {
@@ -112,7 +112,7 @@ describe('AuthCallbackContainer component', () => {
     setup()
 
     expect(setSpy).toHaveBeenCalledTimes(1)
-    expect(setSpy).toHaveBeenCalledWith('authToken', '')
+    expect(setSpy).toHaveBeenCalledWith('edlToken', undefined)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/'])

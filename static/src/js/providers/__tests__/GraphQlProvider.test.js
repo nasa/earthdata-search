@@ -36,7 +36,7 @@ const setup = setupTest({
   },
   defaultZustandState: {
     user: {
-      authToken: 'token'
+      edlToken: 'token'
     }
   }
 })
@@ -62,7 +62,7 @@ describe('GraphQlProvider', () => {
     expect(screen.getByText('Child Component')).toBeInTheDocument()
   })
 
-  describe('when rendering again with the same authToken', () => {
+  describe('when rendering again with the same edlToken', () => {
     test('does not create a new ApolloClient', () => {
       setup()
 
@@ -70,15 +70,15 @@ describe('GraphQlProvider', () => {
     })
   })
 
-  describe('when rendering again with a different authToken', () => {
+  describe('when rendering again with a different edlToken', () => {
     test('creates a new ApolloClient', async () => {
       jest.clearAllMocks()
 
-      // Update the authToken in the store
+      // Update the edlToken in the store
       await act(async () => {
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.user.authToken = 'newToken'
+          state.user.edlToken = 'newToken'
         })
       })
 

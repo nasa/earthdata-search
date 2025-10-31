@@ -52,7 +52,7 @@ import {
 import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getGranules } from '../../zustand/selectors/granules'
-import { getAuthToken, getSitePreferences } from '../../zustand/selectors/user'
+import { getEdlToken, getSitePreferences } from '../../zustand/selectors/user'
 
 import { routes } from '../../constants/routes'
 
@@ -82,7 +82,7 @@ const SearchPanels = ({
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal
 }) => {
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const collections = useEdscStore(getCollections)
@@ -122,7 +122,7 @@ const SearchPanels = ({
     defaultPanelStateFromProps(granuleListView)
   )
 
-  const loggedIn = !!authToken
+  const loggedIn = !!edlToken
 
   const {
     pageNum: granulesPageNum = 1,

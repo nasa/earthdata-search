@@ -1,9 +1,7 @@
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
@@ -21,16 +19,12 @@ export default async function deleteRetrieval(event, context) {
   try {
     const { pathParameters } = event
 
-    const earthdataEnvironment = deployedEnvironment()
-
     const { id: providedRetrieval } = pathParameters
 
     // Decode the provided retrieval id
     const decodedRetrievalId = deobfuscateId(providedRetrieval)
 
-    const jwtToken = getJwtToken(event)
-
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    const { userId } = getAuthorizerContext(event)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()

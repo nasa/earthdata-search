@@ -10,10 +10,10 @@ import addToast from '../../util/addToast'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 const DownloadHistoryContainer = () => {
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const handleError = useEdscStore((state) => state.errors.handleError)
   const [retrievalHistory, setRetrievalHistory] = useState([])
@@ -23,7 +23,7 @@ const DownloadHistoryContainer = () => {
   })
 
   const fetchRetrievalHistory = useCallback(async () => {
-    if (!authToken) return
+    if (!edlToken) return
 
     setRetrievalHistoryLoadingState({
       isLoading: true,
@@ -31,7 +31,7 @@ const DownloadHistoryContainer = () => {
     })
 
     try {
-      const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+      const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
       const response = await requestObject.all()
       const { data } = response
 
@@ -54,15 +54,15 @@ const DownloadHistoryContainer = () => {
         notificationType: 'banner'
       })
     }
-  }, [authToken, earthdataEnvironment])
+  }, [edlToken, earthdataEnvironment])
 
   const handleDeleteRetrieval = useCallback(async (retrievalId) => {
-    if (!authToken) return
+    if (!edlToken) return
 
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')) {
       try {
-        const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+        const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
         await requestObject.remove(retrievalId)
 
         setRetrievalHistory((prevHistory) => prevHistory.filter((item) => item.id !== retrievalId))
@@ -81,10 +81,10 @@ const DownloadHistoryContainer = () => {
         })
       }
     }
-  }, [authToken, earthdataEnvironment])
+  }, [edlToken, earthdataEnvironment])
 
   useEffect(() => {
-    if (authToken) {
+    if (edlToken) {
       fetchRetrievalHistory()
     }
   }, [fetchRetrievalHistory])

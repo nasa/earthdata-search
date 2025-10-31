@@ -3,10 +3,9 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 import snakecaseKeys from 'snakecase-keys'
 
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { generateRetrievalPayloads } from './generateRetrievalPayloads'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
-import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -33,16 +32,11 @@ const submitRetrieval = async (event, context) => {
 
   const { collections, environment, json_data: jsonData } = params
 
-  const jwtToken = getJwtToken(event)
+  const { jwtToken, userId } = getAuthorizerContext(event)
 
   if (sqs == null) {
     sqs = new SQSClient(getSqsConfig())
   }
-
-  const {
-    access_token: accessToken,
-    user_id: userId
-  } = await getAccessTokenFromJwtToken(jwtToken, environment)
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
@@ -57,7 +51,7 @@ const submitRetrieval = async (event, context) => {
       .insert({
         user_id: userId,
         environment,
-        token: accessToken,
+        token: jwtToken,
         jsondata: jsonData
       })
 
@@ -182,7 +176,7 @@ const submitRetrieval = async (event, context) => {
             sqsEntries.push({
               Id: `${retrievalCollectionId}-${pageNum}`,
               MessageBody: JSON.stringify({
-                accessToken,
+                accessToken: jwtToken,
                 id: newOrderRecord[0].id
               }),
               // Wait a few seconds before picking up the SQS job to ensure the database transaction

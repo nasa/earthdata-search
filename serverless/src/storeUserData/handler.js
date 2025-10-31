@@ -30,31 +30,17 @@ const storeUserData = async (event, context) => {
 
     // Destruct the payload from SQS
     const {
-      environment, userId, username
+      edlToken,
+      environment,
+      userId,
+      username
     } = JSON.parse(body)
 
     console.log(`[StoreUserData Debug] Attempting to retrieve user data for ${username} (id: ${userId}, environment: ${environment}).`)
 
-    // Retrieve the authenticated users' access tokens from the database
-    const existingUserTokens = await dbConnection('user_tokens')
-      .select([
-        'id',
-        'access_token',
-        'refresh_token',
-        'expires_at'
-      ])
-      .where({
-        user_id: userId,
-        environment
-      })
-      .orderBy('created_at', 'DESC')
-
     let ursUserData // URS user Profile
 
-    if (existingUserTokens.length > 0) {
-      const [tokenRow] = existingUserTokens
-      const { access_token: token } = tokenRow
-
+    if (edlToken) {
       // Default the payload that gets sent to the database
       const userPayload = {
         environment,
@@ -62,7 +48,7 @@ const storeUserData = async (event, context) => {
       }
 
       try {
-        ursUserData = await getUrsUserData(username, token, environment)
+        ursUserData = await getUrsUserData(username, edlToken, environment)
 
         // If we successfully retrieved URS data add the response to the database payload
         userPayload.urs_profile = ursUserData
@@ -74,7 +60,7 @@ const storeUserData = async (event, context) => {
 
       console.log(`Response from updating ${username} (id: ${userId}): ${dbResponse}`)
     } else {
-      console.log(`[StoreUserData Debug] Ignoring attempt to retrieve user data for ${username} (userId: ${userId}, environment: ${environment}) because the user doesn't have any available tokens.`)
+      console.log(`[StoreUserData Debug] Ignoring attempt to retrieve user data for ${username} (userId: ${userId}, environment: ${environment}) because the user doesn't have a token.`)
     }
   })
 }

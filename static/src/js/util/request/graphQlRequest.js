@@ -1,21 +1,18 @@
 import axios from 'axios'
 import Request from './request'
 
-import { getEnvironmentConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export default class GraphQlRequest extends Request {
-  constructor(authToken, earthdataEnvironment) {
-    if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+  constructor(edlToken, earthdataEnvironment) {
+    super(getEarthdataConfig(earthdataEnvironment).graphQlHost, earthdataEnvironment)
 
+    this.searchPath = 'api'
+
+    if (edlToken) {
       this.authenticated = true
-      this.authToken = authToken
-      this.searchPath = 'cmr-graphql-proxy'
-    } else {
-      super(getEarthdataConfig(earthdataEnvironment).graphQlHost, earthdataEnvironment)
-
-      this.searchPath = 'api'
+      this.edlToken = edlToken
     }
   }
 
@@ -25,17 +22,9 @@ export default class GraphQlRequest extends Request {
    * @return {Object} A modified object.
    */
   transformRequest(data, headers) {
-    if (
-      this.earthdataEnvironment
-      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
-    ) {
-      // eslint-disable-next-line no-param-reassign
-      headers['Earthdata-ENV'] = this.earthdataEnvironment
-    }
-
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer ${this.getAuthToken()}`
+      headers.Authorization = `Bearer ${this.getEdlToken()}`
     }
 
     // If contacting GraphQL directly, add the content type
@@ -45,14 +34,6 @@ export default class GraphQlRequest extends Request {
     }
 
     if (data) {
-      // POST requests to Lambda use a JSON string
-      if (this.authenticated || this.lambda) {
-        return JSON.stringify({
-          requestId: this.requestId,
-          data
-        })
-      }
-
       // Lambda will set this for us, if we're not using lambda
       // we'll set it to ensure its provided to CMR
       // eslint-disable-next-line no-param-reassign

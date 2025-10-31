@@ -1,6 +1,5 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetSubscriptionsQuery'
 import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuery'
 import { setupTests } from '../../../../../support/setupTests'
 
@@ -21,7 +20,6 @@ import collectionsBody from './__mocks__/common/collections.body.json'
 import commonHeaders from './__mocks__/common/common.headers.json'
 import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
-import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
 
 /**
  * Tests the title displayed in the collection details
@@ -255,18 +253,9 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.route(/graphql.*\/api/, async (route) => {
-        const { query } = JSON.parse(route.request().postData())
-
         if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             json: assocatedDoisGraphQlBody,
-            headers: graphQlHeaders
-          })
-        }
-
-        if (query === graphQlGetSubscriptionsQuery) {
-          await route.fulfill({
-            json: getSubscriptionsGraphQlBody,
             headers: graphQlHeaders
           })
         }
@@ -335,17 +324,9 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.route(/graphql.*\/api/, async (route) => {
-        const { query } = JSON.parse(route.request().postData())
         if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             json: reformattingGraphQlBody,
-            headers: graphQlHeaders
-          })
-        }
-
-        if (query === graphQlGetSubscriptionsQuery) {
-          await route.fulfill({
-            json: getSubscriptionsGraphQlBody,
             headers: graphQlHeaders
           })
         }
@@ -449,15 +430,6 @@ test.describe('Path /search/granules/collection-details', () => {
         })
 
         await page.route(/graphql.*\/api/, async (route) => {
-          const { query } = JSON.parse(route.request().postData())
-
-          if (query === graphQlGetSubscriptionsQuery) {
-            await route.fulfill({
-              json: getSubscriptionsGraphQlBody,
-              headers: graphQlHeaders
-            })
-          }
-
           if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: reformattingGraphQlBody,
@@ -508,15 +480,6 @@ test.describe('Path /search/granules/collection-details', () => {
         })
 
         await page.route(/graphql.*\/api/, async (route) => {
-          const { query } = JSON.parse(route.request().postData())
-
-          if (query === graphQlGetSubscriptionsQuery) {
-            await route.fulfill({
-              json: getSubscriptionsGraphQlBody,
-              headers: graphQlHeaders
-            })
-          }
-
           if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: pointSpatialGraphqlBody,
@@ -567,15 +530,6 @@ test.describe('Path /search/granules/collection-details', () => {
         })
 
         await page.route(/graphql.*\/api/, async (route) => {
-          const { query } = JSON.parse(route.request().postData())
-
-          if (query === graphQlGetSubscriptionsQuery) {
-            await route.fulfill({
-              json: getSubscriptionsGraphQlBody,
-              headers: graphQlHeaders
-            })
-          }
-
           if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: linesGraphqlBody,
@@ -626,15 +580,6 @@ test.describe('Path /search/granules/collection-details', () => {
         })
 
         await page.route(/graphql.*\/api/, async (route) => {
-          const { query } = JSON.parse(route.request().postData())
-
-          if (query === graphQlGetSubscriptionsQuery) {
-            await route.fulfill({
-              json: getSubscriptionsGraphQlBody,
-              headers: graphQlHeaders
-            })
-          }
-
           if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: polygonGraphqlBody,
@@ -686,15 +631,6 @@ test.describe('Path /search/granules/collection-details', () => {
           })
 
           await page.route(/graphql.*\/api/, async (route) => {
-            const { query } = JSON.parse(route.request().postData())
-
-            if (query === graphQlGetSubscriptionsQuery) {
-              await route.fulfill({
-                json: getSubscriptionsGraphQlBody,
-                headers: graphQlHeaders
-              })
-            }
-
             if (isGetCollectionQuery(route, conceptId)) {
               await route.fulfill({
                 json: smallPolygonGraphqlBody,
@@ -745,15 +681,6 @@ test.describe('Path /search/granules/collection-details', () => {
         })
 
         await page.route(/graphql.*\/api/, async (route) => {
-          const { query } = JSON.parse(route.request().postData())
-
-          if (query === graphQlGetSubscriptionsQuery) {
-            await route.fulfill({
-              json: getSubscriptionsGraphQlBody,
-              headers: graphQlHeaders
-            })
-          }
-
           if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: multiShapeGraphqlBody,

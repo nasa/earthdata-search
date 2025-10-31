@@ -7,7 +7,7 @@ import {
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../zustand/selectors/user'
+import { getEdlToken } from '../zustand/selectors/user'
 
 export const setRetrievalCollectionLoading = (retrievalCollection) => ({
   type: SET_RETRIEVAL_COLLECTION_LOADING,
@@ -24,12 +24,12 @@ export const updateRetrievalCollection = (id, retrievalCollectionData) => ({
  */
 export const fetchRetrievalCollection = (id) => (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   dispatch(setRetrievalCollectionLoading({ id }))
 
-  const requestObject = new RetrievalCollectionRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalCollectionRequest(edlToken, earthdataEnvironment)
 
   const response = requestObject.fetch(id)
     .then((responseObject) => {

@@ -82,7 +82,7 @@ describe('getRegions', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'token',
+      edlToken: 'token',
       searchResults: {
         collections: {},
         facets: {},
@@ -131,7 +131,7 @@ describe('getRegions', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: '',
+      edlToken: '',
       searchResults: {
         collections: {},
         facets: {},

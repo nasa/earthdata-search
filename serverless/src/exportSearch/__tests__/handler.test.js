@@ -1,18 +1,14 @@
 import nock from 'nock'
 
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
-import * as getJwtToken from '../../util/getJwtToken'
-import * as getEchoToken from '../../util/urs/getEchoToken'
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 import exportSearch from '../handler'
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getEchoToken, 'getEchoToken').mockImplementation(() => '1234-abcd-5678-efgh')
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
 })
 
 describe('exportSearch', () => {

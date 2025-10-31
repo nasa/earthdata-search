@@ -115,10 +115,9 @@ describe('createSubscription', () => {
 
     getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
-    nock(/localhost/)
-      .post(/graphql/, (body) => {
-        const { data } = body
-        const { variables } = data
+    nock(/graphql/)
+      .post(/api/, (body) => {
+        const { variables } = body
         const { params } = variables
         const {
           collectionConceptId,
@@ -159,7 +158,7 @@ describe('createSubscription', () => {
       // eslint-disable-next-line no-param-reassign
       state.collection.collectionId = 'collectionId'
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
       // eslint-disable-next-line no-param-reassign
       state.user.username = 'testUser'
     })
@@ -194,10 +193,9 @@ describe('createSubscription', () => {
 
     getCollectionSubscriptionQueryString.mockReturnValue('options[temporal][limit_to_granules]=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
-    nock(/localhost/)
-      .post(/graphql/, (body) => {
-        const { data } = body
-        const { variables } = data
+    nock(/graphql/)
+      .post(/api/, (body) => {
+        const { variables } = body
         const { params } = variables
         const {
           name,
@@ -239,7 +237,7 @@ describe('createSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
       // eslint-disable-next-line no-param-reassign
       state.user.username = 'testUser'
     })
@@ -275,10 +273,9 @@ describe('createSubscription', () => {
 
       getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
-      nock(/localhost/)
-        .post(/graphql/, (body) => {
-          const { data } = body
-          const { variables } = data
+      nock(/graphql/)
+        .post(/api/, (body) => {
+          const { variables } = body
           const { params } = variables
           const {
             collectionConceptId,
@@ -321,7 +318,7 @@ describe('createSubscription', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.collectionId = 'collectionId'
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = 'token'
+        state.user.edlToken = 'token'
         // eslint-disable-next-line no-param-reassign
         state.user.username = 'testUser'
       })
@@ -357,8 +354,8 @@ describe('createSubscription', () => {
         graphQlHost: 'https://graphql.example.com'
       }))
 
-      nock(/localhost/)
-        .post(/graphql/)
+      nock(/graphql/)
+        .post(/api/)
         .reply(200, {
           errors: [{
             message: 'The Provider Id [EDSC] and Subscription Name [Test Name] combination must be unique for a given native-id.'
@@ -373,7 +370,7 @@ describe('createSubscription', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.collectionId = 'collectionId'
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = 'token'
+        state.user.edlToken = 'token'
       })
 
       const store = mockStore({
@@ -408,8 +405,8 @@ describe('getSubscriptions', () => {
           graphQlHost: 'https://graphql.example.com'
         }))
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               subscriptions: {
@@ -432,7 +429,7 @@ describe('getSubscriptions', () => {
 
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.user.authToken = 'token'
+          state.user.edlToken = 'token'
         })
 
         const store = mockStore()
@@ -489,8 +486,8 @@ describe('getSubscriptions', () => {
           graphQlHost: 'https://graphql.example.com'
         }))
 
-        nock(/localhost/)
-          .post(/graphql/)
+        nock(/graphql/)
+          .post(/api/)
           .reply(200, {
             data: {
               subscriptions: {
@@ -502,7 +499,7 @@ describe('getSubscriptions', () => {
 
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.user.authToken = 'token'
+          state.user.edlToken = 'token'
         })
 
         const store = mockStore()
@@ -548,8 +545,8 @@ describe('getSubscriptions', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -562,7 +559,7 @@ describe('getSubscriptions', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -608,7 +605,7 @@ describe('getGranuleSubscriptions', () => {
         opensearchRoot: 'https://cmr.example.com'
       }))
 
-      nock(/graph/)
+      nock(/graphql/)
         .post(/api/)
         .reply(200, {
           data: {
@@ -626,7 +623,7 @@ describe('getGranuleSubscriptions', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.updateGranuleSubscriptions = jest.fn()
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = undefined
+        state.user.edlToken = null
       })
 
       const store = mockStore()
@@ -648,7 +645,7 @@ describe('getGranuleSubscriptions', () => {
         opensearchRoot: 'https://cmr.example.com'
       }))
 
-      nock(/graph/)
+      nock(/graphql/)
         .post(/api/)
         .reply(200, {
           data: {
@@ -664,7 +661,7 @@ describe('getGranuleSubscriptions', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.updateGranuleSubscriptions = jest.fn()
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = undefined
+        state.user.edlToken = null
       })
 
       const store = mockStore()
@@ -689,8 +686,8 @@ describe('getGranuleSubscriptions', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -703,7 +700,7 @@ describe('getGranuleSubscriptions', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -728,8 +725,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           deleteSubscription: {
@@ -740,7 +737,7 @@ describe('deleteSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -766,8 +763,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           deleteSubscription: {
@@ -778,7 +775,7 @@ describe('deleteSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -834,8 +831,8 @@ describe('deleteSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -848,7 +845,7 @@ describe('deleteSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -875,8 +872,8 @@ describe('updateSubscription', () => {
 
     const getGranuleSubscriptionsMock = jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           updateSubscription: {
@@ -887,7 +884,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({
@@ -928,8 +925,8 @@ describe('updateSubscription', () => {
 
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           updateSubscription: {
@@ -940,7 +937,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({
@@ -982,8 +979,8 @@ describe('updateSubscription', () => {
 
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         data: {
           updateSubscription: {
@@ -994,7 +991,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({
@@ -1039,8 +1036,8 @@ describe('updateSubscription', () => {
       graphQlHost: 'https://graphql.example.com'
     }))
 
-    nock(/localhost/)
-      .post(/graphql/)
+    nock(/graphql/)
+      .post(/api/)
       .reply(200, {
         errors: [{
           message: 'Token does not exist'
@@ -1053,7 +1050,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({

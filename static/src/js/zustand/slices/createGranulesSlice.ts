@@ -2,7 +2,7 @@ import { CancelTokenSource, isCancel } from 'axios'
 // @ts-expect-error There are no types for this file
 import { mbr } from '@edsc/geo-utils'
 
-import { getAuthToken } from '../selectors/user'
+import { getEdlToken } from '../selectors/user'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
 import { getCollectionsById } from '../selectors/collections'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -50,7 +50,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
       } = configureStore()
 
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const collectionId = getCollectionId(zustandState)
       const collectionMetadata = getFocusedCollectionMetadata(zustandState)
@@ -119,7 +119,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
       // TODO can I replace this with a single page of fetchGranuleLinks? Maybe just the opensearch call
       if (isOpenSearch) {
-        requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment, collectionId)
+        requestObject = new OpenSearchGranuleRequest(edlToken, earthdataEnvironment, collectionId)
 
         const { polygon } = searchParams
 
@@ -141,7 +141,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
           delete searchParams.polygon
         }
       } else {
-        requestObject = new GranuleRequest(authToken, earthdataEnvironment)
+        requestObject = new GranuleRequest(edlToken, earthdataEnvironment)
       }
 
       granuleSearchCancelTokens[collectionId] = requestObject.getCancelToken()

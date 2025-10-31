@@ -65,21 +65,20 @@ describe('GranuleDetailsMetadata component', () => {
           },
           overrideZustandState: {
             user: {
-              authToken: 'token'
+              edlToken: 'token'
             }
           }
         })
 
-        const baseUrl = 'http://localhost:3000/concepts/metadata?ee=prod&url='
-        const granuleUrl = encodeURIComponent('https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC')
-        const tokenUrl = '&token=token'
+        const granuleUrl = 'https://cmr.earthdata.nasa.gov/search/concepts/G1422858365-ORNL_DAAC'
+        const tokenUrl = '?token=Bearer%20token'
 
         expect(screen.getAllByRole('listitem')).toHaveLength(5)
-        expect(screen.getByRole('link', { name: 'Native' })).toHaveAttribute('href', `${baseUrl}${granuleUrl}${tokenUrl}`)
-        expect(screen.getByRole('link', { name: 'UMM-G' })).toHaveAttribute('href', `${baseUrl}${granuleUrl}.umm_json${tokenUrl}`)
-        expect(screen.getByRole('link', { name: 'ATOM' })).toHaveAttribute('href', `${baseUrl}${granuleUrl}.atom${tokenUrl}`)
-        expect(screen.getByRole('link', { name: 'ECHO 10' })).toHaveAttribute('href', `${baseUrl}${granuleUrl}.echo10${tokenUrl}`)
-        expect(screen.getByRole('link', { name: 'ISO 19115' })).toHaveAttribute('href', `${baseUrl}${granuleUrl}.iso19115${tokenUrl}`)
+        expect(screen.getByRole('link', { name: 'Native' })).toHaveAttribute('href', `${granuleUrl}${tokenUrl}`)
+        expect(screen.getByRole('link', { name: 'UMM-G' })).toHaveAttribute('href', `${granuleUrl}.umm_json${tokenUrl}`)
+        expect(screen.getByRole('link', { name: 'ATOM' })).toHaveAttribute('href', `${granuleUrl}.atom${tokenUrl}`)
+        expect(screen.getByRole('link', { name: 'ECHO 10' })).toHaveAttribute('href', `${granuleUrl}.echo10${tokenUrl}`)
+        expect(screen.getByRole('link', { name: 'ISO 19115' })).toHaveAttribute('href', `${granuleUrl}.iso19115${tokenUrl}`)
       })
     })
   })

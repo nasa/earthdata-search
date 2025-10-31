@@ -60,7 +60,7 @@ describe('fetchGranuleLinks', () => {
       })
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     const params = {
@@ -148,7 +148,7 @@ describe('fetchGranuleLinks', () => {
       })
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     const params = {
@@ -223,7 +223,7 @@ describe('fetchGranuleLinks', () => {
       })
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     const params = {
@@ -285,7 +285,7 @@ describe('fetchGranuleLinks', () => {
       })
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     const params = {
@@ -332,7 +332,7 @@ describe('fetchGranuleLinks', () => {
       })
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     const params = {
@@ -370,7 +370,7 @@ describe('fetchGranuleLinks', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     const params = {

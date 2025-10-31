@@ -15,21 +15,6 @@ export default {
     }
   },
   Mutation: {
-    logout: async (parent, args, context) => {
-      const {
-        databaseClient,
-        earthdataEnvironment,
-        user
-      } = context
-
-      const result = await databaseClient.deleteUserTokens({
-        earthdataEnvironment,
-        userId: user.id
-      })
-
-      return result > 0
-    },
-
     updatePreferences: async (parent, args, context) => {
       const { databaseClient, user } = context
 

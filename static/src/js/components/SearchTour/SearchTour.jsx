@@ -4,17 +4,17 @@ import Joyride, { STATUS, ACTIONS } from 'react-joyride'
 import TourSteps from './TourSteps'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 import { localStorageKeys } from '../../constants/localStorageKeys'
 
 const SearchTour = () => {
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const { runTour, setRunTour } = useEdscStore((state) => ({
     runTour: state.ui.tour.runTour,
     setRunTour: state.ui.tour.setRunTour
   }))
-  const loggedIn = !!authToken
+  const loggedIn = !!edlToken
 
   const TOTAL_STEPS = loggedIn ? 13 : 12
 

@@ -1,10 +1,8 @@
 import { groupBy, sortBy } from 'lodash-es'
 
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -21,13 +19,7 @@ export default async function getRetrievals(event, context) {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { headers } = event
-
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
-
-    const jwtToken = getJwtToken(event)
-
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    const { userId } = getAuthorizerContext(event)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()

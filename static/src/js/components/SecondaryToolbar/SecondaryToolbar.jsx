@@ -17,7 +17,6 @@ import {
   FaUser,
   FaSignInAlt
 } from 'react-icons/fa'
-import { useMutation } from '@apollo/client'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -33,13 +32,11 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getAuthToken, getUrsProfile } from '../../zustand/selectors/user'
+import { getEdlToken, getUrsProfile } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 import { routes } from '../../constants/routes'
-
-import LOGOUT from '../../operations/mutations/logout'
 
 import './SecondaryToolbar.scss'
 
@@ -48,11 +45,9 @@ const SecondaryToolbar = ({
   projectCollectionIds,
   retrieval
 }) => {
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const logout = useEdscStore((state) => state.user.logout)
   const ursProfile = useEdscStore(getUrsProfile)
-
-  const [logoutMutation] = useMutation(LOGOUT)
 
   const {
     setProjectName: updateProjectName,
@@ -82,14 +77,7 @@ const SecondaryToolbar = ({
    * Log the user out by calling the logoutMutation
    */
   const handleLogout = () => {
-    logoutMutation({
-      onCompleted: () => {
-        logout()
-      },
-      onError: () => {
-        logout()
-      }
-    })
+    logout()
   }
 
   const handleNameSubmit = () => {
@@ -123,7 +111,7 @@ const SecondaryToolbar = ({
 
   const { firstName = '' } = ursProfile
 
-  const loggedIn = !!authToken
+  const loggedIn = !!edlToken
   const returnPath = window.location.href
   const { pathname, search } = location
   let isMapOverlay = false

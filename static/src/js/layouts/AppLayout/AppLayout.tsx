@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
-import AuthToken from '../../components/AuthToken/AuthToken'
+import EdlTokenLoader from '../../components/EdlTokenLoader/EdlTokenLoader'
 // @ts-expect-error The file does not have types
 import ErrorBanner from '../../components/ErrorBanner/ErrorBanner'
 // @ts-expect-error The file does not have types
@@ -27,7 +27,7 @@ const AppLayout = () => (
     <HistoryContainer />
     <MetricsContainer />
     <ErrorBanner />
-    <AuthToken>
+    <EdlTokenLoader>
       <UserLoader>
         <UrlQueryContainer>
           <WrappingContainer>
@@ -37,7 +37,7 @@ const AppLayout = () => (
           <Footer />
         </UrlQueryContainer>
       </UserLoader>
-    </AuthToken>
+    </EdlTokenLoader>
   </>
 )
 

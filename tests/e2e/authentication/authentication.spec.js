@@ -25,7 +25,7 @@ test.describe('Authentication', () => {
       height: 850
     })
 
-    await page.route(/collections$/, async (route) => {
+    await page.route(/collections\.json/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,
         headers: collectionFixture.headers
@@ -53,7 +53,15 @@ test.describe('Authentication', () => {
                 sitePreferences,
                 ursId: 'testuser',
                 ursProfile: {
-                  firstName: 'test'
+                  affiliation: 'OTHER',
+                  country: 'United States',
+                  emailAddress: 'test@example.com',
+                  firstName: 'test',
+                  lastName: 'user',
+                  organization: null,
+                  studyArea: 'Other',
+                  uid: 'testuser',
+                  userType: 'Public User'
                 }
               }
             }
@@ -76,7 +84,7 @@ test.describe('Authentication', () => {
   })
 
   test('logs the user in with the auth_callback endpoint and redirects the user', async ({ page }) => {
-    await page.goto(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/search`)
+    await page.goto(`/auth_callback?edlToken=${testJwtToken}&redirect=http://localhost:8080/search`)
     await page.waitForSelector('[data-testid="collection-results-item"]')
 
     await expect(page.getByText('Earthdata Login')).not.toBeVisible()
@@ -93,7 +101,7 @@ test.describe('Authentication', () => {
 
     await expect((await context.cookies())).toEqual([
       expect.objectContaining({
-        name: 'authToken',
+        name: 'edlToken',
         value: testJwtToken
       })
     ])

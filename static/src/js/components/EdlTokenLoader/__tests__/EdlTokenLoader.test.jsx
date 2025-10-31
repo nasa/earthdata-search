@@ -2,7 +2,7 @@ import * as tinyCookie from 'tiny-cookie'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import AuthToken from '../AuthToken'
+import EdlTokenLoader from '../EdlTokenLoader'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -11,21 +11,21 @@ jest.mock('tiny-cookie', () => ({
 }))
 
 const setup = setupTest({
-  Component: AuthToken,
+  Component: EdlTokenLoader,
   defaultProps: {
     children: 'children'
   },
   defaultZustandState: {
     user: {
-      setAuthToken: jest.fn()
+      setEdlToken: jest.fn()
     }
   }
 })
 
-describe('AuthToken component', () => {
-  test('should call setAuthToken when mounted', () => {
+describe('EdlTokenLoader component', () => {
+  test('should call setEdlToken when mounted', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-      if (param === 'authToken') return 'token'
+      if (param === 'edlToken') return 'token'
 
       return ''
     })
@@ -36,14 +36,14 @@ describe('AuthToken component', () => {
 
     const { zustandState } = setup()
 
-    expect(zustandState.user.setAuthToken).toHaveBeenCalledTimes(1)
-    expect(zustandState.user.setAuthToken).toHaveBeenCalledWith('token')
+    expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
+    expect(zustandState.user.setEdlToken).toHaveBeenCalledWith('token')
   })
 
   describe('when disableDatabaseComponents is true', () => {
-    test('should call setAuthToken with an empty string', () => {
+    test('should call setEdlToken with an empty string', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-        if (param === 'authToken') return 'token'
+        if (param === 'edlToken') return 'token'
 
         return ''
       })
@@ -54,8 +54,8 @@ describe('AuthToken component', () => {
 
       const { zustandState } = setup()
 
-      expect(zustandState.user.setAuthToken).toHaveBeenCalledTimes(1)
-      expect(zustandState.user.setAuthToken).toHaveBeenCalledWith(undefined)
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledWith(null)
     })
   })
 })

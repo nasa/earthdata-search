@@ -8,7 +8,7 @@ import configureStore from '../../store/configureStore'
 // @ts-expect-error There are no types for this file
 import actions from '../../actions'
 
-import { getAuthToken } from '../selectors/user'
+import { getEdlToken } from '../selectors/user'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getNlpCollection } from '../selectors/query'
 
@@ -49,7 +49,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       } = configureStore()
       const reduxState = reduxGetState()
 
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
       // If cancel token is set, cancel the previous request(s)
@@ -77,7 +77,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
       reduxDispatch(actions.onFacetsLoading())
 
-      const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
+      const requestObject = new CollectionRequest(edlToken, earthdataEnvironment)
 
       cancelToken = requestObject.getCancelToken()
 
@@ -139,7 +139,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
     getNlpCollections: async () => {
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const nlpFromState = getNlpCollection(zustandState)
       const searchQuery = nlpFromState!.query
@@ -147,7 +146,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       let nlpRequest: NlpSearchRequest
 
       try {
-        nlpRequest = new NlpSearchRequest(authToken, earthdataEnvironment)
+        nlpRequest = new NlpSearchRequest(earthdataEnvironment)
 
         const response = await nlpRequest.search({ q: searchQuery })
         const { data } = response

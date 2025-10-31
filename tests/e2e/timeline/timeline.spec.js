@@ -24,14 +24,14 @@ test.describe('Timeline spec', () => {
 
     const authHeaders = getAuthHeaders()
 
-    await page.route(/collections$/, async (route) => {
+    await page.route(/collections\.json/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,
         headers: collectionFixture.headers
       })
     })
 
-    await page.route(/cmr-graphql-proxy/, async (route) => {
+    await page.route(/graphql.*\/api/, async (route) => {
       await route.fulfill({
         json: collectionsGraphJson.body,
         headers: authHeaders
@@ -69,7 +69,7 @@ test.describe('Timeline spec', () => {
       })
     })
 
-    await page.route(/granules$/, async (route) => {
+    await page.route(/granules\.json/, async (route) => {
       await route.fulfill({
         json: granules.body,
         headers: {

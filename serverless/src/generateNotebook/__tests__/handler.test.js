@@ -3,8 +3,7 @@ import nock from 'nock'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
-import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
-import * as getJwtToken from '../../util/getJwtToken'
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as getS3Client from '../../util/getS3Client'
 
 import generateNotebook from '../handler'
@@ -19,8 +18,7 @@ const mockS3Send = jest.fn()
 const mockS3Client = { send: mockS3Send }
 
 beforeEach(() => {
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'mockAccessToken' }))
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ jwtToken: 'mockJwt' }))
 
   jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
     graphQlHost: 'http://graphql.example.com'
@@ -36,7 +34,6 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.clearAllMocks()
   mockS3Send.mockReset()
 })
 
@@ -198,7 +195,7 @@ describe('generateNotebook', () => {
           }
         })
 
-      jest.spyOn(getJwtToken, 'getJwtToken').mockReturnValue(null)
+      jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockReturnValueOnce({})
 
       const event = {
         body: JSON.stringify({

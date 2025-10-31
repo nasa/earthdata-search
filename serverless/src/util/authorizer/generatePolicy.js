@@ -5,13 +5,25 @@
  * @param {String} effect
  * @param {Object} resource
  */
-export const generatePolicy = (username, jwtToken, effect, resource) => {
+export const generatePolicy = ({
+  earthdataEnvironment,
+  effect,
+  jwtToken,
+  resource,
+  userId,
+  username
+}) => {
   const authResponse = {
     principalId: username
   }
 
   if (jwtToken) {
-    authResponse.context = { jwtToken }
+    authResponse.context = {
+      earthdataEnvironment,
+      jwtToken,
+      userId,
+      username
+    }
   }
 
   if (effect && resource) {

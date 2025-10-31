@@ -43,6 +43,13 @@ config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bambo
 config="`jq '.application.emergencyNotification = $newValue' --arg newValue "$bamboo_EMERGENCY_NOTIFICATION" <<< $config`"
 config="`jq '.application.emergencyNotificationType = $newValue' --arg newValue $bamboo_EMERGENCY_NOTIFICATION_TYPE <<< $config`"
 
+config="`jq '.earthdata.sit.edlJwk = $newValue' --arg newValue $bamboo_EDL_SIT_JWK <<< $config`"
+config="`jq '.earthdata.sit.edlJwkId = $newValue' --arg newValue $bamboo_EDL_SIT_JWK_ID <<< $config`"
+config="`jq '.earthdata.uat.edlJwk = $newValue' --arg newValue $bamboo_EDL_UAT_JWK <<< $config`"
+config="`jq '.earthdata.uat.edlJwkId = $newValue' --arg newValue $bamboo_EDL_UAT_JWK_ID <<< $config`"
+config="`jq '.earthdata.prod.edlJwk = $newValue' --arg newValue $bamboo_EDL_PROD_JWK <<< $config`"
+config="`jq '.earthdata.prod.edlJwkId = $newValue' --arg newValue $bamboo_EDL_PROD_JWK_ID <<< $config`"
+
 # Overwrite static.config.json with new values
 echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
 

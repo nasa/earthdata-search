@@ -18,10 +18,6 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly colormapsApiGatewayResource: apigateway.CfnResource
 
-  public readonly conceptsApiGatewayResource: apigateway.CfnResource
-
-  public readonly granulesApiGatewayResource: apigateway.CfnResource
-
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
 
   public readonly retrievalCollectionsApiGatewayResource: apigateway.CfnResource
@@ -80,35 +76,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.colormapsApiGatewayResource = colormapsApiGatewayResource
-
-    /**
-     * Concepts API Gateway Resource
-     */
-    const conceptsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceConcepts', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'concepts',
-      restApiId: apiGatewayRestApi.ref
-    })
-    this.conceptsApiGatewayResource = conceptsApiGatewayResource
-
-    /**
-     * Granules API Gateway Resource
-     */
-    const granulesApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceGranules', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'granules',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'GranulesOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: granulesApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['POST'],
-      name: 'Granules'
-    })
-
-    this.granulesApiGatewayResource = granulesApiGatewayResource
 
     /**
      * OpenSearch API Gateway Resource

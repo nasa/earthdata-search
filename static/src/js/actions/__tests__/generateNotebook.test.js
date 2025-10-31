@@ -65,7 +65,7 @@ describe('generateNotebook', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: ''
+      edlToken: ''
     })
 
     const notebookParams = {
@@ -130,7 +130,7 @@ describe('generateNotebook', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: ''
+      edlToken: ''
     })
 
     const notebookParams = {

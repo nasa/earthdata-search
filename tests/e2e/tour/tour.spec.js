@@ -27,7 +27,7 @@ test.describe('When dontShowTour is set to false', () => {
       dontShowTour: false
     })
 
-    await page.route(/collections.json/, async (route) => {
+    await page.route(/collections\.json/, async (route) => {
       await route.fulfill({
         json: singleCollection.body,
         headers: singleCollection.headers
@@ -125,14 +125,14 @@ test.describe('When logged in', () => {
 
     await login(page, context)
 
-    await page.route(/collections$/, async (route) => {
+    await page.route(/collections\.json/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,
         headers: collectionFixture.headers
       })
     })
 
-    await page.route(/cmr-graphql-proxy/, async (route) => {
+    await page.route(/graphql.*\/api/, async (route) => {
       await route.fulfill({
         json: getSubscriptionsGraphQlBody,
         headers: graphQlHeaders

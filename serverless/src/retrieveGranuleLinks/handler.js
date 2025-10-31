@@ -4,8 +4,7 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { fetchOpendapLinks } from './fetchOpendapLinks'
 import { flattenGranuleLinks } from './flattenGranuleLinks'
@@ -40,9 +39,7 @@ const retrieveGranuleLinks = async (event, context) => {
     // Decode the provided retrieval id
     const decodedRetrievalCollectionId = deobfuscateId(retrievalCollectionId)
 
-    const jwtToken = getJwtToken(event)
-
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    const { jwtToken, userId } = getAuthorizerContext(event)
 
     // Fetch retrievalOrder from database
     // Retrieve a connection to the database
@@ -54,19 +51,15 @@ const retrieveGranuleLinks = async (event, context) => {
         'retrieval_collections.collection_id',
         'retrieval_collections.granule_params',
         'retrieval_collections.collection_metadata',
-        'retrieval_orders.order_information',
-        'user_tokens.access_token'
+        'retrieval_orders.order_information'
       )
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .leftJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
-      .join('user_tokens', { 'user_tokens.user_id': 'users.id' })
       .where({
         'retrieval_collections.id': decodedRetrievalCollectionId,
-        'users.id': userId,
-        'user_tokens.environment': earthdataEnvironment
+        'users.id': userId
       })
-      .orderBy('user_tokens.updated_at', 'desc')
 
     const [retrievalCollectionResponse] = retrievalCollectionResponseRows
 
@@ -76,8 +69,7 @@ const retrieveGranuleLinks = async (event, context) => {
       collection_id: collectionId,
       collection_metadata: collectionMetadata,
       granule_params: granuleParams,
-      order_information: orderInformation,
-      access_token: token
+      order_information: orderInformation
     } = retrievalCollectionResponse
 
     const { type } = accessMethod
@@ -97,7 +89,7 @@ const retrieveGranuleLinks = async (event, context) => {
           linkTypes,
           pageNum,
           requestId,
-          token
+          token: jwtToken
         }))
 
         break
