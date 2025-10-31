@@ -2,9 +2,6 @@ import { combineReducers } from 'redux'
 
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminRetrievalsMetricsReducer from './admin/retrievalsMetrics'
-import colorMapsReducer from './colorMaps'
-import authTokenReducer from './authToken'
-import contactInfoReducer from './contactInfo'
 import facetsReducer from './facets'
 import granuleDownloadReducer from './granuleDownload'
 import regionResultsReducer from './regionResults'
@@ -19,8 +16,6 @@ export default () => combineReducers({
     retrievalsMetrics: adminRetrievalsMetricsReducer
   }),
   granuleDownload: granuleDownloadReducer,
-  metadata: combineReducers({
-  }),
   retrieval: retrievalReducer,
   searchResults: combineReducers({
     facets: facetsReducer,
