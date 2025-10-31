@@ -1,5 +1,3 @@
-// @ts-expect-error This library does not have types
-import jwt from 'jsonwebtoken'
 import { remove } from 'tiny-cookie'
 
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
@@ -22,13 +20,12 @@ describe('createUserSlice', () => {
     const { user } = zustandState
 
     expect(user).toEqual({
-      authToken: null,
       edlToken: null,
       sitePreferences: initialSitePreferences,
       username: null,
       ursProfile: null,
       logout: expect.any(Function),
-      setAuthToken: expect.any(Function),
+      setEdlToken: expect.any(Function),
       setSitePreferences: expect.any(Function),
       setUsername: expect.any(Function),
       setUrsProfile: expect.any(Function)
@@ -65,13 +62,12 @@ describe('createUserSlice', () => {
 
       const { user } = useEdscStore.getState()
 
-      expect(user.authToken).toBeNull()
       expect(user.edlToken).toBeNull()
       expect(user.username).toBeNull()
       expect(user.ursProfile).toBeNull()
 
       expect(remove).toHaveBeenCalledTimes(1)
-      expect(remove).toHaveBeenCalledWith('authToken')
+      expect(remove).toHaveBeenCalledWith('edlToken')
 
       expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
       expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
@@ -81,34 +77,30 @@ describe('createUserSlice', () => {
     })
   })
 
-  describe('setAuthToken', () => {
+  describe('setEdlToken', () => {
     describe('when a token is provided', () => {
-      test('decodes the token and sets the edlToken and authToken in state', () => {
-        jest.spyOn(jwt, 'decode').mockReturnValueOnce({ edlToken: 'mocked_edl_token' })
-
-        const { setAuthToken } = useEdscStore.getState().user
+      test('sets the edlToken in state', () => {
+        const { setEdlToken } = useEdscStore.getState().user
 
         const mockToken = 'mocked_token'
 
-        setAuthToken(mockToken)
+        setEdlToken(mockToken)
 
         const { user } = useEdscStore.getState()
 
-        expect(user.edlToken).toBe('mocked_edl_token')
-        expect(user.authToken).toBe(mockToken)
+        expect(user.edlToken).toEqual(mockToken)
       })
     })
 
     describe('when no token is provided', () => {
-      test('sets the edlToken and authToken in state to null', () => {
-        const { setAuthToken } = useEdscStore.getState().user
+      test('sets the edlToken in state to null', () => {
+        const { setEdlToken } = useEdscStore.getState().user
 
-        setAuthToken(null)
+        setEdlToken(null)
 
         const { user } = useEdscStore.getState()
 
         expect(user.edlToken).toBeNull()
-        expect(user.authToken).toBeNull()
       })
     })
   })

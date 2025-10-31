@@ -1,23 +1,20 @@
 import CmrRequest from './cmrRequest'
 
 // @ts-expect-error Types are not defined for this module
-import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Request object for timeline specific requests
  */
 export default class TimelineRequest extends CmrRequest {
-  constructor(authToken: string | null, earthdataEnvironment: string) {
-    if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+  constructor(edlToken: string | null, earthdataEnvironment: string) {
+    super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
+    this.searchPath = 'search/granules/timeline'
+
+    if (edlToken) {
       this.authenticated = true
-      this.authToken = authToken
-      this.searchPath = 'granules/timeline'
-    } else {
-      super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
-
-      this.searchPath = 'search/granules/timeline'
+      this.edlToken = edlToken
     }
   }
 

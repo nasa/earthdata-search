@@ -84,6 +84,7 @@ describe('createCollectionsSlice', () => {
         }
 
         state.granules.getGranules = jest.fn()
+        state.user.edlToken = 'mock-token'
       })
 
       mockGetState.mockReturnValue({})
@@ -92,64 +93,6 @@ describe('createCollectionsSlice', () => {
       const { getCollections } = collections
 
       await getCollections()
-      const {
-        collections: updatedCollections
-      } = useEdscStore.getState()
-
-      expect(updatedCollections.collections).toEqual({
-        count: 1,
-        isLoaded: true,
-        isLoading: false,
-        items: [{ mockCollectionData: 'goes here' }],
-        loadTime: expect.any(Number)
-      })
-
-      expect(actions.onFacetsLoading).toHaveBeenCalledTimes(1)
-      expect(actions.onFacetsLoading).toHaveBeenCalledWith()
-
-      expect(actions.onFacetsLoaded).toHaveBeenCalledTimes(1)
-      expect(actions.onFacetsLoaded).toHaveBeenCalledWith({ loaded: true })
-
-      expect(actions.updateFacets).toHaveBeenCalledTimes(1)
-      expect(actions.updateFacets).toHaveBeenCalledWith({ facets: [] })
-    })
-
-    test('calls lambda to get authenticated collections', async () => {
-      nock(/localhost/)
-        .post(/collections/)
-        .reply(200, {
-          feed: {
-            updated: '2019-03-27T20:21:14.705Z',
-            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
-            title: 'ECHO dataset metadata',
-            entry: [{
-              mockCollectionData: 'goes here'
-            }],
-            facets: {}
-          }
-        }, {
-          'cmr-hits': '1',
-          'jwt-token': 'token'
-        })
-
-      useEdscStore.setState((state) => {
-        state.collection.collectionId = 'C10000000000-EDSC'
-        state.collection.collectionMetadata['C10000000000-EDSC'] = {
-          conceptId: 'C10000000000-EDSC',
-          hasAllMetadata: true
-        }
-
-        state.granules.getGranules = jest.fn()
-        state.user.authToken = 'mock-token'
-      })
-
-      mockGetState.mockReturnValue({})
-
-      const { collections } = useEdscStore.getState()
-      const { getCollections } = collections
-
-      await getCollections()
-
       const {
         collections: updatedCollections
       } = useEdscStore.getState()
@@ -273,7 +216,7 @@ describe('createCollectionsSlice', () => {
 
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'test query' }
-        state.user.authToken = 'test-token'
+        state.user.edlToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
@@ -333,7 +276,7 @@ describe('createCollectionsSlice', () => {
 
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'spatial query' }
-        state.user.authToken = 'test-token'
+        state.user.edlToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
@@ -370,13 +313,13 @@ describe('createCollectionsSlice', () => {
         .reply(200)
 
       mockGetState.mockReturnValue({
-        authToken: 'test-token'
+        edlToken: 'test-token'
       })
 
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'error query' }
         state.errors.handleError = jest.fn()
-        state.user.authToken = 'test-token'
+        state.user.edlToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
@@ -421,7 +364,7 @@ describe('createCollectionsSlice', () => {
 
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'empty query' }
-        state.user.authToken = 'test-token'
+        state.user.edlToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()

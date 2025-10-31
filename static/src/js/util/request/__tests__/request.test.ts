@@ -24,12 +24,12 @@ describe('Request#constructor', () => {
   })
 })
 
-describe('Request#getAuthToken', () => {
+describe('Request#getEdlToken', () => {
   test('returns the auth token', () => {
     const request = new Request(baseUrl, 'prod')
-    request.authToken = 'test auth token'
+    request.edlToken = 'test auth token'
 
-    expect(request.getAuthToken()).toEqual('test auth token')
+    expect(request.getEdlToken()).toEqual('test auth token')
   })
 
   test('returns an empty string if optionallyAuthenticated', () => {
@@ -37,7 +37,7 @@ describe('Request#getAuthToken', () => {
 
     request.optionallyAuthenticated = true
 
-    expect(request.getAuthToken()).toEqual('')
+    expect(request.getEdlToken()).toEqual('')
   })
 })
 
@@ -47,7 +47,7 @@ describe('Request#transformRequest', () => {
     const token = '123'
 
     request.authenticated = true
-    request.authToken = token
+    request.edlToken = token
 
     const data = { conceptId: 'C123456-EDSC' }
     const headers = {}

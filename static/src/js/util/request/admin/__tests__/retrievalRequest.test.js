@@ -12,7 +12,7 @@ describe('RetrievalRequest#constructor', () => {
     const request = new RetrievalRequest(token)
 
     expect(request.authenticated).toBeTruthy()
-    expect(request.authToken).toEqual(token)
+    expect(request.edlToken).toEqual(token)
     expect(request.baseUrl).toEqual('http://localhost:3000')
   })
 })

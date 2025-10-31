@@ -29,11 +29,11 @@ export const getCollectionMetadata = (collectionId, collections) => {
 /**
  * Format fetched metadata for the UI
  * @param {Object} metadata Collection metadata
- * @param {String} authToken The authenticated user's JWT token
+ * @param {String} edlToken The authenticated user's JWT token
  */
-export const createFocusedCollectionMetadata = (metadata, authToken, earthdataEnvironment) => ({
+export const createFocusedCollectionMetadata = (metadata, edlToken, earthdataEnvironment) => ({
   gibsLayers: buildGibsLayers(metadata),
-  urls: buildUrls(metadata, authToken, earthdataEnvironment),
+  urls: buildUrls(metadata, edlToken, earthdataEnvironment),
   dataCenters: buildDataCenters(metadata),
   directDistributionInformation: buildDirectDistributionInformation(metadata),
   doi: buildDoi(metadata),

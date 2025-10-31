@@ -6,9 +6,9 @@ import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 import moment from 'moment'
+
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
-import { getJwtToken } from '../util/getJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -63,7 +63,7 @@ const generateNotebook = async (event) => {
 
   const generatedTime = moment().utc().format('MMMM DD, YYYY [at] HH:mm:ss [UTC]')
 
-  const jwtToken = getJwtToken(event)
+  const { jwtToken } = getAuthorizerContext(event)
 
   const graphQLHeader = {
     'Content-Type': 'application/json'
@@ -71,9 +71,7 @@ const generateNotebook = async (event) => {
 
   // The authorizer will have already validated the token if it exists
   if (jwtToken) {
-    const { access_token: accessToken } = await
-    getAccessTokenFromJwtToken(jwtToken, earthdataEnvironment)
-    graphQLHeader.Authorization = `Bearer ${accessToken}`
+    graphQLHeader.Authorization = `Bearer ${jwtToken}`
   }
 
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)

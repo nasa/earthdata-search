@@ -1,7 +1,5 @@
 import { isEmpty, isEqual } from 'lodash-es'
 import { remove } from 'tiny-cookie'
-// @ts-expect-error The file does not have types
-import jwt from 'jsonwebtoken'
 
 import type {
   ImmerStateCreator,
@@ -20,10 +18,6 @@ import { initialMapView } from './createMapSlice'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 import { localStorageKeys } from '../../constants/localStorageKeys'
-
-type JwtTokenPayload = {
-  edlToken: string
-}
 
 export const initialSitePreferences: PreferencesData = {
   panelState: 'default',
@@ -47,7 +41,6 @@ export const initialSitePreferences: PreferencesData = {
 
 const createUserSlice: ImmerStateCreator<UserSlice> = (set, get) => ({
   user: {
-    authToken: null,
     edlToken: null,
     sitePreferences: initialSitePreferences,
     username: null,
@@ -58,10 +51,9 @@ const createUserSlice: ImmerStateCreator<UserSlice> = (set, get) => ({
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
       // Remove the auth cookie
-      remove('authToken')
+      remove('edlToken')
 
       set((state) => {
-        state.user.authToken = null
         state.user.edlToken = null
         state.user.username = null
         state.user.ursProfile = null
@@ -74,17 +66,9 @@ const createUserSlice: ImmerStateCreator<UserSlice> = (set, get) => ({
       window.location.assign(`/search?ee=${earthdataEnvironment}`)
     },
 
-    setAuthToken: (authToken) => {
-      let edlToken = null
-
-      if (authToken) {
-        const decoded = jwt.decode(authToken) as JwtTokenPayload
-        ({ edlToken } = decoded)
-      }
-
+    setEdlToken: (edlToken) => {
       set((state) => {
         state.user.edlToken = edlToken
-        state.user.authToken = authToken
       })
     },
 

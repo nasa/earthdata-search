@@ -11,7 +11,7 @@ import {
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../zustand/selectors/user'
+import { getEdlToken } from '../zustand/selectors/user'
 
 export const updateViewAllFacets = (payload) => ({
   type: UPDATE_VIEW_ALL_FACETS,
@@ -45,7 +45,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const state = getState()
 
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   dispatch(onViewAllFacetsLoading(category))
@@ -66,7 +66,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
     }
   })
 
-  const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
+  const requestObject = new CollectionRequest(edlToken, earthdataEnvironment)
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
     .then((searchResponse) => {

@@ -49,7 +49,7 @@ describe('fetchRetrievalCollection', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     // Call the dispatch
@@ -88,7 +88,7 @@ describe('fetchRetrievalCollection', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'token'
+      edlToken: 'token'
     })
 
     await store.dispatch(fetchRetrievalCollection(1234)).then(() => {

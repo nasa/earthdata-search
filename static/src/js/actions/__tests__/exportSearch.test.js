@@ -62,7 +62,7 @@ describe('exportSearch', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: ''
+      edlToken: ''
     })
 
     // Call the dispatch
@@ -105,7 +105,7 @@ describe('exportSearch', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: ''
+      edlToken: ''
     })
 
     // Call the dispatch
@@ -140,7 +140,7 @@ describe('exportSearch', () => {
     })
 
     const store = mockStore({
-      authToken: ''
+      edlToken: ''
     })
 
     await store.dispatch(exportSearch('json')).then(() => {

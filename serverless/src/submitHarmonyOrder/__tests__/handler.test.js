@@ -16,13 +16,6 @@ import submitHarmonyOrder from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
-    clientId: 'clientId',
-    secret: 'jwt-secret'
-  }))
-
   jest.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
     env: 'test'
   }))
@@ -128,7 +121,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('update')
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'Harmony')
+    expect(startOrderStatusUpdateWorkflowMock).toHaveBeenCalledWith(12, 'access-token', 'Harmony')
   })
 
   test('creates a limited shapefile if the shapefile was limited by the user', async () => {
@@ -220,7 +213,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[4].method).toEqual('update') // Update retrieval orders
 
     expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'Harmony')
+    expect(startOrderStatusUpdateWorkflowMock).toHaveBeenCalledWith(12, 'access-token', 'Harmony')
   })
 
   test('stores returned error message when order creation fails', async () => {
@@ -287,7 +280,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[2].method).toEqual('update')
     expect(queries[2].bindings).toEqual(['create_failed', 'Error: You are not authorized to access the requested resource', 12])
 
-    expect(consoleMock).toBeCalledTimes(9)
+    expect(consoleMock).toHaveBeenCalledTimes(9)
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 order(s)'])
     expect(consoleMock.mock.calls[1]).toEqual(['Harmony order payload'])
     expect(consoleMock.mock.calls[2]).toEqual(['forceAsync: true'])

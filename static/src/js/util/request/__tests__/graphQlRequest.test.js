@@ -14,7 +14,7 @@ describe('GraphQlRequest#constructor', () => {
     const request = new GraphQlRequest(token)
 
     expect(request.authenticated).toBeTruthy()
-    expect(request.authToken).toEqual(token)
+    expect(request.edlToken).toEqual(token)
     expect(request.baseUrl).toEqual('http://localhost:3000')
     expect(request.searchPath).toEqual('cmr-graphql-proxy')
   })
@@ -36,7 +36,7 @@ describe('GraphQlRequest#transformRequest', () => {
     const token = '123'
 
     request.authenticated = true
-    request.authToken = token
+    request.edlToken = token
 
     const data = { param1: 123 }
     const headers = {}

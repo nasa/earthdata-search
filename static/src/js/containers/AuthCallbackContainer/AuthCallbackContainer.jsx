@@ -26,8 +26,7 @@ export const AuthCallbackContainer = () => {
     const params = parse(search, { ignoreQueryPrefix: true })
     const {
       eddRedirect,
-      jwt = '',
-      accessToken,
+      edlToken,
       redirect = routes.HOME
     } = params
 
@@ -42,7 +41,7 @@ export const AuthCallbackContainer = () => {
       const validEddRedirect = eddRedirectUrl.startsWith('earthdata-download')
 
       if (validEddRedirect) {
-        if (accessToken) eddRedirectUrl += `&token=${accessToken}`
+        if (edlToken) eddRedirectUrl += `&token=${edlToken}`
 
         // Add the redirect information to the store
         setRedirectUrl(eddRedirectUrl)
@@ -73,8 +72,8 @@ export const AuthCallbackContainer = () => {
       return
     }
 
-    // Set the authToken cookie
-    set('authToken', jwt)
+    // Set the edlToken cookie
+    set('edlToken', edlToken)
 
     // Redirect the user to the correct location
     window.location.replace(redirect)

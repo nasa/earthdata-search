@@ -71,7 +71,7 @@ import type {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
-import { getAuthToken, getUsername } from '../selectors/user'
+import { getEdlToken, getUsername } from '../selectors/user'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -201,13 +201,13 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const reduxState = reduxGetState()
 
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const username = getUsername(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const collectionsMetadata = getCollectionsMetadata(zustandState)
 
       // If the user isn't logged in, return null
-      if (!authToken) return null
+      if (!edlToken) return null
 
       const {
         defaultCmrSearchTags,
@@ -249,7 +249,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       let savedAccessConfigs = {} as SavedAccessConfigs
       try {
         const savedAccessConfigsRequestObject = new SavedAccessConfigsRequest(
-          authToken,
+          edlToken,
           earthdataEnvironment
         )
 
@@ -280,7 +280,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         includeHasGranules
       } = searchParams
 
-      const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+      const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
       try {
         const response = await graphQlRequestObject.search(getProjectCollections, {
@@ -357,7 +357,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           const focusedMetadata = createFocusedCollectionMetadata(
             metadata,
-            authToken,
+            edlToken,
             earthdataEnvironment
           )
 
@@ -474,7 +474,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       } = configureStore()
 
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const collectionsMetadata = getCollectionsMetadata(zustandState)
       const projectCollectionIds = getProjectCollectionsIds(zustandState)
@@ -507,7 +507,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         // TODO can I replace this with a single page of fetchGranuleLinks?
         if (isOpenSearch) {
           requestObject = new OpenSearchGranuleRequest(
-            authToken,
+            edlToken,
             earthdataEnvironment,
             collectionId
           )
@@ -535,7 +535,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             delete searchParams.polygon
           }
         } else {
-          requestObject = new GranuleRequest(authToken, earthdataEnvironment)
+          requestObject = new GranuleRequest(edlToken, earthdataEnvironment)
         }
 
         const { conceptId: granuleConceptIds = [] } = searchParams

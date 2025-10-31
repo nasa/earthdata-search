@@ -2,7 +2,6 @@ import { AuthorizationCode } from 'simple-oauth2'
 import { parse, stringify } from 'qs'
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 
-import { createJwtToken } from '../util/createJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/getEdlConfig'
@@ -54,19 +53,14 @@ const edlCallback = async (event, context) => {
     redirect_uri: redirectUri
   }
 
-  let jwtToken
   let accessToken
 
   try {
     // Retrieve the Earthdata Login token
     const oauthToken = await client.getToken(tokenConfig)
 
-    const { token } = oauthToken
+    const { token } = oauthToken;
 
-    const {
-      refresh_token: refreshToken,
-      expires_at: expiresAt
-    } = token;
     ({ access_token: accessToken } = token)
 
     const username = getUsernameFromToken(token)
@@ -90,22 +84,11 @@ const edlCallback = async (event, context) => {
       })
     }
 
-    // Store a new token in the database for the user
-    await dbConnection('user_tokens').insert({
-      user_id: userRow.id,
-      environment: earthdataEnvironment,
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      expires_at: expiresAt
-    })
-
-    // Create a JWT token from the EDL response
-    jwtToken = createJwtToken(userRow, earthdataEnvironment, accessToken)
-
     if (process.env.SKIP_SQS !== 'true') {
       const sqsCommand = new SendMessageCommand({
         QueueUrl: getQueueUrl(QUEUE_NAMES.UserDataQueue),
         MessageBody: JSON.stringify({
+          edlToken: accessToken,
           environment: earthdataEnvironment,
           userId: userRow.id,
           username
@@ -133,16 +116,8 @@ const edlCallback = async (event, context) => {
   }
 
   const queryParams = {
+    edlToken: accessToken,
     redirect: state
-  }
-
-  if (jwtToken) {
-    // Set the JWT token to a cookie and redirect back to EDSC
-    queryParams.jwt = jwtToken
-  }
-
-  if (state.includes('earthdata-download')) {
-    queryParams.accessToken = accessToken
   }
 
   const location = `${edscHost}/auth_callback?${stringify(queryParams)}`

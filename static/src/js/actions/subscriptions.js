@@ -27,7 +27,7 @@ import {
   getCollectionSubscriptionQueryString,
   getGranuleSubscriptionQueryString
 } from '../zustand/selectors/query'
-import { getAuthToken, getUsername } from '../zustand/selectors/user'
+import { getEdlToken, getUsername } from '../zustand/selectors/user'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -85,13 +85,13 @@ export const removeSubscriptionDisabledFields = () => ({
  */
 export const createSubscription = (name, subscriptionType) => async (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(zustandState)
 
   let subscriptionQuery
 
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
   const graphQuery = `
     mutation CreateSubscription ($params: CreateSubscriptionInput) {
@@ -166,14 +166,14 @@ export const getSubscriptions = (
 
   // Retrieve data using selectors
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(zustandState)
 
   dispatch(onSubscriptionsLoading())
   dispatch(startSubscriptionsTimer())
 
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetSubscriptions ($params: SubscriptionsInput) {
@@ -257,7 +257,7 @@ export const getGranuleSubscriptions = (collectionId) => async () => {
 
   // Retrieve data using selectors
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(zustandState)
 
@@ -265,7 +265,7 @@ export const getGranuleSubscriptions = (collectionId) => async () => {
     collectionConceptId = getCollectionId(zustandState)
   }
 
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
   const graphQuery = `
     query GetGranuleSubscriptions($params: SubscriptionsInput) {
@@ -328,11 +328,11 @@ export const deleteSubscription = (
 ) => async (dispatch) => {
   // Retrieve data from Redux using selectors
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const collectionsMetadata = getCollectionsMetadata(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
   const graphQuery = `
     mutation DeleteSubscription ($params: DeleteSubscriptionInput) {
@@ -391,7 +391,7 @@ export const updateSubscription = ({
   shouldUpdateQuery
 }) => async (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const username = getUsername(zustandState)
 
   const {
@@ -427,7 +427,7 @@ export const updateSubscription = ({
 
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new GraphQlRequest(edlToken, earthdataEnvironment)
 
   const graphQuery = `
     mutation UpdateSubscription ($params: UpdateSubscriptionInput) {

@@ -16,7 +16,7 @@ jest.mock('../../../components/OrderStatus/OrderStatus', () => jest.fn(() => <di
 const setup = setupTest({
   Component: OrderStatusContainer,
   defaultProps: {
-    authToken: 'testToken',
+    edlToken: 'testToken',
     granuleDownload: {},
     onChangePath: jest.fn(),
     onFetchRetrieval: jest.fn(),

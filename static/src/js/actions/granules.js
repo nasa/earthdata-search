@@ -11,7 +11,7 @@ import RetrievalRequest from '../util/request/retrievalRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../zustand/selectors/user'
+import { getEdlToken } from '../zustand/selectors/user'
 
 const { granuleLinksPageSize, openSearchGranuleLinksPageSize } = getApplicationConfig()
 
@@ -38,7 +38,7 @@ export const fetchGranuleLinks = (
   linkTypes
 ) => async (dispatch) => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const {
@@ -58,7 +58,7 @@ export const fetchGranuleLinks = (
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)
 
-  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
 
   let cursor
   let response

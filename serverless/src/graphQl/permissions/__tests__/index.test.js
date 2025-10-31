@@ -57,7 +57,6 @@ describe('permissions', () => {
             isValidUser,
             userOwnsProject
           ),
-          logout: isValidUser,
           updatePreferences: isValidUser,
           updateProject: userOwnsProjectIfProjectOwned
         }

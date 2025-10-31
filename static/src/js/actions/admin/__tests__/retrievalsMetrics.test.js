@@ -137,7 +137,7 @@ describe('fetchAdminRetrievalsMetrics', () => {
       .reply(200, data)
 
     const store = mockStore({
-      authToken: 'mockToken',
+      edlToken: 'mockToken',
       admin: {
         isAuthorized: true,
         retrievalsMetrics: {
@@ -177,7 +177,7 @@ describe('fetchAdminRetrievalsMetrics', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'mockToken',
+      edlToken: 'mockToken',
       admin: {
         isAuthorized: true,
         retrievalsMetrics: {

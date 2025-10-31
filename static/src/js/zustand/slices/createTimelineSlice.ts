@@ -19,7 +19,7 @@ import { TimelineResponseData } from '../../types/sharedTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionsQuery } from '../selectors/query'
 import { getCollectionId } from '../selectors/collection'
-import { getAuthToken } from '../selectors/user'
+import { getEdlToken } from '../selectors/user'
 
 let cancelToken: CancelTokenSource
 
@@ -43,7 +43,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
       }
 
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
+      const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const timelineParams = prepareTimelineParams({
         collectionQuery: getCollectionsQuery(zustandState),
@@ -80,7 +80,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
         return
       }
 
-      const requestObject = new TimelineRequest(authToken, earthdataEnvironment)
+      const requestObject = new TimelineRequest(edlToken, earthdataEnvironment)
 
       cancelToken = requestObject.getCancelToken()
 

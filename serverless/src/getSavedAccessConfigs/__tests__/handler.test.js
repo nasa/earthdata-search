@@ -2,17 +2,14 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 
 import getSavedAccessConfigs from '../handler'
-import * as getJwtToken from '../../util/getJwtToken'
-import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
 let dbConnectionToMock
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({

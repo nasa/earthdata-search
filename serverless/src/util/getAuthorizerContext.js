@@ -1,11 +1,10 @@
 /**
- * Returns the JWT Token from our custom authorizer context
+ * Returns the custom authorizer context
  * @param {Object} event Details about the HTTP request that it received
  */
-export const getJwtToken = (event) => {
+export const getAuthorizerContext = (event) => {
   const { requestContext = {} } = event
   const { authorizer = {} } = requestContext
-  const { jwtToken } = authorizer
 
-  return jwtToken
+  return authorizer
 }

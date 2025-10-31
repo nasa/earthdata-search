@@ -39,7 +39,7 @@ const setup = setupTest({
   Component: DownloadHistoryContainer,
   defaultZustandState: {
     user: {
-      authToken: 'testToken'
+      edlToken: 'testToken'
     }
   }
 })
@@ -96,11 +96,11 @@ describe('DownloadHistoryContainer component', () => {
     }, {})
   })
 
-  test('handles the case when authToken is not provided', async () => {
+  test('handles the case when edlToken is not provided', async () => {
     setup({
       overrideZustandState: {
         user: {
-          authToken: null
+          edlToken: null
         }
       }
     })

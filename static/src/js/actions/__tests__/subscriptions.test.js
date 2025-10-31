@@ -159,7 +159,7 @@ describe('createSubscription', () => {
       // eslint-disable-next-line no-param-reassign
       state.collection.collectionId = 'collectionId'
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
       // eslint-disable-next-line no-param-reassign
       state.user.username = 'testUser'
     })
@@ -239,7 +239,7 @@ describe('createSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
       // eslint-disable-next-line no-param-reassign
       state.user.username = 'testUser'
     })
@@ -321,7 +321,7 @@ describe('createSubscription', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.collectionId = 'collectionId'
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = 'token'
+        state.user.edlToken = 'token'
         // eslint-disable-next-line no-param-reassign
         state.user.username = 'testUser'
       })
@@ -373,7 +373,7 @@ describe('createSubscription', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.collectionId = 'collectionId'
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = 'token'
+        state.user.edlToken = 'token'
       })
 
       const store = mockStore({
@@ -432,7 +432,7 @@ describe('getSubscriptions', () => {
 
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.user.authToken = 'token'
+          state.user.edlToken = 'token'
         })
 
         const store = mockStore()
@@ -502,7 +502,7 @@ describe('getSubscriptions', () => {
 
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.user.authToken = 'token'
+          state.user.edlToken = 'token'
         })
 
         const store = mockStore()
@@ -562,7 +562,7 @@ describe('getSubscriptions', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -626,7 +626,7 @@ describe('getGranuleSubscriptions', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.updateGranuleSubscriptions = jest.fn()
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = undefined
+        state.user.edlToken = null
       })
 
       const store = mockStore()
@@ -664,7 +664,7 @@ describe('getGranuleSubscriptions', () => {
         // eslint-disable-next-line no-param-reassign
         state.collection.updateGranuleSubscriptions = jest.fn()
         // eslint-disable-next-line no-param-reassign
-        state.user.authToken = undefined
+        state.user.edlToken = null
       })
 
       const store = mockStore()
@@ -703,7 +703,7 @@ describe('getGranuleSubscriptions', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -740,7 +740,7 @@ describe('deleteSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -778,7 +778,7 @@ describe('deleteSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -848,7 +848,7 @@ describe('deleteSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore()
@@ -887,7 +887,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({
@@ -940,7 +940,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({
@@ -994,7 +994,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({
@@ -1053,7 +1053,7 @@ describe('updateSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.user.authToken = 'token'
+      state.user.edlToken = 'token'
     })
 
     const store = mockStore({

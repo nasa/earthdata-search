@@ -279,7 +279,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1', 'collectionId2']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -360,7 +360,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1', 'collectionId2']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -440,27 +440,27 @@ describe('createProjectSlice', () => {
             tools: { items: [{ name: 'SOTO' }] },
             urls: {
               atom: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.atom?token=Bearer%20mockEdlToken',
                 title: 'ATOM'
               },
               dif: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.dif?token=Bearer%20mockEdlToken',
                 title: 'DIF'
               },
               echo10: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.echo10?token=Bearer%20mockEdlToken',
                 title: 'ECHO10'
               },
               html: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.html?token=Bearer%20mockEdlToken',
                 title: 'HTML'
               },
               iso19115: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.iso19115?token=Bearer%20mockEdlToken',
                 title: 'ISO19115'
               },
               native: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId1.native?token=Bearer%20mockEdlToken',
                 title: 'Native'
               },
               osdd: {
@@ -513,27 +513,27 @@ describe('createProjectSlice', () => {
             tools: { items: [] },
             urls: {
               atom: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.atom&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.atom?token=Bearer%20mockEdlToken',
                 title: 'ATOM'
               },
               dif: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.dif&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.dif?token=Bearer%20mockEdlToken',
                 title: 'DIF'
               },
               echo10: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.echo10&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.echo10?token=Bearer%20mockEdlToken',
                 title: 'ECHO10'
               },
               html: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.html&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.html?token=Bearer%20mockEdlToken',
                 title: 'HTML'
               },
               iso19115: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.iso19115&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.iso19115?token=Bearer%20mockEdlToken',
                 title: 'ISO19115'
               },
               native: {
-                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.native&token=mockAuthToken',
+                href: 'https://cmr.earthdata.nasa.gov/search/concepts/collectionId2.native?token=Bearer%20mockEdlToken',
                 title: 'Native'
               },
               osdd: {
@@ -660,7 +660,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -783,7 +783,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['C10000000000-EDSC']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -861,7 +861,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -906,7 +906,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = []
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -983,7 +983,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -1052,7 +1052,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()
@@ -1118,7 +1118,7 @@ describe('createProjectSlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
-          state.user.authToken = 'mockAuthToken'
+          state.user.edlToken = 'mockEdlToken'
         })
 
         const zustandState = useEdscStore.getState()

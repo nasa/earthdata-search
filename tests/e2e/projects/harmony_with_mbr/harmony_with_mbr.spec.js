@@ -57,7 +57,7 @@ test.describe('Harmony with MBR', () => {
           })
         })
 
-        await page.route(/granules$/, async (route) => {
+        await page.route(/granules\.json/, async (route) => {
           await route.fulfill({
             json: granules,
             headers: {

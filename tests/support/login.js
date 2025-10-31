@@ -59,7 +59,7 @@ export const login = async (page, context) => {
   })
 
   await context.addCookies([{
-    name: 'authToken',
+    name: 'edlToken',
     value: testJwtToken,
     url: 'http://localhost:8080'
   }])

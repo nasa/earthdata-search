@@ -3,7 +3,6 @@ import lowercaseKeys from 'lowercase-keys'
 
 import { getClientId } from '../../../../sharedUtils/getClientId'
 import { getEarthdataConfig, getApplicationConfig } from '../../../../sharedUtils/config'
-import { getEchoToken } from '../urs/getEchoToken'
 import { parseError } from '../../../../sharedUtils/parseError'
 import { prepareExposeHeaders } from './prepareExposeHeaders'
 import { wrapAxios } from '../wrapAxios'
@@ -38,10 +37,7 @@ export const doSearchRequest = async ({
     }
 
     if (jwtToken) {
-      // Support endpoints that have optional authentication
-      const token = await getEchoToken(jwtToken, earthdataEnvironment)
-
-      requestHeaders.Authorization = `Bearer ${token}`
+      requestHeaders.Authorization = `Bearer ${jwtToken}`
     }
 
     if (requestId) {

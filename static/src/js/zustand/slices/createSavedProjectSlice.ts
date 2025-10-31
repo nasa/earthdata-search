@@ -8,7 +8,7 @@ import CREATE_PROJECT from '../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../operations/mutations/updateProject'
 import GET_PROJECT from '../../operations/queries/getProject'
 
-import { getAuthToken, getEdlToken } from '../selectors/user'
+import { getEdlToken } from '../selectors/user'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get) => ({
@@ -27,7 +27,6 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
     setProjectName: async (name) => {
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const edlToken = getEdlToken(zustandState)
 
@@ -46,7 +45,6 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
       if (!path) realPath = pathname + search
 
       const apolloClient = getApolloClient({
-        authToken,
         earthdataEnvironment,
         edlToken
       })
@@ -102,12 +100,10 @@ const createSavedProjectSlice: ImmerStateCreator<SavedProjectSlice> = (set, get)
 
     getProject: async (projectId) => {
       const zustandState = get()
-      const authToken = getAuthToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const edlToken = getEdlToken(zustandState)
 
       const apolloClient = getApolloClient({
-        authToken,
         earthdataEnvironment,
         edlToken
       })

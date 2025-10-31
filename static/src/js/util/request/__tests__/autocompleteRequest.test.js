@@ -3,7 +3,6 @@ import Request from '../request'
 
 beforeEach(() => {
   jest.restoreAllMocks()
-  jest.clearAllMocks()
 })
 
 describe('AutocompleteRequest#constructor', () => {
@@ -12,7 +11,7 @@ describe('AutocompleteRequest#constructor', () => {
     const request = new AutocompleteRequest(token)
 
     expect(request.authenticated).toBeTruthy()
-    expect(request.authToken).toEqual(token)
+    expect(request.edlToken).toEqual(token)
     expect(request.baseUrl).toEqual('http://localhost:3000')
     expect(request.searchPath).toEqual('autocomplete')
   })

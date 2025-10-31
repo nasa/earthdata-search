@@ -1,127 +1,97 @@
 import jwt from 'jsonwebtoken'
-import { AuthorizationCode } from 'simple-oauth2'
+import jwksClient from 'jwks-rsa'
 
-import { getDbConnection } from '../database/getDbConnection'
-import { getEdlConfig } from '../getEdlConfig'
-import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
-import { parseError } from '../../../../sharedUtils/parseError'
+const SIT_JWK_URL = 'https://sit.urs.earthdata.nasa.gov/.well-known/edl_sit_jwks.json'
+const UAT_JWK_URL = 'https://uat.urs.earthdata.nasa.gov/.well-known/edl_uat_jwks.json'
+const PROD_JWK_URL = 'https://urs.earthdata.nasa.gov/.well-known/edl_ops_jwks.json'
+
+const pubKey = async (keyFilePath, kid) => {
+  const client = jwksClient({
+    strictSsl: true,
+    jwksUri: keyFilePath
+  })
+
+  const key = await client.getSigningKey(kid)
+
+  return key.getPublicKey()
+}
+
+let sitKey
+let uatKey
+let prodKey
+
+const getKey = async (environment) => {
+  switch (environment) {
+    case 'sit':
+      if (!sitKey) {
+        sitKey = await pubKey(SIT_JWK_URL, 'edljwtpubkey_sit')
+      }
+
+      return sitKey
+    case 'uat':
+      if (!uatKey) {
+        uatKey = await pubKey(UAT_JWK_URL, 'edljwtpubkey_uat')
+      }
+
+      return uatKey
+    case 'prod':
+      if (!prodKey) {
+        prodKey = await pubKey(PROD_JWK_URL, 'edljwtpubkey_ops')
+      }
+
+      return prodKey
+    default:
+      throw new Error(`Unknown environment: ${environment}`)
+  }
+}
+
+const sitIssuer = 'https://sit.urs.earthdata.nasa.gov'
+const uatIssuer = 'https://uat.urs.earthdata.nasa.gov'
+const prodIssuer = 'https://urs.earthdata.nasa.gov'
 
 /**
  * Validates a users EDL token, attempts to refresh the token if needed
  * @param {String} jwtToken Authorization token from request
  * @returns {String} username associated with the valid EDL token
  */
-export const validateToken = async (jwtToken, earthdataEnvironment) => {
-  const decodedJwtToken = jwt.decode(jwtToken)
+export const validateToken = async (edlToken, earthdataEnvironment) => {
+  const decodedJwtToken = jwt.decode(edlToken)
 
   if (!decodedJwtToken) {
     return false
   }
 
-  const { earthdataEnvironment: decodedEarthdataEnvironment = '' } = decodedJwtToken
-
-  const edlConfig = await getEdlConfig(earthdataEnvironment)
-
-  try {
-    // If the environment in the jwtToken doesn't match the environment provided in the header
-    if (earthdataEnvironment.toLowerCase() !== decodedEarthdataEnvironment.toLowerCase()) {
-      return false
-    }
-
-    // Retrieve a connection to the database
-    const dbConnection = await getDbConnection()
-
-    // Pull the secret used to encrypt our jwtTokens
-    const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
-
-    return jwt.verify(jwtToken, secret, async (verifyError, verifiedJwtToken) => {
-      if (verifyError) {
-        // This suggests that the token has been tampered with
-        console.log(`JWT Token Invalid. ${verifyError}`)
-
-        return false
-      }
-
-      const {
-        id: userId,
-        username
-      } = verifiedJwtToken
-
-      // Retrieve the authenticated users' access tokens from the database
-      const mostRecentToken = await dbConnection('user_tokens')
-        .first([
-          'id',
-          'access_token',
-          'refresh_token',
-          'expires_at'
-        ])
-        .where({
-          user_id: userId,
-          environment: earthdataEnvironment
-        })
-        .orderBy('created_at', 'DESC')
-
-      // If no token was found, return false
-      if (!mostRecentToken) return false
-
-      const {
-        access_token: accessToken,
-        refresh_token: refreshToken,
-        expires_at: expiresAt
-      } = mostRecentToken
-
-      const client = new AuthorizationCode(edlConfig)
-
-      const oauthToken = client.createToken({
-        access_token: accessToken,
-        refresh_token: refreshToken,
-        expires_at: expiresAt
-      })
-
-      if (oauthToken.expired()) {
-        try {
-          // Remove all tokens for this user in the current environment
-          await dbConnection('user_tokens')
-            .where({
-              user_id: userId,
-              environment: earthdataEnvironment
-            })
-            .del()
-
-          const refreshedToken = await oauthToken.refresh()
-
-          console.log(`Access token refreshed successfully for ${username}`)
-
-          const { token } = refreshedToken
-          const {
-            access_token: refreshedAccessToken,
-            refresh_token: refreshedRefreshToken,
-            expires_at: refreshedExpiresAt
-          } = token
-
-          await dbConnection('user_tokens').insert({
-            user_id: userId,
-            access_token: refreshedAccessToken,
-            refresh_token: refreshedRefreshToken,
-            expires_at: refreshedExpiresAt,
-            environment: earthdataEnvironment
-          })
-        } catch (error) {
-          console.log('Error refreshing access token: ', error.message)
-
-          return false
-        }
-      }
-
-      // If successful, return the user ID and username associated with the token
-      return {
-        userId,
-        username
-      }
-    })
-  } catch (error) {
-    parseError(error)
-
-    return false
+  const key = await getKey(earthdataEnvironment)
+  let issuer = prodIssuer
+  if (earthdataEnvironment === 'sit') {
+    issuer = sitIssuer
   }
+
+  if (earthdataEnvironment === 'uat') {
+    issuer = uatIssuer
+  }
+
+  if (earthdataEnvironment === 'prod') {
+    issuer = prodIssuer
+  }
+
+  jwt.verify(
+    edlToken,
+    key,
+    {
+      algorithms: ['RS256'],
+      issuer
+    },
+    (error, decoded) => {
+      if (error) throw new Error(error)
+
+      const { uid: username } = decoded
+
+      return username
+    }
+  )
+
+  const { uid: username } = decodedJwtToken
+
+  return { username }
 }

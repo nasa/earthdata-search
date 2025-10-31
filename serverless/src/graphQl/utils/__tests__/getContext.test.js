@@ -3,7 +3,7 @@ import DatabaseClient from '../databaseClient'
 import { validateToken } from '../../../util/authorizer/validateToken'
 
 jest.mock('../../../util/authorizer/validateToken', () => ({
-  validateToken: jest.fn().mockResolvedValue({ userId: 1 })
+  validateToken: jest.fn().mockResolvedValue({ username: 'testuser' })
 }))
 
 jest.mock('../../../../../sharedUtils/config', () => ({
@@ -14,8 +14,8 @@ jest.mock('../../../../../sharedUtils/config', () => ({
 
 describe('getContext', () => {
   test('should return the correct context', async () => {
-    const getUserByIdSpy = jest.spyOn(DatabaseClient.prototype, 'getUserById')
-    getUserByIdSpy.mockResolvedValue({
+    const getUserWhereMock = jest.spyOn(DatabaseClient.prototype, 'getUserWhere')
+    getUserWhereMock.mockResolvedValue({
       id: 1,
       name: 'John Doe'
     })
@@ -35,14 +35,20 @@ describe('getContext', () => {
       name: 'John Doe'
     })
 
+    expect(validateToken).toHaveBeenCalledTimes(1)
     expect(validateToken).toHaveBeenCalledWith('token', 'testenv')
-    expect(getUserByIdSpy).toHaveBeenCalledWith(1)
+
+    expect(getUserWhereMock).toHaveBeenCalledTimes(1)
+    expect(getUserWhereMock).toHaveBeenCalledWith({
+      environment: 'testenv',
+      urs_id: 'testuser'
+    })
   })
 
   describe('when the user does not exist in the database', () => {
     test('should return the correct context with an undefined user', async () => {
-      const getUserByIdSpy = jest.spyOn(DatabaseClient.prototype, 'getUserById')
-      getUserByIdSpy.mockResolvedValue(undefined)
+      const getUserWhereMock = jest.spyOn(DatabaseClient.prototype, 'getUserWhere')
+      getUserWhereMock.mockResolvedValue(undefined)
 
       const event = {
         headers: {
@@ -53,6 +59,15 @@ describe('getContext', () => {
       const { user } = await getContext({ event })
 
       expect(user).toEqual(undefined)
+
+      expect(validateToken).toHaveBeenCalledTimes(1)
+      expect(validateToken).toHaveBeenCalledWith('token', 'testenv')
+
+      expect(getUserWhereMock).toHaveBeenCalledTimes(1)
+      expect(getUserWhereMock).toHaveBeenCalledWith({
+        environment: 'testenv',
+        urs_id: 'testuser'
+      })
     })
   })
 
@@ -62,9 +77,14 @@ describe('getContext', () => {
         headers: {}
       }
 
-      const { user } = await getContext({ event })
+      const { databaseClient, bearerToken, user } = await getContext({ event })
 
+      expect(databaseClient).toBeInstanceOf(DatabaseClient)
+      expect(bearerToken).toEqual('')
       expect(user).toEqual(undefined)
+
+      expect(validateToken).toHaveBeenCalledTimes(1)
+      expect(validateToken).toHaveBeenCalledWith(undefined, 'testenv')
     })
   })
 })

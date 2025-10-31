@@ -80,7 +80,7 @@ describe('createSavedProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           })
         })
 
@@ -140,7 +140,7 @@ describe('createSavedProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           })
         })
 
@@ -199,7 +199,7 @@ describe('createSavedProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           })
         })
 
@@ -294,7 +294,7 @@ describe('createSavedProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           })
         })
 
@@ -347,7 +347,7 @@ describe('createSavedProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           })
         })
 

@@ -26,12 +26,12 @@ describe('CmrRequest#constructor', () => {
   })
 })
 
-describe('CmrRequest#getAuthToken', () => {
+describe('CmrRequest#getEdlToken', () => {
   test('returns the auth token', () => {
     const request = new CmrRequest(baseUrl, 'prod')
-    request.authToken = 'test auth token'
+    request.edlToken = 'test auth token'
 
-    expect(request.getAuthToken()).toEqual('test auth token')
+    expect(request.getEdlToken()).toEqual('test auth token')
   })
 
   test('returns an empty string if optionallyAuthenticated', () => {
@@ -39,7 +39,7 @@ describe('CmrRequest#getAuthToken', () => {
 
     request.optionallyAuthenticated = true
 
-    expect(request.getAuthToken()).toEqual('')
+    expect(request.getEdlToken()).toEqual('')
   })
 })
 
@@ -65,7 +65,7 @@ describe('CmrRequest#transformRequest', () => {
     const token = '123'
 
     request.authenticated = true
-    request.authToken = token
+    request.edlToken = token
 
     const data = { param1: 123 }
     const headers = {}

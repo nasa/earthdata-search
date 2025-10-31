@@ -10,8 +10,6 @@ import storeUserData from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
@@ -56,6 +54,7 @@ describe('storeUserData', () => {
     await storeUserData({
       Records: [{
         body: JSON.stringify({
+          edlToken: 'mock-token',
           environment: 'test',
           userId: 1,
           username: 'urs_user'
@@ -65,9 +64,8 @@ describe('storeUserData', () => {
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].method).toEqual('select')
-    expect(queries[1].method).toEqual('update')
-    expect(queries[1].bindings).toEqual([
+    expect(queries[0].method).toEqual('update')
+    expect(queries[0].bindings).toEqual([
       'test',
       'urs_user',
       {
@@ -99,6 +97,7 @@ describe('storeUserData', () => {
     await storeUserData({
       Records: [{
         body: JSON.stringify({
+          edlToken: 'mock-token',
           environment: 'test',
           userId: 1,
           username: 'urs_user'
@@ -108,9 +107,8 @@ describe('storeUserData', () => {
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].method).toEqual('select')
-    expect(queries[1].method).toEqual('update')
-    expect(queries[1].bindings).toEqual([
+    expect(queries[0].method).toEqual('update')
+    expect(queries[0].bindings).toEqual([
       'test',
       'urs_user',
       1
@@ -121,6 +119,8 @@ describe('storeUserData', () => {
   })
 
   test('logs error if user does not have a token', async () => {
+    const consoleMock = jest.spyOn(console, 'log')
+
     dbTracker.on('query', (query, step) => {
       // Default response from queries
       query.response([])
@@ -133,6 +133,7 @@ describe('storeUserData', () => {
     await storeUserData({
       Records: [{
         body: JSON.stringify({
+          edlToken: null,
           environment: 'test',
           userId: 1,
           username: 'urs_user'
@@ -140,9 +141,11 @@ describe('storeUserData', () => {
       }]
     }, {})
 
-    const { queries } = dbTracker.queries
-
-    expect(queries[0].method).toEqual('select')
+    expect(consoleMock).toHaveBeenCalledTimes(4)
+    expect(consoleMock).toHaveBeenNthCalledWith(1, 'Processing 1 user(s)')
+    expect(consoleMock).toHaveBeenNthCalledWith(2, '[StoreUserData Debug] Payload received: {"edlToken":null,"environment":"test","userId":1,"username":"urs_user"}')
+    expect(consoleMock).toHaveBeenNthCalledWith(3, '[StoreUserData Debug] Attempting to retrieve user data for urs_user (id: 1, environment: test).')
+    expect(consoleMock).toHaveBeenNthCalledWith(4, '[StoreUserData Debug] Ignoring attempt to retrieve user data for urs_user (userId: 1, environment: test) because the user doesn\'t have a token.')
   })
 
   test('returns early if SQS records are empty', async () => {

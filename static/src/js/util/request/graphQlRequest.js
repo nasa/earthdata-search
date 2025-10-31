@@ -5,12 +5,12 @@ import { getEnvironmentConfig, getEarthdataConfig } from '../../../../../sharedU
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export default class GraphQlRequest extends Request {
-  constructor(authToken, earthdataEnvironment) {
-    if (authToken && authToken !== '') {
+  constructor(edlToken, earthdataEnvironment) {
+    if (edlToken && edlToken !== '') {
       super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
       this.authenticated = true
-      this.authToken = authToken
+      this.edlToken = edlToken
       this.searchPath = 'cmr-graphql-proxy'
     } else {
       super(getEarthdataConfig(earthdataEnvironment).graphQlHost, earthdataEnvironment)
@@ -35,7 +35,7 @@ export default class GraphQlRequest extends Request {
 
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer ${this.getAuthToken()}`
+      headers.Authorization = `Bearer ${this.getEdlToken()}`
     }
 
     // If contacting GraphQL directly, add the content type

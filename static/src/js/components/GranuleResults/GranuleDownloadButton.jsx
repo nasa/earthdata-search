@@ -16,7 +16,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 import { routes } from '../../constants/routes'
 
@@ -33,7 +33,7 @@ export const GranuleDownloadButton = ({
 }) => {
   const location = useLocation()
 
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const addProjectCollection = useEdscStore((state) => state.project.addProjectCollection)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
@@ -123,7 +123,7 @@ export const GranuleDownloadButton = ({
     variant: 'full'
   }
 
-  if (!authToken) {
+  if (!edlToken) {
     const projectPath = `${window.location.protocol}//${window.location.host}${routes.PROJECTS}${stringifiedProjectParams}`
 
     return (
