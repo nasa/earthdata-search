@@ -622,10 +622,10 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Enter the bounding box values
-          await page.getByTestId('spatial-display_southwest-point').focus()
-          await page.keyboard.type('-9.53964,42.1875')
-          await page.getByTestId('spatial-display_northeast-point').focus()
-          await page.keyboard.type('4.5297,56.25')
+          await page.getByTestId('spatial-display_southwest-point').click()
+          await page.getByTestId('spatial-display_southwest-point').fill('-9.53964,42.1875')
+          await page.getByTestId('spatial-display_northeast-point').click()
+          await page.getByTestId('spatial-display_northeast-point').fill('4.5297,56.25')
           await page.keyboard.up('Enter')
 
           // Updates the URL
