@@ -170,7 +170,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }))
 
   const colormapsMetadata = useEdscStore(getColormapsMetadata)
-  console.log('🚀 ~ file: MapContainer.tsx:173 ~ colormapsMetadata:', colormapsMetadata)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
@@ -369,18 +368,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       setMapLayersOrder,
       setLayerOpacity
     }
+
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
     // Get colormap data for all available GIBS tags
     layersForProjection.forEach((layer) => {
       const { product } = layer
-      console.log('🚀 ~ file: MapContainer.tsx:376 ~ product:', product)
-      console.log('🚀 ~ file: MapContainer.tsx:378 ~ colormapsMetadata:', colormapsMetadata)
       const productColormap = colormapsMetadata[product]
-      console.log('🚀 ~ file: MapContainer.tsx:378 ~ colormapsMetadata[product]:', colormapsMetadata[product])
-
-      // ImageryLayersObject.layerData.push({
-      //   ...layer
-      // } as ImageryLayerItem)
 
       if (productColormap) {
         // Store colormap data by product name

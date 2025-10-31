@@ -1,9 +1,13 @@
-import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 import type {
   CollectionSlice,
   GranuleQuery,
   ImmerStateCreator
 } from '../types'
+
+import type { Colormap } from '../../types/sharedTypes'
+
+import GET_COLORMAPS from '../../operations/queries/getColorMaps'
+
 // @ts-expect-error There are no types for this file
 import getApolloClient from '../../providers/getApolloClient'
 
@@ -192,74 +196,45 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // Look and see if there are any gibs tags
           // If there are, check to see if the colormaps associated with the productids in the tags exists.
           // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
-          console.log('🚀 ~ file: createCollectionSlice.ts:197 ~ tags:', tags)
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
-          console.log('🚀 ~ file: createCollectionSlice.ts:198 ~ gibsTags:', gibsTags)
           // Update the map layers with the gibs tags
-
-          let colormaps = {}
+          const colormaps: Record<string, Colormap> = {}
           if (gibsTags && gibsTags.length > 0) {
             get().map.setMapLayers(focusedCollectionId, gibsTags)
             // Update the map layers with the gibs tags
             const products = gibsTags.map((gibsTag: { product: string }) => gibsTag.product)
             const edlToken = getEdlToken(zustandState)
 
+            const apolloClient = getApolloClient({
+              authToken,
+              earthdataEnvironment,
+              edlToken
+            })
+
             try {
-              const apolloClient = getApolloClient({
-                authToken,
-                earthdataEnvironment,
-                edlToken
+              const { data: colormapData } = await apolloClient.query({
+                query: GET_COLORMAPS,
+                variables: { products }
               })
-              console.log('🚀 ~ file: createCollectionSlice.ts:213 ~ apolloClient:', !!apolloClient)
-              console.log('🚀 ~ file: createCollectionSlice.ts:214 ~ products:', products)
+              const { colormaps: colorMapsResponse } = colormapData
 
-              console.log('🚀 ~ file: createCollectionSlice.ts:216 ~ GraphQL query:', GET_COLORMAPS)
-              console.log('🚀 ~ file: createCollectionSlice.ts:217 ~ variables:', { products })
-
-              let colormapsData = []
-              // TODO do we need the errorpolicy
-              try {
-                const { data: colormapsResponse, errors } = await apolloClient.query({
-                  query: GET_COLORMAPS,
-                  variables: { products },
-                  errorPolicy: 'all'
-                })
-
-                console.log('🚀 ~ file: createCollectionSlice.ts:223 ~ colormapsResponse:', colormapsResponse)
-                console.log('🚀 ~ file: createCollectionSlice.ts:224 ~ errors:', errors)
-                colormapsData = colormapsResponse?.colormaps || []
-              } catch (apolloError) {
-                console.error('🚀 ~ file: createCollectionSlice.ts:227 ~ Apollo Client Error:', apolloError)
-                throw apolloError
-              }
-
-              console.log('🚀 ~ file: createCollectionSlice.ts:232 ~ colormapsData:', colormapsData)
-
-              if (colormapsData && colormapsData.length > 0) {
-                console.log('🚀 ~ file: createCollectionSlice.ts:236 ~ colormapsData:', colormapsData)
+              if (colorMapsResponse && colorMapsResponse.length > 0) {
                 // Store colormaps in the collection metadata
-                const colormapsMetadata: Record<string, unknown> = {}
-                colormapsData.forEach((colormap: { product: string; jsonData: unknown }) => {
+                colorMapsResponse.forEach((colormap: { product: string; jsonData: Colormap }) => {
                   if (colormap.jsonData) {
-                    colormapsMetadata[colormap.product] = colormap.jsonData
+                    colormaps[colormap.product] = colormap.jsonData
                   }
                 })
-
-                console.log('🚀 ~ file: createCollectionSlice.ts:256 ~ colormapsMetadata:', colormapsMetadata)
-
-                // Update collection metadata with colormap data
-                colormaps = colormapsMetadata
-                // Set((state) => {
-                // state.collection.collectionMetadata[conceptId].colormaps = colormapsMetadata
-
-                // If (state.collection.collectionMetadata[conceptId]) {
-                //   debugger
-                //   state.collection.collectionMetadata[conceptId].colormaps = colormapsMetadata
-                // }
-                // })
               }
             } catch (error) {
-              console.error('Error loading colormaps:', error)
+              if (error) {
+                get().errors.handleError({
+                  error: error as Error,
+                  action: 'getColormaps',
+                  resource: 'colormaps',
+                  verb: 'retrieving'
+                })
+              }
             }
           }
 

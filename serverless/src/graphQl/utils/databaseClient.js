@@ -535,56 +535,18 @@ export default class DatabaseClient {
     }
   }
 
-  /*
-    * Retrieves a colormap by its product name
- * @param {string} product - The product name of the colormap to retrieve
- * @returns {Promise<Object>} A promise that resolves to the colormap object
- */
-  async getColorMapByProduct(product) {
-    try {
-      const db = await this.getDbConnection()
-
-      const colormap = await db('colormaps')
-        .select('*')
-        .where({ product })
-        .first()
-      console.log('🚀 ~ file: databaseClient.js:476 ~ DatabaseClient ~ colormap:', colormap)
-
-      console.log('🚀 ~ file: databaseClient.js:476 ~ DatabaseClient ~ colormap:', colormap)
-      if (!colormap) {
-        return null
-      }
-
-      return {
-        id: colormap.id,
-        product: colormap.product,
-        url: colormap.url,
-        jsonData: colormap.jsondata,
-        createdAt: colormap.created_at,
-        updatedAt: colormap.updated_at
-      }
-    } catch {
-      const errorMessage = 'Failed to retrieve colormap by product'
-      console.log(errorMessage)
-      throw new Error(errorMessage)
-    }
-  }
-
   /**
    * Retrieves colormaps by their product names
    * @param {string[]} products - The product names of the colormaps to retrieve
    * @returns {Promise<Array>} A promise that resolves to an array of colormap objects
    */
   async getColorMapsByProducts(products) {
-    console.log('🚀 ~ file: databaseClient.js:505 ~ DatabaseClient ~ products:', products)
     try {
       const db = await this.getDbConnection()
 
       const colormaps = await db('colormaps')
         .select('*')
         .whereIn('product', products)
-
-      console.log('🚀 ~ file: databaseClient.js:510 ~ DatabaseClient ~ colormaps:', colormaps)
 
       // Return list of colormaps for all of the request products
       return colormaps.map((colormap) => ({

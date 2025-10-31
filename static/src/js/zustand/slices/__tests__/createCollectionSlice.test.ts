@@ -33,19 +33,6 @@ configureStore.mockReturnValue({
   dispatch: mockDispatch
 })
 
-// Const mockColorMapsQuery = jest.fn().mockResolvedValue({
-//   data: {
-//     colormaps: [
-//       {
-//         id: '1',
-//         product: 'MODIS_Terra_SurfaceReflectance_Bands143',
-//         url: 'https://example.com/colormap',
-//         jsonData: { scale: { colors: ['#ff0000'] } }
-//       }
-//     ]
-//   }
-// })
-
 jest.mock('../../../providers/getApolloClient', () => ({
   __esModule: true,
   default: jest.fn().mockReturnValue({
@@ -222,7 +209,7 @@ describe('createCollectionSlice', () => {
               boxes: undefined,
               cloudHosted: undefined,
               // TODO double check this
-              colormaps: null,
+              colormaps: {},
               conceptId: 'C10000000000-EDSC',
               consortiums: [],
               coordinateSystem: undefined,
@@ -359,7 +346,7 @@ describe('createCollectionSlice', () => {
                 coordinateSystem: undefined,
                 conceptId: 'C10000000000-EDSC',
                 consortiums: ['CEOS'],
-                colormaps: null,
+                colormaps: {},
                 dataCenter: undefined,
                 dataCenters: undefined,
                 directDistributionInformation: {},
@@ -492,6 +479,7 @@ describe('createCollectionSlice', () => {
                 associatedDois: undefined,
                 boxes: undefined,
                 cloudHosted: undefined,
+                colormaps: {},
                 conceptId: 'C10000000000-EDSC',
                 consortiums: [],
                 coordinateSystem: undefined,
@@ -754,7 +742,6 @@ describe('createCollectionSlice', () => {
           expect(getApolloClient().query).toHaveBeenCalledTimes(1)
           expect(getApolloClient().query).toHaveBeenCalledWith({
             query: GET_COLORMAPS,
-            errorPolicy: 'all',
             variables: {
               products: [
                 'AIRS_Prata_SO2_Index_Day',
