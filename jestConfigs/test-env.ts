@@ -14,7 +14,9 @@ import { TextEncoder, TextDecoder } from 'util'
 // Google Tag Manager dataLayer
 (global as any).dataLayer = {
   push: jest.fn()
-};
+}
+
+global.fetch = jest.fn();
 
 // https://stackoverflow.com/questions/42677387/jest-returns-network-error-when-doing-an-authenticated-request-with-axios/43020260#43020260
 (global as any).XMLHttpRequest = undefined

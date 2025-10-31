@@ -15,13 +15,11 @@ import TimelineRequest from '../../util/request/timelineRequest'
 // @ts-expect-error Types are not defined for this module
 import { prepareTimelineParams } from '../../util/timeline'
 
-// @ts-expect-error Types are not defined for this module
-import configureStore from '../../store/configureStore'
-
 import { TimelineResponseData } from '../../types/sharedTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionsQuery } from '../selectors/query'
 import { getCollectionId } from '../selectors/collection'
+import { getAuthToken } from '../selectors/user'
 
 let cancelToken: CancelTokenSource
 
@@ -44,23 +42,14 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
         cancelToken.cancel()
       }
 
-      const {
-        getState: reduxGetState
-      } = configureStore()
-      const reduxState = reduxGetState()
-
-      const currentState = get()
-      const {
-        authToken
-      } = reduxState
-
-      const earthdataEnvironment = getEarthdataEnvironment(currentState)
+      const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const timelineParams = prepareTimelineParams({
-        ...reduxState,
-        collectionQuery: getCollectionsQuery(currentState),
-        focusedCollection: getCollectionId(currentState),
-        projectCollections: currentState.project.collections,
-        timelineQuery: currentState.timeline.query
+        collectionQuery: getCollectionsQuery(zustandState),
+        focusedCollection: getCollectionId(zustandState),
+        projectCollections: zustandState.project.collections,
+        timelineQuery: zustandState.timeline.query
       })
 
       if (!timelineParams) {
@@ -123,7 +112,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
         .catch(async (error) => {
           if (isCancel(error)) return
 
-          currentState.errors.handleError({
+          zustandState.errors.handleError({
             error: error as Error,
             action: 'getTimeline',
             resource: 'timeline',

@@ -13,7 +13,6 @@ jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
 const setup = setupTest({
   Component: GranuleDetailsMetadata,
   defaultProps: {
-    authToken: '',
     metadataUrls: {}
   }
 })
@@ -62,8 +61,12 @@ describe('GranuleDetailsMetadata component', () => {
       test('renders the authenticated links correctly', () => {
         setup({
           overrideProps: {
-            authToken: 'token',
             metadataUrls: granuleMetadata.metadataUrls
+          },
+          overrideZustandState: {
+            user: {
+              authToken: 'token'
+            }
           }
         })
 

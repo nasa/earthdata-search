@@ -1,57 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
-import { connect } from 'react-redux'
-import type { Dispatch } from 'redux'
+import { useQuery } from '@apollo/client'
 import { remove } from 'tiny-cookie'
 import { useNavigate } from 'react-router-dom'
 
 import GET_USER from '../../operations/queries/getUser'
 
-// @ts-expect-error The file does not have types
-import actions from '../../actions/index'
-
 import useEdscStore from '../../zustand/useEdscStore'
+import { getAuthToken } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
-import Spinner from '../../components/Spinner/Spinner'
+import Spinner from '../Spinner/Spinner'
 
 import { localStorageKeys } from '../../constants/localStorageKeys'
 
-import type { UrsProfile } from '../../types/sharedTypes'
-
-// @ts-expect-error Don't want to define types for all of Redux
-export const mapStateToProps = (state) => ({
-  authToken: state.authToken
-})
-
-type ContactInfo = {
-  ursProfile: UrsProfile
-}
-
-export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onUpdateAuthToken:
-    (token: string) => dispatch(actions.updateAuthToken(token)),
-  onUpdateContactInfo:
-    (contactInfo: ContactInfo) => dispatch(actions.updateContactInfo(contactInfo))
-})
-
-interface UserContainerProps {
-  /** The authentication token */
-  authToken: string
+interface UserLoaderProps {
   /** The child components */
   children: React.ReactNode
-  /** Function to update the authentication token */
-  onUpdateAuthToken: (token: string) => void
-  /** Function to update the user's contact information */
-  onUpdateContactInfo: (contactInfo: ContactInfo) => void
 }
 
-export const UserContainer: React.FC<UserContainerProps> = ({
-  authToken,
-  children,
-  onUpdateAuthToken,
-  onUpdateContactInfo
+export const UserLoader: React.FC<UserLoaderProps> = ({
+  children
 }) => {
+  const authToken = useEdscStore(getAuthToken)
+  const setAuthToken = useEdscStore((state) => state.user.setAuthToken)
+  const setUrsProfile = useEdscStore((state) => state.user.setUrsProfile)
   const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
   const setUsername = useEdscStore((state) => state.user.setUsername)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -74,7 +46,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
         } = JSON.parse(localUser)
 
         setSitePreferences(sitePreferences)
-        onUpdateContactInfo({ ursProfile })
+        setUrsProfile(ursProfile)
 
         // Set the preferences as loaded to unblock the rest of the application
         setPreferencesLoaded(true)
@@ -83,7 +55,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
   }, [authToken])
 
   // Fetch the user data when we have an authToken
-  const { data, error } = useQuery(gql(GET_USER), {
+  const { data, error } = useQuery(GET_USER, {
     skip: !authToken
   })
 
@@ -92,8 +64,9 @@ export const UserContainer: React.FC<UserContainerProps> = ({
       // Delete the authToken cookie
       remove('authToken')
 
-      // Update the authToken in Redux
-      onUpdateAuthToken('')
+      // Update the store
+      setAuthToken(null)
+      setUrsProfile(null)
 
       // Clear the user information from local storage
       localStorage.removeItem(localStorageKeys.user)
@@ -122,7 +95,7 @@ export const UserContainer: React.FC<UserContainerProps> = ({
       // Update the state with the user information
       setSitePreferences(sitePreferences)
       setUsername(ursId)
-      onUpdateContactInfo({ ursProfile })
+      setUrsProfile(ursProfile)
 
       // Save the user information to local storage
       localStorage.setItem(localStorageKeys.user, JSON.stringify({
@@ -149,4 +122,4 @@ export const UserContainer: React.FC<UserContainerProps> = ({
   return children
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)
+export default UserLoader

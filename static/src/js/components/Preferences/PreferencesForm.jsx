@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
 
@@ -35,7 +35,7 @@ const PreferencesForm = () => {
     setFormData(sitePreferences)
   }, [sitePreferences])
 
-  const [updatePreferencesMutation, { loading }] = useMutation(gql(UPDATE_PREFERENCES))
+  const [updatePreferencesMutation, { loading }] = useMutation(UPDATE_PREFERENCES)
 
   const handleSubmit = async ({ formData: newFormData }) => {
     updatePreferencesMutation({

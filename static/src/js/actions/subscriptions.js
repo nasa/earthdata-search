@@ -27,7 +27,7 @@ import {
   getCollectionSubscriptionQueryString,
   getGranuleSubscriptionQueryString
 } from '../zustand/selectors/query'
-import { getUsername } from '../zustand/selectors/user'
+import { getAuthToken, getUsername } from '../zustand/selectors/user'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -83,14 +83,9 @@ export const removeSubscriptionDisabledFields = () => ({
 /**
  * Perform a subscriptions request.
  */
-export const createSubscription = (name, subscriptionType) => async (dispatch, getState) => {
-  const state = getState()
-
-  const {
-    authToken
-  } = state
-
+export const createSubscription = (name, subscriptionType) => async (dispatch) => {
   const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(zustandState)
 
@@ -144,7 +139,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
       dispatch(actions.getGranuleSubscriptions())
     }
   } catch (error) {
-    useEdscStore.getState().errors.handleError({
+    zustandState.errors.handleError({
       error,
       action: 'createSubscription',
       resource: 'subscription',
@@ -164,19 +159,14 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
 export const getSubscriptions = (
   subscriptionType,
   clearSubscriptions = true
-) => async (dispatch, getState) => {
+) => async (dispatch) => {
   if (clearSubscriptions) {
     dispatch(updateSubscriptionResults([]))
   }
 
-  const state = getState()
-
-  const {
-    authToken
-  } = state
-
   // Retrieve data using selectors
   const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(zustandState)
 
@@ -246,7 +236,7 @@ export const getSubscriptions = (
       ]
     ))
 
-    useEdscStore.getState().errors.handleError({
+    zustandState.errors.handleError({
       error,
       action: 'fetchSubscriptions',
       resource: 'subscription',
@@ -262,17 +252,12 @@ export const getSubscriptions = (
 /**
  * Request granule subscriptions
  */
-export const getGranuleSubscriptions = (collectionId) => async (dispatch, getState) => {
-  const state = getState()
-
-  const {
-    authToken
-  } = state
-
+export const getGranuleSubscriptions = (collectionId) => async () => {
   let collectionConceptId = collectionId
 
   // Retrieve data using selectors
   const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(zustandState)
 
@@ -314,13 +299,13 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
 
     const { subscriptions } = responseData
 
-    const { collection } = useEdscStore.getState()
+    const { collection } = zustandState
     const { updateGranuleSubscriptions } = collection
     updateGranuleSubscriptions(collectionConceptId, subscriptions)
 
     return response
   } catch (error) {
-    useEdscStore.getState().errors.handleError({
+    zustandState.errors.handleError({
       error,
       action: 'getGranuleSubscriptions',
       resource: 'subscription',
@@ -340,15 +325,10 @@ export const deleteSubscription = (
   conceptId,
   nativeId,
   collectionId
-) => async (dispatch, getState) => {
-  const state = getState()
-
-  const {
-    authToken
-  } = state
-
+) => async (dispatch) => {
   // Retrieve data from Redux using selectors
   const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
   const collectionsMetadata = getCollectionsMetadata(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
@@ -389,7 +369,7 @@ export const deleteSubscription = (
       autoDismiss: true
     })
   } catch (error) {
-    useEdscStore.getState().errors.handleError({
+    zustandState.errors.handleError({
       error,
       action: 'deleteSubscription',
       resource: 'subscription',
@@ -409,10 +389,9 @@ export const deleteSubscription = (
 export const updateSubscription = ({
   subscription,
   shouldUpdateQuery
-}) => async (dispatch, getState) => {
-  const state = getState()
-
+}) => async (dispatch) => {
   const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
   const username = getUsername(zustandState)
 
   const {
@@ -446,10 +425,6 @@ export const updateSubscription = ({
 
   params.query = subscriptionQuery
 
-  const {
-    authToken
-  } = state
-
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
@@ -481,7 +456,7 @@ export const updateSubscription = ({
       dispatch(actions.getGranuleSubscriptions())
     }
   } catch (error) {
-    useEdscStore.getState().errors.handleError({
+    zustandState.errors.handleError({
       error,
       action: 'updateSubscription',
       resource: 'subscription',

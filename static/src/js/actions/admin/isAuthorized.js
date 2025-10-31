@@ -4,19 +4,17 @@ import { SET_ADMIN_IS_AUTHORIZED } from '../../constants/actionTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getAuthToken } from '../../zustand/selectors/user'
 
 export const updateIsAuthorized = (isAuthorized) => ({
   type: SET_ADMIN_IS_AUTHORIZED,
   payload: isAuthorized
 })
 
-export const adminIsAuthorized = () => (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
-
-  const { authToken } = state
+export const adminIsAuthorized = () => (dispatch) => {
+  const zustandState = useEdscStore.getState()
+  const authToken = getAuthToken(zustandState)
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 

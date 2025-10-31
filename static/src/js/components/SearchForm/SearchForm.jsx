@@ -58,7 +58,6 @@ class SearchForm extends Component {
 
   render() {
     const {
-      authToken,
       selectedRegion
     } = this.props
 
@@ -73,9 +72,7 @@ class SearchForm extends Component {
     return (
       <section className="search-form">
         <div className="search-form__primary">
-          <SearchAutocomplete
-            authToken={authToken}
-          />
+          <SearchAutocomplete />
         </div>
         <div className="search-form__secondary">
           <div className="search-form__secondary-actions d-flex justify-content-between flex-row">
@@ -124,7 +121,6 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  authToken: PropTypes.string.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
   selectedRegion: PropTypes.shape({}).isRequired

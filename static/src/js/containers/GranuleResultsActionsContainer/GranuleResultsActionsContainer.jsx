@@ -31,17 +31,10 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(metricsAddCollectionProject(data))
 })
 
-export const mapStateToProps = (state) => ({
-  authToken: state.authToken
-})
-
-export const GranuleResultsActionsContainer = (props) => {
-  const {
-    authToken,
-    onChangePath,
-    onMetricsAddCollectionProject
-  } = props
-
+export const GranuleResultsActionsContainer = ({
+  onChangePath,
+  onMetricsAddCollectionProject
+}) => {
   const { mapView } = useEdscStore((state) => ({
     mapView: state.map.mapView
   }))
@@ -86,7 +79,6 @@ export const GranuleResultsActionsContainer = (props) => {
 
   return (
     <GranuleResultsActions
-      authToken={authToken}
       addedGranuleIds={addedGranuleIds}
       focusedCollectionId={focusedCollectionId}
       focusedProjectCollection={focusedProjectCollection}
@@ -105,9 +97,8 @@ export const GranuleResultsActionsContainer = (props) => {
 }
 
 GranuleResultsActionsContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GranuleResultsActionsContainer)
+export default connect(null, mapDispatchToProps)(GranuleResultsActionsContainer)

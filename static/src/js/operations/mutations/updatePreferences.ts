@@ -1,9 +1,21 @@
-const UPDATE_PREFERENCES = `
+import { gql } from '@apollo/client'
+
+const UPDATE_PREFERENCES = gql`
   mutation UpdatePreferences($preferences: JSON!) {
     updatePreferences(preferences: $preferences) {
       id
       sitePreferences
-      ursProfile
+      ursProfile {
+        affiliation
+        country
+        emailAddress
+        firstName
+        lastName
+        organization
+        studyArea
+        uid
+        userType
+      }
       ursId
     }
   }

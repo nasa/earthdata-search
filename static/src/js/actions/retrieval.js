@@ -10,6 +10,7 @@ import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 import routerHelper from '../router/router'
 import { routes } from '../constants/routes'
+import { getAuthToken } from '../zustand/selectors/user'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -23,14 +24,10 @@ export const updateRetrieval = (retrievalData) => ({
 /**
  * Submit data representing a Retrieval to be stored in the database
  */
-export const submitRetrieval = () => (dispatch, getState) => {
-  const state = getState()
-
+export const submitRetrieval = () => (dispatch) => {
   const zustandState = useEdscStore.getState()
-
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-
-  const { authToken } = state
 
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
@@ -93,7 +90,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
   submittingProject()
 
-  const orderParams = prepareRetrievalParams(state)
+  const orderParams = prepareRetrievalParams()
 
   const response = requestObject.submit(orderParams)
     .then((responseObject) => {
@@ -123,14 +120,10 @@ export const submitRetrieval = () => (dispatch, getState) => {
  * Fetch a retrieval from the database
  * @param {Integer} id Database ID of the retrieval to lookup
  */
-export const fetchRetrieval = (id) => (dispatch, getState) => {
-  const state = getState()
-
+export const fetchRetrieval = (id) => (dispatch) => {
   const zustandState = useEdscStore.getState()
-
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-
-  const { authToken } = state
 
   dispatch(setRetrievalLoading())
 

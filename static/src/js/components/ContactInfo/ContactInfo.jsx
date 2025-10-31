@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import { useMutation, useQuery } from '@apollo/client'
 
 import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-
-import { isEmpty } from 'lodash-es'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
@@ -11,23 +9,64 @@ import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getUrsProfile } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+
+import { apolloClientNames } from '../../constants/apolloClientNames'
+
+import GET_CMR_ORDERING_USER from '../../operations/queries/getCmrOrderingUser'
+import UPDATE_CMR_ORDERING_USER from '../../operations/mutations/updateCmrOrderingUser'
+
+import addToast from '../../util/addToast'
 
 import './ContactInfo.scss'
 
-const ContactInfo = ({
-  contactInfo,
-  onUpdateNotificationLevel
-}) => {
+const ContactInfo = () => {
+  const ursProfile = useEdscStore(getUrsProfile)
+  const handleError = useEdscStore((state) => state.errors.handleError)
+
   const {
-    cmrPreferences = {},
-    ursProfile
-  } = contactInfo
+    affiliation,
+    country,
+    emailAddress,
+    firstName,
+    lastName,
+    organization,
+    studyArea,
+    uid,
+    userType
+  } = ursProfile
+
+  const {
+    data,
+    loading: cmrOrderingLoading,
+    error
+  } = useQuery(GET_CMR_ORDERING_USER, {
+    variables: {
+      ursId: uid
+    },
+    context: {
+      clientName: apolloClientNames.CMR_ORDERING
+    }
+  })
+
+  const [updateNotificationLevelMutation] = useMutation(UPDATE_CMR_ORDERING_USER, {
+    context: {
+      clientName: apolloClientNames.CMR_ORDERING
+    }
+  })
+
+  useEffect(() => {
+    if (error) {
+      console.error('Error fetching CMR ordering user:', error)
+    }
+  }, [error])
+
+  const { user: cmrOrderingUser = {} } = data || {}
+
   const {
     notificationLevel: propsNotificationLevel
-  } = cmrPreferences
-
-  const emptyPreferences = isEmpty(cmrPreferences)
+  } = cmrOrderingUser
 
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const { edlHost } = getEarthdataConfig(earthdataEnvironment)
@@ -43,19 +82,27 @@ const ContactInfo = ({
   }
 
   const handleUpdateNotificationClick = () => {
-    onUpdateNotificationLevel(notificationLevel)
+    updateNotificationLevelMutation({
+      variables: {
+        ursId: uid,
+        notificationLevel
+      },
+      onCompleted: () => {
+        addToast('Notification Preference Level updated', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      },
+      onError: (mutationError) => {
+        handleError({
+          error: mutationError,
+          action: 'updateNotificationLevel',
+          resource: 'contactInfo',
+          verb: 'updating'
+        })
+      }
+    })
   }
-
-  const {
-    affiliation,
-    country,
-    email_address: email,
-    first_name: firstName,
-    last_name: lastName,
-    organization,
-    study_area: studyArea,
-    user_type: userType
-  } = ursProfile
 
   return (
     <fieldset className="contact-info-form">
@@ -73,7 +120,7 @@ const ContactInfo = ({
         </li>
         <li className="contact-info-form__item">
           <span className="contact-info-form__label">Email</span>
-          <span>{email}</span>
+          <span>{emailAddress}</span>
         </li>
         <li className="contact-info-form__item">
           <span className="contact-info-form__label">Organization Name</span>
@@ -120,7 +167,7 @@ const ContactInfo = ({
         </label>
         {' '}
         {
-          emptyPreferences
+          cmrOrderingLoading
             ? (
               <Spinner className="contact-info-form__preferences-spinner" size="x-tiny" type="dots" inline />
             )
@@ -146,30 +193,13 @@ const ContactInfo = ({
         bootstrapVariant="primary"
         label="Update Notification Preference"
         onClick={handleUpdateNotificationClick}
-        disabled={emptyPreferences}
+        disabled={cmrOrderingLoading}
       >
         Update Notification Preference
       </Button>
 
     </fieldset>
   )
-}
-
-ContactInfo.propTypes = {
-  contactInfo: PropTypes.shape({
-    cmrPreferences: PropTypes.shape({}),
-    ursProfile: PropTypes.shape({
-      affiliation: PropTypes.string,
-      country: PropTypes.string,
-      email_address: PropTypes.string,
-      first_name: PropTypes.string,
-      last_name: PropTypes.string,
-      organization: PropTypes.string,
-      study_area: PropTypes.string,
-      user_type: PropTypes.string
-    })
-  }).isRequired,
-  onUpdateNotificationLevel: PropTypes.func.isRequired
 }
 
 export default ContactInfo

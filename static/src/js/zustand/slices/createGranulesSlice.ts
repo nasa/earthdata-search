@@ -2,6 +2,7 @@ import { CancelTokenSource, isCancel } from 'axios'
 // @ts-expect-error There are no types for this file
 import { mbr } from '@edsc/geo-utils'
 
+import { getAuthToken } from '../selectors/user'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
 import { getCollectionsById } from '../selectors/collections'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -45,19 +46,16 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
     getGranules: async () => {
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
 
-      const currentState = get()
-      const earthdataEnvironment = getEarthdataEnvironment(currentState)
-      const collectionId = getCollectionId(currentState)
-      const collectionMetadata = getFocusedCollectionMetadata(currentState)
-      const collections = getCollectionsById(currentState)
+      const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const collectionId = getCollectionId(zustandState)
+      const collectionMetadata = getFocusedCollectionMetadata(zustandState)
+      const collections = getCollectionsById(zustandState)
       const collectionById = collections[collectionId]
-
-      const { authToken } = reduxState
 
       // Extract granule search parameters from redux specific to the focused collection
       const extractedGranuleParams = extractGranuleSearchParams(collectionId)
@@ -96,7 +94,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         // TODO This is causing a double fetch for OpenSearch granules (both to the same OpenSearch endpoint)
         // TODO when loaded from the search results. The first request gets cancelled, but it would be nice to avoid that
         if (
-          collectionId === currentState.granules.granules.collectionConceptId
+          collectionId === zustandState.granules.granules.collectionConceptId
           && !isOpenSearch
         ) {
           return
@@ -179,7 +177,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
           state.granules.granules.isLoaded = false
         })
 
-        currentState.errors.handleError({
+        zustandState.errors.handleError({
           error: error as Error,
           action: 'getGranules',
           resource: 'granules',

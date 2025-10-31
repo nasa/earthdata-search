@@ -52,7 +52,7 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
     // Direct CMR URL
     let url = `${cmrHost}/search/concepts/${collectionId}.${type.ext}`
 
-    if (authToken !== '') {
+    if (authToken) {
       // If an auth token is provided route the request through Lambda
       url = buildAuthenticatedRedirectUrl(encodeURIComponent(url), authToken, earthdataEnvironment)
     }
@@ -83,7 +83,7 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
   } else if (json.hasGranules) {
     let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
 
-    if (authToken !== '') {
+    if (authToken) {
       // If an auth token is provided route the request through Lambda
       cmrGranulesUrl = buildAuthenticatedRedirectUrl(
         encodeURIComponent(cmrGranulesUrl),

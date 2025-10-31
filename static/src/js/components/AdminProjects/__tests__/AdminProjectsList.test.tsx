@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client'
 import { screen, within } from '@testing-library/react'
 
 import AdminProjectsList from '../AdminProjectsList'
@@ -17,7 +16,7 @@ jest.mock('react-router-dom', () => ({
 const defaultApolloClientMocks = [
   {
     request: {
-      query: gql(ADMIN_PROJECTS),
+      query: ADMIN_PROJECTS,
       variables: {
         params: {
           limit: 20,
@@ -128,7 +127,7 @@ describe('AdminProjectsList component', () => {
             ...defaultApolloClientMocks,
             {
               request: {
-                query: gql(ADMIN_PROJECTS),
+                query: ADMIN_PROJECTS,
                 variables: {
                   params: {
                     limit: 20,
@@ -182,7 +181,7 @@ describe('AdminProjectsList component', () => {
             },
             {
               request: {
-                query: gql(ADMIN_PROJECTS),
+                query: ADMIN_PROJECTS,
                 variables: {
                   params: {
                     limit: 20,
@@ -265,7 +264,7 @@ describe('AdminProjectsList component', () => {
             ...defaultApolloClientMocks,
             {
               request: {
-                query: gql(ADMIN_PROJECTS),
+                query: ADMIN_PROJECTS,
                 variables: {
                   params: {
                     limit: 20,
@@ -319,7 +318,7 @@ describe('AdminProjectsList component', () => {
             },
             {
               request: {
-                query: gql(ADMIN_PROJECTS),
+                query: ADMIN_PROJECTS,
                 variables: {
                   params: {
                     limit: 20,
@@ -403,7 +402,7 @@ describe('AdminProjectsList component', () => {
         defaultApolloClientMocks: [
           {
             request: {
-              query: gql(ADMIN_PROJECTS),
+              query: ADMIN_PROJECTS,
               variables: {
                 params: {
                   limit: 20,

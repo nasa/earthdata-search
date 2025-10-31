@@ -13,23 +13,16 @@ export const mapDispatchToProps = (dispatch) => ({
     (state) => dispatch(actions.toggleAdvancedSearchModal(state))
 })
 
-export const mapStateToProps = (state) => ({
-  authToken: state.authToken
-})
-
 // Export non-redux-connected component for use in tests
 // Import this class as `import { SearchFormContainer } from '../SearchFormContainer'`
-export const SearchFormContainer = (props) => {
-  const {
-    authToken,
-    onToggleAdvancedSearchModal
-  } = props
+export const SearchFormContainer = ({
+  onToggleAdvancedSearchModal
+}) => {
   const clearFilters = useEdscStore((state) => state.query.clearFilters)
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
 
   return (
     <SearchForm
-      authToken={authToken}
       onClearFilters={clearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
       selectedRegion={selectedRegion}
@@ -38,10 +31,9 @@ export const SearchFormContainer = (props) => {
 }
 
 SearchFormContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 // Export redux-connected component for use in application
 // Import this class as `import ConnectedSearchFormContainer from './SearchFormContainer'`
-export default connect(mapStateToProps, mapDispatchToProps)(SearchFormContainer)
+export default connect(null, mapDispatchToProps)(SearchFormContainer)

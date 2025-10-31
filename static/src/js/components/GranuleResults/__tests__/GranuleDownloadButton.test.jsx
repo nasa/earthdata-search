@@ -20,7 +20,6 @@ jest.mock('react-router-dom', () => ({
 const setup = setupTest({
   Component: GranuleDownloadButton,
   defaultProps: {
-    authToken: 'token',
     badge: '294 Granules',
     buttonText: 'Download All',
     focusedCollectionId: 'collectionId',
@@ -35,6 +34,9 @@ const setup = setupTest({
   defaultZustandState: {
     project: {
       addProjectCollection: jest.fn()
+    },
+    user: {
+      authToken: 'testToken'
     }
   },
   withRouter: true,
@@ -87,8 +89,10 @@ describe('GranuleDownloadButton component', () => {
       describe('when the user is not logged in', () => {
         test('clicking the button calls sets window.location.href to login', async () => {
           const { user, zustandState } = setup({
-            overrideProps: {
-              authToken: ''
+            overrideZustandState: {
+              user: {
+                authToken: null
+              }
             }
           })
 
@@ -131,8 +135,10 @@ describe('GranuleDownloadButton component', () => {
           })
 
           const { user, zustandState } = setup({
-            overrideProps: {
-              authToken: ''
+            overrideZustandState: {
+              user: {
+                authToken: null
+              }
             }
           })
 

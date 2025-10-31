@@ -6,7 +6,6 @@ import OrderStatusItem from './OrderStatusItem'
 import './OrderStatusList.scss'
 
 export const OrderStatusList = ({
-  authToken,
   collections = [],
   earthdataEnvironment,
   granuleDownload,
@@ -28,7 +27,6 @@ export const OrderStatusList = ({
 
           return (
             <OrderStatusItem
-              authToken={authToken}
               collection={order}
               defaultOpen={collections.length === 1}
               earthdataEnvironment={earthdataEnvironment}
@@ -50,7 +48,6 @@ export const OrderStatusList = ({
 )
 
 OrderStatusList.propTypes = {
-  authToken: PropTypes.string.isRequired,
   collections: PropTypes.arrayOf(PropTypes.shape({})),
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,

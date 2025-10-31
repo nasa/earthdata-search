@@ -1,5 +1,3 @@
-import { gql } from '@apollo/client'
-
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
 import ADMIN_RETRIEVAL from '../../../../../static/src/js/operations/queries/adminRetrieval'
 import ADMIN_RETRIEVALS from '../../../../../static/src/js/operations/queries/adminRetrievals'
@@ -40,7 +38,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_PREFERENCES_METRICS)
+          query: ADMIN_PREFERENCES_METRICS
         }, {
           contextValue
         })
@@ -148,7 +146,7 @@ describe('Admin Resolver', () => {
         const { contextValue, server } = setupServer(databaseClient)
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_PREFERENCES_METRICS)
+          query: ADMIN_PREFERENCES_METRICS
         }, {
           contextValue: {
             ...contextValue,
@@ -198,7 +196,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_PROJECT),
+          query: ADMIN_PROJECT,
           variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
         }, {
           contextValue
@@ -237,7 +235,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_PROJECT),
+          query: ADMIN_PROJECT,
           variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
         }, {
           contextValue
@@ -288,7 +286,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_PROJECTS),
+          query: ADMIN_PROJECTS,
           variables: {
             params: {
               limit: 2,
@@ -347,7 +345,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_PROJECTS)
+          query: ADMIN_PROJECTS
         }, {
           contextValue
         })
@@ -415,7 +413,7 @@ describe('Admin Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(ADMIN_PROJECTS),
+            query: ADMIN_PROJECTS,
             variables: {
               params: {
                 limit: 2,
@@ -518,7 +516,7 @@ describe('Admin Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(ADMIN_PROJECTS),
+            query: ADMIN_PROJECTS,
             variables: {
               params: {
                 limit: 2,
@@ -635,7 +633,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_RETRIEVAL),
+          query: ADMIN_RETRIEVAL,
           variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
         }, {
           contextValue
@@ -708,7 +706,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_RETRIEVAL),
+          query: ADMIN_RETRIEVAL,
           variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
         }, {
           contextValue
@@ -764,7 +762,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_RETRIEVALS),
+          query: ADMIN_RETRIEVALS,
           variables: {
             params: {
               limit: 2,
@@ -829,7 +827,7 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(ADMIN_RETRIEVALS)
+          query: ADMIN_RETRIEVALS
         }, {
           contextValue
         })
@@ -908,7 +906,7 @@ describe('Admin Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(ADMIN_RETRIEVALS),
+            query: ADMIN_RETRIEVALS,
             variables: {
               params: {
                 limit: 2,
@@ -1027,7 +1025,7 @@ describe('Admin Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(ADMIN_RETRIEVALS),
+            query: ADMIN_RETRIEVALS,
             variables: {
               params: {
                 limit: 2,

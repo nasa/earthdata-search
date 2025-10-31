@@ -12,7 +12,7 @@ import {
   FaCaretDown,
   FaFilter
 } from 'react-icons/fa'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
@@ -69,7 +69,7 @@ const AdminProjectsList = () => {
 
   const pageSize = 20
 
-  const { data, error, loading } = useQuery<AdminProjectsQueryData>(gql(ADMIN_PROJECTS), {
+  const { data, error, loading } = useQuery<AdminProjectsQueryData>(ADMIN_PROJECTS, {
     variables: {
       params: {
         limit: pageSize,

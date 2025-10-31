@@ -1,5 +1,3 @@
-import { gql } from '@apollo/client'
-
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error Types are not defined for this module
@@ -102,7 +100,7 @@ describe('createSavedProjectSlice', () => {
 
         expect(mockMutate).toHaveBeenCalledTimes(1)
         expect(mockMutate).toHaveBeenCalledWith({
-          mutation: gql(CREATE_PROJECT),
+          mutation: CREATE_PROJECT,
           variables: {
             name: 'Test Project',
             path: '/search'
@@ -169,7 +167,7 @@ describe('createSavedProjectSlice', () => {
 
         expect(mockMutate).toHaveBeenCalledTimes(1)
         expect(mockMutate).toHaveBeenCalledWith({
-          mutation: gql(UPDATE_PROJECT),
+          mutation: UPDATE_PROJECT,
           variables: {
             name: 'Test Project',
             obfuscatedId: '12345',
@@ -226,7 +224,7 @@ describe('createSavedProjectSlice', () => {
 
         expect(mockMutate).toHaveBeenCalledTimes(1)
         expect(mockMutate).toHaveBeenCalledWith({
-          mutation: gql(CREATE_PROJECT),
+          mutation: CREATE_PROJECT,
           variables: {
             name: 'Test Project',
             path: '/search'
@@ -269,7 +267,7 @@ describe('createSavedProjectSlice', () => {
 
       expect(mockQuery).toHaveBeenCalledTimes(1)
       expect(mockQuery).toHaveBeenCalledWith({
-        query: gql(GET_PROJECT),
+        query: GET_PROJECT,
         variables: {
           obfuscatedId: '12345'
         }
@@ -312,7 +310,7 @@ describe('createSavedProjectSlice', () => {
 
         expect(mockQuery).toHaveBeenCalledTimes(1)
         expect(mockQuery).toHaveBeenCalledWith({
-          query: gql(GET_PROJECT),
+          query: GET_PROJECT,
           variables: {
             obfuscatedId: '12345'
           }
@@ -370,7 +368,7 @@ describe('createSavedProjectSlice', () => {
 
         expect(mockQuery).toHaveBeenCalledTimes(1)
         expect(mockQuery).toHaveBeenCalledWith({
-          query: gql(GET_PROJECT),
+          query: GET_PROJECT,
           variables: {
             obfuscatedId: '12345'
           }

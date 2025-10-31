@@ -1,20 +1,13 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
-import { gql } from '@apollo/client'
 import * as tinyCookie from 'tiny-cookie'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  UserContainer
-} from '../UserContainer'
+import UserLoader from '../UserLoader'
 import GET_USER from '../../../operations/queries/getUser'
 
-// @ts-expect-error The file does not have types
-import actions from '../../../actions/index'
-import Spinner from '../../../components/Spinner/Spinner'
+import Spinner from '../../Spinner/Spinner'
 
 import { localStorageKeys } from '../../../constants/localStorageKeys'
 
@@ -31,19 +24,18 @@ jest.mock('react-router-dom', () => ({
 }))
 
 const setup = setupTest({
-  Component: UserContainer,
+  Component: UserLoader,
   defaultProps: {
-    authToken: '',
-    children: <div>Child Component</div>,
-    onUpdateAuthToken: jest.fn(),
-    onUpdateContactInfo: jest.fn()
+    children: <div>Child Component</div>
   },
   defaultZustandState: {
     errors: {
       handleError: jest.fn()
     },
     user: {
+      setAuthToken: jest.fn(),
       setSitePreferences: jest.fn(),
+      setUrsProfile: jest.fn(),
       setUsername: jest.fn()
     }
   },
@@ -51,51 +43,7 @@ const setup = setupTest({
   withRouter: true
 })
 
-describe('mapDispatchToProps', () => {
-  test('onUpdateAuthToken calls actions.updateAuthToken', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateAuthToken')
-
-    mapDispatchToProps(dispatch).onUpdateAuthToken('test-token')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('test-token')
-  })
-
-  test('onUpdateContactInfo calls actions.updateContactInfo', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateContactInfo')
-
-    mapDispatchToProps(dispatch).onUpdateContactInfo({
-      ursProfile: {
-        email_address: 'test@example.com'
-      }
-    })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({
-      ursProfile: {
-        email_address: 'test@example.com'
-      }
-    })
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      authToken: 'test-auth-token'
-    }
-
-    const expectedState = {
-      authToken: 'test-auth-token'
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
-describe('UserContainer', () => {
+describe('UserLoader', () => {
   test('renders child components when no authToken is provided', () => {
     const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem')
 
@@ -111,12 +59,14 @@ describe('UserContainer', () => {
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
 
       setup({
-        overrideProps: {
-          authToken: 'test-auth-token'
+        overrideZustandState: {
+          user: {
+            authToken: 'test-auth-token'
+          }
         },
         overrideApolloClientMocks: [{
           request: {
-            query: gql(GET_USER)
+            query: GET_USER
           },
           result: {
             data: {
@@ -150,40 +100,15 @@ describe('UserContainer', () => {
         }
       }))
 
-      const { props, zustandState } = setup({
-        overrideProps: {
-          authToken: 'test-auth-token'
-        }
-      })
-
-      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
-      expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
-
-      expect(zustandState.user.setSitePreferences).toHaveBeenCalledTimes(1)
-      expect(zustandState.user.setSitePreferences).toHaveBeenCalledWith({
-        mock: 'preferences'
-      })
-
-      expect(props.onUpdateContactInfo).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateContactInfo).toHaveBeenCalledWith({
-        ursProfile: {
-          firstName: 'test'
-        }
-      })
-    })
-  })
-
-  describe('when an authToken and user data are provided', () => {
-    test('updates store and renders child components', async () => {
-      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
-
-      const { props, zustandState } = setup({
-        overrideProps: {
-          authToken: 'test-auth-token'
+      const { zustandState } = setup({
+        overrideZustandState: {
+          user: {
+            authToken: 'test-auth-token'
+          }
         },
         overrideApolloClientMocks: [{
           request: {
-            query: gql(GET_USER)
+            query: GET_USER
           },
           result: {
             data: {
@@ -198,13 +123,55 @@ describe('UserContainer', () => {
         }]
       })
 
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
+
+      expect(zustandState.user.setSitePreferences).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.setSitePreferences).toHaveBeenCalledWith({
+        mock: 'preferences'
+      })
+
+      expect(zustandState.user.setUrsProfile).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.setUrsProfile).toHaveBeenCalledWith({
+        firstName: 'test'
+      })
+    })
+  })
+
+  describe('when an authToken and user data are provided', () => {
+    test('updates store and renders child components', async () => {
+      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+
+      const { zustandState } = setup({
+        overrideZustandState: {
+          user: {
+            authToken: 'test-auth-token'
+          }
+        },
+        overrideApolloClientMocks: [{
+          request: {
+            query: GET_USER
+          },
+          result: {
+            data: {
+              user: {
+                id: '123',
+                sitePreferences: {},
+                ursId: 'test-user',
+                ursProfile: null
+              }
+            }
+          }
+        }]
+      })
+
       expect(await screen.findByText('Child Component')).toBeInTheDocument()
 
       expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
       expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
-      expect(props.onUpdateContactInfo).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateContactInfo).toHaveBeenCalledWith({ ursProfile: {} })
+      expect(zustandState.user.setUrsProfile).toHaveBeenCalledTimes(1)
+      expect(zustandState.user.setUrsProfile).toHaveBeenCalledWith(null)
 
       expect(zustandState.user.setSitePreferences).toHaveBeenCalledTimes(1)
       expect(zustandState.user.setSitePreferences).toHaveBeenCalledWith({})
@@ -220,13 +187,15 @@ describe('UserContainer', () => {
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
       const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
 
-      const { props, zustandState } = setup({
-        overrideProps: {
-          authToken: 'test-auth-token'
+      const { zustandState } = setup({
+        overrideZustandState: {
+          user: {
+            authToken: 'test-auth-token'
+          }
         },
         overrideApolloClientMocks: [{
           request: {
-            query: gql(GET_USER)
+            query: GET_USER
           },
           error: new Error('Test error')
         }]
@@ -236,10 +205,10 @@ describe('UserContainer', () => {
       expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       await waitFor(() => {
-        expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
+        expect(zustandState.user.setAuthToken).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.onUpdateAuthToken).toHaveBeenCalledWith('')
+      expect(zustandState.user.setAuthToken).toHaveBeenCalledWith(null)
 
       expect(removeSpy).toHaveBeenCalledTimes(1)
       expect(removeSpy).toHaveBeenCalledWith('authToken')

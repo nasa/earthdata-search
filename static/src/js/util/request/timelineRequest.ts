@@ -7,7 +7,7 @@ import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedU
  * Request object for timeline specific requests
  */
 export default class TimelineRequest extends CmrRequest {
-  constructor(authToken: string, earthdataEnvironment: string) {
+  constructor(authToken: string | null, earthdataEnvironment: string) {
     if (authToken && authToken !== '') {
       super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 

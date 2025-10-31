@@ -6,7 +6,7 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import AppLayout from '../AppLayout'
 
 // @ts-expect-error The file does not have types
-import AuthTokenContainer from '../../../containers/AuthTokenContainer/AuthTokenContainer'
+import AuthToken from '../../../components/AuthToken/AuthToken'
 // @ts-expect-error The file does not have types
 import ErrorBanner from '../../../components/ErrorBanner/ErrorBanner'
 // @ts-expect-error The file does not have types
@@ -23,9 +23,9 @@ import SecondaryToolbarContainer from '../../../containers/SecondaryToolbarConta
 import UrlQueryContainer from '../../../containers/UrlQueryContainer/UrlQueryContainer'
 // @ts-expect-error The file does not have types
 import WrappingContainer from '../../../containers/WrappingContainer/WrappingContainer'
-import UserContainer from '../../../containers/UserContainer/UserContainer'
+import UserLoader from '../../../components/UserLoader/UserLoader'
 
-jest.mock('../../../containers/AuthTokenContainer/AuthTokenContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+jest.mock('../../../components/AuthToken/AuthToken', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../components/ErrorBanner/ErrorBanner', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../components/Footer/Footer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/HistoryContainer/HistoryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
@@ -34,7 +34,7 @@ jest.mock('../../../containers/PortalContainer/PortalContainer', () => jest.fn((
 jest.mock('../../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/WrappingContainer/WrappingContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/UserContainer/UserContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+jest.mock('../../../components/UserLoader/UserLoader', () => jest.fn(({ children }) => <div>{children}</div>))
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -58,16 +58,16 @@ describe('AppLayout', () => {
     expect(ErrorBanner).toHaveBeenCalledTimes(1)
     expect(ErrorBanner).toHaveBeenCalledWith({}, {})
 
-    expect(AuthTokenContainer).toHaveBeenCalledTimes(1)
-    expect(AuthTokenContainer).toHaveBeenCalledWith(
+    expect(AuthToken).toHaveBeenCalledTimes(1)
+    expect(AuthToken).toHaveBeenCalledWith(
       {
         children: expect.anything()
       },
       {}
     )
 
-    expect(UserContainer).toHaveBeenCalledTimes(1)
-    expect(UserContainer).toHaveBeenCalledWith(
+    expect(UserLoader).toHaveBeenCalledTimes(1)
+    expect(UserLoader).toHaveBeenCalledWith(
       {
         children: expect.anything()
       },

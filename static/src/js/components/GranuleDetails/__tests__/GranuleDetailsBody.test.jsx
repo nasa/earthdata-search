@@ -13,9 +13,6 @@ jest.mock('../GranuleDetailsMetadata', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: GranuleDetailsBody,
-  defaultProps: {
-    authToken: ''
-  },
   defaultZustandState: {
     granule: {
       granuleId: 'G1422858365-ORNL_DAAC',
@@ -37,7 +34,6 @@ describe('GranuleDetailsBody component', () => {
 
     expect(GranuleDetailsMetadata).toHaveBeenCalledTimes(1)
     expect(GranuleDetailsMetadata).toHaveBeenCalledWith({
-      authToken: '',
       metadataUrls: granuleMetadata.metadataUrls
     }, {})
   })

@@ -12,7 +12,6 @@ jest.mock('../OrderStatusItem', () => jest.fn(() => <div />))
 const setup = setupTest({
   Component: OrderStatusList,
   defaultProps: {
-    authToken: 'mock-token',
     collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.byId),
     earthdataEnvironment: 'prod',
     granuleDownload: {},
@@ -41,7 +40,6 @@ describe('OrderStatus component', () => {
 
     expect(OrderStatusItem).toHaveBeenCalledTimes(1)
     expect(OrderStatusItem).toHaveBeenCalledWith({
-      authToken: 'mock-token',
       collection: {
         access_method: { type: 'ECHO ORDERS' },
         collection_id: 'TEST_COLLECTION_111',

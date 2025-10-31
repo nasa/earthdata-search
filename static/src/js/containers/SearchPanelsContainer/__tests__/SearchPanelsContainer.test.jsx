@@ -18,7 +18,6 @@ jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <
 const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
-    authToken: '',
     collectionSubscriptions: [],
     isExportRunning: {
       csv: false,
@@ -115,7 +114,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      authToken: 'mock-token',
       ui: {
         export: {
           isExportRunning: {
@@ -127,7 +125,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      authToken: 'mock-token',
       collectionSubscriptions: [],
       isExportRunning: {
         csv: false,
@@ -149,7 +146,6 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
       {
-        authToken: '',
         collectionSubscriptions: [],
         isExportRunning: {
           csv: false,

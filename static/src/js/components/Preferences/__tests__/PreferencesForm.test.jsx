@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react'
-import { gql } from '@apollo/client'
 
 import PreferencesForm from '../PreferencesForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -96,7 +95,7 @@ describe('PreferencesForm component', () => {
         overrideApolloClientMocks: [
           {
             request: {
-              query: gql(UPDATE_PREFERENCES),
+              query: UPDATE_PREFERENCES,
               variables: {
                 preferences: {
                   collectionSort: '-score',
@@ -203,7 +202,7 @@ describe('PreferencesForm component', () => {
           overrideApolloClientMocks: [
             {
               request: {
-                query: gql(UPDATE_PREFERENCES),
+                query: UPDATE_PREFERENCES,
                 variables: {
                   preferences: {
                     collectionSort: 'default',

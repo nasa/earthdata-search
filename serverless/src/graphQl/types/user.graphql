@@ -1,3 +1,32 @@
+type UrsProfile {
+  "The affiliation of the user from the URS profile"
+  affiliation: String
+
+  "The country of the user from the URS profile"
+  country: String
+
+  "The email address of the user from the URS profile"
+  emailAddress: String
+
+  "The first name of the user from the URS profile"
+  firstName: String
+
+  "The last name of the user from the URS profile"
+  lastName: String
+
+  "The organization of the user from the URS profile"
+  organization: String
+
+  "The study area of the user from the URS profile"
+  studyArea: String
+
+  "The user's unique identifier from the URS profile"
+  uid: String
+
+  "The user type of the user from the URS profile"
+  userType: String
+}
+
 type User {
   "The unique identifier for the user"
   id: Int
@@ -6,7 +35,7 @@ type User {
   sitePreferences: JSON
 
   "The URS profile for the user"
-  ursProfile: JSON
+  ursProfile: UrsProfile
 
   "The URS ID for the user"
   ursId: String
@@ -18,6 +47,9 @@ type Query {
 }
 
 type Mutation {
+  "Logout the current user"
+  logout: Boolean
+
   "Update the current user's EDSC preferences"
   updatePreferences(
     "The new preferences to set for the user"

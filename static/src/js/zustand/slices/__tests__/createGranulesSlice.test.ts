@@ -24,10 +24,8 @@ jest.mock('../../../actions', () => ({
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 const mockDispatch = jest.fn()
-const mockGetState = jest.fn()
 configureStore.mockReturnValue({
-  dispatch: mockDispatch,
-  getState: mockGetState
+  dispatch: mockDispatch
 })
 
 describe('createGranulesSlice', () => {
@@ -75,10 +73,6 @@ describe('createGranulesSlice', () => {
           'cmr-hits': '1'
         })
 
-      mockGetState.mockReturnValue({
-        authToken: ''
-      })
-
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
         state.errors.handleError = jest.fn()
@@ -124,13 +118,10 @@ describe('createGranulesSlice', () => {
           'jwt-token': 'token'
         })
 
-      mockGetState.mockReturnValue({
-        authToken: 'mock-token'
-      })
-
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
         state.errors.handleError = jest.fn()
+        state.user.authToken = 'mock-token'
       })
 
       const { granules } = useEdscStore.getState()
@@ -181,10 +172,7 @@ describe('createGranulesSlice', () => {
         }
 
         state.errors.handleError = jest.fn()
-      })
-
-      mockGetState.mockReturnValue({
-        authToken: 'mock-token'
+        state.user.authToken = 'mock-token'
       })
 
       const { granules, errors } = useEdscStore.getState()
@@ -239,10 +227,6 @@ describe('createGranulesSlice', () => {
         }
 
         state.errors.handleError = jest.fn()
-      })
-
-      mockGetState.mockReturnValue({
-        authToken: ''
       })
 
       const { granules } = useEdscStore.getState()

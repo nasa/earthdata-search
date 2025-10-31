@@ -1,4 +1,6 @@
-const ADMIN_RETRIEVALS = `
+import { gql } from '@apollo/client'
+
+const ADMIN_RETRIEVALS = gql`
   query AdminRetrievals($params: AdminRetrievalsInput) {
     adminRetrievals(params: $params) {
       pageInfo {

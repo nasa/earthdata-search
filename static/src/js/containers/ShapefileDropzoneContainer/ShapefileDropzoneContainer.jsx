@@ -16,10 +16,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (state) => dispatch(actions.toggleShapefileUploadModal(state))
 })
 
-export const mapStateToProps = (state) => ({
-  authToken: state.authToken
-})
-
 // Add an edscId to each feature in the shapefile
 const addEdscIdsToShapefile = (file) => {
   const fileWithIds = file
@@ -58,7 +54,6 @@ const dropzoneOptions = {
 }
 
 export const ShapefileDropzoneContainer = ({
-  authToken,
   onToggleShapefileUploadModal
 }) => {
   const {
@@ -105,7 +100,6 @@ export const ShapefileDropzoneContainer = ({
           onToggleShapefileUploadModal(false)
 
           onSaveShapefile({
-            authToken,
             file: fileWithIds,
             filename: name,
             size: fileSize
@@ -144,8 +138,7 @@ export const ShapefileDropzoneContainer = ({
 }
 
 ShapefileDropzoneContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShapefileDropzoneContainer)
+export default connect(null, mapDispatchToProps)(ShapefileDropzoneContainer)

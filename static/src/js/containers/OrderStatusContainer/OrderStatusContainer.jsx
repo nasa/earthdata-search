@@ -9,7 +9,6 @@ import { metricsRelatedCollection } from '../../middleware/metrics/actions'
 import OrderStatus from '../../components/OrderStatus/OrderStatus'
 
 export const mapStateToProps = (state) => ({
-  authToken: state.authToken,
   granuleDownload: state.granuleDownload,
   retrieval: state.retrieval
 })
@@ -38,7 +37,6 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const OrderStatusContainer = ({
-  authToken,
   granuleDownload,
   onChangePath,
   onFetchRetrieval,
@@ -50,7 +48,6 @@ export const OrderStatusContainer = ({
   retrieval
 }) => (
   <OrderStatus
-    authToken={authToken}
     granuleDownload={granuleDownload}
     onChangePath={onChangePath}
     onFetchRetrieval={onFetchRetrieval}
@@ -64,7 +61,6 @@ export const OrderStatusContainer = ({
 )
 
 OrderStatusContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,

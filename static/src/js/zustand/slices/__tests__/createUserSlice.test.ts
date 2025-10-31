@@ -1,3 +1,7 @@
+// @ts-expect-error This library does not have types
+import jwt from 'jsonwebtoken'
+import { remove } from 'tiny-cookie'
+
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import projectionCodes from '../../../constants/projectionCodes'
 import mapLayers from '../../../constants/mapLayers'
@@ -6,6 +10,11 @@ import useEdscStore from '../../useEdscStore'
 import { initialSitePreferences } from '../createUserSlice'
 
 import type { PreferencesData } from '../../types'
+import { localStorageKeys } from '../../../constants/localStorageKeys'
+
+jest.mock('tiny-cookie', () => ({
+  remove: jest.fn()
+}))
 
 describe('createUserSlice', () => {
   test('sets the default state', () => {
@@ -13,10 +22,94 @@ describe('createUserSlice', () => {
     const { user } = zustandState
 
     expect(user).toEqual({
-      username: undefined,
+      authToken: null,
+      edlToken: null,
       sitePreferences: initialSitePreferences,
+      username: null,
+      ursProfile: null,
+      logout: expect.any(Function),
+      setAuthToken: expect.any(Function),
       setSitePreferences: expect.any(Function),
-      setUsername: expect.any(Function)
+      setUsername: expect.any(Function),
+      setUrsProfile: expect.any(Function)
+    })
+  })
+
+  describe('logout', () => {
+    const originalWindowLocation = window.location
+
+    beforeEach(() => {
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        enumerable: true,
+        value: {
+          assign: jest.fn()
+        }
+      })
+    })
+
+    afterEach(() => {
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        enumerable: true,
+        value: originalWindowLocation
+      })
+    })
+
+    test('clears the user state and redirects the user', () => {
+      const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
+
+      const { logout } = useEdscStore.getState().user
+
+      logout()
+
+      const { user } = useEdscStore.getState()
+
+      expect(user.authToken).toBeNull()
+      expect(user.edlToken).toBeNull()
+      expect(user.username).toBeNull()
+      expect(user.ursProfile).toBeNull()
+
+      expect(remove).toHaveBeenCalledTimes(1)
+      expect(remove).toHaveBeenCalledWith('authToken')
+
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
+      expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
+
+      expect(window.location.assign).toHaveBeenCalledTimes(1)
+      expect(window.location.assign).toHaveBeenCalledWith('/search?ee=prod')
+    })
+  })
+
+  describe('setAuthToken', () => {
+    describe('when a token is provided', () => {
+      test('decodes the token and sets the edlToken and authToken in state', () => {
+        jest.spyOn(jwt, 'decode').mockReturnValueOnce({ edlToken: 'mocked_edl_token' })
+
+        const { setAuthToken } = useEdscStore.getState().user
+
+        const mockToken = 'mocked_token'
+
+        setAuthToken(mockToken)
+
+        const { user } = useEdscStore.getState()
+
+        expect(user.edlToken).toBe('mocked_edl_token')
+        expect(user.authToken).toBe(mockToken)
+      })
+    })
+
+    describe('when no token is provided', () => {
+      test('sets the edlToken and authToken in state to null', () => {
+        const { setAuthToken } = useEdscStore.getState().user
+
+        setAuthToken(null)
+
+        const { user } = useEdscStore.getState()
+
+        expect(user.edlToken).toBeNull()
+        expect(user.authToken).toBeNull()
+      })
     })
   })
 
@@ -157,6 +250,23 @@ describe('createUserSlice', () => {
 
       const { username } = useEdscStore.getState().user
       expect(username).toBe('test_user')
+    })
+  })
+
+  describe('setUrsProfile', () => {
+    test('sets the ursProfile in state', () => {
+      const { setUrsProfile } = useEdscStore.getState().user
+
+      const mockProfile = {
+        emailAddress: 'test@example.com',
+        firstName: 'Test',
+        lastName: 'User'
+      }
+
+      setUrsProfile(mockProfile)
+
+      const { ursProfile } = useEdscStore.getState().user
+      expect(ursProfile).toEqual(mockProfile)
     })
   })
 })

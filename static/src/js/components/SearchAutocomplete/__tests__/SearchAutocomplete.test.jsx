@@ -6,12 +6,6 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const setup = setupTest({
   Component: SearchAutocomplete,
-  defaultProps: {
-    authToken: ''
-  },
-  defaultReduxState: {
-    authToken: ''
-  },
   defaultZustandState: {
     earthdataEnvironment: {
       currentEnvironment: 'prod'

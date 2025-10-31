@@ -17,7 +17,6 @@ import { getCollectionsQuery, getSelectedRegionQuery } from '../zustand/selector
 export const prepareCollectionParams = (state) => {
   const {
     autocomplete = {},
-    authToken,
     searchResults = {}
   } = state
 
@@ -91,7 +90,6 @@ export const prepareCollectionParams = (state) => {
   const { consortium: portalConsortium = [] } = portalQuery
 
   const collectionParams = {
-    authToken,
     boundingBox,
     circle,
     cloudHosted,

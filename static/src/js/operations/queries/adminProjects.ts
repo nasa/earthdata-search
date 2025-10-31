@@ -1,4 +1,6 @@
-const ADMIN_PROJECTS = `
+import { gql } from '@apollo/client'
+
+const ADMIN_PROJECTS = gql`
   query AdminProjects($params: AdminProjectsInput) {
     adminProjects(params: $params) {
       pageInfo {

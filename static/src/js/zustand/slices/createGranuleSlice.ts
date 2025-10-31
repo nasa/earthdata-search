@@ -13,6 +13,8 @@ import configureStore from '../../store/configureStore'
 import actions from '../../actions'
 
 import GET_GRANULE from '../../operations/queries/getGranule'
+
+import { getAuthToken } from '../selectors/user'
 import { getFocusedGranule, getGranuleId } from '../selectors/granule'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionMetadata } from '../selectors/collection'
@@ -26,20 +28,15 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
 
     getGranuleMetadata: async () => {
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
 
-      const {
-        authToken
-      } = reduxState
-
-      const currentState = get()
-      const earthdataEnvironment = getEarthdataEnvironment(currentState)
-      const granuleId = getGranuleId(currentState)
-      const collectionMetadata = getFocusedCollectionMetadata(currentState)
-      const focusedGranuleMetadata = getFocusedGranule(currentState)
+      const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const granuleId = getGranuleId(zustandState)
+      const collectionMetadata = getFocusedCollectionMetadata(zustandState)
+      const focusedGranuleMetadata = getFocusedGranule(zustandState)
 
       // If there is no granuleId to fetch, return
       if (!granuleId) return
@@ -135,7 +132,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
           state.granule.granuleId = null
         })
 
-        currentState.errors.handleError({
+        zustandState.errors.handleError({
           error: error as Error,
           action: 'getGranuleMetadata',
           resource: 'granule',

@@ -71,7 +71,7 @@ import type {
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
-import { getUsername } from '../selectors/user'
+import { getAuthToken, getUsername } from '../selectors/user'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -200,16 +200,14 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       } = configureStore()
       const reduxState = reduxGetState()
 
-      const {
-        authToken
-      } = reduxState
+      const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const username = getUsername(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const collectionsMetadata = getCollectionsMetadata(zustandState)
+
       // If the user isn't logged in, return null
       if (!authToken) return null
-
-      const currentState = get()
-      const username = getUsername(currentState)
-      const earthdataEnvironment = getEarthdataEnvironment(currentState)
-      const collectionsMetadata = getCollectionsMetadata(currentState)
 
       const {
         defaultCmrSearchTags,
@@ -262,7 +260,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         const { data } = savedAccessConfigsResponse
         savedAccessConfigs = data
       } catch (error) {
-        currentState.errors.handleError({
+        zustandState.errors.handleError({
           error: error as Error,
           action: 'getProjectCollections',
           resource: 'saved access configurations'
@@ -456,7 +454,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           return response
         }))
       } catch (error) {
-        currentState.errors.handleError({
+        zustandState.errors.handleError({
           error: error as Error,
           action: 'getProjectCollections',
           resource: 'project collections',
@@ -472,19 +470,14 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const { defaultCmrPageSize, maxCmrPageSize } = getApplicationConfig()
 
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
 
-      const {
-        authToken
-      } = reduxState
-
-      const currentState = get()
-      const earthdataEnvironment = getEarthdataEnvironment(currentState)
-      const collectionsMetadata = getCollectionsMetadata(currentState)
-      const projectCollectionIds = getProjectCollectionsIds(currentState)
+      const zustandState = get()
+      const authToken = getAuthToken(zustandState)
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const collectionsMetadata = getCollectionsMetadata(zustandState)
+      const projectCollectionIds = getProjectCollectionsIds(zustandState)
 
       await Promise.all(projectCollectionIds.map((collectionId) => {
         // Extract granule search parameters from redux specific to this project collection
@@ -594,7 +587,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
             get().project.stopProjectGranulesTimer(collectionId)
 
-            currentState.errors.handleError({
+            zustandState.errors.handleError({
               error: error as Error,
               action: 'getProjectGranules',
               resource: 'granules',

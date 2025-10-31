@@ -3,11 +3,7 @@ import React from 'react'
 import { act } from '@testing-library/react'
 import actions from '../../../actions'
 import * as EventEmitter from '../../../events/events'
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  ShapefileDropzoneContainer
-} from '../ShapefileDropzoneContainer'
+import { mapDispatchToProps, ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
 import ShapefileDropzone from '../../../components/Dropzone/ShapefileDropzone'
 
 import { shapefileEventTypes } from '../../../constants/eventTypes'
@@ -18,7 +14,6 @@ jest.mock('../../../components/Dropzone/ShapefileDropzone', () => jest.fn(() => 
 const setup = setupTest({
   Component: ShapefileDropzoneContainer,
   defaultProps: {
-    authToken: 'test-auth-token',
     onToggleShapefileUploadModal: jest.fn()
   },
   defaultZustandState: {
@@ -37,20 +32,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      authToken: 'mock-token'
-    }
-
-    const expectedState = {
-      authToken: 'mock-token'
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
   })
 })
 
@@ -206,7 +187,6 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(onSaveShapefileMock).toHaveBeenCalledTimes(1)
       expect(onSaveShapefileMock).toHaveBeenCalledWith({
-        authToken: 'test-auth-token',
         file: {
           features: [
             {

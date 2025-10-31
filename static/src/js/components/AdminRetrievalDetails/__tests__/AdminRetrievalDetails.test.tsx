@@ -3,7 +3,6 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
-import { gql } from '@apollo/client'
 
 import AdminRetrievalDetails from '../AdminRetrievalDetails'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -22,7 +21,7 @@ const setup = setupTest({
   defaultApolloClientMocks: [
     {
       request: {
-        query: gql(ADMIN_RETRIEVAL),
+        query: ADMIN_RETRIEVAL,
         variables: {
           params: {
             obfuscatedId: '06347346'

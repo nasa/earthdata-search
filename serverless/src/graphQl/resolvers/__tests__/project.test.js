@@ -1,5 +1,3 @@
-import { gql } from '@apollo/client'
-
 import setupServer from './__mocks__/setupServer'
 
 import CREATE_PROJECT from '../../../../../static/src/js/operations/mutations/createProject'
@@ -27,7 +25,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_PROJECT),
+          query: GET_PROJECT,
           variables: { obfuscatedId: 'test-obfuscated-id' }
         }, {
           contextValue
@@ -61,7 +59,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_PROJECT),
+          query: GET_PROJECT,
           variables: { obfuscatedId: 'test-obfuscated-id' }
         }, {
           contextValue
@@ -103,7 +101,7 @@ describe('Project Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(GET_PROJECT),
+            query: GET_PROJECT,
             variables: { obfuscatedId: 'test-obfuscated-id' }
           }, {
             contextValue
@@ -155,7 +153,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_PROJECTS),
+          query: GET_PROJECTS,
           variables: {}
         }, {
           contextValue
@@ -211,7 +209,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_PROJECTS),
+          query: GET_PROJECTS,
           variables: {}
         }, {
           contextValue
@@ -247,7 +245,7 @@ describe('Project Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(GET_PROJECTS),
+            query: GET_PROJECTS,
             variables: {
               limit: 2,
               offset: 2
@@ -308,7 +306,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(CREATE_PROJECT),
+          query: CREATE_PROJECT,
           variables: {
             name: 'Test Project',
             path: '/test/project'
@@ -352,7 +350,7 @@ describe('Project Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(CREATE_PROJECT),
+            query: CREATE_PROJECT,
             variables: {
               name: 'Test Project',
               path: '/test/project'
@@ -384,7 +382,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(DELETE_PROJECT),
+          query: DELETE_PROJECT,
           variables: {
             obfuscatedId: '2057964173'
           }
@@ -414,7 +412,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(DELETE_PROJECT),
+          query: DELETE_PROJECT,
           variables: {
             obfuscatedId: '2057964173'
           }
@@ -446,7 +444,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(DELETE_PROJECT),
+          query: DELETE_PROJECT,
           variables: {
             obfuscatedId: '2057964173'
           }
@@ -480,7 +478,7 @@ describe('Project Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(UPDATE_PROJECT),
+          query: UPDATE_PROJECT,
           variables: {
             obfuscatedId: '4517239960',
             name: 'Updated Project',
@@ -518,7 +516,7 @@ describe('Project Resolver', () => {
           })
 
           const response = await server.executeOperation({
-            query: gql(UPDATE_PROJECT),
+            query: UPDATE_PROJECT,
             variables: {
               obfuscatedId: '4517239960',
               name: 'Updated Project',

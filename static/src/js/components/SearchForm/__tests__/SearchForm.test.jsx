@@ -31,8 +31,6 @@ jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', (
 const setup = setupTest({
   Component: SearchForm,
   defaultProps: {
-    authToken: '',
-    handleError: jest.fn(),
     onClearFilters: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn(),
     selectedRegion: {}

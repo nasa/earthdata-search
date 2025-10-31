@@ -1,3 +1,4 @@
+import { UrsProfile } from '../../types/sharedTypes'
 import { EdscStore } from '../types'
 
 /**
@@ -6,12 +7,30 @@ import { EdscStore } from '../types'
 export const getUser = (state: EdscStore) => state.user
 
 /**
+ * Retrieve user's authToken from Zustand store
+ */
+export const getAuthToken = (state: EdscStore) => {
+  const user = getUser(state)
+
+  return user.authToken
+}
+
+/**
+ * Retrieve user's edlToken from Zustand store
+ */
+export const getEdlToken = (state: EdscStore) => {
+  const user = getUser(state)
+
+  return user.edlToken
+}
+
+/**
  * Get username from Zustand store
  */
 export const getUsername = (state: EdscStore) => {
   const user = getUser(state)
 
-  return user?.username
+  return user.username
 }
 
 /**
@@ -20,7 +39,7 @@ export const getUsername = (state: EdscStore) => {
 export const getSitePreferences = (state: EdscStore) => {
   const user = getUser(state)
 
-  return user?.sitePreferences
+  return user.sitePreferences
 }
 
 /**
@@ -29,7 +48,7 @@ export const getSitePreferences = (state: EdscStore) => {
 export const getMapPreferences = (state: EdscStore) => {
   const preferences = getSitePreferences(state)
 
-  return preferences?.mapView
+  return preferences.mapView
 }
 
 /**
@@ -38,5 +57,14 @@ export const getMapPreferences = (state: EdscStore) => {
 export const getCollectionSortPreference = (state: EdscStore) => {
   const preferences = getSitePreferences(state)
 
-  return preferences?.collectionSort
+  return preferences.collectionSort
+}
+
+/**
+ * Get URS profile from Zustand store
+ */
+export const getUrsProfile = (state: EdscStore) => {
+  const user = getUser(state)
+
+  return user.ursProfile || {} as UrsProfile
 }

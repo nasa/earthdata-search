@@ -6,7 +6,7 @@ import { getSecretEarthdataConfig } from '../../../sharedUtils/config'
  * Create a signed JWT Token with user information
  * @param {Object} user User object from database
  */
-export const createJwtToken = (user, earthdataEnvironment) => {
+export const createJwtToken = (user, earthdataEnvironment, edlToken) => {
   const {
     id,
     urs_id: username
@@ -15,8 +15,9 @@ export const createJwtToken = (user, earthdataEnvironment) => {
   const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
 
   return jwt.sign({
+    edlToken,
+    earthdataEnvironment,
     id,
-    username,
-    earthdataEnvironment
+    username
   }, secret)
 }

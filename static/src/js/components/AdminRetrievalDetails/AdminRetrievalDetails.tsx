@@ -1,5 +1,5 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
 import Alert from 'react-bootstrap/Alert'
@@ -53,7 +53,7 @@ const AdminRetrievalDetails = ({
 }: AdminRetrievalDetailsProps) => {
   const { obfuscatedId } = useParams<{ obfuscatedId: string }>()
 
-  const { data, error, loading } = useQuery<AdminRetrievalQueryData>(gql(ADMIN_RETRIEVAL), {
+  const { data, error, loading } = useQuery<AdminRetrievalQueryData>(ADMIN_RETRIEVAL, {
     variables: {
       params: {
         obfuscatedId

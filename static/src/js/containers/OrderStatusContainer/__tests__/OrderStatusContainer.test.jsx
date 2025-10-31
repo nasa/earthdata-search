@@ -115,13 +115,11 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      authToken: 'mock-token',
       granuleDownload: {},
       retrieval: {}
     }
 
     const expectedState = {
-      authToken: 'mock-token',
       granuleDownload: {},
       retrieval: {}
     }
@@ -138,7 +136,6 @@ describe('OrderStatusContainer component', () => {
       expect(OrderStatus).toHaveBeenCalledTimes(1)
       expect(OrderStatus).toHaveBeenCalledWith(
         {
-          authToken: 'testToken',
           granuleDownload: {},
           onChangePath: expect.any(Function),
           onFetchRetrieval: expect.any(Function),

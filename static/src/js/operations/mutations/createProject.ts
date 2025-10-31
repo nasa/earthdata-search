@@ -1,4 +1,6 @@
-const CREATE_PROJECT = `
+import { gql } from '@apollo/client'
+
+const CREATE_PROJECT = gql`
   mutation CreateProject(
     $name: String
     $path: String

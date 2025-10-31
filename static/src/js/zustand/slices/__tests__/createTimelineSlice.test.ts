@@ -9,7 +9,9 @@ import configureStore from '../../../store/configureStore'
 
 import routerHelper from '../../../router/router'
 
-jest.mock('../../../store/configureStore', () => jest.fn())
+jest.mock('../../../store/configureStore', () => jest.fn().mockReturnValue({
+  dispatch: jest.fn()
+}))
 
 describe('createTimelineSlice', () => {
   test('sets the default state', () => {
@@ -119,12 +121,6 @@ describe('createTimelineSlice', () => {
 
     describe('when the user is not logged in', () => {
       test('calls cmr to set the intervals', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            authToken: ''
-          })
-        })
-
         nock(/cmr/)
           .post(/granules\/timeline/)
           .reply(200, [{
@@ -179,12 +175,6 @@ describe('createTimelineSlice', () => {
 
     describe('when the user is logged in', () => {
       test('calls lambda to set the intervals', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            authToken: 'mock-token'
-          })
-        })
-
         nock(/localhost/)
           .post(/granules\/timeline/)
           .reply(200, [{
@@ -205,6 +195,8 @@ describe('createTimelineSlice', () => {
             interval: TimelineInterval.Day,
             startDate: '1979-01-01T00:00:00.000Z'
           }
+
+          state.user.authToken = 'mock-token'
         })
 
         const zustandState = useEdscStore.getState()
@@ -239,12 +231,6 @@ describe('createTimelineSlice', () => {
 
     describe('when there is no focusedCollection', () => {
       test('sets intervals to empty', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            authToken: 'mock-token'
-          })
-        })
-
         useEdscStore.setState((state) => {
           state.timeline.intervals = {
             collectionId: [
@@ -255,6 +241,8 @@ describe('createTimelineSlice', () => {
               ]
             ]
           }
+
+          state.user.authToken = 'mock-token'
         })
 
         const zustandState = useEdscStore.getState()
@@ -273,12 +261,6 @@ describe('createTimelineSlice', () => {
       })
 
       test('sets intervals to empty when conceptId is empty array', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            authToken: 'mock-token'
-          })
-        })
-
         useEdscStore.setState((state) => {
           state.collection.collectionId = ''
           state.timeline.query = {
@@ -298,6 +280,7 @@ describe('createTimelineSlice', () => {
           }
 
           state.project.collections.allIds = []
+          state.user.authToken = 'mock-token'
         })
 
         const zustandState = useEdscStore.getState()
@@ -336,10 +319,7 @@ describe('createTimelineSlice', () => {
         const mockDispatch = jest.fn()
 
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({
-            authToken: ''
-          })
+          dispatch: mockDispatch
         })
 
         nock(/cmr/)

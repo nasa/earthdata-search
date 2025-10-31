@@ -3,8 +3,6 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 import RetrievalRequest from '../../util/request/retrievalRequest'
@@ -12,14 +10,10 @@ import addToast from '../../util/addToast'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getAuthToken } from '../../zustand/selectors/user'
 
-export const mapStateToProps = (state) => ({
-  authToken: state.authToken
-})
-
-export const DownloadHistoryContainer = ({
-  authToken
-}) => {
+const DownloadHistoryContainer = () => {
+  const authToken = useEdscStore(getAuthToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const handleError = useEdscStore((state) => state.errors.handleError)
   const [retrievalHistory, setRetrievalHistory] = useState([])
@@ -106,8 +100,4 @@ export const DownloadHistoryContainer = ({
   )
 }
 
-DownloadHistoryContainer.propTypes = {
-  authToken: PropTypes.string.isRequired
-}
-
-export default connect(mapStateToProps)(DownloadHistoryContainer)
+export default DownloadHistoryContainer

@@ -5,30 +5,54 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import ContactInfo from '../ContactInfo'
 import Spinner from '../../Spinner/Spinner'
+import GET_CMR_ORDERING_USER from '../../../operations/queries/getCmrOrderingUser'
+import UPDATE_CMR_ORDERING_USER from '../../../operations/mutations/updateCmrOrderingUser'
+import addToast from '../../../util/addToast'
 
 jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
 
+jest.mock('../../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
+
 const setup = setupTest({
   Component: ContactInfo,
-  defaultProps: {
-    contactInfo: {
-      cmrPreferences: {
-        notificationLevel: 'VERBOSE'
-      },
+  defaultZustandState: {
+    errors: {
+      handleError: jest.fn()
+    },
+    user: {
       ursProfile: {
         affiliation: 'Mock Affiliation',
         country: 'Mock Country',
-        email_address: 'mock@example.com',
-        first_name: 'Mock',
-        last_name: 'User',
+        emailAddress: 'mock@example.com',
+        firstName: 'Mock',
+        lastName: 'User',
         organization: 'Mock Organization',
-        study_area: 'Mock Study Area',
-        user_type: 'Mock User Type'
+        studyArea: 'Mock Study Area',
+        uid: 'mock-uid',
+        userType: 'Mock User Type'
+      }
+    }
+  },
+  defaultApolloClientMocks: [{
+    request: {
+      query: GET_CMR_ORDERING_USER,
+      variables: {
+        ursId: 'mock-uid'
       }
     },
-    earthdataEnvironment: 'prod',
-    onUpdateNotificationLevel: jest.fn()
-  }
+    result: {
+      data: {
+        user: {
+          notificationLevel: 'VERBOSE',
+          ursId: 'mock-uid'
+        }
+      }
+    }
+  }],
+  withApolloClient: true
 })
 
 describe('ContactInfo component', () => {
@@ -64,24 +88,106 @@ describe('ContactInfo component', () => {
     }, {})
   })
 
-  test('displays the users current notification level', () => {
+  test('displays the users current notification level', async () => {
     setup()
 
-    expect(screen.getByRole('combobox')).toHaveValue('VERBOSE')
+    expect(await screen.findByRole('combobox')).toHaveValue('VERBOSE')
   })
 
   describe('when updating the notification level', () => {
     test('calls onUpdateNotificationLevel', async () => {
-      const { props, user } = setup()
+      const { user } = setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: GET_CMR_ORDERING_USER,
+            variables: {
+              ursId: 'mock-uid'
+            }
+          },
+          result: {
+            data: {
+              user: {
+                notificationLevel: 'VERBOSE',
+                ursId: 'mock-uid'
+              }
+            }
+          }
+        }, {
+          request: {
+            query: UPDATE_CMR_ORDERING_USER,
+            variables: {
+              notificationLevel: 'INFO',
+              ursId: 'mock-uid'
+            }
+          },
+          result: {
+            data: {
+              updateUser: {
+                notificationLevel: 'VERBOSE',
+                ursId: 'mock-uid'
+              }
+            }
+          }
+        }]
+      })
 
-      const select = screen.getByRole('combobox')
+      const select = await screen.findByRole('combobox')
       await user.selectOptions(select, 'INFO')
 
       const button = screen.getByRole('button', { name: 'Update Notification Preference' })
       await user.click(button)
 
-      expect(props.onUpdateNotificationLevel).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateNotificationLevel).toHaveBeenCalledWith('INFO')
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Notification Preference Level updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+
+    describe('when an error occurs', () => {
+      test('calls handleError', async () => {
+        const { user, zustandState } = setup({
+          overrideApolloClientMocks: [{
+            request: {
+              query: GET_CMR_ORDERING_USER,
+              variables: {
+                ursId: 'mock-uid'
+              }
+            },
+            result: {
+              data: {
+                user: {
+                  notificationLevel: 'VERBOSE',
+                  ursId: 'mock-uid'
+                }
+              }
+            }
+          }, {
+            request: {
+              query: UPDATE_CMR_ORDERING_USER,
+              variables: {
+                notificationLevel: 'INFO',
+                ursId: 'mock-uid'
+              }
+            },
+            error: new Error('An error occurred')
+          }]
+        })
+
+        const select = await screen.findByRole('combobox')
+        await user.selectOptions(select, 'INFO')
+
+        const button = screen.getByRole('button', { name: 'Update Notification Preference' })
+        await user.click(button)
+
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+          action: 'updateNotificationLevel',
+          error: new Error('An error occurred'),
+          resource: 'contactInfo',
+          verb: 'updating'
+        })
+      })
     })
   })
 })

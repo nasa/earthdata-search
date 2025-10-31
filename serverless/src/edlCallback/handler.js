@@ -100,7 +100,7 @@ const edlCallback = async (event, context) => {
     })
 
     // Create a JWT token from the EDL response
-    jwtToken = createJwtToken(userRow, earthdataEnvironment)
+    jwtToken = createJwtToken(userRow, earthdataEnvironment, accessToken)
 
     if (process.env.SKIP_SQS !== 'true') {
       const sqsCommand = new SendMessageCommand({

@@ -17,6 +17,7 @@ import {
   FaUser,
   FaSignInAlt
 } from 'react-icons/fa'
+import { useMutation } from '@apollo/client'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -32,21 +33,27 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getAuthToken, getUrsProfile } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 import { routes } from '../../constants/routes'
 
+import LOGOUT from '../../operations/mutations/logout'
+
 import './SecondaryToolbar.scss'
 
 const SecondaryToolbar = ({
-  authToken,
   location,
-  onLogout,
   projectCollectionIds,
-  retrieval,
-  ursProfile
+  retrieval
 }) => {
+  const authToken = useEdscStore(getAuthToken)
+  const logout = useEdscStore((state) => state.user.logout)
+  const ursProfile = useEdscStore(getUrsProfile)
+
+  const [logoutMutation] = useMutation(LOGOUT)
+
   const {
     setProjectName: updateProjectName,
     setRunTour
@@ -72,10 +79,17 @@ const SecondaryToolbar = ({
   }, [name])
 
   /**
-   * Log the user out by calling the onLogout action
+   * Log the user out by calling the logoutMutation
    */
   const handleLogout = () => {
-    onLogout()
+    logoutMutation({
+      onCompleted: () => {
+        logout()
+      },
+      onError: () => {
+        logout()
+      }
+    })
   }
 
   const handleNameSubmit = () => {
@@ -109,7 +123,7 @@ const SecondaryToolbar = ({
 
   const { firstName = '' } = ursProfile
 
-  const loggedIn = authToken !== ''
+  const loggedIn = !!authToken
   const returnPath = window.location.href
   const { pathname, search } = location
   let isMapOverlay = false
@@ -423,17 +437,12 @@ const SecondaryToolbar = ({
 }
 
 SecondaryToolbar.propTypes = {
-  authToken: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
-  onLogout: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({
     jsondata: PropTypes.shape({
       source: PropTypes.string
     })
-  }).isRequired,
-  ursProfile: PropTypes.shape({
-    firstName: PropTypes.string
   }).isRequired
 }
 

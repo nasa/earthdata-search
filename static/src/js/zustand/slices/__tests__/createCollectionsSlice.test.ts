@@ -86,9 +86,7 @@ describe('createCollectionsSlice', () => {
         state.granules.getGranules = jest.fn()
       })
 
-      mockGetState.mockReturnValue({
-        authToken: ''
-      })
+      mockGetState.mockReturnValue({})
 
       const { collections } = useEdscStore.getState()
       const { getCollections } = collections
@@ -142,11 +140,10 @@ describe('createCollectionsSlice', () => {
         }
 
         state.granules.getGranules = jest.fn()
+        state.user.authToken = 'mock-token'
       })
 
-      mockGetState.mockReturnValue({
-        authToken: 'mock-token'
-      })
+      mockGetState.mockReturnValue({})
 
       const { collections } = useEdscStore.getState()
       const { getCollections } = collections
@@ -195,9 +192,7 @@ describe('createCollectionsSlice', () => {
         state.granules.getGranules = jest.fn()
       })
 
-      mockGetState.mockReturnValue({
-        authToken: ''
-      })
+      mockGetState.mockReturnValue({})
 
       const { collections } = useEdscStore.getState()
       const { getCollections } = collections
@@ -276,12 +271,9 @@ describe('createCollectionsSlice', () => {
         .get(/search\/nlp\/query\.json/)
         .reply(200, mockNlpResponse)
 
-      mockGetState.mockReturnValue({
-        authToken: 'test-token'
-      })
-
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'test query' }
+        state.user.authToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
@@ -339,12 +331,9 @@ describe('createCollectionsSlice', () => {
         .get(/search\/nlp\/query\.json/)
         .reply(200, mockNlpResponse)
 
-      mockGetState.mockReturnValue({
-        authToken: 'test-token'
-      })
-
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'spatial query' }
+        state.user.authToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
@@ -387,6 +376,7 @@ describe('createCollectionsSlice', () => {
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'error query' }
         state.errors.handleError = jest.fn()
+        state.user.authToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
@@ -429,12 +419,9 @@ describe('createCollectionsSlice', () => {
         .get(/search\/nlp\/query\.json/)
         .reply(200, mockNlpResponse)
 
-      mockGetState.mockReturnValue({
-        authToken: 'test-token'
-      })
-
       useEdscStore.setState((state) => {
         state.query.nlpCollection = { query: 'empty query' }
+        state.user.authToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()

@@ -8,11 +8,7 @@ import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
 // @ts-expect-error This file does not have types
 import { XCircled, Share } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import {
-  gql,
-  useMutation,
-  useQuery
-} from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import Pagination from 'rc-pagination'
 
@@ -74,7 +70,7 @@ const SavedProjects: React.FC = () => {
     error,
     loading,
     refetch
-  } = useQuery<ProjectsQueryData>(gql(GET_PROJECTS), {
+  } = useQuery<ProjectsQueryData>(GET_PROJECTS, {
     variables: {
       limit: pageSize,
       offset: (currentPage - 1) * pageSize
@@ -84,7 +80,7 @@ const SavedProjects: React.FC = () => {
   const { projects: projectsList } = data || {}
   const { projects = [], count = 0 } = projectsList || {}
 
-  const [deleteProjectMutation] = useMutation(gql(DELETE_PROJECT))
+  const [deleteProjectMutation] = useMutation(DELETE_PROJECT)
 
   const handleDeleteProject = (obfuscatedId: string) => {
     // eslint-disable-next-line no-alert

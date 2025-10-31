@@ -356,8 +356,7 @@ describe('AccessMethod component', () => {
         onUpdateAccessMethod: expect.any(Function),
         rawModel: null,
         spatial: emptySpatial,
-        temporal: {},
-        ursProfile: {}
+        temporal: {}
       }, {})
     })
 
@@ -391,8 +390,7 @@ describe('AccessMethod component', () => {
         onUpdateAccessMethod: expect.any(Function),
         rawModel,
         spatial: emptySpatial,
-        temporal: {},
-        ursProfile: {}
+        temporal: {}
       }, {})
     })
   })

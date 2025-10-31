@@ -4,12 +4,7 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-import actions from '../../../actions'
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  SecondaryToolbarContainer
-} from '../SecondaryToolbarContainer'
+import { mapStateToProps, SecondaryToolbarContainer } from '../SecondaryToolbarContainer'
 import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryToolbar'
 
 beforeEach(() => {
@@ -23,40 +18,20 @@ jest.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => jest.fn
 const setup = setupTest({
   Component: SecondaryToolbarContainer,
   defaultProps: {
-    authToken: 'mock-token',
     retrieval: {},
-    onLogout: jest.fn(),
-    ursProfile: {}
+    onLogout: jest.fn()
   },
   withRouter: true
-})
-
-describe('mapDispatchToProps', () => {
-  test('onLogout calls actions.logout', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'logout')
-
-    mapDispatchToProps(dispatch).onLogout()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith()
-  })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      authToken: 'mock-token',
-      contactInfo: {
-        ursProfile: {}
-      },
       retrieval: {}
     }
 
     const expectedState = {
-      authToken: 'mock-token',
-      retrieval: {},
-      ursProfile: {}
+      retrieval: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -69,7 +44,6 @@ describe('SecondaryToolbarContainer component', () => {
 
     expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
     expect(SecondaryToolbar).toHaveBeenCalledWith({
-      authToken: 'mock-token',
       location: {
         hash: '',
         key: 'default',
@@ -77,10 +51,8 @@ describe('SecondaryToolbarContainer component', () => {
         search: '',
         state: null
       },
-      onLogout: expect.any(Function),
       projectCollectionIds: [],
-      retrieval: {},
-      ursProfile: {}
+      retrieval: {}
     }, {})
   })
 })

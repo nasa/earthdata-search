@@ -1,5 +1,4 @@
 import { screen, waitFor } from '@testing-library/react'
-import { gql } from '@apollo/client'
 import AdminProjectDetails from '../AdminProjectDetails'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_PROJECT from '../../../operations/queries/adminProject'
@@ -12,7 +11,7 @@ const setup = setupTest({
   defaultApolloClientMocks: [
     {
       request: {
-        query: gql(ADMIN_PROJECT),
+        query: ADMIN_PROJECT,
         variables: {
           params: {
             obfuscatedId: '06347346'

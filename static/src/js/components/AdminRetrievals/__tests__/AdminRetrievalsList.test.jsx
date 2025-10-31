@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client'
 import {
   screen,
   waitFor,
@@ -20,7 +19,7 @@ jest.mock('react-router-dom', () => ({
 const defaultApolloClientMocks = [
   {
     request: {
-      query: gql(ADMIN_RETRIEVALS),
+      query: ADMIN_RETRIEVALS,
       variables: {
         params: {
           limit: 20,
@@ -128,7 +127,7 @@ describe('AdminRetrievalsList component', () => {
             ...defaultApolloClientMocks,
             {
               request: {
-                query: gql(ADMIN_RETRIEVALS),
+                query: ADMIN_RETRIEVALS,
                 variables: {
                   params: {
                     limit: 20,
@@ -178,7 +177,7 @@ describe('AdminRetrievalsList component', () => {
             },
             {
               request: {
-                query: gql(ADMIN_RETRIEVALS),
+                query: ADMIN_RETRIEVALS,
                 variables: {
                   params: {
                     limit: 20,
@@ -257,7 +256,7 @@ describe('AdminRetrievalsList component', () => {
             ...defaultApolloClientMocks,
             {
               request: {
-                query: gql(ADMIN_RETRIEVALS),
+                query: ADMIN_RETRIEVALS,
                 variables: {
                   params: {
                     limit: 20,
@@ -307,7 +306,7 @@ describe('AdminRetrievalsList component', () => {
             },
             {
               request: {
-                query: gql(ADMIN_RETRIEVALS),
+                query: ADMIN_RETRIEVALS,
                 variables: {
                   params: {
                     limit: 20,

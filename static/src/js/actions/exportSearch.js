@@ -4,6 +4,7 @@ import ExportSearchRequest from '../util/request/exportSearchRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+import { getAuthToken } from '../zustand/selectors/user'
 
 export const onExportStarted = (payload) => ({
   type: EXPORT_STARTED,
@@ -25,14 +26,10 @@ export const exportSearch = (format) => (dispatch, getState) => {
   const state = getState()
 
   const zustandState = useEdscStore.getState()
-
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const collectionParams = prepareCollectionParams(state)
-
-  const {
-    authToken
-  } = collectionParams
 
   const graphQlRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
 

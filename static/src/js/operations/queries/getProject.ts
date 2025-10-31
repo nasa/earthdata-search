@@ -1,4 +1,6 @@
-const GET_PROJECT = `
+import { gql } from '@apollo/client'
+
+const GET_PROJECT = gql`
   query GetProject($obfuscatedId: String!) {
     project(obfuscatedId: $obfuscatedId) {
       createdAt

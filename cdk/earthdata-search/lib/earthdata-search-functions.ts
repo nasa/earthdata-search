@@ -94,7 +94,6 @@ export class Functions extends Construct {
       collectionsApiGatewayResource,
       colormapsApiGatewayResource,
       conceptsApiGatewayResource,
-      contactInfoApiGatewayResource,
       granulesApiGatewayResource,
       opensearchApiGatewayResource,
       retrievalCollectionsApiGatewayResource,
@@ -613,26 +612,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * Get Contact Info
-     */
-    const getContactInfoNestedStack = new cdk.NestedStack(scope, 'GetContactInfoNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getContactInfoNestedStack, 'GetContactInfoLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: contactInfoApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['GET'],
-        path: 'contact_info'
-      },
-      entry: '../../serverless/src/getContactInfo/handler.js',
-      functionName: 'getContactInfo',
-      functionNamePrefix
-    })
-
-    /**
      * Get Retrieval
      */
     const getRetrievalNestedStack = new cdk.NestedStack(scope, 'GetRetrievalNestedStack')
@@ -767,25 +746,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/cmrGraphQlProxy/handler.js',
       functionName: 'cmrGraphQlProxy',
-      functionNamePrefix
-    })
-
-    /**
-     * Logout
-     */
-    const logoutNestedStack = new cdk.NestedStack(scope, 'LogoutNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(logoutNestedStack, 'LogoutLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['DELETE'],
-        path: 'logout'
-      },
-      entry: '../../serverless/src/logout/handler.js',
-      functionName: 'logout',
       functionNamePrefix
     })
 
@@ -998,26 +958,6 @@ export class Functions extends Construct {
       functionName: 'retrieveGranuleLinks',
       functionNamePrefix,
       memorySize: 256
-    })
-
-    /**
-     * Save Contact Info
-     */
-    const saveContactInfoNestedStack = new cdk.NestedStack(scope, 'SaveContactInfoNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(saveContactInfoNestedStack, 'SaveContactInfoLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: contactInfoApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['POST'],
-        path: 'contact_info'
-      },
-      entry: '../../serverless/src/saveContactInfo/handler.js',
-      functionName: 'saveContactInfo',
-      functionNamePrefix
     })
 
     /**

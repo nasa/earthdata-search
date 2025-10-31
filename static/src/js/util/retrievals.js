@@ -58,11 +58,7 @@ const permittedAccessMethodFields = [
  * @param {Object} state Current Redux State
  * @returns Parameters used in submitRetrieval()
  */
-export const prepareRetrievalParams = (state) => {
-  const {
-    authToken
-  } = state
-
+export const prepareRetrievalParams = () => {
   const { shapefile } = useEdscStore.getState()
 
   // Retrieve data from Zustand
@@ -191,7 +187,6 @@ export const prepareRetrievalParams = (state) => {
   }
 
   return {
-    authToken,
     collections: [...retrievalCollections],
     environment: earthdataEnvironment,
     json_data: jsonData

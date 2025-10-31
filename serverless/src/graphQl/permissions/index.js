@@ -47,6 +47,7 @@ const buildPermissions = () => shield(
         isValidUser,
         userOwnsProject
       ),
+      logout: isValidUser,
       updatePreferences: isValidUser,
       updateProject: userOwnsProjectIfProjectOwned
     }

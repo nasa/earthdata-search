@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'qs'
 
@@ -24,7 +24,7 @@ interface AdminProjectQueryData {
 
 export const AdminProjectDetails = () => {
   const { obfuscatedId } = useParams<{ obfuscatedId: string }>()
-  const { data, loading } = useQuery<AdminProjectQueryData>(gql(ADMIN_PROJECT), {
+  const { data, loading } = useQuery<AdminProjectQueryData>(ADMIN_PROJECT, {
     variables: {
       params: {
         obfuscatedId

@@ -1,11 +1,7 @@
 import React from 'react'
 
 import actions from '../../../actions'
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  ProjectPanelsContainer
-} from '../ProjectPanelsContainer'
+import { mapDispatchToProps, ProjectPanelsContainer } from '../ProjectPanelsContainer'
 import ProjectPanels from '../../../components/ProjectPanels/ProjectPanels'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -16,8 +12,7 @@ const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
     onToggleAboutCSDAModal: jest.fn(),
-    onChangePath: jest.fn(),
-    ursProfile: {}
+    onChangePath: jest.fn()
   },
   defaultZustandState: {
     dataQualitySummaries: {
@@ -85,27 +80,6 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      contactInfo: {
-        ursProfile: {}
-      },
-      ui: {
-        map: {
-          drawingNewLayer: false
-        }
-      }
-    }
-
-    const expectedState = {
-      ursProfile: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('ProjectPanelsContainer component', () => {
   test('passes its props and renders a single ProjectPanels component', () => {
     const { props, zustandState } = setup()
@@ -143,8 +117,7 @@ describe('ProjectPanelsContainer component', () => {
       projectCollectionsMetadata: {},
       setCollectionId: zustandState.collection.setCollectionId,
       spatial: {},
-      temporal: {},
-      ursProfile: {}
+      temporal: {}
     }, {})
   })
 })

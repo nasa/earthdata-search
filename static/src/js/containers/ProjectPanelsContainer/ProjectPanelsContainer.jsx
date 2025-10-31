@@ -5,18 +5,12 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 
-import { getUrsProfile } from '../../selectors/contactInfo'
-
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getCollectionId } from '../../zustand/selectors/collection'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
-
-export const mapStateToProps = (state) => ({
-  ursProfile: getUrsProfile(state)
-})
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -35,8 +29,7 @@ export const mapDispatchToProps = (dispatch) => ({
  */
 export const ProjectPanelsContainer = ({
   onChangePath,
-  onToggleAboutCSDAModal,
-  ursProfile
+  onToggleAboutCSDAModal
 }) => {
   const location = useLocation()
 
@@ -96,7 +89,6 @@ export const ProjectPanelsContainer = ({
       setCollectionId={setCollectionId}
       spatial={spatial}
       temporal={temporal}
-      ursProfile={ursProfile}
       overrideTemporal={overrideTemporal}
     />
   )
@@ -104,10 +96,7 @@ export const ProjectPanelsContainer = ({
 
 ProjectPanelsContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  ursProfile: PropTypes.shape({
-    email_address: PropTypes.string
-  }).isRequired
+  onToggleAboutCSDAModal: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectPanelsContainer)
+export default connect(null, mapDispatchToProps)(ProjectPanelsContainer)

@@ -3,6 +3,7 @@ import GenerateNotebookRequest from '../util/request/generateNotebookRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+import { getAuthToken } from '../zustand/selectors/user'
 
 export const onGenerateNotebookStarted = (payload) => ({
   type: GENERATE_NOTEBOOK_STARTED,
@@ -18,19 +19,13 @@ export const onGenerateNotebookFinished = (payload) => ({
  * Fetch the collection search export in the given format
  * @param {String} format Format for the export (JSON, CSV)
  */
-export const generateNotebook = (params) => (dispatch, getState) => {
+export const generateNotebook = (params) => (dispatch) => {
   const { granuleId } = params
   dispatch(onGenerateNotebookStarted(granuleId))
 
-  const state = getState()
-
   const zustandState = useEdscStore.getState()
-
+  const authToken = getAuthToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-
-  const {
-    authToken
-  } = state
 
   const generateNotebookRequestObject = new GenerateNotebookRequest(authToken, earthdataEnvironment)
 

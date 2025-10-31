@@ -16,9 +16,9 @@ import SearchPanels from '../SearchPanels'
 import CollectionResultsBodyContainer from '../../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import GranuleResultsBodyContainer from '../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
 import CollectionDetailsBodyContainer from '../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
-import GranuleDetailsBodyContainer from '../../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import SubscriptionsBodyContainer from '../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
 import GranuleResultsFocusedMetaContainer from '../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
+import GranuleDetailsBody from '../../GranuleDetails/GranuleDetailsBody'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn().mockReturnValue('')
@@ -27,7 +27,7 @@ jest.mock('tiny-cookie', () => ({
 jest.mock('../../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer', () => jest.fn(() => <div />))
-jest.mock('../../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../GranuleDetails/GranuleDetailsBody', () => jest.fn(() => <div />))
 jest.mock('../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer', () => jest.fn(() => <div />))
 
@@ -153,8 +153,8 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(GranuleDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(GranuleDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(GranuleDetailsBody).toHaveBeenCalledTimes(2)
+      expect(GranuleDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -456,8 +456,8 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(GranuleDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(GranuleDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(GranuleDetailsBody).toHaveBeenCalledTimes(2)
+      expect(GranuleDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -903,8 +903,8 @@ describe('SearchPanels component', () => {
         isActive: true
       }), {})
 
-      expect(GranuleDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(GranuleDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(GranuleDetailsBody).toHaveBeenCalledTimes(2)
+      expect(GranuleDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -928,7 +928,7 @@ describe('SearchPanels component', () => {
   })
 
   describe('when on the /search/granules/granule-details route', () => {
-    test('renders the GranuleDetailsBodyContainer', () => {
+    test('renders the GranuleDetailsBody', () => {
       useLocation.mockReturnValue({
         pathname: '/search/granules/granule-details',
         search: '?p=C1000-EDSC&g=G1000-EDSC'
@@ -1001,8 +1001,8 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(GranuleDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(GranuleDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(GranuleDetailsBody).toHaveBeenCalledTimes(2)
+      expect(GranuleDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: true
       }), {})
 
@@ -1090,8 +1090,8 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(GranuleDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(GranuleDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(GranuleDetailsBody).toHaveBeenCalledTimes(2)
+      expect(GranuleDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -1186,8 +1186,8 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(GranuleDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(GranuleDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(GranuleDetailsBody).toHaveBeenCalledTimes(2)
+      expect(GranuleDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
