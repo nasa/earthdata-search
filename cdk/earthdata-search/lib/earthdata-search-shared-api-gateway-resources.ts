@@ -71,7 +71,6 @@ export class SharedApiGatewayResources extends Construct {
 
     this.collectionsApiGatewayResource = collectionsApiGatewayResource
 
-
     /**
      * OpenSearch API Gateway Resource
      */
