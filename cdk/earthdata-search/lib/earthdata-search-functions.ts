@@ -590,7 +590,6 @@ export class Functions extends Construct {
       }
     })
 
-
     /**
      * Get Retrieval
      */

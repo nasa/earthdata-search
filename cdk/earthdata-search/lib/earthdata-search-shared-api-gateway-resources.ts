@@ -69,7 +69,6 @@ export class SharedApiGatewayResources extends Construct {
 
     this.collectionsApiGatewayResource = collectionsApiGatewayResource
 
-
     /**
      * Concepts API Gateway Resource
      */
