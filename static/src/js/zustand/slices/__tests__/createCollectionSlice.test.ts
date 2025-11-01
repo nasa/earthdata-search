@@ -566,7 +566,7 @@ describe('createCollectionSlice', () => {
       })
 
       describe('when the requested collection and we try and retrieve an existing gibs tag', () => {
-        test('Test that retrieving colormap data works successfully ', async () => {
+        test('getColorMap is called for each product when multiple gibs tags are returned ', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {

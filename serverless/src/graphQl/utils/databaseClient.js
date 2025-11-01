@@ -530,8 +530,8 @@ export default class DatabaseClient {
       return user
     } catch {
       const errorMessage = 'Failed to update site preferences'
-
-      return errorMessage
+      console.log(errorMessage)
+      throw new Error(errorMessage)
     }
   }
 
