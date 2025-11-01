@@ -1,0 +1,33 @@
+type ColorMap {
+  "ID of the colormap"
+  id: Int!
+
+  "Product identifier for the colormap"
+  product: String!
+
+  "URL source for the colormap"
+  url: String!
+
+  "JSON data containing colormap information"
+  jsonData: JSON
+
+  "Timestamp when the colormap was created"
+  createdAt: DateTime
+
+  "Timestamp when the colormap was last updated"
+  updatedAt: DateTime
+}
+
+type Query {
+  "Retrieves a single colormap by product name"
+  colormap(
+    "Product identifier for the colormap"
+    product: String!
+  ): ColorMap
+
+  "Retrieves multiple colormaps by product names"
+  colormaps(
+    "List of product identifiers"
+    products: [String!]!
+  ): [ColorMap]
+}

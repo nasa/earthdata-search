@@ -1,9 +1,12 @@
 import nock from 'nock'
-
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error This file does not have types
 import configureStore from '../../../store/configureStore'
+
+// @ts-expect-error Types are not defined for this module
+import getApolloClient from '../../../providers/getApolloClient'
+import GET_COLORMAPS from '../../../operations/queries/getColorMaps'
 
 // @ts-expect-error This file does not have types
 import actions from '../../../actions'
@@ -29,6 +32,13 @@ const mockDispatch = jest.fn()
 configureStore.mockReturnValue({
   dispatch: mockDispatch
 })
+
+jest.mock('../../../providers/getApolloClient', () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    query: jest.fn()
+  })
+}))
 
 describe('createCollectionSlice', () => {
   test('sets the default state', () => {
@@ -110,7 +120,7 @@ describe('createCollectionSlice', () => {
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
 
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+        expect(getApolloClient().query).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -152,7 +162,7 @@ describe('createCollectionSlice', () => {
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(0)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(0)
         expect(granules.getGranules).toHaveBeenCalledTimes(0)
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+        expect(getApolloClient().query).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -198,6 +208,8 @@ describe('createCollectionSlice', () => {
               associatedDois: undefined,
               boxes: undefined,
               cloudHosted: undefined,
+              // TODO double check this
+              colormaps: {},
               conceptId: 'C10000000000-EDSC',
               consortiums: [],
               coordinateSystem: undefined,
@@ -276,7 +288,7 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenNthCalledWith(1)
           expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
-          expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+          expect(getApolloClient().query).toHaveBeenCalledTimes(0)
         })
 
         describe('when the requested collection is opensearch and a polygon search is active and we try and retrieve an existing gibs tag', () => {
@@ -334,6 +346,7 @@ describe('createCollectionSlice', () => {
                 coordinateSystem: undefined,
                 conceptId: 'C10000000000-EDSC',
                 consortiums: ['CEOS'],
+                colormaps: {},
                 dataCenter: undefined,
                 dataCenters: undefined,
                 directDistributionInformation: {},
@@ -411,7 +424,7 @@ describe('createCollectionSlice', () => {
             expect(granules.getGranules).toHaveBeenNthCalledWith(1)
             expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
-            expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+            expect(getApolloClient().query).toHaveBeenCalledTimes(0)
           })
         })
 
@@ -466,6 +479,7 @@ describe('createCollectionSlice', () => {
                 associatedDois: undefined,
                 boxes: undefined,
                 cloudHosted: undefined,
+                colormaps: {},
                 conceptId: 'C10000000000-EDSC',
                 consortiums: [],
                 coordinateSystem: undefined,
@@ -546,13 +560,13 @@ describe('createCollectionSlice', () => {
             expect(granules.getGranules).toHaveBeenNthCalledWith(1)
             expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
-            expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+            expect(getApolloClient().query).toHaveBeenCalledTimes(0)
           })
         })
       })
 
       describe('when the requested collection and we try and retrieve an existing gibs tag', () => {
-        test('Test that getColorMap works when multiple gibs tags are returned in the graphql call (call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS)', async () => {
+        test('getColorMap is called for each product when multiple gibs tags are returned ', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -578,23 +592,35 @@ describe('createCollectionSlice', () => {
               }
             })
 
-          nock(/localhost/)
-            .get(/colormaps\/AIRS_Prata_SO2_Index_Day/)
-            .reply(200, {
-              scale: {}
-            })
+          // Mock the Apollo Client query response for colormaps
+          const mockQuery = jest.fn().mockResolvedValue({
+            data: {
+              colormaps: [
+                {
+                  id: 1,
+                  product: 'AIRS_Prata_SO2_Index_Day',
+                  url: 'https://example.com/colormap',
+                  jsonData: { scale: { colors: ['#ff0000'] } }
+                },
+                {
+                  id: 2,
+                  product: 'MODIS_Terra_Aerosol',
+                  url: 'https://example.com/colormap',
+                  jsonData: { scale: { colors: ['#ff0000'] } }
+                },
+                {
+                  id: 3,
+                  product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
+                  url: 'https://example.com/colormap',
+                  jsonData: { scale: { colors: ['#ff0000'] } }
+                }
+              ]
+            }
+          })
 
-          nock(/localhost/)
-            .get(/colormaps\/MODIS_Terra_Aerosol/)
-            .reply(200, {
-              scale: {}
-            })
-
-          nock(/localhost/)
-            .get(/colormaps\/VIIRS_SNPP_CorrectedReflectance_TrueColor/)
-            .reply(200, {
-              scale: {}
-            })
+          getApolloClient.mockReturnValue({
+            query: mockQuery
+          })
 
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
@@ -620,6 +646,12 @@ describe('createCollectionSlice', () => {
               associatedDois: undefined,
               boxes: undefined,
               cloudHosted: undefined,
+              colormaps:
+                {
+                  AIRS_Prata_SO2_Index_Day: { scale: { colors: ['#ff0000'] } },
+                  MODIS_Terra_Aerosol: { scale: { colors: ['#ff0000'] } },
+                  VIIRS_SNPP_CorrectedReflectance_TrueColor: { scale: { colors: ['#ff0000'] } }
+                },
               conceptId: 'C10000000000-EDSC',
               consortiums: [],
               coordinateSystem: undefined,
@@ -707,17 +739,16 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
           // Verify getColorMap is called for each GIBS tag
-          expect(actions.getColorMap).toHaveBeenCalledTimes(3)
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(1, {
-            product: 'AIRS_Prata_SO2_Index_Day'
-          })
-
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(2, {
-            product: 'MODIS_Terra_Aerosol'
-          })
-
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(3, {
-            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor'
+          expect(getApolloClient().query).toHaveBeenCalledTimes(1)
+          expect(getApolloClient().query).toHaveBeenCalledWith({
+            query: GET_COLORMAPS,
+            variables: {
+              products: [
+                'AIRS_Prata_SO2_Index_Day',
+                'MODIS_Terra_Aerosol',
+                'VIIRS_SNPP_CorrectedReflectance_TrueColor'
+              ]
+            }
           })
 
           expect(setMapLayers).toHaveBeenCalledTimes(1)
@@ -788,7 +819,7 @@ describe('createCollectionSlice', () => {
 
           expect(errors.handleError).toHaveBeenCalledTimes(0)
 
-          expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+          expect(getApolloClient().query).toHaveBeenCalledTimes(0)
         })
       })
     })
@@ -846,7 +877,7 @@ describe('createCollectionSlice', () => {
         expect(granules.getGranules).toHaveBeenNthCalledWith(1)
         expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+        expect(getApolloClient().query).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -962,7 +993,7 @@ describe('createCollectionSlice', () => {
         expect(granules.getGranules).toHaveBeenNthCalledWith(1)
         expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+        expect(getApolloClient().query).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -1013,7 +1044,7 @@ describe('createCollectionSlice', () => {
       expect(granules.getGranules).toHaveBeenCalledTimes(1)
       expect(granules.getGranules).toHaveBeenCalledWith()
 
-      expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+      expect(getApolloClient().query).toHaveBeenCalledTimes(0)
     })
   })
 

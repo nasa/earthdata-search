@@ -35,7 +35,11 @@ export default startServerAndCreateLambdaHandler(
   server,
   handlers.createAPIGatewayProxyEventRequestHandler(),
   {
-    context: getContext,
+    context: async (params) => {
+      const context = await getContext(params)
+
+      return context
+    },
     middleware: [
       () => async (result) => {
         const { headers } = result

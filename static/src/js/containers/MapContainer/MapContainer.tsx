@@ -20,8 +20,7 @@ import { eventEmitter } from '../../events/events'
 
 import Map from '../../components/Map/Map'
 
-// @ts-expect-error The file does not have types
-import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
+import { getColormapsMetadata } from '../../zustand/selectors/colormap'
 
 import { isPath } from '../../util/isPath'
 import { projectionConfigs } from '../../util/map/crs'
@@ -60,7 +59,6 @@ import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
-  Colormap,
   ImageryLayers,
   ImageryLayerItem,
   MapGranule,
@@ -85,26 +83,11 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
-  colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer
 })
 
 interface MapContainerProps {
-  /** The colormaps metadata */
-  colormapsMetadata: {
-    /** The colormap metadata by GIBS product name */
-    [key: string]: {
-      /** The colormap data */
-      colorMapData?: Colormap
-      /** Is the colormap errored */
-      isErrored?: boolean
-      /** Is the colormap loading */
-      isLoading?: boolean
-      /** Is the colormap loaded */
-      isLoaded?: boolean
-    }
-  }
   /** The display spatial polygon warning flag */
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
@@ -121,7 +104,6 @@ interface MapContainerProps {
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
-    colormapsMetadata,
     displaySpatialPolygonWarning,
     drawingNewLayer,
     onMetricsMap,
@@ -187,6 +169,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     toggleLayerVisibility: state.map.toggleLayerVisibility
   }))
 
+  const colormapsMetadata = useEdscStore(getColormapsMetadata)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
@@ -385,17 +368,18 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       setMapLayersOrder,
       setLayerOpacity
     }
+
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
     // Get colormap data for all available GIBS tags
     layersForProjection.forEach((layer) => {
       const { product } = layer
       const productColormap = colormapsMetadata[product]
 
-      if (productColormap && productColormap.colorMapData) {
+      if (productColormap) {
         // Store colormap data by product name
         imageryLayersObject.layerData.push({
           ...layer,
-          colormap: productColormap.colorMapData
+          colormap: productColormap
         } as ImageryLayerItem)
       }
     })

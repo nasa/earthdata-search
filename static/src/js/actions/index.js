@@ -15,12 +15,7 @@ import {
   onFacetsLoaded,
   onFacetsErrored
 } from './facets'
-import {
-  getColorMap,
-  setColorMapsErrored,
-  setColorMapsLoaded,
-  setColorMapsLoading
-} from './colorMaps'
+
 import {
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks
@@ -83,7 +78,6 @@ const actions = {
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
   generateNotebook,
-  getColorMap,
   getGranuleSubscriptions,
   getRegions,
   getSubscriptions,
@@ -94,9 +88,6 @@ const actions = {
   onFacetsLoading,
   removeSubscriptionDisabledFields,
   requeueOrder,
-  setColorMapsErrored,
-  setColorMapsLoaded,
-  setColorMapsLoading,
   submitRetrieval,
   toggleAboutCSDAModal,
   toggleAboutCwicModal,
