@@ -7,10 +7,9 @@ import userResolver from './user'
 
 const resolvers = [
   adminResolver,
-  projectResolver,
-  userResolver,
   colormapResolver,
-  projectResolver
+  projectResolver,
+  userResolver
 ]
 
 export default mergeResolvers(resolvers)
