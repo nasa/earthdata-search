@@ -7,6 +7,10 @@ import {
 import { setupTests } from '../../support/setupTests'
 
 import commonHeaders from './__mocks__/common_collections.headers.json'
+import allProjectionsCollectionGraphql from './__mocks__/gibs/all_projections_collection_graphql.body.json'
+import allProjectionsCollections from './__mocks__/gibs/all_projections_collections.body.json'
+import antarcticGranules from './__mocks__/gibs/antarctic_granules.body.json'
+import arcticGranules from './__mocks__/gibs/arctic_granules.body.json'
 import gibsCollectionGraphQlBody from './__mocks__/gibs/collection_graphql.body.json'
 import gibsCollectionGraphQlHeaders from './__mocks__/gibs/graphql.headers.json'
 import gibsCollectionsBody from './__mocks__/gibs/collections.body.json'
@@ -309,6 +313,120 @@ test.describe('Map: imagery and layer-picker interactions', () => {
             clip: screenshotClip,
             maxDiffPixelRatio: 0.05
           })
+        })
+      })
+    })
+
+    test.describe('when granules have antarctic gibs imagery', () => {
+      test.beforeEach(async ({ page }) => {
+        const conceptId = 'C3091256524-NSIDC_CPRD'
+        await interceptUnauthenticatedCollections({
+          page,
+          body: allProjectionsCollections,
+          headers: commonHeaders
+        })
+
+        await page.route(/search\/granules.json/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=MYD10A1.A2025014.h22v16.061.2025016045026.hdf&sort_key=-start_date`) {
+            await route.fulfill({
+              json: antarcticGranules,
+              headers: {
+                'access-control-expose-headers': 'cmr-hits',
+                'cmr-hits': '1',
+                'cmr-request-id': 'a147eaf4-ae99-440e-aef5-e0a8208d6167',
+                'cmr-took': '451',
+                'content-type': 'application/json;charset=utf-8'
+              }
+            })
+          }
+        })
+
+        await page.route(/api$/, async (route) => {
+          if (isGetCollectionQuery(route, conceptId)) {
+            await route.fulfill({
+              json: allProjectionsCollectionGraphql,
+              headers: gibsCollectionGraphQlHeaders
+            })
+          }
+        })
+
+        await page.route(/colormaps\/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/TIME=2025-01-14&layer=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/)
+        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&pg[0][id]=MYD10A1.A2025014.h22v16.061.2025016045026.hdf&lat=-74&long=155&projection=EPSG%3A3031&zoom=5')
+
+        await initialMapPromise
+
+        // Close the layer picker to emphasize the map in the screenshot
+        await page.keyboard.press('l')
+      })
+
+      test('draws the granule GIBS imagery @screenshot', async ({ page }) => {
+        await expect(page).toHaveScreenshot('gibs-antarctic-projection.png', {
+          clip: screenshotClip
+        })
+      })
+    })
+
+    test.describe('when granules have arctic gibs imagery', () => {
+      test.beforeEach(async ({ page }) => {
+        const conceptId = 'C3091256524-NSIDC_CPRD'
+        await interceptUnauthenticatedCollections({
+          page,
+          body: allProjectionsCollections,
+          headers: commonHeaders
+        })
+
+        await page.route(/search\/granules.json/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=MYD10A1.A2025301.h11v02.061.2025303033037.hdf&sort_key=-start_date`) {
+            await route.fulfill({
+              json: arcticGranules,
+              headers: {
+                'access-control-expose-headers': 'cmr-hits',
+                'cmr-hits': '1',
+                'cmr-request-id': 'a147eaf4-ae99-440e-aef5-e0a8208d6167',
+                'cmr-took': '451',
+                'content-type': 'application/json;charset=utf-8'
+              }
+            })
+          }
+        })
+
+        await page.route(/api$/, async (route) => {
+          if (isGetCollectionQuery(route, conceptId)) {
+            await route.fulfill({
+              json: allProjectionsCollectionGraphql,
+              headers: gibsCollectionGraphQlHeaders
+            })
+          }
+        })
+
+        await page.route(/colormaps\/MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/TIME=2025-10-28&layer=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/)
+        await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&pg[0][id]=MYD10A1.A2025301.h11v02.061.2025303033037.hdf&lat=66&long=-135&projection=EPSG%3A3413&zoom=6')
+
+        await initialMapPromise
+
+        // Close the layer picker to emphasize the map in the screenshot
+        await page.keyboard.press('l')
+      })
+
+      test('draws the granule GIBS imagery @screenshot', async ({ page }) => {
+        await expect(page).toHaveScreenshot('gibs-arctic-projection.png', {
+          clip: screenshotClip
         })
       })
     })

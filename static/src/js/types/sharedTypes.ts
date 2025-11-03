@@ -195,6 +195,11 @@ export type GranulesMetadata = {
   [key: string]: GranuleMetadata
 }
 
+export type GibsLayersByCollection = {
+  /** The MapLayers associated with a Collection Id */
+  [collectionId: string]: MapLayer[]
+}
+
 export type GibsData = {
   /** The format of the GIBS product */
   format?: string
@@ -223,8 +228,6 @@ export type MapGranule = {
   collectionId: string
   /** The temporal value formatted for display */
   formattedTemporal: string
-  /** The GIBS metadata */
-  gibsData: GibsData[]
   /** The granule id */
   granuleId: string
   /** The granule style */
@@ -233,6 +236,8 @@ export type MapGranule = {
   highlightedStyle: Style
   /** The spatial value for the granule */
   spatial: GeoJsonObject
+  /** The time value for the granule */
+  time: string
 }
 export type ColormapScale = {
   /** The scale object contains colors and labels */

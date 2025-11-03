@@ -173,8 +173,7 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Enter the spatial point
-          await page.getByTestId('spatial-display_point').focus()
-          await page.keyboard.type('4.5297,42.1875')
+          await page.getByTestId('spatial-display_point').fill('4.5297,42.1875')
           await page.keyboard.up('Enter')
 
           // Updates the URL
@@ -393,10 +392,8 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Circle' }).click()
 
           // Enter the circle values
-          await page.getByTestId('spatial-display_circle-center').focus()
-          await page.keyboard.type('4.5297,42.1875')
-          await page.getByTestId('spatial-display_circle-radius').focus()
-          await page.keyboard.type('156444')
+          await page.getByTestId('spatial-display_circle-center').fill('4.5297,42.1875')
+          await page.getByTestId('spatial-display_circle-radius').fill('156444')
           await page.keyboard.up('Enter')
 
           // Updates the URL
@@ -622,10 +619,8 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Enter the bounding box values
-          await page.getByTestId('spatial-display_southwest-point').focus()
-          await page.keyboard.type('-9.53964,42.1875')
-          await page.getByTestId('spatial-display_northeast-point').focus()
-          await page.keyboard.type('4.5297,56.25')
+          await page.getByTestId('spatial-display_southwest-point').fill('-9.53964,42.1875')
+          await page.getByTestId('spatial-display_northeast-point').fill('4.5297,56.25')
           await page.keyboard.up('Enter')
 
           // Updates the URL
@@ -1184,8 +1179,8 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Enter the spatial point
-          await page.getByTestId('spatial-display_point').focus()
-          await page.keyboard.type('76.61639,-109.80547')
+          await page.getByTestId('spatial-display_point').fill('76.61639,-109.80547')
+
           await page.keyboard.up('Enter')
 
           // Updates the URL
@@ -1338,10 +1333,8 @@ test.describe('Map: Spatial interactions', () => {
           }).click()
 
           // Enter the circle values
-          await page.getByTestId('spatial-display_circle-center').focus()
-          await page.keyboard.type('76.61639,-109.80547')
-          await page.getByTestId('spatial-display_circle-radius').focus()
-          await page.keyboard.type('166091')
+          await page.getByTestId('spatial-display_circle-center').fill('76.61639,-109.80547')
+          await page.getByTestId('spatial-display_circle-radius').fill('166091')
           await page.keyboard.up('Enter')
 
           // Updates the URL
@@ -1494,10 +1487,8 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Enter the bounding box values
-          await page.getByTestId('spatial-display_southwest-point').focus()
-          await page.keyboard.type('70.50112,-109.80547')
-          await page.getByTestId('spatial-display_northeast-point').focus()
-          await page.keyboard.type('76.61639,-58.21561')
+          await page.getByTestId('spatial-display_southwest-point').fill('70.50112,-109.80547')
+          await page.getByTestId('spatial-display_northeast-point').fill('76.61639,-58.21561')
           await page.keyboard.up('Enter')
 
           // Updates the URL
