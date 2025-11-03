@@ -23,7 +23,7 @@ describe('Colormap Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_COLORMAPS),
+          query: GET_COLORMAPS,
           variables: { products: ['test-product'] }
         }, {
           contextValue
@@ -57,7 +57,7 @@ describe('Colormap Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: gql(GET_COLORMAPS),
+          query: GET_COLORMAPS,
           variables: { products: ['test-product'] }
         }, {
           contextValue
