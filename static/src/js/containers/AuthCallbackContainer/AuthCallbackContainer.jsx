@@ -9,7 +9,7 @@ import { routes } from '../../constants/routes'
 
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
- * We get the jwt and redirect path from the URL, store the jwt in a cookie and redirect
+ * We get the edlToken and redirect path from the URL, store the edlToken in a cookie and redirect
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */

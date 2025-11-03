@@ -25,7 +25,7 @@ export default class Request {
   authenticated: boolean
 
   /** The user's edlToken */
-  edlToken: string | undefined
+  edlToken: string | null
 
   /** The base URL for the request */
   baseUrl: string
@@ -67,6 +67,7 @@ export default class Request {
     this.optionallyAuthenticated = false
     this.searchPath = ''
     this.startTime = null
+    this.edlToken = null
 
     this.generateRequestId()
   }

@@ -12,17 +12,12 @@ const mockConfig = {
 }
 
 beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
   getEarthdataConfig.mockReturnValue(mockConfig)
-
-  simplify.mockClear()
-  booleanClockwise.mockClear()
 })
 
 describe('NlpSearchRequest#constructor', () => {
   test('sets searchPath correctly', () => {
-    const request = new NlpSearchRequest('test-auth-token', 'sit')
+    const request = new NlpSearchRequest('sit')
 
     expect(request.searchPath).toBe('search/nlp/query.json')
   })
@@ -30,7 +25,7 @@ describe('NlpSearchRequest#constructor', () => {
 
 describe('NlpSearchRequest#get', () => {
   test('calls axios with correct options', async () => {
-    const request = new NlpSearchRequest('test-token', 'sit')
+    const request = new NlpSearchRequest('sit')
     const startTimerSpy = jest.spyOn(request, 'startTimer').mockImplementation()
     const setFullUrlSpy = jest.spyOn(request, 'setFullUrl').mockImplementation()
     const mockCancelToken = { token: 'mock-cancel-token' }
@@ -60,7 +55,7 @@ describe('NlpSearchRequest#get', () => {
 
 describe('NlpSearchRequest#search', () => {
   test('calls get with searchPath and params', () => {
-    const request = new NlpSearchRequest('', 'sit')
+    const request = new NlpSearchRequest('sit')
     const getSpy = jest.spyOn(request, 'get').mockImplementation()
     const searchParams = {
       q: 'test',
@@ -75,7 +70,7 @@ describe('NlpSearchRequest#search', () => {
 
 describe('NlpSearchRequest#nonIndexedKeys', () => {
   test('returns an empty array', () => {
-    const request = new NlpSearchRequest('', 'sit')
+    const request = new NlpSearchRequest('sit')
 
     expect(request.nonIndexedKeys()).toEqual([])
   })
@@ -83,7 +78,7 @@ describe('NlpSearchRequest#nonIndexedKeys', () => {
 
 describe('NlpSearchRequest#permittedCmrKeys', () => {
   test('returns the correct array of permitted keys', () => {
-    const request = new NlpSearchRequest('', 'sit')
+    const request = new NlpSearchRequest('sit')
 
     expect(request.permittedCmrKeys()).toEqual(['q'])
   })
@@ -93,7 +88,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
   let request
 
   beforeEach(() => {
-    request = new NlpSearchRequest('', 'sit')
+    request = new NlpSearchRequest('sit')
   })
 
   test('handles null geometry through transformResponse', () => {
@@ -342,7 +337,7 @@ describe('NlpSearchRequest#transformResponse', () => {
   let request
 
   beforeEach(() => {
-    request = new NlpSearchRequest('', 'sit')
+    request = new NlpSearchRequest('sit')
   })
 
   test('returns default structure when response has no data', () => {

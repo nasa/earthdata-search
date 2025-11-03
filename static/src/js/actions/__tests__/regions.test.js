@@ -131,7 +131,6 @@ describe('getRegions', () => {
       .reply(200)
 
     const store = mockStore({
-      edlToken: '',
       searchResults: {
         collections: {},
         facets: {},

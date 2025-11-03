@@ -277,7 +277,8 @@ describe('saveShapefile', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          authToken: 'mock token',
+          earthdataEnvironment: 'prod',
+          edlToken: 'mock token',
           file: {},
           filename: 'test_file.geojson'
         }

@@ -60,7 +60,6 @@ const setup = setupTest({
   },
   defaultPropsByRoute: {
     [PAGE_ROUTE]: {
-      edlToken: '',
       collectionSubscriptions: [],
       isExportRunning: {
         csv: false,
