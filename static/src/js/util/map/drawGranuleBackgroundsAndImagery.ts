@@ -146,7 +146,7 @@ const drawGranuleBackgroundsAndImagery = ({
       const gibsLayers = gibsLayersByCollection[collectionId] || []
 
       // If the collection has no GIBS layers, return without drawing imagery
-      if (!gibsLayers || gibsLayers.length === 0) return
+      if (gibsLayers.length === 0) return
 
       // There are a few things we need to keep in mind when drawing the granule imagery:
       // 1. The granule imagery is served by GIBS in tiles, but we only show the imagery that is contained
