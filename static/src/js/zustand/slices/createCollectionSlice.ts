@@ -4,13 +4,6 @@ import type {
   ImmerStateCreator
 } from '../types'
 
-import type { Colormap } from '../../types/sharedTypes'
-
-import GET_COLORMAPS from '../../operations/queries/getColorMaps'
-
-// @ts-expect-error There are no types for this file
-import getApolloClient from '../../providers/getApolloClient'
-
 import routerHelper, { type Router } from '../../router/router'
 
 // @ts-expect-error There are no types for this file
@@ -194,48 +187,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           }
 
           // Look and see if there are any gibs tags
-          // If there are, check to see if the colormaps associated with the productids in the tags exists.
-          // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
+          // If there are, update the map layers with the gibs tags
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
-          // Update the map layers with the gibs tags
-          const colormaps: Record<string, Colormap> = {}
           if (gibsTags && gibsTags.length > 0) {
             get().map.setMapLayers(focusedCollectionId, gibsTags)
-            // Update the map layers with the gibs tags
-            const products = gibsTags.map((gibsTag: { product: string }) => gibsTag.product)
-            const edlToken = getEdlToken(zustandState)
-
-            const apolloClient = getApolloClient({
-              authToken,
-              earthdataEnvironment,
-              edlToken
-            })
-
-            try {
-              const { data: colormapData } = await apolloClient.query({
-                query: GET_COLORMAPS,
-                variables: { products }
-              })
-              const { colormaps: colorMapsResponse } = colormapData
-
-              if (colorMapsResponse && colorMapsResponse.length > 0) {
-                // Store colormaps in the collection metadata
-                colorMapsResponse.forEach((colormap: { product: string; jsonData: Colormap }) => {
-                  if (colormap.jsonData) {
-                    colormaps[colormap.product] = colormap.jsonData
-                  }
-                })
-              }
-            } catch (error) {
-              if (error) {
-                get().errors.handleError({
-                  error: error as Error,
-                  action: 'getColormaps',
-                  resource: 'colormaps',
-                  verb: 'retrieving'
-                })
-              }
-            }
           }
 
           // Formats the metadata returned from graphql for use throughout the application
@@ -253,7 +208,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             cloudHosted,
             coordinateSystem,
             conceptId,
-            colormaps,
             consortiums: consortiums || [],
             dataCenter,
             duplicateCollections,

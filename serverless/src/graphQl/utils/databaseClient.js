@@ -545,7 +545,14 @@ export default class DatabaseClient {
       const db = await this.getDbConnection()
 
       const colormaps = await db('colormaps')
-        .select('*')
+        .select(
+          'id',
+          'product',
+          'url',
+          'jsondata',
+          'created_at',
+          'updated_at'
+        )
         .whereIn('product', products)
 
       // Return list of colormaps for all of the request products

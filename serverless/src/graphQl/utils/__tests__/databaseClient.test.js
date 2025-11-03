@@ -1468,7 +1468,7 @@ describe('DatabaseClient', () => {
       await expect(databaseClient.getColorMapsByProducts(['test-product'])).rejects.toThrow('Failed to retrieve colormaps by products')
 
       const { queries } = dbTracker.queries
-      expect(queries[0].sql).toEqual('select * from "colormaps" where "product" in ($1)')
+      expect(queries[0].sql).toEqual('select "id", "product", "url", "jsondata", "created_at", "updated_at" from "colormaps" where "product" in ($1)')
       expect(queries[0].bindings).toEqual(['test-product'])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)

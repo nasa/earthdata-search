@@ -10,6 +10,8 @@ import { Dispatch } from 'redux'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
 import { useLocation } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions'
@@ -19,8 +21,6 @@ import { metricsMap } from '../../middleware/metrics/actions'
 import { eventEmitter } from '../../events/events'
 
 import Map from '../../components/Map/Map'
-
-import { getColormapsMetadata } from '../../zustand/selectors/colormap'
 
 import { isPath } from '../../util/isPath'
 import { projectionConfigs } from '../../util/map/crs'
@@ -169,7 +169,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     toggleLayerVisibility: state.map.toggleLayerVisibility
   }))
 
-  const colormapsMetadata = useEdscStore(getColormapsMetadata)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
@@ -216,6 +215,49 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     longitude
   })
   const [zoom, setZoom] = useState(zoomProps)
+
+  // Helper function to get GIBS tags available for the current projection
+  const getLayersForProjection = useCallback(() => {
+    if (!mapLayers) return []
+
+    return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
+  }, [mapLayers, projection])
+
+  const layersForProjection = getLayersForProjection()
+
+  // Extract products from map layers for the current projection
+  const products = layersForProjection.map((layer) => layer.product)
+
+  // Fetch colormaps using useQuery
+  const { data: colormapData } = useQuery(GET_COLORMAPS, {
+    variables: { products },
+    skip: products.length === 0
+  })
+  console.log('🚀 ~ file: MapContainer.tsx:237 ~ colormapData:', colormapData)
+
+  // Transform colormap query result to match the expected format
+  const colormapsMetadata: Record<string, Colormap> = useMemo(() => {
+    // Fallback to an empty object if the colormap data is not available or errors
+    if (!colormapData?.colormaps) {
+      console.log('🚀 ~ file: MapContainer.tsx:243 ~ colormapData?.colormaps:', 'no colormap data')
+
+      return {}
+    }
+
+    const colormaps: Record<string, Colormap> = {}
+    colormapData.colormaps.forEach((colormap: { product: string; jsonData: Colormap }) => {
+      if (colormap.jsonData) {
+        console.log('🚀 ~ file: MapContainer.tsx:253 ~ colormap.product:', colormap.product)
+        colormaps[colormap.product] = colormap.jsonData
+      }
+    })
+
+    console.log('🚀 ~ file: MapContainer.tsx:258 ~ colormaps:', colormaps)
+
+    return colormaps
+  }, [colormapData])
+
+  console.log('🚀 ~ file: MapContainer.tsx:261 ~ colormapsMetadata:', colormapsMetadata)
 
   // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
   useEffect(() => {
@@ -350,16 +392,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setStartDrawing(false)
   }, [setStartDrawing])
 
-  // Helper function to get GIBS tags available for the current projection
-  const getLayersForProjection = useCallback(() => {
-    if (!mapLayers) return []
-
-    return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
-  }, [mapLayers, projection])
-
-  // Extract the actual colormap data from the state
   // Get GIBS data to pass to the map within each granule
-  const layersForProjection = getLayersForProjection()
 
   const imageryLayers: ImageryLayers = useMemo(() => {
     const imageryLayersObject: ImageryLayers = {
@@ -373,7 +406,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     // Get colormap data for all available GIBS tags
     layersForProjection.forEach((layer) => {
       const { product } = layer
+      console.log('🚀 ~ file: MapContainer.tsx:409 ~ product:', product)
+      console.log('🚀 ~ file: MapContainer.tsx:412 ~ colormapsMetadata:', colormapsMetadata)
       const productColormap = colormapsMetadata[product]
+      console.log('🚀 ~ file: MapContainer.tsx:407 ~ productColormap:', productColormap)
 
       if (productColormap) {
         // Store colormap data by product name
@@ -385,7 +421,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     })
 
     return imageryLayersObject
-  }, [colormapsMetadata, layersForProjection])
+  }, [colormapsMetadata, layersForProjection, colormapData])
 
   // Create an object for GIBS layers keyed by collectionId
   // if no layersForProjection, then return no GIBS data
