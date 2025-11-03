@@ -1,5 +1,3 @@
-import { gql } from '@apollo/client'
-
 import setupServer from './__mocks__/setupServer'
 
 import GET_COLORMAPS from '../../../../../static/src/js/operations/queries/getColorMaps'
