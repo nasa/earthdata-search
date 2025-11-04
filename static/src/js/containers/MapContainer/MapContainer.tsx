@@ -122,6 +122,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   ])
 
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
+
   const {
     boundingBox: boundingBoxSearch,
     circle: circleSearch,
@@ -129,6 +130,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     point: pointSearch,
     polygon: polygonSearch
   } = spatialQuery
+
   const {
     map: mapProps,
     onChangeMap,
@@ -234,31 +236,22 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     variables: { products },
     skip: products.length === 0
   })
-  console.log('🚀 ~ file: MapContainer.tsx:237 ~ colormapData:', colormapData)
-
   // Transform colormap query result to match the expected format
   const colormapsMetadata: Record<string, Colormap> = useMemo(() => {
     // Fallback to an empty object if the colormap data is not available or errors
     if (!colormapData?.colormaps) {
-      console.log('🚀 ~ file: MapContainer.tsx:243 ~ colormapData?.colormaps:', 'no colormap data')
-
       return {}
     }
 
     const colormaps: Record<string, Colormap> = {}
     colormapData.colormaps.forEach((colormap: { product: string; jsondata: Colormap }) => {
       if (colormap.jsondata) {
-        console.log('🚀 ~ file: MapContainer.tsx:253 ~ colormap.product:', colormap.product)
         colormaps[colormap.product] = colormap.jsondata
       }
     })
 
-    console.log('🚀 ~ file: MapContainer.tsx:258 ~ colormaps:', colormaps)
-
     return colormaps
   }, [colormapData])
-
-  console.log('🚀 ~ file: MapContainer.tsx:261 ~ colormapsMetadata:', colormapsMetadata)
 
   // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
   useEffect(() => {
@@ -274,6 +267,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }, [shapefile])
 
   const nonExcludedGranules: { [key: string]: { collectionId: string; index: number } } = {}
+
   // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
   // This is so the focused granule is always drawn on top of the other granules
   if (focusedGranuleId && focusedGranule) {
