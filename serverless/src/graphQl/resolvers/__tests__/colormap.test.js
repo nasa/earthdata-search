@@ -11,7 +11,7 @@ describe('Colormap Resolver', () => {
             id: 1,
             product: 'test-product',
             url: 'https://example.com/colormap',
-            jsonData: { scale: { colors: ['#ff0000'] } },
+            jsondata: { scale: { colors: ['#ff0000'] } },
             createdAt: '2023-01-01T00:00:00Z',
             updatedAt: '2023-01-01T00:00:00Z'
           }])
@@ -37,7 +37,7 @@ describe('Colormap Resolver', () => {
             id: 1,
             product: 'test-product',
             url: 'https://example.com/colormap',
-            jsonData: { scale: { colors: ['#ff0000'] } },
+            jsondata: { scale: { colors: ['#ff0000'] } },
             createdAt: '2023-01-01T00:00:00Z',
             updatedAt: '2023-01-01T00:00:00Z'
           }]

@@ -60,6 +60,7 @@ import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 import type {
   GibsLayersByCollection,
   ImageryLayers,
+  Colormap,
   ImageryLayerItem,
   MapGranule,
   ProjectionCode,
@@ -245,10 +246,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     }
 
     const colormaps: Record<string, Colormap> = {}
-    colormapData.colormaps.forEach((colormap: { product: string; jsonData: Colormap }) => {
-      if (colormap.jsonData) {
+    colormapData.colormaps.forEach((colormap: { product: string; jsondata: Colormap }) => {
+      if (colormap.jsondata) {
         console.log('🚀 ~ file: MapContainer.tsx:253 ~ colormap.product:', colormap.product)
-        colormaps[colormap.product] = colormap.jsonData
+        colormaps[colormap.product] = colormap.jsondata
       }
     })
 
@@ -406,18 +407,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     // Get colormap data for all available GIBS tags
     layersForProjection.forEach((layer) => {
       const { product } = layer
-      console.log('🚀 ~ file: MapContainer.tsx:409 ~ product:', product)
-      console.log('🚀 ~ file: MapContainer.tsx:412 ~ colormapsMetadata:', colormapsMetadata)
       const productColormap = colormapsMetadata[product]
-      console.log('🚀 ~ file: MapContainer.tsx:407 ~ productColormap:', productColormap)
 
-      if (productColormap) {
-        // Store colormap data by product name
-        imageryLayersObject.layerData.push({
-          ...layer,
-          colormap: productColormap
-        } as ImageryLayerItem)
-      }
+      imageryLayersObject.layerData.push({
+        ...layer,
+        ...(productColormap && { colormap: productColormap })
+      } as ImageryLayerItem)
     })
 
     return imageryLayersObject

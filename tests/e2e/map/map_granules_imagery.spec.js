@@ -85,17 +85,26 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
+        await page.route(/graphql$/, async (route) => {
+          // Return empty colormap body
           await route.fulfill({
-            json: {}
+            data: {
+              colormaps: []
+            }
           })
         })
 
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Pressure_Total/, async (route) => {
-          await route.fulfill({
-            json: {}
-          })
-        })
+        // Await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
+        //   await route.fulfill({
+        //     json: {}
+        //   })
+        // })
+
+        // await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Pressure_Total/, async (route) => {
+        //   await route.fulfill({
+        //     json: {}
+        //   })
+        // })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
@@ -172,13 +181,8 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
-          await route.fulfill({
-            json: {}
-          })
-        })
-
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Pressure_Total/, async (route) => {
+        await page.route(/graphql$/, async (route) => {
+          // Return empty colormap body
           await route.fulfill({
             json: {}
           })

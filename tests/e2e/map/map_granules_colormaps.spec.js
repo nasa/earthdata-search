@@ -41,31 +41,31 @@ test.describe('Map: Colormap interactions', () => {
           id: 1,
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Ice_Concentration.xml',
           product: 'GHRSST_L4_MUR_Sea_Ice_Concentration',
-          jsonData: seaIceConcentrationColormapBody
+          jsondata: seaIceConcentrationColormapBody
         },
         {
           id: 2,
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature.xml',
           product: 'GHRSST_L4_MUR_Sea_Surface_Temperature',
-          jsonData: seaSurfaceTemperatureColormapBody
+          jsondata: seaSurfaceTemperatureColormapBody
         },
         {
           id: 3,
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies.xml',
           product: 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies',
-          jsonData: seaSurfaceTemperatureAnomaliesColormapBody
+          jsondata: seaSurfaceTemperatureAnomaliesColormapBody
         },
         {
           id: 4,
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Day.xml',
           product: 'AIRS_Prata_SO2_Index_Day',
-          jsonData: airsPrataSo2IndexDayColormapBody
+          jsondata: airsPrataSo2IndexDayColormapBody
         },
         {
           id: 5,
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Night.xml',
           product: 'AIRS_Prata_SO2_Index_Night',
-          jsonData: airsPrataSo2IndexNightColormapBody
+          jsondata: airsPrataSo2IndexNightColormapBody
         }
       ]
     }
@@ -121,9 +121,9 @@ test.describe('Map: Colormap interactions', () => {
         })
       })
 
-      const MockColorMapRoute = async (route) => route.fulfill({
-        json: colormapMock
-      })
+      // Const MockColorMapRoute = async (route) => route.fulfill({
+      //   json: colormapMock
+      // })
 
       await page.route(/graphql$/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
@@ -132,7 +132,7 @@ test.describe('Map: Colormap interactions', () => {
 
         if (query.includes('GetColorMaps')) {
           console.log('we are in the query')
-          await MockColorMapRoute(route)
+          await route.fulfill({ json: colormapMock })
         }
       })
 

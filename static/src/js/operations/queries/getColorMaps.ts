@@ -6,7 +6,7 @@ const GET_COLORMAPS = gql`
       id
       product
       url
-      jsonData
+      jsondata
       createdAt
       updatedAt
     }

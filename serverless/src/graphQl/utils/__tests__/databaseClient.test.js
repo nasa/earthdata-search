@@ -1452,9 +1452,9 @@ describe('DatabaseClient', () => {
         id: 1,
         product: 'test-product',
         url: 'https://example.com/colormap',
-        jsonData: { scale: { colors: ['#ff0000'] } },
-        createdAt: '2025-08-18 12:05:00.00000',
-        updatedAt: '2025-08-18 12:05:00.00000'
+        jsondata: { scale: { colors: ['#ff0000'] } },
+        created_at: '2025-08-18 12:05:00.00000',
+        updated_at: '2025-08-18 12:05:00.00000'
       }])
     })
 

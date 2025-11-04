@@ -1,3 +1,5 @@
+import camelcaseKeys from 'camelcase-keys'
+
 export default {
   Query: {
     colormaps: async (parent, args, context) => {
@@ -6,7 +8,7 @@ export default {
 
       const result = await databaseClient.getColorMapsByProducts(products)
 
-      return result
+      return camelcaseKeys(result, { deep: true })
     }
   }
 }

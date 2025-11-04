@@ -9,7 +9,7 @@ type ColorMap {
   url: String!
 
   "JSON data containing colormap information"
-  jsonData: JSON
+  jsondata: JSON
 
   "Timestamp when the colormap was created"
   createdAt: DateTime

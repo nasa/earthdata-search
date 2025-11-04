@@ -556,14 +556,7 @@ export default class DatabaseClient {
         .whereIn('product', products)
 
       // Return list of colormaps for all of the request products
-      return colormaps.map((colormap) => ({
-        id: colormap.id,
-        product: colormap.product,
-        url: colormap.url,
-        jsonData: colormap.jsondata,
-        createdAt: colormap.created_at,
-        updatedAt: colormap.updated_at
-      }))
+      return colormaps
     } catch {
       const errorMessage = 'Failed to retrieve colormaps by products'
       console.log(errorMessage)
