@@ -34,46 +34,46 @@ test.describe('Map: Colormap interactions', () => {
     })
   })
 
-  const colormapMock = {
-    data: {
-      colormaps: [
-        {
-          id: 1,
-          url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Ice_Concentration.xml',
-          product: 'GHRSST_L4_MUR_Sea_Ice_Concentration',
-          jsondata: seaIceConcentrationColormapBody
-        },
-        {
-          id: 2,
-          url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature.xml',
-          product: 'GHRSST_L4_MUR_Sea_Surface_Temperature',
-          jsondata: seaSurfaceTemperatureColormapBody
-        },
-        {
-          id: 3,
-          url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies.xml',
-          product: 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies',
-          jsondata: seaSurfaceTemperatureAnomaliesColormapBody
-        },
-        {
-          id: 4,
-          url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Day.xml',
-          product: 'AIRS_Prata_SO2_Index_Day',
-          jsondata: airsPrataSo2IndexDayColormapBody
-        },
-        {
-          id: 5,
-          url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Night.xml',
-          product: 'AIRS_Prata_SO2_Index_Night',
-          jsondata: airsPrataSo2IndexNightColormapBody
-        }
-      ]
-    }
-  }
   test.describe('When viewing granules with colormap data', () => {
     test.beforeEach(async ({ page }) => {
       const conceptIdOne = 'C1996881146-POCLOUD'
       const conceptIdTwo = 'C1243477369-GES_DISC'
+      const colormapMock = {
+        data: {
+          colormaps: [
+            {
+              id: 1,
+              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Ice_Concentration.xml',
+              product: 'GHRSST_L4_MUR_Sea_Ice_Concentration',
+              jsondata: seaIceConcentrationColormapBody
+            },
+            {
+              id: 2,
+              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature.xml',
+              product: 'GHRSST_L4_MUR_Sea_Surface_Temperature',
+              jsondata: seaSurfaceTemperatureColormapBody
+            },
+            {
+              id: 3,
+              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies.xml',
+              product: 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies',
+              jsondata: seaSurfaceTemperatureAnomaliesColormapBody
+            },
+            {
+              id: 4,
+              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Day.xml',
+              product: 'AIRS_Prata_SO2_Index_Day',
+              jsondata: airsPrataSo2IndexDayColormapBody
+            },
+            {
+              id: 5,
+              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Night.xml',
+              product: 'AIRS_Prata_SO2_Index_Night',
+              jsondata: airsPrataSo2IndexNightColormapBody
+            }
+          ]
+        }
+      }
 
       await interceptUnauthenticatedCollections({
         page,
@@ -121,52 +121,15 @@ test.describe('Map: Colormap interactions', () => {
         })
       })
 
-      // Const MockColorMapRoute = async (route) => route.fulfill({
-      //   json: colormapMock
-      // })
-
       await page.route(/graphql$/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
-
-        console.log('🚀 ~ file: map_granules_colormaps.spec.js:90 ~ query:', query)
-
         if (query.includes('GetColorMaps')) {
-          console.log('we are in the query')
           await route.fulfill({ json: colormapMock })
         }
       })
 
-      // Await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
-      //   await route.fulfill({
-      //     json: seaIceConcentrationColormapBody
-      //   })
-      // })
-
-      // await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature/, async (route) => {
-      //   await route.fulfill({
-      //     json: seaSurfaceTemperatureColormapBody
-      //   })
-      // })
-
-      // await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies/, async (route) => {
-      //   await route.fulfill({
-      //     json: seaSurfaceTemperatureAnomaliesColormapBody
-      //   })
-      // })
-
-      // await page.route(/colormaps\/AIRS_Prata_SO2_Index_Day/, async (route) => {
-      //   await route.fulfill({
-      //     json: airsPrataSo2IndexDayColormapBody
-      //   })
-      // })
-
-      // await page.route(/colormaps\/AIRS_Prata_SO2_Index_Night/, async (route) => {
-      //   await route.fulfill({
-      //     json: airsPrataSo2IndexNightColormapBody
-      //   })
-      // })
-
       const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+
       await page.goto('search/granules?p=C1996881146-POCLOUD')
 
       // Wait for the map to load
@@ -179,7 +142,6 @@ test.describe('Map: Colormap interactions', () => {
     test('displays the color map on the page @screenshot', async ({ page }) => {
       const legend = page.getByTestId('legend')
       await legend.scrollIntoViewIfNeeded()
-      // Await legend.scrollIntoViewIfNeeded()
 
       // Retrieve the colormaps for each layer and ensure they match the screenshot
       const firstCanvas = legend.locator('canvas').nth(0)
