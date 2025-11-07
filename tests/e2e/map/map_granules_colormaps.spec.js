@@ -140,8 +140,7 @@ test.describe('Map: Colormap interactions', () => {
     })
 
     test('displays the color map on the page @screenshot', async ({ page }) => {
-      const legend = page.getByTestId('legend').waitFor()
-      await legend.scrollIntoViewIfNeeded()
+      const legend = page.getByTestId('legend')
 
       // Retrieve the colormaps for each layer and ensure they match the screenshot
       const firstCanvas = legend.locator('canvas').nth(0)
