@@ -19,12 +19,6 @@ type ColorMap {
 }
 
 type Query {
-  "Retrieves a single colormap by product name"
-  colormap(
-    "Product identifier for the colormap"
-    product: String!
-  ): ColorMap
-
   "Retrieves multiple colormaps by product names"
   colormaps(
     "List of product identifiers"

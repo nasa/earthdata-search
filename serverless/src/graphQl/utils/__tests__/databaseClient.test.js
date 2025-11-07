@@ -1456,6 +1456,10 @@ describe('DatabaseClient', () => {
         created_at: '2025-08-18 12:05:00.00000',
         updated_at: '2025-08-18 12:05:00.00000'
       }])
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select "id", "product", "url", "jsondata", "created_at", "updated_at" from "colormaps" where "product" in ($1)')
+      expect(queries[0].bindings).toEqual(['test-product'])
     })
 
     test('returns an error', async () => {

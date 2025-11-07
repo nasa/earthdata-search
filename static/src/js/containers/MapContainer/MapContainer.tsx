@@ -58,10 +58,10 @@ import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
-  GibsLayersByCollection,
-  ImageryLayers,
   Colormap,
+  GibsLayersByCollection,
   ImageryLayerItem,
+  ImageryLayers,
   MapGranule,
   ProjectionCode,
   SpatialSearch
@@ -410,7 +410,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     })
 
     return imageryLayersObject
-  }, [colormapsMetadata, layersForProjection, colormapData])
+  }, [colormapsMetadata, layersForProjection])
 
   // Create an object for GIBS layers keyed by collectionId
   // if no layersForProjection, then return no GIBS data
