@@ -176,7 +176,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.route(/graphql$/, async (route) => {
           // Return empty colormap body
           await route.fulfill({
-            json: {}
+            colormaps: []
           })
         })
       })

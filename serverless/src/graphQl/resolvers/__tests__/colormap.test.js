@@ -8,12 +8,8 @@ describe('Colormap Resolver', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
           getColorMapsByProducts: jest.fn().mockResolvedValue([{
-            id: 1,
             product: 'test-product',
-            url: 'https://example.com/colormap',
             jsondata: { scale: { colors: ['#ff0000'] } },
-            createdAt: '2023-01-01T00:00:00Z',
-            updatedAt: '2023-01-01T00:00:00Z'
           }])
         }
         const { contextValue, server } = setupServer({
@@ -34,12 +30,8 @@ describe('Colormap Resolver', () => {
 
         expect(data).toEqual({
           colormaps: [{
-            id: 1,
             product: 'test-product',
-            url: 'https://example.com/colormap',
             jsondata: { scale: { colors: ['#ff0000'] } },
-            createdAt: '2023-01-01T00:00:00Z',
-            updatedAt: '2023-01-01T00:00:00Z'
           }]
         })
       })

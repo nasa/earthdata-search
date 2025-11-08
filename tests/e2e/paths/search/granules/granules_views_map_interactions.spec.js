@@ -71,6 +71,13 @@ test.describe('When clicking on a granule on the map', () => {
       })
     })
 
+    await page.route(/graphql$/, async (route) => {
+      const { query } = JSON.parse(route.request().postData())
+      if (query.includes('GetColorMaps')) {
+        await route.fulfill({ colormaps: [] })
+      }
+    })
+
     const baseTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
 
     await page.goto(`/search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)

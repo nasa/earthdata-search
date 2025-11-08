@@ -3,12 +3,8 @@ import { gql } from '@apollo/client'
 const GET_COLORMAPS = gql`
   query GetColorMaps($products: [String!]!) {
     colormaps(products: $products) {
-      id
       product
-      url
       jsondata
-      createdAt
-      updatedAt
     }
   }
 `

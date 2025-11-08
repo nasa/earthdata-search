@@ -404,8 +404,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       const productColormap = colormapsMetadata[product]
 
       imageryLayersObject.layerData.push({
-        ...layer,
-        ...(productColormap && { colormap: productColormap })
+        colormap: productColormap,
+        ...layer
       } as ImageryLayerItem)
     })
 
