@@ -9,7 +9,7 @@ describe('Colormap Resolver', () => {
         const databaseClient = {
           getColorMapsByProducts: jest.fn().mockResolvedValue([{
             product: 'test-product',
-            jsondata: { scale: { colors: ['#ff0000'] } },
+            jsondata: { scale: { colors: ['#ff0000'] } }
           }])
         }
         const { contextValue, server } = setupServer({
@@ -31,7 +31,7 @@ describe('Colormap Resolver', () => {
         expect(data).toEqual({
           colormaps: [{
             product: 'test-product',
-            jsondata: { scale: { colors: ['#ff0000'] } },
+            jsondata: { scale: { colors: ['#ff0000'] } }
           }]
         })
       })

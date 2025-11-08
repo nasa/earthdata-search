@@ -27,8 +27,8 @@ test.describe('Map: Colormap interactions', () => {
       page
     })
 
-    await page.route('**/search/granules/timeline', (route) => {
-      route.fulfill({
+    await page.route('**/search/granules/timeline', async (route) => {
+      await route.fulfill({
         body: JSON.stringify([])
       })
     })
@@ -42,32 +42,22 @@ test.describe('Map: Colormap interactions', () => {
         data: {
           colormaps: [
             {
-              id: 1,
-              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Ice_Concentration.xml',
               product: 'GHRSST_L4_MUR_Sea_Ice_Concentration',
               jsondata: seaIceConcentrationColormapBody
             },
             {
-              id: 2,
-              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature.xml',
               product: 'GHRSST_L4_MUR_Sea_Surface_Temperature',
               jsondata: seaSurfaceTemperatureColormapBody
             },
             {
-              id: 3,
-              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies.xml',
               product: 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies',
               jsondata: seaSurfaceTemperatureAnomaliesColormapBody
             },
             {
-              id: 4,
-              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Day.xml',
               product: 'AIRS_Prata_SO2_Index_Day',
               jsondata: airsPrataSo2IndexDayColormapBody
             },
             {
-              id: 5,
-              url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/AIRS_Prata_SO2_Index_Night.xml',
               product: 'AIRS_Prata_SO2_Index_Night',
               jsondata: airsPrataSo2IndexNightColormapBody
             }
@@ -140,20 +130,24 @@ test.describe('Map: Colormap interactions', () => {
     })
 
     test('displays the color map on the page @screenshot', async ({ page }) => {
-      const legend = page.getByTestId('legend')
+      const legend = await page.getByTestId('legend')
 
       // Retrieve the colormaps for each layer and ensure they match the screenshot
-      const firstCanvas = legend.locator('canvas').nth(0)
+      const firstCanvas = await legend.locator('canvas').nth(0)
       await expect(firstCanvas).toHaveScreenshot('sea-ice-concentration-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
 
-      const secondCanvas = legend.locator('canvas').nth(1)
+      const secondCanvas = await legend.locator('canvas').nth(1)
       await expect(secondCanvas).toHaveScreenshot('sea-surface-temperature-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
 
-      const thirdCanvas = legend.locator('canvas').nth(2)
+      await secondCanvas.hover()
+      // Scroll down to the bottom of the colorbar
+      await page.mouse.wheel(0, 100)
+
+      const thirdCanvas = await legend.locator('canvas').nth(2)
       await expect(thirdCanvas).toHaveScreenshot('sea-surface-temperature-anomalies-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
@@ -190,14 +184,14 @@ test.describe('Map: Colormap interactions', () => {
           // Wait for the timeline to be visible as a proxy for the map being ready
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
-          const legend = page.getByTestId('legend')
+          const legend = await page.getByTestId('legend')
 
-          const firstCanvas = legend.locator('canvas').nth(0)
+          const firstCanvas = await legend.locator('canvas').nth(0)
           await expect(firstCanvas).toHaveScreenshot('sulfur-dioxide-day-colormap.png', {
             maxDiffPixelRatio: 0.01
           })
 
-          const secondCanvas = legend.locator('canvas').nth(1)
+          const secondCanvas = await legend.locator('canvas').nth(1)
           await expect(secondCanvas).toHaveScreenshot('sulfur-dioxide-night-colormap.png', {
             maxDiffPixelRatio: 0.01
           })
