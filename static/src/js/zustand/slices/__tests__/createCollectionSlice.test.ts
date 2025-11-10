@@ -17,7 +17,6 @@ import routerHelper from '../../../router/router'
 jest.mock('../../../actions', () => ({
   changeUrl: jest.fn(),
   collectionRelevancyMetrics: jest.fn(),
-  getColorMap: jest.fn(),
   handleError: jest.fn(),
   toggleSpatialPolygonWarning: jest.fn()
 }))
@@ -328,7 +327,6 @@ describe('createCollectionSlice', () => {
                 coordinateSystem: undefined,
                 conceptId: 'C10000000000-EDSC',
                 consortiums: ['CEOS'],
-
                 dataCenter: undefined,
                 dataCenters: undefined,
                 directDistributionInformation: {},
