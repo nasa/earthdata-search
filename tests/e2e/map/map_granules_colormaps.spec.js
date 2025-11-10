@@ -179,24 +179,21 @@ test.describe('Map: Colormap interactions', () => {
       })
 
       test.describe('when visiting another collection with a colormap', () => {
-        test('displays a new colormap @screenshot', async ({ page, browserName }) => {
+        test('displays a new colormap @screenshot', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
           // Wait for the timeline to be visible as a proxy for the map being ready
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
-
-          // Temporary fix for webkit browser due to different canvas rendering
-          const maxDiffPixelRatio = browserName === 'webkit' ? 0.01 : 0.1
 
           const legend = await page.getByTestId('legend')
 
           const firstCanvas = await legend.locator('canvas').nth(0)
           await expect(firstCanvas).toHaveScreenshot('sulfur-dioxide-day-colormap.png', {
-            maxDiffPixelRatio
+            maxDiffPixelRatio: 0.01
           })
 
           const secondCanvas = await legend.locator('canvas').nth(1)
           await expect(secondCanvas).toHaveScreenshot('sulfur-dioxide-night-colormap.png', {
-            maxDiffPixelRatio
+            maxDiffPixelRatio: 0.01
           })
 
           await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')
