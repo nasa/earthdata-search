@@ -116,6 +116,11 @@ export default class Request {
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
 
+    if (this.earthdataEnvironment && this.lambda) {
+      // eslint-disable-next-line no-param-reassign
+      headers['Earthdata-ENV'] = this.earthdataEnvironment
+    }
+
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
       headers.Authorization = `Bearer ${this.getEdlToken()}`

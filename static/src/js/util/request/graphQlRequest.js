@@ -33,7 +33,20 @@ export default class GraphQlRequest extends Request {
       headers['Content-Type'] = 'application/json'
     }
 
+    if (this.earthdataEnvironment && this.lambda) {
+      // eslint-disable-next-line no-param-reassign
+      headers['Earthdata-ENV'] = this.earthdataEnvironment
+    }
+
     if (data) {
+      // POST requests to Lambda use a JSON string
+      if (this.lambda) {
+        return JSON.stringify({
+          requestId: this.requestId,
+          data
+        })
+      }
+
       // Lambda will set this for us, if we're not using lambda
       // we'll set it to ensure its provided to CMR
       // eslint-disable-next-line no-param-reassign

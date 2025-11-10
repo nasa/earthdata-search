@@ -29,7 +29,7 @@ export const generateNotebook = (params) => (dispatch) => {
 
   const generateNotebookRequestObject = new GenerateNotebookRequest(edlToken, earthdataEnvironment)
 
-  const response = generateNotebookRequestObject.generateNotebook(JSON.stringify(params))
+  const response = generateNotebookRequestObject.generateNotebook(params)
     .then((responseObject) => {
       const { data } = responseObject
 

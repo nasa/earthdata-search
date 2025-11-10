@@ -7,6 +7,7 @@ export default class GenerateNotebookRequest extends Request {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.optionallyAuthenticated = true
+    this.lambda = true
     this.edlToken = edlToken
   }
 

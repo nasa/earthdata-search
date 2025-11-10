@@ -37,7 +37,8 @@ const generateNotebook = async (event) => {
     s3Client = getS3Client()
   }
 
-  const params = JSON.parse(body)
+  const parsedBody = JSON.parse(body)
+  const { params } = parsedBody
 
   const {
     boundingBox,

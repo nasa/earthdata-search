@@ -6,6 +6,7 @@ export default class RetrievalCollectionRequest extends Request {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.authenticated = true
+    this.lambda = true
     this.edlToken = edlToken
   }
 

@@ -65,10 +65,13 @@ describe('generateNotebook', () => {
 
       const event = {
         body: JSON.stringify({
-          boundingBox: '-180, -90, 180, 90',
-          referrerUrl: 'http://example.com',
-          granuleId: 'G1234-MOCK',
-          variableId: 'V1234-MOCK'
+          params: {
+            boundingBox: '-180, -90, 180, 90',
+            referrerUrl: 'http://example.com',
+            granuleId: 'G1234-MOCK',
+            variableId: 'V1234-MOCK'
+          },
+          requestId: 'mockRequestId'
         }),
         headers: {}
       }
@@ -110,10 +113,13 @@ describe('generateNotebook', () => {
 
       const event = {
         body: JSON.stringify({
-          boundingBox: '-180, -90, 180, 90',
-          referrerUrl: 'http://example.com',
-          granuleId: 'G1234-MOCK',
-          variableId: 'V1234-MOCK'
+          params: {
+            boundingBox: '-180, -90, 180, 90',
+            referrerUrl: 'http://example.com',
+            granuleId: 'G1234-MOCK',
+            variableId: 'V1234-MOCK'
+          },
+          requestId: 'mockRequestId'
         }),
         headers: {}
       }
@@ -153,8 +159,11 @@ describe('generateNotebook', () => {
 
       const event = {
         body: JSON.stringify({
-          granuleId: 'G1234-MOCK',
-          variableId: 'V1234-MOCK'
+          params: {
+            granuleId: 'G1234-MOCK',
+            variableId: 'V1234-MOCK'
+          },
+          requestId: 'mockRequestId'
         }),
         headers: {}
       }
@@ -199,8 +208,11 @@ describe('generateNotebook', () => {
 
       const event = {
         body: JSON.stringify({
-          granuleId: 'G1234-MOCK',
-          variableId: 'V1234-MOCK'
+          params: {
+            granuleId: 'G1234-MOCK',
+            variableId: 'V1234-MOCK'
+          },
+          requestId: 'mockRequestId'
         }),
         headers: { 'mock-header': 'mock-value' }
       }
@@ -226,8 +238,11 @@ describe('generateNotebook', () => {
 
       const event = {
         body: JSON.stringify({
-          granuleId: 'G1234-MOCK',
-          variableId: 'V1234-MOCK'
+          params: {
+            granuleId: 'G1234-MOCK',
+            variableId: 'V1234-MOCK'
+          },
+          requestId: 'mockRequestId'
         }),
         headers: {}
       }
@@ -274,8 +289,11 @@ describe('generateNotebook', () => {
 
       const event = {
         body: JSON.stringify({
-          granuleId: 'G1234-MOCK',
-          variableId: 'V1234-MOCK'
+          params: {
+            granuleId: 'G1234-MOCK',
+            variableId: 'V1234-MOCK'
+          },
+          requestId: 'mockRequestId'
         }),
         headers: {}
       }
