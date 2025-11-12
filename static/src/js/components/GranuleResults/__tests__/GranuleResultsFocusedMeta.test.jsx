@@ -837,7 +837,45 @@ describe('GranuleResultsFocusedMeta component', () => {
         })
 
         describe('when attempting to download the image', () => {
-          test('should select granule link to open', async () => {
+          test('with a single link should select granule link to open', async () => {
+            const focusedGranuleLink = 'http://test.com/test.jpg'
+
+            const { props, user } = setup({
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: focusedGranuleLink,
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
+                }
+              }
+            })
+
+            const expandButton = screen.getByLabelText('Expand browse image')
+            await user.click(expandButton)
+
+            const downloadButton = screen.getByRole('button', { name: 'Download browse image' })
+
+            expect(downloadButton).toHaveAttribute('href', focusedGranuleLink)
+
+            await user.click(downloadButton)
+
+            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(2)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+              modalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Download'
+            })
+          })
+
+          test('with multiple links should select granule link to open', async () => {
             const focusedGranuleLink = 'http://test.com/test.jpg'
 
             const { props, user } = setup({
