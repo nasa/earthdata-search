@@ -546,12 +546,8 @@ export default class DatabaseClient {
 
       const colormaps = await db('colormaps')
         .select(
-          'id',
           'product',
-          'url',
-          'jsondata',
-          'created_at',
-          'updated_at'
+          'jsondata'
         )
         .whereIn('product', products)
 

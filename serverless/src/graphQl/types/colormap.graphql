@@ -1,21 +1,9 @@
 type ColorMap {
-  "ID of the colormap"
-  id: Int!
-
   "Product identifier for the colormap"
   product: String!
 
-  "URL source for the colormap"
-  url: String!
-
   "JSON data containing colormap information"
-  jsondata: JSON
-
-  "Timestamp when the colormap was created"
-  createdAt: DateTime
-
-  "Timestamp when the colormap was last updated"
-  updatedAt: DateTime
+  jsondata: JSON!
 }
 
 type Query {
