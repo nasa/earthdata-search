@@ -92,9 +92,6 @@ export class Functions extends Construct {
     const {
       adminApiGatewayResource,
       collectionsApiGatewayResource,
-      colormapsApiGatewayResource,
-      conceptsApiGatewayResource,
-      granulesApiGatewayResource,
       opensearchApiGatewayResource,
       retrievalCollectionsApiGatewayResource,
       retrievalsApiGatewayResource,

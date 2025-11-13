@@ -16,12 +16,6 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly collectionsApiGatewayResource: apigateway.CfnResource
 
-  public readonly colormapsApiGatewayResource: apigateway.CfnResource
-
-  public readonly conceptsApiGatewayResource: apigateway.CfnResource
-
-  public readonly granulesApiGatewayResource: apigateway.CfnResource
-
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
 
   public readonly retrievalCollectionsApiGatewayResource: apigateway.CfnResource
