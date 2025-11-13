@@ -18,9 +18,9 @@ export const AuthRequiredContainer = ({
     const { apiHost } = getEnvironmentConfig()
     const { disableDatabaseComponents } = getApplicationConfig()
 
-    const token = get('authToken')
+    const token = get('edlToken')
     if (disableDatabaseComponents === 'true') {
-      remove('authToken')
+      remove('edlToken')
     }
 
     const returnPath = window.location.href

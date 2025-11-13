@@ -1,9 +1,7 @@
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getJwtToken } from '../util/getJwtToken'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getAuthorizerContext } from '../util/getAuthorizerContext'
 
 /**
  * Retrieve access methods for a provided collection
@@ -18,7 +16,7 @@ const getSavedAccessConfigs = async (event, context) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
-    const { body, headers } = event
+    const { body } = event
 
     const { params = {} } = JSON.parse(body)
 
@@ -26,11 +24,7 @@ const getSavedAccessConfigs = async (event, context) => {
       collectionIds
     } = params
 
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
-
-    const jwtToken = getJwtToken(event)
-
-    const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    const { userId } = getAuthorizerContext(event)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()

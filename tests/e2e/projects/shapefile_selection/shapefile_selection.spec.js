@@ -44,14 +44,14 @@ test.describe('Shapefile Selection on Project Page', () => {
       })
     })
 
-    await page.route('**/cmr-graphql-proxy', async (route) => {
+    await page.route(/graphql.*\/api/, async (route) => {
       await route.fulfill({
         json: collectionsGraphQlBody,
         headers: authHeaders
       })
     })
 
-    await page.route(/granules$/, async (route) => {
+    await page.route(/granules\.json/, async (route) => {
       await route.fulfill({
         json: granules,
         headers: {

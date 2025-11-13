@@ -36,7 +36,7 @@ const setup = setupTest({
       addProjectCollection: jest.fn()
     },
     user: {
-      authToken: 'testToken'
+      edlToken: 'testToken'
     }
   },
   withRouter: true,
@@ -91,7 +91,7 @@ describe('GranuleDownloadButton component', () => {
           const { user, zustandState } = setup({
             overrideZustandState: {
               user: {
-                authToken: null
+                edlToken: null
               }
             }
           })
@@ -137,7 +137,7 @@ describe('GranuleDownloadButton component', () => {
           const { user, zustandState } = setup({
             overrideZustandState: {
               user: {
-                authToken: null
+                edlToken: null
               }
             }
           })

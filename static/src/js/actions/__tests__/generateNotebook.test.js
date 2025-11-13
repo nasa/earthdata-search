@@ -64,9 +64,7 @@ describe('generateNotebook', () => {
       )
 
     // MockStore with initialState
-    const store = mockStore({
-      authToken: ''
-    })
+    const store = mockStore({})
 
     const notebookParams = {
       granuleId: 'G123456789-PROV1'
@@ -129,9 +127,7 @@ describe('generateNotebook', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({
-      authToken: ''
-    })
+    const store = mockStore({})
 
     const notebookParams = {
       granuleId: 'G123456789-PROV1'

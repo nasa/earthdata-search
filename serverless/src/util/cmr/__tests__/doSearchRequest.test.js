@@ -4,7 +4,6 @@ import { doSearchRequest } from '../doSearchRequest'
 
 import * as getEdlConfig from '../../getEdlConfig'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
-import * as getAccessTokenFromJwtToken from '../../urs/getAccessTokenFromJwtToken'
 
 describe('util#doSearchRequest', () => {
   test('correctly returns the search response', async () => {
@@ -45,13 +44,6 @@ describe('util#doSearchRequest', () => {
         'access-control-allow-origin': '*'
       })
 
-    const token = {
-      token: {
-        access_token: '123'
-      }
-    }
-
-    jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => token)
     jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
       client: {
         id: 'clientId'

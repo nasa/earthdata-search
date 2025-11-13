@@ -1,4 +1,4 @@
-import axios, { CancelTokenSource } from 'axios'
+import axios, { AxiosError, CancelTokenSource } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
 // @ts-expect-error Types are not defined for this module
@@ -24,8 +24,8 @@ export default class Request {
   /** If the request is for an authenticated user */
   authenticated: boolean
 
-  /** The user's authToken */
-  authToken: string | undefined
+  /** The user's edlToken */
+  edlToken: string | null
 
   /** The base URL for the request */
   baseUrl: string
@@ -67,19 +67,20 @@ export default class Request {
     this.optionallyAuthenticated = false
     this.searchPath = ''
     this.startTime = null
+    this.edlToken = null
 
     this.generateRequestId()
   }
 
   /**
-   * Getter for the authToken. Returns an empty string if the request is optionallyAuthenticated
+   * Getter for the edlToken. Returns an empty string if the request is optionallyAuthenticated
    */
-  getAuthToken() {
-    if (this.optionallyAuthenticated && !this.authToken) {
+  getEdlToken() {
+    if (this.optionallyAuthenticated && !this.edlToken) {
       return ''
     }
 
-    return this.authToken
+    return this.edlToken
   }
 
   /**
@@ -115,22 +116,19 @@ export default class Request {
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
 
-    if (
-      this.earthdataEnvironment
-      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
-    ) {
+    if (this.earthdataEnvironment && this.lambda) {
       // eslint-disable-next-line no-param-reassign
       headers['Earthdata-ENV'] = this.earthdataEnvironment
     }
 
     if (this.authenticated || this.optionallyAuthenticated) {
       // eslint-disable-next-line no-param-reassign
-      headers.Authorization = `Bearer ${this.getAuthToken()}`
+      headers.Authorization = `Bearer ${this.getEdlToken()}`
     }
 
     if (data) {
       // POST requests to Lambda use a JSON string
-      if (this.authenticated || this.lambda) {
+      if (this.lambda) {
         return JSON.stringify({
           params: filteredData,
           requestId: this.requestId
@@ -161,8 +159,6 @@ export default class Request {
       timingEventValue: timing
     })
 
-    this.handleUnauthorized(data)
-
     return data
   }
 
@@ -176,7 +172,7 @@ export default class Request {
     this.startTimer()
     this.setFullUrl(url)
 
-    return axios({
+    const axiosObject = axios({
       method: 'post',
       baseURL: this.baseUrl,
       url,
@@ -190,6 +186,12 @@ export default class Request {
       ),
       cancelToken: this.cancelToken.token
     })
+
+    axiosObject.catch((error) => {
+      this.handleUnauthorized(error)
+    })
+
+    return axiosObject
   }
 
   /**
@@ -220,14 +222,14 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer ${this.getAuthToken()}`
+          Authorization: `Bearer ${this.getEdlToken()}`
         }
       }
     }
 
     if (
       this.earthdataEnvironment
-      && (this.authenticated || this.optionallyAuthenticated || this.lambda)
+      && (this.lambda)
     ) {
       requestOptions = {
         ...requestOptions,
@@ -238,7 +240,13 @@ export default class Request {
       }
     }
 
-    return axios(requestOptions)
+    const axiosObject = axios(requestOptions)
+
+    axiosObject.catch((error) => {
+      this.handleUnauthorized(error)
+    })
+
+    return axiosObject
   }
 
   /**
@@ -265,7 +273,7 @@ export default class Request {
       requestOptions = {
         ...requestOptions,
         headers: {
-          Authorization: `Bearer ${this.getAuthToken()}`
+          Authorization: `Bearer ${this.getEdlToken()}`
         }
       }
     }
@@ -283,7 +291,13 @@ export default class Request {
       }
     }
 
-    return axios(requestOptions)
+    const axiosObject = axios(requestOptions)
+
+    axiosObject.catch((error) => {
+      this.handleUnauthorized(error)
+    })
+
+    return axiosObject
   }
 
   /*
@@ -298,8 +312,8 @@ export default class Request {
   /**
    * Handle an unauthorized response
    */
-  handleUnauthorized(data: Response) {
-    if (data.statusCode === 401 || data.message === 'Unauthorized') {
+  handleUnauthorized(error: AxiosError) {
+    if ((error.response && error.response.status === 401) || error.message === 'Unauthorized') {
       const { href, pathname } = window.location
       // Determine the path to redirect to for logging in
       const returnPath = href

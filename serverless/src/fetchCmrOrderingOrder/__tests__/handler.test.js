@@ -3,7 +3,6 @@ import mockKnex from 'mock-knex'
 import nock from 'nock'
 
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 
 import fetchCmrOrderingOrder from '../handler'
@@ -11,10 +10,7 @@ import fetchCmrOrderingOrder from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
     const dbCon = knex({

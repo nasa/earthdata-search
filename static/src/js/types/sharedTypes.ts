@@ -398,10 +398,16 @@ export type ShapefileFile = FeatureCollection & {
 }
 
 export type ShapefileRequestParams = {
-  authToken: string
-  file: ShapefileFile
+  /** The Earthdata environment */
+  earthdataEnvironment: string
+  /** The user's edlToken */
+  edlToken: string | null
+  /** The shapefile filename */
   filename: string
+  /** The shapefile size */
   size: string
+  /** The shapefile contents */
+  file: ShapefileFile
 }
 
 /** The request parameters for a timeline request */
@@ -476,14 +482,6 @@ export type Shapefile = {
   shapefileId: string
   /** The selected features of the shapefile */
   selectedFeatures: string[]
-}
-
-/** Redux state types */
-export type ReduxState = {
-  /** The auth token */
-  authToken: string
-  /** The Earthdata Environment */
-  earthdataEnvironment: string
 }
 
 export type ScienceKeyword = {

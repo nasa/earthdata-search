@@ -117,35 +117,6 @@ export default class DatabaseClient {
   }
 
   /**
-   * Deletes user tokens for a specific user and environment
-   * @param {Object} params
-   * @param {string} params.earthdataEnvironment - The Earthdata environment
-   * @param {string} params.userId - The ID of the user
-   * @returns {Promise<number>} A promise that resolves to the number of rows deleted
-   */
-  async deleteUserTokens({
-    earthdataEnvironment,
-    userId
-  }) {
-    try {
-      const db = await this.getDbConnection()
-
-      const result = await db('user_tokens')
-        .where({
-          user_id: userId,
-          environment: earthdataEnvironment
-        })
-        .del()
-
-      return result
-    } catch {
-      const errorMessage = 'Failed to delete user tokens'
-      console.log(errorMessage)
-      throw new Error(errorMessage)
-    }
-  }
-
-  /**
    * Retrieves preferences for all users
    * @returns {Promise<Array>} A promise that resolves to an array of user preferences
    */
@@ -429,6 +400,33 @@ export default class DatabaseClient {
         .first()
     } catch {
       const errorMessage = 'Failed to retrieve user by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves the user by the provided `where` clause
+   * @param {Object} where `where` clause to filter the user
+   * @returns {Promise<Object>} A promise that resolves to the user object
+   */
+  async getUserWhere(where) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('users')
+        .select(
+          'users.id',
+          'users.site_preferences',
+          'users.urs_id',
+          'users.urs_profile'
+        )
+        .where(where)
+        .first()
+
+      return result
+    } catch {
+      const errorMessage = 'Failed to retrieve user using where object'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }

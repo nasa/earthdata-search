@@ -33,7 +33,7 @@ const setup = setupTest({
       handleError: jest.fn()
     },
     user: {
-      setAuthToken: jest.fn(),
+      setEdlToken: jest.fn(),
       setSitePreferences: jest.fn(),
       setUrsProfile: jest.fn(),
       setUsername: jest.fn()
@@ -44,7 +44,7 @@ const setup = setupTest({
 })
 
 describe('UserLoader', () => {
-  test('renders child components when no authToken is provided', () => {
+  test('renders child components when no edlToken is provided', () => {
     const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem')
 
     setup()
@@ -54,14 +54,14 @@ describe('UserLoader', () => {
     expect(localStorageGetItemSpy).toHaveBeenCalledTimes(0)
   })
 
-  describe('when an authToken and user data are provided', () => {
+  describe('when an edlToken and user data are provided', () => {
     test('renders a spinner', () => {
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
 
       setup({
         overrideZustandState: {
           user: {
-            authToken: 'test-auth-token'
+            edlToken: 'test-auth-token'
           }
         },
         overrideApolloClientMocks: [{
@@ -103,7 +103,7 @@ describe('UserLoader', () => {
       const { zustandState } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'test-auth-token'
+            edlToken: 'test-auth-token'
           }
         },
         overrideApolloClientMocks: [{
@@ -138,14 +138,14 @@ describe('UserLoader', () => {
     })
   })
 
-  describe('when an authToken and user data are provided', () => {
+  describe('when an edlToken and user data are provided', () => {
     test('updates store and renders child components', async () => {
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
 
       const { zustandState } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'test-auth-token'
+            edlToken: 'test-auth-token'
           }
         },
         overrideApolloClientMocks: [{
@@ -182,7 +182,7 @@ describe('UserLoader', () => {
   })
 
   describe('when the getUser query returns an error', () => {
-    test('handles the error, removes the authToken, and redirects to /search', async () => {
+    test('handles the error, removes the edlToken, and redirects to /search', async () => {
       const removeSpy = jest.spyOn(tinyCookie, 'remove')
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
       const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
@@ -190,7 +190,7 @@ describe('UserLoader', () => {
       const { zustandState } = setup({
         overrideZustandState: {
           user: {
-            authToken: 'test-auth-token'
+            edlToken: 'test-auth-token'
           }
         },
         overrideApolloClientMocks: [{
@@ -205,13 +205,13 @@ describe('UserLoader', () => {
       expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)
 
       await waitFor(() => {
-        expect(zustandState.user.setAuthToken).toHaveBeenCalledTimes(1)
+        expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
       })
 
-      expect(zustandState.user.setAuthToken).toHaveBeenCalledWith(null)
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledWith(null)
 
       expect(removeSpy).toHaveBeenCalledTimes(1)
-      expect(removeSpy).toHaveBeenCalledWith('authToken')
+      expect(removeSpy).toHaveBeenCalledWith('edlToken')
 
       expect(localStorageRemoveItemSpy).toHaveBeenCalledTimes(1)
       expect(localStorageRemoveItemSpy).toHaveBeenCalledWith(localStorageKeys.user)

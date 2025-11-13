@@ -10,7 +10,7 @@ import simplifySpatial from '../geometry/simplifySpatial'
  * Calls CMR NLP endpoint directly
  */
 export default class NlpSearchRequest extends CmrRequest {
-  constructor(authToken, earthdataEnvironment) {
+  constructor(earthdataEnvironment) {
     super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
     this.searchPath = 'search/nlp/query.json'

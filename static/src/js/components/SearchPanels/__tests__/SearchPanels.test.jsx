@@ -60,7 +60,6 @@ const setup = setupTest({
   },
   defaultPropsByRoute: {
     [PAGE_ROUTE]: {
-      authToken: '',
       collectionSubscriptions: [],
       isExportRunning: {
         csv: false,
@@ -1032,7 +1031,7 @@ describe('SearchPanels component', () => {
       setup({
         overridePropsByRoute: {
           '/search/activePanel1?/:activePanel2?/*': {
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           }
         },
         overrideRouterEntries: ['/search/granules/subscriptions']
@@ -1128,7 +1127,7 @@ describe('SearchPanels component', () => {
       setup({
         overridePropsByRoute: {
           '/search/activePanel1?/:activePanel2?/*': {
-            authToken: 'mock-token'
+            edlToken: 'mock-token'
           }
         },
         overrideRouterEntries: ['/search/subscriptions']

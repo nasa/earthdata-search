@@ -5,7 +5,7 @@ import { displayNotificationType } from '../../constants/enums'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 /**
  * Sends a request to have the provided order requeued for processing
@@ -13,10 +13,10 @@ import { getAuthToken } from '../../zustand/selectors/user'
  */
 export const requeueOrder = (orderId) => () => {
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalRequest(edlToken, earthdataEnvironment)
 
   const response = requestObject.requeueOrder({ orderId })
     .then(() => {

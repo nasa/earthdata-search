@@ -26,12 +26,12 @@ describe('CmrRequest#constructor', () => {
   })
 })
 
-describe('CmrRequest#getAuthToken', () => {
+describe('CmrRequest#getEdlToken', () => {
   test('returns the auth token', () => {
     const request = new CmrRequest(baseUrl, 'prod')
-    request.authToken = 'test auth token'
+    request.edlToken = 'test auth token'
 
-    expect(request.getAuthToken()).toEqual('test auth token')
+    expect(request.getEdlToken()).toEqual('test auth token')
   })
 
   test('returns an empty string if optionallyAuthenticated', () => {
@@ -39,7 +39,7 @@ describe('CmrRequest#getAuthToken', () => {
 
     request.optionallyAuthenticated = true
 
-    expect(request.getAuthToken()).toEqual('')
+    expect(request.getEdlToken()).toEqual('')
   })
 })
 
@@ -65,7 +65,7 @@ describe('CmrRequest#transformRequest', () => {
     const token = '123'
 
     request.authenticated = true
-    request.authToken = token
+    request.edlToken = token
 
     const data = { param1: 123 }
     const headers = {}
@@ -128,18 +128,13 @@ describe('CmrRequest#transformRequest', () => {
 })
 
 describe('CmrRequest#transformResponse', () => {
-  test('calls handleUnauthorized and returns data', () => {
+  test('returns data', () => {
     const request = new CmrRequest(baseUrl, 'prod')
-
-    const handleUnauthorizedMock = jest.spyOn(CmrRequest.prototype, 'handleUnauthorized').mockImplementation()
 
     const data = { param1: 123 }
     const result = request.transformResponse(data)
 
     expect(result).toEqual({ param1: 123 })
-
-    expect(handleUnauthorizedMock).toBeCalledTimes(1)
-    expect(handleUnauthorizedMock).toBeCalledWith(data)
   })
 })
 
@@ -155,44 +150,7 @@ describe('CmrRequest#search', () => {
     }
     request.search(params)
 
-    expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('', params)
-  })
-})
-
-describe('CmrRequest#handleUnauthorized', () => {
-  const { href } = window.location
-
-  afterEach(() => {
-    jest.clearAllMocks()
-    window.location.href = href
-  })
-
-  test('redirects if the response is unauthorized', () => {
-    const request = new CmrRequest(baseUrl, 'prod')
-    const data = {
-      statusCode: 401
-    }
-    const returnPath = 'http://example.com/test/path'
-
-    delete window.location
-    window.location = {
-      href: returnPath,
-      pathname: ''
-    }
-
-    request.handleUnauthorized(data)
-    expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
-  })
-
-  test('does not redirect if the response is valid', () => {
-    const request = new CmrRequest(baseUrl, 'prod')
-
-    delete window.location
-    window.location = { href: jest.fn() }
-
-    request.handleUnauthorized({})
-
-    expect(window.location.href.mock.calls.length).toBe(0)
+    expect(postMock).toHaveBeenCalledTimes(1)
+    expect(postMock).toHaveBeenCalledWith('', params)
   })
 })

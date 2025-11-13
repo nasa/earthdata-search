@@ -3,7 +3,7 @@ import GenerateNotebookRequest from '../util/request/generateNotebookRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getAuthToken } from '../zustand/selectors/user'
+import { getEdlToken } from '../zustand/selectors/user'
 
 export const onGenerateNotebookStarted = (payload) => ({
   type: GENERATE_NOTEBOOK_STARTED,
@@ -24,12 +24,12 @@ export const generateNotebook = (params) => (dispatch) => {
   dispatch(onGenerateNotebookStarted(granuleId))
 
   const zustandState = useEdscStore.getState()
-  const authToken = getAuthToken(zustandState)
+  const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const generateNotebookRequestObject = new GenerateNotebookRequest(authToken, earthdataEnvironment)
+  const generateNotebookRequestObject = new GenerateNotebookRequest(edlToken, earthdataEnvironment)
 
-  const response = generateNotebookRequestObject.generateNotebook(JSON.stringify(params))
+  const response = generateNotebookRequestObject.generateNotebook(params)
     .then((responseObject) => {
       const { data } = responseObject
 

@@ -93,8 +93,6 @@ export class Functions extends Construct {
       adminApiGatewayResource,
       collectionsApiGatewayResource,
       colormapsApiGatewayResource,
-      conceptsApiGatewayResource,
-      granulesApiGatewayResource,
       opensearchApiGatewayResource,
       retrievalCollectionsApiGatewayResource,
       retrievalsApiGatewayResource,
@@ -200,68 +198,6 @@ export class Functions extends Construct {
       stageName,
       securityGroups: defaultLambdaConfig.securityGroups,
       vpc: defaultLambdaConfig.vpc
-    })
-
-    /**
-     * CMR Granule Search
-     */
-    const cmrGranuleSearchNestedStack = new cdk.NestedStack(scope, 'CmrGranuleSearchNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(cmrGranuleSearchNestedStack, 'CmrGranuleSearchLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: granulesApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['POST'],
-        path: 'granules'
-      },
-      entry: '../../serverless/src/cmrGranuleSearch/handler.js',
-      functionName: 'cmrGranuleSearch',
-      functionNamePrefix,
-      memorySize: 256
-    })
-
-    /**
-     * Collection Search
-     */
-    const collectionSearchNestedStack = new cdk.NestedStack(scope, 'CollectionSearchNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(collectionSearchNestedStack, 'CollectionSearchLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: collectionsApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['POST'],
-        path: 'collections'
-      },
-      entry: '../../serverless/src/collectionSearch/handler.js',
-      functionName: 'collectionSearch',
-      functionNamePrefix,
-      memorySize: 192
-    })
-
-    /**
-     * Concept Metadata
-     */
-    const conceptMetadataNestedStack = new cdk.NestedStack(scope, 'ConceptMetadataNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(conceptMetadataNestedStack, 'ConceptMetadataLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        methods: ['GET'],
-        parentId: conceptsApiGatewayResource.ref,
-        parentPath: 'concepts',
-        path: 'metadata'
-      },
-      entry: '../../serverless/src/conceptMetadata/handler.js',
-      functionName: 'conceptMetadata',
-      functionNamePrefix
     })
 
     /**
@@ -731,25 +667,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * CMR GraphQL Proxy
-     */
-    const cmrGraphQlProxyNestedStack = new cdk.NestedStack(scope, 'CmrGraphQlProxyNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(cmrGraphQlProxyNestedStack, 'GraphQlLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlOptionalAuthorizer,
-        methods: ['POST'],
-        path: 'cmr-graphql-proxy'
-      },
-      entry: '../../serverless/src/cmrGraphQlProxy/handler.js',
-      functionName: 'cmrGraphQlProxy',
-      functionNamePrefix
-    })
-
-    /**
      * Migrate Database
      */
     const migrateDatabaseNestedStack = new cdk.NestedStack(scope, 'MigrateDatabaseNestedStack')
@@ -920,27 +837,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * Retrieve Concept
-     */
-    const retrieveConceptNestedStack = new cdk.NestedStack(scope, 'RetrieveConceptNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(retrieveConceptNestedStack, 'RetrieveConceptLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['GET'],
-        parentId: conceptsApiGatewayResource.ref,
-        parentPath: 'concepts',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/retrieveConcept/handler.js',
-      functionName: 'retrieveConcept',
-      functionNamePrefix
-    })
-
-    /**
      * Retrieve Granule Links
      */
     const retrieveGranuleLinksNestedStack = new cdk.NestedStack(scope, 'RetrieveGranuleLinksNestedStack')
@@ -1022,27 +918,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/submitRetrieval/handler.js',
       functionName: 'submitRetrieval',
-      functionNamePrefix
-    })
-
-    /**
-     * Timeline Search
-     */
-    const timelineSearchNestedStack = new cdk.NestedStack(scope, 'TimelineSearchNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(timelineSearchNestedStack, 'TimelineSearchLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['POST'],
-        parentId: granulesApiGatewayResource?.ref,
-        parentPath: 'granules',
-        path: 'timeline'
-      },
-      entry: '../../serverless/src/timelineSearch/handler.js',
-      functionName: 'timelineSearch',
       functionNamePrefix
     })
   }

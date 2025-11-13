@@ -1,12 +1,11 @@
 import 'pg'
 import md5 from 'md5'
 
-import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
+import { validateToken } from '../util/authorizer/validateToken'
 
 /**
  * Saves a shapefile to the database
@@ -25,12 +24,11 @@ const saveShapefile = async (event, context) => {
   const { params } = JSON.parse(body)
 
   const {
-    authToken,
+    earthdataEnvironment,
+    edlToken,
     file,
     filename
   } = params
-
-  const earthdataEnvironment = deployedEnvironment()
 
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
@@ -48,11 +46,17 @@ const saveShapefile = async (event, context) => {
     }
 
     // If user information was included, use it in the queries
-    if (authToken) {
-      const { id: userId } = getVerifiedJwtToken(authToken, earthdataEnvironment)
+    if (edlToken) {
+      const { username } = await validateToken(edlToken, earthdataEnvironment)
+      if (username) {
+        const { id: userId } = await dbConnection('users').where({
+          environment: earthdataEnvironment,
+          urs_id: username
+        }).first()
 
-      shapefileSearchOptions.user_id = userId
-      shapefileInsertOptions.user_id = userId
+        shapefileSearchOptions.user_id = userId
+        shapefileInsertOptions.user_id = userId
+      }
     }
 
     // If the shapefile exists, return the ID

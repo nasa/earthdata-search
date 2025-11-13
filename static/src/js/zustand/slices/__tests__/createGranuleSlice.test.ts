@@ -22,10 +22,8 @@ jest.mock('../../../actions', () => ({
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 const mockDispatch = jest.fn()
-const mockGetState = jest.fn()
 configureStore.mockReturnValue({
-  dispatch: mockDispatch,
-  getState: mockGetState
+  dispatch: mockDispatch
 })
 
 describe('createGranuleSlice', () => {
@@ -110,10 +108,6 @@ describe('createGranuleSlice', () => {
           }
         })
 
-        mockGetState.mockReturnValue({
-          authToken: ''
-        })
-
         const { granule, errors } = useEdscStore.getState()
         const { getGranuleMetadata } = granule
 
@@ -139,10 +133,6 @@ describe('createGranuleSlice', () => {
 
           useEdscStore.setState((state) => {
             state.granule.granuleId = 'granuleId'
-          })
-
-          mockGetState.mockReturnValue({
-            authToken: ''
           })
 
           const { granule, errors } = useEdscStore.getState()
@@ -213,10 +203,6 @@ describe('createGranuleSlice', () => {
               state.granule.granuleId = 'granuleId'
             })
 
-            mockGetState.mockReturnValue({
-              authToken: ''
-            })
-
             const { granule, errors } = useEdscStore.getState()
             const { getGranuleMetadata } = granule
 
@@ -253,10 +239,6 @@ describe('createGranuleSlice', () => {
             subscribe: jest.fn()
           }
 
-          mockGetState.mockReturnValue({
-            authToken: ''
-          })
-
           const { granule, errors } = useEdscStore.getState()
           const { getGranuleMetadata } = granule
 
@@ -288,10 +270,6 @@ describe('createGranuleSlice', () => {
 
         useEdscStore.setState((state) => {
           state.granule.granuleId = 'granuleId'
-        })
-
-        mockGetState.mockReturnValue({
-          authToken: ''
         })
 
         const { granule } = useEdscStore.getState()

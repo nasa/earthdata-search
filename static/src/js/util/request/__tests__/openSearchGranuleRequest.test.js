@@ -29,7 +29,7 @@ describe('OpenSearchGranuleRequest#transformRequest', () => {
 
   describe('when logged in', () => {
     test('returns a basic example result correctly transformed', () => {
-      const openSearchGranulesRequest = new OpenSearchGranuleRequest('authToken')
+      const openSearchGranulesRequest = new OpenSearchGranuleRequest('edlToken')
       openSearchGranulesRequest.startTime = 1576855756
 
       const transformedData = openSearchGranulesRequest.transformRequest({

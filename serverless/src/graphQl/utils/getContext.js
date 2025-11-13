@@ -1,11 +1,8 @@
-import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { validateToken } from '../../util/authorizer/validateToken'
 import { determineEarthdataEnvironment } from '../../util/determineEarthdataEnvironment'
 import { downcaseKeys } from '../../util/downcaseKeys'
 import getLoaders from './getLoaders'
 import DatabaseClient from './databaseClient'
-
-const { env } = getApplicationConfig()
 
 const databaseClient = new DatabaseClient()
 
@@ -25,14 +22,19 @@ const getContext = async ({ event }) => {
     authorization: bearerToken = ''
   } = downcaseKeys(headers)
 
-  const { userId } = await validateToken(bearerToken.split(' ')[1], env)
+  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+  const { username } = await validateToken(bearerToken.split(' ')[1], earthdataEnvironment)
 
   let user
 
-  // If a userId was returned, get the user from the database
-  if (userId) user = await databaseClient.getUserById(userId)
-
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  // If a username was returned, get the user from the database
+  if (username) {
+    user = await databaseClient.getUserWhere({
+      environment: earthdataEnvironment,
+      urs_id: username
+    })
+  }
 
   return {
     databaseClient,

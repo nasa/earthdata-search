@@ -61,9 +61,7 @@ describe('exportSearch', () => {
       ])
 
     // MockStore with initialState
-    const store = mockStore({
-      authToken: ''
-    })
+    const store = mockStore()
 
     // Call the dispatch
     await store.dispatch(exportSearch('csv')).then(() => {
@@ -104,9 +102,7 @@ describe('exportSearch', () => {
       ])
 
     // MockStore with initialState
-    const store = mockStore({
-      authToken: ''
-    })
+    const store = mockStore()
 
     // Call the dispatch
     await store.dispatch(exportSearch('json')).then(() => {
@@ -139,9 +135,7 @@ describe('exportSearch', () => {
       state.errors.handleError = jest.fn()
     })
 
-    const store = mockStore({
-      authToken: ''
-    })
+    const store = mockStore()
 
     await store.dispatch(exportSearch('json')).then(() => {
       const storeActions = store.getActions()

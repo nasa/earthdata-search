@@ -42,8 +42,6 @@ jest.mock('@aws-sdk/client-sqs', () => {
 const client = new SQSClient()
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   jest.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
   jest.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')
   jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
@@ -97,17 +95,16 @@ describe('edlCallback', () => {
     expect(client.send).toHaveBeenCalledTimes(1)
     expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
       input: {
-        MessageBody: '{"environment":"prod","userId":1,"username":"edsc"}',
+        MessageBody: '{"edlToken":"accessToken","environment":"prod","userId":1,"username":"edsc"}',
         QueueUrl: undefined
       }
     }))
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?edlToken=accessToken&redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod' })
   })
 
   test('includes the accessToken when redirecting to earthdata-download', async () => {
@@ -134,17 +131,16 @@ describe('edlCallback', () => {
     expect(client.send).toHaveBeenCalledTimes(1)
     expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
       input: {
-        MessageBody: '{"environment":"prod","userId":1,"username":"edsc"}',
+        MessageBody: '{"edlToken":"accessToken","environment":"prod","userId":1,"username":"edsc"}',
         QueueUrl: undefined
       }
     }))
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=earthdata-download%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken&accessToken=accessToken' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?edlToken=accessToken&redirect=earthdata-download%3A%2F%2Fexample.com%3Fee%3Dprod' })
   })
 
   test('creates a new user if one does not exist', async () => {
@@ -173,10 +169,9 @@ describe('edlCallback', () => {
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('insert')
-    expect(queries[2].method).toEqual('insert')
 
     expect(response.statusCode).toEqual(307)
-    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken' })
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?edlToken=accessToken&redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod' })
   })
 
   test('catches and logs errors correctly', async () => {

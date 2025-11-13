@@ -4,19 +4,15 @@ import { isEmpty } from 'lodash-es'
 
 import Spinner from '../Spinner/Spinner'
 
-import { buildAuthenticatedRedirectUrl } from '../../util/url/buildAuthenticatedRedirectUrl'
-
 import useEdscStore from '../../zustand/useEdscStore'
-import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './GranuleDetailsMetadata.scss'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 export const GranuleDetailsMetadata = ({
   metadataUrls = null
 }) => {
-  const authToken = useEdscStore(getAuthToken)
-  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const edlToken = useEdscStore(getEdlToken)
 
   const metdataUrlKeys = [
     'native',
@@ -44,13 +40,8 @@ export const GranuleDetailsMetadata = ({
                       const { title, href } = metadataUrl
 
                       let cmrGranulesUrl = href
-                      if (authToken) {
-                        // If an auth token is provided route the request through Lambda
-                        cmrGranulesUrl = buildAuthenticatedRedirectUrl(
-                          encodeURIComponent(href),
-                          authToken,
-                          earthdataEnvironment
-                        )
+                      if (edlToken) {
+                        cmrGranulesUrl = `${href}?token=Bearer%20${edlToken}`
                       }
 
                       return (

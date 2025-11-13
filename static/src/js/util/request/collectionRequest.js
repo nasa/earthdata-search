@@ -1,5 +1,5 @@
 import CmrRequest from './cmrRequest'
-import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 import {
@@ -12,18 +12,14 @@ import { transformCollectionEntries } from '../collections/transformCollectionEn
  * Base Request object for collection specific requests
  */
 export default class CollectionRequest extends CmrRequest {
-  constructor(authToken, earthdataEnvironment) {
-    if (authToken && authToken !== '') {
-      super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+  constructor(edlToken, earthdataEnvironment) {
+    super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
+    this.searchPath = 'search/collections.json'
+
+    if (edlToken) {
       this.authenticated = true
-      this.authToken = authToken
-      this.searchPath = 'collections'
-    } else {
-      super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
-
-      // We do not define an extension here. It will be added in the search method.
-      this.searchPath = 'search/collections.json'
+      this.edlToken = edlToken
     }
   }
 

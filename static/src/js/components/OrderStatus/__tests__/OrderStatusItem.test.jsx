@@ -31,7 +31,7 @@ const setup = (overrideProps) => {
   const shouldRefreshMock = jest.fn()
 
   const props = {
-    authToken: 'mock-token',
+    edlToken: 'mock-token',
     collection: retrievalStatusProps.retrieval.collections.byId[1],
     defaultOpen: false,
     earthdataEnvironment: 'prod',

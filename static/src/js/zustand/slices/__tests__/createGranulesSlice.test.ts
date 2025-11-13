@@ -76,6 +76,7 @@ describe('createGranulesSlice', () => {
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
         state.errors.handleError = jest.fn()
+        state.user.edlToken = 'mock-token'
       })
 
       const { granules, errors } = useEdscStore.getState()
@@ -98,53 +99,6 @@ describe('createGranulesSlice', () => {
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
 
-      expect(errors.handleError).toHaveBeenCalledTimes(0)
-    })
-
-    test('calls lambda to get authenticated granules', async () => {
-      nock(/localhost/)
-        .post(/granules/)
-        .reply(200, {
-          feed: {
-            updated: '2019-03-27T20:21:14.705Z',
-            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
-            title: 'ECHO granule metadata',
-            entry: [{
-              mockGranuleData: 'goes here'
-            }]
-          }
-        }, {
-          'cmr-hits': '1',
-          'jwt-token': 'token'
-        })
-
-      useEdscStore.setState((state) => {
-        state.collection.collectionId = 'collectionId'
-        state.errors.handleError = jest.fn()
-        state.user.authToken = 'mock-token'
-      })
-
-      const { granules } = useEdscStore.getState()
-      await granules.getGranules()
-
-      const { granules: updatedGranules } = useEdscStore.getState()
-      expect(updatedGranules.granules).toEqual({
-        collectionConceptId: 'collectionId',
-        count: 1,
-        isLoaded: true,
-        isLoading: false,
-        items: [{
-          isOpenSearch: false,
-          mockGranuleData: 'goes here',
-          spatial: null
-        }],
-        loadTime: expect.any(Number)
-      })
-
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
-
-      const { errors } = useEdscStore.getState()
       expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
 
@@ -172,7 +126,7 @@ describe('createGranulesSlice', () => {
         }
 
         state.errors.handleError = jest.fn()
-        state.user.authToken = 'mock-token'
+        state.user.edlToken = 'mock-token'
       })
 
       const { granules, errors } = useEdscStore.getState()

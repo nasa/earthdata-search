@@ -3,9 +3,7 @@ import mockKnex from 'mock-knex'
 import { v4 as uuidv4 } from 'uuid'
 
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import * as getJwtToken from '../../util/getJwtToken'
-import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as fetchCmrLinks from '../fetchCmrLinks'
 import * as fetchOpenSearchLinks from '../fetchOpenSearchLinks'
 import * as fetchOpendapLinks from '../fetchOpendapLinks'
@@ -18,9 +16,10 @@ jest.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
 beforeEach(() => {
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'jwt-secret' }))
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({
+    jwtToken: 'mock-access-token',
+    userId: 1
+  }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
@@ -73,8 +72,7 @@ describe('retrieveGranuleLinks', () => {
         },
         collection_metadata: {
           mock: 'metadata'
-        },
-        access_token: 'mock-access-token'
+        }
       }])
     })
 
@@ -143,8 +141,7 @@ describe('retrieveGranuleLinks', () => {
         collection_metadata: {
           isOpenSearch: true,
           mock: 'metadata'
-        },
-        access_token: 'mock-access-token'
+        }
       }])
     })
 
@@ -212,8 +209,7 @@ describe('retrieveGranuleLinks', () => {
         },
         collection_metadata: {
           mock: 'metadata'
-        },
-        access_token: 'mock-access-token'
+        }
       }])
     })
 
@@ -289,7 +285,6 @@ describe('retrieveGranuleLinks', () => {
         collection_metadata: {
           mock: 'metadata'
         },
-        access_token: 'mock-access-token',
         order_information: {
           links: [
             {
@@ -373,7 +368,6 @@ describe('retrieveGranuleLinks', () => {
           collection_metadata: {
             mock: 'metadata'
           },
-          access_token: 'mock-access-token',
           order_information: {
             jobID: 'f2bf037d-25d3-473d-b2cd-7d6b4c62298f',
             links: [
@@ -426,7 +420,6 @@ describe('retrieveGranuleLinks', () => {
           collection_metadata: {
             mock: 'metadata'
           },
-          access_token: 'mock-access-token',
           order_information: {
             jobID: '1234qwer-25d3-473d-b2cd-7d6b4c62298f',
             links: [
@@ -504,7 +497,6 @@ describe('retrieveGranuleLinks', () => {
           collection_metadata: {
             mock: 'metadata'
           },
-          access_token: 'mock-access-token',
           order_information: {}
         }, {
           access_method: {
@@ -525,7 +517,6 @@ describe('retrieveGranuleLinks', () => {
           collection_metadata: {
             mock: 'metadata'
           },
-          access_token: 'mock-access-token',
           order_information: {}
         }])
       })

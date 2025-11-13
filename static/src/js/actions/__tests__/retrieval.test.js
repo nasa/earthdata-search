@@ -31,7 +31,7 @@ describe('submitRetrieval', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -102,7 +102,7 @@ describe('submitRetrieval', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -176,7 +176,7 @@ describe('submitRetrieval', () => {
     })
 
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     await store.dispatch(submitRetrieval())
@@ -200,7 +200,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken'
+        edlToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -257,7 +257,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken'
+        edlToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -317,7 +317,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken'
+        edlToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -374,7 +374,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken'
+        edlToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -428,7 +428,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken'
+        edlToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -483,7 +483,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken'
+        edlToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -611,7 +611,7 @@ describe('fetchRetrieval', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -761,7 +761,7 @@ describe('fetchRetrieval', () => {
     })
 
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     await store.dispatch(fetchRetrieval(7)).then(() => {

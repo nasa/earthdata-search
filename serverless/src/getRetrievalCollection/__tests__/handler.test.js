@@ -1,18 +1,15 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
-import * as getJwtToken from '../../util/getJwtToken'
+
+import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+
 import getRetrievalCollection from '../handler'
 
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
+  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
@@ -37,7 +34,6 @@ afterEach(() => {
 describe('getRetrievalCollection', () => {
   test('correctly retrieves retrievals', async () => {
     process.env.OBFUSCATION_SPIN = 1000
-    const determineEarthdataEnvironmentMock = jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
 
     dbTracker.on('query', (query) => {
       query.response([{
@@ -90,8 +86,6 @@ describe('getRetrievalCollection', () => {
     }))
 
     expect(statusCode).toEqual(200)
-    expect(determineEarthdataEnvironmentMock).toBeCalledTimes(1)
-    expect(determineEarthdataEnvironmentMock).toBeCalledWith({ 'Earthdata-Env': 'prod' })
   })
 
   test('correctly returns an error', async () => {

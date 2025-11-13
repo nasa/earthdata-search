@@ -3,6 +3,7 @@ import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { getAdminUsers } from '../util/getAdminUsers'
 import { validateToken } from '../util/authorizer/validateToken'
 import { downcaseKeys } from '../util/downcaseKeys'
+import { getDbConnection } from '../util/database/getDbConnection'
 
 /**
  * Custom authorizer for API Gateway authentication for the admin routes
@@ -38,7 +39,22 @@ const edlAdminAuthorizer = async (event, context) => {
     }
 
     if (adminUsers.includes(username)) {
-      return generatePolicy(username, jwtToken, 'Allow', methodArn)
+      // Retrieve a connection to the database
+      const dbConnection = await getDbConnection()
+
+      const { id: userId } = await dbConnection('users').where({
+        environment: earthdataEnvironment,
+        urs_id: username
+      }).first()
+
+      return generatePolicy({
+        earthdataEnvironment,
+        effect: 'Allow',
+        jwtToken,
+        resource: methodArn,
+        userId,
+        username
+      })
     }
   }
 

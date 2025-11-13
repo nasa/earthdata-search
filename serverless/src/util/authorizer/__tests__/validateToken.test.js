@@ -1,225 +1,70 @@
-import knex from 'knex'
-import mockKnex from 'mock-knex'
-import { AuthorizationCode } from 'simple-oauth2'
-
-import * as getDbConnection from '../../database/getDbConnection'
-import * as getEarthdataConfig from '../../../../../sharedUtils/config'
-import * as getEdlConfig from '../../getEdlConfig'
+import jwt from 'jsonwebtoken'
 
 import { validateToken } from '../validateToken'
 
-let dbTracker
-
-jest.mock('simple-oauth2')
-
-beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
-    client: {
-      id: 'clientId'
-    }
-  }))
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
-    const dbCon = knex({
-      client: 'pg',
-      debug: false
+jest.mock('jwks-rsa', () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    getSigningKey: jest.fn().mockResolvedValue({
+      getPublicKey: jest.fn().mockReturnValue('PUBLIC_KEY')
     })
-
-    // Mock the db connection
-    mockKnex.mock(dbCon)
-
-    return dbCon
   })
-
-  dbTracker = mockKnex.getTracker()
-  dbTracker.install()
-})
-
-afterEach(() => {
-  dbTracker.uninstall()
-})
+}))
 
 describe('validateToken', () => {
+  describe('when there is no token', () => {
+    test('returns false', async () => {
+      const result = await validateToken(null, 'sit')
+
+      expect(result).toEqual(false)
+    })
+  })
+
   describe('when the provided token is invalid', () => {
     test('returns false', async () => {
-      jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
-
-      AuthorizationCode.mockImplementationOnce(() => ({
-        createToken: jest.fn().mockImplementation(() => ({
-          token: {
-            access_token: 'accessToken',
-            token_type: 'Bearer',
-            expires_in: 3600,
-            refresh_token: 'refreshToken',
-            endpoint: '/api/users/edsc',
-            expires_at: '2019-09-10T20:00:23.313Z'
-          },
-          expired: jest.fn(() => false)
-        }))
-      }))
-
-      const consoleMock = jest.spyOn(console, 'log')
-
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response({
-            id: 1,
-            access_token: 'accessToken',
-            refresh_token: 'refreshToken',
-            expires_at: '2020-10-010 16:54:35.710382'
-          })
-        } else {
-          query.response([])
-        }
+      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+        callback('Mock Error')
       })
 
-      const { username } = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.0WJdf_c93ZCIzFSchcKMzIRgwaL2HhihXGg0y9pDm2M', 'test')
-
-      expect(username).toEqual(undefined)
-
-      expect(consoleMock).toBeCalledTimes(1)
-      expect(consoleMock.mock.calls[0]).toEqual(['JWT Token Invalid. JsonWebTokenError: invalid signature'])
+      await expect(validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.T8pJ9sbgabjPISwMllvQdL4Bl7ng5pkgpS2Tjwij148', 'sit')).rejects.toThrow('Mock Error')
     })
   })
 
   describe('when the provided token is valid', () => {
+    describe('when the token is a SIT token', () => {
+      test('returns the username associated with the token', async () => {
+        jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+          callback(undefined, { username: 'testuser' })
+        })
+
+        const { username } = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.T8pJ9sbgabjPISwMllvQdL4Bl7ng5pkgpS2Tjwij148', 'sit')
+
+        expect(username).toEqual('testuser')
+      })
+    })
+  })
+
+  describe('when the token is a UAT token', () => {
     test('returns the username associated with the token', async () => {
-      jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
-
-      AuthorizationCode.mockImplementation(() => ({
-        createToken: jest.fn().mockImplementation(() => ({
-          token: {
-            access_token: 'accessToken',
-            token_type: 'Bearer',
-            expires_in: 3600,
-            refresh_token: 'refreshToken',
-            endpoint: '/api/users/edsc',
-            expires_at: '2019-09-10T20:00:23.313Z'
-          },
-          expired: jest.fn(() => false)
-        }))
-      }))
-
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response({
-            id: 1,
-            access_token: 'accessToken',
-            refresh_token: 'refreshToken',
-            expires_at: '2020-10-010 16:54:35.710382'
-          })
-        } else {
-          query.response([])
-        }
+      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+        callback(undefined, { username: 'testuser' })
       })
 
-      const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
-
-      const { username } = await validateToken(jwtToken, 'test')
+      const { username } = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.T8pJ9sbgabjPISwMllvQdL4Bl7ng5pkgpS2Tjwij148', 'uat')
 
       expect(username).toEqual('testuser')
     })
   })
 
-  describe('when the provided token is valid but expired', () => {
+  describe('when the token is a PROD token', () => {
     test('returns the username associated with the token', async () => {
-      jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
-
-      AuthorizationCode.mockImplementation(() => ({
-        createToken: jest.fn().mockImplementation(() => ({
-          token: {
-            access_token: 'accessToken',
-            token_type: 'Bearer',
-            expires_in: 3600,
-            refresh_token: 'refreshToken',
-            endpoint: '/api/users/edsc',
-            expires_at: '2019-09-10T20:00:23.313Z'
-          },
-          expired: jest.fn(() => true),
-          refresh: jest.fn().mockImplementation(() => ({
-            token: {
-              access_token: 'accessToken',
-              token_type: 'Bearer',
-              expires_in: 3600,
-              refresh_token: 'refreshedToken',
-              endpoint: '/api/users/testuser',
-              expires_at: '2019-09-10T20:00:23.313Z'
-            }
-          }))
-        }))
-      }))
-
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response({
-            id: 1,
-            access_token: 'accessToken',
-            refresh_token: 'refreshToken',
-            expires_at: '2020-10-010 16:54:35.710382'
-          })
-        } else {
-          query.response([])
-        }
+      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+        callback(undefined, { username: 'testuser' })
       })
 
-      const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
-
-      const { username } = await validateToken(jwtToken, 'test')
-
-      const { queries } = dbTracker.queries
-
-      expect(queries[0].method).toEqual('first')
-      expect(queries[1].method).toEqual('del')
-      expect(queries[2].method).toEqual('insert')
-      expect(queries[2].bindings).toEqual([
-        'accessToken',
-        'test',
-        '2019-09-10T20:00:23.313Z',
-        'refreshedToken',
-        1
-      ])
+      const { username } = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3Nn0.T8pJ9sbgabjPISwMllvQdL4Bl7ng5pkgpS2Tjwij148', 'prod')
 
       expect(username).toEqual('testuser')
-    })
-  })
-
-  describe('when the provided token has no user_token', () => {
-    test('returns false', async () => {
-      jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
-
-      AuthorizationCode.mockImplementationOnce(() => ({
-        createToken: jest.fn().mockImplementation(() => ({
-          token: {
-            access_token: 'accessToken',
-            token_type: 'Bearer',
-            expires_in: 3600,
-            refresh_token: 'refreshToken',
-            endpoint: '/api/users/edsc',
-            expires_at: '2019-09-10T20:00:23.313Z'
-          },
-          expired: jest.fn(() => false)
-        }))
-      }))
-
-      const consoleMock = jest.spyOn(console, 'log')
-
-      dbTracker.on('query', (query, step) => {
-        if (step === 1) {
-          query.response(undefined)
-        } else {
-          query.response([])
-        }
-      })
-
-      const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
-
-      const { username } = await validateToken(jwtToken, 'test')
-
-      expect(username).toEqual(undefined)
-
-      expect(consoleMock).toBeCalledTimes(0)
     })
   })
 })

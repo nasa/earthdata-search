@@ -15,7 +15,8 @@ import {
   Temporal,
   TimelineIntervals,
   VariableMetadata,
-  UrsProfile
+  UrsProfile,
+  ShapefileRequestParams
 } from '../types/sharedTypes'
 
 export type CollectionSlice = {
@@ -978,17 +979,6 @@ type UpdateShapefileParams = {
   file?: ShapefileFile
 }
 
-type SaveShapefileParams = {
-  /** The user's authToken */
-  authToken: string
-  /** The shapefile filename */
-  filename: string
-  /** The shapefile size */
-  size: string
-  /** The shapefile contents */
-  file: ShapefileFile
-}
-
 export type ShapefileSlice = {
   /** The Shapefile Slice of the store */
   shapefile: {
@@ -1017,7 +1007,7 @@ export type ShapefileSlice = {
     /** Function to clear the shapefile */
     clearShapefile: () => void
     /** Function to save the shapefile */
-    saveShapefile: (data: SaveShapefileParams) => Promise<void>
+    saveShapefile: (data: ShapefileRequestParams) => Promise<void>
     /** Function to fetch the shapefile */
     fetchShapefile: (shapefileId: string) => Promise<void>
   }
@@ -1138,16 +1128,13 @@ export type UserSlice = {
   user: {
     /** The user's EDL token */
     edlToken: string | null
+    /** Function to set the user's EDL token */
+    setEdlToken: (edlToken: string | null) => void
 
     /** The user's site preferences */
     sitePreferences: PreferencesData
     /** Function to set the user's site preferences */
     setSitePreferences: (sitePreferences: PreferencesData) => void
-
-    /** The user's authentication token */
-    authToken: string | null
-    /** Function to set the user's authentication token */
-    setAuthToken: (authToken: string | null) => void
 
     /** The username of the user */
     username: string | null

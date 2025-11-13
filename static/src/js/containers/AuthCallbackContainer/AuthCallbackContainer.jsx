@@ -9,7 +9,7 @@ import { routes } from '../../constants/routes'
 
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
- * We get the jwt and redirect path from the URL, store the jwt in a cookie and redirect
+ * We get the edlToken and redirect path from the URL, store the edlToken in a cookie and redirect
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */
@@ -26,8 +26,7 @@ export const AuthCallbackContainer = () => {
     const params = parse(search, { ignoreQueryPrefix: true })
     const {
       eddRedirect,
-      jwt = '',
-      accessToken,
+      edlToken,
       redirect = routes.HOME
     } = params
 
@@ -42,7 +41,7 @@ export const AuthCallbackContainer = () => {
       const validEddRedirect = eddRedirectUrl.startsWith('earthdata-download')
 
       if (validEddRedirect) {
-        if (accessToken) eddRedirectUrl += `&token=${accessToken}`
+        if (edlToken) eddRedirectUrl += `&token=${edlToken}`
 
         // Add the redirect information to the store
         setRedirectUrl(eddRedirectUrl)
@@ -73,8 +72,8 @@ export const AuthCallbackContainer = () => {
       return
     }
 
-    // Set the authToken cookie
-    set('authToken', jwt)
+    // Set the edlToken cookie
+    set('edlToken', edlToken)
 
     // Redirect the user to the correct location
     window.location.replace(redirect)

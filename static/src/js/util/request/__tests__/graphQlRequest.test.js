@@ -3,10 +3,7 @@ import GraphQlRequest from '../graphQlRequest'
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
+jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ graphQlHost: 'https://graphql.earthdata.nasa.gov' }))
 
 describe('GraphQlRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
@@ -14,15 +11,13 @@ describe('GraphQlRequest#constructor', () => {
     const request = new GraphQlRequest(token)
 
     expect(request.authenticated).toBeTruthy()
-    expect(request.authToken).toEqual(token)
-    expect(request.baseUrl).toEqual('http://localhost:3000')
-    expect(request.searchPath).toEqual('cmr-graphql-proxy')
+    expect(request.edlToken).toEqual(token)
+    expect(request.baseUrl).toEqual('https://graphql.earthdata.nasa.gov')
+    expect(request.searchPath).toEqual('api')
   })
 
   test('sets the default values when unauthenticated', () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ graphQlHost: 'https://graphql.earthdata.nasa.gov' }))
-
-    const request = new GraphQlRequest(undefined, 'prod')
+    const request = new GraphQlRequest(null, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://graphql.earthdata.nasa.gov')
@@ -32,11 +27,11 @@ describe('GraphQlRequest#constructor', () => {
 
 describe('GraphQlRequest#transformRequest', () => {
   test('adds authorization header when authenticated', () => {
-    const request = new GraphQlRequest(undefined, 'prod')
+    const request = new GraphQlRequest(null, 'prod')
     const token = '123'
 
     request.authenticated = true
-    request.authToken = token
+    request.edlToken = token
 
     const data = { param1: 123 }
     const headers = {}
@@ -51,7 +46,7 @@ describe('GraphQlRequest#transformRequest', () => {
   test('adds client-id header when not authenticated', () => {
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-    const request = new GraphQlRequest(undefined, 'prod')
+    const request = new GraphQlRequest(null, 'prod')
 
     request.authenticated = false
 
@@ -66,7 +61,7 @@ describe('GraphQlRequest#transformRequest', () => {
   })
 
   test('correctly transforms data for CMR requests', () => {
-    const request = new GraphQlRequest(undefined, 'prod')
+    const request = new GraphQlRequest(null, 'prod')
 
     const data = { ParamName: 123 }
 
@@ -75,26 +70,8 @@ describe('GraphQlRequest#transformRequest', () => {
     expect(transformedData).toEqual('{"ParamName":123}')
   })
 
-  test('correctly transforms data for Lambda requests', () => {
-    const request = new GraphQlRequest(undefined, 'prod')
-    request.lambda = true
-    request.startTime = 1576855756
-
-    const data = { paramName: 123 }
-
-    const transformedData = request.transformRequest(data, {})
-
-    const parsedData = JSON.parse(transformedData)
-    expect(parsedData).toEqual({
-      data: {
-        paramName: 123
-      },
-      requestId: expect.any(String)
-    })
-  })
-
   test('adds content type header when making direct calls', () => {
-    const request = new GraphQlRequest(undefined, 'prod')
+    const request = new GraphQlRequest(null, 'prod')
 
     const data = { param1: 123 }
     const headers = {}
@@ -113,7 +90,7 @@ describe('GraphQlRequest#transformResponse', () => {
   })
 
   test('returns data if response is not successful', () => {
-    const request = new GraphQlRequest(undefined, 'prod')
+    const request = new GraphQlRequest(null, 'prod')
 
     const data = {
       statusCode: 404

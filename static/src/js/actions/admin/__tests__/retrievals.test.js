@@ -23,7 +23,7 @@ describe('requeueOrder', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     await store.dispatch(requeueOrder(orderId))
@@ -55,7 +55,7 @@ describe('requeueOrder', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'mockToken'
+      edlToken: 'mockToken'
     })
 
     await store.dispatch(requeueOrder(orderId))

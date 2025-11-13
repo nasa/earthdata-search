@@ -34,7 +34,7 @@ import buildEddLink from './buildEddLink'
 import ProgressRing from '../ProgressRing/ProgressRing'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getAuthToken } from '../../zustand/selectors/user'
+import { getEdlToken } from '../../zustand/selectors/user'
 
 import './OrderStatusItem.scss'
 
@@ -64,7 +64,7 @@ export const OrderStatusItem = ({
   onFetchRetrievalCollectionGranuleLinks,
   onToggleAboutCSDAModal
 }) => {
-  const authToken = useEdscStore(getAuthToken)
+  const edlToken = useEdscStore(getEdlToken)
   const [opened, setOpened] = useState(defaultOpen)
 
   const shouldRefresh = () => {
@@ -439,7 +439,7 @@ export const OrderStatusItem = ({
                       downloadLinks={downloadUrls}
                       eddLink={
                         buildEddLink({
-                          authToken,
+                          edlToken,
                           collection,
                           downloadUrls,
                           earthdataEnvironment,
@@ -528,7 +528,7 @@ export const OrderStatusItem = ({
                       retrievalCollection={collection}
                       eddLink={
                         buildEddLink({
-                          authToken,
+                          edlToken,
                           collection,
                           downloadUrls,
                           earthdataEnvironment,
