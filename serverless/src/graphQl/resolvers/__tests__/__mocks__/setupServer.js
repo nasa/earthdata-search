@@ -19,7 +19,7 @@ const setupServer = ({
     bearerToken: 'token',
     user: {
       id: 42,
-      ursId: 'testuser'
+      urs_id: 'testuser'
     }
   }
 

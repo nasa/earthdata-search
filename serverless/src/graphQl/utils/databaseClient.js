@@ -173,6 +173,7 @@ export default class DatabaseClient {
     offset = 0,
     sortKey,
     ursId,
+    userId,
     obfuscatedId
   }) {
     const sortKeyParams = {
@@ -206,6 +207,10 @@ export default class DatabaseClient {
 
       if (ursId) {
         projectQuery = projectQuery.where({ 'users.urs_id': ursId })
+      }
+
+      if (userId) {
+        projectQuery = projectQuery.where({ 'users.id': userId })
       }
 
       if (obfuscatedId) {
