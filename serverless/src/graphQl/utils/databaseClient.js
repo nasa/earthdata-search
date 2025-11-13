@@ -166,6 +166,12 @@ export default class DatabaseClient {
   /**
    * Retrieves projects based on the provided filters
    * @param {Object} params The filters to apply
+   * @param {number} [params.limit=20] - The maximum number of projects to retrieve
+   * @param {number} [params.offset=0] - The number of projects to skip
+   * @param {string} [params.sortKey] - The key to sort the projects by
+   * @param {string} [params.ursId] - The user's URS ID (EDL username) to filter projects by
+   * @param {string} [params.userId] - The user's ID to filter projects by
+   * @param {string} [params.obfuscatedId] - The obfuscated ID to filter projects by
    * @returns {Promise<Array>} A promise that resolves to an array of project results
    */
   async getProjects({
@@ -173,6 +179,7 @@ export default class DatabaseClient {
     offset = 0,
     sortKey,
     ursId,
+    userId,
     obfuscatedId
   }) {
     const sortKeyParams = {
@@ -206,6 +213,10 @@ export default class DatabaseClient {
 
       if (ursId) {
         projectQuery = projectQuery.where({ 'users.urs_id': ursId })
+      }
+
+      if (userId) {
+        projectQuery = projectQuery.where({ 'users.id': userId })
       }
 
       if (obfuscatedId) {

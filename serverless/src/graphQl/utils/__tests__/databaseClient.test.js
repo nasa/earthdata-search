@@ -374,6 +374,40 @@ describe('DatabaseClient', () => {
       })
     })
 
+    describe('when searching with a userId', () => {
+      test('retrieves the projects', async () => {
+        dbTracker.on('query', (query) => {
+          query.response([{
+            id: 1,
+            name: 'Test Project',
+            path: '/projects/test-project',
+            user_id: 1,
+            created_at: '2025-01-01T00:00:00.000Z',
+            updated_at: '2025-01-01T00:00:00.000Z'
+          }])
+        })
+
+        const project = await databaseClient.getProjects({
+          userId: 42
+        })
+
+        expect(project).toBeDefined()
+        expect(project).toEqual([{
+          id: 1,
+          name: 'Test Project',
+          path: '/projects/test-project',
+          user_id: 1,
+          created_at: '2025-01-01T00:00:00.000Z',
+          updated_at: '2025-01-01T00:00:00.000Z'
+        }])
+
+        const { queries } = dbTracker.queries
+
+        expect(queries[0].sql).toEqual('select "projects"."id", "projects"."name", "projects"."path", "projects"."created_at", "projects"."updated_at", "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "projects" inner join "users" on "projects"."user_id" = "users"."id" where "users"."id" = $1 order by "projects"."id" desc limit $2')
+        expect(queries[0].bindings).toEqual([42, 20])
+      })
+    })
+
     describe('when searching with an obfuscatedId', () => {
       test('retrieves the projects', async () => {
         dbTracker.on('query', (query) => {
