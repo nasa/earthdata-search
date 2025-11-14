@@ -36,10 +36,10 @@ const buildPermissions = () => shield(
         isValidUser,
         isAdminUser
       ),
+      colormaps: allow,
       project: allow,
       projects: isValidUser,
-      user: isValidUser,
-      colormaps: allow
+      user: isValidUser
     },
     Mutation: {
       '*': deny,
