@@ -534,4 +534,29 @@ export default class DatabaseClient {
       throw new Error(errorMessage)
     }
   }
+
+  /**
+   * Retrieves colormaps by their product names
+   * @param {string[]} products - The product names of the colormaps to retrieve
+   * @returns {Promise<Array>} A promise that resolves to an array of colormap objects
+   */
+  async getColorMapsByProducts(products) {
+    try {
+      const db = await this.getDbConnection()
+
+      const colormaps = await db('colormaps')
+        .select(
+          'product',
+          'jsondata'
+        )
+        .whereIn('product', products)
+
+      // Return list of colormaps for all of the request products
+      return colormaps
+    } catch {
+      const errorMessage = 'Failed to retrieve colormaps by products'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
 }

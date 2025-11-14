@@ -187,18 +187,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           }
 
           // Look and see if there are any gibs tags
-          // If there are, check to see if the colormaps associated with the productids in the tags exists.
-          // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
+          // If there are, update the map layers with the gibs tags
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
           if (gibsTags && gibsTags.length > 0) {
-            // Update the map layers with the gibs tags
             get().map.setMapLayers(focusedCollectionId, gibsTags)
-
-            // Load each colormap
-            gibsTags.forEach((gibsTag: { product: string }) => {
-              const { product } = gibsTag
-              reduxDispatch(actions.getColorMap({ product }))
-            })
           }
 
           // Formats the metadata returned from graphql for use throughout the application

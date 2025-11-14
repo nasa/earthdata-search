@@ -27,8 +27,8 @@ test.describe('Map: Colormap interactions', () => {
       page
     })
 
-    await page.route('**/search/granules/timeline', (route) => {
-      route.fulfill({
+    await page.route('**/search/granules/timeline', async (route) => {
+      await route.fulfill({
         body: JSON.stringify([])
       })
     })
@@ -38,6 +38,32 @@ test.describe('Map: Colormap interactions', () => {
     test.beforeEach(async ({ page }) => {
       const conceptIdOne = 'C1996881146-POCLOUD'
       const conceptIdTwo = 'C1243477369-GES_DISC'
+      const colormapMock = {
+        data: {
+          colormaps: [
+            {
+              product: 'GHRSST_L4_MUR_Sea_Ice_Concentration',
+              jsondata: seaIceConcentrationColormapBody
+            },
+            {
+              product: 'GHRSST_L4_MUR_Sea_Surface_Temperature',
+              jsondata: seaSurfaceTemperatureColormapBody
+            },
+            {
+              product: 'GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies',
+              jsondata: seaSurfaceTemperatureAnomaliesColormapBody
+            },
+            {
+              product: 'AIRS_Prata_SO2_Index_Day',
+              jsondata: airsPrataSo2IndexDayColormapBody
+            },
+            {
+              product: 'AIRS_Prata_SO2_Index_Night',
+              jsondata: airsPrataSo2IndexNightColormapBody
+            }
+          ]
+        }
+      }
 
       await interceptUnauthenticatedCollections({
         page,
@@ -85,37 +111,15 @@ test.describe('Map: Colormap interactions', () => {
         })
       })
 
-      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
-        await route.fulfill({
-          json: seaIceConcentrationColormapBody
-        })
-      })
-
-      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature/, async (route) => {
-        await route.fulfill({
-          json: seaSurfaceTemperatureColormapBody
-        })
-      })
-
-      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies/, async (route) => {
-        await route.fulfill({
-          json: seaSurfaceTemperatureAnomaliesColormapBody
-        })
-      })
-
-      await page.route(/colormaps\/AIRS_Prata_SO2_Index_Day/, async (route) => {
-        await route.fulfill({
-          json: airsPrataSo2IndexDayColormapBody
-        })
-      })
-
-      await page.route(/colormaps\/AIRS_Prata_SO2_Index_Night/, async (route) => {
-        await route.fulfill({
-          json: airsPrataSo2IndexNightColormapBody
-        })
+      await page.route(/graphql$/, async (route) => {
+        const { query } = JSON.parse(route.request().postData())
+        if (query.includes('GetColorMaps')) {
+          await route.fulfill({ json: colormapMock })
+        }
       })
 
       const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+
       await page.goto('search/granules?p=C1996881146-POCLOUD')
 
       // Wait for the map to load
@@ -126,21 +130,24 @@ test.describe('Map: Colormap interactions', () => {
     })
 
     test('displays the color map on the page @screenshot', async ({ page }) => {
-      const legend = page.getByTestId('legend')
-      await legend.scrollIntoViewIfNeeded()
+      const legend = await page.getByTestId('legend')
 
       // Retrieve the colormaps for each layer and ensure they match the screenshot
-      const firstCanvas = legend.locator('canvas').nth(0)
+      const firstCanvas = await legend.locator('canvas').nth(0)
       await expect(firstCanvas).toHaveScreenshot('sea-ice-concentration-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
 
-      const secondCanvas = legend.locator('canvas').nth(1)
+      const secondCanvas = await legend.locator('canvas').nth(1)
       await expect(secondCanvas).toHaveScreenshot('sea-surface-temperature-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
 
-      const thirdCanvas = legend.locator('canvas').nth(2)
+      await secondCanvas.hover()
+      // Scroll down to the bottom of the colorbar
+      await page.mouse.wheel(0, 100)
+
+      const thirdCanvas = await legend.locator('canvas').nth(2)
       await expect(thirdCanvas).toHaveScreenshot('sea-surface-temperature-anomalies-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
@@ -177,14 +184,14 @@ test.describe('Map: Colormap interactions', () => {
           // Wait for the timeline to be visible as a proxy for the map being ready
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
-          const legend = page.getByTestId('legend')
+          const legend = await page.getByTestId('legend')
 
-          const firstCanvas = legend.locator('canvas').nth(0)
+          const firstCanvas = await legend.locator('canvas').nth(0)
           await expect(firstCanvas).toHaveScreenshot('sulfur-dioxide-day-colormap.png', {
             maxDiffPixelRatio: 0.01
           })
 
-          const secondCanvas = legend.locator('canvas').nth(1)
+          const secondCanvas = await legend.locator('canvas').nth(1)
           await expect(secondCanvas).toHaveScreenshot('sulfur-dioxide-night-colormap.png', {
             maxDiffPixelRatio: 0.01
           })

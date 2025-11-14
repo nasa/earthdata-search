@@ -10,6 +10,8 @@ import { Dispatch } from 'redux'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
 import { useLocation } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions'
@@ -19,9 +21,6 @@ import { metricsMap } from '../../middleware/metrics/actions'
 import { eventEmitter } from '../../events/events'
 
 import Map from '../../components/Map/Map'
-
-// @ts-expect-error The file does not have types
-import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
 
 import { isPath } from '../../util/isPath'
 import { projectionConfigs } from '../../util/map/crs'
@@ -61,8 +60,8 @@ import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 import type {
   Colormap,
   GibsLayersByCollection,
-  ImageryLayers,
   ImageryLayerItem,
+  ImageryLayers,
   MapGranule,
   ProjectionCode,
   SpatialSearch
@@ -85,26 +84,11 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
-  colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer
 })
 
 interface MapContainerProps {
-  /** The colormaps metadata */
-  colormapsMetadata: {
-    /** The colormap metadata by GIBS product name */
-    [key: string]: {
-      /** The colormap data */
-      colorMapData?: Colormap
-      /** Is the colormap errored */
-      isErrored?: boolean
-      /** Is the colormap loading */
-      isLoading?: boolean
-      /** Is the colormap loaded */
-      isLoaded?: boolean
-    }
-  }
   /** The display spatial polygon warning flag */
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
@@ -121,7 +105,6 @@ interface MapContainerProps {
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
-    colormapsMetadata,
     displaySpatialPolygonWarning,
     drawingNewLayer,
     onMetricsMap,
@@ -139,6 +122,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   ])
 
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
+
   const {
     boundingBox: boundingBoxSearch,
     circle: circleSearch,
@@ -146,6 +130,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     point: pointSearch,
     polygon: polygonSearch
   } = spatialQuery
+
   const {
     map: mapProps,
     onChangeMap,
@@ -234,6 +219,40 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   })
   const [zoom, setZoom] = useState(zoomProps)
 
+  // Helper function to get GIBS tags available for the current projection
+  const getLayersForProjection = useCallback(() => {
+    if (!mapLayers) return []
+
+    return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
+  }, [mapLayers, projection])
+
+  const layersForProjection = getLayersForProjection()
+
+  // Extract products from map layers for the current projection
+  const products = layersForProjection.map((layer) => layer.product)
+
+  // Fetch colormaps using useQuery
+  const { data: colormapData } = useQuery(GET_COLORMAPS, {
+    variables: { products },
+    skip: products.length === 0
+  })
+  // Transform colormap query result to match the expected format
+  const colormapsMetadata: Record<string, Colormap> = useMemo(() => {
+    // Fallback to an empty object if the colormap data is not available or errors
+    if (!colormapData?.colormaps) {
+      return {}
+    }
+
+    const colormaps: Record<string, Colormap> = {}
+    colormapData.colormaps.forEach((colormap: { product: string; jsondata: Colormap }) => {
+      if (colormap.jsondata) {
+        colormaps[colormap.product] = colormap.jsondata
+      }
+    })
+
+    return colormaps
+  }, [colormapData])
+
   // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
   useEffect(() => {
     if (shapefile) {
@@ -248,6 +267,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }, [shapefile])
 
   const nonExcludedGranules: { [key: string]: { collectionId: string; index: number } } = {}
+
   // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
   // This is so the focused granule is always drawn on top of the other granules
   if (focusedGranuleId && focusedGranule) {
@@ -367,16 +387,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setStartDrawing(false)
   }, [setStartDrawing])
 
-  // Helper function to get GIBS tags available for the current projection
-  const getLayersForProjection = useCallback(() => {
-    if (!mapLayers) return []
-
-    return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
-  }, [mapLayers, projection])
-
-  // Extract the actual colormap data from the state
   // Get GIBS data to pass to the map within each granule
-  const layersForProjection = getLayersForProjection()
 
   const imageryLayers: ImageryLayers = useMemo(() => {
     const imageryLayersObject: ImageryLayers = {
@@ -385,19 +396,17 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       setMapLayersOrder,
       setLayerOpacity
     }
+
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
     // Get colormap data for all available GIBS tags
     layersForProjection.forEach((layer) => {
       const { product } = layer
       const productColormap = colormapsMetadata[product]
 
-      if (productColormap && productColormap.colorMapData) {
-        // Store colormap data by product name
-        imageryLayersObject.layerData.push({
-          ...layer,
-          colormap: productColormap.colorMapData
-        } as ImageryLayerItem)
-      }
+      imageryLayersObject.layerData.push({
+        colormap: productColormap,
+        ...layer
+      } as ImageryLayerItem)
     })
 
     return imageryLayersObject

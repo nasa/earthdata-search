@@ -36,6 +36,7 @@ const buildPermissions = () => shield(
         isValidUser,
         isAdminUser
       ),
+      colormaps: allow,
       project: allow,
       projects: isValidUser,
       user: isValidUser

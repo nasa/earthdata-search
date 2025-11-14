@@ -15,6 +15,8 @@
     visibility: visible;
     transition: opacity 0.2s ease;
     overflow-x: hidden;
+    box-sizing: border-box;
+    border: 1px solid utils.$color__carbon-black;
 
     .colormap--is-colormap-rendered & {
       visibility: visible !important;

@@ -1431,4 +1431,44 @@ describe('DatabaseClient', () => {
       expect(consoleMock).toHaveBeenCalledWith('Failed to update site preferences')
     })
   })
+
+  describe('colormaps', () => {
+    test('retrieves the colormaps', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          product: 'test-product',
+          jsondata: { scale: { colors: ['#ff0000'] } }
+        }])
+      })
+
+      const colormaps = await databaseClient.getColorMapsByProducts(['test-product'])
+
+      expect(colormaps).toBeDefined()
+      expect(colormaps).toEqual([{
+        product: 'test-product',
+        jsondata: { scale: { colors: ['#ff0000'] } }
+      }])
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select "product", "jsondata" from "colormaps" where "product" in ($1)')
+      expect(queries[0].bindings).toEqual(['test-product'])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getColorMapsByProducts(['test-product'])).rejects.toThrow('Failed to retrieve colormaps by products')
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select "product", "jsondata" from "colormaps" where "product" in ($1)')
+      expect(queries[0].bindings).toEqual(['test-product'])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve colormaps by products')
+    })
+  })
 })

@@ -15,7 +15,6 @@ import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphq
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
-import colormapBody from './__mocks__/cmr_granules/colormap.body.json'
 
 const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
@@ -72,10 +71,11 @@ test.describe('When clicking on a granule on the map', () => {
       })
     })
 
-    await page.route(/colormaps\/VIIRS_NOAA20_Brightness_Temp_BandI5_Day/, async (route) => {
-      await route.fulfill({
-        json: colormapBody
-      })
+    await page.route(/graphql$/, async (route) => {
+      const { query } = JSON.parse(route.request().postData())
+      if (query.includes('GetColorMaps')) {
+        await route.fulfill({ colormaps: [] })
+      }
     })
 
     const baseTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)

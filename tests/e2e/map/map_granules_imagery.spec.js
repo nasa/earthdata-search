@@ -85,16 +85,17 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
-          await route.fulfill({
-            json: {}
-          })
-        })
+        await page.route(/graphql$/, async (route) => {
+          const { query } = JSON.parse(route.request().postData())
 
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Pressure_Total/, async (route) => {
-          await route.fulfill({
-            json: {}
-          })
+          // Return empty colormap body
+          if (query.includes('GetColorMaps')) {
+            await route.fulfill({
+              data: {
+                colormaps: []
+              }
+            })
+          }
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -172,15 +173,10 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
+        await page.route(/graphql$/, async (route) => {
+          // Return empty colormap body
           await route.fulfill({
-            json: {}
-          })
-        })
-
-        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Pressure_Total/, async (route) => {
-          await route.fulfill({
-            json: {}
+            colormaps: []
           })
         })
       })

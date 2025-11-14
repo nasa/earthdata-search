@@ -1,0 +1,15 @@
+type ColorMap {
+  "Product identifier for the colormap"
+  product: String!
+
+  "JSON data containing colormap information"
+  jsondata: JSON!
+}
+
+type Query {
+  "Retrieves multiple colormaps by product names"
+  colormaps(
+    "List of product identifiers"
+    products: [String!]!
+  ): [ColorMap]
+}

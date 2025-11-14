@@ -1,5 +1,4 @@
 import nock from 'nock'
-
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error This file does not have types
@@ -18,7 +17,6 @@ import routerHelper from '../../../router/router'
 jest.mock('../../../actions', () => ({
   changeUrl: jest.fn(),
   collectionRelevancyMetrics: jest.fn(),
-  getColorMap: jest.fn(),
   handleError: jest.fn(),
   toggleSpatialPolygonWarning: jest.fn()
 }))
@@ -109,8 +107,6 @@ describe('createCollectionSlice', () => {
 
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
-
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -152,7 +148,6 @@ describe('createCollectionSlice', () => {
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(0)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(0)
         expect(granules.getGranules).toHaveBeenCalledTimes(0)
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -275,8 +270,6 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenCalledTimes(2)
           expect(granules.getGranules).toHaveBeenNthCalledWith(1)
           expect(granules.getGranules).toHaveBeenNthCalledWith(2)
-
-          expect(actions.getColorMap).toHaveBeenCalledTimes(0)
         })
 
         describe('when the requested collection is opensearch and a polygon search is active and we try and retrieve an existing gibs tag', () => {
@@ -410,8 +403,6 @@ describe('createCollectionSlice', () => {
             expect(granules.getGranules).toHaveBeenCalledTimes(2)
             expect(granules.getGranules).toHaveBeenNthCalledWith(1)
             expect(granules.getGranules).toHaveBeenNthCalledWith(2)
-
-            expect(actions.getColorMap).toHaveBeenCalledTimes(0)
           })
         })
 
@@ -466,6 +457,7 @@ describe('createCollectionSlice', () => {
                 associatedDois: undefined,
                 boxes: undefined,
                 cloudHosted: undefined,
+
                 conceptId: 'C10000000000-EDSC',
                 consortiums: [],
                 coordinateSystem: undefined,
@@ -545,189 +537,7 @@ describe('createCollectionSlice', () => {
             expect(granules.getGranules).toHaveBeenCalledTimes(2)
             expect(granules.getGranules).toHaveBeenNthCalledWith(1)
             expect(granules.getGranules).toHaveBeenNthCalledWith(2)
-
-            expect(actions.getColorMap).toHaveBeenCalledTimes(0)
           })
-        })
-      })
-
-      describe('when the requested collection and we try and retrieve an existing gibs tag', () => {
-        test('Test that getColorMap works when multiple gibs tags are returned in the graphql call (call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS)', async () => {
-          nock(/graph/)
-            .post(/api/)
-            .reply(200, {
-              data: {
-                collection: {
-                  conceptId: 'C10000000000-EDSC',
-                  shortName: 'id_1',
-                  versionId: 'VersionID',
-                  hasGranules: false,
-                  tags: {
-                    'edsc.extra.serverless.gibs': {
-                      data: [
-                        { product: 'AIRS_Prata_SO2_Index_Day' },
-                        { product: 'MODIS_Terra_Aerosol' },
-                        { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
-                      ]
-                    }
-                  },
-                  tools: {
-                    items: []
-                  }
-                }
-              }
-            })
-
-          nock(/localhost/)
-            .get(/colormaps\/AIRS_Prata_SO2_Index_Day/)
-            .reply(200, {
-              scale: {}
-            })
-
-          nock(/localhost/)
-            .get(/colormaps\/MODIS_Terra_Aerosol/)
-            .reply(200, {
-              scale: {}
-            })
-
-          nock(/localhost/)
-            .get(/colormaps\/VIIRS_SNPP_CorrectedReflectance_TrueColor/)
-            .reply(200, {
-              scale: {}
-            })
-
-          useEdscStore.setState((state) => {
-            state.collection.collectionId = 'C10000000000-EDSC'
-            state.granules.getGranules = jest.fn()
-            state.map.setMapLayers = jest.fn()
-          })
-
-          const { collection, map } = useEdscStore.getState()
-          const { getCollectionMetadata } = collection
-          const { setMapLayers } = map
-
-          await getCollectionMetadata()
-
-          const {
-            collection: updatedCollection,
-            granules
-          } = useEdscStore.getState()
-
-          expect(updatedCollection.collectionMetadata).toEqual({
-            'C10000000000-EDSC': {
-              abstract: undefined,
-              archiveAndDistributionInformation: undefined,
-              associatedDois: undefined,
-              boxes: undefined,
-              cloudHosted: undefined,
-              conceptId: 'C10000000000-EDSC',
-              consortiums: [],
-              coordinateSystem: undefined,
-              dataCenter: undefined,
-              dataCenters: undefined,
-              directDistributionInformation: {},
-              doi: undefined,
-              duplicateCollections: [],
-              gibsLayers: 'None',
-              granules: undefined,
-              hasAllMetadata: true,
-              hasGranules: false,
-              id: 'C10000000000-EDSC',
-              isCSDA: false,
-              isOpenSearch: false,
-              lines: undefined,
-              nativeDataFormats: undefined,
-              points: undefined,
-              polygons: undefined,
-              relatedCollections: undefined,
-              relatedUrls: [],
-              scienceKeywords: [],
-              services: undefined,
-              shortName: 'id_1',
-              spatial: undefined,
-              subscriptions: undefined,
-              tags: {
-                'edsc.extra.serverless.gibs': {
-                  data: [
-                    { product: 'AIRS_Prata_SO2_Index_Day' },
-                    { product: 'MODIS_Terra_Aerosol' },
-                    { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
-                  ]
-                }
-              },
-              temporal: ['Not available'],
-              tilingIdentificationSystems: undefined,
-              timeEnd: undefined,
-              timeStart: undefined,
-              title: undefined,
-              tools: { items: [] },
-              urls: {
-                atom: {
-                  href: 'https://cmr.example.com/search/concepts/C10000000000-EDSC.atom',
-                  title: 'ATOM'
-                },
-                dif: {
-                  href: 'https://cmr.example.com/search/concepts/C10000000000-EDSC.dif',
-                  title: 'DIF'
-                },
-                echo10: {
-                  href: 'https://cmr.example.com/search/concepts/C10000000000-EDSC.echo10',
-                  title: 'ECHO10'
-                },
-                html: {
-                  href: 'https://cmr.example.com/search/concepts/C10000000000-EDSC.html',
-                  title: 'HTML'
-                },
-                iso19115: {
-                  href: 'https://cmr.example.com/search/concepts/C10000000000-EDSC.iso19115',
-                  title: 'ISO19115'
-                },
-                native: {
-                  href: 'https://cmr.example.com/search/concepts/C10000000000-EDSC.native',
-                  title: 'Native'
-                },
-                osdd: {
-                  href: 'https://cmr.example.com/granules/descriptor_document.xml?clientId=eed-edsc-test-serverless-client&shortName=id_1&versionId=VersionID&dataCenter=EDSC',
-                  title: 'OSDD'
-                }
-              },
-              variables: undefined,
-              versionId: 'VersionID'
-            }
-          })
-
-          expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
-          expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
-
-          expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-          expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
-
-          expect(granules.getGranules).toHaveBeenCalledTimes(2)
-          expect(granules.getGranules).toHaveBeenNthCalledWith(1)
-          expect(granules.getGranules).toHaveBeenNthCalledWith(2)
-
-          // Verify getColorMap is called for each GIBS tag
-          expect(actions.getColorMap).toHaveBeenCalledTimes(3)
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(1, {
-            product: 'AIRS_Prata_SO2_Index_Day'
-          })
-
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(2, {
-            product: 'MODIS_Terra_Aerosol'
-          })
-
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(3, {
-            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor'
-          })
-
-          expect(setMapLayers).toHaveBeenCalledTimes(1)
-          expect(setMapLayers).toHaveBeenCalledWith(
-            'C10000000000-EDSC',
-            [{ product: 'AIRS_Prata_SO2_Index_Day' },
-              { product: 'MODIS_Terra_Aerosol' },
-              { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
-            ]
-          )
         })
       })
 
@@ -787,8 +597,6 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenCalledWith()
 
           expect(errors.handleError).toHaveBeenCalledTimes(0)
-
-          expect(actions.getColorMap).toHaveBeenCalledTimes(0)
         })
       })
     })
@@ -845,8 +653,6 @@ describe('createCollectionSlice', () => {
         expect(granules.getGranules).toHaveBeenCalledTimes(2)
         expect(granules.getGranules).toHaveBeenNthCalledWith(1)
         expect(granules.getGranules).toHaveBeenNthCalledWith(2)
-
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -961,8 +767,6 @@ describe('createCollectionSlice', () => {
         expect(granules.getGranules).toHaveBeenCalledTimes(2)
         expect(granules.getGranules).toHaveBeenNthCalledWith(1)
         expect(granules.getGranules).toHaveBeenNthCalledWith(2)
-
-        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -1012,8 +816,6 @@ describe('createCollectionSlice', () => {
 
       expect(granules.getGranules).toHaveBeenCalledTimes(1)
       expect(granules.getGranules).toHaveBeenCalledWith()
-
-      expect(actions.getColorMap).toHaveBeenCalledTimes(0)
     })
   })
 

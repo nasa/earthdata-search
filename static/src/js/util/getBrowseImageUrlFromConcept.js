@@ -7,7 +7,7 @@ import { isLinkBrowse } from '../../../../sharedUtils/isLinkBrowse'
  */
 export const getBrowseImageUrlFromConcept = (concept) => {
   // Default `links` to an empty array for concepts that do not have any
-  const { id, links = [] } = concept
+  const { links = [] } = concept
 
   // Filter the links on the granule to find all browse links with an http/https protocol. This filters
   // any S3 browse links which cause protocol issues.
@@ -16,8 +16,6 @@ export const getBrowseImageUrlFromConcept = (concept) => {
 
   // If no image url was found return null
   if (imgUrl == null) {
-    console.log(`Did not find imgUrl for a browseable image on concept: ${id}`)
-
     return null
   }
 
