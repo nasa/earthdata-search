@@ -1436,12 +1436,8 @@ describe('DatabaseClient', () => {
     test('retrieves the colormaps', async () => {
       dbTracker.on('query', (query) => {
         query.response([{
-          id: 1,
           product: 'test-product',
-          url: 'https://example.com/colormap',
-          jsondata: { scale: { colors: ['#ff0000'] } },
-          created_at: '2025-08-18 12:05:00.00000',
-          updated_at: '2025-08-18 12:05:00.00000'
+          jsondata: { scale: { colors: ['#ff0000'] } }
         }])
       })
 
@@ -1449,12 +1445,8 @@ describe('DatabaseClient', () => {
 
       expect(colormaps).toBeDefined()
       expect(colormaps).toEqual([{
-        id: 1,
         product: 'test-product',
-        url: 'https://example.com/colormap',
-        jsondata: { scale: { colors: ['#ff0000'] } },
-        created_at: '2025-08-18 12:05:00.00000',
-        updated_at: '2025-08-18 12:05:00.00000'
+        jsondata: { scale: { colors: ['#ff0000'] } }
       }])
 
       const { queries } = dbTracker.queries
