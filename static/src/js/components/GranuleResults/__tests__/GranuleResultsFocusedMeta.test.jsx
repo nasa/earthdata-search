@@ -920,7 +920,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
         describe('when clicking fully through the images with the previous button', () => {
           test('should repeat the images', async () => {
-            const { user } = setup({
+            const { props, user } = setup({
               overrideZustandState: {
                 granules: {
                   granules: {
@@ -961,6 +961,19 @@ describe('GranuleResultsFocusedMeta component', () => {
             const pagination = within(modal).queryByText('2/2')
             expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
+
+            const downloadButton = screen.getByRole('button', { name: 'Download browse image' })
+
+            expect(downloadButton).toHaveAttribute('href', 'http://test.com/test-2.jpg')
+
+            await user.click(downloadButton)
+
+            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(3)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+              modalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Download'
+            })
           })
         })
       })

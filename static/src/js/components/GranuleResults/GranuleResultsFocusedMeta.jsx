@@ -460,7 +460,7 @@ const GranuleResultsFocusedMeta = ({
                           <Button
                             className="granule-results-focused-meta__image-nav-button"
                             type="button"
-                            target="__blank"
+                            target="_blank"
                             onClick={
                               () => {
                                 onMetricsBrowseGranuleImage({
