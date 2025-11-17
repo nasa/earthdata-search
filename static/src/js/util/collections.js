@@ -192,10 +192,9 @@ export const buildCollectionSearchParams = (params) => {
     keywordWithWildcard = `${keyword.replace(/\s+/g, '* ')}*`
   }
 
-  const sortKey = [selectedSortKey]
+  const sortKey = selectedSortKey ? [selectedSortKey] : []
   // Only include has_granules_or_cwic sort key if the parameter is being used
   if (hasGranulesOrCwic) sortKey.unshift('has_granules_or_cwic')
-
   // Add Recent Version as a secondary sort key for all collection searches
   if (selectedSortKey !== collectionSortKeys.recentVersion) {
     sortKey.push(collectionSortKeys.recentVersion)

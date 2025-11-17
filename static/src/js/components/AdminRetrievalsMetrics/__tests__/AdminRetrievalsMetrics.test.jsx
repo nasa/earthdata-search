@@ -1,95 +1,205 @@
-import ReactDOM from 'react-dom'
 import { screen, waitFor } from '@testing-library/react'
 
+import { act } from 'react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-
 import AdminRetrievalsMetrics from '../AdminRetrievalsMetrics'
+import ADMIN_RETRIEVALS_METRICS from '../../../operations/queries/adminRetrievalsMetrics'
 
-const defaultRetrievalsMetrics = {
-  isLoaded: true,
-  isLoading: false,
-  accessMethodType: {},
-  allAccessMethodTypes: [],
-  multCollectionResponse: [],
-  byAccessMethodType: {},
-  startDate: '',
-  endDate: ''
-}
-// DatepickerContainer connects to redux store and router
 const setup = setupTest({
   Component: AdminRetrievalsMetrics,
-  defaultProps: {
-    retrievalsMetrics: defaultRetrievalsMetrics,
-    onFetchAdminRetrievalsMetrics: jest.fn(),
-    onUpdateAdminRetrievalsMetricsStartDate: jest.fn(),
-    onUpdateAdminRetrievalsMetricsEndDate: jest.fn()
-  },
-  withRedux: true,
-  withRouter: true
+  defaultProps: {},
+  withRouter: true,
+  withApolloClient: true
 })
 
+const mockRetrievalsMetrics = {
+  adminRetrievalsMetrics: {
+    retrievalResponse: [
+      {
+        accessMethodType: 'Harmony',
+        totalTimesAccessMethodUsed: '1',
+        averageGranuleCount: '2',
+        averageGranuleLinkCount: '50',
+        totalGranulesRetrieved: '2',
+        maxGranuleLinkCount: 50,
+        minGranuleLinkCount: 50
+      },
+      {
+        accessMethodType: 'download',
+        totalTimesAccessMethodUsed: '3',
+        averageGranuleCount: '5375',
+        averageGranuleLinkCount: '207',
+        totalGranulesRetrieved: '16124',
+        maxGranuleLinkCount: 240,
+        minGranuleLinkCount: 160
+      }
+    ],
+    multCollectionResponse: [
+      {
+        collectionCount: 2,
+        retrievalId: 6
+      }
+    ]
+  }
+}
+
 describe('AdminRetrievalsMetrics component', () => {
-  describe('when the component loads', () => {
-    test('prompts the user to enter a temporal filter', () => {
+  describe('when the component renders', () => {
+    test('it should display the page title and date pickers, but not table', () => {
       setup()
 
-      expect(
-        screen.getByText('Enter a value for the temporal filter')
-      ).toBeInTheDocument()
+      expect(screen.getByText('Retrieval Metrics')).toBeInTheDocument()
+      expect(screen.getByRole('textbox', { name: 'Start Date:' })).toBeInTheDocument()
+      expect(screen.getByRole('textbox', { name: 'End Date:' })).toBeInTheDocument()
+      expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
+    })
+
+    test('it should display Apply and Clear buttons', () => {
+      setup()
+
+      expect(screen.getByRole('button', { name: 'Apply' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
     })
   })
 
-  describe('when filtering temporally', () => {
-    beforeAll(() => {
-      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
-    })
+  describe('when a user enters dates', () => {
+    test('it should enable the Apply button when an end date is entered', async () => {
+      const { user } = setup()
 
-    afterEach(() => {
-      ReactDOM.createPortal.mockClear()
-    })
+      const endDateInput = screen.getByLabelText('End Date:')
+      const applyButton = screen.getByRole('button', { name: 'Apply' })
 
-    test('clicking on the temporal filter modal opens it', async () => {
-      const { user, props } = setup()
+      expect(applyButton).toBeDisabled()
 
-      const temporalFilterButton = screen.getByRole('button')
-      await waitFor(async () => {
-        await user.click(temporalFilterButton)
+      await act(async () => {
+        await user.type(endDateInput, '2023-05-15 12:00:00')
       })
 
-      const validStartDate = '2019-03-29T00:00:00.000Z'
-      const validEndDate = '2019-03-30T00:00:00.000Z'
+      expect(applyButton).toBeEnabled()
+    })
+  })
 
-      const updatedEndDate = '2019-03-30T23:59:59.999Z'
+  describe('when a user clicks the Apply button', () => {
+    test('it should fetch the retrieval metrics', async () => {
+      const mocks = [
+        {
+          request: {
+            query: ADMIN_RETRIEVALS_METRICS,
+            variables: {
+              params: {
+                startDate: '2025-11-14 00:00:00',
+                endDate: '2025-11-14 23:59:59'
+              }
+            }
+          },
+          result: {
+            data: mockRetrievalsMetrics
+          }
+        }
+      ]
 
-      const startDate = screen.getByRole('textbox', { name: 'Start Date' })
-      const endDate = screen.getByRole('textbox', { name: 'End Date' })
-
-      await user.click(startDate)
-      await user.type(startDate, validStartDate)
-
-      await user.click(endDate)
-      await user.type(endDate, validEndDate)
-
-      const applyBtn = screen.getByRole('button', { name: 'Apply' })
-
-      await waitFor(async () => {
-        await user.click(startDate)
-        await user.click(applyBtn)
+      const { user } = setup({
+        overrideApolloClientMocks: mocks
       })
 
-      expect(props.onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledWith(validStartDate)
+      const startDateInput = screen.getByLabelText('Start Date:')
+      const endDateInput = screen.getByLabelText('End Date:')
+      const applyButton = screen.getByRole('button', { name: 'Apply' })
 
-      expect(props.onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledWith(updatedEndDate)
+      await user.type(startDateInput, '2025-11-14 00:00:00')
+      await user.type(endDateInput, '2025-11-14 23:59:59')
 
-      expect(props.onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
+      expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
 
-      const startDateHeader = screen.getAllByRole('heading', { level: 5 })[0]
-      const endDateHeader = screen.getAllByRole('heading', { level: 5 })[1]
+      await user.click(applyButton)
 
-      expect(startDateHeader.textContent).toEqual(`Start Date:${validStartDate}`)
-      expect(endDateHeader.textContent).toEqual(`End Date:${updatedEndDate}`)
+      await waitFor(() => {
+        expect(screen.getByText('Data Access Type')).toBeInTheDocument()
+      })
+
+      expect(screen.getByText('Harmony')).toBeInTheDocument()
+      expect(screen.getByText('download')).toBeInTheDocument()
+    })
+  })
+
+  describe('when a user clicks the Clear button', () => {
+    test('it should clear the selected dates', async () => {
+      const { user } = setup()
+
+      const startDateInput = screen.getByLabelText('Start Date:')
+      const endDateInput = screen.getByLabelText('End Date:')
+      const clearButton = screen.getByRole('button', { name: 'Clear' })
+
+      await user.type(startDateInput, '2025-11-14 00:00:00')
+      await user.type(endDateInput, '2025-11-14 23:59:59')
+
+      await user.click(clearButton)
+
+      expect(startDateInput).toHaveValue('')
+      expect(endDateInput).toHaveValue('')
+    })
+  })
+
+  describe('when an error occurs during data fetching', () => {
+    test('it should display an error message', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+      const mocks = [
+        {
+          request: {
+            query: ADMIN_RETRIEVALS_METRICS,
+            variables: {
+              params: {
+                startDate: '',
+                endDate: '2025-11-14 23:59:59'
+              }
+            }
+          },
+          error: new Error('An error occurred')
+        }
+      ]
+
+      const { user } = setup({
+        overrideApolloClientMocks: mocks
+      })
+
+      const endDateInput = screen.getByRole('textbox', { name: 'End Date:' })
+      const applyButton = screen.getByRole('button', { name: 'Apply' })
+
+      await user.type(endDateInput, '2025-11-14 23:59:59')
+
+      await user.click(applyButton)
+
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalledWith(
+          'Error fetching Retrieval Metrics:',
+          expect.any(Error)
+        )
+      })
+
+      expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
+
+      consoleErrorSpy.mockRestore()
+    })
+  })
+
+  describe('when an invalid date has been passed in', () => {
+    test('it should display an error message', async () => {
+      const { user } = setup()
+
+      const endDateInput = screen.getByRole('textbox', { name: 'End Date:' })
+      const applyButton = screen.getByRole('button', { name: 'Apply' })
+
+      await user.type(endDateInput, '2025-11-1 23:59:59')
+
+      user.click(applyButton)
+
+      await waitFor(() => {
+        expect(screen.getByText('Invalid date format')).toBeInTheDocument()
+      })
+
+      // Ensure that the AdminRetrievalsMetricsList is not rendered
+      expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
     })
   })
 })

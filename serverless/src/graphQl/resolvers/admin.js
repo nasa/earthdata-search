@@ -65,6 +65,21 @@ export default {
         pageInfo: result.pageInfo,
         count: result.count
       }
+    },
+    adminRetrievalsMetrics: async (source, args, context) => {
+      const { databaseClient } = context
+      const { params = {} } = args
+      const { startDate = '', endDate } = params
+
+      const result = await databaseClient.getAdminRetrievalsMetrics({
+        startDate,
+        endDate
+      })
+
+      return {
+        retrievalResponse: camelcaseKeys(result.retrievalResponse, { deep: true }),
+        multCollectionResponse: camelcaseKeys(result.multCollectionResponse, { deep: true })
+      }
     }
   }
 }

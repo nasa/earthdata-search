@@ -7,11 +7,8 @@ import './AdminRetrievalsMetricsList.scss'
 export const AdminRetrievalsMetricsList = ({
   retrievalsMetrics = {}
 }) => {
-  const {
-    allAccessMethodTypes,
-    byAccessMethodType,
-    multCollectionResponse
-  } = retrievalsMetrics
+  const { adminRetrievalsMetrics = {} } = retrievalsMetrics
+  const { retrievalResponse, multCollectionResponse } = adminRetrievalsMetrics
 
   return (
     <>
@@ -29,24 +26,23 @@ export const AdminRetrievalsMetricsList = ({
         </thead>
         <tbody>
           {
-            allAccessMethodTypes.map((dataRetrievalType) => {
-              const retrieval = byAccessMethodType[dataRetrievalType]
-
+            retrievalResponse && retrievalResponse.map((retrievalMetric) => {
               const {
-                total_times_access_method_used: totalTimesAccessMethodUsed,
-                average_granule_count: averageGranuleCount,
-                average_granule_link_count: averageGranuleLinkCount,
-                total_granules_retrieved: totalGranulesRetrieved,
-                max_granule_link_count: maxGranuleLinkCount,
-                min_granule_link_count: minGranuleLinkCount
-              } = retrieval
+                accessMethodType,
+                averageGranuleCount,
+                averageGranuleLinkCount,
+                maxGranuleLinkCount,
+                minGranuleLinkCount,
+                totalGranulesRetrieved,
+                totalTimesAccessMethodUsed
+              } = retrievalMetric
 
               return (
                 <tr
                   className="admin-retrievals-metrics-list__table-row"
-                  key={dataRetrievalType}
+                  key={accessMethodType}
                 >
-                  <td>{dataRetrievalType}</td>
+                  <td>{accessMethodType}</td>
                   <td>{totalTimesAccessMethodUsed}</td>
                   <td>{averageGranuleCount}</td>
                   <td>{totalGranulesRetrieved}</td>
@@ -98,19 +94,19 @@ export const AdminRetrievalsMetricsList = ({
         </thead>
         <tbody className="admin-retrievals-metrics-list__table-body">
           {
-            multCollectionResponse.map((retrieval) => {
-              const { retrieval_id: retreivalId, count } = retrieval
+            multCollectionResponse && multCollectionResponse.map((retrieval) => {
+              const { retrievalId, collectionCount } = retrieval
 
               return (
                 <tr
                   className="admin-retrievals-metrics-list__table-row"
-                  key={retreivalId}
+                  key={retrievalId}
                 >
                   <td>
-                    {retreivalId}
+                    {retrievalId}
                   </td>
                   <td>
-                    {count}
+                    {collectionCount}
                   </td>
                 </tr>
               )
@@ -124,9 +120,21 @@ export const AdminRetrievalsMetricsList = ({
 
 AdminRetrievalsMetricsList.propTypes = {
   retrievalsMetrics: PropTypes.shape({
-    allAccessMethodTypes: PropTypes.arrayOf(PropTypes.string),
-    byAccessMethodType: PropTypes.shape({}),
-    multCollectionResponse: PropTypes.arrayOf(PropTypes.shape({}))
+    adminRetrievalsMetrics: PropTypes.shape({
+      retrievalResponse: PropTypes.arrayOf(PropTypes.shape({
+        accessMethodType: PropTypes.string,
+        averageGranuleCount: PropTypes.string,
+        averageGranuleLinkCount: PropTypes.string,
+        maxGranuleLinkCount: PropTypes.number,
+        minGranuleLinkCount: PropTypes.number,
+        totalGranulesRetrieved: PropTypes.string,
+        totalTimesAccessMethodUsed: PropTypes.string
+      })),
+      multCollectionResponse: PropTypes.arrayOf(PropTypes.shape({
+        retrievalId: PropTypes.number,
+        collectionCount: PropTypes.number
+      }))
+    })
   })
 }
 

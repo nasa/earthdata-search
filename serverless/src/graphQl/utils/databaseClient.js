@@ -884,27 +884,66 @@ export default class DatabaseClient {
   }
 
   /**
-   * Retrieves colormaps by their product names
-   * @param {string[]} products - The product names of the colormaps to retrieve
-   * @returns {Promise<Array>} A promise that resolves to an array of colormap objects
+   * Retrieves admin retrievals metrics
+   * @param {Object} params - Parameters for the query
+   * @param {string} [params.startDate] - Start date for the metrics query
+   * @param {string} [params.endDate] - End date for the metrics query
+   * @returns {Promise<Object>} A promise that resolves to the retrievals metrics
    */
-  async getColorMapsByProducts(products) {
+  async getAdminRetrievalsMetrics({ startDate, endDate }) {
     try {
+      // Retrieve a connection to the database
       const db = await this.getDbConnection()
 
-      const colormaps = await db('colormaps')
-        .select(
-          'product',
-          'jsondata'
-        )
-        .whereIn('product', products)
+      // `jsonExtract` parses fields in `jsonb` columns
+      // https://knexjs.org/guide/query-builder.html#jsonextract
+      // Fetch metrics on `retrieval_collections`
+      const retrievalResponse = await db('retrieval_collections')
+        .jsonExtract('access_method', '$.type', 'access_method_type')
+        .count('* as total_times_access_method_used')
+        .select(db.raw('ROUND(AVG(retrieval_collections.granule_count)) AS average_granule_count'))
+        .select(db.raw('ROUND(AVG(retrieval_collections.granule_link_count)) AS average_granule_link_count'))
+        .select(db.raw('SUM(retrieval_collections.granule_count) AS total_granules_retrieved'))
+        .select(db.raw('MAX(retrieval_collections.granule_link_count) AS max_granule_link_count'))
+        .select(db.raw('MIN(retrieval_collections.granule_link_count) AS min_granule_link_count'))
+        .modify((queryBuilder) => {
+          if (startDate) {
+            queryBuilder.where('retrieval_collections.created_at', '>=', startDate)
+          }
+        })
+        .modify((queryBuilder) => {
+          if (endDate) {
+            queryBuilder.where('retrieval_collections.created_at', '<', endDate)
+          }
+        })
+        .groupBy('access_method_type')
+        .orderBy('total_times_access_method_used')
 
-      // Return list of colormaps for all of the request products
-      return colormaps
-    } catch {
-      const errorMessage = 'Failed to retrieve colormaps by products'
-      console.log(errorMessage)
-      throw new Error(errorMessage)
+      // Fetch the list of `retrievals` which contained > 1 collections
+      const multCollectionResponse = await db('retrieval_collections')
+        .select('retrieval_collections.retrieval_id as retrieval_id')
+        .modify((queryBuilder) => {
+          if (startDate) {
+            queryBuilder.where('retrieval_collections.created_at', '>=', startDate)
+          }
+        })
+        .modify((queryBuilder) => {
+          if (endDate) {
+            queryBuilder.where('retrieval_collections.created_at', '<', endDate)
+          }
+        })
+        .count('* as collection_count')
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .groupBy('retrieval_id')
+        .havingRaw('COUNT(*) > ?', [1])
+
+      return {
+        retrievalResponse,
+        multCollectionResponse
+      }
+    } catch (error) {
+      console.error('Failed to retrieve admin retrievals metrics', error)
+      throw new Error('Failed to retrieve admin retrievals metrics')
     }
   }
 }

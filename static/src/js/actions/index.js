@@ -4,12 +4,6 @@ import { adminIsAuthorized } from './admin/isAuthorized'
 import { requeueOrder } from './admin/retrievals'
 
 import {
-  fetchAdminRetrievalsMetrics,
-  updateAdminRetrievalsMetricsStartDate,
-  updateAdminRetrievalsMetricsEndDate
-} from './admin/retrievalMetrics'
-
-import {
   updateFacets,
   onFacetsLoading,
   onFacetsLoaded,
@@ -66,7 +60,6 @@ const actions = {
   deleteCollectionSubscription,
   deleteSubscription,
   exportSearch,
-  fetchAdminRetrievalsMetrics,
   generateNotebook,
   getGranuleSubscriptions,
   getRegions,
@@ -95,8 +88,6 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  updateAdminRetrievalsMetricsEndDate,
-  updateAdminRetrievalsMetricsStartDate,
   updateFacets,
   updateStore,
   updateSubscription,

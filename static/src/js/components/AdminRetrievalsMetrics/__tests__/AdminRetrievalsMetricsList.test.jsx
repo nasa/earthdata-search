@@ -4,21 +4,41 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import AdminRetrievalsMetricsList from '../AdminRetrievalsMetricsList'
 
-const defaultRetrievalsMetrics = {
-  isLoaded: true,
-  isLoading: false,
-  accessMethodType: {},
-  allAccessMethodTypes: [],
-  multCollectionResponse: [],
-  byAccessMethodType: {},
-  startDate: '',
-  endDate: ''
+const mockRetrievalsMetrics = {
+  adminRetrievalsMetrics: {
+    retrievalResponse: [
+      {
+        accessMethodType: 'Harmony',
+        totalTimesAccessMethodUsed: 'Total Times Access Method Used HARMONY 1',
+        averageGranuleCount: 'average granule count HARMONY 2',
+        averageGranuleLinkCount: 'average granule link count HARMONY 3',
+        totalGranulesRetrieved: 'total Granules Retrieved HARMONY 4',
+        maxGranuleLinkCount: 1,
+        minGranuleLinkCount: 50
+      },
+      {
+        accessMethodType: 'download',
+        totalTimesAccessMethodUsed: 'Total Times Access Method Used DOWNLOAD 1',
+        averageGranuleCount: 'average granule count DOWNLOAD 2',
+        averageGranuleLinkCount: 'average granule link count DOWNLOAD 3',
+        totalGranulesRetrieved: 'total Granules Retrieved DOWNLOAD 4',
+        maxGranuleLinkCount: 240,
+        minGranuleLinkCount: 160
+      }
+    ],
+    multCollectionResponse: [
+      {
+        collectionCount: 2,
+        retrievalId: 6
+      }
+    ]
+  }
 }
 
 const setup = setupTest({
   Component: AdminRetrievalsMetricsList,
   defaultProps: {
-    retrievalsMetrics: defaultRetrievalsMetrics
+    retrievalsMetrics: mockRetrievalsMetrics
   }
 })
 
@@ -57,104 +77,30 @@ describe('AdminRetrievalsList component', () => {
   })
 
   test('renders the collections table when collections are provided', () => {
-    setup({
-      overrideProps: {
-        retrievalsMetrics: {
-          allAccessMethodTypes: [
-            'ESI',
-            'Harmony',
-            'OPeNDAP',
-            'ECHO ORDERS',
-            'download'
-          ],
-          accessMethodType: {},
-          multCollectionResponse: [
-            {
-              retrieval_id: 112,
-              count: '2'
-            },
-            {
-              retrieval_id: 5,
-              count: '2'
-            },
-            {
-              retrieval_id: 74,
-              count: '3'
-            },
-            {
-              retrieval_id: 110,
-              count: '2'
-            }
-          ],
-          isLoading: false,
-          isLoaded: true,
-          sortKey: '',
-          pagination: {
-            pageSize: 20,
-            pageNum: 1,
-            pageCount: null,
-            totalResults: null
-          },
-          startDate: '2019-02-12T00:00:00.000Z',
-          endDate: '2023-09-28T23:59:59.999Z',
-          byAccessMethodType: {
-            ESI: {
-              access_method_type: 'ESI',
-              total_times_access_method_used: '1',
-              average_granule_count: '3',
-              average_granule_link_count: '0',
-              total_granules_retrieved: '3',
-              max_granule_link_count: 0,
-              min_granule_link_count: 0
-            },
-            Harmony: {
-              access_method_type: 'Harmony',
-              total_times_access_method_used: '1',
-              average_granule_count: '59416',
-              average_granule_link_count: null,
-              total_granules_retrieved: '59416',
-              max_granule_link_count: 143,
-              min_granule_link_count: null
-            },
-            OPeNDAP: {
-              access_method_type: 'OPeNDAP',
-              total_times_access_method_used: '2',
-              average_granule_count: '1',
-              average_granule_link_count: null,
-              total_granules_retrieved: '2',
-              max_granule_link_count: null,
-              min_granule_link_count: null
-            },
-            'ECHO ORDERS': {
-              access_method_type: 'ECHO ORDERS',
-              total_times_access_method_used: '3',
-              average_granule_count: '7',
-              average_granule_link_count: null,
-              total_granules_retrieved: '22',
-              max_granule_link_count: null,
-              min_granule_link_count: null
-            },
-            download: {
-              access_method_type: 'download',
-              total_times_access_method_used: '121',
-              average_granule_count: '208',
-              average_granule_link_count: '33',
-              total_granules_retrieved: '25218',
-              max_granule_link_count: 167,
-              min_granule_link_count: 0
-            }
-          }
-        }
-      }
-    })
+    setup()
 
-    // Values render on the table
-    expect(screen.getByRole('cell', { name: '25218' })).toBeInTheDocument()
-    expect(screen.getByRole('cell', { name: '143' })).toBeInTheDocument()
-    expect(screen.getByRole('cell', { name: 'download' })).toBeInTheDocument()
-    expect(screen.getByRole('cell', { name: '121' })).toBeInTheDocument()
+    // Check for Harmony row
+    expect(screen.getByText('Harmony')).toBeInTheDocument()
+    expect(screen.getByText('Total Times Access Method Used HARMONY 1')).toBeInTheDocument()
+    expect(screen.getByText('average granule count HARMONY 2')).toBeInTheDocument()
+    expect(screen.getByText('total Granules Retrieved HARMONY 4')).toBeInTheDocument()
+    expect(screen.getByText('average granule link count HARMONY 3')).toBeInTheDocument()
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('50')).toBeInTheDocument()
 
-    // Values which were `null` fill in as `N/A`
-    expect(screen.getAllByRole('cell', { name: /N\/A/ }).length).toBe(9)
+    // Check for download row
+    expect(screen.getByText('download')).toBeInTheDocument()
+    expect(screen.getByText('Total Times Access Method Used DOWNLOAD 1')).toBeInTheDocument()
+    expect(screen.getByText('average granule count DOWNLOAD 2')).toBeInTheDocument()
+    expect(screen.getByText('total Granules Retrieved DOWNLOAD 4')).toBeInTheDocument()
+    expect(screen.getByText('average granule link count DOWNLOAD 3')).toBeInTheDocument()
+    expect(screen.getByText('240')).toBeInTheDocument()
+    expect(screen.getByText('160')).toBeInTheDocument()
+
+    // Check for multiple collections table
+    expect(screen.getByText('Retrieval-id for retrievals that included multiple collections')).toBeInTheDocument()
+    expect(screen.getByText('Number of collections in the retrieval')).toBeInTheDocument()
+    expect(screen.getByText('6')).toBeInTheDocument()
+    expect(screen.getByText('2')).toBeInTheDocument()
   })
 })

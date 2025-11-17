@@ -150,6 +150,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
+      // Do these two things in my tests
       expect(queries[0].sql).toEqual('insert into "projects" ("name", "path", "user_id") values ($1, $2, $3) returning *')
       expect(queries[0].bindings).toEqual(['Test Project', '/test/project', 1])
 

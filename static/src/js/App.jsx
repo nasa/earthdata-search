@@ -256,10 +256,10 @@ const browserRouter = createBrowserRouter([
           {
             path: routes.ADMIN_RETRIEVAL_METRICS,
             async lazy() {
-              const AdminRetrievalsMetricsContainer = await import('./containers/AdminRetrievalsMetricsContainer/AdminRetrievalsMetricsContainer')
+              const AdminRetrievalsMetrics = await import('./components/AdminRetrievalsMetrics/AdminRetrievalsMetrics')
 
               return {
-                Component: AdminRetrievalsMetricsContainer.default
+                Component: AdminRetrievalsMetrics.default
               }
             }
           },

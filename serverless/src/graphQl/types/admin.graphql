@@ -113,6 +113,53 @@ input AdminRetrievalsInput {
   retrievalCollectionId: Int
 }
 
+type AdminRetrievalsMetrics {
+  "Metrics for each access method type"
+  retrievalResponse: [AccessMethodMetrics!]
+
+  "Information about multi-collection retrievals"
+  multCollectionResponse: [MultiCollectionRetrieval!]
+}
+
+type AccessMethodMetrics {
+  "The type of access method used"
+  accessMethodType: String
+
+  "The total number of times this access method has been used"
+  totalTimesAccessMethodUsed: String
+
+  "The average number of granules per retrieval using this access method"
+  averageGranuleCount: String
+
+  "The average number of granule links per retrieval"
+  averageGranuleLinkCount: String
+
+  "The total number of granules retrieved using this access method"
+  totalGranulesRetrieved: String
+
+  "The maximum number of granule links in a single retrieval"
+  maxGranuleLinkCount: Int
+
+  "The minimum number of granule links in a single retrieval"
+  minGranuleLinkCount: Int
+}
+
+type MultiCollectionRetrieval {
+  "The ID of the retrieval"
+  retrievalId: Int
+
+  "The count of collections in this retrieval"
+  collectionCount: Int
+}
+
+input AdminRetrievalsMetricsInput {
+  "Start date for the metrics query"
+  startDate: DateTime
+
+  "End date for the metrics query"
+  endDate: DateTime!
+}
+
 type Query {
   "Retrieves admin preferences metrics"
   adminPreferencesMetrics: AdminPreferencesMetrics
@@ -128,4 +175,7 @@ type Query {
 
   "Retrieves retrievals"
   adminRetrievals(params: AdminRetrievalsInput): AdminRetrievals
+
+  "Retrieves admin retrievals metrics"
+  adminRetrievalsMetrics(params: AdminRetrievalsMetricsInput): AdminRetrievalsMetrics
 }
