@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 
 import adminIsAuthorizedReducer from './admin/isAuthorized'
-import colorMapsReducer from './colorMaps'
 import facetsReducer from './facets'
 import regionResultsReducer from './regionResults'
 import subscriptionsReducer from './subscriptions'
