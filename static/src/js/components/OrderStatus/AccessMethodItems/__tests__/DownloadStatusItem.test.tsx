@@ -12,6 +12,8 @@ jest.mock('../../../../hooks/useGetRetrievalGranuleLinks', () => ({
   useGetRetrievalGranuleLinks: () => mockUseGetRetrievalGranuleLinks()
 }))
 
+jest.mock('../../buildEddLink', () => jest.fn().mockReturnValue('mock-eddlink'))
+
 const setup = setupTest({
   Component: DownloadStatusItem,
   defaultProps: {
@@ -81,7 +83,7 @@ describe('DownloadStatusItem', () => {
       collectionIsCSDA: false,
       disableEddInProgress: false,
       downloadLinks: ['https://example.com'],
-      eddLink: 'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D12345%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-edsc-dev-serverless-client&token=Bearer null&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback',
+      eddLink: 'mock-eddlink',
       granuleCount: 1,
       granuleLinksIsLoading: false,
       percentDoneDownloadLinks: '100',
@@ -131,7 +133,7 @@ describe('DownloadStatusItem', () => {
       accessMethodType: 'download',
       browseUrls: ['https://example.com/browse'],
       earthdataEnvironment: 'prod',
-      eddLink: 'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D12345%26flattenLinks%3Dtrue%26linkTypes%3Dbrowse%26ee%3Dprod&downloadId=undefined&clientId=eed-edsc-dev-serverless-client&token=Bearer null&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback',
+      eddLink: 'mock-eddlink',
       granuleCount: 1,
       granuleLinksIsLoading: false,
       retrievalCollection: {
