@@ -51,7 +51,7 @@ $item-height: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5*bootstrap.$spacer;
+    // padding: 0.5*bootstrap.$spacer;
     width: 15%;
     color: utils.$color__carbon--60;
 
@@ -118,6 +118,13 @@ $item-height: 3rem;
     height: 23px;
     position: relative;
     top: -0.075rem;
+
+    &--closed {
+      margin-right: calc(bootstrap.$spacer / 4);
+      height: 23px;
+      position: relative;
+      top: -0.175rem;
+    }
 
     .progress-ring__circle-back {
       animation: pulse 1s alternate infinite;

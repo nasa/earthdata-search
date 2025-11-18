@@ -17,16 +17,18 @@ import {
   getProjectCollectionsRequiringChunking
 } from '../../zustand/selectors/project'
 
+import { useCreateRetrieval } from '../../hooks/useCreateRetrieval'
+
 import './ChunkedOrderModal.scss'
 
 const ChunkedOrderModal = ({
   isOpen,
-  onToggleChunkedOrderModal,
-  onSubmitRetrieval
+  onToggleChunkedOrderModal
 }) => {
   const location = useLocation()
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
+  const { createRetrieval } = useCreateRetrieval()
 
   const onModalClose = () => {
     onToggleChunkedOrderModal(false)
@@ -34,7 +36,8 @@ const ChunkedOrderModal = ({
 
   const onClickContinue = () => {
     onToggleChunkedOrderModal(false)
-    onSubmitRetrieval()
+
+    createRetrieval()
   }
 
   // Remove focused collection from back button params
@@ -166,7 +169,6 @@ const ChunkedOrderModal = ({
 
 ChunkedOrderModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onSubmitRetrieval: PropTypes.func.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired
 }
 

@@ -10,7 +10,8 @@ import granules from './__mocks__/granules.json'
 /**
  * This test suite verifies that page titles are correct for each route.
  * Note: This suite will not pass unless you run the prod build with
- * npm run build && npm run preview
+ * `npm run build && npm run preview`
+ * and also have your `application.env` set to "prod" in your static config file.
  */
 
 const collectionsResponse = {

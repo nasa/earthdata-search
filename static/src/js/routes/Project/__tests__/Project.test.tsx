@@ -45,10 +45,14 @@ jest.mock('../../../../../../sharedUtils/config', () => ({
   })
 }))
 
+const mockCreateRetrieval = jest.fn()
+jest.mock('../../../hooks/useCreateRetrieval', () => ({
+  useCreateRetrieval: () => ({ createRetrieval: mockCreateRetrieval })
+}))
+
 const setup = setupTest({
   Component: Project,
   defaultProps: {
-    onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
   },
   defaultZustandState: {
@@ -61,16 +65,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onSubmitRetrieval calls actions.submitRetrieval', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'submitRetrieval')
-
-    mapDispatchToProps(dispatch).onSubmitRetrieval()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith()
-  })
-
   test('onToggleChunkedOrderModal calls actions.toggleChunkedOrderModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleChunkedOrderModal')
@@ -103,14 +97,14 @@ describe('Project component', () => {
   })
 
   describe('handleSubmit', () => {
-    test('calls onSubmitRetrieval', async () => {
-      const { props, user } = setup()
+    test('calls createRetrieval', async () => {
+      const { user } = setup()
 
       const button = screen.getByRole('button', { name: 'Submit' })
       await user.click(button)
 
-      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(1)
-      expect(props.onSubmitRetrieval).toHaveBeenCalledWith()
+      expect(mockCreateRetrieval).toHaveBeenCalledTimes(1)
+      expect(mockCreateRetrieval).toHaveBeenCalledWith()
     })
 
     test('calls onToggleChunkedOrderModal when any collections require chunking', async () => {
@@ -138,7 +132,7 @@ describe('Project component', () => {
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(true)
 
-      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(0)
+      expect(mockCreateRetrieval).toHaveBeenCalledTimes(0)
     })
   })
 

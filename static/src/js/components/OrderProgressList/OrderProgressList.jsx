@@ -6,19 +6,19 @@ import OrderProgressItem from './OrderProgressItem'
 import './OrderProgressList.scss'
 
 export const OrderProgressList = ({
-  orders
+  retrievalOrders
 }) => (
   <ul className="order-progress-list">
     {
-      orders.map((order) => {
-        const { order_number: orderNumber } = order
+      retrievalOrders.map((retrievalOrder) => {
+        const { orderNumber } = retrievalOrder
 
         if (orderNumber == null) return null
 
         return (
           <OrderProgressItem
             key={orderNumber}
-            order={order}
+            retrievalOrder={retrievalOrder}
           />
         )
       })
@@ -27,7 +27,7 @@ export const OrderProgressList = ({
 )
 
 OrderProgressList.propTypes = {
-  orders: PropTypes.arrayOf(
+  retrievalOrders: PropTypes.arrayOf(
     PropTypes.shape({})
   ).isRequired
 }

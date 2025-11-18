@@ -15,7 +15,7 @@ import TextWindowActions from '../../TextWindowActions/TextWindowActions'
  * @param {Number} arg0.granuleCount - The retrieval collection granule count.
  * @param {Boolean} arg0.stacLinksIsLoading - A flag set when the STAC links are loading.
 */
-export const STACJsonPanel = ({
+const STACJsonPanel = ({
   accessMethodType,
   stacLinks,
   retrievalId,

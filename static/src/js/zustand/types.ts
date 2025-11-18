@@ -475,7 +475,8 @@ type OptionDefinition = {
 }
 
 /** The ESI access method */
-type EsiAccessMethod = {
+export type EsiAccessMethod = {
+  name?: string
   /** The ECHO Form XML */
   form: string
   /** A hash of the form */
@@ -543,7 +544,7 @@ type KeywordMapping = {
 }
 
 /** The Harmony access method */
-type HarmonyAccessMethod = {
+export type HarmonyAccessMethod = {
   /** The default value for concatenation */
   defaultConcatenation: boolean
   /** The Harmony access method description */

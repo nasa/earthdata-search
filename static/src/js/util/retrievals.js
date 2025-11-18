@@ -27,6 +27,7 @@ const permittedCollectionMetadataFields = [
   'isOpenSearch',
   'links',
   'relatedUrls',
+  'relatedCollections',
   'title',
   'shortName',
   'versionId'
@@ -59,10 +60,9 @@ const permittedAccessMethodFields = [
  * @returns Parameters used in submitRetrieval()
  */
 export const prepareRetrievalParams = () => {
-  const { shapefile } = useEdscStore.getState()
-
   // Retrieve data from Zustand
   const zustandState = useEdscStore.getState()
+  const { shapefile } = zustandState
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const collectionsMetadata = getProjectCollectionsMetadata(zustandState)
   const projectCollections = getProjectCollections(zustandState)
@@ -99,9 +99,9 @@ export const prepareRetrievalParams = () => {
     const returnValue = {}
 
     returnValue.id = collectionId
-    returnValue.granule_count = granuleCount
-    returnValue.granule_link_count = totalGranuleLinks
-    returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
+    returnValue.granuleCount = granuleCount
+    returnValue.granuleLinkCount = totalGranuleLinks
+    returnValue.collectionMetadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(collectionId)
 
@@ -114,9 +114,9 @@ export const prepareRetrievalParams = () => {
 
     const { variables, selectedVariables } = accessMethods[selectedAccessMethod]
 
-    returnValue.granule_params = params
+    returnValue.granuleParams = params
 
-    returnValue.access_method = pick(
+    returnValue.accessMethod = pick(
       accessMethods[selectedAccessMethod],
       permittedAccessMethodFields
     )
@@ -131,7 +131,7 @@ export const prepareRetrievalParams = () => {
       })
 
       if (variableNames) {
-        returnValue.access_method.selectedVariableNames = variableNames
+        returnValue.accessMethod.selectedVariableNames = variableNames
       }
     }
 
@@ -161,7 +161,7 @@ export const prepareRetrievalParams = () => {
 
       if (swLat && swLng && neLat && neLng) {
         // If an MBR was returned add it to the access method before submitting to the database
-        returnValue.access_method.mbr = {
+        returnValue.accessMethod.mbr = {
           swLat,
           swLng,
           neLat,
@@ -189,6 +189,6 @@ export const prepareRetrievalParams = () => {
   return {
     collections: [...retrievalCollections],
     environment: earthdataEnvironment,
-    json_data: jsonData
+    jsondata: jsonData
   }
 }

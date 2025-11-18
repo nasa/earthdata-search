@@ -16,19 +16,19 @@ import './DownloadFilesPanel.scss'
  * @param {Object} arg0 - The props passed into the component.
  * @param {String} arg0.accessMethodType - The retrieval collection access method.
  * @param {Object} arg0.directDistributionInformation - The collection direct distribution information.
- * @param {Array} arg0.s3Links - The s3 links.
- * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Number} arg0.granuleCount - The retrieval collection granule count.
  * @param {Boolean} arg0.granuleLinksIsLoading - A flag set when the granule links are loading.
+ * @param {String} arg0.retrievalId - The retrieval id.
+ * @param {Array} arg0.s3Links - The s3 links.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
 */
-export const S3LinksPanel = ({
+const S3LinksPanel = ({
   accessMethodType,
   directDistributionInformation,
-  s3Links,
-  retrievalId,
   granuleCount,
   granuleLinksIsLoading,
+  retrievalId,
+  s3Links,
   showTextWindowActions = true
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}-s3.txt`

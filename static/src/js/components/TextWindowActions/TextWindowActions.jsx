@@ -37,7 +37,7 @@ import './TextWindowActions.scss'
  * @param {String} id - The id to use for the bootstrap modal.
  * @param {String} modalTitle - The title for the modal.
  */
-export const TextWindowActions = ({
+const TextWindowActions = ({
   children = null,
   clipboardContents = '',
   disableCopy = false,

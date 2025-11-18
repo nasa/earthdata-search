@@ -235,12 +235,7 @@ describe('retrieveGranuleLinks', () => {
       },
       collectionId: 'C1214470488-ASF',
       earthdataEnvironment: 'prod',
-      event: {
-        queryStringParameters: {
-          id: '1234567',
-          linkTypes: 'data,s3'
-        }
-      },
+      edlToken: 'mock-access-token',
       granuleParams: {
         concept_id: [],
         echo_collection_id: 'C1214470488-ASF',

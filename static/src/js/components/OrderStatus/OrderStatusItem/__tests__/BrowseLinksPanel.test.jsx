@@ -1,82 +1,128 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
-import { BrowseLinksPanel } from '../BrowseLinksPanel'
-import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
+import setupTest from '../../../../../../../jestConfigs/setupTest'
+
+import BrowseLinksPanel from '../BrowseLinksPanel'
+import TextWindowActions from '../../../TextWindowActions/TextWindowActions'
+
+jest.mock('../../../TextWindowActions/TextWindowActions', () => jest.fn(() => <div />))
+jest.mock('react-bootstrap/ProgressBar', () => jest.fn(() => <div />))
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 
-beforeEach(() => {
-  jest.clearAllMocks()
+const setup = setupTest({
+  Component: BrowseLinksPanel,
+  defaultProps: {
+    accessMethodType: 'download',
+    browseUrls: [],
+    granuleCount: 100,
+    granuleLinksIsLoading: false,
+    percentDoneDownloadLinks: '0',
+    retrievalId: '1',
+    showTextWindowActions: true
+  }
 })
-
-Enzyme.configure({ adapter: new Adapter() })
 
 describe('BrowseLinksPanel', () => {
   describe('when panel is not provided granule links', () => {
     test('renders placeholder message', () => {
-      const enzymeWrapper = shallow(
-        <BrowseLinksPanel
-          accessMethodType="download"
-          earthdataEnvironment="prod"
-          browseUrls={[]}
-          retrievalId="1"
-          granuleCount={100}
-          granuleLinksIsLoading={false}
-        />
-      )
+      setup()
 
-      expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The browse imagery links will become available once the order has finished processing.')
+      expect(screen.getByText('The browse imagery links will become available once the order has finished processing.')).toBeInTheDocument()
     })
   })
 
-  describe('when panel is provided granule links', () => {
+  describe('when panel is provided all of the granule links', () => {
     test('renders a TextWindowActions component', () => {
-      const enzymeWrapper = shallow(
-        <BrowseLinksPanel
-          accessMethodType="download"
-          earthdataEnvironment="prod"
-          browseUrls={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalId="1"
-          granuleCount={10}
-          granuleLinksIsLoading
-          percentDoneDownloadLinks="25"
-        />
-      )
+      setup({
+        overrideProps: {
+          browseUrls: ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
+          granuleCount: 2,
+          granuleLinksIsLoading: false,
+          percentDoneDownloadLinks: '100'
+        }
+      })
 
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('Retrieving files for 10 granules...')
-      expect(enzymeWrapper.find(ProgressBar).props().now).toEqual('25')
-      expect(enzymeWrapper.find(ProgressBar).props().label).toEqual('25%')
+      expect(screen.getByText('Retrieved 2 files for 2 granules')).toBeInTheDocument()
 
-      const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().id).toEqual('links-1')
-      expect(windowActions.props().fileContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().fileName).toEqual('1-download-browse-imagery.txt')
-      expect(windowActions.props().clipboardContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().modalTitle).toEqual('Browse Imagery Links')
+      expect(ProgressBar).toHaveBeenCalledTimes(1)
+      expect(ProgressBar).toHaveBeenCalledWith({
+        label: '100%',
+        now: '100'
+      }, {})
+
+      expect(TextWindowActions).toHaveBeenCalledTimes(1)
+      expect(TextWindowActions).toHaveBeenCalledWith({
+        children: expect.any(Object),
+        clipboardContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
+        disableCopy: false,
+        disableSave: false,
+        fileContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
+        fileName: '1-download-browse-imagery.txt',
+        id: 'links-1',
+        modalTitle: 'Browse Imagery Links'
+      }, {})
+    })
+  })
+
+  describe('when panel is provided some of the granule links', () => {
+    test('renders a TextWindowActions component', () => {
+      setup({
+        overrideProps: {
+          browseUrls: ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
+          granuleCount: 10,
+          granuleLinksIsLoading: true,
+          percentDoneDownloadLinks: '25'
+        }
+      })
+
+      expect(screen.getByText('Retrieving files for 10 granules...')).toBeInTheDocument()
+
+      expect(ProgressBar).toHaveBeenCalledTimes(1)
+      expect(ProgressBar).toHaveBeenCalledWith({
+        label: '25%',
+        now: '25'
+      }, {})
+
+      expect(TextWindowActions).toHaveBeenCalledTimes(1)
+      expect(TextWindowActions).toHaveBeenCalledWith({
+        children: expect.any(Object),
+        clipboardContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
+        disableCopy: false,
+        disableSave: false,
+        fileContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
+        fileName: '1-download-browse-imagery.txt',
+        id: 'links-1',
+        modalTitle: 'Browse Imagery Links'
+      }, {})
     })
   })
 
   describe('when the text window actions are disabled', () => {
     test('hides the copy and save buttons', () => {
-      const enzymeWrapper = shallow(
-        <BrowseLinksPanel
-          accessMethodType="ESI"
-          earthdataEnvironment="prod"
-          browseUrls={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalId="1"
-          granuleCount={10}
-          granuleLinksIsLoading
-          showTextWindowActions={false}
-        />
-      )
+      setup({
+        overrideProps: {
+          browseUrls: ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
+          granuleCount: 10,
+          granuleLinksIsLoading: true,
+          percentDoneDownloadLinks: '25',
+          showTextWindowActions: false
+        }
+      })
 
-      const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().disableCopy).toEqual(true)
-      expect(windowActions.props().disableSave).toEqual(true)
+      expect(TextWindowActions).toHaveBeenCalledTimes(1)
+      expect(TextWindowActions).toHaveBeenCalledWith({
+        children: expect.any(Object),
+        clipboardContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
+        disableCopy: true,
+        disableSave: true,
+        fileContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
+        fileName: '1-download-browse-imagery.txt',
+        id: 'links-1',
+        modalTitle: 'Browse Imagery Links'
+      }, {})
     })
   })
 })

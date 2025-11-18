@@ -597,31 +597,97 @@ export interface Project {
   createdAt: string
 }
 
+/** Order information for Harmony orders */
+export type HarmonyOrderInformation = {
+  /** The progress of the order */
+  progress: number
+  /** The links associated with the order */
+  links: {
+    /** The link href */
+    href: string
+    /** The link rel */
+    rel: string
+  }[]
+  /** The status of the order */
+  status: string
+  /** The message associated with the order */
+  message: string
+  /** The job ID */
+  jobId: string
+}
+
+/** Order information for SWODLR orders */
+export type SwodlrOrderInformation = {
+  /** The reason message (I think its a status?) */
+  reason: string
+  /** The granules associated with the order */
+  granules: {
+    /** The granule URI */
+    uri: string
+  }[]
+}
+
+/** Order information for ESI orders */
+export type EsiOrderInformation = {
+  /** Contact information for the order */
+  contactInformation: {
+    /** The contact name */
+    contactName: string
+    /** The contact email */
+    contactEmail: string
+  }
+  /** The download URLs for the order */
+  downloadUrls: {
+    /** The download URLs for the order */
+    downloadUrl: string[]
+  }
+  /** Process information for the order */
+  processInfo: {
+    /** The process message */
+    message: string
+  }
+  /** Request status information for the order */
+  requestStatus: {
+    /** The request status */
+    status: string
+    /** The number of items processed */
+    numberProcessed: number
+    /** The total number of items */
+    totalNumber: number
+  }
+}
+
+/** Combined order information type */
+export type OrderInformation = EsiOrderInformation
+  & HarmonyOrderInformation
+  & SwodlrOrderInformation
+
 /** A retrieval order */
-interface AdminRetrievalOrder {
+export interface RetrievalOrder {
   /** Unique identifier for the retrieval order */
   id: string
   /** Additional order configuration and parameters */
-  orderInformation: object
+  orderInformation: OrderInformation
   /** Human-readable order number from the data provider */
   orderNumber: string
   /** Current processing state of the order */
   state: string
   /** Type of retrieval order */
   type: string
+  /** Error message, if any */
+  error: string | null
 }
 
 /** A retrieval collection. Contains collection metadata, order information, and tracking details */
-export interface AdminRetrievalCollection {
+export interface RetrievalCollection {
   /** Unique identifier for the retrieval collection */
   id: string
+  /** Obfuscated unique identifier for the retrieval collection */
+  obfuscatedId: string
   /** NASA CMR collection identifier */
   collectionId: string
   /** Metadata information about the collection */
-  collectionMetadata: {
-    /** Data provider/center responsible for the collection */
-    dataCenter: string
-  }
+  collectionMetadata: CollectionMetadata
   /** Total number of granules in this collection */
   granuleCount: number
   /** Access method configuration for data retrieval */
@@ -634,7 +700,7 @@ export interface AdminRetrievalCollection {
   /** ISO timestamp when the retrieval collection was last updated */
   updatedAt: string
   /** Array of individual retrieval orders for this collection */
-  retrievalOrders: AdminRetrievalOrder[]
+  retrievalOrders: RetrievalOrder[]
 }
 
 /** An admin retrieval */

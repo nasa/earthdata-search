@@ -1,6 +1,4 @@
-import React from 'react'
-
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import { OrderProgressItem } from '../OrderProgressItem'
 
@@ -11,30 +9,22 @@ import {
   retrievalStatusPropsSwodlrOrder,
   retrievalStatusPropsUponRequestOrder
 } from './mocks'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-beforeEach(() => {
-  jest.clearAllMocks()
+const setup = setupTest({
+  Component: OrderProgressItem,
+  defaultProps: {
+    retrievalOrder: retrievalStatusPropsEsi.orders[0]
+  }
 })
-
-const setup = (overrideProps) => {
-  let props = {}
-
-  props = {
-    ...overrideProps
-  }
-
-  render(<OrderProgressItem {...props} />)
-
-  return {
-    props
-  }
-}
 
 describe('OrderProgressItem component', () => {
   describe('Complete Swodlr Order', () => {
     test('shows the correct order metadata', () => {
       setup({
-        order: retrievalStatusPropsSwodlrOrder
+        overrideProps: {
+          retrievalOrder: retrievalStatusPropsSwodlrOrder
+        }
       })
 
       expect(screen.getByRole('heading', {
@@ -53,11 +43,11 @@ describe('OrderProgressItem component', () => {
       const { orders } = retrievalStatusPropsEsi
       const esiOrder = orders[0]
 
-      setup(
-        {
-          order: esiOrder
+      setup({
+        overrideProps: {
+          retrievalOrder: esiOrder
         }
-      )
+      })
 
       const orderHeading = screen.getByRole('heading', {
         level: 5,
@@ -75,7 +65,9 @@ describe('OrderProgressItem component', () => {
   describe('Harmony Order in progress', () => {
     test('shows the correct order metadata upon initial request of order', () => {
       setup({
-        order: retrievalStatusPropsUponRequestOrder
+        overrideProps: {
+          retrievalOrder: retrievalStatusPropsUponRequestOrder
+        }
       })
 
       expect(screen.getByRole('heading', {
@@ -94,7 +86,9 @@ describe('OrderProgressItem component', () => {
 
     test('shows the correct order metadata and Harmony workflows link', () => {
       setup({
-        order: retrievalStatusPropsHarmonyOrderInProgress
+        overrideProps: {
+          retrievalOrder: retrievalStatusPropsHarmonyOrderInProgress
+        }
       })
 
       expect(screen.getByRole('heading', {
@@ -114,11 +108,11 @@ describe('OrderProgressItem component', () => {
 
   describe('Complete Harmony Order', () => {
     test('shows the correct order metadata', () => {
-      setup(
-        {
-          order: retrievalStatusPropsHarmonyOrder
+      setup({
+        overrideProps: {
+          retrievalOrder: retrievalStatusPropsHarmonyOrder
         }
-      )
+      })
 
       expect(screen.getByRole('heading', {
         level: 5,
@@ -137,10 +131,12 @@ describe('OrderProgressItem component', () => {
       const esiOrder = orders[0]
 
       setup({
-        order: {
-          ...esiOrder,
-          state: 'creating',
-          order_information: {}
+        overrideProps: {
+          retrievalOrder: {
+            ...esiOrder,
+            state: 'creating',
+            orderInformation: {}
+          }
         }
       })
 

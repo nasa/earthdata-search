@@ -8,18 +8,15 @@ import granulesBody from './__mocks__/granules.body.json'
 import granulesGraphQlBody from './__mocks__/granulesGraphql.body.json'
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import retrieval from './__mocks__/retrieval.json'
-import retrievals from './__mocks__/retrievals.json'
+import retrievalCollection from './__mocks__/retrievalCollection.json'
 import timeline from './__mocks__/timeline.json'
 
 import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import { login } from '../../support/login'
-import { getAuthHeaders } from '../../support/getAuthHeaders'
 import { setupTests } from '../../support/setupTests'
 import { isGetProjectQuery } from '../../support/isGetProjectQuery'
 
 const conceptId = 'C1214470488-ASF'
-
-const authHeaders = getAuthHeaders()
 
 const downloadLinks = [
   'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf'
@@ -132,7 +129,7 @@ test.describe('History', () => {
       })
 
       await page.route('**/graphql', async (route) => {
-        const { query } = JSON.parse(route.request().postData())
+        const { query, variables } = JSON.parse(route.request().postData())
 
         if (isGetProjectQuery(route, '9452013926')) {
           await route.fulfill({
@@ -161,46 +158,81 @@ test.describe('History', () => {
             }
           })
         }
-      })
 
-      await page.route(/retrievals/, async (route) => {
-        if (route.request().method() === 'GET') {
-          await route.fulfill({
-            json: retrieval.body,
-            headers: retrieval.headers
-          })
-        } else {
-          await route.fulfill({
-            json: retrievals.body,
-            headers: retrievals.headers
-          })
-        }
-      })
-
-      await page.route(/granule_links/, async (route) => {
-        if (route.request().url().includes('pageNum=1')) {
+        if (query.includes('mutation CreateRetrieval')) {
           await route.fulfill({
             json: {
-              cursor: 'mock-cursor',
-              links: {
-                browse: [],
-                download: downloadLinks,
-                s3: []
+              data: {
+                createRetrieval: {
+                  environment: 'prod',
+                  obfuscatedId: '2058954173'
+                }
               }
             },
-            headers: authHeaders
-          })
-        } else {
-          await route.fulfill({
-            json: {
-              cursor: null,
-              links: {
-                browse: [],
-                download: [],
-                s3: []
-              }
+            headers: {
+              'content-type': 'application/json'
             }
           })
+        }
+
+        if (query.includes('query GetRetrieval(')) {
+          await route.fulfill({
+            json: retrieval,
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+        }
+
+        if (query.includes('query GetRetrievalCollection')) {
+          await route.fulfill({
+            json: retrievalCollection,
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+        }
+
+        if (query.includes('query GetRetrievalGranuleLinks')) {
+          if (variables.cursor === null) {
+            await route.fulfill({
+              json: {
+                data: {
+                  retrieveGranuleLinks: {
+                    cursor: 'mock-cursor',
+                    done: null,
+                    links: {
+                      browse: [],
+                      download: downloadLinks,
+                      s3: []
+                    }
+                  }
+                }
+              },
+              headers: {
+                'content-type': 'application/json'
+              }
+            })
+          } else {
+            await route.fulfill({
+              json: {
+                data: {
+                  retrieveGranuleLinks: {
+                    cursor: null,
+                    done: null,
+                    links: {
+                      browse: [],
+                      download: [],
+                      s3: []
+                    }
+                  }
+                }
+              },
+              headers: {
+                'content-type': 'application/json'
+              }
+            })
+          }
         }
       })
     })
@@ -219,17 +251,13 @@ test.describe('History', () => {
       await expect(page).toHaveURL(/projectId=9452013926/)
 
       // Download the data
-      const retrievalsPromise = page.waitForResponse(/retrievals\/\d+/)
       await page.getByRole('button', { name: 'Download project data' }).click()
-      await retrievalsPromise
 
       // Expect the link to be on the download page
       await expect(page.getByRole('link', { name: downloadLinks[0] })).toBeVisible()
 
       // Click the Back to Project button
-      const projectsPromise = page.waitForResponse('**/graphql')
       await page.getByRole('button', { name: 'Back to Project' }).click()
-      await projectsPromise
 
       // Expect the download button to be enabled (everything was reloaded)
       await expect(page.getByRole('button', { name: 'Download project data' })).toBeEnabled()

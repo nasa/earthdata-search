@@ -23,7 +23,7 @@ import './DownloadFilesPanel.scss'
  * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
 */
-export const DownloadFilesPanel = ({
+const DownloadFilesPanel = ({
   accessMethodType,
   collectionIsCSDA = false,
   disableEddInProgress = false,

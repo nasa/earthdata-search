@@ -25,11 +25,11 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsRequiringChunking } from '../../zustand/selectors/project'
 import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
+import { useCreateRetrieval } from '../../hooks/useCreateRetrieval'
+
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onSubmitRetrieval:
-    () => dispatch(actions.submitRetrieval()),
   onToggleChunkedOrderModal:
     (isOpen: boolean) => dispatch(actions.toggleChunkedOrderModal(isOpen))
 })
@@ -37,7 +37,6 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 const { edscHost } = getEnvironmentConfig()
 
 interface ProjectProps {
-  onSubmitRetrieval: () => void
   onToggleChunkedOrderModal: (isOpen: boolean) => void
 }
 
@@ -45,9 +44,9 @@ interface ProjectProps {
  * The Project route component
 */
 export const Project: React.FC<ProjectProps> = ({
-  onSubmitRetrieval,
   onToggleChunkedOrderModal
 }) => {
+  const { createRetrieval } = useCreateRetrieval()
   const name = useEdscStore(getSavedProjectName)
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
 
@@ -57,7 +56,7 @@ export const Project: React.FC<ProjectProps> = ({
     if (Object.keys(projectCollectionsRequiringChunking).length > 0) {
       onToggleChunkedOrderModal(true)
     } else {
-      onSubmitRetrieval()
+      createRetrieval()
     }
   }
 

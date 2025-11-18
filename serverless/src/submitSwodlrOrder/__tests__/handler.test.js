@@ -543,4 +543,118 @@ describe('submitSwodlrOrder', () => {
     expect(queries[1].method).toEqual('update')
     expect(queries[1].bindings).toEqual(['create_failed', 'Test error message', 12])
   })
+
+  describe('when the order is already in the READY state', () => {
+    test('saves the state as GENERATING', async () => {
+      const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+        .mockImplementation(() => (jest.fn()))
+      const consoleMock = jest.spyOn(console, 'log')
+
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .post(/search\/granules.json/)
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G2938391118-POCLOUD',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }
+            ]
+          }
+        })
+
+      nock(/swodlr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .post(/api\/graphql/)
+        .reply(200, {
+          data: {
+            generateL2RasterProduct: {
+              id: 'e40d4b75-b632-4608-bfae-6f6e2c6f8f56',
+              cycle: 13,
+              pass: 514,
+              scene: 87,
+              outputGranuleExtentFlag: false,
+              outputSamplingGridType: 'UTM',
+              rasterResolution: 200,
+              utmZoneAdjust: -1,
+              mgrsBandAdjust: 1,
+              status: [
+                {
+                  id: 'dcb5e83f-6669-4fef-9d45-5296dcbef1c6',
+                  timestamp: '2024-04-22T20:30:05.061178',
+                  state: 'READY',
+                  reason: null
+                }
+              ]
+            }
+          }
+        })
+
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response([{
+            id: 1,
+            environment: 'prod',
+            access_method: {
+              optionDefinition: {
+                conceptId: 'C2799438271-POCLOUD',
+                name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
+              },
+              url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
+              type: 'SWODLR',
+              swodlrData: {
+                params: {
+                  rasterResolution: 200,
+                  outputSamplingGridType: 'UTM',
+                  outputGranuleExtentFlag: false
+                },
+                custom_params: {
+                  'G2938391118-POCLOUD': {
+                    utmZoneAdjust: -1,
+                    mgrsBandAdjust: 1
+                  }
+                }
+              }
+            },
+            collection_id: 'C2799438271-POCLOUD',
+            granule_params: {
+              exclude: {},
+              options: {},
+              page_num: 1,
+              sort_key: '-start_date',
+              page_size: 2000,
+              concept_id: [
+                'G2938390910-POCLOUD'
+              ],
+              echo_collection_id: 'C2799438271-POCLOUD',
+              two_d_coordinate_system: {}
+            }
+          }
+          ])
+        } else if (step === 2) {
+          query.response([])
+        }
+      })
+
+      const context = {}
+      await submitSwodlrOrder(mockSwodlrOrder, context)
+
+      const { queries } = dbTracker.queries
+
+      expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 order(s)'])
+
+      expect(queries[0].method).toEqual('first')
+      expect(queries[1].method).toEqual('update')
+      expect(queries[1].bindings).toEqual(['e40d4b75-b632-4608-bfae-6f6e2c6f8f56', {
+        jobId: 'dcb5e83f-6669-4fef-9d45-5296dcbef1c6',
+        createdAt: '2024-04-22T20:30:05.061178',
+        numGranules: 1,
+        productId: 'e40d4b75-b632-4608-bfae-6f6e2c6f8f56',
+        status: 'GENERATING',
+        updatedAt: '2024-04-22T20:30:05.061178'
+      }, 'in_progress', 12])
+
+      expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'SWODLR')
+    })
+  })
 })

@@ -10,7 +10,7 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 import { maxSwodlrGranuleCount } from '../../../static/src/js/constants/swodlrConstants'
 
 const graphQlQuery = `
-mutation GenerateNewL2RasterProduct ($cycle: Int!, $pass: Int!, $scene: Int!, $outputGranuleExtentFlag: Boolean!, $outputSamplingGridType: GridType!, $rasterResolution: Int!, $utmZoneAdjust: Int, $mgrsBandAdjust: Int) { 
+mutation GenerateNewL2RasterProduct ($cycle: Int!, $pass: Int!, $scene: Int!, $outputGranuleExtentFlag: Boolean!, $outputSamplingGridType: GridType!, $rasterResolution: Int!, $utmZoneAdjust: Int, $mgrsBandAdjust: Int) {
   generateL2RasterProduct(cycle: $cycle, pass: $pass, scene: $scene, outputGranuleExtentFlag: $outputGranuleExtentFlag, outputSamplingGridType: $outputSamplingGridType, rasterResolution: $rasterResolution, utmZoneAdjust: $utmZoneAdjust, mgrsBandAdjust: $mgrsBandAdjust) {
     cycle
     pass
@@ -177,10 +177,15 @@ const submitSwodlrOrder = async (event, context) => {
         const { id: productId, status: jobStatus } = generateL2RasterProduct
         const { id: jobId, state, timestamp: createdAt } = jobStatus[0]
 
+        // If the latest state is 'READY', we need to change it to 'GENERATING'.
+        // If we set it to 'READY' here, the frontend will think the order is complete and
+        // will not properly refresh.
+        const adjustedState = state === 'READY' ? 'GENERATING' : state
+
         const orderInfo = {
           jobId,
           productId,
-          status: state,
+          status: adjustedState,
           createdAt,
           updatedAt: createdAt,
           numGranules: orderItems.length
@@ -189,7 +194,7 @@ const submitSwodlrOrder = async (event, context) => {
         await dbConnection('retrieval_orders').update({
           order_number: productId,
           order_information: orderInfo,
-          state: getStateFromOrderStatus(state)
+          state: getStateFromOrderStatus(adjustedState)
         }).where({ id })
 
         // Start the order status check workflow

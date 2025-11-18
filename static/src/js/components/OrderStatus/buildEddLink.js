@@ -6,29 +6,27 @@ import { routes } from '../../constants/routes'
 /**
  * Builds a link to open Earthdata Download
  * @param {Object} params
- * @param {String} params.edlToken The users authentication token
- * @param {Object} params.collection The collection object
+ * @param {Object} params.collectionMetadata The collection metadata
  * @param {Array} params.downloadUrls The download urls
  * @param {String} params.earthdataEnvironment The Earthdata environment to link to
+ * @param {String} params.edlToken The users authentication token
  * @param {String} params.linkType The type of link to build
+ * @param {String} params.retrievalCollectionId The retrieval collection ID
+ * @param {Array} params.retrievalOrders The retrieval orders
  * @returns {String} The link to open Earthdata Download
  */
 const buildEddLink = ({
-  edlToken,
-  collection,
+  collectionMetadata,
   downloadUrls,
   earthdataEnvironment,
-  linkType
+  edlToken,
+  linkType,
+  retrievalCollectionId,
+  retrievalOrders
 }) => {
-  const {
-    collection_metadata: collectionMetadata,
-    orders = [],
-    retrieval_collection_id: retrievalCollectionId
-  } = collection
+  const orderStatus = aggregatedOrderStatus(retrievalOrders)
 
-  const orderStatus = aggregatedOrderStatus(orders)
-
-  const [firstOrder = {}] = orders
+  const [firstOrder = {}] = retrievalOrders
   const {
     type = ''
   } = firstOrder

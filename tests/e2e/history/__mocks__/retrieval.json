@@ -1,1 +1,103 @@
-{"headers":{},"body":{"id":"5413479022","jsondata":{"source":"?projectId=9452013926","portalId":"edsc","shapefileId":""},"created_at":"2024-07-23T18:07:04.246Z","collections":{"byId":{"148":{"access_method":{"mbr":{"neLat":12.273960010000001,"neLng":76.78125001,"swLat":12.27395999,"swLng":76.78124999},"type":"download"},"collection_id":"C1214470488-ASF","collection_metadata":{"title":"SENTINEL-1A_SLC","isCSDA":false,"conceptId":"C1214470488-ASF","shortName":"SENTINEL-1A_SLC","versionId":"1","dataCenter":"ASF","relatedUrls":[{"urls":[],"label":"Collection URL","contentType":"CollectionURL"},{"urls":[{"url":"https://vertex.daac.asf.alaska.edu/","type":"GET DATA","subtype":"","description":"Vertex, the ASF search and download interface","urlContentType":"DistributionURL"}],"label":"Distribution URL","contentType":"DistributionURL"},{"urls":[],"label":"Publication URL","contentType":"PublicationURL"},{"urls":[],"label":"Visualization URL","contentType":"VisualizationURL"},{"urls":[],"label":"Highlighted URL","contentType":"HighlightedURL"}],"isOpenSearch":false,"directDistributionInformation":{"region":"us-west-2","s3CredentialsApiEndpoint":"https://sentinel1.asf.alaska.edu/s3credentials","s3CredentialsApiDocumentationUrl":"https://sentinel1.asf.alaska.edu/s3credentialsREADME"}},"granule_count":313,"granule_params":{"point":["76.78125,12.27396"],"exclude":{},"options":{},"page_num":1,"sort_key":"-start_date","page_size":20,"concept_id":[],"echo_collection_id":"C1214470488-ASF","two_d_coordinate_system":{}},"id":148,"retrieval_collection_id":"4369204521","retrieval_id":"5413479022","urs_id":"macrouch"}},"download":[148]},"links":[]}}
+{
+  "data": {
+    "retrieval": {
+      "retrievalCollections": [
+        {
+          "obfuscatedId": "5513469022",
+          "collectionId": "C1214470488-ASF",
+          "collectionMetadata": {
+            "title": "SENTINEL-1A_SLC",
+            "isCsda": false,
+            "conceptId": "C1214470488-ASF",
+            "shortName": "SENTINEL-1A_SLC",
+            "versionId": "1",
+            "dataCenter": "ASF",
+            "relatedUrls": [
+              {
+                "urls": [],
+                "label": "Collection URL",
+                "contentType": "CollectionURL"
+              },
+              {
+                "urls": [
+                  {
+                    "url": "https://search.asf.alaska.edu/ ",
+                    "type": "GET DATA",
+                    "subtype": "VERTEX",
+                    "description": "ASF data search and download interface",
+                    "urlContentType": "DistributionURL"
+                  }
+                ],
+                "label": "Distribution URL",
+                "contentType": "DistributionURL"
+              },
+              {
+                "urls": [
+                  {
+                    "url": "https://webdocs.asf.alaska.edu/Sentinel-1/Sentinel-1-User-Guide.pdf",
+                    "type": "VIEW RELATED INFORMATION",
+                    "subtype": "USER'S GUIDE",
+                    "urlContentType": "PublicationURL"
+                  }
+                ],
+                "label": "Publication URL",
+                "contentType": "PublicationURL"
+              },
+              {
+                "urls": [],
+                "label": "Visualization URL",
+                "contentType": "VisualizationURL"
+              },
+              {
+                "urls": [
+                  {
+                    "url": "https://webdocs.asf.alaska.edu/Sentinel-1/Sentinel-1-User-Guide.pdf",
+                    "type": "VIEW RELATED INFORMATION",
+                    "subtype": "USER'S GUIDE",
+                    "urlContentType": "PublicationURL",
+                    "highlightedType": "User's Guide"
+                  }
+                ],
+                "label": "Highlighted URL",
+                "contentType": "HighlightedURL"
+              }
+            ],
+            "isOpenSearch": false,
+            "relatedCollections": {
+              "count": 141,
+              "items": [
+                {
+                  "id": "C1214471521-ASF",
+                  "title": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES"
+                },
+                {
+                  "id": "C1214470732-ASF",
+                  "title": "SENTINEL-1A_SINGLE_POL_METADATA_GRD_HIGH_RES"
+                },
+                {
+                  "id": "C1214472978-ASF",
+                  "title": "SENTINEL-1A_SINGLE_POL_GRD_FULL_RES"
+                }
+              ]
+            },
+            "directDistributionInformation": {
+              "region": "us-west-2",
+              "s3CredentialsApiEndpoint": "https://sentinel1.asf.alaska.edu/s3credentials",
+              "s3CredentialsApiDocumentationUrl": "https://sentinel1.asf.alaska.edu/s3credentialsREADME"
+            }
+          },
+          "links": null,
+          "__typename": "RetrievalCollection"
+        }
+      ],
+      "id": 253,
+      "obfuscatedId": "2058954173",
+      "jsondata": {
+        "source": "?p=!C1214470488-ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=download&pg[1][cd]=f&sb[0]=-84.27368%2C41.66752%2C-78.18039%2C47.53593",
+        "portalId": "edsc",
+        "shapefileId": ""
+      },
+      "__typename": "Retrieval"
+    }
+  }
+}

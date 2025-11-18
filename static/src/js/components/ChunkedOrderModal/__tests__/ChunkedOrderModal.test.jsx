@@ -24,23 +24,15 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
+const mockCreateRetrieval = jest.fn()
+jest.mock('../../../hooks/useCreateRetrieval', () => ({
+  useCreateRetrieval: () => ({ createRetrieval: mockCreateRetrieval })
+}))
+
 const setup = setupTest({
   Component: ChunkedOrderModal,
   defaultProps: {
     isOpen: true,
-    projectCollectionsMetadata: {
-      'C100005-EDSC': {
-        title: 'collection title'
-      }
-    },
-    projectCollectionsRequiringChunking: {
-      'C100005-EDSC': {
-        granules: {
-          count: 9001
-        }
-      }
-    },
-    onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
   },
   defaultZustandState: {
@@ -204,7 +196,7 @@ describe('ChunkedOrderModal component', () => {
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
 
-      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(0)
+      expect(mockCreateRetrieval).toHaveBeenCalledTimes(0)
     })
 
     test('\'Change access methods\' button should trigger onToggleChunkedOrderModal', async () => {
@@ -215,7 +207,7 @@ describe('ChunkedOrderModal component', () => {
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
 
-      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(0)
+      expect(mockCreateRetrieval).toHaveBeenCalledTimes(0)
     })
 
     test('\'Continue\' button should trigger onToggleChunkedOrderModal', async () => {
@@ -226,8 +218,8 @@ describe('ChunkedOrderModal component', () => {
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
 
-      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(1)
-      expect(props.onSubmitRetrieval).toHaveBeenCalledWith()
+      expect(mockCreateRetrieval).toHaveBeenCalledTimes(1)
+      expect(mockCreateRetrieval).toHaveBeenCalledWith()
     })
   })
 })

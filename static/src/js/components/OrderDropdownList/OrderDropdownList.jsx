@@ -5,14 +5,14 @@ import OrderDropdownItem from './OrderDropdownItem'
 
 import './OrderDropdownList.scss'
 
-export const OrderDropdownList = ({
+const OrderDropdownList = ({
   orders,
   totalOrders
 }) => (
   <ul className="order-dropdown-list">
     {
       orders.map((order, index) => {
-        const { order_number: orderNumber } = order
+        const { orderNumber } = order
 
         return (
           <OrderDropdownItem

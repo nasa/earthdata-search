@@ -13,17 +13,15 @@ describe('buildEddLink', () => {
       const retrievalCollectionId = 1
       const edlToken = 'edlToken'
       const earthdataEnvironment = 'prod'
-      const collection = {
-        collection_metadata: {
-          conceptId: 'conceptId',
-          shortName: 'shortName',
-          versionId: 'versionId'
-        },
-        orders: [{
-          type: 'harmony'
-        }],
-        retrieval_collection_id: retrievalCollectionId
+      const collectionMetadata = {
+        conceptId: 'conceptId',
+        shortName: 'shortName',
+        versionId: 'versionId'
       }
+      const retrievalOrders = [{
+        type: 'harmony'
+      }]
+
       const downloadUrls = []
       const linkType = 'data'
 
@@ -32,11 +30,13 @@ describe('buildEddLink', () => {
 
       // Build the EDD link
       const response = buildEddLink({
-        edlToken,
-        collection,
+        collectionMetadata,
         downloadUrls,
         earthdataEnvironment,
-        linkType
+        edlToken,
+        linkType,
+        retrievalCollectionId,
+        retrievalOrders
       })
 
       // Ensure the response is null
@@ -50,17 +50,14 @@ describe('buildEddLink', () => {
       const retrievalCollectionId = 1
       const edlToken = 'edlToken'
       const earthdataEnvironment = 'prod'
-      const collection = {
-        collection_metadata: {
-          conceptId: 'conceptId',
-          shortName: 'shortName',
-          versionId: 'versionId'
-        },
-        orders: [{
-          type: 'harmony'
-        }],
-        retrieval_collection_id: retrievalCollectionId
+      const collectionMetadata = {
+        conceptId: 'conceptId',
+        shortName: 'shortName',
+        versionId: 'versionId'
       }
+      const retrievalOrders = [{
+        type: 'harmony'
+      }]
       const downloadUrls = ['http://example.com']
       const linkType = 'data'
 
@@ -69,11 +66,13 @@ describe('buildEddLink', () => {
 
       // Build the EDD link
       const response = buildEddLink({
-        edlToken,
-        collection,
+        collectionMetadata,
         downloadUrls,
         earthdataEnvironment,
-        linkType
+        edlToken,
+        linkType,
+        retrievalCollectionId,
+        retrievalOrders
       })
 
       // Ensure the response is the EDD link
@@ -87,17 +86,14 @@ describe('buildEddLink', () => {
       const retrievalCollectionId = 1
       const edlToken = 'edlToken'
       const earthdataEnvironment = 'prod'
-      const collection = {
-        collection_metadata: {
-          conceptId: 'conceptId',
-          shortName: 'shortName',
-          versionId: 'versionId'
-        },
-        orders: [{
-          type: 'download'
-        }],
-        retrieval_collection_id: retrievalCollectionId
+      const collectionMetadata = {
+        conceptId: 'conceptId',
+        shortName: 'shortName',
+        versionId: 'versionId'
       }
+      const retrievalOrders = [{
+        type: 'download'
+      }]
       const downloadUrls = ['http://example.com']
       const linkType = 'data'
 
@@ -106,11 +102,13 @@ describe('buildEddLink', () => {
 
       // Build the EDD link
       const response = buildEddLink({
-        edlToken,
-        collection,
+        collectionMetadata,
         downloadUrls,
         earthdataEnvironment,
-        linkType
+        edlToken,
+        linkType,
+        retrievalCollectionId,
+        retrievalOrders
       })
 
       // Ensure the response is the EDD link

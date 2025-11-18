@@ -7,10 +7,10 @@ export const orderStates = {
     'cancelling'
   ],
   complete: [
-    'ready',
     'closed',
     'complete_with_errors',
     'complete',
+    'ready',
     'successful'
   ],
   failed: [
@@ -31,6 +31,7 @@ export const orderStates = {
     'available',
     'generating',
     'in progress',
+    'in_progress',
     'initialized', // Custom EDSC status for orders that have been submitted but we dont have a status for yet
     'pending',
     'processing_with_exceptions',
@@ -38,8 +39,8 @@ export const orderStates = {
     'quoted_with_exceptions',
     'quoted',
     'quoting',
-    'running',
     'running_with_errors',
+    'running',
     'submitted_with_exceptions',
     'submitting',
     'validated'

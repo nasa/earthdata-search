@@ -12,26 +12,21 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = (dispatch) => ({
   onToggleChunkedOrderModal:
-    (state) => dispatch(actions.toggleChunkedOrderModal(state)),
-  onSubmitRetrieval:
-    () => dispatch(actions.submitRetrieval())
+    (state) => dispatch(actions.toggleChunkedOrderModal(state))
 })
 
 export const ChunkedOrderModalContainer = ({
   isOpen,
-  onSubmitRetrieval,
   onToggleChunkedOrderModal
 }) => (
   <ChunkedOrderModal
     isOpen={isOpen}
-    onSubmitRetrieval={onSubmitRetrieval}
     onToggleChunkedOrderModal={onToggleChunkedOrderModal}
   />
 )
 
 ChunkedOrderModalContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onSubmitRetrieval: PropTypes.func.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired
 }
 

@@ -12,14 +12,14 @@ import ExternalLink from '../ExternalLink/ExternalLink'
 import './OrderProgressItem.scss'
 
 export const OrderProgressItem = ({
-  order
+  retrievalOrder
 }) => {
   const {
-    order_number: orderId,
+    orderNumber: orderId,
     state: orderStatus,
-    order_information: orderInformation = {},
+    orderInformation = {},
     type
-  } = order
+  } = retrievalOrder
 
   let numGranulesProccessed
   let totalGranulesInOrder
@@ -121,10 +121,10 @@ export const OrderProgressItem = ({
 }
 
 OrderProgressItem.propTypes = {
-  order: PropTypes.shape({
-    order_number: PropTypes.string,
+  retrievalOrder: PropTypes.shape({
+    orderNumber: PropTypes.string,
     state: PropTypes.string,
-    order_information: PropTypes.shape({}),
+    orderInformation: PropTypes.shape({}),
     type: PropTypes.string
   }).isRequired
 }

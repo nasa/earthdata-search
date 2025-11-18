@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
@@ -17,13 +16,13 @@ import {
   FaUser,
   FaSignInAlt
 } from 'react-icons/fa'
+import { useLocation } from 'react-router-dom'
 
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { isDownloadPathWithId } from '../../util/isDownloadPathWithId'
 import { isPath } from '../../util/isPath'
-import { locationPropType } from '../../util/propTypes/location'
 import { pathStartsWith } from '../../util/pathStartsWith'
 import { stringify } from '../../util/url/url'
 
@@ -34,19 +33,23 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEdlToken, getUrsProfile } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 import { routes } from '../../constants/routes'
 
+import { useGetRetrieval } from '../../hooks/useGetRetrieval'
+
 import './SecondaryToolbar.scss'
 
-const SecondaryToolbar = ({
-  location,
-  projectCollectionIds,
-  retrieval
-}) => {
+const SecondaryToolbar = () => {
+  const location = useLocation()
+
   const edlToken = useEdscStore(getEdlToken)
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const logout = useEdscStore((state) => state.user.logout)
+  const name = useEdscStore(getSavedProjectName)
+  const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
   const ursProfile = useEdscStore(getUrsProfile)
 
   const {
@@ -57,8 +60,7 @@ const SecondaryToolbar = ({
     setRunTour: state.ui.tour.setRunTour
   }))
 
-  const name = useEdscStore(getSavedProjectName)
-  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const { retrieval } = useGetRetrieval()
 
   const [projectDropdownOpen, setProjectDropdownOpen] = useState(false)
   const [projectName, setProjectName] = useState(name)
@@ -72,6 +74,13 @@ const SecondaryToolbar = ({
       setTimeout(() => {}, 0)
     }
   }, [name])
+
+  const { disableDatabaseComponents } = getApplicationConfig()
+  let secondaryToolbarEnabled = true
+  if (disableDatabaseComponents === 'true') secondaryToolbarEnabled = false
+  if (!secondaryToolbarEnabled) {
+    return null
+  }
 
   /**
    * Log the user out by calling the logoutMutation
@@ -128,15 +137,15 @@ const SecondaryToolbar = ({
   const { apiHost } = getEnvironmentConfig()
 
   // Remove focused collection from back button params
-  const params = parse(search, {
+  const searchParams = parse(search, {
     parseArrays: false,
     ignoreQueryPrefix: true
   })
-  let { p = '' } = params
+  let { p = '' } = searchParams
   p = p.replace(/^[^!]*/, '')
 
   const newSearch = stringify({
-    ...params,
+    ...searchParams,
     p
   })
   const backToSearchLink = (
@@ -160,6 +169,7 @@ const SecondaryToolbar = ({
 
   const { jsondata = {} } = retrieval
   const { source } = jsondata
+
   const backToProjectLink = (
     <PortalLinkContainer
       type="button"
@@ -204,7 +214,7 @@ const SecondaryToolbar = ({
         to={
           {
             pathname: routes.PROJECT,
-            search: location.search
+            search
           }
         }
         className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
@@ -398,20 +408,20 @@ const SecondaryToolbar = ({
     </Dropdown>
   )
 
-  const showSaveProjectDropdown = pathStartsWith(location.pathname, [routes.SEARCH]) && loggedIn
+  const showSaveProjectDropdown = pathStartsWith(pathname, [routes.SEARCH]) && loggedIn
   const showViewProjectLink = (
     !pathStartsWith(
-      location.pathname,
+      pathname,
       [routes.PROJECT, routes.DOWNLOADS]
     )
     && (projectCollectionIds.length > 0 || name)
   )
-  const showStartTourButton = location.pathname === routes.SEARCH
+  const showStartTourButton = pathname === routes.SEARCH
 
   return (
     <nav className={secondaryToolbarClassnames}>
-      {isPath(location.pathname, [routes.PROJECT]) && backToSearchLink}
-      {isDownloadPathWithId(location.pathname) && backToProjectLink}
+      {isPath(pathname, [routes.PROJECT]) && backToSearchLink}
+      {isDownloadPathWithId(pathname) && backToProjectLink}
       <PortalFeatureContainer authentication>
         <>
           {showViewProjectLink && projectLink}
@@ -422,16 +432,6 @@ const SecondaryToolbar = ({
       </PortalFeatureContainer>
     </nav>
   )
-}
-
-SecondaryToolbar.propTypes = {
-  location: locationPropType.isRequired,
-  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  retrieval: PropTypes.shape({
-    jsondata: PropTypes.shape({
-      source: PropTypes.string
-    })
-  }).isRequired
 }
 
 export default SecondaryToolbar

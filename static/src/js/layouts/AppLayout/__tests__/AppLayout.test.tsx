@@ -18,7 +18,7 @@ import MetricsContainer from '../../../containers/MetricsContainer/MetricsContai
 // @ts-expect-error The file does not have types
 import PortalContainer from '../../../containers/PortalContainer/PortalContainer'
 // @ts-expect-error The file does not have types
-import SecondaryToolbarContainer from '../../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryToolbar'
 // @ts-expect-error The file does not have types
 import UrlQueryContainer from '../../../containers/UrlQueryContainer/UrlQueryContainer'
 // @ts-expect-error The file does not have types
@@ -31,7 +31,7 @@ jest.mock('../../../components/Footer/Footer', () => jest.fn(({ children }) => <
 jest.mock('../../../containers/HistoryContainer/HistoryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/MetricsContainer/MetricsContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/PortalContainer/PortalContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+jest.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../containers/WrappingContainer/WrappingContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 jest.mock('../../../components/UserLoader/UserLoader', () => jest.fn(({ children }) => <div>{children}</div>))
@@ -93,8 +93,8 @@ describe('AppLayout', () => {
       {}
     )
 
-    expect(SecondaryToolbarContainer).toHaveBeenCalledTimes(1)
-    expect(SecondaryToolbarContainer).toHaveBeenCalledWith({}, {})
+    expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
+    expect(SecondaryToolbar).toHaveBeenCalledWith({}, {})
 
     expect(Footer).toHaveBeenCalledTimes(1)
     expect(Footer).toHaveBeenCalledWith({}, {})

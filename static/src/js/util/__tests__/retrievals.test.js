@@ -109,7 +109,7 @@ describe('retrievals', () => {
 
     expect(response).toEqual({
       collections: [{
-        access_method: {
+        accessMethod: {
           mbr: {
             neLat: 34.00000001,
             neLng: -76.99999999,
@@ -120,7 +120,7 @@ describe('retrievals', () => {
           type: 'Harmony',
           url: 'https://harmony.sit.earthdata.nasa.gov'
         },
-        collection_metadata: {
+        collectionMetadata: {
           conceptId: 'C100000-EDSC',
           dataCenter: 'EDSC',
           directDistributionInformation: {},
@@ -129,9 +129,9 @@ describe('retrievals', () => {
           shortName: 'mock shortName',
           versionId: 'mock version'
         },
-        granule_count: 100,
-        granule_link_count: 4,
-        granule_params: {
+        granuleCount: 100,
+        granuleLinkCount: 4,
+        granuleParams: {
           boundingBox: undefined,
           browseOnly: undefined,
           circle: undefined,
@@ -160,7 +160,7 @@ describe('retrievals', () => {
         id: 'C100000-EDSC'
       }],
       environment: 'prod',
-      json_data: {
+      jsondata: {
         portalId: 'edsc',
         shapefileId: undefined,
         source: '?p=C100000-EDSC'
@@ -249,7 +249,7 @@ describe('retrievals', () => {
 
     expect(response).toEqual({
       collections: [{
-        access_method: {
+        accessMethod: {
           mbr: {
             neLat: 34.00000001,
             neLng: -76.99999999,
@@ -260,7 +260,7 @@ describe('retrievals', () => {
           type: 'Harmony',
           url: 'https://harmony.sit.earthdata.nasa.gov'
         },
-        collection_metadata: {
+        collectionMetadata: {
           conceptId: 'C100000-EDSC',
           dataCenter: 'EDSC',
           directDistributionInformation: {},
@@ -269,9 +269,9 @@ describe('retrievals', () => {
           shortName: 'mock shortName',
           versionId: 'mock version'
         },
-        granule_count: 100,
-        granule_link_count: 0,
-        granule_params: {
+        granuleCount: 100,
+        granuleLinkCount: 0,
+        granuleParams: {
           boundingBox: undefined,
           browseOnly: undefined,
           circle: undefined,
@@ -300,7 +300,7 @@ describe('retrievals', () => {
         id: 'C100000-EDSC'
       }],
       environment: 'prod',
-      json_data: {
+      jsondata: {
         portalId: 'edsc',
         shapefileId: undefined,
         source: '?p=C100000-EDSC'

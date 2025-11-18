@@ -45,6 +45,70 @@ describe('DatabaseClient', () => {
     MockDate.reset()
   })
 
+  describe('startTransaction', () => {
+    test('starts a new transaction', async () => {
+      // Mock the databaseClient's getDbConnection function
+      const mockTransaction = jest.fn().mockReturnValue({
+        commit: jest.fn(),
+        rollback: jest.fn()
+      })
+      databaseClient.getDbConnection = jest.fn().mockReturnValueOnce({
+        transaction: mockTransaction
+      })
+
+      await databaseClient.startTransaction()
+
+      expect(mockTransaction).toHaveBeenCalledTimes(1)
+      expect(mockTransaction).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('commitTransaction', () => {
+    test('commits a transaction', async () => {
+      // Mock the databaseClient's getDbConnection function
+      const mockTransaction = jest.fn().mockReturnValue({
+        commit: jest.fn(),
+        rollback: jest.fn()
+      })
+      databaseClient.getDbConnection = jest.fn().mockReturnValueOnce({
+        transaction: mockTransaction
+      })
+
+      await databaseClient.startTransaction()
+
+      expect(mockTransaction).toHaveBeenCalledTimes(1)
+      expect(mockTransaction).toHaveBeenCalledWith()
+
+      await databaseClient.commitTransaction()
+
+      expect(mockTransaction().commit).toHaveBeenCalledTimes(1)
+      expect(mockTransaction().commit).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('rollbackTransaction', () => {
+    test('rolls back a transaction', async () => {
+      // Mock the databaseClient's getDbConnection function
+      const mockTransaction = jest.fn().mockReturnValue({
+        commit: jest.fn(),
+        rollback: jest.fn()
+      })
+      databaseClient.getDbConnection = jest.fn().mockReturnValueOnce({
+        transaction: mockTransaction
+      })
+
+      await databaseClient.startTransaction()
+
+      expect(mockTransaction).toHaveBeenCalledTimes(1)
+      expect(mockTransaction).toHaveBeenCalledWith()
+
+      await databaseClient.rollbackTransaction()
+
+      expect(mockTransaction().rollback).toHaveBeenCalledTimes(1)
+      expect(mockTransaction().rollback).toHaveBeenCalledWith()
+    })
+  })
+
   describe('createProject', () => {
     test('creates a new project', async () => {
       dbTracker.on('query', (query) => {
@@ -90,7 +154,211 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual(['Test Project', '/test/project', 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to create project')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to create project', expect.any(Error))
+    })
+  })
+
+  describe('createRetrieval', () => {
+    test('creates a new retrieval', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          user_id: 1,
+          environment: 'testenv',
+          jsondata: { mock: 'data' },
+          updated_at: mockToday,
+          created_at: mockToday
+        }])
+      })
+
+      const retrieval = await databaseClient.createRetrieval({
+        environment: 'testenv',
+        jsondata: { mock: 'data' },
+        token: 'token',
+        userId: 1
+      })
+
+      expect(retrieval).toBeDefined()
+      expect(retrieval).toEqual({
+        id: 1,
+        user_id: 1,
+        environment: 'testenv',
+        jsondata: { mock: 'data' },
+        updated_at: mockToday,
+        created_at: mockToday
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "retrievals" ("environment", "jsondata", "token", "user_id") values ($1, $2, $3, $4) returning "id", "user_id", "environment", "jsondata", "updated_at", "created_at"')
+      expect(queries[0].bindings).toEqual(['testenv', JSON.stringify({ mock: 'data' }), 'token', 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.createRetrieval({
+        environment: 'testenv',
+        jsondata: { mock: 'data' },
+        token: 'token',
+        userId: 1
+      })).rejects.toThrow('Failed to create retrieval')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "retrievals" ("environment", "jsondata", "token", "user_id") values ($1, $2, $3, $4) returning "id", "user_id", "environment", "jsondata", "updated_at", "created_at"')
+      expect(queries[0].bindings).toEqual(['testenv', JSON.stringify({ mock: 'data' }), 'token', 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to create retrieval', expect.any(Error))
+    })
+  })
+
+  describe('createRetrievalCollection', () => {
+    test('creates a new retrieval collection', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          access_method: { mock: 'access method' },
+          collection_id: 'collectionId',
+          collection_metadata: { mock: 'collection metadata' },
+          granule_params: { mock: 'granule params' },
+          granule_count: 42,
+          granule_link_count: 42
+        }])
+      })
+
+      const retrievalCollection = await databaseClient.createRetrievalCollection({
+        accessMethod: { mock: 'access method' },
+        collectionId: 'collectionId',
+        collectionMetadata: { mock: 'collection metadata' },
+        granuleCount: 42,
+        granuleLinkCount: 42,
+        granuleParams: { mock: 'granule params' },
+        retrievalId: 1
+      })
+
+      expect(retrievalCollection).toBeDefined()
+      expect(retrievalCollection).toEqual([{
+        id: 1,
+        access_method: { mock: 'access method' },
+        collection_id: 'collectionId',
+        collection_metadata: { mock: 'collection metadata' },
+        granule_params: { mock: 'granule params' },
+        granule_count: 42,
+        granule_link_count: 42
+      }])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "retrieval_collections" ("access_method", "collection_id", "collection_metadata", "granule_count", "granule_link_count", "granule_params", "retrieval_id") values ($1, $2, $3, $4, $5, $6, $7) returning "id", "access_method", "collection_id", "collection_metadata", "granule_params", "granule_count", "granule_link_count"')
+      expect(queries[0].bindings).toEqual([
+        JSON.stringify({ mock: 'access method' }),
+        'collectionId',
+        JSON.stringify({ mock: 'collection metadata' }),
+        42,
+        42,
+        JSON.stringify({ mock: 'granule params' }),
+        1
+      ])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(
+        databaseClient.createRetrievalCollection({
+          accessMethod: { mock: 'access method' },
+          collectionId: 'collectionId',
+          collectionMetadata: { mock: 'collection metadata' },
+          granuleCount: 42,
+          granuleLinkCount: 42,
+          granuleParams: { mock: 'granule params' },
+          retrievalId: 1
+        })
+      ).rejects.toThrow('Failed to create retrieval collection')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "retrieval_collections" ("access_method", "collection_id", "collection_metadata", "granule_count", "granule_link_count", "granule_params", "retrieval_id") values ($1, $2, $3, $4, $5, $6, $7) returning "id", "access_method", "collection_id", "collection_metadata", "granule_params", "granule_count", "granule_link_count"')
+      expect(queries[0].bindings).toEqual([
+        JSON.stringify({ mock: 'access method' }),
+        'collectionId',
+        JSON.stringify({ mock: 'collection metadata' }),
+        42,
+        42,
+        JSON.stringify({ mock: 'granule params' }),
+        1
+      ])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to create retrieval collection', expect.any(Error))
+    })
+  })
+
+  describe('createRetrievalOrder', () => {
+    test('creates a new retrieval order', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1
+        }])
+      })
+
+      const retrievalCollection = await databaseClient.createRetrievalOrder({
+        orderPayload: { mock: 'order payload' },
+        retrievalCollectionId: 1,
+        type: 'type'
+      })
+
+      expect(retrievalCollection).toBeDefined()
+      expect(retrievalCollection).toEqual({
+        id: 1
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "retrieval_orders" ("granule_params", "retrieval_collection_id", "type") values ($1, $2, $3) returning "id"')
+      expect(queries[0].bindings).toEqual([
+        JSON.stringify({ mock: 'order payload' }),
+        1,
+        'type'
+      ])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(
+        databaseClient.createRetrievalOrder({
+          orderPayload: { mock: 'order payload' },
+          retrievalCollectionId: 1,
+          type: 'type'
+        })
+      ).rejects.toThrow('Failed to create retrieval order')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "retrieval_orders" ("granule_params", "retrieval_collection_id", "type") values ($1, $2, $3) returning "id"')
+      expect(queries[0].bindings).toEqual([
+        JSON.stringify({ mock: 'order payload' }),
+        1,
+        'type'
+      ])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to create retrieval order', expect.any(Error))
     })
   })
 
@@ -132,7 +400,57 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to delete project')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to delete project', expect.any(Error))
+    })
+  })
+
+  describe('getAccessConfiguration', () => {
+    test('retrieves the access configuration', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          collection_id: 'collectionId',
+          access_method: { mock: 'access method' }
+        }])
+      })
+
+      const accessConfig = await databaseClient.getAccessConfiguration({
+        collectionId: 'collectionId',
+        userId: 1
+      })
+
+      expect(accessConfig).toBeDefined()
+      expect(accessConfig).toEqual([{
+        id: 1,
+        collection_id: 'collectionId',
+        access_method: { mock: 'access method' }
+      }])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "id", "collection_id", "access_method" from "access_configurations" where "collection_id" = $1 and "user_id" = $2')
+      expect(queries[0].bindings).toEqual(['collectionId', 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getAccessConfiguration({
+        collectionId: 'collectionId',
+        userId: 1
+      })).rejects.toThrow('Failed to retrieve access configuration')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "id", "collection_id", "access_method" from "access_configurations" where "collection_id" = $1 and "user_id" = $2')
+      expect(queries[0].bindings).toEqual(['collectionId', 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve access configuration', expect.any(Error))
     })
   })
 
@@ -203,7 +521,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual(['testenv'])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve site preferences')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve site preferences', expect.any(Error))
     })
   })
 
@@ -234,7 +552,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "projects"."id", "projects"."name", "projects"."path", "projects"."user_id", "projects"."created_at", "projects"."updated_at" from "projects" where "projects"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "id", "name", "path", "user_id", "created_at", "updated_at" from "projects" where "id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
     })
 
@@ -249,11 +567,11 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "projects"."id", "projects"."name", "projects"."path", "projects"."user_id", "projects"."created_at", "projects"."updated_at" from "projects" where "projects"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "id", "name", "path", "user_id", "created_at", "updated_at" from "projects" where "id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve project by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve project by ID', expect.any(Error))
     })
   })
 
@@ -303,7 +621,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([20])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user projects')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user projects', expect.any(Error))
     })
 
     describe('when searching with a sortKey', () => {
@@ -529,7 +847,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user retrievals')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user retrievals', expect.any(Error))
     })
 
     describe('when searching with a sortKey', () => {
@@ -915,8 +1233,48 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at" from "retrievals" where "retrievals"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "id", "user_id", "jsondata", "environment", "created_at", "updated_at" from "retrievals" where "id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
+    })
+
+    test('returns the retrieval with a userId', async () => {
+      dbTracker.on('query', (query) => {
+        query.response({
+          id: 2,
+          user_id: 2,
+          jsondata: {
+            source: '?p=C1595422627-ASF!C1595422627-ASF&pg[1][a]=2700576794!2700634599!2700578014!2700575283!ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=harmony0&pg[1][ets]=t&q=C1595422627-ASF&polygon[0]=47.67188%2C31.48374%2C43.45313%2C31.06194%2C44.71875%2C25.29727%2C49.78125%2C26.42209%2C47.67188%2C31.48374&tl=1687897235.3!3!!&lat=-0.0703125&long=0.140625',
+            portalId: 'edsc',
+            shapefileId: ''
+          },
+          token: 'token',
+          environment: 'prod',
+          updated_at: '2023-06-27T20:22:47.400Z',
+          created_at: '2023-06-27T20:22:47.400Z'
+        })
+      })
+
+      const collections = await databaseClient.getRetrievalByObfuscatedId('4517239960', 2)
+
+      expect(collections).toBeDefined()
+      expect(collections).toEqual({
+        id: 2,
+        user_id: 2,
+        jsondata: {
+          source: '?p=C1595422627-ASF!C1595422627-ASF&pg[1][a]=2700576794!2700634599!2700578014!2700575283!ASF&pg[1][v]=t&pg[1][gsk]=-start_date&pg[1][m]=harmony0&pg[1][ets]=t&q=C1595422627-ASF&polygon[0]=47.67188%2C31.48374%2C43.45313%2C31.06194%2C44.71875%2C25.29727%2C49.78125%2C26.42209%2C47.67188%2C31.48374&tl=1687897235.3!3!!&lat=-0.0703125&long=0.140625',
+          portalId: 'edsc',
+          shapefileId: ''
+        },
+        token: 'token',
+        environment: 'prod',
+        updated_at: '2023-06-27T20:22:47.400Z',
+        created_at: '2023-06-27T20:22:47.400Z'
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "id", "user_id", "jsondata", "environment", "created_at", "updated_at" from "retrievals" where "id" = $1 and "user_id" = $2 limit $3')
+      expect(queries[0].bindings).toEqual([1, 2, 1])
     })
 
     test('returns an error', async () => {
@@ -930,11 +1288,153 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."user_id", "retrievals"."jsondata", "retrievals"."environment", "retrievals"."created_at", "retrievals"."updated_at" from "retrievals" where "retrievals"."id" = $1 limit $2')
+      expect(queries[0].sql).toEqual('select "id", "user_id", "jsondata", "environment", "created_at", "updated_at" from "retrievals" where "id" = $1 limit $2')
       expect(queries[0].bindings).toEqual([1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval by ID', expect.any(Error))
+    })
+  })
+
+  describe('getRetrievalCollectionByObfuscatedId', () => {
+    test('retrieves the retrieval collection', async () => {
+      dbTracker.on('query', (query) => {
+        query.response({
+          id: 1,
+          retrieval_id: 1,
+          access_method: {
+            type: 'Harmony'
+          },
+          collection_id: 'C1595422627-ASF',
+          collection_metadata: {
+            conceptId: 'C1595422627-ASF',
+            dataCenter: 'ASF'
+          },
+          granule_params: {
+            echo_collection_id: 'C1595422627-ASF'
+          },
+          granule_count: 4,
+          updated_at: '2025-01-01T00:00:00.000Z',
+          created_at: '2025-01-01T00:00:00.000Z',
+          granule_link_count: 4
+        })
+      })
+
+      const collection = await databaseClient.getRetrievalCollectionByObfuscatedId('4517239960', 2)
+
+      expect(collection).toBeDefined()
+      expect(collection).toEqual({
+        id: 1,
+        retrieval_id: 1,
+        access_method: {
+          type: 'Harmony'
+        },
+        collection_id: 'C1595422627-ASF',
+        collection_metadata: {
+          conceptId: 'C1595422627-ASF',
+          dataCenter: 'ASF'
+        },
+        granule_params: {
+          echo_collection_id: 'C1595422627-ASF'
+        },
+        granule_count: 4,
+        updated_at: '2025-01-01T00:00:00.000Z',
+        created_at: '2025-01-01T00:00:00.000Z',
+        granule_link_count: 4
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."id", "retrieval_collections"."retrieval_id", "retrieval_collections"."access_method", "retrieval_collections"."collection_id", "retrieval_collections"."collection_metadata", "retrieval_collections"."granule_params", "retrieval_collections"."granule_count", "retrieval_collections"."granule_link_count", "retrieval_collections"."updated_at", "retrieval_orders"."id" as "retrieval_order_id", "retrieval_orders"."type", "retrieval_orders"."order_number", "retrieval_orders"."order_information", "retrieval_orders"."state", "retrieval_orders"."error", "retrieval_orders"."updated_at" as "retrieval_order_updated_at" from "retrieval_collections" left join "retrieval_orders" on "retrieval_collections"."id" = "retrieval_orders"."retrieval_collection_id" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" inner join "users" on "retrievals"."user_id" = "users"."id" where "retrieval_collections"."id" = $1 and "users"."id" = $2 limit $3')
+      expect(queries[0].bindings).toEqual([1, 2, 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(
+        databaseClient.getRetrievalCollectionByObfuscatedId('4517239960', 2)
+      ).rejects.toThrow('Failed to retrieve retrieval collection by ID')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."id", "retrieval_collections"."retrieval_id", "retrieval_collections"."access_method", "retrieval_collections"."collection_id", "retrieval_collections"."collection_metadata", "retrieval_collections"."granule_params", "retrieval_collections"."granule_count", "retrieval_collections"."granule_link_count", "retrieval_collections"."updated_at", "retrieval_orders"."id" as "retrieval_order_id", "retrieval_orders"."type", "retrieval_orders"."order_number", "retrieval_orders"."order_information", "retrieval_orders"."state", "retrieval_orders"."error", "retrieval_orders"."updated_at" as "retrieval_order_updated_at" from "retrieval_collections" left join "retrieval_orders" on "retrieval_collections"."id" = "retrieval_orders"."retrieval_collection_id" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" inner join "users" on "retrievals"."user_id" = "users"."id" where "retrieval_collections"."id" = $1 and "users"."id" = $2 limit $3')
+      expect(queries[0].bindings).toEqual([1, 2, 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval collection by ID', expect.any(Error))
+    })
+  })
+
+  describe('getRetrievalCollectionsForGranuleLinks', () => {
+    test('retrieves the retrieval collections for granule links', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          access_method: {
+            type: 'Harmony'
+          },
+          collection_id: 'C1595422627-ASF',
+          collection_metadata: {
+            conceptId: 'C1595422627-ASF',
+            dataCenter: 'ASF'
+          },
+          granule_params: {
+            echo_collection_id: 'C1595422627-ASF'
+          },
+          order_information: {
+            jobId: '12345'
+          }
+        }])
+      })
+
+      const collections = await databaseClient.getRetrievalCollectionsForGranuleLinks(12345, 2)
+
+      expect(collections).toBeDefined()
+      expect(collections).toEqual([{
+        access_method: {
+          type: 'Harmony'
+        },
+        collection_id: 'C1595422627-ASF',
+        collection_metadata: {
+          conceptId: 'C1595422627-ASF',
+          dataCenter: 'ASF'
+        },
+        granule_params: {
+          echo_collection_id: 'C1595422627-ASF'
+        },
+        order_information: {
+          jobId: '12345'
+        }
+      }])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."access_method", "retrieval_collections"."collection_id", "retrieval_collections"."collection_metadata", "retrieval_collections"."granule_params", "retrieval_orders"."order_information" from "retrieval_collections" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" left join "retrieval_orders" on "retrieval_orders"."retrieval_collection_id" = "retrieval_collections"."id" inner join "users" on "retrievals"."user_id" = "users"."id" where "retrieval_collections"."id" = $1 and "users"."id" = $2')
+      expect(queries[0].bindings).toEqual([12345, 2])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(
+        databaseClient.getRetrievalCollectionsForGranuleLinks(12345, 2)
+      ).rejects.toThrow('Failed to retrieve retrieval collections for granule links')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."access_method", "retrieval_collections"."collection_id", "retrieval_collections"."collection_metadata", "retrieval_collections"."granule_params", "retrieval_orders"."order_information" from "retrieval_collections" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" left join "retrieval_orders" on "retrieval_orders"."retrieval_collection_id" = "retrieval_collections"."id" inner join "users" on "retrievals"."user_id" = "users"."id" where "retrieval_collections"."id" = $1 and "users"."id" = $2')
+      expect(queries[0].bindings).toEqual([12345, 2])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval collections for granule links', expect.any(Error))
     })
   })
 
@@ -1046,7 +1546,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([1, 2])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval collections by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval collections by ID', expect.any(Error))
     })
   })
 
@@ -1136,7 +1636,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([1, 2])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval orders by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval orders by ID', expect.any(Error))
     })
   })
 
@@ -1188,7 +1688,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user by ID', expect.any(Error))
     })
   })
 
@@ -1240,7 +1740,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user using where object')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user using where object', expect.any(Error))
     })
   })
 
@@ -1314,7 +1814,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([1, 2])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve users by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve users by ID', expect.any(Error))
     })
   })
 
@@ -1370,7 +1870,95 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual(['Updated Project', '/updated/project', new Date(mockToday), 1, 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to update project')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to update project', expect.any(Error))
+    })
+  })
+
+  describe('saveAccessConfiguration', () => {
+    test('saves the access configuration', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([])
+      })
+
+      const result = await databaseClient.saveAccessConfiguration({
+        accessMethod: { mock: 'access method' },
+        collectionId: 'collectionId',
+        userId: 1
+      })
+
+      expect(result).toEqual([])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "access_configurations" ("access_method", "collection_id", "created_at", "updated_at", "user_id") values ($1, $2, $3, $4, $5)')
+      expect(queries[0].bindings).toEqual([JSON.stringify(({ mock: 'access method' })), 'collectionId', new Date(mockToday), new Date(mockToday), 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.saveAccessConfiguration({
+        accessMethod: { mock: 'access method' },
+        collectionId: 'collectionId',
+        userId: 1
+      })).rejects.toThrow('Failed to save access configuration')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "access_configurations" ("access_method", "collection_id", "created_at", "updated_at", "user_id") values ($1, $2, $3, $4, $5)')
+      expect(queries[0].bindings).toEqual([JSON.stringify(({ mock: 'access method' })), 'collectionId', new Date(mockToday), new Date(mockToday), 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to save access configuration', expect.any(Error))
+    })
+  })
+
+  describe('updateAccessConfiguration', () => {
+    test('updates the access configuration', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([])
+      })
+
+      const result = await databaseClient.updateAccessConfiguration({
+        accessMethod: { mock: 'access method' }
+      }, {
+        collectionId: 'collectionId',
+        userId: 1
+      })
+
+      expect(result).toEqual([])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('update "access_configurations" set "access_method" = $1, "updated_at" = $2 where "collection_id" = $3 and "user_id" = $4')
+      expect(queries[0].bindings).toEqual([{ mock: 'access method' }, new Date(mockToday), 'collectionId', 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.updateAccessConfiguration({
+        accessMethod: { mock: 'access method' }
+      }, {
+        collectionId: 'collectionId',
+        userId: 1
+      })).rejects.toThrow('Failed to update access configuration')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('update "access_configurations" set "access_method" = $1, "updated_at" = $2 where "collection_id" = $3 and "user_id" = $4')
+      expect(queries[0].bindings).toEqual([{ mock: 'access method' }, new Date(mockToday), 'collectionId', 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to update access configuration', expect.any(Error))
     })
   })
 
@@ -1428,7 +2016,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual([{ mock: 'preferences' }, new Date(mockToday), 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to update site preferences')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to update site preferences', expect.any(Error))
     })
   })
 
