@@ -327,7 +327,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           expect(images[1]).toHaveClass('granule-results-focused-meta__thumb--is-active')
           expect(pagination).toBeInTheDocument()
 
-          expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(1)
+          expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(1)
           expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
             modalOpen: false,
             granuleId: 'G-1234-TEST',
@@ -377,8 +377,14 @@ describe('GranuleResultsFocusedMeta component', () => {
           expect(images[0]).toHaveClass('granule-results-focused-meta__thumb--is-active')
           expect(pagination).toBeInTheDocument()
 
-          expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(2)
-          expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+          expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(2)
+          expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+            modalOpen: false,
+            granuleId: 'G-1234-TEST',
+            value: 'Next'
+          })
+
+          expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
             modalOpen: false,
             granuleId: 'G-1234-TEST',
             value: 'Previous'
@@ -429,7 +435,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           expect(images[2]).toHaveClass('granule-results-focused-meta__thumb--is-active')
           expect(pagination).toBeInTheDocument()
 
-          expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(1)
+          expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(1)
           expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
             modalOpen: false,
             granuleId: 'G-1234-TEST',
@@ -674,8 +680,14 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(pagination).toBeInTheDocument()
 
             // Tracks Expand and Next
-            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(2)
-            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(2)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+              modalOpen: false,
+              granuleId: 'G-1234-TEST',
+              value: 'Expand'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
               modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Next'
@@ -729,8 +741,20 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(pagination).toBeInTheDocument()
 
             // Tracks Expand, Next, and Previous
-            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(3)
-            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(3)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+              modalOpen: false,
+              granuleId: 'G-1234-TEST',
+              value: 'Expand'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
+              modalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Next'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(3, {
               modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Previous'
@@ -785,8 +809,14 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(images[2]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
 
-            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(2)
-            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(2)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+              modalOpen: false,
+              granuleId: 'G-1234-TEST',
+              value: 'Expand'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
               modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'View List'
@@ -867,8 +897,14 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             await user.click(downloadButton)
 
-            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(2)
-            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(2)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+              modalOpen: false,
+              granuleId: 'G-1234-TEST',
+              value: 'Expand'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
               modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Download'
@@ -909,8 +945,14 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             await user.click(downloadButton)
 
-            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(2)
-            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(2)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+              modalOpen: false,
+              granuleId: 'G-1234-TEST',
+              value: 'Expand'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
               modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Download'
@@ -968,8 +1010,20 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             await user.click(downloadButton)
 
-            expect(props.onMetricsBrowseGranuleImage).toBeCalledTimes(3)
-            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(3)
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(1, {
+              modalOpen: false,
+              granuleId: 'G-1234-TEST',
+              value: 'Expand'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(2, {
+              modalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Previous'
+            })
+
+            expect(props.onMetricsBrowseGranuleImage).toHaveBeenNthCalledWith(3, {
               modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Download'
