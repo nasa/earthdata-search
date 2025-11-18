@@ -408,53 +408,59 @@ const GranuleResultsFocusedMeta = ({
                 }
               </div>
               {
-                (browseThumbnails.length && browseThumbnails.length > 1) && (
+                (browseThumbnails.length) && (
                   <nav className="granule-results-focused-meta__modal-primary-actions">
-                    <div className="granule-results-focused-meta__modal-nav-primary">
-                      <Button
-                        className="granule-results-focused-meta__image-nav-button"
-                        type="button"
-                        icon={ArrowChevronLeft}
-                        label="Previous browse image"
-                        onClick={
-                          () => {
-                            onClickModalPreviousButton()
-                            onMetricsBrowseGranuleImage({
-                              modalOpen: true,
-                              granuleId: focusedGranuleId,
-                              value: 'Previous'
-                            })
-                          }
-                        }
-                      />
-                      <Button
-                        className="granule-results-focused-meta__image-nav-button"
-                        type="button"
-                        icon={ArrowChevronRight}
-                        label="Next browse image"
-                        onClick={
-                          () => {
-                            onClickModalNextButton()
-                            onMetricsBrowseGranuleImage({
-                              modalOpen: true,
-                              granuleId: focusedGranuleId,
-                              value: 'Next'
-                            })
-                          }
-                        }
-                      />
-                      <span className="granule-results-focused-meta__pagination">
-                        {`${activeModalBrowseImageIndex + 1}/${browseThumbnails.length}`}
-                      </span>
-                      {modalBrowseImageSelectionPopover}
-                    </div>
+                    {(browseThumbnails.length === 1) && (<div className="granule-results-focused-meta__modal-nav-primary" />)}
+                    {
+                      (browseThumbnails.length > 1) && (
+                        <div className="granule-results-focused-meta__modal-nav-primary">
+                          <Button
+                            className="granule-results-focused-meta__image-nav-button"
+                            type="button"
+                            icon={ArrowChevronLeft}
+                            label="Previous browse image"
+                            onClick={
+                              () => {
+                                onClickModalPreviousButton()
+                                onMetricsBrowseGranuleImage({
+                                  modalOpen: true,
+                                  granuleId: focusedGranuleId,
+                                  value: 'Previous'
+                                })
+                              }
+                            }
+                          />
+                          <Button
+                            className="granule-results-focused-meta__image-nav-button"
+                            type="button"
+                            icon={ArrowChevronRight}
+                            label="Next browse image"
+                            onClick={
+                              () => {
+                                onClickModalNextButton()
+                                onMetricsBrowseGranuleImage({
+                                  modalOpen: true,
+                                  granuleId: focusedGranuleId,
+                                  value: 'Next'
+                                })
+                              }
+                            }
+                          />
+                          <span className="granule-results-focused-meta__pagination">
+                            {`${activeModalBrowseImageIndex + 1}/${browseThumbnails.length}`}
+                          </span>
+                          {modalBrowseImageSelectionPopover}
+                        </div>
+                      )
+                    }
+
                     {
                       activeModalHref && (
                         <div className="granule-results-focused-meta__modal-nav-secondary">
                           <Button
                             className="granule-results-focused-meta__image-nav-button"
                             type="button"
-                            target="__blank"
+                            target="_blank"
                             onClick={
                               () => {
                                 onMetricsBrowseGranuleImage({
