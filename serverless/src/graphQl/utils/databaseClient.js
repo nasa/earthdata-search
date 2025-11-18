@@ -882,12 +882,12 @@ export default class DatabaseClient {
       throw new Error(errorMessage)
     }
   }
-  /**
-    * Retrieves colormaps by their product names
-    * @param {string[]} products - The product names of the colormaps to retrieve
-    * @returns {Promise<Array>} A promise that resolves to an array of colormap objects
-  */
 
+  /**
+   * Retrieves colormaps by their product names
+   * @param {string[]} products - The product names of the colormaps to retrieve
+   * @returns {Promise<Array>} A promise that resolves to an array of colormap objects
+   */
   async getColorMapsByProducts(products) {
     try {
       const db = await this.getDbConnection()

@@ -7,7 +7,7 @@ import './AdminRetrievalsMetricsList.scss'
 export const AdminRetrievalsMetricsList = ({
   retrievalsMetrics = {}
 }) => {
-  const { adminRetrievalsMetrics = {} } = retrievalsMetrics
+  const { adminRetrievalsMetrics } = retrievalsMetrics
   const { retrievalResponse, multCollectionResponse } = adminRetrievalsMetrics
 
   return (
@@ -26,7 +26,7 @@ export const AdminRetrievalsMetricsList = ({
         </thead>
         <tbody>
           {
-            retrievalResponse && retrievalResponse.map((retrievalMetric) => {
+            retrievalResponse.map((retrievalMetric) => {
               const {
                 accessMethodType,
                 averageGranuleCount,
@@ -94,7 +94,7 @@ export const AdminRetrievalsMetricsList = ({
         </thead>
         <tbody className="admin-retrievals-metrics-list__table-body">
           {
-            multCollectionResponse && multCollectionResponse.map((retrieval) => {
+            multCollectionResponse.map((retrieval) => {
               const { retrievalId, collectionCount } = retrieval
 
               return (

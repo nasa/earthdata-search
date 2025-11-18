@@ -52,22 +52,21 @@ const AdminRetrievalsMetrics = () => {
     const newDateError = startDateResult.error || endDateResult.error
     setDateError(newDateError)
 
-    console.log('🚀 ~ AdminRetrievalsMetrics.jsx:45 ~ onApplyClick ~ dateError:', dateError)
-    if (!newDateError) {
-      fetchMetrics({
-        variables: {
-          params: {
-            startDate: startDateResult.formattedDate,
-            endDate: endDateResult.formattedDate
-          }
+    fetchMetrics({
+      skip: newDateError,
+      variables: {
+        params: {
+          startDate: startDateResult.formattedDate,
+          endDate: endDateResult.formattedDate
         }
-      })
-    }
+      }
+    })
   }
 
   const onClearClick = () => {
     setStartDate('')
     setEndDate('')
+    setDateError('')
   }
 
   const handleStartDateChange = (event) => {
@@ -106,7 +105,7 @@ const AdminRetrievalsMetrics = () => {
               <Col sm="10">
                 <Form.Control
                   type="text"
-                  placeholder="YYYY-MM-DD HH:MM:SS"
+                  placeholder={DATE_FORMAT}
                   value={startDate}
                   onChange={handleStartDateChange}
                 />
@@ -119,7 +118,7 @@ const AdminRetrievalsMetrics = () => {
               <Col sm="10">
                 <Form.Control
                   type="text"
-                  placeholder="YYYY-MM-DD HH:MM:SS"
+                  placeholder={DATE_FORMAT}
                   value={endDate}
                   onChange={handleEndDateChange}
                 />
@@ -146,7 +145,7 @@ const AdminRetrievalsMetrics = () => {
         </Col>
       </Row>
       {
-        dateError && (
+        (dateError && endDate) && (
           <Row className="mt-3">
             <Col sm={
               {
