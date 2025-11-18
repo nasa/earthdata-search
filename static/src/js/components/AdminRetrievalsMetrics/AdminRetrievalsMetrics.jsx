@@ -52,15 +52,17 @@ const AdminRetrievalsMetrics = () => {
     const newDateError = startDateResult.error || endDateResult.error
     setDateError(newDateError)
 
-    fetchMetrics({
-      skip: newDateError,
-      variables: {
-        params: {
-          startDate: startDateResult.formattedDate,
-          endDate: endDateResult.formattedDate
+    if (!newDateError) {
+      fetchMetrics({
+        skip: newDateError,
+        variables: {
+          params: {
+            startDate: startDateResult.formattedDate,
+            endDate: endDateResult.formattedDate
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   const onClearClick = () => {
