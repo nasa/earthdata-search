@@ -50,6 +50,7 @@ describe('permissions', () => {
             isValidUser,
             isAdminUser
           ),
+          colormaps: allow,
           project: allow,
           projects: isValidUser,
           retrieval: isValidUser,
