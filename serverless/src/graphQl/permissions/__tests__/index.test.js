@@ -57,7 +57,7 @@ describe('permissions', () => {
         Mutation: {
           '*': deny,
           createProject: allow,
-          createRetrieval: allow,
+          createRetrieval: isValidUser,
           deleteProject: and(
             isValidUser,
             userOwnsProject

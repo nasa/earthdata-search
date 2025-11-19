@@ -14,6 +14,13 @@ export const STATUS_MESSAGES = {
     FAILED: 'The order has failed processing.',
     IN_PROGRESS: 'Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.'
   },
+  HARMONY: {
+    CANCELED: 'The order has been canceled.',
+    COMPLETE: 'Your orders are done processing and are available for download.',
+    CREATING: 'Your orders are pending processing. This may take some time.',
+    FAILED: 'The order has failed processing.',
+    IN_PROGRESS: 'Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.'
+  },
   OPENDAP: {
     COMPLETE: 'Download your data directly from the links below, or use the provided download script.'
   },

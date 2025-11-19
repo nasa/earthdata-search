@@ -183,7 +183,6 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
         }
         granuleCount={granuleCount}
         granuleLinksIsLoading={granuleLinksIsLoading}
-        // RetrievalCollectionId={retrievalCollectionId}
         retrievalId={retrievalId}
         showTextWindowActions={false}
       />

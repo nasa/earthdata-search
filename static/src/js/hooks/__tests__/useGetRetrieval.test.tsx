@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../jestConfigs/setupTest'
 import { useGetRetrieval } from '../useGetRetrieval'
@@ -80,5 +80,37 @@ describe('useGetRetrieval', () => {
     expect(await screen.findByText('Loading: false')).toBeInTheDocument()
 
     expect(screen.getByText('Retrieval: {"retrievalCollections":{"obfuscatedId":"98765","collectionId":"collectionId","collectionMetadata":{},"links":[]},"id":1,"obfuscatedId":"123456","jsondata":{}}')).toBeInTheDocument()
+  })
+
+  describe('when there is an error', () => {
+    test('calls handleError', async () => {
+      const { zustandState } = setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: GET_RETRIEVAL,
+            variables: {
+              obfuscatedId: '123456'
+            }
+          },
+          error: new Error('An error occurred')
+        }],
+        overrideZustandState: {
+          errors: {
+            handleError: jest.fn()
+          }
+        }
+      })
+
+      // Wait for the error to be handled
+      await waitFor(() => {
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+      })
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+        action: 'getRetrieval',
+        error: new Error('An error occurred'),
+        resource: 'retrieval'
+      })
+    })
   })
 })

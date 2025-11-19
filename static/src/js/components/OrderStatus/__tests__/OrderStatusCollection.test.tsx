@@ -108,6 +108,38 @@ describe('OrderStatusCollection', () => {
     })
   })
 
+  describe('when there is an error', () => {
+    test('calls handleError', async () => {
+      const { zustandState } = setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: GET_RETRIEVAL_COLLECTION,
+            variables: {
+              obfuscatedId: '12345'
+            }
+          },
+          error: new Error('An error occurred')
+        }],
+        overrideZustandState: {
+          errors: {
+            handleError: jest.fn()
+          }
+        }
+      })
+
+      // Wait for the error to be handled
+      await waitFor(() => {
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+      })
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+        action: 'getRetrievalCollection',
+        error: new Error('An error occurred'),
+        resource: 'collection'
+      })
+    })
+  })
+
   describe('when the collection\'s access method is download', () => {
     test('renders a DownloadStatusItem', async () => {
       const { props } = setup({

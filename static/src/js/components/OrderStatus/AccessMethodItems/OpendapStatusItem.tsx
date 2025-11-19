@@ -116,7 +116,6 @@ const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
         granuleCount={granuleCount}
         granuleLinksIsLoading={granuleLinksLoading}
         percentDoneDownloadLinks="0"
-        // RetrievalCollectionId={retrievalCollectionId}
         retrievalId={retrievalId}
         showTextWindowActions={false}
       />

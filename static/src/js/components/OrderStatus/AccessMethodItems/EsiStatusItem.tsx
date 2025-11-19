@@ -208,7 +208,6 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
         }
         granuleCount={granuleCount}
         granuleLinksIsLoading={granuleLinksIsLoading}
-        // RetrievalCollectionId={retrievalCollectionId}
         retrievalId={retrievalId}
         showTextWindowActions={false}
       />

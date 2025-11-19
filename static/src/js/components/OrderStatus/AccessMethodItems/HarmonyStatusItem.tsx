@@ -95,25 +95,25 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
   if (stateFromOrderStatus === 'creating') {
     progressPercentage = 0
 
-    orderInfo = STATUS_MESSAGES.ESI.CREATING
+    orderInfo = STATUS_MESSAGES.HARMONY.CREATING
   }
 
   if (stateFromOrderStatus === 'in_progress') {
-    orderInfo = STATUS_MESSAGES.ESI.IN_PROGRESS
+    orderInfo = STATUS_MESSAGES.HARMONY.IN_PROGRESS
   }
 
   if (stateFromOrderStatus === 'complete') {
-    orderInfo = STATUS_MESSAGES.ESI.COMPLETE
+    orderInfo = STATUS_MESSAGES.HARMONY.COMPLETE
   }
 
   if (stateFromOrderStatus === 'failed') {
     progressPercentage = 0
-    orderInfo = STATUS_MESSAGES.ESI.FAILED
+    orderInfo = STATUS_MESSAGES.HARMONY.FAILED
   }
 
   if (stateFromOrderStatus === 'canceled') {
     progressPercentage = 0
-    orderInfo = STATUS_MESSAGES.ESI.CANCELED
+    orderInfo = STATUS_MESSAGES.HARMONY.CANCELED
   }
 
   let totalProgress = 0
@@ -230,7 +230,6 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
         }
         granuleCount={granuleCount}
         granuleLinksIsLoading={granuleLinksIsLoading}
-        // RetrievalCollectionId={retrievalCollectionId}
         retrievalId={retrievalId}
         showTextWindowActions={false}
       />

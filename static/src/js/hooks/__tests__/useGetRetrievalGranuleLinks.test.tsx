@@ -1,12 +1,16 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../jestConfigs/setupTest'
+
 import {
   useGetRetrievalGranuleLinks,
   UseGetRetrievalGranuleLinksProps
 } from '../useGetRetrievalGranuleLinks'
 import GET_RETRIEVAL_GRANULE_LINKS from '../../operations/queries/getRetrievalGranuleLinks'
+
+// @ts-expect-error This file does not have types
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 const TestComponent = ({
   collectionMetadata,
@@ -56,6 +60,13 @@ const setup = setupTest({
   },
   withApolloClient: true,
   withRouter: true
+})
+
+beforeEach(() => {
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    granuleLinksPageSize: '5',
+    openSearchGranuleLinksPageSize: '5'
+  }))
 })
 
 afterEach(() => {
@@ -305,6 +316,41 @@ describe('useGetRetrievalGranuleLinks', () => {
       expect(await screen.findByText('Loading: false')).toBeInTheDocument()
       expect(screen.getByText('Percent Done: 100')).toBeInTheDocument()
       expect(await screen.findByText('Granule Links: {"browse":[],"data":["http://example.com/data1","http://example.com/data2","http://example.com/data3","http://example.com/data4","http://example.com/data5","http://example.com/data6","http://example.com/data7","http://example.com/data8","http://example.com/data9","http://example.com/data10"],"s3":[]}')).toBeInTheDocument()
+    })
+  })
+
+  describe('when there is an error', () => {
+    test('calls handleError', async () => {
+      const { zustandState } = setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: GET_RETRIEVAL_GRANULE_LINKS,
+            variables: {
+              cursor: null,
+              obfuscatedRetrievalCollectionId: '123456',
+              linkTypes: ['data'],
+              flattenLinks: false
+            }
+          },
+          error: new Error('An error occurred')
+        }],
+        overrideZustandState: {
+          errors: {
+            handleError: jest.fn()
+          }
+        }
+      })
+
+      // Wait for the error to be handled
+      await waitFor(() => {
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+      })
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+        action: 'getRetrievalGranuleLinks',
+        error: new Error('An error occurred'),
+        resource: 'granule links'
+      })
     })
   })
 })

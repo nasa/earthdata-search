@@ -20,6 +20,8 @@ import Skeleton from '../Skeleton/Skeleton'
 // @ts-expect-error This file does not have types
 import { orderStatusSkeleton } from './skeleton'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './OrderStatusItem.scss'
 
 const { orderStatusRefreshTime, orderStatusRefreshTimeCreating } = getApplicationConfig()
@@ -52,19 +54,35 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
   onToggleAboutCSDAModal,
   retrievalId
 }) => {
+  const handleError = useEdscStore((state) => state.errors.handleError)
+
   const { obfuscatedId } = collection
 
   const [refreshInterval, setRefreshInterval] = useState(orderStatusRefreshTimeCreating)
 
   const {
     data: retrievalCollectionData = {},
+    error,
     loading
   } = useQuery(GET_RETRIEVAL_COLLECTION, {
     pollInterval: refreshInterval,
     variables: { obfuscatedId }
   })
+
+  useEffect(() => {
+    if (error) {
+      handleError({
+        error,
+        action: 'getRetrievalCollection',
+        resource: 'collection'
+      })
+    }
+  }, [error])
+
   const { retrievalCollection = {} } = retrievalCollectionData
 
+  // This useEffect is triggered when the `retrievalCollection` data changes
+  // It updates the refresh interval based on the order status
   useEffect(() => {
     const { retrievalOrders = [] } = retrievalCollection
     if (retrievalOrders.length > 0) {
@@ -74,11 +92,14 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
       if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
         setRefreshInterval(0)
       } else if (orderStatus === 'creating') {
+        // If the order is still creating, use the shorter refresh interval
         setRefreshInterval(orderStatusRefreshTimeCreating)
       } else {
+        // Default refresh interval for an in progress order
         setRefreshInterval(orderStatusRefreshTime)
       }
     } else {
+      // If there are no retrieval orders, stop refreshing (download or opendap types)
       setRefreshInterval(0)
     }
   }, [retrievalCollection])
@@ -105,31 +126,32 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
 
   const { type: accessMethodType = '' } = accessMethod
 
-  let OrderStatusComponent = null
+  let OrderStatusItemComponent = null
 
+  // Determine the appropriate OrderStatusItemComponent based on the access method type
   switch (accessMethodType.toLowerCase()) {
     case 'echo orders':
-      OrderStatusComponent = EchoOrderStatusItem
+      OrderStatusItemComponent = EchoOrderStatusItem
       break
     case 'esi':
-      OrderStatusComponent = EsiStatusItem
+      OrderStatusItemComponent = EsiStatusItem
       break
     case 'harmony':
-      OrderStatusComponent = HarmonyStatusItem
+      OrderStatusItemComponent = HarmonyStatusItem
       break
     case 'opendap':
-      OrderStatusComponent = OpendapStatusItem
+      OrderStatusItemComponent = OpendapStatusItem
       break
     case 'swodlr':
-      OrderStatusComponent = SwodlrStatusItem
+      OrderStatusItemComponent = SwodlrStatusItem
       break
     default:
-      OrderStatusComponent = DownloadStatusItem
+      OrderStatusItemComponent = DownloadStatusItem
       break
   }
 
   return (
-    <OrderStatusComponent
+    <OrderStatusItemComponent
       defaultOpen={defaultOpen}
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       retrievalCollection={retrievalCollection}
