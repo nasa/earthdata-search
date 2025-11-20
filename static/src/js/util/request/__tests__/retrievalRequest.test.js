@@ -54,20 +54,6 @@ describe('RetrievalRequest#all', () => {
   })
 })
 
-describe('RetrievalRequest#fetch', () => {
-  test('calls Request#get', () => {
-    const request = new RetrievalRequest()
-
-    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
-
-    const projectId = '12345'
-    request.fetch(projectId)
-
-    expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('retrievals/12345')
-  })
-})
-
 describe('RetrievalRequest#remove', () => {
   test('calls Request#delete', () => {
     const token = '123'
@@ -80,37 +66,5 @@ describe('RetrievalRequest#remove', () => {
 
     expect(deleteMock).toBeCalledTimes(1)
     expect(deleteMock).toBeCalledWith('retrievals/12345')
-  })
-})
-
-describe('RetrievalRequest#submit', () => {
-  test('calls Request#post', () => {
-    const request = new RetrievalRequest()
-
-    const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
-
-    const params = {
-      collections: [],
-      environment: 'sit',
-      json_data: {}
-    }
-    request.submit(params)
-
-    expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('retrievals', params)
-  })
-})
-
-describe('RetrievalRequest#fetchLinks', () => {
-  test('calls Request#get', () => {
-    const request = new RetrievalRequest()
-
-    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
-
-    const params = '?id=1234'
-    request.fetchLinks(params)
-
-    expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('granule_links?id=1234&requestId=mock-request-id')
   })
 })

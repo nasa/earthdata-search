@@ -1,9 +1,9 @@
+import { v4 as uuidv4 } from 'uuid'
 import { mbr } from '@edsc/geo-utils'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { buildParams } from '../util/cmr/buildParams'
-import { getAuthorizerContext } from '../util/getAuthorizerContext'
 
 /**
  * Fetches opendap access method links from CMR
@@ -11,7 +11,7 @@ import { getAuthorizerContext } from '../util/getAuthorizerContext'
  * @param {Object} params.accessMethod Access method pulled from database
  * @param {String} params.collectionId Collection ID of links being retrieved
  * @param {String} params.earthdataEnvironment Earthdata environment of the links being retrieved
- * @param {Object} params.event Lambda event object
+ * @param {Object} params.edlToken EDL token for authentication
  * @param {Object} params.granuleParams Granule parameters used in retrieval
  * @param {Number} params.pageNum Page number of request to send
  * @param {String} params.requestId Request ID to include in requests
@@ -20,7 +20,7 @@ export const fetchOpendapLinks = async ({
   accessMethod,
   collectionId,
   earthdataEnvironment,
-  event,
+  edlToken,
   granuleParams,
   pageNum,
   requestId
@@ -101,10 +101,8 @@ export const fetchOpendapLinks = async ({
     'variables'
   ]
 
-  const { jwtToken } = getAuthorizerContext(event)
-
   const response = await doSearchRequest({
-    jwtToken,
+    jwtToken: edlToken,
     path: `/service-bridge/ous/collection/${collectionId}`,
     params: buildParams({
       body: JSON.stringify({ params: ousPayload }),
@@ -112,7 +110,7 @@ export const fetchOpendapLinks = async ({
       nonIndexedKeys,
       stringifyResult: false
     }),
-    requestId,
+    requestId: requestId || uuidv4(),
     earthdataEnvironment,
     providedHeaders: {
       Accept: 'application/vnd.cmr-service-bridge.v3+json'

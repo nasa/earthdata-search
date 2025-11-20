@@ -4,13 +4,20 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Create and return a string representing a script users can use to download links from CMR
- * @param {Array} granuleLinks Links to include in the download script
- * @param {Object} retrievalCollection The retrieval collection data from the database
+ * @param {Object} params The parameters for generating the download script
+ * @param {string} params.earthdataEnvironment The Earthdata environment
+ * @param {Array} params.granuleLinks Links to include in the download script
+ * @param {Object} params.retrievalCollection The retrieval collection data from the database
+ * @param {string} params.username The username for authentication
  */
-export const generateDownloadScript = (granuleLinks, retrievalCollection, earthdataEnvironment) => {
+export const generateDownloadScript = ({
+  earthdataEnvironment,
+  granuleLinks,
+  retrievalCollection,
+  username
+}) => {
   const {
-    collection_metadata: collectionMetadata = {},
-    urs_id: username
+    collectionMetadata = {}
   } = retrievalCollection
 
   const { isCSDA = false } = collectionMetadata

@@ -1,9 +1,12 @@
 import React from 'react'
 import { screen, within } from '@testing-library/react'
+import { useLocation, useParams } from 'react-router-dom'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
   const mockPortalFeatureContainer = jest.fn(({ children }) => (
@@ -25,15 +28,20 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   return mockPortalLinkContainer
 })
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search',
+    search: '',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  }),
+  useParams: jest.fn().mockReturnValue({})
+}))
+
 const setup = setupTest({
   Component: SecondaryToolbar,
-  defaultProps: {
-    location: {
-      pathname: '/search'
-    },
-    projectCollectionIds: [],
-    retrieval: {}
-  },
   defaultZustandState: {
     savedProject: {
       setProjectName: jest.fn()
@@ -263,8 +271,12 @@ describe('SecondaryToolbar component', () => {
     describe('when there are projectCollectionIds', () => {
       test('displays the My Project button', () => {
         setup({
-          overrideProps: {
-            projectCollectionIds: ['123']
+          overrideZustandState: {
+            project: {
+              collections: {
+                allIds: ['123']
+              }
+            }
           }
         })
 
@@ -274,14 +286,107 @@ describe('SecondaryToolbar component', () => {
 
     test('hovering over My Project renders a tool-tip', async () => {
       const { user } = setup({
-        overrideProps: {
-          projectCollectionIds: ['123']
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['123']
+            }
+          }
         }
       })
 
       await user.hover(screen.getByRole('button', { name: 'My Project' }))
 
       expect(await screen.findByText('View your project')).toBeVisible()
+    })
+  })
+
+  describe('Back to Project button', () => {
+    describe('when not on the downloads page', () => {
+      test('does not show the Back to Project button', () => {
+        setup({
+          overrideZustandState: {
+            user: {
+              edlToken: 'fakeauthkey',
+              ursProfile: {
+                firstName: 'First Name'
+              }
+            }
+          }
+        })
+
+        expect(screen.queryByText('Back to Project')).not.toBeInTheDocument()
+      })
+    })
+
+    describe('when on the downloads page', () => {
+      afterEach(() => {
+        useLocation.mockReturnValue({
+          pathname: '/search'
+        })
+
+        useParams.mockReturnValue({})
+      })
+
+      test('shows the Back to Project button', async () => {
+        useLocation.mockReturnValue({
+          pathname: '/downloads/12345'
+        })
+
+        useParams.mockReturnValue({
+          id: '12345'
+        })
+
+        setup({
+          overrideZustandState: {
+            user: {
+              edlToken: 'fakeauthkey',
+              ursProfile: {
+                firstName: 'First Name'
+              }
+            }
+          },
+          overrideApolloClientMocks: [{
+            request: {
+              query: GET_RETRIEVAL,
+              variables: {
+                obfuscatedId: '12345'
+              }
+            },
+            result: {
+              data: {
+                retrieval: {
+                  id: 'mock-id',
+                  obfuscatedId: '12345',
+                  retrievalCollections: [],
+                  jsondata: {
+                    source: '?p=!collectionId'
+                  }
+                }
+              }
+            }
+          }]
+        })
+
+        expect(await screen.findByText('Back to Project')).toBeInTheDocument()
+
+        expect(PortalLinkContainer).toHaveBeenCalledTimes(3)
+
+        // The first two calls don't have the `to` populated because the request hasn't finished
+        expect(PortalLinkContainer).toHaveBeenNthCalledWith(3, {
+          bootstrapVariant: 'light',
+          children: 'Back to Project',
+          className: 'secondary-toolbar__back focus-light',
+          icon: expect.any(Function),
+          label: 'Back to Project',
+          to: {
+            pathname: '/project',
+            search: '?p=!collectionId'
+          },
+          type: 'button',
+          updatePath: true
+        }, {})
+      })
     })
   })
 

@@ -1,19 +1,20 @@
 import { upperFirst } from 'lodash-es'
+import { ORDER_STATES } from '../sharedConstants/orderStates'
 
 export const orderStates = {
-  canceled: [
+  [ORDER_STATES.CANCELED]: [
     'canceled',
     'cancelled',
     'cancelling'
   ],
-  complete: [
-    'ready',
+  [ORDER_STATES.COMPLETE]: [
     'closed',
     'complete_with_errors',
     'complete',
+    'ready',
     'successful'
   ],
-  failed: [
+  [ORDER_STATES.FAILED]: [
     'closed_with_exceptions',
     'create_failed', // Custom EDSC status for orders that failed to create
     'error',
@@ -26,11 +27,12 @@ export const orderStates = {
     'submit_rejected',
     'unavailable'
   ],
-  in_progress: [
+  [ORDER_STATES.IN_PROGRESS]: [
     'accepted',
     'available',
     'generating',
     'in progress',
+    'in_progress',
     'initialized', // Custom EDSC status for orders that have been submitted but we dont have a status for yet
     'pending',
     'processing_with_exceptions',
@@ -38,13 +40,13 @@ export const orderStates = {
     'quoted_with_exceptions',
     'quoted',
     'quoting',
-    'running',
     'running_with_errors',
+    'running',
     'submitted_with_exceptions',
     'submitting',
     'validated'
   ],
-  creating: [
+  [ORDER_STATES.CREATING]: [
     'creating', // Custom EDSC status pertaining to orders before they are submitted
     'new'
   ]
@@ -78,25 +80,25 @@ export const getStateFromOrderStatus = (status) => {
  * @param {Array} orders An array of orders
  */
 export const aggregatedOrderStatus = (orders = []) => {
-  let orderStatus = 'creating'
+  let orderStatus = ORDER_STATES.CREATING
 
   // If no orders exist the state should return the default, creating
   if (orders.length === 0) return orderStatus
 
-  if (orders.some((order) => getStateFromOrderStatus(order.state) === 'in_progress')) {
-    orderStatus = 'in progress'
+  if (orders.some((order) => getStateFromOrderStatus(order.state) === ORDER_STATES.IN_PROGRESS)) {
+    orderStatus = ORDER_STATES.IN_PROGRESS
   }
 
-  if (orders.every((order) => getStateFromOrderStatus(order.state) === 'failed')) {
-    orderStatus = 'failed'
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === ORDER_STATES.FAILED)) {
+    orderStatus = ORDER_STATES.FAILED
   }
 
-  if (orders.every((order) => getStateFromOrderStatus(order.state) === 'complete')) {
-    orderStatus = 'complete'
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === ORDER_STATES.COMPLETE)) {
+    orderStatus = ORDER_STATES.COMPLETE
   }
 
-  if (orders.every((order) => getStateFromOrderStatus(order.state) === 'canceled')) {
-    orderStatus = 'canceled'
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === ORDER_STATES.CANCELED)) {
+    orderStatus = ORDER_STATES.CANCELED
   }
 
   return orderStatus

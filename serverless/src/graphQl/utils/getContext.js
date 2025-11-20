@@ -1,12 +1,18 @@
+import { SQSClient } from '@aws-sdk/client-sqs'
+
 import { validateToken } from '../../util/authorizer/validateToken'
 import { determineEarthdataEnvironment } from '../../util/determineEarthdataEnvironment'
 import { downcaseKeys } from '../../util/downcaseKeys'
 import getLoaders from './getLoaders'
 import DatabaseClient from './databaseClient'
+import { getSqsConfig } from '../../util/aws/getSqsConfig'
 
 const databaseClient = new DatabaseClient()
 
 const loaders = getLoaders({ databaseClient })
+
+// AWS SQS adapter
+let sqs
 
 /**
  * Gets the context for the GraphQL resolver
@@ -24,7 +30,9 @@ const getContext = async ({ event }) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const { username } = await validateToken(bearerToken.split(' ')[1], earthdataEnvironment)
+  const edlToken = bearerToken.split(' ')[1]
+
+  const { username } = await validateToken(edlToken, earthdataEnvironment)
 
   let user
 
@@ -36,11 +44,17 @@ const getContext = async ({ event }) => {
     })
   }
 
+  if (sqs == null) {
+    sqs = new SQSClient(getSqsConfig())
+  }
+
   return {
     databaseClient,
+    edlToken,
     earthdataEnvironment,
     bearerToken,
     loaders,
+    sqs,
     user
   }
 }

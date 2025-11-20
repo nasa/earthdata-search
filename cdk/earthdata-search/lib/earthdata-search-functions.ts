@@ -93,7 +93,6 @@ export class Functions extends Construct {
       adminApiGatewayResource,
       collectionsApiGatewayResource,
       opensearchApiGatewayResource,
-      retrievalCollectionsApiGatewayResource,
       retrievalsApiGatewayResource,
       retrievalsIdApiGatewayResource,
       scaleApiGatewayResource,
@@ -527,48 +526,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * Get Retrieval
-     */
-    const getRetrievalNestedStack = new cdk.NestedStack(scope, 'GetRetrievalNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getRetrievalNestedStack, 'GetRetrievalLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: retrievalsIdApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['GET'],
-        parentPath: 'retrievals',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/getRetrieval/handler.js',
-      functionName: 'getRetrieval',
-      functionNamePrefix
-    })
-
-    /**
-     * Get Retrieval Collection
-     */
-    const getRetrievalCollectionNestedStack = new cdk.NestedStack(scope, 'GetRetrievalCollectionNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getRetrievalCollectionNestedStack, 'GetRetrievalCollectionLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['GET'],
-        parentId: retrievalCollectionsApiGatewayResource.ref,
-        parentPath: 'retrieval_collections',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/getRetrievalCollection/handler.js',
-      functionName: 'getRetrievalCollection',
-      functionNamePrefix
-    })
-
-    /**
      * Get Saved Access Configs
      */
     const getSavedAccessConfigsNestedStack = new cdk.NestedStack(scope, 'GetSavedAccessConfigsNestedStack')
@@ -878,26 +835,6 @@ export class Functions extends Construct {
         queue: queues.userDataQueue
       },
       timeout: cdk.Duration.minutes(5)
-    })
-
-    /**
-     * Submit Retrieval
-     */
-    const submitRetrievalNestedStack = new cdk.NestedStack(scope, 'SubmitRetrievalNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(submitRetrievalNestedStack, 'SubmitRetrievalLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: retrievalsApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['POST'],
-        path: 'retrievals'
-      },
-      entry: '../../serverless/src/submitRetrieval/handler.js',
-      functionName: 'submitRetrieval',
-      functionNamePrefix
     })
   }
 }

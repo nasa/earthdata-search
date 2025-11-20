@@ -39,11 +39,15 @@ const buildPermissions = () => shield(
       colormaps: allow,
       project: allow,
       projects: isValidUser,
+      retrieval: isValidUser,
+      retrievalCollection: isValidUser,
+      retrieveGranuleLinks: isValidUser,
       user: isValidUser
     },
     Mutation: {
       '*': deny,
       createProject: allow,
+      createRetrieval: isValidUser,
       deleteProject: and(
         isValidUser,
         userOwnsProject

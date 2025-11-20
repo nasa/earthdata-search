@@ -17,10 +17,6 @@ import {
 } from './facets'
 
 import {
-  fetchRetrievalCollectionGranuleBrowseLinks,
-  fetchRetrievalCollectionGranuleLinks
-} from './granules'
-import {
   changeUrl,
   changePath,
   updateStore
@@ -46,8 +42,6 @@ import {
 } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
 import { getRegions } from './regions'
-import { fetchRetrieval, submitRetrieval } from './retrieval'
-import { fetchRetrievalCollection } from './retrievalCollection'
 import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
@@ -73,10 +67,6 @@ const actions = {
   deleteSubscription,
   exportSearch,
   fetchAdminRetrievalsMetrics,
-  fetchRetrieval,
-  fetchRetrievalCollection,
-  fetchRetrievalCollectionGranuleBrowseLinks,
-  fetchRetrievalCollectionGranuleLinks,
   generateNotebook,
   getGranuleSubscriptions,
   getRegions,
@@ -88,7 +78,6 @@ const actions = {
   onFacetsLoading,
   removeSubscriptionDisabledFields,
   requeueOrder,
-  submitRetrieval,
   toggleAboutCSDAModal,
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,

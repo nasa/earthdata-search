@@ -1,0 +1,150 @@
+{
+  "data": {
+    "retrievalCollection": {
+      "accessMethod": {
+        "mbr": {
+          "neLat": 38.99784,
+          "neLng": -76.89801,
+          "swLat": 38.78817,
+          "swLng": -77.15071
+        },
+        "type": "download"
+      },
+      "collectionMetadata": {
+        "title": "MODIS/Aqua Aerosol 5-Min L2 Swath 3km",
+        "isCsda": false,
+        "conceptId": "C1443528505-LAADS",
+        "shortName": "MYD04_3K",
+        "versionId": "6.1",
+        "dataCenter": "LAADS",
+        "relatedUrls": [
+          {
+            "urls": [
+              {
+                "url": "https://doi.org/10.5067/MODIS/MYD04_3K.061",
+                "type": "DATA SET LANDING PAGE",
+                "subtype": "",
+                "description": "The product landing page",
+                "urlContentType": "CollectionURL"
+              }
+            ],
+            "label": "Collection URL",
+            "contentType": "CollectionURL"
+          },
+          {
+            "urls": [
+              {
+                "url": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/",
+                "type": "GET DATA",
+                "getData": {
+                  "size": 0,
+                  "unit": "KB",
+                  "format": "Not provided",
+                  "mimeType": "text/html"
+                },
+                "subtype": "DIRECT DOWNLOAD",
+                "description": "Direct access to MYD04_3K C6.1 data set.",
+                "urlContentType": "DistributionURL"
+              },
+              {
+                "url": "https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MYD04_3K--61",
+                "type": "GET DATA",
+                "getData": {
+                  "size": 0,
+                  "unit": "KB",
+                  "format": "Not provided",
+                  "mimeType": "text/html"
+                },
+                "subtype": "LAADS",
+                "description": "Search and order products from LAADS website.",
+                "urlContentType": "DistributionURL"
+              },
+              {
+                "url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD04_3K/contents.html",
+                "type": "USE SERVICE API",
+                "subtype": "OPENDAP DATA",
+                "getService": {
+                  "dataId": "Not provided",
+                  "format": "Not provided",
+                  "dataType": "Not provided",
+                  "fullName": "Not provided",
+                  "mimeType": "text/html",
+                  "protocol": "HTTPS"
+                },
+                "description": "Direct access to product's OPeNDAP directory",
+                "urlContentType": "DistributionURL"
+              }
+            ],
+            "label": "Distribution URL",
+            "contentType": "DistributionURL"
+          },
+          {
+            "urls": [
+              {
+                "url": "https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/ATBD_MOD04_C005_rev2_0.pdf",
+                "type": "VIEW RELATED INFORMATION",
+                "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)",
+                "description": "Aerosol product ATBD",
+                "urlContentType": "PublicationURL"
+              },
+              {
+                "url": "https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/C061_Aerosol_Dark_Target_v2.pdf",
+                "type": "VIEW RELATED INFORMATION",
+                "subtype": "SCIENCE DATA PRODUCT SOFTWARE DOCUMENTATION",
+                "description": "The dark target 6.1 update document.",
+                "urlContentType": "PublicationURL"
+              },
+              {
+                "url": "https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/modis_deep_blue_c61_changes2.pdf",
+                "type": "VIEW RELATED INFORMATION",
+                "subtype": "SCIENCE DATA PRODUCT SOFTWARE DOCUMENTATION",
+                "description": "The MODIS deep blue aerosol version 6 to 6.1 change document",
+                "urlContentType": "PublicationURL"
+              }
+            ],
+            "label": "Publication URL",
+            "contentType": "PublicationURL"
+          },
+          {
+            "urls": [],
+            "label": "Visualization URL",
+            "contentType": "VisualizationURL"
+          },
+          {
+            "urls": [
+              {
+                "url": "https://doi.org/10.5067/MODIS/MYD04_3K.061",
+                "type": "DATA SET LANDING PAGE",
+                "description": "The product landing page",
+                "urlContentType": "CollectionURL",
+                "highlightedType": "Data Set Landing Page"
+              }
+            ],
+            "label": "Highlighted URL",
+            "contentType": "HighlightedURL"
+          }
+        ],
+        "isOpenSearch": false,
+        "relatedCollections": {
+          "count": 0,
+          "items": []
+        },
+        "directDistributionInformation": {
+          "region": "us-west-2",
+          "s3CredentialsApiEndpoint": "https://data.laadsdaac.earthdatacloud.nasa.gov/s3credentials",
+          "s3BucketAndObjectPrefixNames": [
+            "s3://prod-lads/MYD04_3K"
+          ],
+          "s3CredentialsApiDocumentationUrl": "https://data.laadsdaac.earthdatacloud.nasa.gov/s3credentialsREADME"
+        }
+      },
+      "granuleCount": 8,
+      "id": 247,
+      "obfuscatedId": "3154092254",
+      "retrievalId": 252,
+      "updatedAt": "2025-11-18T20:42:57.045Z",
+      "retrievalOrders": [],
+      "__typename": "RetrievalCollection"
+    }
+  }
+}

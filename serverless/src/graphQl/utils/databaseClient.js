@@ -11,6 +11,7 @@ const { env } = getApplicationConfig()
 export default class DatabaseClient {
   constructor() {
     this.dbConnection = null
+    this.transaction = null
   }
 
   /**
@@ -18,17 +19,49 @@ export default class DatabaseClient {
    * @returns {Promise<knex>} A promise that resolves to the database connection
    */
   async getDbConnection() {
+    // If a transaction is active, return it
+    if (this.transaction) return this.transaction
+
     if (!this.dbConnection) {
       try {
         this.dbConnection = await getDbConnection()
-      } catch {
+      } catch (error) {
         const errorMessage = 'Failed to connect to the database'
-        console.log(errorMessage)
+        console.log(errorMessage, error)
         throw new Error(errorMessage)
       }
     }
 
     return this.dbConnection
+  }
+
+  /**
+   * Starts a new database transaction
+   */
+  async startTransaction() {
+    const db = await this.getDbConnection()
+
+    this.transaction = await db.transaction()
+  }
+
+  /**
+   * Commits the current database transaction
+   */
+  async commitTransaction() {
+    if (this.transaction) {
+      await this.transaction.commit()
+      this.transaction = null
+    }
+  }
+
+  /**
+   * Rolls back the current database transaction
+   */
+  async rollbackTransaction() {
+    if (this.transaction) {
+      await this.transaction.rollback()
+      this.transaction = null
+    }
   }
 
   /**
@@ -52,9 +85,9 @@ export default class DatabaseClient {
       }
 
       return queryToPaginate
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to execute paginated query'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -83,9 +116,137 @@ export default class DatabaseClient {
         .returning('*')
 
       return project
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to create project'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Creates a new retrieval
+   * @param {Object} params - Parameters object
+   * @param {string} params.environment - The environment for the retrieval
+   * @param {Object} params.jsondata - The JSON data for the retrieval
+   * @param {string} params.token - The token associated with the retrieval
+   * @param {string} params.userId - The ID of the user creating the retrieval
+   * @returns {Promise<Object>} A promise that resolves to the created retrieval object
+   */
+  async createRetrieval({
+    environment,
+    jsondata,
+    token,
+    userId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const [retrieval] = await db('retrievals')
+        .returning([
+          'id',
+          'user_id',
+          'environment',
+          'jsondata',
+          'updated_at',
+          'created_at'
+        ])
+        .insert({
+          user_id: userId,
+          environment,
+          token,
+          jsondata
+        })
+
+      return retrieval
+    } catch (error) {
+      const errorMessage = 'Failed to create retrieval'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Creates a new retrieval collection
+   * @param {Object} params - Parameters object
+   * @param {string} params.accessMethod - The access method for the retrieval collection
+   * @param {string} params.collectionId - The ID of the collection
+   * @param {Object} params.collectionMetadata - Metadata for the collection
+   * @param {number} params.granuleCount - The count of granules
+   * @param {number} params.granuleLinkCount - The count of granule links
+   * @param {Object} params.granuleParams - Parameters for the granules
+   * @param {string} params.retrievalId - The ID of the retrieval
+   * @returns {Promise<Object>} A promise that resolves to the created retrieval collection object
+   */
+  async createRetrievalCollection({
+    accessMethod,
+    collectionId,
+    collectionMetadata,
+    granuleCount,
+    granuleLinkCount,
+    granuleParams,
+    retrievalId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const retrievalCollection = await db('retrieval_collections')
+        .returning([
+          'id',
+          'access_method',
+          'collection_id',
+          'collection_metadata',
+          'granule_params',
+          'granule_count',
+          'granule_link_count'
+        ])
+        .insert({
+          access_method: accessMethod,
+          collection_id: collectionId,
+          collection_metadata: collectionMetadata,
+          granule_count: granuleCount,
+          granule_link_count: granuleLinkCount,
+          granule_params: granuleParams,
+          retrieval_id: retrievalId
+        })
+
+      return retrievalCollection
+    } catch (error) {
+      const errorMessage = 'Failed to create retrieval collection'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Creates a new retrieval order
+   * @param {Object} params - Parameters object
+   * @param {Object} params.orderPayload - The payload for the order
+   * @param {string} params.retrievalCollectionId - The ID of the retrieval collection
+   * @param {string} params.type - The type of the retrieval order
+   * @returns {Promise<Object>} A promise that resolves to the created retrieval order object
+   */
+  async createRetrievalOrder({
+    orderPayload,
+    retrievalCollectionId,
+    type
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const [retrievalOrder] = await db('retrieval_orders')
+        .returning([
+          'id'
+        ])
+        .insert({
+          granule_params: orderPayload,
+          retrieval_collection_id: retrievalCollectionId,
+          type
+        })
+
+      return retrievalOrder
+    } catch (error) {
+      const errorMessage = 'Failed to create retrieval order'
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -109,9 +270,42 @@ export default class DatabaseClient {
         .del()
 
       return result
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to delete project'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves access configuration for a given collection and user
+   * @param {Object} params - Parameters object
+   * @param {string} params.collectionId - The ID of the collection
+   * @param {string} params.userId - The ID of the user
+   * @returns {Promise<Array>} A promise that resolves to an array of access configurations
+   */
+  async getAccessConfiguration({
+    collectionId,
+    userId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const configs = await db('access_configurations')
+        .select(
+          'id',
+          'collection_id',
+          'access_method'
+        )
+        .where({
+          collection_id: collectionId,
+          user_id: userId
+        })
+
+      return configs
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve access configuration'
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -127,9 +321,9 @@ export default class DatabaseClient {
       return await db('users')
         .select('users.site_preferences')
         .where({ 'users.environment': env })
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve site preferences'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -145,20 +339,20 @@ export default class DatabaseClient {
 
       return await db('projects')
         .select(
-          'projects.id',
-          'projects.name',
-          'projects.path',
-          'projects.user_id',
-          'projects.created_at',
-          'projects.updated_at'
+          'id',
+          'name',
+          'path',
+          'user_id',
+          'created_at',
+          'updated_at'
         )
         .where({
-          'projects.id': deobfuscateId(parseInt(obfuscatedId, 10))
+          id: deobfuscateId(parseInt(obfuscatedId, 10))
         })
         .first()
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve project by ID'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -228,9 +422,9 @@ export default class DatabaseClient {
         limit,
         offset
       })
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve user projects'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -296,38 +490,123 @@ export default class DatabaseClient {
         limit,
         offset
       })
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve user retrievals'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
 
   /**
    * Retrieves a retrieval by its obfuscated ID
-   * @param {number} obfuscatedId The ID of the retrieval to retrieve
+   * @param {string} obfuscatedId The ID of the retrieval to retrieve
+   * @param {number} [userId] The ID of the user (optional)
    * @returns {Promise<Object>} A promise that resolves to the retrieval object
    */
-  async getRetrievalByObfuscatedId(obfuscatedId) {
+  async getRetrievalByObfuscatedId(obfuscatedId, userId) {
     try {
       const db = await this.getDbConnection()
 
+      const where = {
+        id: deobfuscateId(parseInt(obfuscatedId, 10))
+      }
+
+      if (userId) {
+        where.user_id = userId
+      }
+
       return await db('retrievals')
         .select(
-          'retrievals.id',
-          'retrievals.user_id',
-          'retrievals.jsondata',
-          'retrievals.environment',
-          'retrievals.created_at',
-          'retrievals.updated_at'
+          'id',
+          'user_id',
+          'jsondata',
+          'environment',
+          'created_at',
+          'updated_at'
         )
+        .where(where)
+        .first()
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve retrieval by ID'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves a retrieval collection by its obfuscated ID
+   * @param {string} obfuscatedId The obfuscated ID of the retrieval collection
+   * @param {number} userId The ID of the user
+   * @returns {Promise<Object>} A promise that resolves to the retrieval collection object
+   */
+  async getRetrievalCollectionByObfuscatedId(obfuscatedId, userId) {
+    try {
+      const db = await this.getDbConnection()
+
+      return await db('retrieval_collections')
+        .select(
+          'retrieval_collections.id',
+          'retrieval_collections.retrieval_id',
+          'retrieval_collections.access_method',
+          'retrieval_collections.collection_id',
+          'retrieval_collections.collection_metadata',
+          'retrieval_collections.granule_params',
+          'retrieval_collections.granule_count',
+          'retrieval_collections.granule_link_count',
+          'retrieval_collections.updated_at',
+          'retrieval_orders.id AS retrieval_order_id',
+          'retrieval_orders.type',
+          'retrieval_orders.order_number',
+          'retrieval_orders.order_information',
+          'retrieval_orders.state',
+          'retrieval_orders.error',
+          'retrieval_orders.updated_at as retrieval_order_updated_at'
+        )
+        .leftJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .join('users', { 'retrievals.user_id': 'users.id' })
         .where({
-          'retrievals.id': deobfuscateId(parseInt(obfuscatedId, 10))
+          'retrieval_collections.id': deobfuscateId(parseInt(obfuscatedId, 10)),
+          'users.id': userId
         })
         .first()
-    } catch {
-      const errorMessage = 'Failed to retrieve retrieval by ID'
-      console.log(errorMessage)
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve retrieval collection by ID'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves retrieval collections for granule links
+   * @param {number} retrievalCollectionId - The ID of the retrieval collection
+   * @param {number} userId - The ID of the user
+   * @returns {Promise<Array>} A promise that resolves to an array of retrieval collections
+   */
+  async getRetrievalCollectionsForGranuleLinks(retrievalCollectionId, userId) {
+    try {
+      const db = await this.getDbConnection()
+
+      const rows = await db('retrieval_collections')
+        .select(
+          'retrieval_collections.access_method',
+          'retrieval_collections.collection_id',
+          'retrieval_collections.collection_metadata',
+          'retrieval_collections.granule_params',
+          'retrieval_orders.order_information'
+        )
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .leftJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+        .join('users', { 'retrievals.user_id': 'users.id' })
+        .where({
+          'retrieval_collections.id': retrievalCollectionId,
+          'users.id': userId
+        })
+
+      return rows
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve retrieval collections for granule links'
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -356,9 +635,9 @@ export default class DatabaseClient {
         .whereIn('retrieval_collections.retrieval_id', retrievalIds)
 
       return result
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve retrieval collections by ID'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -384,9 +663,9 @@ export default class DatabaseClient {
         .whereIn('retrieval_orders.retrieval_collection_id', retrievalCollectionIds)
 
       return result
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve retrieval orders by ID'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -409,9 +688,9 @@ export default class DatabaseClient {
         )
         .where({ 'users.id': userId })
         .first()
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve user by ID'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -436,9 +715,9 @@ export default class DatabaseClient {
         .first()
 
       return result
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve user using where object'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -458,9 +737,9 @@ export default class DatabaseClient {
           'users.urs_id'
         )
         .whereIn('users.id', userIds)
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to retrieve users by ID'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -496,9 +775,78 @@ export default class DatabaseClient {
         .returning('*')
 
       return project
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to update project'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Saves a new access configuration
+   * @param {Object} params - Parameters object
+   * @param {string} params.accessMethod - The access method
+   * @param {string} params.collectionId - The ID of the collection
+   * @param {string} params.userId - The ID of the user
+   * @returns {Promise<Object>} A promise that resolves to the saved access configuration
+   */
+  async saveAccessConfiguration({
+    accessMethod,
+    collectionId,
+    userId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const accessConfiguration = await db('access_configurations')
+        .insert({
+          access_method: accessMethod,
+          collection_id: collectionId,
+          user_id: userId,
+          created_at: new Date(),
+          updated_at: new Date()
+        })
+
+      return accessConfiguration
+    } catch (error) {
+      const errorMessage = 'Failed to save access configuration'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Updates an existing access configuration
+   * @param {Object} params - Parameters object
+   * @param {string} params.accessMethod - The access method
+   * @param {Object} identifiers - Identifiers object
+   * @param {string} identifiers.collectionId - The ID of the collection
+   * @param {string} identifiers.userId - The ID of the user
+   * @returns {Promise<number>} A promise that resolves to the number of rows updated
+   */
+  async updateAccessConfiguration({
+    accessMethod
+  }, {
+    collectionId,
+    userId
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('access_configurations')
+        .where({
+          collection_id: collectionId,
+          user_id: userId
+        })
+        .update({
+          access_method: accessMethod,
+          updated_at: new Date()
+        })
+
+      return result
+    } catch (error) {
+      const errorMessage = 'Failed to update access configuration'
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }
@@ -528,9 +876,9 @@ export default class DatabaseClient {
         ])
 
       return user
-    } catch {
+    } catch (error) {
       const errorMessage = 'Failed to update site preferences'
-      console.log(errorMessage)
+      console.log(errorMessage, error)
       throw new Error(errorMessage)
     }
   }

@@ -20,7 +20,7 @@ import './BrowseLinksPanel.scss'
  * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
 */
-export const BrowseLinksPanel = ({
+const BrowseLinksPanel = ({
   accessMethodType,
   browseUrls,
   granuleCount,

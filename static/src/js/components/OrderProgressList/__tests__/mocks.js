@@ -2,9 +2,9 @@ export const retrievalStatusPropsEsi = {
   orders: [
     {
       type: 'ESI',
-      order_number: '5000000333461',
+      orderNumber: '5000000333461',
       state: 'complete',
-      order_information: {
+      orderInformation: {
         downloadUrls: {
           downloadUrl: [
             'https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html',
@@ -24,9 +24,9 @@ export const retrievalStatusPropsEsi = {
     },
     {
       type: 'ESI',
-      order_number: '5000000333462',
+      orderNumber: '5000000333462',
       state: 'processing',
-      order_information: {
+      orderInformation: {
         downloadUrls: {
           downloadUrl: [
             'https://n5eil02u.ecs.nsidc.org/esir/5000000333462.html',
@@ -50,8 +50,8 @@ export const retrievalStatusPropsEsi = {
 export const retrievalStatusPropsSwodlrOrder = {
   id: 1,
   type: 'SWODLR',
-  order_number: 'e7efe743-f253-43e3-b017-74faa8bdfcf1',
-  order_information: {
+  orderNumber: 'e7efe743-f253-43e3-b017-74faa8bdfcf1',
+  orderInformation: {
     jobId: '318f172c-3faa-4ad4-ad5e-ac9f8ec8572f',
     reason: null,
     status: 'complete',
@@ -73,8 +73,8 @@ export const retrievalStatusPropsSwodlrOrder = {
 export const retrievalStatusPropsHarmonyOrder = {
   id: 1,
   type: 'Harmony',
-  order_number: '9f6fc038-0966-4a27-8220-2a0c7eff6078',
-  order_information: {
+  orderNumber: '9f6fc038-0966-4a27-8220-2a0c7eff6078',
+  orderInformation: {
     createdAt: '2024-11-21T17:54:51.995Z',
     dataExpiration: '2024-12-21T17:54:51.995Z',
     jobID: '9f6fc038-0966-4a27-8220-2a0c7eff6078',
@@ -94,8 +94,8 @@ export const retrievalStatusPropsHarmonyOrder = {
 export const retrievalStatusPropsHarmonyOrderInProgress = {
   id: 1,
   type: 'Harmony',
-  order_number: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
-  order_information: {
+  orderNumber: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
+  orderInformation: {
     createdAt: '2024-11-21T17:54:51.995Z',
     dataExpiration: '2024-12-21T17:54:51.995Z',
     jobID: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
@@ -114,7 +114,7 @@ export const retrievalStatusPropsHarmonyOrderInProgress = {
 export const retrievalStatusPropsUponRequestOrder = {
   id: 1,
   type: 'Harmony',
-  order_number: '',
+  orderNumber: '',
   state: 'running',
   error: null
 }

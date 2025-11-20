@@ -15,7 +15,6 @@ const setup = setupTest({
   Component: ChunkedOrderModalContainer,
   defaultProps: {
     isOpen: true,
-    onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
   }
 })
@@ -29,16 +28,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(false)
-  })
-
-  test('onSubmitRetrieval calls actions.submitRetrieval', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'submitRetrieval')
-
-    mapDispatchToProps(dispatch).onSubmitRetrieval()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith()
   })
 })
 
@@ -67,7 +56,6 @@ describe('ChunkedOrderModalContainer component', () => {
     expect(ChunkedOrderModal).toHaveBeenCalledTimes(1)
     expect(ChunkedOrderModal).toHaveBeenCalledWith({
       isOpen: true,
-      onSubmitRetrieval: expect.any(Function),
       onToggleChunkedOrderModal: expect.any(Function)
     }, {})
   })

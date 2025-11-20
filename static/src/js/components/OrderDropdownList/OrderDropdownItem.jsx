@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 
 import './OrderDropdownItem.scss'
 
-export const OrderDropdownItem = ({
+const OrderDropdownItem = ({
   index,
   order,
   totalOrders
 }) => {
   const {
-    order_number: orderId,
-    order_information: orderInformation
+    orderNumber: orderId,
+    orderInformation
   } = order
 
   const {
@@ -46,8 +46,8 @@ export const OrderDropdownItem = ({
 OrderDropdownItem.propTypes = {
   index: PropTypes.number.isRequired,
   order: PropTypes.shape({
-    order_number: PropTypes.string,
-    order_information: PropTypes.shape({
+    orderNumber: PropTypes.string,
+    orderInformation: PropTypes.shape({
       downloadUrls: PropTypes.shape({})
     })
   }).isRequired,

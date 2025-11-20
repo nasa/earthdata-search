@@ -1,27 +1,16 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import { OrderProgressList } from '../OrderProgressList'
 
 import { retrievalStatusPropsEsi } from './mocks'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-beforeEach(() => {
-  jest.clearAllMocks()
+const setup = setupTest({
+  Component: OrderProgressList,
+  defaultProps: {
+    retrievalOrders: retrievalStatusPropsEsi.orders
+  }
 })
-
-const setup = () => {
-  const { orders } = retrievalStatusPropsEsi
-
-  const props = {
-    orders
-  }
-
-  render(<OrderProgressList {...props} />)
-
-  return {
-    props
-  }
-}
 
 describe('OrderProgressList component', () => {
   test('is displayed', () => {

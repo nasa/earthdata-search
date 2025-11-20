@@ -14,7 +14,7 @@ import MetricsContainer from '../../containers/MetricsContainer/MetricsContainer
 // @ts-expect-error The file does not have types
 import PortalContainer from '../../containers/PortalContainer/PortalContainer'
 // @ts-expect-error The file does not have types
-import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
 // @ts-expect-error The file does not have types
 import UrlQueryContainer from '../../containers/UrlQueryContainer/UrlQueryContainer'
 // @ts-expect-error The file does not have types
@@ -31,7 +31,7 @@ const AppLayout = () => (
       <UserLoader>
         <UrlQueryContainer>
           <WrappingContainer>
-            <SecondaryToolbarContainer />
+            <SecondaryToolbar />
             <Outlet />
           </WrappingContainer>
           <Footer />

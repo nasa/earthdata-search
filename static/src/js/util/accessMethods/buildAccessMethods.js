@@ -1,12 +1,17 @@
 import { camelCase } from 'lodash-es'
 
-import * as accessMethodTypes from '../../constants/accessMethodTypes'
 import { buildEcho } from './buildAccessMethods/buildEcho'
 import { buildEsi } from './buildAccessMethods/buildEsi'
 import { buildOpendap } from './buildAccessMethods/buildOpendap'
 import { buildHarmony } from './buildAccessMethods/buildHarmony'
 import { buildSwodlr } from './buildAccessMethods/buildSwodlr'
 import { buildDownload } from './buildAccessMethods/buildDownload'
+
+const ECHO_ORDERS = 'echoOrders'
+const ESI = 'esi'
+const OPENDAP = 'opendap'
+const HARMONY = 'harmony'
+const SWODLR = 'swodlr'
 
 /**
  * Formats a service type into a lower case and camelCase version
@@ -37,27 +42,27 @@ export const reduceAccessMethods = (items = []) => {
     const updatedAccessMethods = { ...methods }
 
     switch (methodKey) {
-      case (accessMethodTypes.ESI):
+      case (ESI):
         updatedAccessMethods[`${methodKey}${esiIndex}`] = item
 
         esiIndex += 1
         break
-      case (accessMethodTypes.ECHO_ORDERS):
+      case (ECHO_ORDERS):
         updatedAccessMethods[`${methodKey}${echoIndex}`] = item
 
         echoIndex += 1
         break
-      case (accessMethodTypes.HARMONY):
+      case (HARMONY):
         updatedAccessMethods[`${methodKey}${harmonyIndex}`] = item
 
         harmonyIndex += 1
         break
       // No need to create a "accessMethodKey" since you can only have one openDap or SWODLR
-      case (accessMethodTypes.OPENDAP):
+      case (OPENDAP):
         updatedAccessMethods[methodKey] = item
 
         break
-      case (accessMethodTypes.SWODLR):
+      case (SWODLR):
         updatedAccessMethods[methodKey] = item
 
         break
@@ -110,7 +115,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     const formattedServiceType = formatServiceType(serviceType)
 
     // Only process service types that EDSC supports
-    if (!Object.values(accessMethodTypes).includes(formattedServiceType)) return {}
+    if (![ESI, ECHO_ORDERS, HARMONY, OPENDAP, SWODLR].includes(formattedServiceType)) return {}
 
     const params = {
       associatedVariables

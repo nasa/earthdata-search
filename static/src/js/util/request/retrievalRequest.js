@@ -18,16 +18,4 @@ export default class RetrievalRequest extends Request {
   remove(id) {
     return this.delete(`retrievals/${id}`)
   }
-
-  fetch(id) {
-    return this.get(`retrievals/${id}`)
-  }
-
-  submit(params) {
-    return this.post('retrievals', params)
-  }
-
-  fetchLinks(paramString) {
-    return this.get(`granule_links${paramString}&requestId=${this.requestId}`)
-  }
 }

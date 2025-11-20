@@ -9,24 +9,27 @@ import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../share
 
 import ExternalLink from '../ExternalLink/ExternalLink'
 
+import { ACCESS_METHOD_TYPES } from '../../../../../sharedConstants/accessMethodTypes'
+import { ORDER_STATES } from '../../../../../sharedConstants/orderStates'
+
 import './OrderProgressItem.scss'
 
 export const OrderProgressItem = ({
-  order
+  retrievalOrder
 }) => {
   const {
-    order_number: orderId,
+    orderNumber: orderId,
     state: orderStatus,
-    order_information: orderInformation = {},
+    orderInformation = {},
     type
-  } = order
+  } = retrievalOrder
 
   let numGranulesProccessed
   let totalGranulesInOrder
   let totalPercentProcessed
   let jobInformationHref
 
-  if (type === 'Harmony') {
+  if (type === ACCESS_METHOD_TYPES.HARMONY) {
     const { progress = 0, request = '' } = orderInformation
     totalPercentProcessed = progress
 
@@ -40,7 +43,7 @@ export const OrderProgressItem = ({
     jobInformationHref = domainName && orderId ? `${domainName}/workflow-ui/${orderId}` : null
   }
 
-  if (type === 'ESI') {
+  if (type === ACCESS_METHOD_TYPES.ESI) {
     const { requestStatus = {} } = orderInformation
 
     const {
@@ -61,7 +64,7 @@ export const OrderProgressItem = ({
   // Grab the order status if it exists and check if it's complete
   const { status = 'created' } = orderInformation
 
-  if (type === 'SWODLR' && status === 'complete') {
+  if (type === ACCESS_METHOD_TYPES.SWODLR && status === ORDER_STATES.COMPLETE) {
     totalPercentProcessed = 100
   }
 
@@ -106,7 +109,7 @@ export const OrderProgressItem = ({
         </div>
       </header>
       {
-        type === 'Harmony' && jobInformationHref && (
+        type === ACCESS_METHOD_TYPES.HARMONY && jobInformationHref && (
           <ExternalLink href={jobInformationHref}>
             View Harmony Job Information
           </ExternalLink>
@@ -121,10 +124,10 @@ export const OrderProgressItem = ({
 }
 
 OrderProgressItem.propTypes = {
-  order: PropTypes.shape({
-    order_number: PropTypes.string,
+  retrievalOrder: PropTypes.shape({
+    orderNumber: PropTypes.string,
     state: PropTypes.string,
-    order_information: PropTypes.shape({}),
+    orderInformation: PropTypes.shape({}),
     type: PropTypes.string
   }).isRequired
 }

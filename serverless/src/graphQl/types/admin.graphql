@@ -44,134 +44,6 @@ type AdminPreferencesMetrics {
   baseLayer: [AdminPreferencesEntry]
 }
 
-type AdminRetrievalCollections {
-  "Unique identifier for the collection"
-  id: Int
-
-  "ID of the retrieval this collection belongs to"
-  retrievalId: Int
-
-  "Method used to access the collection"
-  accessMethod: String
-
-  "ID of the collection"
-  collectionId: String
-
-  "Metadata associated with the collection"
-  collectionMetadata: String
-
-  "Parameters used to retrieve granules"
-  granuleParams: String
-
-  "Count of granules retrieved"
-  granuleCount: Int
-
-  "Timestamp of when the collection was last updated"
-  updatedAt: DateTime
-
-  "Timestamp of when the collection was created"
-  createdAt: DateTime
-
-  "Count of links to granules in the collection"
-  granuleLinkCount: Int
-}
-
-enum AccessMethodType {
-  "ECHO Orders access method"
-  ECHO_ORDERS
-  "ESI access method"
-  ESI
-  "OPeNDAP access method"
-  OPENDAP
-  "Harmony access method"
-  HARMONY
-  "SWODLR access method"
-  SWODLR
-}
-
-type ServiceOptionDefinition {
-  "Unique identifier for the service option"
-  id: String
-
-  "Name of the service option"
-  name: String
-}
-
-type AccessMethod {
-  "Unique identifier for the access method"
-  id: Int
-
-  "URL for the access method"
-  url: String
-
-  "Form used to access the collection"
-  form: String
-
-  "Type of access method"
-  type: AccessMethodType
-
-  "The form model"
-  model: String
-
-  "Indicates if the access method is valid"
-  isValid: Boolean
-
-  "Raw form model used for the access method"
-  rawModel: String
-
-  "Timestamp of when the access method was last updated"
-  updatedAt: DateTime
-
-  "Digest of the form used for the access method"
-  formDigest: String
-
-  "Service option definition for the access method"
-  serviceOptionDefinition: ServiceOptionDefinition
-}
-
-type AdminRetrievalCollection {
-  "ID of the retrieval collection"
-  id: Int
-
-  "Method used to access the collection"
-  accessMethod: JSON
-
-  "ID of the collection"
-  collectionId: String
-
-  "The collection metadata"
-  collectionMetadata: JSON
-
-  "Orders associated with the retrieval"
-  retrievalOrders: [AdminRetrievalOrder]
-
-  "Count of granules retrieved"
-  granuleCount: Int
-
-  "Timestamp of when the collection was last updated"
-  updatedAt: DateTime
-
-  "Timestamp of when the collection was created"
-  createdAt: DateTime
-}
-
-type AdminRetrievalOrder {
-  "ID of the retrieval order"
-  id: Int
-
-  "State of the retrieval order"
-  state: String
-
-  "Order number of the retrieval order"
-  orderNumber: String
-
-  "Information about the retrieval order"
-  orderInformation: JSON
-
-  "Type of the retrieval order"
-  type: String
-}
-
 input AdminProjectInput {
   "Obfuscated ID to filter by"
   obfuscatedId: String
@@ -205,32 +77,6 @@ input AdminProjectsInput {
   obfuscatedId: String
 }
 
-type AdminRetrieval {
-  "ID of the retrieval"
-  id: Int
-
-  "Obfuscated ID of the retrieval"
-  obfuscatedId: String
-
-  "User who initiated the retrieval"
-  user: User
-
-  "JSON representation of the retrieval data"
-  jsondata: JSON
-
-  "Environment in which the retrieval was made"
-  environment: String
-
-  "Collections associated with the retrieval"
-  retrievalCollections: [AdminRetrievalCollection]
-
-  "Timestamp of when the retrieval was last updated"
-  updatedAt: DateTime
-
-  "Timestamp of when the retrieval was created"
-  createdAt: DateTime
-}
-
 input AdminRetrievalInput {
   "Obfuscated ID to filter by"
   obfuscatedId: String
@@ -238,7 +84,7 @@ input AdminRetrievalInput {
 
 type AdminRetrievals {
   "List of retrievals"
-  adminRetrievals: [AdminRetrieval]
+  adminRetrievals: [Retrieval]
 
   "Pagination information"
   pageInfo: PageInfo
@@ -278,7 +124,7 @@ type Query {
   adminProjects(params: AdminProjectsInput): AdminProjects
 
   "Retrieves admin retrieval information"
-  adminRetrieval(params: AdminRetrievalInput!): AdminRetrieval
+  adminRetrieval(params: AdminRetrievalInput!): Retrieval
 
   "Retrieves retrievals"
   adminRetrievals(params: AdminRetrievalsInput): AdminRetrievals

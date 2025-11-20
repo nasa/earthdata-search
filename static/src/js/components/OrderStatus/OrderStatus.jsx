@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { ArrowCircleRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import ExternalLink from '../ExternalLink/ExternalLink'
 import OrderStatusList from './OrderStatusList'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import RelatedCollection from '../RelatedCollection/RelatedCollection'
@@ -18,60 +19,45 @@ import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { stringify } from '../../util/url/url'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getEdlToken } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import { routes } from '../../constants/routes'
+
+import { useGetRetrieval } from '../../hooks/useGetRetrieval'
 
 import './OrderStatus.scss'
 
 /**
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.granuleDownload - Data pertaining to the status of the granule download for a retrieval collection.
  * @param {Function} props.onChangePath - Selects an access method.
- * @param {Function} props.onFetchRetrieval - Fetches a retrieval from the database.
- * @param {Function} props.onFetchRetrievalCollection - Fetches a retrieval collection from the database.
- * @param {Function} props.onFetchRetrievalCollectionGranuleLinks - Passed down to child components, method to fetch granules for a given retrieval collection.
  * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
  * @param {Function} props.onToggleAboutCSDAModal - Callback to toggle the About CSDA Modal.
-
  */
-export const OrderStatus = ({
-  granuleDownload,
+const OrderStatus = ({
   onChangePath,
-  onFetchRetrieval,
-  onFetchRetrievalCollection,
-  onFetchRetrievalCollectionGranuleLinks,
-  onFetchRetrievalCollectionGranuleBrowseLinks,
   onMetricsRelatedCollection,
-  onToggleAboutCSDAModal,
-  retrieval
+  onToggleAboutCSDAModal
 }) => {
   const params = useParams()
-  const { id: paramsId } = params
-
-  const edlToken = useEdscStore(getEdlToken)
-  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
-
-  useEffect(() => {
-    if (edlToken !== '') {
-      const { id: retrievalId } = params
-
-      onFetchRetrieval(retrievalId, edlToken)
-    }
-  }, [edlToken])
+  const { id: retrievalId } = params
 
   const {
-    collections,
-    id: loadedId,
-    isLoaded,
-    isLoading,
-    jsondata = {},
-    links = []
+    loading,
+    retrieval
+  } = useGetRetrieval()
+
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+
+  const {
+    retrievalCollections = [],
+    obfuscatedId: loadedId,
+    jsondata = {}
   } = retrieval
 
-  const { byId = {} } = collections
+  const retrievalCollectionLinks = retrievalCollections.map(
+    (retrievalCollection) => retrievalCollection.links
+  ).flat().filter(Boolean)
 
   const [filteredRelatedCollectionItems, setFilteredRelatedCollections] = useState([])
 
@@ -80,9 +66,9 @@ export const OrderStatus = ({
   useEffect(() => {
     const relatedCollectionItems = []
 
-    if (!isLoading && isLoaded) {
-      Object.values(byId).forEach((retrievalCollection) => {
-        const { collection_metadata: metadata } = retrievalCollection
+    if (!loading) {
+      retrievalCollections.forEach((retrievalCollection) => {
+        const { collectionMetadata: metadata = {} } = retrievalCollection
 
         const { relatedCollections } = metadata
 
@@ -101,56 +87,21 @@ export const OrderStatus = ({
       setFilteredRelatedCollections(relatedCollectionItems
         .sort(() => 0.5 - Math.random()).slice(0, 3))
     }
-  }, [isLoading, isLoaded])
+  }, [loading])
 
   const { source } = jsondata
-
-  let {
-    download: downloads = [],
-    opendap: opendapOrders = [],
-    echo_orders: echoOrders = [],
-    esi: esiOrders = [],
-    harmony: harmonyOrders = [],
-    swodlr: swodlrOrders = []
-  } = collections
-
-  const collectionsById = Object.values(byId)
-
-  downloads = collectionsById.filter(
-    ({ id: collectionId }) => downloads.includes(collectionId)
-  )
-
-  opendapOrders = collectionsById.filter(
-    ({ id: collectionId }) => opendapOrders.includes(collectionId)
-  )
-
-  echoOrders = collectionsById.filter(
-    ({ id: collectionId }) => echoOrders.includes(collectionId)
-  )
-
-  esiOrders = collectionsById.filter(
-    ({ id: collectionId }) => esiOrders.includes(collectionId)
-  )
-
-  harmonyOrders = collectionsById.filter(
-    ({ id: collectionId }) => harmonyOrders.includes(collectionId)
-  )
-
-  swodlrOrders = collectionsById.filter(
-    ({ id: collectionId }) => swodlrOrders.includes(collectionId)
-  )
 
   const { edscHost } = getEnvironmentConfig()
 
   const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
-  const shouldShowLoading = paramsId !== loadedId || (isLoading && !isLoaded)
+  const shouldShowLoading = loading
 
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-      <a href={`${edscHost}${routes.DOWNLOADS}/${paramsId}${eeLink}`}>
-        {`${edscHost}${routes.DOWNLOADS}/${paramsId}${eeLink}`}
+      <a href={`${edscHost}${routes.DOWNLOADS}/${retrievalId}${eeLink}`}>
+        {`${edscHost}${routes.DOWNLOADS}/${retrievalId}${eeLink}`}
       </a>
       {' or the '}
       <PortalLinkContainer
@@ -166,15 +117,6 @@ export const OrderStatus = ({
       {' page.'}
     </p>
   )
-
-  const allCollections = [
-    ...downloads,
-    ...opendapOrders,
-    ...echoOrders,
-    ...esiOrders,
-    ...harmonyOrders,
-    ...swodlrOrders
-  ]
 
   return (
     <>
@@ -205,17 +147,10 @@ export const OrderStatus = ({
               )
             }
             {
-              isLoaded && (
+              loadedId && (
                 <OrderStatusList
-                  collections={allCollections}
-                  earthdataEnvironment={earthdataEnvironment}
-                  granuleDownload={granuleDownload}
-                  onChangePath={onChangePath}
-                  onFetchRetrieval={onFetchRetrieval}
-                  onFetchRetrievalCollection={onFetchRetrievalCollection}
-                  onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
-                  // eslint-disable-next-line max-len
-                  onFetchRetrievalCollectionGranuleBrowseLinks={onFetchRetrievalCollectionGranuleBrowseLinks}
+                  retrievalCollections={retrievalCollections}
+                  retrievalId={retrievalId}
                   onToggleAboutCSDAModal={onToggleAboutCSDAModal}
                 />
               )
@@ -238,39 +173,44 @@ export const OrderStatus = ({
                 )
               }
               {
-                isLoaded && (
+                loadedId && (
                   <ul className="order-status__links">
                     {
-                      links && links.length > 0 && (
-                        links.map((link, index) => {
+                      retrievalCollectionLinks && retrievalCollectionLinks.length > 0 && (
+                        retrievalCollectionLinks.map((link, index) => {
                           const {
-                            dataset_id: datasetId,
+                            title,
                             links: linkLinks
                           } = link
+
+                          if (!linkLinks) return null
 
                           return (
                             <li
                               // eslint-disable-next-line react/no-array-index-key
-                              key={`${datasetId}_${index}`}
+                              key={`${title}_${index}`}
                               className="order-status__links-item"
                             >
-                              <h3 className="order-status__links-title">{datasetId}</h3>
+                              <h3 className="order-status__links-title">{title}</h3>
                               <ul className="order-status__collection-links">
                                 {
                                   linkLinks.map((linkObject) => {
-                                    const { href } = linkObject
+                                    const {
+                                      type,
+                                      url: linkUrl
+                                    } = linkObject
 
                                     return (
                                       <li
-                                        key={href}
+                                        key={linkUrl}
                                         className="order-status__collection-links-item"
                                       >
-                                        <a
-                                          href={href}
-                                          className="order-status__collection-link"
+                                        <ExternalLink
+                                          className="link--separated"
+                                          href={linkUrl}
                                         >
-                                          {href}
-                                        </a>
+                                          {type}
+                                        </ExternalLink>
                                       </li>
                                     )
                                   })
@@ -282,7 +222,7 @@ export const OrderStatus = ({
                       )
                     }
                     {
-                      (links && links.length === 0) && (
+                      (retrievalCollectionLinks && retrievalCollectionLinks.length === 0) && (
                         <li className="order-status__links-item">
                           No additional resources provided
                         </li>
@@ -293,7 +233,7 @@ export const OrderStatus = ({
               }
             </Well.Section>
             {
-              (isLoaded && (
+              (loadedId && (
                 filteredRelatedCollectionItems && filteredRelatedCollectionItems.length > 0
               )) && (
                 <>
@@ -384,30 +324,9 @@ export const OrderStatus = ({
 }
 
 OrderStatus.propTypes = {
-  granuleDownload: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onFetchRetrieval: PropTypes.func.isRequired,
-  onFetchRetrievalCollection: PropTypes.func.isRequired,
-  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
-  onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  retrieval: PropTypes.shape({
-    collections: PropTypes.shape({
-      byId: PropTypes.shape({}),
-      download: PropTypes.arrayOf(PropTypes.number),
-      opendap: PropTypes.arrayOf(PropTypes.number),
-      echo_orders: PropTypes.arrayOf(PropTypes.number),
-      esi: PropTypes.arrayOf(PropTypes.number),
-      harmony: PropTypes.arrayOf(PropTypes.number),
-      swodlr: PropTypes.arrayOf(PropTypes.number)
-    }),
-    id: PropTypes.string,
-    isLoaded: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    jsondata: PropTypes.shape({}),
-    links: PropTypes.arrayOf(PropTypes.shape({}))
-  }).isRequired
+  onToggleAboutCSDAModal: PropTypes.func.isRequired
 }
 
 export default OrderStatus

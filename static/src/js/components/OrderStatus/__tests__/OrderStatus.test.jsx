@@ -1,17 +1,17 @@
-import {
-  screen,
-  waitFor,
-  within
-} from '@testing-library/react'
 import React from 'react'
+import { screen, waitFor } from '@testing-library/react'
 import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { initalizedRetrievalStatusProps, retrievalStatusProps } from './mocks'
-import { OrderStatus } from '../OrderStatus'
-import Skeleton from '../../Skeleton/Skeleton'
 import * as config from '../../../../../../sharedUtils/config'
+import { retrievalStatus } from './mocks'
+
+import OrderStatus from '../OrderStatus'
+import Skeleton from '../../Skeleton/Skeleton'
+import OrderStatusList from '../OrderStatusList'
+
+import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'), // Preserve other exports
@@ -20,16 +20,33 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
+jest.mock('../OrderStatusList', () => jest.fn(() => <div />))
 jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: OrderStatus,
-  defaultProps: retrievalStatusProps,
+  defaultApolloClientMocks: [{
+    request: {
+      query: GET_RETRIEVAL,
+      variables: {
+        obfuscatedId: '7'
+      }
+    },
+    result: {
+      data: retrievalStatus
+    }
+  }],
+  defaultProps: {
+    onMetricsRelatedCollection: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
+    onChangePath: jest.fn()
+  },
   defaultZustandState: {
     user: {
       edlToken: 'testToken'
     }
   },
+  withApolloClient: true,
   withRedux: true,
   withRouter: true
 })
@@ -39,89 +56,166 @@ beforeEach(() => {
 })
 
 describe('OrderStatus component', () => {
-  test('renders itself correclty upon page load', () => {
-    setup({
-      overrideProps: initalizedRetrievalStatusProps
+  describe('when the retrieval is loading', () => {
+    test('renders skeletons', () => {
+      setup()
+
+      expect(screen.getByText('https://search.earthdata.nasa.gov/downloads/7')).toBeInTheDocument()
+      expect(Skeleton).toHaveBeenCalledTimes(2)
+      expect(Skeleton).toHaveBeenNthCalledWith(1, {
+        className: 'order-status__item-skeleton',
+        containerStyle: {
+          display: 'inline-block',
+          height: '175px',
+          width: '100%'
+        },
+        shapes: [{
+          height: 18,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 2,
+          width: 200
+        }, {
+          height: 14,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 31,
+          width: '80%'
+        }, {
+          height: 96,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 60,
+          width: '100%'
+        }]
+      }, {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(2, {
+        className: 'order-status__item-skeleton',
+        containerStyle: {
+          display: 'inline-block',
+          height: '175px',
+          width: '100%'
+        },
+        shapes: [{
+          height: 16,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 2,
+          width: '60%'
+        }, {
+          height: 14,
+          left: 20,
+          radius: 2,
+          shape: 'rectangle',
+          top: 31,
+          width: '50%'
+        }, {
+          height: 14,
+          left: 20,
+          radius: 2,
+          shape: 'rectangle',
+          top: 55,
+          width: '57%'
+        }]
+      }, {})
     })
-
-    expect(screen.getByText('https://search.earthdata.nasa.gov/downloads/7')).toBeInTheDocument()
-    expect(Skeleton).toHaveBeenCalledTimes(2)
-    expect(Skeleton).toHaveBeenNthCalledWith(1, {
-      className: 'order-status__item-skeleton',
-      containerStyle: {
-        display: 'inline-block',
-        height: '175px',
-        width: '100%'
-      },
-      shapes: [{
-        height: 18,
-        left: 0,
-        radius: 2,
-        shape: 'rectangle',
-        top: 2,
-        width: 200
-      }, {
-        height: 14,
-        left: 0,
-        radius: 2,
-        shape: 'rectangle',
-        top: 31,
-        width: '80%'
-      }, {
-        height: 96,
-        left: 0,
-        radius: 2,
-        shape: 'rectangle',
-        top: 60,
-        width: '100%'
-      }]
-    }, {})
-
-    expect(Skeleton).toHaveBeenNthCalledWith(2, {
-      className: 'order-status__item-skeleton',
-      containerStyle: {
-        display: 'inline-block',
-        height: '175px',
-        width: '100%'
-      },
-      shapes: [{
-        height: 16,
-        left: 0,
-        radius: 2,
-        shape: 'rectangle',
-        top: 2,
-        width: '60%'
-      }, {
-        height: 14,
-        left: 20,
-        radius: 2,
-        shape: 'rectangle',
-        top: 31,
-        width: '50%'
-      }, {
-        height: 14,
-        left: 20,
-        radius: 2,
-        shape: 'rectangle',
-        top: 55,
-        width: '57%'
-      }]
-    }, {})
   })
 
-  test('renders itself correctly after initial page load', () => {
-    setup()
+  describe('when the retrieval has loaded', () => {
+    test('renders and OrderStatusList', async () => {
+      const { props } = setup()
 
-    expect(screen.getByText('Download Status')).toBeInTheDocument()
-    expect(Skeleton).toHaveBeenCalledTimes(0)
+      expect(await screen.findByText('Download Status')).toBeInTheDocument()
+
+      expect(OrderStatusList).toHaveBeenCalledTimes(1)
+      expect(OrderStatusList).toHaveBeenCalledWith({
+        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
+        retrievalCollections: [{
+          collectionId: 'TEST_COLLECTION_111',
+          collectionMetadata: {
+            datasetId: 'Test Dataset ID',
+            id: 'TEST_COLLECTION_111',
+            relatedCollections: {
+              count: 3,
+              items: [{
+                doi: '1.TEST.DOI',
+                id: 'TEST_COLLECTION_1_1',
+                relationships: [{ relationshipType: 'relatedUrl' }],
+                title: 'Test Title 1_1'
+              }, {
+                doi: '2.TEST.DOI',
+                id: 'TEST_COLLECTION_2_1',
+                relationships: [{ relationshipType: 'relatedUrl' }],
+                title: 'Test Title 2_1'
+              }, {
+                doi: '3.TEST.DOI',
+                id: 'TEST_COLLECTION_3_1',
+                relationships: [{ relationshipType: 'relatedUrl' }],
+                title: 'Test Title 3_1'
+              }]
+            }
+          },
+          links: [{
+            links: [{
+              type: 'HOME PAGE',
+              url: 'http://linkurl.com/test'
+            }],
+            title: 'Test Dataset ID'
+          }],
+          obfuscatedId: '12345'
+        }, {
+          collectionId: 'TEST_COLLECTION_222',
+          collectionMetadata: {
+            datasetId: 'Test Dataset ID',
+            id: 'TEST_COLLECTION_222',
+            relatedCollections: {
+              count: 2,
+              items: [{
+                doi: '1.TEST.DOI',
+                id: 'TEST_COLLECTION_1_2',
+                relationships: [{ relationshipType: 'relatedUrl' }],
+                title: 'Test Title 1_2'
+              }, {
+                doi: '2.TEST.DOI',
+                id: 'TEST_COLLECTION_2_2',
+                relationships: [{ relationshipType: 'relatedUrl' }],
+                title: 'Test Title 2_2'
+              }]
+            }
+          },
+          links: null,
+          obfuscatedId: '98765'
+        }],
+        retrievalId: '7'
+      }, {})
+    })
+
+    test('renders Additional Resources and Documentation', async () => {
+      setup()
+
+      expect(await screen.findByText('Test Dataset ID')).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'HOME PAGE' })).toHaveAttribute('href', 'http://linkurl.com/test')
+    })
+
+    test('renders related collections', async () => {
+      setup()
+
+      expect(await screen.findByText('Test Dataset ID')).toBeInTheDocument()
+
+      // Shows 3 links
+      expect(screen.getAllByRole('link', { name: /Test Title/ })).toHaveLength(3)
+    })
   })
 
   test('renders the correct Helmet meta information', async () => {
     setup()
 
     await waitFor(() => expect(document.title).toEqual('Download Status'))
-
-    expect(Skeleton).toHaveBeenCalledTimes(0)
 
     const helmet = Helmet.peek()
 
@@ -136,13 +230,6 @@ describe('OrderStatus component', () => {
     const canonicalLink = helmet.linkTags.find((tag) => tag.rel === 'canonical')
     expect(canonicalLink).toBeDefined()
     expect(canonicalLink.href).toBe('https://search.earthdata.nasa.gov/downloads')
-  })
-
-  test('calls onFetchRetrieval when mounted', () => {
-    const { props } = setup()
-
-    expect(props.onFetchRetrieval).toHaveBeenCalledTimes(1)
-    expect(props.onFetchRetrieval).toHaveBeenCalledWith('7', 'testToken')
   })
 
   describe('Order Status page', () => {
@@ -165,15 +252,14 @@ describe('OrderStatus component', () => {
       expect(screen.getByText(/or the.*page./)).toBeInTheDocument()
     })
 
-    test('download status link has correct href', () => {
+    test('download status link has correct href', async () => {
       setup()
 
-      const link = screen.getByRole('link', { name: 'http://localhost/downloads/7' })
+      const link = await screen.findByRole('link', { name: 'http://localhost/downloads/7' })
       expect(link).toBeInTheDocument()
-      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
 
-    test('download status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
+    test('download status link has correct href when earthdataEnvironment is different than the deployed environment', async () => {
       jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'uat'
@@ -181,20 +267,18 @@ describe('OrderStatus component', () => {
 
       setup()
 
-      const link = screen.getByRole('link', { name: 'http://localhost/downloads/7?ee=prod' })
+      const link = await screen.findByRole('link', { name: 'http://localhost/downloads/7?ee=prod' })
       expect(link).toBeInTheDocument()
-      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
 
-    test('status link has correct href', () => {
+    test('status link has correct href', async () => {
       setup()
 
-      const link = screen.getByRole('link', { name: 'Download Status and History' })
+      const link = await screen.findByRole('link', { name: 'Download Status and History' })
       expect(link.href).toEqual('http://localhost/downloads')
-      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
 
-    test('status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
+    test('status link has correct href when earthdataEnvironment is different than the deployed environment', async () => {
       jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'uat'
@@ -202,53 +286,30 @@ describe('OrderStatus component', () => {
 
       setup()
 
-      const link = screen.getByRole('link', { name: 'Download Status and History' })
+      const link = await screen.findByRole('link', { name: 'Download Status and History' })
       expect(link.href).toEqual('http://localhost/downloads?ee=prod')
-      expect(Skeleton).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  describe('data links', () => {
-    test('renders data links in a list', () => {
-      setup()
-
-      expect(screen.getByRole('link', { name: 'http://linkurl.com/test' })).toBeInTheDocument()
-      expect(Skeleton).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  describe('related collection links', () => {
-    test('renders related collections', () => {
-      setup()
-
-      const relatedCollectionsHeading = screen.getByRole('heading', { name: 'You might also be interested in...' })
-      expect(relatedCollectionsHeading).toBeInTheDocument()
-      const listElements = screen.getAllByRole('list')
-      const relatedColList = listElements[3]
-
-      const relatedCollections = within(relatedColList).getAllByRole('listitem')
-
-      expect(relatedCollections.length).toEqual(3)
-      expect(within(relatedCollections[0]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_3_111' })).toBeInTheDocument()
-      expect(within(relatedCollections[1]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_2_111' })).toBeInTheDocument()
-      expect(within(relatedCollections[2]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_1_111' })).toBeInTheDocument()
-      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('footer links', () => {
-    test('calls onChangePath when the search link is clicked', async () => {
+    test('calls onChangePath when the Back to Earthdata Search Results link is clicked', async () => {
       const { props, user } = setup()
 
       const backToSearchLink = screen.getByRole('link', { name: 'Back to Earthdata Search Results' })
-      user.click(backToSearchLink)
+      await user.click(backToSearchLink)
 
-      await waitFor(() => {
-        expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      })
-
+      expect(props.onChangePath).toHaveBeenCalledTimes(1)
       expect(props.onChangePath).toHaveBeenCalledWith('/search?test=source_link')
-      expect(Skeleton).toHaveBeenCalledTimes(0)
+    })
+
+    test('calls onChangePath when the Start a New Earthdata Search Session link is clicked', async () => {
+      const { props, user } = setup()
+
+      const backToSearchLink = screen.getByRole('link', { name: 'Start a New Earthdata Search Session' })
+      await user.click(backToSearchLink)
+
+      expect(props.onChangePath).toHaveBeenCalledTimes(1)
+      expect(props.onChangePath).toHaveBeenCalledWith('/search')
     })
   })
 })

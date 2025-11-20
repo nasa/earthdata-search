@@ -1,0 +1,177 @@
+type Retrieval {
+  "The ID of the retrieval"
+  id: Int
+
+  "Obfuscated ID of the retrieval"
+  obfuscatedId: String
+
+  "The retrieval data"
+  jsondata: JSON
+
+  "The earthdata environment used in this retrieval"
+  environment: String
+
+  "Timestamp of when the retrieval was created"
+  createdAt: DateTime
+
+  "Timestamp of when the retrieval was last updated"
+  updatedAt: DateTime
+
+  "The retrieval collections associated with this retrieval"
+  retrievalCollections: [RetrievalCollection]
+
+  "User who created the retrieval"
+  user: User
+}
+
+type RetrievalCollection {
+  "The ID of the retrieval collection"
+  id: Int
+
+  "Obfuscated ID of the retrieval collection"
+  obfuscatedId: String
+
+  "The access method for this retrieval collection"
+  accessMethod: JSON
+
+  "The collection ID"
+  collectionId: String
+
+  "The collection metadata"
+  collectionMetadata: JSON
+
+  "Granule parameters"
+  granuleParams: JSON
+
+  "The granule count"
+  granuleCount: Int
+
+  "The granule link count"
+  granuleLinkCount: Int
+
+  "The retrieval ID"
+  retrievalId: Int
+
+  "Timestamp of when the retrieval was created"
+  createdAt: DateTime
+
+  "Timestamp of when the retrieval was last updated"
+  updatedAt: DateTime
+
+  "Links for the Additional Resources and Documentation of the collection"
+  links: JSON
+
+  "The retrieval orders associated with this retrieval collection"
+  retrievalOrders: [RetrievalOrder]
+}
+
+type RetrievalOrder {
+  "The ID of the retrieval order"
+  id: Int
+
+  "Obfuscated ID of the retrieval order"
+  obfuscatedId: String
+
+  "The type of the retrieval order"
+  type: String
+
+  "The granule parameters"
+  granuleParams: JSON
+
+  "The order number"
+  orderNumber: JSON
+
+  "The state of the retrieval order"
+  state: String
+
+  "The order information"
+  orderInformation: JSON
+
+  "The error message"
+  error: String
+
+  "Timestamp of when the retrieval was created"
+  createdAt: DateTime
+
+  "Timestamp of when the retrieval was last updated"
+  updatedAt: DateTime
+
+  "The retrieval collection associated with this retrieval order"
+  retrievalCollection: RetrievalCollection
+}
+
+type GranuleLinks {
+  "Cursor for pagination"
+  cursor: String
+
+  "Indicates if all pages have been retrieved"
+  done: Boolean
+
+  "The granule links"
+  links: JSON
+}
+
+type Query {
+  retrieval(
+    "Obfuscated ID of the retrieval"
+    obfuscatedId: String!
+  ): Retrieval
+
+  retrievalCollection(
+    "Obfuscated ID of the retrieval collection"
+    obfuscatedId: String!
+  ): RetrievalCollection
+
+  retrieveGranuleLinks(
+    "The obfuscated ID of the retrieval collection"
+    obfuscatedRetrievalCollectionId: String
+
+    "Cursor for pagination"
+    cursor: String
+
+    "The types of links to retrieve"
+    linkTypes: [String]
+
+    "Page number for pagination"
+    pageNum: Int
+
+    "Whether to flatten the links"
+    flattenLinks: Boolean
+
+    "Request identifier"
+    requestId: String
+  ): GranuleLinks
+}
+
+input RetrievalCollectionInput {
+  "The ID of the retrieval collection"
+  id: String
+
+  "The access method for this retrieval collection"
+  accessMethod: JSON
+
+  "The collection metadata"
+  collectionMetadata: JSON
+
+  "Granule parameters"
+  granuleParams: JSON
+
+  "The granule count"
+  granuleCount: Int
+
+  "The granule link count"
+  granuleLinkCount: Int
+}
+
+type Mutation {
+  createRetrieval(
+    "The collections to include in the retrieval"
+    collections: [RetrievalCollectionInput]
+
+    "The environment for the retrieval"
+    environment: String
+
+    "The JSON data for the retrieval"
+    jsondata: JSON
+  ): Retrieval
+}

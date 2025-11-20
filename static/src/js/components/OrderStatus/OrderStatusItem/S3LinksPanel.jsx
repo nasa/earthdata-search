@@ -16,19 +16,19 @@ import './DownloadFilesPanel.scss'
  * @param {Object} arg0 - The props passed into the component.
  * @param {String} arg0.accessMethodType - The retrieval collection access method.
  * @param {Object} arg0.directDistributionInformation - The collection direct distribution information.
- * @param {Array} arg0.s3Links - The s3 links.
- * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Number} arg0.granuleCount - The retrieval collection granule count.
  * @param {Boolean} arg0.granuleLinksIsLoading - A flag set when the granule links are loading.
+ * @param {String} arg0.retrievalId - The retrieval id.
+ * @param {Array} arg0.s3Links - The s3 links.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
 */
-export const S3LinksPanel = ({
+const S3LinksPanel = ({
   accessMethodType,
   directDistributionInformation,
-  s3Links,
-  retrievalId,
   granuleCount,
   granuleLinksIsLoading,
+  retrievalId,
+  s3Links,
   showTextWindowActions = true
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}-s3.txt`
@@ -61,7 +61,7 @@ export const S3LinksPanel = ({
                 <div className="order-status-item__direct-distribution-item">
                   Bucket/Object Prefix
                   {
-                    s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                    s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, index) => (
                       <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
                         <CopyableText
                           className="order-status-item__direct-distribution-item-value"
@@ -70,7 +70,7 @@ export const S3LinksPanel = ({
                           successMessage="Copied the AWS S3 Bucket/Object Prefix"
                           failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
                         />
-                        {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                        {index !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
                       </React.Fragment>
                     ))
                   }
@@ -116,8 +116,8 @@ export const S3LinksPanel = ({
       >
         <ul className="download-links-panel__list">
           {
-            s3Links.map((path, i) => {
-              const key = `link_${i}`
+            s3Links.map((path, index) => {
+              const key = `link_${index}`
               const s3LinkTitle = getFilenameFromPath(path)
 
               return (
@@ -125,8 +125,8 @@ export const S3LinksPanel = ({
                   <CopyableText
                     text={path}
                     label="Copy AWS S3 path to clipboard"
-                    successMessage={() => `Copied AWS S3 path for: ${s3LinkTitle}`}
-                    failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
+                    successMessage={`Copied AWS S3 path for: ${s3LinkTitle}`}
+                    failureMessage={`Could not copy AWS S3 path for: ${s3LinkTitle}`}
                   />
                 </li>
               )
@@ -147,7 +147,7 @@ S3LinksPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({
     region: PropTypes.string,
-    s3BucketAndObjectPrefixNames: PropTypes.string,
+    s3BucketAndObjectPrefixNames: PropTypes.arrayOf(PropTypes.string),
     s3CredentialsApiEndpoint: PropTypes.string,
     s3CredentialsApiDocumentationUrl: PropTypes.string
   }).isRequired,

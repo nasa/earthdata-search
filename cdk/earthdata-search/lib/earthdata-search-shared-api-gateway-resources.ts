@@ -18,8 +18,6 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
 
-  public readonly retrievalCollectionsApiGatewayResource: apigateway.CfnResource
-
   public readonly retrievalsApiGatewayResource: apigateway.CfnResource
 
   public readonly retrievalsIdApiGatewayResource: apigateway.CfnResource
@@ -74,16 +72,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.opensearchApiGatewayResource = opensearchApiGatewayResource
-
-    /**
-     * Retrieval Collection API Gateway Resource
-     */
-    const retrievalCollectionsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceRetrievalCollections', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'retrieval_collections',
-      restApiId: apiGatewayRestApi.ref
-    })
-    this.retrievalCollectionsApiGatewayResource = retrievalCollectionsApiGatewayResource
 
     /**
      * Retrievals API Gateway Resource

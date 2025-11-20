@@ -5,6 +5,7 @@ import admin from './admin.graphql'
 import colormap from './colormap.graphql'
 import pageInfo from './pageInfo.graphql'
 import project from './project.graphql'
+import retrieval from './retrieval.graphql'
 import user from './user.graphql'
 
 const scalarTypeDefs = [
@@ -19,6 +20,7 @@ export default mergeTypeDefs(
     colormap,
     pageInfo,
     project,
+    retrieval,
     user
   ]
 )

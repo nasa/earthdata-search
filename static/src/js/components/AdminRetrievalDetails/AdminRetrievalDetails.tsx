@@ -14,7 +14,7 @@ import DefinitionList from '../DefinitionList/DefinitionList'
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
 
-import { type AdminRetrievalCollection } from '../../types/sharedTypes'
+import { type RetrievalCollection } from '../../types/sharedTypes'
 
 import './AdminRetrievalDetails.scss'
 
@@ -26,7 +26,7 @@ interface AdminRetrievalQueryData {
   /** Root object containing all administrative retrieval information */
   adminRetrieval: {
     /** Array of collections associated with this retrieval request */
-    retrievalCollections: AdminRetrievalCollection[]
+    retrievalCollections: RetrievalCollection[]
     /** JSON metadata associated with the retrieval request */
     jsondata: {
       /** Optional portal identifier if the retrieval was initiated from a specific portal */

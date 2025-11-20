@@ -12,12 +12,16 @@ describe('generateDownloadScript', () => {
 
   describe('when no collection metadata is present', () => {
     test('authentication URL is edl', () => {
-      const script = generateDownloadScript([
-        'https://granule-link-one.hdf',
-        'https://granule-link-two.hdf'
-      ], {
-        collection_metadata: {},
-        urs_id: 'test-user'
+      const script = generateDownloadScript({
+        earthdataEnvironment: 'prod',
+        granuleLinks: [
+          'https://granule-link-one.hdf',
+          'https://granule-link-two.hdf'
+        ],
+        retrievalCollection: {
+          collectionMetadata: {}
+        },
+        username: 'test-user'
       })
 
       expect(script).toContain('Username (test-user):')
@@ -32,12 +36,16 @@ describe('generateDownloadScript', () => {
 
   describe('when collection metadata does not indicate CSDA at all', () => {
     test('authentication URL is edl', () => {
-      const script = generateDownloadScript([
-        'https://granule-link-one.hdf',
-        'https://granule-link-two.hdf'
-      ], {
-        collection_metadata: {},
-        urs_id: 'test-user'
+      const script = generateDownloadScript({
+        earthdataEnvironment: 'prod',
+        granuleLinks: [
+          'https://granule-link-one.hdf',
+          'https://granule-link-two.hdf'
+        ],
+        retrievalCollection: {
+          collectionMetadata: {}
+        },
+        username: 'test-user'
       })
 
       expect(script).toContain('Username (test-user):')
@@ -52,14 +60,18 @@ describe('generateDownloadScript', () => {
 
   describe('when collection is not CSDA', () => {
     test('authentication URL is edl', () => {
-      const script = generateDownloadScript([
-        'https://granule-link-one.hdf',
-        'https://granule-link-two.hdf'
-      ], {
-        collection_metadata: {
-          isCSDA: false
+      const script = generateDownloadScript({
+        earthdataEnvironment: 'prod',
+        granuleLinks: [
+          'https://granule-link-one.hdf',
+          'https://granule-link-two.hdf'
+        ],
+        retrievalCollection: {
+          collectionMetadata: {
+            isCSDA: false
+          }
         },
-        urs_id: 'test-user'
+        username: 'test-user'
       })
 
       expect(script).toContain('Username (test-user):')
@@ -74,14 +86,18 @@ describe('generateDownloadScript', () => {
 
   describe('when collection is CSDA', () => {
     test('authentication URL is csda', () => {
-      const script = generateDownloadScript([
-        'https://granule-link-one.hdf',
-        'https://granule-link-two.hdf'
-      ], {
-        collection_metadata: {
-          isCSDA: true
+      const script = generateDownloadScript({
+        earthdataEnvironment: 'prod',
+        granuleLinks: [
+          'https://granule-link-one.hdf',
+          'https://granule-link-two.hdf'
+        ],
+        retrievalCollection: {
+          collectionMetadata: {
+            isCSDA: true
+          }
         },
-        urs_id: 'test-user'
+        username: 'test-user'
       })
 
       expect(script).toContain('Username (test-user):')

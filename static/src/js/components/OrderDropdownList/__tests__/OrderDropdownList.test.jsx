@@ -1,42 +1,67 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { OrderDropdownList } from '../OrderDropdownList'
-import { OrderDropdownItem } from '../OrderDropdownItem'
+import OrderDropdownList from '../OrderDropdownList'
+import OrderDropdownItem from '../OrderDropdownItem'
 
 import { retrievalStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
+jest.mock('../OrderDropdownItem', () => jest.fn(() => null))
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const { orders } = retrievalStatusPropsEsi.retrieval.collections.byId[1]
-
-  const props = {
-    orders,
+const setup = setupTest({
+  Component: OrderDropdownList,
+  defaultProps: {
+    orders: retrievalStatusPropsEsi.retrieval.retrievalCollections[0].retrievalOrders,
     totalOrders: 2
   }
-
-  const enzymeWrapper = shallow(<OrderDropdownList {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('OrderDropdownList component', () => {
-  const { enzymeWrapper } = setup()
-
-  test('is displayed', () => {
-    expect(enzymeWrapper).toBeDefined()
-  })
-
   test('renders items', () => {
-    expect(enzymeWrapper.find(OrderDropdownItem).length).toEqual(2)
+    setup()
+
+    expect(OrderDropdownItem).toHaveBeenCalledTimes(2)
+    expect(OrderDropdownItem).toHaveBeenNthCalledWith(1, {
+      index: 0,
+      order: {
+        orderInformation: {
+          contactInformation: {
+            contactEmail: 'nsidc@nsidc.org',
+            contactName: 'NSIDC User Services'
+          },
+          downloadUrls: { downloadUrl: ['https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html', 'https://n5eil02u.ecs.nsidc.org/esir/5000000333461.zip'] },
+          requestStatus: {
+            numberProcessed: 81,
+            status: 'complete',
+            totalNumber: 81
+          }
+        },
+        orderNumber: '5000000333461',
+        state: 'complete',
+        type: 'ESI'
+      },
+      totalOrders: 2
+    }, {})
+
+    expect(OrderDropdownItem).toHaveBeenNthCalledWith(2, {
+      index: 1,
+      order: {
+        orderInformation: {
+          contactInformation: {
+            contactEmail: 'nsidc@nsidc.org',
+            contactName: 'NSIDC User Services'
+          },
+          downloadUrls: { downloadUrl: ['https://n5eil02u.ecs.nsidc.org/esir/5000000333462.html', 'https://n5eil02u.ecs.nsidc.org/esir/5000000333462.zip'] },
+          requestStatus: {
+            numberProcessed: 13,
+            status: 'processing',
+            totalNumber: 100
+          }
+        },
+        orderNumber: '5000000333462',
+        state: 'processing',
+        type: 'ESI'
+      },
+      totalOrders: 2
+    }, {})
   })
 })
