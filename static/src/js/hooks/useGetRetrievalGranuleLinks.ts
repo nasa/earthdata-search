@@ -14,6 +14,7 @@ import GET_RETRIEVAL_GRANULE_LINKS from '../operations/queries/getRetrievalGranu
 import useEdscStore from '../zustand/useEdscStore'
 
 import type { CollectionMetadata } from '../types/sharedTypes'
+import { GRANULE_LINK_TYPES } from '../constants/granuleLinkTypes'
 
 export type UseGetRetrievalGranuleLinksProps = {
   /** Metadata about the collection */
@@ -21,7 +22,7 @@ export type UseGetRetrievalGranuleLinksProps = {
   /** The number of granules */
   granuleCount: number
   /** Types of links to fetch */
-  linkTypes: Array<'data' | 's3' | 'browse'>
+  linkTypes: Array<typeof GRANULE_LINK_TYPES[keyof typeof GRANULE_LINK_TYPES]>
   /** The obfuscated ID of the retrieval */
   obfuscatedId: string
 }

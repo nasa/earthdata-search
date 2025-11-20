@@ -6,6 +6,11 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 // @ts-expect-error This file does not have types
 import { aggregatedOrderStatus } from '../../../../../sharedUtils/orderStatus'
 
+// @ts-expect-error This file does not have types
+import { ACCESS_METHOD_TYPES } from '../../../../../sharedConstants/accessMethodTypes'
+// @ts-expect-error This file does not have types
+import { ORDER_STATES } from '../../../../../sharedConstants/orderStates'
+
 import GET_RETRIEVAL_COLLECTION from '../../operations/queries/getRetrievalCollection'
 
 import DownloadStatusItem from './AccessMethodItems/DownloadStatusItem'
@@ -89,9 +94,13 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
       const orderStatus = aggregatedOrderStatus(retrievalOrders)
 
       // If the order is in a terminal state stop asking for order status
-      if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
+      if ([
+        ORDER_STATES.COMPLETE,
+        ORDER_STATES.FAILED,
+        ORDER_STATES.CANCELED
+      ].includes(orderStatus)) {
         setRefreshInterval(0)
-      } else if (orderStatus === 'creating') {
+      } else if (orderStatus === ORDER_STATES.CREATING) {
         // If the order is still creating, use the shorter refresh interval
         setRefreshInterval(orderStatusRefreshTimeCreating)
       } else {
@@ -130,19 +139,19 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
 
   // Determine the appropriate OrderStatusItemComponent based on the access method type
   switch (accessMethodType.toLowerCase()) {
-    case 'echo orders':
+    case ACCESS_METHOD_TYPES.ECHO_ORDERS.toLowerCase():
       OrderStatusItemComponent = EchoOrderStatusItem
       break
-    case 'esi':
+    case ACCESS_METHOD_TYPES.ESI.toLowerCase():
       OrderStatusItemComponent = EsiStatusItem
       break
-    case 'harmony':
+    case ACCESS_METHOD_TYPES.HARMONY.toLowerCase():
       OrderStatusItemComponent = HarmonyStatusItem
       break
-    case 'opendap':
+    case ACCESS_METHOD_TYPES.OPENDAP.toLowerCase():
       OrderStatusItemComponent = OpendapStatusItem
       break
-    case 'swodlr':
+    case ACCESS_METHOD_TYPES.SWODLR.toLowerCase():
       OrderStatusItemComponent = SwodlrStatusItem
       break
     default:

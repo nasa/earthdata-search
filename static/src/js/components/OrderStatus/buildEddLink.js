@@ -1,3 +1,4 @@
+import { ORDER_STATES } from '../../../../../sharedConstants/orderStates'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 import { aggregatedOrderStatus } from '../../../../../sharedUtils/orderStatus'
@@ -32,7 +33,10 @@ const buildEddLink = ({
   } = firstOrder
 
   // If the order is Harmony and is still running or has no files, don't show the EDD link
-  const isDone = !['creating', 'in progress'].includes(orderStatus)
+  const isDone = ![
+    ORDER_STATES.CREATING,
+    ORDER_STATES.IN_PROGRESS
+  ].includes(orderStatus)
   const notDoneOrEmpty = !isDone || downloadUrls.length === 0
   if (type.toLowerCase() === 'harmony' && notDoneOrEmpty) {
     return null

@@ -9,7 +9,12 @@ import BrowseLinksPanel from '../OrderStatusItem/BrowseLinksPanel'
 import OrderStatusPanel from '../OrderStatusItem/OrderStatusPanel'
 import OrderStatusItem from '../OrderStatusItem'
 
+import { GRANULE_LINK_TYPES } from '../../../constants/granuleLinkTypes'
 import { STATUS_MESSAGES } from '../../../constants/orderStatusMessages'
+// @ts-expect-error: Types do not exist for this file
+import { ACCESS_METHOD_TYPES } from '../../../../../../sharedConstants/accessMethodTypes'
+// @ts-expect-error: Types do not exist for this file
+import { ORDER_STATES } from '../../../../../../sharedConstants/orderStates'
 import {
   aggregatedOrderStatus,
   getStateFromOrderStatus
@@ -43,7 +48,7 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
   retrievalCollection,
   retrievalId
 }) => {
-  const accessMethodType = 'ESI'
+  const accessMethodType = ACCESS_METHOD_TYPES.ESI
 
   const edlToken = useEdscStore(getEdlToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -64,7 +69,7 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
   } = useGetRetrievalGranuleLinks({
     collectionMetadata,
     granuleCount,
-    linkTypes: ['browse'],
+    linkTypes: [GRANULE_LINK_TYPES.BROWSE],
     obfuscatedId
   })
 
@@ -86,26 +91,26 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
   const browseUrls = granuleLinks.browse
   const downloadUrls: string[] = []
 
-  if (stateFromOrderStatus === 'creating') {
+  if (stateFromOrderStatus === ORDER_STATES.CREATING) {
     progressPercentage = 0
 
     orderInfo = STATUS_MESSAGES.ESI.CREATING
   }
 
-  if (stateFromOrderStatus === 'in_progress') {
+  if (stateFromOrderStatus === ORDER_STATES.IN_PROGRESS) {
     orderInfo = STATUS_MESSAGES.ESI.IN_PROGRESS
   }
 
-  if (stateFromOrderStatus === 'complete') {
+  if (stateFromOrderStatus === ORDER_STATES.COMPLETE) {
     orderInfo = STATUS_MESSAGES.ESI.COMPLETE
   }
 
-  if (stateFromOrderStatus === 'failed') {
+  if (stateFromOrderStatus === ORDER_STATES.FAILED) {
     progressPercentage = 0
     orderInfo = STATUS_MESSAGES.ESI.FAILED
   }
 
-  if (stateFromOrderStatus === 'canceled') {
+  if (stateFromOrderStatus === ORDER_STATES.CANCELED) {
     progressPercentage = 0
     orderInfo = STATUS_MESSAGES.ESI.CANCELED
   }
@@ -151,7 +156,7 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
       totalNumber: currentTotalNumber = 0
     } = requestStatus as EsiOrderInformation['requestStatus']
 
-    if (currentStatus === 'complete' || currentStatus === 'failed') {
+    if (currentStatus === ORDER_STATES.COMPLETE || currentStatus === ORDER_STATES.FAILED) {
       totalCompleteOrders += 1
     }
 
@@ -203,7 +208,7 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
             retrievalCollectionId: obfuscatedId,
             downloadUrls,
             earthdataEnvironment,
-            linkType: 'data'
+            linkType: GRANULE_LINK_TYPES.DATA
           })
         }
         granuleCount={granuleCount}
@@ -235,7 +240,7 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
               retrievalCollectionId: obfuscatedId,
               downloadUrls: browseUrls,
               earthdataEnvironment,
-              linkType: 'browse'
+              linkType: GRANULE_LINK_TYPES.BROWSE
             })
           }
           retrievalId={retrievalId}

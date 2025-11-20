@@ -13,7 +13,10 @@ import BrowseLinksPanel from '../OrderStatusItem/BrowseLinksPanel'
 
 import OrderStatusItem from '../OrderStatusItem'
 
+import { GRANULE_LINK_TYPES } from '../../../constants/granuleLinkTypes'
 import { STATUS_MESSAGES } from '../../../constants/orderStatusMessages'
+// @ts-expect-error: Types do not exist for this file
+import { ACCESS_METHOD_TYPES } from '../../../../../../sharedConstants/accessMethodTypes'
 // @ts-expect-error: Types do not exist for this file
 import { aggregatedOrderStatus } from '../../../../../../sharedUtils/orderStatus'
 // @ts-expect-error: Types do not exist for this file
@@ -44,7 +47,7 @@ const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
   retrievalCollection,
   retrievalId
 }) => {
-  const accessMethodType = 'OPeNDAP'
+  const accessMethodType = ACCESS_METHOD_TYPES.OPENDAP
 
   const {
     collectionMetadata,
@@ -65,7 +68,7 @@ const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
   } = useGetRetrievalGranuleLinks({
     collectionMetadata,
     granuleCount,
-    linkTypes: ['data', 's3', 'browse'],
+    linkTypes: [GRANULE_LINK_TYPES.BROWSE, GRANULE_LINK_TYPES.DATA, GRANULE_LINK_TYPES.S3],
     obfuscatedId
   })
 
@@ -110,7 +113,7 @@ const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
             retrievalCollectionId: obfuscatedId,
             downloadUrls,
             earthdataEnvironment,
-            linkType: 'data'
+            linkType: GRANULE_LINK_TYPES.DATA
           })
         }
         granuleCount={granuleCount}
@@ -184,7 +187,7 @@ const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
               retrievalCollectionId: obfuscatedId,
               downloadUrls,
               earthdataEnvironment,
-              linkType: 'browse'
+              linkType: GRANULE_LINK_TYPES.BROWSE
             })
           }
           retrievalId={retrievalId}

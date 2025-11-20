@@ -9,7 +9,12 @@ import BrowseLinksPanel from '../OrderStatusItem/BrowseLinksPanel'
 import OrderStatusPanel from '../OrderStatusItem/OrderStatusPanel'
 import OrderStatusItem from '../OrderStatusItem'
 
+import { GRANULE_LINK_TYPES } from '../../../constants/granuleLinkTypes'
 import { STATUS_MESSAGES } from '../../../constants/orderStatusMessages'
+// @ts-expect-error: Types do not exist for this file
+import { ACCESS_METHOD_TYPES } from '../../../../../../sharedConstants/accessMethodTypes'
+// @ts-expect-error: Types do not exist for this file
+import { ORDER_STATES } from '../../../../../../sharedConstants/orderStates'
 import {
   aggregatedOrderStatus,
   getStateFromOrderStatus
@@ -43,7 +48,7 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
   retrievalCollection,
   retrievalId
 }) => {
-  const accessMethodType = 'SWODLR'
+  const accessMethodType = ACCESS_METHOD_TYPES.SWODLR
 
   const edlToken = useEdscStore(getEdlToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -64,7 +69,7 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
   } = useGetRetrievalGranuleLinks({
     collectionMetadata,
     granuleCount,
-    linkTypes: ['browse'],
+    linkTypes: [GRANULE_LINK_TYPES.BROWSE],
     obfuscatedId
   })
 
@@ -87,21 +92,21 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
   const browseUrls = granuleLinks.browse
   const downloadUrls: string[] = []
 
-  if (stateFromOrderStatus === 'creating') {
+  if (stateFromOrderStatus === ORDER_STATES.CREATING) {
     progressPercentage = 0
 
     orderInfo = STATUS_MESSAGES.SWODLR.CREATING
   }
 
-  if (stateFromOrderStatus === 'in_progress') {
+  if (stateFromOrderStatus === ORDER_STATES.IN_PROGRESS) {
     orderInfo = STATUS_MESSAGES.SWODLR.IN_PROGRESS
   }
 
-  if (stateFromOrderStatus === 'complete') {
+  if (stateFromOrderStatus === ORDER_STATES.COMPLETE) {
     orderInfo = STATUS_MESSAGES.SWODLR.COMPLETE
   }
 
-  if (stateFromOrderStatus === 'failed') {
+  if (stateFromOrderStatus === ORDER_STATES.FAILED) {
     progressPercentage = 0
     orderInfo = STATUS_MESSAGES.SWODLR.FAILED
   }
@@ -121,7 +126,7 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
     totalNumber += 1
     totalOrders += 1
 
-    if (state === 'complete') {
+    if (state === ORDER_STATES.COMPLETE) {
       granules.forEach((granule) => {
         const { uri } = granule
         downloadUrls.push(uri)
@@ -129,7 +134,7 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
       })
 
       totalProcessed += 1
-    } else if (state === 'failed') {
+    } else if (state === ORDER_STATES.FAILED) {
       progressPercentage = 100
       if (error) {
         messages.push(error)
@@ -147,10 +152,10 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
     'order-status-item',
     {
       'order-status-item--is-opened': opened,
-      'order-status-item--complete': stateFromOrderStatus === 'complete',
-      'order-status-item--in_progress': stateFromOrderStatus === 'in_progress',
-      'order-status-item--failed': stateFromOrderStatus === 'failed',
-      'order-status-item--canceled': stateFromOrderStatus === 'canceled'
+      'order-status-item--complete': stateFromOrderStatus === ORDER_STATES.COMPLETE,
+      'order-status-item--in_progress': stateFromOrderStatus === ORDER_STATES.IN_PROGRESS,
+      'order-status-item--failed': stateFromOrderStatus === ORDER_STATES.FAILED,
+      'order-status-item--canceled': stateFromOrderStatus === ORDER_STATES.CANCELED
     }
   )
 
@@ -178,7 +183,7 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
             retrievalCollectionId: obfuscatedId,
             downloadUrls,
             earthdataEnvironment,
-            linkType: 'data'
+            linkType: GRANULE_LINK_TYPES.DATA
           })
         }
         granuleCount={granuleCount}
@@ -210,7 +215,7 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
               retrievalCollectionId: obfuscatedId,
               downloadUrls: browseUrls,
               earthdataEnvironment,
-              linkType: 'browse'
+              linkType: GRANULE_LINK_TYPES.BROWSE
             })
           }
           retrievalId={retrievalId}

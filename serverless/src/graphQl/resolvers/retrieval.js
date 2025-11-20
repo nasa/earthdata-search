@@ -7,6 +7,7 @@ import { fetchGranuleLinks } from '../../util/fetchGranuleLinks'
 import { removeSpatialFromAccessMethod } from '../../util/removeSpatialFromAccessMethod'
 import { generateRetrievalPayloads } from '../../util/generateRetrievalPayloads'
 import { getQueueUrl, QUEUE_NAMES } from '../../util/getQueueUrl'
+import { ACCESS_METHOD_TYPES } from '../../../../sharedConstants/accessMethodTypes'
 
 export default {
   Query: {
@@ -168,7 +169,12 @@ export default {
           // need to be submitted to
           const { type } = accessMethod
 
-          if (['ESI', 'ECHO ORDERS', 'Harmony', 'SWODLR'].includes(type)) {
+          if ([
+            ACCESS_METHOD_TYPES.ESI,
+            ACCESS_METHOD_TYPES.ECHO_ORDERS,
+            ACCESS_METHOD_TYPES.HARMONY,
+            ACCESS_METHOD_TYPES.SWODLR
+          ].includes(type)) {
           // The insert above returns an array but we've only added a single row
           // so we will always take the first result
             const [retrievalCollection] = newRetrievalCollection
@@ -181,18 +187,18 @@ export default {
 
             let queueUrl
 
-            if (type === 'ESI') {
+            if (type === ACCESS_METHOD_TYPES.ESI) {
               // Submits to Catalog Rest and is often referred to as a
               // service order -- this is presenting in EDSC as the 'Customize' access method
               queueUrl = getQueueUrl(QUEUE_NAMES.CatalogRestOrderQueue)
-            } else if (type === 'ECHO ORDERS') {
+            } else if (type === ACCESS_METHOD_TYPES.ECHO_ORDERS) {
               // Submits to cmr-ordering and is often referred to as an
               // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
               queueUrl = getQueueUrl(QUEUE_NAMES.CmrOrderingOrderQueue)
-            } else if (type === 'Harmony') {
+            } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
               // Submits to Harmony
               queueUrl = getQueueUrl(QUEUE_NAMES.HarmonyOrderQueue)
-            } else if (type === 'SWODLR') {
+            } else if (type === ACCESS_METHOD_TYPES.SWODLR) {
               queueUrl = getQueueUrl(QUEUE_NAMES.SwodlrOrderQueue)
             }
 

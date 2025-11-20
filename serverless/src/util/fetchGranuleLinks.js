@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
-
+import { ACCESS_METHOD_TYPES } from '../../../sharedConstants/accessMethodTypes'
 import fetchDownloadLinks from '../retrieveGranuleLinks/fetchDownloadLinks'
 import fetchHarmonyLinks from '../retrieveGranuleLinks/fetchHarmonyLinks'
 import { fetchOpendapLinks } from '../retrieveGranuleLinks/fetchOpendapLinks'
@@ -15,7 +14,7 @@ export const fetchGranuleLinks = async ({
   linkTypes,
   obfuscatedRetrievalCollectionId,
   pageNum = 1,
-  requestId = uuidv4(),
+  requestId,
   userId
 }) => {
   // Decode the provided retrieval id
@@ -45,7 +44,7 @@ export const fetchGranuleLinks = async ({
   let newCursor
 
   switch (type.toLowerCase()) {
-    case 'download':
+    case ACCESS_METHOD_TYPES.DOWNLOAD.toLowerCase():
       ({ links, newCursor } = await fetchDownloadLinks({
         collectionId,
         collectionMetadata,
@@ -59,7 +58,7 @@ export const fetchGranuleLinks = async ({
       }))
 
       break
-    case 'opendap':
+    case ACCESS_METHOD_TYPES.OPENDAP.toLowerCase():
       links = await fetchOpendapLinks({
         accessMethod,
         collectionId,
@@ -71,7 +70,7 @@ export const fetchGranuleLinks = async ({
       })
 
       break
-    case 'harmony':
+    case ACCESS_METHOD_TYPES.HARMONY.toLowerCase():
       // When the order has multiple Harmony jobs, we need to return the links from every job
       if (retrievalCollectionRows.length > 1) {
         // Combine the `order_information` objects from each row into a single object keyed by the `jobID`
@@ -106,7 +105,7 @@ export const fetchGranuleLinks = async ({
 
       done = true
       break
-    case 'esi':
+    case ACCESS_METHOD_TYPES.ESI.toLowerCase():
       // When the order has multiple Harmony jobs, we need to return the links from every job
       if (retrievalCollectionRows.length) {
         // Combine the `order_information` objects from each row into a single object keyed by the `jobID`

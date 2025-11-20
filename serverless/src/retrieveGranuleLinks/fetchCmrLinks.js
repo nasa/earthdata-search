@@ -1,5 +1,6 @@
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
+import { v4 as uuidv4 } from 'uuid'
 
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
@@ -56,7 +57,7 @@ export const fetchCmrLinks = async ({
     },
     headers: {
       Authorization: `Bearer ${token}`,
-      'X-Request-Id': requestId
+      'X-Request-Id': requestId || uuidv4()
     }
   })
 

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { mbr } from '@edsc/geo-utils'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -109,7 +110,7 @@ export const fetchOpendapLinks = async ({
       nonIndexedKeys,
       stringifyResult: false
     }),
-    requestId,
+    requestId: requestId || uuidv4(),
     earthdataEnvironment,
     providedHeaders: {
       Accept: 'application/vnd.cmr-service-bridge.v3+json'

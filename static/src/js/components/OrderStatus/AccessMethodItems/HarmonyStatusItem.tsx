@@ -11,7 +11,12 @@ import BrowseLinksPanel from '../OrderStatusItem/BrowseLinksPanel'
 import OrderStatusPanel from '../OrderStatusItem/OrderStatusPanel'
 import OrderStatusItem from '../OrderStatusItem'
 
+import { GRANULE_LINK_TYPES } from '../../../constants/granuleLinkTypes'
 import { STATUS_MESSAGES } from '../../../constants/orderStatusMessages'
+// @ts-expect-error: Types do not exist for this file
+import { ACCESS_METHOD_TYPES } from '../../../../../../sharedConstants/accessMethodTypes'
+// @ts-expect-error: Types do not exist for this file
+import { ORDER_STATES } from '../../../../../../sharedConstants/orderStates'
 import {
   aggregatedOrderStatus,
   getStateFromOrderStatus
@@ -45,7 +50,7 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
   retrievalCollection,
   retrievalId
 }) => {
-  const accessMethodType = 'Harmony'
+  const accessMethodType = ACCESS_METHOD_TYPES.HARMONY
 
   const edlToken = useEdscStore(getEdlToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -66,7 +71,7 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
   } = useGetRetrievalGranuleLinks({
     collectionMetadata,
     granuleCount,
-    linkTypes: ['browse'],
+    linkTypes: [GRANULE_LINK_TYPES.BROWSE],
     obfuscatedId
   })
 
@@ -92,26 +97,26 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
   const browseUrls = granuleLinks.browse
   const downloadUrls: string[] = []
 
-  if (stateFromOrderStatus === 'creating') {
+  if (stateFromOrderStatus === ORDER_STATES.CREATING) {
     progressPercentage = 0
 
     orderInfo = STATUS_MESSAGES.HARMONY.CREATING
   }
 
-  if (stateFromOrderStatus === 'in_progress') {
+  if (stateFromOrderStatus === ORDER_STATES.IN_PROGRESS) {
     orderInfo = STATUS_MESSAGES.HARMONY.IN_PROGRESS
   }
 
-  if (stateFromOrderStatus === 'complete') {
+  if (stateFromOrderStatus === ORDER_STATES.COMPLETE) {
     orderInfo = STATUS_MESSAGES.HARMONY.COMPLETE
   }
 
-  if (stateFromOrderStatus === 'failed') {
+  if (stateFromOrderStatus === ORDER_STATES.FAILED) {
     progressPercentage = 0
     orderInfo = STATUS_MESSAGES.HARMONY.FAILED
   }
 
-  if (stateFromOrderStatus === 'canceled') {
+  if (stateFromOrderStatus === ORDER_STATES.CANCELED) {
     progressPercentage = 0
     orderInfo = STATUS_MESSAGES.HARMONY.CANCELED
   }
@@ -131,7 +136,11 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
       jobId = false
     } = orderInformation
 
-    if (harmonyCompletedSuccessfullyStates.includes(status) || status === 'failed' || status === 'canceled') {
+    if (
+      harmonyCompletedSuccessfullyStates.includes(status)
+      || status === ORDER_STATES.FAILED
+      || status === ORDER_STATES.CANCELED
+    ) {
       totalCompleteOrders += 1
     }
 
@@ -139,12 +148,12 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
       messages.push(harmonyMessage)
     }
 
-    if (status === 'failed' && harmonyMessage) {
+    if (status === ORDER_STATES.FAILED && harmonyMessage) {
       messages.push(harmonyMessage)
       messageIsError = messageIsError || true
     }
 
-    if (status === 'canceled' && harmonyMessage) {
+    if (status === ORDER_STATES.CANCELED && harmonyMessage) {
       messages.push(harmonyMessage)
     }
 
@@ -152,7 +161,7 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
       .filter(({ rel }: { rel: string }) => rel === 'data')
       .map(({ href }: { href: string }) => href))
 
-    if (status === 'failed') {
+    if (status === ORDER_STATES.FAILED) {
       // If the order failed, Harmony will tell us its something less
       // than 100% complete, overwrite that here to consider this order complete
       totalProgress += 100
@@ -194,10 +203,10 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
     'order-status-item',
     {
       'order-status-item--is-opened': opened,
-      'order-status-item--complete': stateFromOrderStatus === 'complete',
-      'order-status-item--in_progress': stateFromOrderStatus === 'in_progress',
-      'order-status-item--failed': stateFromOrderStatus === 'failed',
-      'order-status-item--canceled': stateFromOrderStatus === 'canceled'
+      'order-status-item--complete': stateFromOrderStatus === ORDER_STATES.COMPLETE,
+      'order-status-item--in_progress': stateFromOrderStatus === ORDER_STATES.IN_PROGRESS,
+      'order-status-item--failed': stateFromOrderStatus === ORDER_STATES.FAILED,
+      'order-status-item--canceled': stateFromOrderStatus === ORDER_STATES.CANCELED
     }
   )
 
@@ -225,7 +234,7 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
             retrievalCollectionId: obfuscatedId,
             downloadUrls,
             earthdataEnvironment,
-            linkType: 'data'
+            linkType: GRANULE_LINK_TYPES.DATA
           })
         }
         granuleCount={granuleCount}
@@ -275,7 +284,7 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
               retrievalCollectionId: obfuscatedId,
               downloadUrls: browseUrls,
               earthdataEnvironment,
-              linkType: 'browse'
+              linkType: GRANULE_LINK_TYPES.BROWSE
             })
           }
           retrievalId={retrievalId}

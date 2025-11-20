@@ -7,7 +7,12 @@ import BrowseLinksPanel from '../OrderStatusItem/BrowseLinksPanel'
 
 import OrderStatusItem from '../OrderStatusItem'
 
+import { GRANULE_LINK_TYPES } from '../../../constants/granuleLinkTypes'
 import { STATUS_MESSAGES } from '../../../constants/orderStatusMessages'
+// @ts-expect-error: Types do not exist for this file
+import { ACCESS_METHOD_TYPES } from '../../../../../../sharedConstants/accessMethodTypes'
+// @ts-expect-error: Types do not exist for this file
+import { ORDER_STATES } from '../../../../../../sharedConstants/orderStates'
 import {
   aggregatedOrderStatus,
   getStateFromOrderStatus
@@ -41,7 +46,7 @@ const EchoOrderStatusItem: React.FC<EchoOrderStatusItemProps> = ({
   retrievalCollection,
   retrievalId
 }) => {
-  const accessMethodType = 'ECHO ORDERS'
+  const accessMethodType = ACCESS_METHOD_TYPES.ECHO_ORDERS
 
   const edlToken = useEdscStore(getEdlToken)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -62,7 +67,7 @@ const EchoOrderStatusItem: React.FC<EchoOrderStatusItemProps> = ({
   } = useGetRetrievalGranuleLinks({
     collectionMetadata,
     granuleCount,
-    linkTypes: ['browse'],
+    linkTypes: [GRANULE_LINK_TYPES.BROWSE],
     obfuscatedId
   })
 
@@ -80,17 +85,17 @@ const EchoOrderStatusItem: React.FC<EchoOrderStatusItemProps> = ({
 
   const browseUrls = granuleLinks.browse
 
-  if (stateFromOrderStatus === 'creating' || stateFromOrderStatus === 'in_progress') {
+  if ([ORDER_STATES.CREATING, ORDER_STATES.IN_PROGRESS].includes(stateFromOrderStatus)) {
     progressPercentage = 0
     orderInfo = STATUS_MESSAGES.ECHO_ORDERS.IN_PROGRESS
   }
 
-  if (stateFromOrderStatus === 'complete') {
+  if (stateFromOrderStatus === ORDER_STATES.COMPLETE) {
     progressPercentage = 100
     orderInfo = STATUS_MESSAGES.ECHO_ORDERS.COMPLETE
   }
 
-  if (stateFromOrderStatus === 'failed') {
+  if (stateFromOrderStatus === ORDER_STATES.FAILED) {
     progressPercentage = 100
     orderInfo = STATUS_MESSAGES.ECHO_ORDERS.FAILED
   }
@@ -129,7 +134,7 @@ const EchoOrderStatusItem: React.FC<EchoOrderStatusItemProps> = ({
               retrievalCollectionId: obfuscatedId,
               downloadUrls: browseUrls,
               earthdataEnvironment,
-              linkType: 'browse'
+              linkType: GRANULE_LINK_TYPES.BROWSE
             })
           }
           retrievalId={retrievalId}

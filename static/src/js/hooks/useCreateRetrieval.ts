@@ -8,6 +8,9 @@ import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 // @ts-expect-error This file does not have types
+import { ACCESS_METHOD_TYPES } from '../../../../sharedConstants/accessMethodTypes'
+
+// @ts-expect-error This file does not have types
 import { prepareRetrievalParams } from '../util/retrievals'
 // @ts-expect-error This file does not have types
 import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
@@ -15,7 +18,12 @@ import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 // @ts-expect-error This file does not have types
 import configureStore from '../store/configureStore'
-import { EchoOrderAccessMethod, EsiAccessMethod } from '../zustand/types'
+
+import type {
+  EchoOrderAccessMethod,
+  EsiAccessMethod,
+  HarmonyAccessMethod
+} from '../zustand/types'
 
 export const useCreateRetrieval = () => {
   const navigate = useNavigate()
@@ -69,28 +77,28 @@ export const useCreateRetrieval = () => {
       let selectedService
       let selectedType
 
-      if (type === 'download') {
+      if (type === ACCESS_METHOD_TYPES.DOWNLOAD) {
         selectedService = 'Download'
         selectedType = 'download'
-      } else if (type === 'ECHO ORDERS') {
+      } else if (type === ACCESS_METHOD_TYPES.ECHO_ORDERS) {
         const { optionDefinition } = selectedMethod as EchoOrderAccessMethod
         const { name: serviceName } = optionDefinition
 
         selectedService = serviceName
         selectedType = 'order'
-      } else if (type === 'ESI') {
+      } else if (type === ACCESS_METHOD_TYPES.ESI) {
         const { optionDefinition } = selectedMethod as EsiAccessMethod
         const { name: serviceName } = optionDefinition
         selectedService = serviceName
         selectedType = 'esi'
-      } else if (type === 'OPeNDAP') {
+      } else if (type === ACCESS_METHOD_TYPES.OPENDAP) {
         selectedService = 'OPeNDAP'
         selectedType = 'opendap'
-      } else if (type === 'Harmony') {
-        const { name } = selectedMethod
+      } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
+        const { name } = selectedMethod as HarmonyAccessMethod
         selectedService = name
         selectedType = 'harmony'
-      } else if (type === 'SWODLR') {
+      } else if (type === ACCESS_METHOD_TYPES.SWODLR) {
         selectedService = 'SWODLR'
         selectedType = 'swodlr'
       }

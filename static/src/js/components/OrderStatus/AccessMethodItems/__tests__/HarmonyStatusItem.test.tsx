@@ -521,7 +521,7 @@ describe('HarmonyStatusItem', () => {
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.IN_PROGRESS,
-        orderStatus: 'in progress',
+        orderStatus: 'in_progress',
         progressPercentage: 25,
         setOpened: expect.any(Function),
         tabs: expect.any(Array),

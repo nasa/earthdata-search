@@ -1,3 +1,4 @@
+import { ORDER_STATES } from '../../sharedConstants/orderStates'
 import { aggregatedOrderStatus } from '../orderStatus'
 
 describe('aggregatedOrderStatus', () => {
@@ -9,25 +10,25 @@ describe('aggregatedOrderStatus', () => {
     test('returns the correct state for failed', () => {
       expect(aggregatedOrderStatus([{
         state: 'not_found'
-      }])).toEqual('failed')
+      }])).toEqual(ORDER_STATES.FAILED)
     })
 
     test('returns the correct state for canceled', () => {
       expect(aggregatedOrderStatus([{
         state: 'cancelled'
-      }])).toEqual('canceled')
+      }])).toEqual(ORDER_STATES.CANCELED)
     })
 
     test('returns the correct state for in progress', () => {
       expect(aggregatedOrderStatus([{
         state: 'submitting'
-      }])).toEqual('in progress')
+      }])).toEqual(ORDER_STATES.IN_PROGRESS)
     })
 
     test('returns the correct state for complete', () => {
       expect(aggregatedOrderStatus([{
         state: 'closed'
-      }])).toEqual('complete')
+      }])).toEqual(ORDER_STATES.COMPLETE)
     })
   })
 
@@ -37,7 +38,7 @@ describe('aggregatedOrderStatus', () => {
         state: 'complete'
       }, {
         state: 'processing'
-      }])).toEqual('in progress')
+      }])).toEqual(ORDER_STATES.IN_PROGRESS)
     })
 
     test('returns the correct state when complete', () => {
@@ -45,7 +46,7 @@ describe('aggregatedOrderStatus', () => {
         state: 'complete'
       }, {
         state: 'closed'
-      }])).toEqual('complete')
+      }])).toEqual(ORDER_STATES.COMPLETE)
     })
 
     test('returns the correct state when complete', () => {
@@ -53,13 +54,13 @@ describe('aggregatedOrderStatus', () => {
         state: 'failed'
       }, {
         state: 'failed'
-      }])).toEqual('failed')
+      }])).toEqual(ORDER_STATES.FAILED)
     })
 
     test('returns the correct state when complete for running errors', () => {
       expect(aggregatedOrderStatus([{
         state: 'running_with_errors'
-      }])).toEqual('in progress')
+      }])).toEqual(ORDER_STATES.IN_PROGRESS)
     })
   })
 })
