@@ -134,6 +134,7 @@ describe('createTimelineSlice', () => {
         }])
 
       useEdscStore.setState((state) => {
+        state.earthdataEnvironment.currentEnvironment = 'prod'
         state.collection.collectionId = 'collectionId'
         state.timeline.query = {
           endDate: '2009-12-01T23:59:59.000Z',
@@ -250,6 +251,7 @@ describe('createTimelineSlice', () => {
           .reply(200)
 
         useEdscStore.setState((state) => {
+          state.earthdataEnvironment.currentEnvironment = 'prod'
           state.collection.collectionId = 'collectionId'
           state.timeline.query = {
             endDate: '2009-12-01T23:59:59.000Z',

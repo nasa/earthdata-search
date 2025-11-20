@@ -55,6 +55,9 @@ describe('createUserSlice', () => {
 
     test('clears the user state and redirects the user', () => {
       const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
+      useEdscStore.setState((state) => {
+        state.earthdataEnvironment.currentEnvironment = 'prod'
+      })
 
       const { logout } = useEdscStore.getState().user
 
@@ -230,6 +233,18 @@ describe('createUserSlice', () => {
         const { map } = useEdscStore.getState()
 
         expect(map.setMapView).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('when the provided preferences are empty', () => {
+      test('sets the sitePreferences to the initialSitePreferences', () => {
+        const { setSitePreferences } = useEdscStore.getState().user
+
+        setSitePreferences({} as PreferencesData)
+
+        const { user } = useEdscStore.getState()
+
+        expect(user.sitePreferences).toEqual(initialSitePreferences)
       })
     })
   })
