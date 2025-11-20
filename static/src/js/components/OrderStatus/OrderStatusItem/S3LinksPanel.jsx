@@ -61,7 +61,7 @@ const S3LinksPanel = ({
                 <div className="order-status-item__direct-distribution-item">
                   Bucket/Object Prefix
                   {
-                    s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                    s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, index) => (
                       <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
                         <CopyableText
                           className="order-status-item__direct-distribution-item-value"
@@ -70,7 +70,7 @@ const S3LinksPanel = ({
                           successMessage="Copied the AWS S3 Bucket/Object Prefix"
                           failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
                         />
-                        {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                        {index !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
                       </React.Fragment>
                     ))
                   }
@@ -116,8 +116,8 @@ const S3LinksPanel = ({
       >
         <ul className="download-links-panel__list">
           {
-            s3Links.map((path, i) => {
-              const key = `link_${i}`
+            s3Links.map((path, index) => {
+              const key = `link_${index}`
               const s3LinkTitle = getFilenameFromPath(path)
 
               return (
@@ -125,8 +125,8 @@ const S3LinksPanel = ({
                   <CopyableText
                     text={path}
                     label="Copy AWS S3 path to clipboard"
-                    successMessage={() => `Copied AWS S3 path for: ${s3LinkTitle}`}
-                    failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
+                    successMessage={`Copied AWS S3 path for: ${s3LinkTitle}`}
+                    failureMessage={`Could not copy AWS S3 path for: ${s3LinkTitle}`}
                   />
                 </li>
               )
@@ -147,7 +147,7 @@ S3LinksPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({
     region: PropTypes.string,
-    s3BucketAndObjectPrefixNames: PropTypes.string,
+    s3BucketAndObjectPrefixNames: PropTypes.arrayOf(PropTypes.string),
     s3CredentialsApiEndpoint: PropTypes.string,
     s3CredentialsApiDocumentationUrl: PropTypes.string
   }).isRequired,

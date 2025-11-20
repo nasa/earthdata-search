@@ -10,16 +10,16 @@ import TextWindowActions from '../../TextWindowActions/TextWindowActions'
  * Renders STACJsonPanel.
  * @param {Object} arg0 - The props passed into the component.
  * @param {String} arg0.accessMethodType - The retrieval collection access method.
- * @param {Array} arg0.stacLinks - The STAC links links.
- * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Number} arg0.granuleCount - The retrieval collection granule count.
+ * @param {String} arg0.retrievalId - The retrieval id.
+ * @param {Array} arg0.stacLinks - The STAC links links.
  * @param {Boolean} arg0.stacLinksIsLoading - A flag set when the STAC links are loading.
 */
 const STACJsonPanel = ({
   accessMethodType,
-  stacLinks,
-  retrievalId,
   granuleCount,
+  retrievalId,
+  stacLinks,
   stacLinksIsLoading
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}-STAC.txt`
@@ -31,7 +31,7 @@ const STACJsonPanel = ({
           {
             stacLinksIsLoading
               ? `Retrieving STAC links for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}...`
-              : `Retrieved ${stacLinks.length} STAC ${pluralize('links', stacLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
+              : `Retrieved ${stacLinks.length} STAC ${pluralize('link', stacLinks.length)} for ${commafy(granuleCount)} ${pluralize('granule', granuleCount)}`
           }
         </span>
       </div>

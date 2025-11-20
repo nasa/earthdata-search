@@ -8,15 +8,18 @@ import type { RetrievalOrder } from '../../../types/sharedTypes'
 import './DownloadFilesPanel.scss'
 
 interface OrderStatusPanelProps {
-  retrievalOrders: RetrievalOrder[]
-  contactName?: string
+  /** The email address to contact for assistance */
   contactEmail?: string
+  /** The name of the contact person for assistance */
+  contactName?: string
+  /** The list of retrieval orders */
+  retrievalOrders: RetrievalOrder[]
 }
 
 const OrderStatusPanel: React.FC<OrderStatusPanelProps> = ({
-  retrievalOrders,
+  contactEmail,
   contactName,
-  contactEmail
+  retrievalOrders
 }) => (
   <>
     {
