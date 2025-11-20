@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Table from 'react-bootstrap/Table'
 
+import commafy from '../../util/commafy'
+
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({
   retrievalsMetrics = {}
 }) => {
   const { adminRetrievalsMetrics } = retrievalsMetrics
-  const { retrievalResponse, multCollectionResponse } = adminRetrievalsMetrics
+  const { retrievalMetricsByAccessType, multCollectionResponse } = adminRetrievalsMetrics
 
   return (
     <>
@@ -26,7 +28,7 @@ export const AdminRetrievalsMetricsList = ({
         </thead>
         <tbody>
           {
-            retrievalResponse.map((retrievalMetric) => {
+            retrievalMetricsByAccessType.map((retrievalMetric) => {
               const {
                 accessMethodType,
                 averageGranuleCount,
@@ -43,14 +45,14 @@ export const AdminRetrievalsMetricsList = ({
                   key={accessMethodType}
                 >
                   <td>{accessMethodType}</td>
-                  <td>{totalTimesAccessMethodUsed}</td>
-                  <td>{averageGranuleCount}</td>
-                  <td>{totalGranulesRetrieved}</td>
+                  <td>{commafy(totalTimesAccessMethodUsed)}</td>
+                  <td>{commafy(averageGranuleCount)}</td>
+                  <td>{commafy(totalGranulesRetrieved)}</td>
                   {
                     (averageGranuleLinkCount || averageGranuleLinkCount === 0)
                       ? (
                         <td>
-                          {averageGranuleLinkCount}
+                          {commafy(averageGranuleLinkCount)}
                         </td>
                       )
                       : (
@@ -61,7 +63,7 @@ export const AdminRetrievalsMetricsList = ({
                     maxGranuleLinkCount
                       ? (
                         <td>
-                          {maxGranuleLinkCount}
+                          {commafy(maxGranuleLinkCount)}
                         </td>
                       )
                       : (
@@ -72,7 +74,7 @@ export const AdminRetrievalsMetricsList = ({
                     (minGranuleLinkCount || minGranuleLinkCount === 0)
                       ? (
                         <td>
-                          {minGranuleLinkCount}
+                          {commafy(minGranuleLinkCount)}
                         </td>
                       )
                       : (
@@ -95,18 +97,18 @@ export const AdminRetrievalsMetricsList = ({
         <tbody className="admin-retrievals-metrics-list__table-body">
           {
             multCollectionResponse.map((retrieval) => {
-              const { retrievalId, collectionCount } = retrieval
+              const { obfuscatedId, collectionCount } = retrieval
 
               return (
                 <tr
                   className="admin-retrievals-metrics-list__table-row"
-                  key={retrievalId}
+                  key={obfuscatedId}
                 >
                   <td>
-                    {retrievalId}
+                    {obfuscatedId}
                   </td>
                   <td>
-                    {collectionCount}
+                    {commafy(collectionCount)}
                   </td>
                 </tr>
               )
@@ -121,7 +123,7 @@ export const AdminRetrievalsMetricsList = ({
 AdminRetrievalsMetricsList.propTypes = {
   retrievalsMetrics: PropTypes.shape({
     adminRetrievalsMetrics: PropTypes.shape({
-      retrievalResponse: PropTypes.arrayOf(PropTypes.shape({
+      retrievalMetricsByAccessType: PropTypes.arrayOf(PropTypes.shape({
         accessMethodType: PropTypes.string,
         averageGranuleCount: PropTypes.string,
         averageGranuleLinkCount: PropTypes.string,

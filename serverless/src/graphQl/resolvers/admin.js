@@ -1,4 +1,5 @@
 import camelcaseKeys from 'camelcase-keys'
+import { obfuscateId } from '../../util/obfuscation/obfuscateId'
 import formatAdminPreferencesMetrics from '../utils/formatAdminPreferencesMetrics'
 import buildPaginatedResult from '../utils/buildPaginatedResult'
 
@@ -71,15 +72,74 @@ export default {
       const { params = {} } = args
       const { startDate = '', endDate } = params
 
-      const result = await databaseClient.getAdminRetrievalsMetrics({
+      const retrievalMetricsByAccessTypeResult = await databaseClient
+        .getRetrievalsMetricsByAccessType({
+          startDate,
+          endDate
+        })
+
+      const multiCollectionRetrievalMetricsResult = await databaseClient.getMultiCollectionMetrics({
         startDate,
         endDate
       })
 
       return {
-        retrievalResponse: camelcaseKeys(result.retrievalResponse, { deep: true }),
-        multCollectionResponse: camelcaseKeys(result.multCollectionResponse, { deep: true })
+        retrievalMetricsByAccessType: camelcaseKeys(retrievalMetricsByAccessTypeResult
+          .retrievalMetricsByAccessType, { deep: true }),
+        multCollectionResponse: camelcaseKeys(multiCollectionRetrievalMetricsResult
+          .multCollectionResponse, { deep: true })
       }
+    }
+  },
+  MultiCollectionRetrieval: {
+    obfuscatedId: async (parent) => {
+      const { retrievalId } = parent
+
+      return obfuscateId(retrievalId)
+    }
+  },
+  AdminRetrieval: {
+    user: async (parent, args, context) => {
+      const { loaders } = context
+
+      // Use the users dataloader to fetch the user for the retrieval using the userId
+      // from the parent AdminRetrieval
+      const loaderData = await loaders.users.load(parent.userId)
+
+      return camelcaseKeys(loaderData, { deep: true })
+    },
+    obfuscatedId: async (parent) => {
+      const { id } = parent
+
+      return obfuscateId(id)
+    },
+    retrievalCollections: async (parent, args, context) => {
+      const { loaders } = context
+
+      // Use the retrievalCollections dataloader to fetch the retrieval collections for the retrieval
+      // using the id from the parent AdminRetrieval
+      const loaderData = await loaders.retrievalCollections.load(parent.id)
+
+      return camelcaseKeys(loaderData, {
+        deep: true,
+        // Prevent camelcasing of JSON fields
+        stopPaths: ['access_method', 'collection_metadata']
+      })
+    }
+  },
+  AdminRetrievalCollection: {
+    retrievalOrders: async (parent, args, context) => {
+      const { loaders } = context
+
+      // Use the retrievalOrders dataloader to fetch the retrieval orders for the collection
+      // using the id from the parent AdminRetrievalCollection
+      const loaderData = await loaders.retrievalOrders.load(parent.id)
+
+      return camelcaseKeys(loaderData, {
+        deep: true,
+        // Prevent camelcasing of JSON fields
+        stopPaths: ['granule_params', 'order_information']
+      })
     }
   }
 }

@@ -6,7 +6,7 @@ import AdminRetrievalsMetricsList from '../AdminRetrievalsMetricsList'
 
 const mockRetrievalsMetrics = {
   adminRetrievalsMetrics: {
-    retrievalResponse: [
+    retrievalMetricsByAccessType: [
       {
         accessMethodType: 'Harmony',
         totalTimesAccessMethodUsed: 'Total Times Access Method Used HARMONY 1',
@@ -29,6 +29,7 @@ const mockRetrievalsMetrics = {
     multCollectionResponse: [
       {
         collectionCount: 2,
+        obfuscatedId: '123456',
         retrievalId: 6
       }
     ]
@@ -100,7 +101,7 @@ describe('AdminRetrievalsList component', () => {
     // Check for multiple collections table
     expect(screen.getByText('Retrieval-id for retrievals that included multiple collections')).toBeInTheDocument()
     expect(screen.getByText('Number of collections in the retrieval')).toBeInTheDocument()
-    expect(screen.getByText('6')).toBeInTheDocument()
+    expect(screen.getByText('123456')).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
   })
 })

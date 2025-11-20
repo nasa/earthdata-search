@@ -115,7 +115,7 @@ input AdminRetrievalsInput {
 
 type AdminRetrievalsMetrics {
   "Metrics for each access method type"
-  retrievalResponse: [AccessMethodMetrics!]
+  retrievalMetricsByAccessType: [AccessMethodMetrics!]
 
   "Information about multi-collection retrievals"
   multCollectionResponse: [MultiCollectionRetrieval!]
@@ -145,11 +145,14 @@ type AccessMethodMetrics {
 }
 
 type MultiCollectionRetrieval {
-  "The ID of the retrieval"
-  retrievalId: Int
-
   "The count of collections in this retrieval"
   collectionCount: Int
+
+  "Obfuscated Id based on retrieval Id"
+  obfuscatedId: String
+
+  "The ID of the retrieval"
+  retrievalId: Int
 }
 
 input AdminRetrievalsMetricsInput {

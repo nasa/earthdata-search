@@ -915,7 +915,7 @@ export default class DatabaseClient {
    * @param {string} [params.endDate] - End date for the metrics query
    * @returns {Promise<Object>} A promise that resolves to the retrievals metrics
    */
-  async getAdminRetrievalsMetrics({ startDate, endDate }) {
+  async getRetrievalsMetricsByAccessType({ startDate, endDate }) {
     try {
       // Retrieve a connection to the database
       const db = await this.getDbConnection()
@@ -923,7 +923,7 @@ export default class DatabaseClient {
       // `jsonExtract` parses fields in `jsonb` columns
       // https://knexjs.org/guide/query-builder.html#jsonextract
       // Fetch metrics on `retrieval_collections`
-      const retrievalResponse = await db('retrieval_collections')
+      const retrievalMetricsByAccessType = await db('retrieval_collections')
         .jsonExtract('access_method', '$.type', 'access_method_type')
         .count('* as total_times_access_method_used')
         .select(db.raw('ROUND(AVG(retrieval_collections.granule_count)) AS average_granule_count'))
@@ -944,6 +944,28 @@ export default class DatabaseClient {
         .groupBy('access_method_type')
         .orderBy('total_times_access_method_used')
 
+      return {
+        retrievalMetricsByAccessType
+      }
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve admin retrievals metrics by access type'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves Multi Collection Retrieval Metrics
+   * @param {Object} params - Parameters for the query
+   * @param {string} [params.startDate] - Start date for the metrics query
+   * @param {string} [params.endDate] - End date for the metrics query
+   * @returns {Promise<Object>} A promise that resolves to the retrievals metrics
+   */
+  async getMultiCollectionMetrics({ startDate, endDate }) {
+    try {
+      // Retrieve a connection to the database
+      const db = await this.getDbConnection()
+
       // Fetch the list of `retrievals` which contained > 1 collections
       const multCollectionResponse = await db('retrieval_collections')
         .select('retrieval_collections.retrieval_id as retrieval_id')
@@ -963,12 +985,12 @@ export default class DatabaseClient {
         .havingRaw('COUNT(*) > ?', [1])
 
       return {
-        retrievalResponse,
         multCollectionResponse
       }
     } catch (error) {
-      console.error('Failed to retrieve admin retrievals metrics', error)
-      throw new Error('Failed to retrieve admin retrievals metrics')
+      const errorMessage = 'Failed to retrieve multi collection retrievals metrics'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
     }
   }
 }

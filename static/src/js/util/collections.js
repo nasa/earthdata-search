@@ -192,7 +192,7 @@ export const buildCollectionSearchParams = (params) => {
     keywordWithWildcard = `${keyword.replace(/\s+/g, '* ')}*`
   }
 
-  const sortKey = selectedSortKey ? [selectedSortKey] : []
+  const sortKey = [selectedSortKey]
   // Only include has_granules_or_cwic sort key if the parameter is being used
   if (hasGranulesOrCwic) sortKey.unshift('has_granules_or_cwic')
 

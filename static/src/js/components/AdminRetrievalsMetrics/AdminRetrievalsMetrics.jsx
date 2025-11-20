@@ -18,6 +18,7 @@ const AdminRetrievalsMetrics = () => {
   const [endDate, setEndDate] = useState('')
   const [startDate, setStartDate] = useState('')
   const [dateError, setDateError] = useState('')
+  const [hasFetched, setHasFetched] = useState(false)
 
   const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
@@ -27,41 +28,34 @@ const AdminRetrievalsMetrics = () => {
     console.error('Error fetching Retrieval Metrics:', error)
   }
 
-  const validateAndFormatDate = (date) => {
+  // Ensure the date entered is valid
+  const validateDate = (date) => {
     const momentDate = moment(date, DATE_FORMAT, true)
-    if (momentDate.isValid()) {
-      return {
-        formattedDate: momentDate.format(DATE_FORMAT),
-        error: ''
-      }
+    if (date && !momentDate.isValid()) {
+      const invalidDate = 'Invalid date format'
+      setDateError(invalidDate)
+
+      return invalidDate
     }
 
-    return {
-      formattedDate: date,
-      error: 'Invalid date format'
-    }
+    return null
   }
 
+  // Check the dates are valid and if so, useLazyQuery to fetchMetrics on Apply Click
   const onApplyClick = () => {
-    const startDateResult = startDate ? validateAndFormatDate(startDate) : ''
-    const endDateResult = validateAndFormatDate(endDate)
-
-    setStartDate(startDateResult.formattedDate)
-    setEndDate(endDateResult.formattedDate)
-
-    const newDateError = startDateResult.error || endDateResult.error
-    setDateError(newDateError)
+    const newDateError = validateDate(startDate) || validateDate(endDate)
 
     if (!newDateError) {
       fetchMetrics({
-        skip: newDateError,
         variables: {
           params: {
-            startDate: startDateResult.formattedDate,
-            endDate: endDateResult.formattedDate
+            startDate,
+            endDate
           }
         }
       })
+
+      setHasFetched(true)
     }
   }
 
@@ -69,6 +63,7 @@ const AdminRetrievalsMetrics = () => {
     setStartDate('')
     setEndDate('')
     setDateError('')
+    setHasFetched(false)
   }
 
   const handleStartDateChange = (event) => {
@@ -79,7 +74,8 @@ const AdminRetrievalsMetrics = () => {
     setEndDate(event.target.value)
   }
 
-  const disableButton = !endDate
+  const renderError = (dateError && endDate)
+  const renderTable = (data && endDate && !dateError && hasFetched)
 
   return (
     <AdminPage
@@ -135,7 +131,7 @@ const AdminRetrievalsMetrics = () => {
                 }
               }
               >
-                <Button onClick={onApplyClick} disabled={disableButton} className="me-2">
+                <Button onClick={onApplyClick} disabled={!endDate} className="me-2">
                   Apply
                 </Button>
                 <Button onClick={onClearClick} variant="secondary">
@@ -147,7 +143,7 @@ const AdminRetrievalsMetrics = () => {
         </Col>
       </Row>
       {
-        (dateError && endDate) && (
+        renderError && (
           <Row className="mt-3">
             <Col sm={
               {
@@ -162,7 +158,7 @@ const AdminRetrievalsMetrics = () => {
         )
       }
       {
-        (data && endDate && !dateError) && (
+        renderTable && (
           <Row>
             <Col>
               <AdminRetrievalsMetricsList retrievalsMetrics={data} />

@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react'
 
-import { act } from 'react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import AdminRetrievalsMetrics from '../AdminRetrievalsMetrics'
 import ADMIN_RETRIEVALS_METRICS from '../../../operations/queries/adminRetrievalsMetrics'
@@ -14,7 +13,7 @@ const setup = setupTest({
 
 const mockRetrievalsMetrics = {
   adminRetrievalsMetrics: {
-    retrievalResponse: [
+    retrievalMetricsByAccessType: [
       {
         accessMethodType: 'Harmony',
         totalTimesAccessMethodUsed: '1',
@@ -37,6 +36,7 @@ const mockRetrievalsMetrics = {
     multCollectionResponse: [
       {
         collectionCount: 2,
+        obfuscatedId: '123456',
         retrievalId: 6
       }
     ]
@@ -71,9 +71,7 @@ describe('AdminRetrievalsMetrics component', () => {
 
       expect(applyButton).toBeDisabled()
 
-      await act(async () => {
-        await user.type(endDateInput, '2023-05-15 12:00:00')
-      })
+      await user.type(endDateInput, '2023-05-15 12:00:00')
 
       expect(applyButton).toBeEnabled()
     })

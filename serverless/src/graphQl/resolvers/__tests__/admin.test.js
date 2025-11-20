@@ -1083,8 +1083,8 @@ describe('Admin Resolver', () => {
 
     describe('adminRetrievalsMetrics', () => {
       test('returns results with all fields', async () => {
-        const mockResponse = {
-          retrievalResponse: [
+        const mockRetrievalMetricsByAccessTypeResult = {
+          retrievalMetricsByAccessType: [
             {
               access_method_type: 'Harmony',
               total_times_access_method_used: '1',
@@ -1103,7 +1103,9 @@ describe('Admin Resolver', () => {
               max_granule_link_count: 240,
               min_granule_link_count: 160
             }
-          ],
+          ]
+        }
+        const mockMultiCollectionRetrievalMetricsResult = {
           multCollectionResponse: [
             {
               collection_count: 2,
@@ -1112,7 +1114,10 @@ describe('Admin Resolver', () => {
           ]
         }
         const databaseClient = {
-          getAdminRetrievalsMetrics: jest.fn().mockResolvedValue(mockResponse)
+          getRetrievalsMetricsByAccessType: jest.fn()
+            .mockResolvedValue(mockRetrievalMetricsByAccessTypeResult),
+          getMultiCollectionMetrics: jest.fn()
+            .mockResolvedValue(mockMultiCollectionRetrievalMetricsResult)
         }
 
         const { contextValue, server } = setupServer({
@@ -1123,8 +1128,8 @@ describe('Admin Resolver', () => {
           query: ADMIN_RETRIEVALS_METRICS,
           variables: {
             params: {
-              startDate: '2020-02-01T23:59:59Z',
-              endDate: '2025-02-01T23:59:59Z'
+              startDate: '2020-02-01 23:59:59',
+              endDate: '2025-02-01 23:59:59'
             }
           }
         }, {
@@ -1133,16 +1138,21 @@ describe('Admin Resolver', () => {
 
         const { data } = response.body.singleResult
 
-        expect(databaseClient.getAdminRetrievalsMetrics).toHaveBeenCalledWith({
-          startDate: '2020-02-01T23:59:59Z',
-          endDate: '2025-02-01T23:59:59Z'
+        expect(databaseClient.getRetrievalsMetricsByAccessType).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getRetrievalsMetricsByAccessType).toHaveBeenCalledWith({
+          startDate: '2020-02-01 23:59:59',
+          endDate: '2025-02-01 23:59:59'
         })
 
-        expect(databaseClient.getAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getMultiCollectionMetrics).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getMultiCollectionMetrics).toHaveBeenCalledWith({
+          startDate: '2020-02-01 23:59:59',
+          endDate: '2025-02-01 23:59:59'
+        })
 
         expect(data).toEqual({
           adminRetrievalsMetrics: {
-            retrievalResponse: [
+            retrievalMetricsByAccessType: [
               {
                 accessMethodType: 'Harmony',
                 totalTimesAccessMethodUsed: '1',
@@ -1165,6 +1175,7 @@ describe('Admin Resolver', () => {
             multCollectionResponse: [
               {
                 collectionCount: 2,
+                obfuscatedId: '3217430596',
                 retrievalId: 6
               }
             ]
@@ -1174,7 +1185,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getAdminRetrievalsMetrics: jest.fn().mockImplementation(() => {
+          getRetrievalsMetricsByAccessType: jest.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
 

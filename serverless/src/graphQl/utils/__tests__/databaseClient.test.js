@@ -2059,4 +2059,144 @@ describe('DatabaseClient', () => {
       expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve colormaps by products')
     })
   })
+
+  describe('getRetrievalsMetricsByAccessType', () => {
+    test('retrieves retrieval metrics for admin', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([
+          {
+            access_method_type: 'Harmony',
+            total_times_access_method_used: '1',
+            average_granule_count: '2',
+            average_granule_link_count: '50',
+            total_granules_retrieved: '2',
+            max_granule_link_count: 50,
+            min_granule_link_count: 50
+          },
+          {
+            access_method_type: 'download',
+            total_times_access_method_used: '3',
+            average_granule_count: '5375',
+            average_granule_link_count: '207',
+            total_granules_retrieved: '16124',
+            max_granule_link_count: 240,
+            min_granule_link_count: 160
+          }
+        ])
+      })
+
+      const retrievalMetrics = await databaseClient.getRetrievalsMetricsByAccessType({
+        startDate: '2020-02-01 23:59:59',
+        endDate: '2025-02-01 23:59:59'
+      })
+
+      expect(retrievalMetrics).toBeDefined()
+      expect(retrievalMetrics).toEqual({
+        retrievalMetricsByAccessType: [{
+          access_method_type: 'Harmony',
+          average_granule_count: '2',
+          average_granule_link_count: '50',
+          max_granule_link_count: 50,
+          min_granule_link_count: 50,
+          total_granules_retrieved: '2',
+          total_times_access_method_used: '1'
+        }, {
+          access_method_type: 'download',
+          average_granule_count: '5375',
+          average_granule_link_count: '207',
+          max_granule_link_count: 240,
+          min_granule_link_count: 160,
+          total_granules_retrieved: '16124',
+          total_times_access_method_used: '3'
+        }]
+
+      })
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select jsonb_path_query("access_method", $1) as "access_method_type", count(*) as "total_times_access_method_used", ROUND(AVG(retrieval_collections.granule_count)) AS average_granule_count, ROUND(AVG(retrieval_collections.granule_link_count)) AS average_granule_link_count, SUM(retrieval_collections.granule_count) AS total_granules_retrieved, MAX(retrieval_collections.granule_link_count) AS max_granule_link_count, MIN(retrieval_collections.granule_link_count) AS min_granule_link_count from "retrieval_collections" where "retrieval_collections"."created_at" >= $2 and "retrieval_collections"."created_at" < $3 group by "access_method_type" order by "total_times_access_method_used" asc')
+      expect(queries[0].bindings).toEqual(['$.type', '2020-02-01 23:59:59', '2025-02-01 23:59:59'])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getRetrievalsMetricsByAccessType({
+        startDate: '2020-02-01 23:59:59',
+        endDate: '2025-02-01 23:59:59'
+      })).rejects.toThrow('Failed to retrieve admin retrievals metrics by access type')
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select jsonb_path_query("access_method", $1) as "access_method_type", count(*) as "total_times_access_method_used", ROUND(AVG(retrieval_collections.granule_count)) AS average_granule_count, ROUND(AVG(retrieval_collections.granule_link_count)) AS average_granule_link_count, SUM(retrieval_collections.granule_count) AS total_granules_retrieved, MAX(retrieval_collections.granule_link_count) AS max_granule_link_count, MIN(retrieval_collections.granule_link_count) AS min_granule_link_count from "retrieval_collections" where "retrieval_collections"."created_at" >= $2 and "retrieval_collections"."created_at" < $3 group by "access_method_type" order by "total_times_access_method_used" asc')
+      expect(queries[0].bindings).toEqual(['$.type', '2020-02-01 23:59:59', '2025-02-01 23:59:59'])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith(
+        'Failed to retrieve admin retrievals metrics by access type',
+        expect.objectContaining({
+          message: expect.stringContaining('Unknown Error')
+        })
+      )
+    })
+  })
+
+  describe('getMultiCollectionMetrics', () => {
+    test('retrieves retrieval metrics for admin', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([
+          {
+            collection_count: 2,
+            retrieval_id: 6
+          }
+        ])
+      })
+
+      const retrievalMetrics = await databaseClient.getMultiCollectionMetrics({
+        startDate: '2020-02-01 23:59:59',
+        endDate: '2025-02-01 23:59:59'
+      })
+
+      expect(retrievalMetrics).toBeDefined()
+      expect(retrievalMetrics).toEqual({
+        multCollectionResponse: [
+          {
+            collection_count: 2,
+            retrieval_id: 6
+          }
+        ]
+      })
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."retrieval_id" as "retrieval_id", count(*) as "collection_count" from "retrieval_collections" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_collections"."created_at" >= $1 and "retrieval_collections"."created_at" < $2 group by "retrieval_id" having COUNT(*) > $3')
+      expect(queries[0].bindings).toEqual(['2020-02-01 23:59:59', '2025-02-01 23:59:59', 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getMultiCollectionMetrics({
+        startDate: '2020-02-01 23:59:59',
+        endDate: '2025-02-01 23:59:59'
+      })).rejects.toThrow('Failed to retrieve multi collection retrievals metrics')
+
+      const { queries } = dbTracker.queries
+      expect(queries[0].sql).toEqual('select "retrieval_collections"."retrieval_id" as "retrieval_id", count(*) as "collection_count" from "retrieval_collections" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_collections"."created_at" >= $1 and "retrieval_collections"."created_at" < $2 group by "retrieval_id" having COUNT(*) > $3')
+      expect(queries[0].bindings).toEqual(['2020-02-01 23:59:59', '2025-02-01 23:59:59', 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith(
+        'Failed to retrieve multi collection retrievals metrics',
+        expect.objectContaining({
+          message: expect.stringContaining('Unknown Error')
+        })
+      )
+    })
+  })
 })

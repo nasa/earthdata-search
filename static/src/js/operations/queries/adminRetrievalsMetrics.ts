@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 const ADMIN_RETRIEVALS_METRICS = gql`
   query AdminRetrievalsMetrics($params: AdminRetrievalsMetricsInput) {
     adminRetrievalsMetrics(params: $params) {
-      retrievalResponse {
+      retrievalMetricsByAccessType {
         accessMethodType
         totalTimesAccessMethodUsed
         averageGranuleCount
@@ -14,6 +14,7 @@ const ADMIN_RETRIEVALS_METRICS = gql`
       }
       multCollectionResponse {
         collectionCount
+        obfuscatedId
         retrievalId
       }
     }
