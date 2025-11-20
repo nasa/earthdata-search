@@ -73,6 +73,9 @@ const createUserSlice: ImmerStateCreator<UserSlice> = (set, get) => ({
     },
 
     setSitePreferences: (sitePreferences) => {
+      // If the provided preferences are empty, do not update the state
+      if (isEmpty(sitePreferences)) return
+
       const {
         collectionSort,
         mapView: preferencesMapView = {}
