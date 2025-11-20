@@ -3,6 +3,10 @@ import { getEarthdataEnvironment } from '../earthdataEnvironment'
 
 describe('getEarthdataEnvironment', () => {
   test('returns Earthdata environment from the zustand state', () => {
+    useEdscStore.setState((state) => {
+      state.earthdataEnvironment.currentEnvironment = 'prod'
+    })
+
     expect(getEarthdataEnvironment(useEdscStore.getState())).toEqual('prod')
   })
 })

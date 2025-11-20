@@ -302,6 +302,7 @@ describe('createProjectSlice', () => {
         })
 
         useEdscStore.setState((state) => {
+          state.earthdataEnvironment.currentEnvironment = 'prod'
           state.project.collections.allIds = ['collectionId1', 'collectionId2']
           state.user.edlToken = 'mockEdlToken'
         })
