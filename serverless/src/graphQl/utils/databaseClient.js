@@ -967,7 +967,7 @@ export default class DatabaseClient {
       const db = await this.getDbConnection()
 
       // Fetch the list of `retrievals` which contained > 1 collections
-      const multCollectionResponse = await db('retrieval_collections')
+      const multiCollectionResponse = await db('retrieval_collections')
         .select('retrieval_collections.retrieval_id as retrieval_id')
         .modify((queryBuilder) => {
           if (startDate) {
@@ -985,7 +985,7 @@ export default class DatabaseClient {
         .havingRaw('COUNT(*) > ?', [1])
 
       return {
-        multCollectionResponse
+        multiCollectionResponse
       }
     } catch (error) {
       const errorMessage = 'Failed to retrieve multi collection retrievals metrics'

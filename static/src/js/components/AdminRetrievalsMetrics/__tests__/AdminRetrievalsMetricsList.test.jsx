@@ -26,7 +26,7 @@ const mockRetrievalsMetrics = {
         minGranuleLinkCount: 160
       }
     ],
-    multCollectionResponse: [
+    multiCollectionResponse: [
       {
         collectionCount: 2,
         obfuscatedId: '123456',

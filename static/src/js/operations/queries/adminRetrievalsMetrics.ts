@@ -12,7 +12,7 @@ const ADMIN_RETRIEVALS_METRICS = gql`
         maxGranuleLinkCount
         minGranuleLinkCount
       }
-      multCollectionResponse {
+      multiCollectionResponse {
         collectionCount
         obfuscatedId
         retrievalId

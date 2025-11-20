@@ -10,7 +10,7 @@ export const AdminRetrievalsMetricsList = ({
   retrievalsMetrics = {}
 }) => {
   const { adminRetrievalsMetrics } = retrievalsMetrics
-  const { retrievalMetricsByAccessType, multCollectionResponse } = adminRetrievalsMetrics
+  const { retrievalMetricsByAccessType, multiCollectionResponse } = adminRetrievalsMetrics
 
   return (
     <>
@@ -96,7 +96,7 @@ export const AdminRetrievalsMetricsList = ({
         </thead>
         <tbody className="admin-retrievals-metrics-list__table-body">
           {
-            multCollectionResponse.map((retrieval) => {
+            multiCollectionResponse.map((retrieval) => {
               const { obfuscatedId, collectionCount } = retrieval
 
               return (
@@ -132,7 +132,7 @@ AdminRetrievalsMetricsList.propTypes = {
         totalGranulesRetrieved: PropTypes.string,
         totalTimesAccessMethodUsed: PropTypes.string
       })),
-      multCollectionResponse: PropTypes.arrayOf(PropTypes.shape({
+      multiCollectionResponse: PropTypes.arrayOf(PropTypes.shape({
         retrievalId: PropTypes.number,
         collectionCount: PropTypes.number
       }))

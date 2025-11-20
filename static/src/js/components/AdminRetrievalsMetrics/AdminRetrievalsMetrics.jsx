@@ -22,11 +22,7 @@ const AdminRetrievalsMetrics = () => {
 
   const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
-  const [fetchMetrics, { error, data }] = useLazyQuery(ADMIN_RETRIEVALS_METRICS)
-
-  if (error) {
-    console.error('Error fetching Retrieval Metrics:', error)
-  }
+  const [fetchMetrics, { data }] = useLazyQuery(ADMIN_RETRIEVALS_METRICS)
 
   // Ensure the date entered is valid
   const validateDate = (date) => {
@@ -74,6 +70,12 @@ const AdminRetrievalsMetrics = () => {
     setEndDate(event.target.value)
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      onApplyClick()
+    }
+  }
+
   const renderError = (dateError && endDate)
   const renderTable = (data && endDate && !dateError && hasFetched)
 
@@ -119,6 +121,7 @@ const AdminRetrievalsMetrics = () => {
                   placeholder={DATE_FORMAT}
                   value={endDate}
                   onChange={handleEndDateChange}
+                  onKeyDown={handleKeyDown}
                 />
               </Col>
             </Form.Group>
@@ -134,7 +137,7 @@ const AdminRetrievalsMetrics = () => {
                 <Button onClick={onApplyClick} disabled={!endDate} className="me-2">
                   Apply
                 </Button>
-                <Button onClick={onClearClick} variant="secondary">
+                <Button onClick={onClearClick} variant="secondary" className="btn-light">
                   Clear
                 </Button>
               </Col>

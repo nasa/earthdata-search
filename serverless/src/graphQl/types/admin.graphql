@@ -118,7 +118,7 @@ type AdminRetrievalsMetrics {
   retrievalMetricsByAccessType: [AccessMethodMetrics!]
 
   "Information about multi-collection retrievals"
-  multCollectionResponse: [MultiCollectionRetrieval!]
+  multiCollectionResponse: [MultiCollectionRetrieval!]
 }
 
 type AccessMethodMetrics {

@@ -1106,7 +1106,7 @@ describe('Admin Resolver', () => {
           ]
         }
         const mockMultiCollectionRetrievalMetricsResult = {
-          multCollectionResponse: [
+          multiCollectionResponse: [
             {
               collection_count: 2,
               retrieval_id: 6
@@ -1172,7 +1172,7 @@ describe('Admin Resolver', () => {
                 minGranuleLinkCount: 160
               }
             ],
-            multCollectionResponse: [
+            multiCollectionResponse: [
               {
                 collectionCount: 2,
                 obfuscatedId: '3217430596',

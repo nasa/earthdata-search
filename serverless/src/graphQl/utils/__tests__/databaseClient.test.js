@@ -2161,7 +2161,7 @@ describe('DatabaseClient', () => {
 
       expect(retrievalMetrics).toBeDefined()
       expect(retrievalMetrics).toEqual({
-        multCollectionResponse: [
+        multiCollectionResponse: [
           {
             collection_count: 2,
             retrieval_id: 6

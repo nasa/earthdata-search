@@ -6,7 +6,6 @@ import ADMIN_RETRIEVALS_METRICS from '../../../operations/queries/adminRetrieval
 
 const setup = setupTest({
   Component: AdminRetrievalsMetrics,
-  defaultProps: {},
   withRouter: true,
   withApolloClient: true
 })
@@ -33,7 +32,7 @@ const mockRetrievalsMetrics = {
         minGranuleLinkCount: 160
       }
     ],
-    multCollectionResponse: [
+    multiCollectionResponse: [
       {
         collectionCount: 2,
         obfuscatedId: '123456',
@@ -52,13 +51,6 @@ describe('AdminRetrievalsMetrics component', () => {
       expect(screen.getByRole('textbox', { name: 'Start Date:' })).toBeInTheDocument()
       expect(screen.getByRole('textbox', { name: 'End Date:' })).toBeInTheDocument()
       expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
-    })
-
-    test('it should display Apply and Clear buttons', () => {
-      setup()
-
-      expect(screen.getByRole('button', { name: 'Apply' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
     })
   })
 
@@ -138,59 +130,13 @@ describe('AdminRetrievalsMetrics component', () => {
     })
   })
 
-  describe('when an error occurs during data fetching', () => {
-    test('it should display an error message', async () => {
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
-      const mocks = [
-        {
-          request: {
-            query: ADMIN_RETRIEVALS_METRICS,
-            variables: {
-              params: {
-                startDate: '',
-                endDate: '2025-11-14 23:59:59'
-              }
-            }
-          },
-          error: new Error('An error occurred')
-        }
-      ]
-
-      const { user } = setup({
-        overrideApolloClientMocks: mocks
-      })
-
-      const endDateInput = screen.getByRole('textbox', { name: 'End Date:' })
-      const applyButton = screen.getByRole('button', { name: 'Apply' })
-
-      await user.type(endDateInput, '2025-11-14 23:59:59')
-
-      await user.click(applyButton)
-
-      await waitFor(() => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(
-          'Error fetching Retrieval Metrics:',
-          expect.any(Error)
-        )
-      })
-
-      expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
-
-      consoleErrorSpy.mockRestore()
-    })
-  })
-
   describe('when an invalid date has been passed in', () => {
     test('it should display an error message', async () => {
       const { user } = setup()
 
       const endDateInput = screen.getByRole('textbox', { name: 'End Date:' })
-      const applyButton = screen.getByRole('button', { name: 'Apply' })
 
-      await user.type(endDateInput, '2025-11-1 23:59:59')
-
-      user.click(applyButton)
+      await user.type(endDateInput, '2025-11-1 23:59:59{Enter}')
 
       await waitFor(() => {
         expect(screen.getByText('Invalid date format')).toBeInTheDocument()

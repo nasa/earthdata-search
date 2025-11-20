@@ -86,8 +86,8 @@ export default {
       return {
         retrievalMetricsByAccessType: camelcaseKeys(retrievalMetricsByAccessTypeResult
           .retrievalMetricsByAccessType, { deep: true }),
-        multCollectionResponse: camelcaseKeys(multiCollectionRetrievalMetricsResult
-          .multCollectionResponse, { deep: true })
+        multiCollectionResponse: camelcaseKeys(multiCollectionRetrievalMetricsResult
+          .multiCollectionResponse, { deep: true })
       }
     }
   },
