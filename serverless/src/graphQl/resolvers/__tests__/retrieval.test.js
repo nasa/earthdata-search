@@ -328,11 +328,11 @@ describe('Retrieval resolver', () => {
             granule_link_count: 42,
             updated_at: '2023-01-01T00:00:00Z',
             retrieval_order_id: 3,
-            retrieval_order_type: 'type',
-            retrieval_order_number: 1,
-            retrieval_order_information: { mock: 'order information' },
-            retrieval_order_state: 'state',
-            retrieval_order_error: 'error',
+            type: 'type',
+            order_number: 1,
+            order_information: { mock: 'order information' },
+            state: 'state',
+            error: 'error',
             retrieval_order_updated_at: '2023-01-01T00:00:00Z'
           }),
           getRetrievalOrdersByRetrievalCollectionId: jest.fn().mockResolvedValue([{
@@ -367,7 +367,6 @@ describe('Retrieval resolver', () => {
             accessMethod: { mock: 'access method' },
             collectionMetadata: { mock: 'collection metadata' },
             granuleCount: 42,
-            id: 1,
             obfuscatedId: '4517239960',
             retrievalId: 2,
             retrievalOrders: [{

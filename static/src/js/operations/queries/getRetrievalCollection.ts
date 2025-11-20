@@ -6,7 +6,6 @@ const GET_RETRIEVAL_COLLECTION = gql`
       accessMethod
       collectionMetadata
       granuleCount
-      id
       obfuscatedId
       retrievalId
       updatedAt

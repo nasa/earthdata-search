@@ -42,6 +42,7 @@ export type AccessMethodType =
   | 'DOWNLOAD'
   | 'ECHO_ORDERS'
   | 'ESI'
+  | 'HARMONY'
   | 'OPENDAP'
   | 'SWODLR'
 
