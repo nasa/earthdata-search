@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row'
 
 import { useLazyQuery } from '@apollo/client'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import { routes } from '../../constants/routes'
 
 import ADMIN_RETRIEVALS_METRICS from '../../operations/queries/adminRetrievalsMetrics'
@@ -20,9 +22,20 @@ const AdminRetrievalsMetrics = () => {
   const [dateError, setDateError] = useState('')
   const [hasFetched, setHasFetched] = useState(false)
 
+  const handleError = useEdscStore((state) => state.errors.handleError)
+
   const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
-  const [fetchMetrics, { data }] = useLazyQuery(ADMIN_RETRIEVALS_METRICS)
+  const [fetchMetrics, { data }] = useLazyQuery(ADMIN_RETRIEVALS_METRICS, {
+    onError: (error) => {
+      handleError({
+        error,
+        action: 'getAdminRetrievalsMetrics',
+        resource: 'adminRetrievalMetrics',
+        verb: 'retrieving'
+      })
+    }
+  })
 
   // Ensure the date entered is valid
   const validateDate = (date) => {
@@ -34,11 +47,14 @@ const AdminRetrievalsMetrics = () => {
       return invalidDate
     }
 
+    setDateError('')
+
     return null
   }
 
   // Check the dates are valid and if so, useLazyQuery to fetchMetrics on Apply Click
-  const onApplyClick = () => {
+  const onApplyClick = (event) => {
+    event.preventDefault()
     const newDateError = validateDate(startDate) || validateDate(endDate)
 
     if (!newDateError) {
@@ -68,12 +84,6 @@ const AdminRetrievalsMetrics = () => {
 
   const handleEndDateChange = (event) => {
     setEndDate(event.target.value)
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      onApplyClick()
-    }
   }
 
   const renderError = (dateError && endDate)
@@ -121,7 +131,6 @@ const AdminRetrievalsMetrics = () => {
                   placeholder={DATE_FORMAT}
                   value={endDate}
                   onChange={handleEndDateChange}
-                  onKeyDown={handleKeyDown}
                 />
               </Col>
             </Form.Group>
@@ -134,7 +143,7 @@ const AdminRetrievalsMetrics = () => {
                 }
               }
               >
-                <Button onClick={onApplyClick} disabled={!endDate} className="me-2">
+                <Button onClick={onApplyClick} type="submit" disabled={!endDate} className="me-2">
                   Apply
                 </Button>
                 <Button onClick={onClearClick} variant="secondary" className="btn-light">

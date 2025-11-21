@@ -6,6 +6,11 @@ import ADMIN_RETRIEVALS_METRICS from '../../../operations/queries/adminRetrieval
 
 const setup = setupTest({
   Component: AdminRetrievalsMetrics,
+  defaultZustandState: {
+    errors: {
+      handleError: jest.fn()
+    }
+  },
   withRouter: true,
   withApolloClient: true
 })
@@ -144,6 +149,50 @@ describe('AdminRetrievalsMetrics component', () => {
 
       // Ensure that the AdminRetrievalsMetricsList is not rendered
       expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('when there is an error fetching retrieval metrics', () => {
+    test('calls handleError', async () => {
+      const mocks = [
+        {
+          request: {
+            query: ADMIN_RETRIEVALS_METRICS,
+            variables: {
+              params: {
+                startDate: '2025-11-14 00:00:00',
+                endDate: '2025-11-14 23:59:59'
+              }
+            }
+          },
+          result: {
+            errors: [new Error('Failed to retrieve metrics')]
+          }
+        }
+      ]
+
+      const { user, zustandState } = setup({
+        overrideApolloClientMocks: mocks
+      })
+
+      const startDateInput = screen.getByLabelText('Start Date:')
+      const endDateInput = screen.getByLabelText('End Date:')
+      const applyButton = screen.getByRole('button', { name: 'Apply' })
+
+      await user.type(startDateInput, '2025-11-14 00:00:00')
+      await user.type(endDateInput, '2025-11-14 23:59:59')
+
+      expect(screen.queryByText('Data Access Type')).not.toBeInTheDocument()
+
+      await user.click(applyButton)
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+        action: 'getAdminRetrievalsMetrics',
+        error: new Error('Failed to retrieve metrics'),
+        resource: 'adminRetrievalMetrics',
+        verb: 'retrieving'
+      })
     })
   })
 })
