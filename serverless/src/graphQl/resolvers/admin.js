@@ -97,49 +97,5 @@ export default {
 
       return obfuscateId(retrievalId)
     }
-  },
-  AdminRetrieval: {
-    user: async (parent, args, context) => {
-      const { loaders } = context
-
-      // Use the users dataloader to fetch the user for the retrieval using the userId
-      // from the parent AdminRetrieval
-      const loaderData = await loaders.users.load(parent.userId)
-
-      return camelcaseKeys(loaderData, { deep: true })
-    },
-    obfuscatedId: async (parent) => {
-      const { id } = parent
-
-      return obfuscateId(id)
-    },
-    retrievalCollections: async (parent, args, context) => {
-      const { loaders } = context
-
-      // Use the retrievalCollections dataloader to fetch the retrieval collections for the retrieval
-      // using the id from the parent AdminRetrieval
-      const loaderData = await loaders.retrievalCollections.load(parent.id)
-
-      return camelcaseKeys(loaderData, {
-        deep: true,
-        // Prevent camelcasing of JSON fields
-        stopPaths: ['access_method', 'collection_metadata']
-      })
-    }
-  },
-  AdminRetrievalCollection: {
-    retrievalOrders: async (parent, args, context) => {
-      const { loaders } = context
-
-      // Use the retrievalOrders dataloader to fetch the retrieval orders for the collection
-      // using the id from the parent AdminRetrievalCollection
-      const loaderData = await loaders.retrievalOrders.load(parent.id)
-
-      return camelcaseKeys(loaderData, {
-        deep: true,
-        // Prevent camelcasing of JSON fields
-        stopPaths: ['granule_params', 'order_information']
-      })
-    }
   }
 }
