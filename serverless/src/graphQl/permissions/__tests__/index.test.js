@@ -46,6 +46,10 @@ describe('permissions', () => {
             isValidUser,
             isAdminUser
           ),
+          adminRetrievalsMetrics: and(
+            isValidUser,
+            isAdminUser
+          ),
           colormaps: allow,
           project: allow,
           projects: isValidUser,

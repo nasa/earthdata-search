@@ -1,6 +1,7 @@
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
 import ADMIN_RETRIEVAL from '../../../../../static/src/js/operations/queries/adminRetrieval'
 import ADMIN_RETRIEVALS from '../../../../../static/src/js/operations/queries/adminRetrievals'
+import ADMIN_RETRIEVALS_METRICS from '../../../../../static/src/js/operations/queries/adminRetrievalsMetrics'
 import ADMIN_PROJECT from '../../../../../static/src/js/operations/queries/adminProject'
 import ADMIN_PROJECTS from '../../../../../static/src/js/operations/queries/adminProjects'
 import setupServer from './__mocks__/setupServer'
@@ -1077,6 +1078,137 @@ describe('Admin Resolver', () => {
             }
           })
         })
+      })
+    })
+
+    describe('adminRetrievalsMetrics', () => {
+      test('returns results with all fields', async () => {
+        const mockRetrievalMetricsByAccessTypeResult = {
+          retrievalMetricsByAccessType: [
+            {
+              access_method_type: 'Harmony',
+              total_times_access_method_used: '1',
+              average_granule_count: '2',
+              average_granule_link_count: '50',
+              total_granules_retrieved: '2',
+              max_granule_link_count: 50,
+              min_granule_link_count: 50
+            },
+            {
+              access_method_type: 'download',
+              total_times_access_method_used: '3',
+              average_granule_count: '5375',
+              average_granule_link_count: '207',
+              total_granules_retrieved: '16124',
+              max_granule_link_count: 240,
+              min_granule_link_count: 160
+            }
+          ]
+        }
+        const mockMultiCollectionRetrievalMetricsResult = {
+          multiCollectionResponse: [
+            {
+              collection_count: 2,
+              retrieval_id: 6
+            }
+          ]
+        }
+        const databaseClient = {
+          getRetrievalsMetricsByAccessType: jest.fn()
+            .mockResolvedValue(mockRetrievalMetricsByAccessTypeResult),
+          getMultiCollectionMetrics: jest.fn()
+            .mockResolvedValue(mockMultiCollectionRetrievalMetricsResult)
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_RETRIEVALS_METRICS,
+          variables: {
+            params: {
+              startDate: '2020-02-01 23:59:59',
+              endDate: '2025-02-01 23:59:59'
+            }
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.getRetrievalsMetricsByAccessType).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getRetrievalsMetricsByAccessType).toHaveBeenCalledWith({
+          startDate: '2020-02-01 23:59:59',
+          endDate: '2025-02-01 23:59:59'
+        })
+
+        expect(databaseClient.getMultiCollectionMetrics).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getMultiCollectionMetrics).toHaveBeenCalledWith({
+          startDate: '2020-02-01 23:59:59',
+          endDate: '2025-02-01 23:59:59'
+        })
+
+        expect(data).toEqual({
+          adminRetrievalsMetrics: {
+            retrievalMetricsByAccessType: [
+              {
+                accessMethodType: 'Harmony',
+                totalTimesAccessMethodUsed: '1',
+                averageGranuleCount: '2',
+                averageGranuleLinkCount: '50',
+                totalGranulesRetrieved: '2',
+                maxGranuleLinkCount: 50,
+                minGranuleLinkCount: 50
+              },
+              {
+                accessMethodType: 'download',
+                totalTimesAccessMethodUsed: '3',
+                averageGranuleCount: '5375',
+                averageGranuleLinkCount: '207',
+                totalGranulesRetrieved: '16124',
+                maxGranuleLinkCount: 240,
+                minGranuleLinkCount: 160
+              }
+            ],
+            multiCollectionResponse: [
+              {
+                collectionCount: 2,
+                obfuscatedId: '3217430596',
+                retrievalId: 6
+              }
+            ]
+          }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        const databaseClient = {
+          getRetrievalsMetricsByAccessType: jest.fn().mockImplementation(() => {
+            throw new Error('Something failed')
+          })
+
+        }
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_RETRIEVALS_METRICS
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        const errorMessage = 'Something failed'
+
+        expect(data).toEqual({
+          adminRetrievalsMetrics: null
+        })
+
+        expect(errors[0].message).toEqual(errorMessage)
       })
     })
   })

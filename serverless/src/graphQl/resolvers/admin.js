@@ -1,4 +1,5 @@
 import camelcaseKeys from 'camelcase-keys'
+import { obfuscateId } from '../../util/obfuscation/obfuscateId'
 import formatAdminPreferencesMetrics from '../utils/formatAdminPreferencesMetrics'
 import buildPaginatedResult from '../utils/buildPaginatedResult'
 
@@ -65,6 +66,36 @@ export default {
         pageInfo: result.pageInfo,
         count: result.count
       }
+    },
+    adminRetrievalsMetrics: async (source, args, context) => {
+      const { databaseClient } = context
+      const { params = {} } = args
+      const { startDate = '', endDate } = params
+
+      const retrievalMetricsByAccessTypeResult = await databaseClient
+        .getRetrievalsMetricsByAccessType({
+          startDate,
+          endDate
+        })
+
+      const multiCollectionRetrievalMetricsResult = await databaseClient.getMultiCollectionMetrics({
+        startDate,
+        endDate
+      })
+
+      return {
+        retrievalMetricsByAccessType: camelcaseKeys(retrievalMetricsByAccessTypeResult
+          .retrievalMetricsByAccessType, { deep: true }),
+        multiCollectionResponse: camelcaseKeys(multiCollectionRetrievalMetricsResult
+          .multiCollectionResponse, { deep: true })
+      }
+    }
+  },
+  MultiCollectionRetrieval: {
+    obfuscatedId: async (parent) => {
+      const { retrievalId } = parent
+
+      return obfuscateId(retrievalId)
     }
   }
 }

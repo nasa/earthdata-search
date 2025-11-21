@@ -907,4 +907,90 @@ export default class DatabaseClient {
       throw new Error(errorMessage)
     }
   }
+
+  /**
+   * Retrieves admin retrievals metrics
+   * @param {Object} params - Parameters for the query
+   * @param {string} [params.startDate] - Start date for the metrics query
+   * @param {string} [params.endDate] - End date for the metrics query
+   * @returns {Promise<Object>} A promise that resolves to the retrievals metrics
+   */
+  async getRetrievalsMetricsByAccessType({ startDate, endDate }) {
+    try {
+      // Retrieve a connection to the database
+      const db = await this.getDbConnection()
+
+      // `jsonExtract` parses fields in `jsonb` columns
+      // https://knexjs.org/guide/query-builder.html#jsonextract
+      // Fetch metrics on `retrieval_collections`
+      const retrievalMetricsByAccessType = await db('retrieval_collections')
+        .jsonExtract('access_method', '$.type', 'access_method_type')
+        .count('* as total_times_access_method_used')
+        .select(db.raw('ROUND(AVG(retrieval_collections.granule_count)) AS average_granule_count'))
+        .select(db.raw('ROUND(AVG(retrieval_collections.granule_link_count)) AS average_granule_link_count'))
+        .select(db.raw('SUM(retrieval_collections.granule_count) AS total_granules_retrieved'))
+        .select(db.raw('MAX(retrieval_collections.granule_link_count) AS max_granule_link_count'))
+        .select(db.raw('MIN(retrieval_collections.granule_link_count) AS min_granule_link_count'))
+        .modify((queryBuilder) => {
+          if (startDate) {
+            queryBuilder.where('retrieval_collections.created_at', '>=', startDate)
+          }
+        })
+        .modify((queryBuilder) => {
+          if (endDate) {
+            queryBuilder.where('retrieval_collections.created_at', '<', endDate)
+          }
+        })
+        .groupBy('access_method_type')
+        .orderBy('total_times_access_method_used')
+
+      return {
+        retrievalMetricsByAccessType
+      }
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve admin retrievals metrics by access type'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves Multi Collection Retrieval Metrics
+   * @param {Object} params - Parameters for the query
+   * @param {string} [params.startDate] - Start date for the metrics query
+   * @param {string} [params.endDate] - End date for the metrics query
+   * @returns {Promise<Object>} A promise that resolves to the retrievals metrics
+   */
+  async getMultiCollectionMetrics({ startDate, endDate }) {
+    try {
+      // Retrieve a connection to the database
+      const db = await this.getDbConnection()
+
+      // Fetch the list of `retrievals` which contained > 1 collections
+      const multiCollectionResponse = await db('retrieval_collections')
+        .select('retrieval_collections.retrieval_id as retrieval_id')
+        .modify((queryBuilder) => {
+          if (startDate) {
+            queryBuilder.where('retrieval_collections.created_at', '>=', startDate)
+          }
+        })
+        .modify((queryBuilder) => {
+          if (endDate) {
+            queryBuilder.where('retrieval_collections.created_at', '<', endDate)
+          }
+        })
+        .count('* as collection_count')
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .groupBy('retrieval_id')
+        .havingRaw('COUNT(*) > ?', [1])
+
+      return {
+        multiCollectionResponse
+      }
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve multi collection retrievals metrics'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
 }

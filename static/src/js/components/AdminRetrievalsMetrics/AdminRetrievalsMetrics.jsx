@@ -1,32 +1,93 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import moment from 'moment'
+import React, { useState } from 'react'
 import Row from 'react-bootstrap/Row'
+
+import { useLazyQuery } from '@apollo/client'
+
+import useEdscStore from '../../zustand/useEdscStore'
+
+import { routes } from '../../constants/routes'
+
+import ADMIN_RETRIEVALS_METRICS from '../../operations/queries/adminRetrievalsMetrics'
 
 import AdminPage from '../AdminPage/AdminPage'
 import AdminRetrievalsMetricsList from './AdminRetrievalsMetricsList'
-import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
-import setTemporalFilters from './setTemporalFilters'
-import { routes } from '../../constants/routes'
 
-const AdminRetrievalsMetrics = ({
-  onFetchAdminRetrievalsMetrics,
-  onUpdateAdminRetrievalsMetricsStartDate,
-  onUpdateAdminRetrievalsMetricsEndDate,
-  retrievalsMetrics = {}
-}) => {
-  const [temporalFilterEndDate, setTemporalFilterEndDate] = useState('')
-  const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
+const AdminRetrievalsMetrics = () => {
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [dateError, setDateError] = useState('')
+  const [hasFetched, setHasFetched] = useState(false)
 
-  const onChangeQuery = (event) => {
-    setTemporalFilters(event, {
-      onUpdateAdminRetrievalsMetricsStartDate,
-      onUpdateAdminRetrievalsMetricsEndDate,
-      setTemporalFilterStartDate,
-      setTemporalFilterEndDate,
-      onFetchAdminRetrievalsMetrics
-    })
+  const handleError = useEdscStore((state) => state.errors.handleError)
+
+  const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+
+  const [fetchMetrics, { data }] = useLazyQuery(ADMIN_RETRIEVALS_METRICS, {
+    onError: (error) => {
+      handleError({
+        error,
+        action: 'getAdminRetrievalsMetrics',
+        resource: 'adminRetrievalMetrics',
+        verb: 'retrieving'
+      })
+    }
+  })
+
+  // Ensure the date entered is valid
+  const validateDate = (date) => {
+    const momentDate = moment(date, DATE_FORMAT, true)
+    if (date && !momentDate.isValid()) {
+      const invalidDate = 'Invalid date format'
+      setDateError(invalidDate)
+
+      return invalidDate
+    }
+
+    setDateError('')
+
+    return null
   }
+
+  // Check the dates are valid and if so, useLazyQuery to fetchMetrics on Apply Click
+  const onApplyClick = (event) => {
+    event.preventDefault()
+    const newDateError = validateDate(startDate) || validateDate(endDate)
+
+    if (!newDateError) {
+      fetchMetrics({
+        variables: {
+          params: {
+            startDate,
+            endDate
+          }
+        }
+      })
+
+      setHasFetched(true)
+    }
+  }
+
+  const onClearClick = () => {
+    setStartDate('')
+    setEndDate('')
+    setDateError('')
+    setHasFetched(false)
+  }
+
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value)
+  }
+
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value)
+  }
+
+  const renderError = (dateError && endDate)
+  const renderTable = (data && endDate && !dateError && hasFetched)
 
   return (
     <AdminPage
@@ -44,59 +105,81 @@ const AdminRetrievalsMetrics = ({
         ]
       }
     >
-      <Row className="justify-content-start mb-2">
-        <Col sm="auto">
-          {
-            (temporalFilterEndDate || temporalFilterStartDate)
-              ? (
-                <div>
-                  <h3>
-                    Current temporal filters
-                  </h3>
-                  <br />
-                  <h5>
-                    Start Date:
-                    {temporalFilterStartDate}
-                  </h5>
-                  <br />
-                  <h5>
-                    End Date:
-                    {temporalFilterEndDate}
-                  </h5>
-                </div>
-              )
-              : (
-                <p>
-                  Enter a value for the temporal filter
-                </p>
-              )
-          }
-        </Col>
-      </Row>
-      <Row className="justify-content-end mb-2">
-        <Col sm="auto">
-          <TemporalSelectionDropdown
-            onChangeQuery={onChangeQuery}
-            allowRecurring={false}
-          />
-        </Col>
-      </Row>
-      <Row>
+      <Row className="justify-content-end mb-5">
         <Col>
-          <AdminRetrievalsMetricsList
-            retrievalsMetrics={retrievalsMetrics}
-          />
+          <Form>
+            <Form.Group as={Row} className="mb-3" controlId="formStartDate">
+              <Form.Label column sm="2">
+                Start Date:
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  type="text"
+                  placeholder={DATE_FORMAT}
+                  value={startDate}
+                  onChange={handleStartDateChange}
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formEndDate">
+              <Form.Label column sm="2">
+                End Date:
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  type="text"
+                  placeholder={DATE_FORMAT}
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row}>
+              <Col sm={
+                {
+                  span: 10,
+                  offset: 2
+                }
+              }
+              >
+                <Button onClick={onApplyClick} type="submit" disabled={!endDate} className="me-2">
+                  Apply
+                </Button>
+                <Button onClick={onClearClick} variant="secondary" className="btn-light">
+                  Clear
+                </Button>
+              </Col>
+            </Form.Group>
+          </Form>
         </Col>
       </Row>
+      {
+        renderError && (
+          <Row className="mt-3">
+            <Col sm={
+              {
+                span: 10,
+                offset: 2
+              }
+            }
+            >
+              {dateError}
+            </Col>
+          </Row>
+        )
+      }
+      {
+        renderTable && (
+          <Row>
+            <Col>
+              <AdminRetrievalsMetricsList retrievalsMetrics={data} />
+            </Col>
+          </Row>
+        )
+      }
     </AdminPage>
   )
-}
-
-AdminRetrievalsMetrics.propTypes = {
-  onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsMetricsStartDate: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsMetricsEndDate: PropTypes.func.isRequired,
-  retrievalsMetrics: PropTypes.shape({})
 }
 
 export default AdminRetrievalsMetrics
