@@ -24,8 +24,7 @@ export default {
     },
     adminProject: async (source, args, context) => {
       const { databaseClient } = context
-      const { params = {} } = args
-      const { obfuscatedId } = params
+      const { obfuscatedId } = args
 
       const data = await databaseClient.getProjectByObfuscatedId(obfuscatedId)
 
@@ -33,10 +32,9 @@ export default {
     },
     adminProjects: async (source, args, context) => {
       const { databaseClient } = context
-      const { params = {} } = args
-      const { limit = 20, offset = 0 } = params
+      const { limit = 20, offset = 0 } = args
 
-      const data = await databaseClient.getProjects(params)
+      const data = await databaseClient.getProjects(args)
       const result = buildPaginatedResult({
         data,
         limit,
@@ -51,8 +49,7 @@ export default {
     },
     adminRetrieval: async (source, args, context) => {
       const { databaseClient } = context
-      const { params = {} } = args
-      const { obfuscatedId } = params
+      const { obfuscatedId } = args
 
       const data = await databaseClient.getRetrievalByObfuscatedId(obfuscatedId)
 
@@ -60,10 +57,9 @@ export default {
     },
     adminRetrievals: async (source, args, context) => {
       const { databaseClient } = context
-      const { params = {} } = args
-      const { limit = 20, offset = 0 } = params
+      const { limit = 20, offset = 0 } = args
 
-      const data = await databaseClient.getRetrievals(params)
+      const data = await databaseClient.getRetrievals(args)
       const result = buildPaginatedResult({
         data,
         limit,
@@ -78,8 +74,7 @@ export default {
     },
     adminRetrievalsMetrics: async (source, args, context) => {
       const { databaseClient } = context
-      const { params = {} } = args
-      const { startDate = '', endDate } = params
+      const { startDate = '', endDate } = args
 
       const retrievalMetricsByAccessTypeResult = await databaseClient
         .getRetrievalsMetricsByAccessType({

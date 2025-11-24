@@ -22,9 +22,7 @@ const adminRetrievalMock = {
   request: {
     query: ADMIN_RETRIEVAL,
     variables: {
-      params: {
-        obfuscatedId: '06347346'
-      }
+      obfuscatedId: '06347346'
     }
   },
   result: {

@@ -44,11 +44,6 @@ type AdminPreferencesMetrics {
   baseLayer: [AdminPreferencesEntry]
 }
 
-input AdminProjectInput {
-  "Obfuscated ID to filter by"
-  obfuscatedId: String
-}
-
 type AdminProjects {
   "List of projects"
   adminProjects: [Project]
@@ -60,28 +55,6 @@ type AdminProjects {
   count: Int
 }
 
-input AdminProjectsInput {
-  "Sets the number of projects to return"
-  limit: Int
-
-  "Offset for pagination"
-  offset: Int
-
-  "Set the order of the results"
-  sortKey: String
-
-  "URS ID to filter by"
-  ursId: String
-
-  "Obfuscated ID to filter by"
-  obfuscatedId: String
-}
-
-input AdminRetrievalInput {
-  "Obfuscated ID to filter by"
-  obfuscatedId: String
-}
-
 type AdminRetrievals {
   "List of retrievals"
   adminRetrievals: [Retrieval]
@@ -91,26 +64,6 @@ type AdminRetrievals {
 
   "Total count of retrievals"
   count: Int
-}
-
-input AdminRetrievalsInput {
-  "Sets the number of retrievals to return"
-  limit: Int
-
-  "Offset for pagination"
-  offset: Int
-
-  "Set the order of the results"
-  sortKey: String
-
-  "URS ID to filter by"
-  ursId: String
-
-  "Obfuscated ID to filter by"
-  obfuscatedId: String
-
-  "Collection ID to filter by"
-  retrievalCollectionId: Int
 }
 
 type AdminRetrievalsMetrics {
@@ -155,14 +108,6 @@ type MultiCollectionRetrieval {
   retrievalId: Int
 }
 
-input AdminRetrievalsMetricsInput {
-  "Start date for the metrics query"
-  startDate: DateTime
-
-  "End date for the metrics query"
-  endDate: DateTime!
-}
-
 type Query {
   "Checks if the user is authorized for admin functionality"
   adminIsAuthorized: Boolean
@@ -171,19 +116,64 @@ type Query {
   adminPreferencesMetrics: AdminPreferencesMetrics
 
   "Retrieves admin project information"
-  adminProject(params: AdminProjectInput!): Project
+  adminProject(
+    "Obfuscated ID to filter by"
+    obfuscatedId: String!
+  ): Project
 
   "Retrieves projects"
-  adminProjects(params: AdminProjectsInput): AdminProjects
+  adminProjects(
+    "Sets the number of projects to return"
+    limit: Int
+
+    "Offset for pagination"
+    offset: Int
+
+    "Set the order of the results"
+    sortKey: String
+
+    "URS ID to filter by"
+    ursId: String
+
+    "Obfuscated ID to filter by"
+    obfuscatedId: String
+  ): AdminProjects
 
   "Retrieves admin retrieval information"
-  adminRetrieval(params: AdminRetrievalInput!): Retrieval
+  adminRetrieval(
+    "Obfuscated ID to filter by"
+    obfuscatedId: String!
+  ): Retrieval
 
   "Retrieves retrievals"
-  adminRetrievals(params: AdminRetrievalsInput): AdminRetrievals
+  adminRetrievals(
+    "Sets the number of retrievals to return"
+    limit: Int
+
+    "Offset for pagination"
+    offset: Int
+
+    "Set the order of the results"
+    sortKey: String
+
+    "URS ID to filter by"
+    ursId: String
+
+    "Obfuscated ID to filter by"
+    obfuscatedId: String
+
+    "Collection ID to filter by"
+    retrievalCollectionId: Int
+  ): AdminRetrievals
 
   "Retrieves admin retrievals metrics"
-  adminRetrievalsMetrics(params: AdminRetrievalsMetricsInput): AdminRetrievalsMetrics
+  adminRetrievalsMetrics(
+    "Start date for the metrics query"
+    startDate: DateTime
+
+    "End date for the metrics query"
+    endDate: DateTime!
+  ): AdminRetrievalsMetrics
 }
 
 type Mutation {

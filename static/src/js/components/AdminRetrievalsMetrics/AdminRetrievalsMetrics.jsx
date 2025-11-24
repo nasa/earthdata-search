@@ -60,10 +60,8 @@ const AdminRetrievalsMetrics = () => {
     if (!newDateError) {
       fetchMetrics({
         variables: {
-          params: {
-            startDate,
-            endDate
-          }
+          startDate,
+          endDate
         }
       })
 

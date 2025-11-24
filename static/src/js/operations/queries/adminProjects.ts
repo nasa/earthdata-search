@@ -1,8 +1,20 @@
 import { gql } from '@apollo/client'
 
 const ADMIN_PROJECTS = gql`
-  query AdminProjects($params: AdminProjectsInput) {
-    adminProjects(params: $params) {
+  query AdminProjects(
+    $limit: Int
+    $offset: Int
+    $sortKey: String
+    $ursId: String
+    $obfuscatedId: String
+  ) {
+    adminProjects(
+      limit: $limit
+      offset: $offset
+      sortKey: $sortKey
+      ursId: $ursId
+      obfuscatedId: $obfuscatedId
+    ) {
       pageInfo {
         currentPage
         hasNextPage

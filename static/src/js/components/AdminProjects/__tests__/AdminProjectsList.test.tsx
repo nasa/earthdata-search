@@ -18,13 +18,11 @@ const defaultApolloClientMocks = [
     request: {
       query: ADMIN_PROJECTS,
       variables: {
-        params: {
-          limit: 20,
-          offset: 0,
-          obfuscatedId: undefined,
-          ursId: undefined,
-          sortKey: undefined
-        }
+        limit: 20,
+        offset: 0,
+        obfuscatedId: undefined,
+        ursId: undefined,
+        sortKey: undefined
       }
     },
     result: {
@@ -129,11 +127,9 @@ describe('AdminProjectsList component', () => {
               request: {
                 query: ADMIN_PROJECTS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.ursIdDescending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.ursIdDescending
                 }
               },
               result: {
@@ -183,11 +179,9 @@ describe('AdminProjectsList component', () => {
               request: {
                 query: ADMIN_PROJECTS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.ursIdAscending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.ursIdAscending
                 }
               },
               result: {
@@ -266,11 +260,9 @@ describe('AdminProjectsList component', () => {
               request: {
                 query: ADMIN_PROJECTS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.createdAtDescending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.createdAtDescending
                 }
               },
               result: {
@@ -320,11 +312,9 @@ describe('AdminProjectsList component', () => {
               request: {
                 query: ADMIN_PROJECTS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.createdAtAscending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.createdAtAscending
                 }
               },
               result: {
@@ -404,13 +394,11 @@ describe('AdminProjectsList component', () => {
             request: {
               query: ADMIN_PROJECTS,
               variables: {
-                params: {
-                  limit: 20,
-                  offset: 0,
-                  obfuscatedId: undefined,
-                  ursId: undefined,
-                  sortKey: undefined
-                }
+                limit: 20,
+                offset: 0,
+                obfuscatedId: undefined,
+                ursId: undefined,
+                sortKey: undefined
               }
             },
             result: {

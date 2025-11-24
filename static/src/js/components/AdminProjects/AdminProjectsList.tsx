@@ -71,13 +71,11 @@ const AdminProjectsList = () => {
 
   const { data, error, loading } = useQuery<AdminProjectsQueryData>(ADMIN_PROJECTS, {
     variables: {
-      params: {
-        limit: pageSize,
-        offset: (currentPage - 1) * pageSize,
-        obfuscatedId: searchType === 'obfuscatedId' && debouncedSearchValue ? debouncedSearchValue : undefined,
-        ursId: searchType === 'ursId' && debouncedSearchValue ? debouncedSearchValue : undefined,
-        sortKey
-      }
+      limit: pageSize,
+      offset: (currentPage - 1) * pageSize,
+      obfuscatedId: searchType === 'obfuscatedId' && debouncedSearchValue ? debouncedSearchValue : undefined,
+      ursId: searchType === 'ursId' && debouncedSearchValue ? debouncedSearchValue : undefined,
+      sortKey
     }
   })
 

@@ -233,7 +233,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_PROJECT,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -272,7 +274,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_PROJECT,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -324,10 +328,8 @@ describe('Admin Resolver', () => {
         const response = await server.executeOperation({
           query: ADMIN_PROJECTS,
           variables: {
-            params: {
-              limit: 2,
-              offset: 0
-            }
+            limit: 2,
+            offset: 0
           }
         }, {
           contextValue
@@ -451,10 +453,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_PROJECTS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 0
-              }
+              limit: 2,
+              offset: 0
             }
           }, {
             contextValue
@@ -554,10 +554,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_PROJECTS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 2
-              }
+              limit: 2,
+              offset: 2
             }
           }, {
             contextValue
@@ -670,7 +668,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVAL,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -743,7 +743,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVAL,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -800,10 +802,8 @@ describe('Admin Resolver', () => {
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVALS,
           variables: {
-            params: {
-              limit: 2,
-              offset: 0
-            }
+            limit: 2,
+            offset: 0
           }
         }, {
           contextValue
@@ -944,10 +944,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_RETRIEVALS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 0
-              }
+              limit: 2,
+              offset: 0
             }
           }, {
             contextValue
@@ -1063,10 +1061,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_RETRIEVALS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 2
-              }
+              limit: 2,
+              offset: 2
             }
           }, {
             contextValue
@@ -1162,10 +1158,8 @@ describe('Admin Resolver', () => {
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVALS_METRICS,
           variables: {
-            params: {
-              startDate: '2020-02-01 23:59:59',
-              endDate: '2025-02-01 23:59:59'
-            }
+            startDate: '2020-02-01 23:59:59',
+            endDate: '2025-02-01 23:59:59'
           }
         }, {
           contextValue
@@ -1230,7 +1224,11 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: ADMIN_RETRIEVALS_METRICS
+          query: ADMIN_RETRIEVALS_METRICS,
+          variables: {
+            startDate: '2020-02-01 23:59:59',
+            endDate: '2025-02-01 23:59:59'
+          }
         }, {
           contextValue
         })

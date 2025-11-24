@@ -57,9 +57,7 @@ const AdminRetrievalDetails = () => {
 
   const { data, error, loading } = useQuery<AdminRetrievalQueryData>(ADMIN_RETRIEVAL, {
     variables: {
-      params: {
-        obfuscatedId
-      }
+      obfuscatedId
     }
   })
 
