@@ -90,7 +90,6 @@ export class Functions extends Construct {
       apiGatewayRestApi
     })
     const {
-      adminApiGatewayResource,
       collectionsApiGatewayResource,
       opensearchApiGatewayResource,
       retrievalsApiGatewayResource,
@@ -98,27 +97,6 @@ export class Functions extends Construct {
       scaleApiGatewayResource,
       shapefilesApiGatewayResource
     } = sharedResources
-
-    /**
-     * Admin Is Authorized
-     */
-    const adminIsAuthorizedNestedStack = new cdk.NestedStack(scope, 'AdminIsAuthorizedNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminIsAuthorizedNestedStack, 'AdminIsAuthorizedLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentId: adminApiGatewayResource.ref,
-        parentPath: 'admin',
-        path: 'is_authorized'
-      },
-      entry: '../../serverless/src/adminIsAuthorized/handler.js',
-      functionName: 'adminIsAuthorized',
-      functionNamePrefix
-    })
 
     /**
      * Alert Logger

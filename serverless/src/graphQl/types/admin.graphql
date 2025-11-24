@@ -164,6 +164,9 @@ input AdminRetrievalsMetricsInput {
 }
 
 type Query {
+  "Checks if the user is authorized for admin functionality"
+  adminIsAuthorized: Boolean
+
   "Retrieves admin preferences metrics"
   adminPreferencesMetrics: AdminPreferencesMetrics
 

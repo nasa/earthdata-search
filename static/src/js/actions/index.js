@@ -1,6 +1,4 @@
 /* eslint-disable import/no-cycle */
-import { adminIsAuthorized } from './admin/isAuthorized'
-
 import { requeueOrder } from './admin/retrievals'
 
 import {
@@ -52,7 +50,6 @@ import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
 
 const actions = {
-  adminIsAuthorized,
   changePath,
   changeUrl,
   collectionRelevancyMetrics,

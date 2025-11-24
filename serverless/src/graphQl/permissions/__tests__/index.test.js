@@ -26,6 +26,10 @@ describe('permissions', () => {
       {
         Query: {
           '*': deny,
+          adminIsAuthorized: and(
+            isValidUser,
+            isAdminUser
+          ),
           adminPreferencesMetrics: and(
             isValidUser,
             isAdminUser

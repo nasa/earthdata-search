@@ -8,6 +8,10 @@ import buildPaginatedResult from '../utils/buildPaginatedResult'
  */
 export default {
   Query: {
+    // If the request made it through the permissions check, then the user is an admin
+    // and we just need to return true
+    adminIsAuthorized: async () => true,
+
     adminPreferencesMetrics: async (source, args, context) => {
       const { databaseClient } = context
 

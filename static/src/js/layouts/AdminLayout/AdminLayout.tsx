@@ -1,36 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { type Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import { useQuery } from '@apollo/client'
 
-// @ts-expect-error The file does not have types
-import actions from '../../actions'
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onAdminIsAuthorized: () => dispatch(actions.adminIsAuthorized())
-})
-
-// @ts-expect-error Don't want to define types for all of Redux
-const mapStateToProps = (state) => ({
-  isAuthorized: state.admin.isAuthorized
-})
-
-/** An interface for the AdminLayout component props */
-interface AdminLayoutProps {
-  /** Whether the user is authorized to view the admin layout */
-  isAuthorized: boolean
-  /** Function to call when checking if the user is authorized */
-  onAdminIsAuthorized: () => void
-}
+import ADMIN_IS_AUTHORIZED from '../../operations/queries/adminIsAuthorized'
 
 /** A layout component for admin pages */
-export const AdminLayout: React.FC<AdminLayoutProps> = ({
-  isAuthorized,
-  onAdminIsAuthorized
-}) => {
-  useEffect(() => {
-    onAdminIsAuthorized()
-  }, [])
+const AdminLayout = () => {
+  const { data } = useQuery(ADMIN_IS_AUTHORIZED)
+
+  const isAuthorized = data?.adminIsAuthorized
 
   if (!isAuthorized) return null
 
@@ -45,4 +23,4 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminLayout)
+export default AdminLayout

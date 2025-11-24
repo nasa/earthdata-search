@@ -3,6 +3,7 @@
 .dockerignore
 .DS_Store
 .serverless
+.serverless-dist
 coverage
 dist
 Dockerfile

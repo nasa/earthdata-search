@@ -16,6 +16,10 @@ const buildPermissions = () => shield(
       // This wildcard will catch any mutations we do not explicitly allow since we are not
       // using the `fallbackRule`
       '*': deny,
+      adminIsAuthorized: and(
+        isValidUser,
+        isAdminUser
+      ),
       adminPreferencesMetrics: and(
         isValidUser,
         isAdminUser

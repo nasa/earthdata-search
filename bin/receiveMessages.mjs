@@ -52,7 +52,7 @@ const receiveMessages = async ({
 
         const sqsMessage = { Records: [{ body: message.Body }] }
 
-        const handlerPath = `../serverless/dist/${lambdaFunctionName}/handler.js`
+        const handlerPath = `../.serverless-dist/${lambdaFunctionName}/handler.js`
 
         const { default: handler } = (await import(handlerPath)).default
 

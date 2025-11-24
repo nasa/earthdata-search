@@ -30,7 +30,7 @@ const loadEvent = (filepath) => {
 
 // Invoke the given Lambda function
 const invokeLambda = async (name, payload = {}) => {
-  const handlerPath = `../serverless/dist/${name}/handler.js`
+  const handlerPath = `../.serverless-dist/${name}/handler.js`
   const { default: handler } = (await import(handlerPath)).default
 
   console.log(`Calling Lambda: ${name} with payload:`, payload)
