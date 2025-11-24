@@ -1,6 +1,3 @@
-/* eslint-disable import/no-cycle */
-import { requeueOrder } from './admin/retrievals'
-
 import {
   updateFacets,
   onFacetsLoading,
@@ -67,7 +64,6 @@ const actions = {
   onFacetsLoaded,
   onFacetsLoading,
   removeSubscriptionDisabledFields,
-  requeueOrder,
   toggleAboutCSDAModal,
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,

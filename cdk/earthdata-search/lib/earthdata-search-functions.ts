@@ -21,8 +21,6 @@ export interface FunctionsProps {
   authorizers: {
     /** The standard EDL Authorizer */
     edlAuthorizer: apigateway.CfnAuthorizer;
-    /** The EDL Admin Authorizer */
-    edlAdminAuthorizer: apigateway.CfnAuthorizer;
     /** The EDL Optional Authorizer */
     edlOptionalAuthorizer: apigateway.CfnAuthorizer;
   };
@@ -708,25 +706,6 @@ export class Functions extends Construct {
       functionName: 'replaceCwicWithOpenSearch',
       functionNamePrefix,
       timeout: cdk.Duration.minutes(15)
-    })
-
-    /**
-     * Requeue Order
-     */
-    const requeueOrderNestedStack = new cdk.NestedStack(scope, 'RequeueOrderNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(requeueOrderNestedStack, 'RequeueOrderLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['POST'],
-        path: 'requeue_order'
-      },
-      entry: '../../serverless/src/requeueOrder/handler.js',
-      functionName: 'requeueOrder',
-      functionNamePrefix
     })
 
     /**

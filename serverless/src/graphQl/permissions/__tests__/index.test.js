@@ -64,6 +64,10 @@ describe('permissions', () => {
         },
         Mutation: {
           '*': deny,
+          adminRequeueOrder: and(
+            isValidUser,
+            isAdminUser
+          ),
           createProject: allow,
           createRetrieval: isValidUser,
           deleteProject: and(

@@ -1,43 +1,39 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
 import AdminRetrievalDetails from '../AdminRetrievalDetails/AdminRetrievalDetails'
 import AdminPage from '../AdminPage/AdminPage'
 import { routes } from '../../constants/routes'
 
-const AdminRetrieval = ({
-  obfuscatedId,
-  onRequeueOrder
-}) => (
-  <AdminPage
-    pageTitle="Retrieval Details"
-    breadcrumbs={
-      [
-        {
-          name: 'Admin',
-          href: routes.ADMIN
-        },
-        {
-          name: 'Retrievals',
-          href: routes.ADMIN_RETRIEVALS
-        },
-        {
-          name: 'Retrieval Details',
-          active: true
-        }
-      ]
-    }
-  >
-    <AdminRetrievalDetails
-      obfuscatedId={obfuscatedId}
-      onRequeueOrder={onRequeueOrder}
-    />
-  </AdminPage>
-)
+const AdminRetrieval = () => {
+  const params = useParams()
+  const { obfuscatedId } = params
 
-AdminRetrieval.propTypes = {
-  obfuscatedId: PropTypes.string.isRequired,
-  onRequeueOrder: PropTypes.func.isRequired
+  return (
+    <AdminPage
+      pageTitle="Retrieval Details"
+      breadcrumbs={
+        [
+          {
+            name: 'Admin',
+            href: routes.ADMIN
+          },
+          {
+            name: 'Retrievals',
+            href: routes.ADMIN_RETRIEVALS
+          },
+          {
+            name: 'Retrieval Details',
+            active: true
+          }
+        ]
+      }
+    >
+      <AdminRetrievalDetails
+        obfuscatedId={obfuscatedId}
+      />
+    </AdminPage>
+  )
 }
 
 export default AdminRetrieval

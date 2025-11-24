@@ -185,3 +185,10 @@ type Query {
   "Retrieves admin retrievals metrics"
   adminRetrievalsMetrics(params: AdminRetrievalsMetricsInput): AdminRetrievalsMetrics
 }
+
+type Mutation {
+  "Requeues an order"
+  adminRequeueOrder(
+    retrievalOrderId: Int!
+  ): Boolean
+}

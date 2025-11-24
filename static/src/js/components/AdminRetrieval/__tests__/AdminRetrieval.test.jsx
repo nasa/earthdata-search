@@ -8,14 +8,15 @@ import AdminRetrievalDetails from '../../AdminRetrievalDetails/AdminRetrievalDet
 
 jest.mock('../../AdminRetrievalDetails/AdminRetrievalDetails', () => jest.fn(() => <div />))
 
-const onRequeueOrderMock = jest.fn()
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: jest.fn().mockReturnValue({
+    obfuscatedId: '1'
+  })
+}))
 
 const setup = setupTest({
   Component: AdminRetrieval,
-  defaultProps: {
-    obfuscatedId: '1',
-    onRequeueOrder: onRequeueOrderMock
-  },
   withRouter: true
 })
 
@@ -29,8 +30,7 @@ describe('AdminRetrieval component', () => {
     setup()
     expect(AdminRetrievalDetails).toHaveBeenCalledTimes(1)
     expect(AdminRetrievalDetails).toHaveBeenCalledWith({
-      obfuscatedId: '1',
-      onRequeueOrder: onRequeueOrderMock
+      obfuscatedId: '1'
     }, {})
   })
 })

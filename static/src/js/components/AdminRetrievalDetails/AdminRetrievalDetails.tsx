@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
 import Alert from 'react-bootstrap/Alert'
@@ -8,13 +8,21 @@ import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
 
 import { commafy } from '../../util/commafy'
+// @ts-expect-error This file does not have types
+import addToast from '../../util/addToast'
+
+import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationType'
+
 import ADMIN_RETRIEVAL from '../../operations/queries/adminRetrieval'
+import ADMIN_REQUEUE_ORDER from '../../operations/mutations/adminRequeueOrder'
 
 import DefinitionList from '../DefinitionList/DefinitionList'
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
 
 import { type RetrievalCollection } from '../../types/sharedTypes'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './AdminRetrievalDetails.scss'
 
@@ -42,22 +50,33 @@ interface AdminRetrievalQueryData {
   }
 }
 
-/** The props for the AdminRetrievalDetails component */
-interface AdminRetrievalDetailsProps {
-  onRequeueOrder: (orderId: string) => void
-}
-
 /** AdminRetrievalDetails component */
-const AdminRetrievalDetails = ({
-  onRequeueOrder
-}: AdminRetrievalDetailsProps) => {
+const AdminRetrievalDetails = () => {
   const { obfuscatedId } = useParams<{ obfuscatedId: string }>()
+  const handleError = useEdscStore((state) => state.errors.handleError)
 
   const { data, error, loading } = useQuery<AdminRetrievalQueryData>(ADMIN_RETRIEVAL, {
     variables: {
       params: {
         obfuscatedId
       }
+    }
+  })
+
+  const [requeueOrder] = useMutation(ADMIN_REQUEUE_ORDER, {
+    onCompleted: () => {
+      addToast('Order Requeued for processing', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    },
+    onError: (mutationError) => {
+      handleError({
+        error: mutationError,
+        action: 'requeueOrder',
+        resource: 'admin retrievals',
+        notificationType: DISPLAY_NOTIFICATION_TYPE.TOAST
+      })
     }
   })
 
@@ -221,7 +240,11 @@ const AdminRetrievalDetails = ({
                                                       bootstrapSize="sm"
                                                       onClick={
                                                         () => {
-                                                          onRequeueOrder(orderId)
+                                                          requeueOrder({
+                                                            variables: {
+                                                              retrievalOrderId: orderId
+                                                            }
+                                                          })
                                                         }
                                                       }
                                                     >
