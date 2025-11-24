@@ -1,12 +1,18 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import ADMIN_IS_AUTHORIZED from '../../operations/queries/adminIsAuthorized'
 
 /** A layout component for admin pages */
 const AdminLayout = () => {
-  const { data } = useQuery(ADMIN_IS_AUTHORIZED)
+  const { data, error } = useQuery(ADMIN_IS_AUTHORIZED)
+
+  if (error) {
+    return (
+      <Navigate to="/" replace />
+    )
+  }
 
   const isAuthorized = data?.adminIsAuthorized
 

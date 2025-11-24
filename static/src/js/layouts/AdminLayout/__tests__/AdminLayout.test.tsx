@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -13,7 +13,8 @@ import ADMIN_IS_AUTHORIZED from '../../../operations/queries/adminIsAuthorized'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  Outlet: jest.fn(() => <div>Outlet</div>)
+  Outlet: jest.fn(() => <div>Outlet</div>),
+  Navigate: jest.fn(() => <div>Navigate</div>)
 }))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => <div>{children}</div>))
@@ -37,7 +38,7 @@ const setup = setupTest({
 })
 
 describe('AdminLayout', () => {
-  test('does not render anything when not authorized', () => {
+  test('does not render anything when not authorized', async () => {
     setup({
       overrideApolloClientMocks: [{
         request: {
@@ -46,6 +47,15 @@ describe('AdminLayout', () => {
         error: new Error('Not authorized')
       }]
     })
+
+    await waitFor(() => {
+      expect(Navigate).toHaveBeenCalledTimes(1)
+    })
+
+    expect(Navigate).toHaveBeenCalledWith({
+      replace: true,
+      to: '/'
+    }, {})
 
     expect(PortalLinkContainer).toHaveBeenCalledTimes(0)
   })
