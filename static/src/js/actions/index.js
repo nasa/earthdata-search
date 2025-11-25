@@ -1,8 +1,3 @@
-/* eslint-disable import/no-cycle */
-import { adminIsAuthorized } from './admin/isAuthorized'
-
-import { requeueOrder } from './admin/retrievals'
-
 import {
   updateFacets,
   onFacetsLoading,
@@ -52,7 +47,6 @@ import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
 
 const actions = {
-  adminIsAuthorized,
   changePath,
   changeUrl,
   collectionRelevancyMetrics,
@@ -70,7 +64,6 @@ const actions = {
   onFacetsLoaded,
   onFacetsLoading,
   removeSubscriptionDisabledFields,
-  requeueOrder,
   toggleAboutCSDAModal,
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,

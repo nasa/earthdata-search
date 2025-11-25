@@ -15,8 +15,6 @@ export interface AuthorizersProps {
 export class Authorizers extends Construct {
   public readonly edlAuthorizer: apigateway.CfnAuthorizer
 
-  public readonly edlAdminAuthorizer: apigateway.CfnAuthorizer
-
   public readonly edlOptionalAuthorizer: apigateway.CfnAuthorizer
 
   constructor(scope: cdk.Stack, id: string, props: AuthorizersProps) {
@@ -74,52 +72,6 @@ export class Authorizers extends Construct {
       type: 'REQUEST'
     })
     this.edlAuthorizer = edlAuthorizer
-
-    /**
-     * EDL Admin Authorizer
-     */
-    const edlAdminAuthorizerNestedStack = new cdk.NestedStack(scope, 'EdlAdminAuthorizerNestedStack')
-    const { lambdaFunction: edlAdminAuthorizerLambda } = new application.NodeJsFunction(edlAdminAuthorizerNestedStack, 'EdlAdminAuthorizerLambda', {
-      ...defaultLambdaConfig,
-      entry: '../../serverless/src/edlAdminAuthorizer/handler.js',
-      functionName: 'edlAdminAuthorizer',
-      functionNamePrefix
-    })
-    // eslint-disable-next-line no-new
-    new lambda.CfnPermission(edlAdminAuthorizerNestedStack, 'EdlAdminAuthorizerLambdaPermissionApiGateway', {
-      functionName: edlAdminAuthorizerLambda.functionName,
-      action: 'lambda:InvokeFunction',
-      principal: 'apigateway.amazonaws.com',
-      sourceArn: [
-        'arn:',
-        scope.partition,
-        ':execute-api:',
-        scope.region,
-        ':',
-        scope.account,
-        ':',
-        apiGatewayRestApi.ref,
-        '/*/*'
-      ].join('')
-    })
-
-    const edlAdminAuthorizer = new apigateway.CfnAuthorizer(edlAdminAuthorizerNestedStack, 'EdlAdminAuthorizer', {
-      authorizerResultTtlInSeconds: 0,
-      authorizerUri: cdk.Fn.join('', [
-        'arn:',
-        cdk.Aws.PARTITION,
-        ':apigateway:',
-        cdk.Aws.REGION,
-        ':lambda:path/2015-03-31/functions/',
-        edlAdminAuthorizerLambda.functionArn,
-        '/invocations'
-      ]),
-      identitySource: 'method.request.header.Authorization',
-      name: 'edlAdminAuthorizer',
-      restApiId: apiGatewayRestApi.ref,
-      type: 'REQUEST'
-    })
-    this.edlAdminAuthorizer = edlAdminAuthorizer
 
     /**
      * EDL Optional Authorizer

@@ -226,10 +226,10 @@ const browserRouter = createBrowserRouter([
           {
             path: `${routes.ADMIN_RETRIEVALS}/:obfuscatedId`,
             async lazy() {
-              const AdminRetrievalContainer = await import('./containers/AdminRetrievalContainer/AdminRetrievalContainer')
+              const AdminRetrieval = await import('./components/AdminRetrieval/AdminRetrieval')
 
               return {
-                Component: AdminRetrievalContainer.default
+                Component: AdminRetrieval.default
               }
             }
           },

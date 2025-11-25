@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 const ADMIN_RETRIEVAL = gql`
-  query AdminRetrieval($params: AdminRetrievalInput!) {
-    adminRetrieval(params: $params) {
+  query AdminRetrieval($obfuscatedId: String!) {
+    adminRetrieval(obfuscatedId: $obfuscatedId) {
       id
       jsondata
       obfuscatedId

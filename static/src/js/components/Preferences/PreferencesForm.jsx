@@ -17,7 +17,7 @@ import { getSitePreferences } from '../../zustand/selectors/user'
 import UPDATE_PREFERENCES from '../../operations/mutations/updatePreferences'
 
 import addToast from '../../util/addToast'
-import { displayNotificationType } from '../../constants/enums'
+import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationType'
 
 import './PreferencesForm.scss'
 
@@ -59,7 +59,7 @@ const PreferencesForm = () => {
           action: 'updatePreferences',
           resource: 'preferences',
           requestObject: null,
-          notificationType: displayNotificationType.toast
+          notificationType: DISPLAY_NOTIFICATION_TYPE.TOAST
         })
       }
     })

@@ -13,9 +13,7 @@ const setup = setupTest({
       request: {
         query: ADMIN_PROJECT,
         variables: {
-          params: {
-            obfuscatedId: '06347346'
-          }
+          obfuscatedId: '06347346'
         }
       },
       result: {

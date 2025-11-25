@@ -5,7 +5,7 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import ErrorBanner from '../ErrorBanner'
 import { Banner } from '../../Banner/Banner'
-import { displayNotificationType } from '../../../constants/enums'
+import { DISPLAY_NOTIFICATION_TYPE } from '../../../constants/displayNotificationType'
 
 jest.mock('../../Banner/Banner', () => ({
   Banner: jest.fn(() => <div />)
@@ -19,7 +19,7 @@ const setup = setupTest({
         id: 1,
         title: 'title',
         message: 'message',
-        notificationType: displayNotificationType.banner
+        notificationType: DISPLAY_NOTIFICATION_TYPE.BANNER
       }],
       removeError: jest.fn()
     }
@@ -39,7 +39,7 @@ describe('When the database is disabled', () => {
             id: 1,
             title: 'example of database refusal error',
             message: 'connect ECONNREFUSED port 12212 this error',
-            notificationType: displayNotificationType.banner
+            notificationType: DISPLAY_NOTIFICATION_TYPE.BANNER
           }]
         }
       }

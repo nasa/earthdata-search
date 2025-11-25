@@ -1,8 +1,22 @@
 import { gql } from '@apollo/client'
 
 const ADMIN_RETRIEVALS = gql`
-  query AdminRetrievals($params: AdminRetrievalsInput) {
-    adminRetrievals(params: $params) {
+  query AdminRetrievals(
+    $limit: Int
+    $obfuscatedId: String
+    $offset: Int
+    $retrievalCollectionId: Int
+    $sortKey: String
+    $ursId: String
+  ) {
+    adminRetrievals(
+      limit: $limit
+      obfuscatedId: $obfuscatedId
+      offset: $offset
+      retrievalCollectionId: $retrievalCollectionId
+      sortKey: $sortKey
+      ursId: $ursId
+    ) {
       pageInfo {
         currentPage
         hasNextPage

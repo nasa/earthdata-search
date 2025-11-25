@@ -26,9 +26,7 @@ export const AdminProjectDetails = () => {
   const { obfuscatedId } = useParams<{ obfuscatedId: string }>()
   const { data, loading } = useQuery<AdminProjectQueryData>(ADMIN_PROJECT, {
     variables: {
-      params: {
-        obfuscatedId
-      }
+      obfuscatedId
     }
   })
 

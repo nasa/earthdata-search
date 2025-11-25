@@ -14,7 +14,7 @@ import {
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
-import { displayNotificationType } from '../constants/enums'
+import { DISPLAY_NOTIFICATION_TYPE } from '../constants/displayNotificationType'
 
 import addToast from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
@@ -144,7 +144,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch) =
       action: 'createSubscription',
       resource: 'subscription',
       requestObject: graphQlRequestObject,
-      notificationType: displayNotificationType.toast,
+      notificationType: DISPLAY_NOTIFICATION_TYPE.TOAST,
       showAlertButton: true,
       title: 'Something went wrong creating your subscription'
     })

@@ -26,6 +26,10 @@ describe('permissions', () => {
       {
         Query: {
           '*': deny,
+          adminIsAuthorized: and(
+            isValidUser,
+            isAdminUser
+          ),
           adminPreferencesMetrics: and(
             isValidUser,
             isAdminUser
@@ -60,6 +64,10 @@ describe('permissions', () => {
         },
         Mutation: {
           '*': deny,
+          adminRequeueOrder: and(
+            isValidUser,
+            isAdminUser
+          ),
           createProject: allow,
           createRetrieval: isValidUser,
           deleteProject: and(

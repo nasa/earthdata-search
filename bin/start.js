@@ -51,7 +51,7 @@ const defaultCommands = [{
   command: 'npm run watch:api',
   name: 'watch'
 }, {
-  // Run the API. This script watches the serverless/dist directory and will reload the API
+  // Run the API. This script watches the .serverless-dist directory and will reload the API
   // when the lambdas are rebuilt by the `watch` service.
   command: 'npm run start:api',
   name: 'api'

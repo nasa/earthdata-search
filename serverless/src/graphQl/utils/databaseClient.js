@@ -671,6 +671,34 @@ export default class DatabaseClient {
   }
 
   /**
+   * Retrieves a retrieval order by its order ID
+   * @param {number} orderId The ID of the retrieval order to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the retrieval order object
+   */
+  async getRetrievalOrdersByOrderId(orderId) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('retrieval_orders')
+        .select(
+          'retrieval_orders.retrieval_collection_id',
+          'retrieval_orders.type',
+          'retrievals.token'
+        )
+        .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .where({ 'retrieval_orders.id': orderId })
+        .first()
+
+      return result
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve retrieval order by order ID'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Retrieves a user by their ID
    * @param {number} userId The ID of the user to retrieve
    * @returns {Promise<Object>} A promise that resolves to the user object

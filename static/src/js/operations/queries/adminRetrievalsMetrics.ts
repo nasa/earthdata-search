@@ -1,8 +1,14 @@
 import { gql } from '@apollo/client'
 
 const ADMIN_RETRIEVALS_METRICS = gql`
-  query AdminRetrievalsMetrics($params: AdminRetrievalsMetricsInput) {
-    adminRetrievalsMetrics(params: $params) {
+  query AdminRetrievalsMetrics(
+    $startDate: DateTime
+    $endDate: DateTime!
+  ) {
+    adminRetrievalsMetrics(
+      startDate: $startDate,
+      endDate: $endDate
+    ) {
       retrievalMetricsByAccessType {
         accessMethodType
         totalTimesAccessMethodUsed

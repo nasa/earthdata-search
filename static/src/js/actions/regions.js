@@ -7,7 +7,7 @@ import {
   ERRORED_REGIONS
 } from '../constants/actionTypes'
 
-import { displayNotificationType } from '../constants/enums'
+import { DISPLAY_NOTIFICATION_TYPE } from '../constants/displayNotificationType'
 import { prepareRegionParams } from '../util/regions'
 
 import RegionRequest from '../util/request/regionRequest'
@@ -94,7 +94,7 @@ export const getRegions = () => (dispatch) => {
         error,
         action: 'getRegions',
         resource: 'regions',
-        notificationType: displayNotificationType.none,
+        notificationType: DISPLAY_NOTIFICATION_TYPE.NONE,
         requestObject
       })
     })

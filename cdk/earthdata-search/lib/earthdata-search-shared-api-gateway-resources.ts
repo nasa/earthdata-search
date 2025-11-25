@@ -12,8 +12,6 @@ export interface SharedApiGatewayResourcesProps {
 }
 
 export class SharedApiGatewayResources extends Construct {
-  public readonly adminApiGatewayResource: apigateway.CfnResource
-
   public readonly collectionsApiGatewayResource: apigateway.CfnResource
 
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
@@ -33,16 +31,6 @@ export class SharedApiGatewayResources extends Construct {
       apiGatewayDeployment,
       apiGatewayRestApi
     } = props
-
-    /**
-     * Admin API Gateway Resource
-     */
-    const adminApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceAdmin', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'admin',
-      restApiId: apiGatewayRestApi.ref
-    })
-    this.adminApiGatewayResource = adminApiGatewayResource
 
     /**
      * Collections API Gateway Resource
