@@ -99,6 +99,7 @@ const setup = setupTest({
       changeQuery: jest.fn()
     }
   },
+  withApolloClient: true,
   withRouter: true,
   defaultRouterEntries: ['/search']
 })

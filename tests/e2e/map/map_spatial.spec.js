@@ -957,11 +957,15 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          await page.route('**/regions?endpoint=rivers%2Freach&exact=true&query=86300600011', async (route) => {
-            await route.fulfill({
-              json: reachSearchBody,
-              headers: {}
-            })
+          await page.route('**/graphql', async (route) => {
+            const { query } = JSON.parse(route.request().postData())
+
+            if (query.includes('query Regions')) {
+              await route.fulfill({
+                json: reachSearchBody,
+                headers: {}
+              })
+            }
           })
 
           await page.route('**/projects', async (route) => {
@@ -1014,11 +1018,15 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          await page.route('**/regions?endpoint=huc&exact=true&query=04010101', async (route) => {
-            await route.fulfill({
-              json: hucSearchBody,
-              headers: {}
-            })
+          await page.route('**/graphql', async (route) => {
+            const { query } = JSON.parse(route.request().postData())
+
+            if (query.includes('query Regions')) {
+              await route.fulfill({
+                json: hucSearchBody,
+                headers: {}
+              })
+            }
           })
 
           await page.route('**/projects', async (route) => {
@@ -1667,11 +1675,15 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          await page.route('**/regions?endpoint=rivers%2Freach&exact=true&query=86300600011', async (route) => {
-            await route.fulfill({
-              json: reachSearchBody,
-              headers: {}
-            })
+          await page.route('**/graphql', async (route) => {
+            const { query } = JSON.parse(route.request().postData())
+
+            if (query.includes('query Regions')) {
+              await route.fulfill({
+                json: reachSearchBody,
+                headers: {}
+              })
+            }
           })
 
           await page.route('**/projects', async (route) => {
@@ -1724,11 +1736,15 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          await page.route('**/regions?endpoint=huc&exact=true&query=04010101', async (route) => {
-            await route.fulfill({
-              json: hucSearchBody,
-              headers: {}
-            })
+          await page.route('**/graphql', async (route) => {
+            const { query } = JSON.parse(route.request().postData())
+
+            if (query.includes('query Regions')) {
+              await route.fulfill({
+                json: hucSearchBody,
+                headers: {}
+              })
+            }
           })
 
           await page.route('**/projects', async (route) => {

@@ -39,7 +39,6 @@ describe('createQuerySlice', () => {
       ...initialState,
       changeQuery: expect.any(Function),
       changeGranuleQuery: expect.any(Function),
-      changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
       excludeGranule: expect.any(Function),
       initializeGranuleQuery: expect.any(Function),
@@ -491,25 +490,6 @@ describe('createQuerySlice', () => {
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
-    })
-  })
-
-  describe('changeRegionQuery', () => {
-    test('updates the region query and calls getRegions', async () => {
-      const zustandState = useEdscStore.getState()
-      const { query } = zustandState
-      const { changeRegionQuery } = query
-      await changeRegionQuery({ keyword: 'test' })
-
-      const updatedState = useEdscStore.getState()
-      const {
-        query: updatedQuery
-      } = updatedState
-
-      expect(updatedQuery.region.keyword).toEqual('test')
-
-      expect(actions.getRegions).toHaveBeenCalledTimes(1)
-      expect(actions.getRegions).toHaveBeenCalledWith()
     })
   })
 

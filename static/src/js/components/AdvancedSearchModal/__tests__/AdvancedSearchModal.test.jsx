@@ -1,4 +1,8 @@
-import { screen } from '@testing-library/react'
+import {
+  act,
+  screen,
+  waitFor
+} from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -6,8 +10,12 @@ import AdvancedSearchModal from '../AdvancedSearchModal'
 
 import * as triggerKeyboardShortcut from '../../../util/triggerKeyboardShortcut'
 import AdvancedSearchForm from '../AdvancedSearchForm'
+import RegionSearchResults from '../RegionSearchResults'
+
+import REGIONS from '../../../operations/queries/regions'
 
 jest.mock('../AdvancedSearchForm', () => jest.fn(() => null))
+jest.mock('../RegionSearchResults', () => jest.fn(() => null))
 
 const windowEventMap = {}
 
@@ -23,13 +31,13 @@ const setup = setupTest({
     isValid: true,
     onToggleAdvancedSearchModal: jest.fn(),
     resetForm: jest.fn(),
-    regionSearchResults: {},
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
     values: {},
     validateForm: jest.fn()
-  }
+  },
+  withApolloClient: true
 })
 
 beforeEach(() => {
@@ -61,11 +69,11 @@ describe('AdvancedSearchModal component', () => {
         fields: [],
         handleBlur: expect.any(Function),
         handleChange: expect.any(Function),
+        handleSearch: expect.any(Function),
         isValid: true,
         modalInnerRef: {
           current: expect.anything()
         },
-        regionSearchResults: {},
         setFieldTouched: expect.any(Function),
         setFieldValue: expect.any(Function),
         setModalOverlay: expect.any(Function),
@@ -175,6 +183,169 @@ describe('AdvancedSearchModal component', () => {
         expect(stopPropagationMock).toHaveBeenCalledTimes(1)
         expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
         expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+      })
+    })
+  })
+
+  describe('when submitting the search form', () => {
+    test('calls regionsQuery and passes data to RegionSearchResults', async () => {
+      setup({
+        overrideProps: {
+          isOpen: true
+        },
+        overrideApolloClientMocks: [{
+          request: {
+            query: REGIONS,
+            variables: {
+              endpoint: 'region',
+              exact: true,
+              keyword: 'California Region'
+            }
+          },
+          result: {
+            data: {
+              regions: {
+                count: 1,
+                keyword: 'California Region',
+                regions: [{
+                  id: '18',
+                  name: 'California Region',
+                  spatial: '-121.63690052163548,43.34028642543558,-121.71937759754917,43.23098080164692',
+                  type: 'huc'
+                }]
+              }
+            }
+          }
+        }]
+      })
+
+      const componentProps = AdvancedSearchForm.mock.calls[0][0]
+      const { handleSearch, setModalOverlay } = componentProps
+
+      jest.clearAllMocks()
+
+      await act(async () => {
+        handleSearch({
+          endpoint: 'region',
+          exact: true,
+          keyword: 'California Region'
+        })
+
+        setModalOverlay('regionSearchResults')
+      })
+
+      await waitFor(() => {
+        expect(RegionSearchResults).toHaveBeenCalledTimes(2)
+      })
+
+      expect(RegionSearchResults).toHaveBeenNthCalledWith(1, {
+        modalInnerRef: { current: expect.any(Node) },
+        regionResults: {
+          count: undefined,
+          error: undefined,
+          keyword: undefined,
+          loading: true,
+          regions: undefined
+        },
+        setFieldValue: expect.any(Function),
+        setModalOverlay: expect.any(Function)
+      }, {})
+
+      expect(RegionSearchResults).toHaveBeenNthCalledWith(2, {
+        modalInnerRef: { current: expect.any(Node) },
+        regionResults: {
+          count: 1,
+          error: undefined,
+          keyword: 'California Region',
+          loading: false,
+          regions: [{
+            id: '18',
+            name: 'California Region',
+            spatial: '-121.63690052163548,43.34028642543558,-121.71937759754917,43.23098080164692',
+            type: 'huc'
+          }]
+        },
+        setFieldValue: expect.any(Function),
+        setModalOverlay: expect.any(Function)
+      }, {})
+    })
+
+    describe('when the request fails', () => {
+      test('calls handleError and passes data to RegionSearchResults', async () => {
+        const { zustandState } = setup({
+          overrideProps: {
+            isOpen: true
+          },
+          overrideApolloClientMocks: [{
+            request: {
+              query: REGIONS,
+              variables: {
+                endpoint: 'region',
+                exact: true,
+                keyword: 'California Region'
+              }
+            },
+            error: new Error('Unknown error')
+          }],
+          overrideZustandState: {
+            errors: {
+              handleError: jest.fn()
+            }
+          }
+        })
+
+        const componentProps = AdvancedSearchForm.mock.calls[0][0]
+        const { handleSearch, setModalOverlay } = componentProps
+
+        jest.clearAllMocks()
+
+        await act(async () => {
+          handleSearch({
+            endpoint: 'region',
+            exact: true,
+            keyword: 'California Region'
+          })
+
+          setModalOverlay('regionSearchResults')
+        })
+
+        await waitFor(() => {
+          expect(RegionSearchResults).toHaveBeenCalledTimes(2)
+        })
+
+        expect(RegionSearchResults).toHaveBeenNthCalledWith(1, {
+          modalInnerRef: { current: expect.any(Node) },
+          regionResults: {
+            count: undefined,
+            error: undefined,
+            keyword: undefined,
+            loading: true,
+            regions: undefined
+          },
+          setFieldValue: expect.any(Function),
+          setModalOverlay: expect.any(Function)
+        }, {})
+
+        expect(RegionSearchResults).toHaveBeenNthCalledWith(2, {
+          modalInnerRef: { current: expect.any(Node) },
+          regionResults: {
+            count: undefined,
+            error: 'Unknown error',
+            keyword: undefined,
+            loading: false,
+            regions: undefined
+          },
+          setFieldValue: expect.any(Function),
+          setModalOverlay: expect.any(Function)
+        }, {})
+
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+          action: 'getRegions',
+          error: new Error('Unknown error'),
+          notificationType: 'none',
+          resource: 'regions'
+        })
       })
     })
   })

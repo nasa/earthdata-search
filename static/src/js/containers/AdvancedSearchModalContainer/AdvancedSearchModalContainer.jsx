@@ -12,12 +12,12 @@ import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSe
 
 import { eventEmitter } from '../../events/events'
 import { mapEventTypes } from '../../constants/eventTypes'
+
 import useEdscStore from '../../zustand/useEdscStore'
 import { getSelectedRegionQuery } from '../../zustand/selectors/query'
 
 export const mapStateToProps = (state) => ({
-  isOpen: state.ui.advancedSearchModal.isOpen,
-  regionSearchResults: state.searchResults.regions
+  isOpen: state.ui.advancedSearchModal.isOpen
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -54,7 +54,6 @@ export const AdvancedSearchModalContainer = ({
   isValid,
   onToggleAdvancedSearchModal,
   resetForm,
-  regionSearchResults,
   setFieldValue,
   setFieldTouched,
   touched,
@@ -71,7 +70,6 @@ export const AdvancedSearchModalContainer = ({
     handleSubmit={handleSubmit}
     isValid={isValid}
     resetForm={resetForm}
-    regionSearchResults={regionSearchResults}
     setFieldValue={setFieldValue}
     setFieldTouched={setFieldTouched}
     touched={touched}
@@ -178,7 +176,6 @@ AdvancedSearchModalContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
   resetForm: PropTypes.func.isRequired,
-  regionSearchResults: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,

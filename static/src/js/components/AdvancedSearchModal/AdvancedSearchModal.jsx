@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
+import { useLazyQuery } from '@apollo/client'
 
 import AdvancedSearchForm from './AdvancedSearchForm'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -7,75 +8,110 @@ import RegionSearchResults from './RegionSearchResults'
 
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
+import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationType'
+
+import REGIONS from '../../operations/queries/regions'
+
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './AdvancedSearchModal.scss'
+
+const keyboardShortcuts = {
+  toggleAdvancedSearchInput: 'a'
+}
 
 /**
  * Renders AdvancedSearchModal.
  * @param {Object} props - The props passed into the component.
- * @param {Boolean} props.isOpen - The modal state.
- * @param {Object} props.fields - The advanced search fields.
  * @param {Object} props.errors - Form errors provided by Formik.
+ * @param {Object} props.fields - The advanced search fields.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
+ * @param {Boolean} props.isOpen - The modal state.
  * @param {Boolean} props.isValid - Flag provided from Formik
  * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
- * @param {Function} props.onChangeRegionQuery - Callback function to update the region search results.
- * @param {Object} props.regionSearchResults - The current region search results.
  * @param {Function} props.resetForm - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
+ * @param {Function} props.validateForm - Callback function provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
-class AdvancedSearchModal extends Component {
-  constructor(props) {
-    super(props)
+const AdvancedSearchModal = ({
+  errors,
+  fields,
+  handleBlur,
+  handleChange,
+  handleSubmit,
+  isOpen,
+  isValid,
+  onToggleAdvancedSearchModal,
+  resetForm,
+  setFieldTouched,
+  setFieldValue,
+  touched,
+  validateForm,
+  values
+}) => {
+  const handleError = useEdscStore((state) => state.errors.handleError)
 
-    this.keyboardShortcuts = {
-      toggleAdvancedSearchInput: 'a'
+  const [regionsQuery, { data, loading, error }] = useLazyQuery(REGIONS)
+
+  const { regions: regionsData = {} } = data || {}
+  const {
+    count,
+    keyword,
+    regions
+  } = regionsData
+
+  // If there is an error fetching results
+  useEffect(() => {
+    if (error) {
+      handleError({
+        error,
+        action: 'getRegions',
+        resource: 'regions',
+        notificationType: DISPLAY_NOTIFICATION_TYPE.NONE
+      })
     }
+  }, [error])
 
-    this.onApplyClick = this.onApplyClick.bind(this)
-    this.onCancelClick = this.onCancelClick.bind(this)
-    this.onModalClose = this.onModalClose.bind(this)
-    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
-  }
-
-  componentDidMount() {
-    window.addEventListener('keyup', this.onWindowKeyUp)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.onWindowKeyUp)
-  }
-
-  onApplyClick(event) {
+  const handleSearch = (searchValues) => {
     const {
-      handleSubmit,
-      onToggleAdvancedSearchModal
-    } = this.props
+      endpoint,
+      exact = false,
+      keyword: searchKeyword
+    } = searchValues
 
+    regionsQuery({
+      variables: {
+        endpoint,
+        exact,
+        keyword: searchKeyword
+      }
+    })
+  }
+
+  const resetAndClose = () => {
+    resetForm()
+    onToggleAdvancedSearchModal(false)
+  }
+
+  const onApplyClick = (event) => {
     handleSubmit(event)
     onToggleAdvancedSearchModal(false)
   }
 
-  onCancelClick() {
-    this.resetAndClose()
+  const onCancelClick = () => {
+    resetAndClose()
   }
 
-  onModalClose() {
-    this.resetAndClose()
+  const onModalClose = () => {
+    resetAndClose()
   }
 
-  onWindowKeyUp(event) {
-    const { keyboardShortcuts } = this
-
-    const {
-      onToggleAdvancedSearchModal,
-      isOpen
-    } = this.props
-
+  const onWindowKeyUp = (event) => {
     const toggleModal = () => onToggleAdvancedSearchModal(!isOpen)
 
     triggerKeyboardShortcut({
@@ -85,77 +121,66 @@ class AdvancedSearchModal extends Component {
     })
   }
 
-  resetAndClose() {
-    const {
-      onToggleAdvancedSearchModal,
-      resetForm
-    } = this.props
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyUp)
 
-    resetForm()
-    onToggleAdvancedSearchModal(false)
-  }
-
-  render() {
-    const {
-      fields,
-      isOpen,
-      errors,
-      handleBlur,
-      handleChange,
-      isValid,
-      regionSearchResults,
-      setFieldValue,
-      setFieldTouched,
-      touched,
-      values,
-      validateForm
-    } = this.props
-
-    const regionSearchResultsOverlay = (
-      <RegionSearchResults
-        regionSearchResults={regionSearchResults}
-        setFieldValue={setFieldValue}
-      />
-    )
-
-    const modalOverlays = {
-      regionSearchResults: regionSearchResultsOverlay
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyUp)
     }
+  }, [onWindowKeyUp])
 
-    const body = (
-      <AdvancedSearchForm
-        fields={fields}
-        errors={errors}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        isValid={isValid}
-        regionSearchResults={regionSearchResults}
-        setFieldValue={setFieldValue}
-        setFieldTouched={setFieldTouched}
-        touched={touched}
-        values={values}
-        validateForm={validateForm}
-      />
-    )
+  const regionResults = useMemo(() => ({
+    count,
+    error: error?.message,
+    keyword,
+    loading,
+    regions
+  }), [count, error, keyword, loading, regions])
 
-    return (
-      <EDSCModalContainer
-        className="advanced-search-modal"
-        title="Advanced Search"
-        isOpen={isOpen}
-        id="advanced-search"
-        size="lg"
-        onClose={this.onModalClose}
-        body={body}
-        modalOverlays={modalOverlays}
-        primaryAction="Apply"
-        primaryActionDisabled={!isValid}
-        onPrimaryAction={this.onApplyClick}
-        secondaryAction="Cancel"
-        onSecondaryAction={this.onCancelClick}
-      />
-    )
+  const regionSearchResultsOverlay = (
+    <RegionSearchResults
+      regionResults={regionResults}
+      setFieldValue={setFieldValue}
+    />
+  )
+
+  const modalOverlays = {
+    regionSearchResults: regionSearchResultsOverlay
   }
+
+  const body = (
+    <AdvancedSearchForm
+      errors={errors}
+      fields={fields}
+      handleBlur={handleBlur}
+      handleChange={handleChange}
+      handleSearch={handleSearch}
+      isValid={isValid}
+      setFieldTouched={setFieldTouched}
+      setFieldValue={setFieldValue}
+      touched={touched}
+      validateForm={validateForm}
+      values={values}
+    />
+  )
+
+  return (
+    <EDSCModalContainer
+      className="advanced-search-modal"
+      title="Advanced Search"
+      isOpen={isOpen}
+      id="advanced-search"
+      size="lg"
+      onClose={onModalClose}
+      body={body}
+      modalOverlays={modalOverlays}
+      primaryAction="Apply"
+      primaryActionDisabled={!isValid}
+      onPrimaryAction={onApplyClick}
+      secondaryAction="Cancel"
+      onSecondaryAction={onCancelClick}
+    />
+  )
 }
 
 AdvancedSearchModal.propTypes = {
@@ -168,7 +193,6 @@ AdvancedSearchModal.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isValid: PropTypes.bool.isRequired,
-  regionSearchResults: PropTypes.shape({}).isRequired,
   resetForm: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,

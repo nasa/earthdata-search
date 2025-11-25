@@ -894,8 +894,6 @@ export type QuerySlice = {
   query: {
     /** The collection query */
     collection: CollectionQuery
-    /** The region query (for searching regions) */
-    region: RegionQuery
     /** The selected region (to use as a spatial query to CMR) */
     selectedRegion: SelectedRegion
     /** The NLP collection query data */
@@ -912,8 +910,6 @@ export type QuerySlice = {
       /** The new query params */
       query: Partial<GranuleQuery>
     }) => void
-    /** Function to change the region query */
-    changeRegionQuery: (query: Partial<RegionQuery>) => void
     /** Function to clear all filters */
     clearFilters: () => void
     /** Function to exclude a granule from a collection */
