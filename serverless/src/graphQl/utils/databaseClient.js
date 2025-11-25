@@ -115,6 +115,8 @@ export default class DatabaseClient {
         })
         .returning('*')
 
+      console.log('🚀 ~ file: databaseClient.js:111 ~ DatabaseClient ~ project:', project)
+
       return project
     } catch (error) {
       const errorMessage = 'Failed to create project'
@@ -671,6 +673,34 @@ export default class DatabaseClient {
   }
 
   /**
+   * Retrieves a retrieval order by its order ID
+   * @param {number} orderId The ID of the retrieval order to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the retrieval order object
+   */
+  async getRetrievalOrdersByOrderId(orderId) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('retrieval_orders')
+        .select(
+          'retrieval_orders.retrieval_collection_id',
+          'retrieval_orders.type',
+          'retrievals.token'
+        )
+        .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .where({ 'retrieval_orders.id': orderId })
+        .first()
+
+      return result
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve retrieval order by order ID'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Retrieves a user by their ID
    * @param {number} userId The ID of the user to retrieve
    * @returns {Promise<Object>} A promise that resolves to the user object
@@ -750,7 +780,7 @@ export default class DatabaseClient {
    * @param {string} params.obfuscatedId - The obfuscated ID of the project to update
    * @param {string} params.name - The new name for the project
    * @param {string} params.path - The new path for the project
-   * @param {number} params.userId - The ID of the user who owns the project
+   * @param {number} [params.userId] - The ID of the user who owns the project
    * @returns {Promise<Object>} A promise that resolves to the updated project object
    */
   async updateProject({
@@ -762,17 +792,23 @@ export default class DatabaseClient {
     try {
       const db = await this.getDbConnection()
 
-      const [project] = await db('projects')
+      let query = db('projects')
         .where({
-          id: deobfuscateId(obfuscatedId),
-          user_id: userId
+          id: deobfuscateId(obfuscatedId)
         })
-        .update({
-          name,
-          path,
-          updated_at: new Date()
-        })
+
+      if (userId) {
+        query = query.where({ user_id: userId })
+      }
+
+      query = query.update({
+        name,
+        path,
+        updated_at: new Date()
+      })
         .returning('*')
+
+      const [project] = await query
 
       return project
     } catch (error) {
