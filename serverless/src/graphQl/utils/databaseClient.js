@@ -670,6 +670,11 @@ export default class DatabaseClient {
     }
   }
 
+  /**
+   * Retrieves a retrieval order by its order ID
+   * @param {number} orderId The ID of the retrieval order to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the retrieval order object
+   */
   async getRetrievalOrdersByOrderId(orderId) {
     try {
       const db = await this.getDbConnection()
