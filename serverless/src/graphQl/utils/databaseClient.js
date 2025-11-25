@@ -115,6 +115,8 @@ export default class DatabaseClient {
         })
         .returning('*')
 
+      console.log('🚀 ~ file: databaseClient.js:111 ~ DatabaseClient ~ project:', project)
+
       return project
     } catch (error) {
       const errorMessage = 'Failed to create project'
@@ -778,7 +780,7 @@ export default class DatabaseClient {
    * @param {string} params.obfuscatedId - The obfuscated ID of the project to update
    * @param {string} params.name - The new name for the project
    * @param {string} params.path - The new path for the project
-   * @param {number} params.userId - The ID of the user who owns the project
+   * @param {number} [params.userId] - The ID of the user who owns the project
    * @returns {Promise<Object>} A promise that resolves to the updated project object
    */
   async updateProject({
@@ -790,17 +792,23 @@ export default class DatabaseClient {
     try {
       const db = await this.getDbConnection()
 
-      const [project] = await db('projects')
+      let query = db('projects')
         .where({
-          id: deobfuscateId(obfuscatedId),
-          user_id: userId
+          id: deobfuscateId(obfuscatedId)
         })
-        .update({
-          name,
-          path,
-          updated_at: new Date()
-        })
+
+      if (userId) {
+        query = query.where({ user_id: userId })
+      }
+
+      query = query.update({
+        name,
+        path,
+        updated_at: new Date()
+      })
         .returning('*')
+
+      const [project] = await query
 
       return project
     } catch (error) {
