@@ -1,14 +1,14 @@
 {
   "moreInfoUrl": "https://podaac.jpl.nasa.gov",
-  "pageTitle": "PO.DAAC",
+  "pageTitle": "PO.DAAC Cloud",
   "parentConfig": "edsc",
   "portalBrowser": true,
   "query": {
-    "dataCenter": "NASA/JPL/PODAAC",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "provider": "POCLOUD"
   },
   "title": {
-    "primary": "PO.DAAC",
+    "primary": "PO.DAAC Cloud",
     "secondary": "Physical Oceanography Distributed Active Archive Center"
   },
   "ui": {
