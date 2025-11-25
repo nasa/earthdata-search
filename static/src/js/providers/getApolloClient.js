@@ -52,14 +52,37 @@ const getApolloClient = ({
   })
 
   // Create the authLink with the provided edlToken
-  const edlTokenAuthLink = setContext((_, { headers }) => ({
-    headers: {
-      ...headers,
-      'Client-Id': getClientId().client,
-      'Earthdata-ENV': earthdataEnvironment,
-      Authorization: `Bearer ${edlToken}`
+  const edlTokenAuthLink = setContext((_, { headers }) => {
+    const authHeader = {}
+    if (edlToken) {
+      authHeader.Authorization = `Bearer ${edlToken}`
     }
-  }))
+
+    return {
+      headers: {
+        ...headers,
+        ...authHeader,
+        'Client-Id': getClientId().client,
+        'Earthdata-ENV': earthdataEnvironment
+      }
+    }
+  })
+
+  // Create the authLink with the provided edlToken
+  const cmrTokenAuthLink = setContext((_, { headers }) => {
+    const authHeader = {}
+    if (edlToken) {
+      authHeader.Authorization = `Bearer ${edlToken}`
+    }
+
+    return {
+      headers: {
+        ...headers,
+        ...authHeader,
+        'Client-Id': getClientId().client
+      }
+    }
+  })
 
   // Create the HTTP link for the EDSC GraphQL API
   const edscLink = createHttpLink({
@@ -79,9 +102,9 @@ const getApolloClient = ({
   const cmrLinks = ApolloLink.split(
     // If the clientName is 'cmrOrdering', use the cmrOrderingLink
     (operation) => operation.getContext().clientName === apolloClientNames.CMR_ORDERING,
-    edlTokenAuthLink.concat(cmrOrderingLink),
+    cmrTokenAuthLink.concat(cmrOrderingLink),
     // Default to the cmrGraphqlLink
-    edlTokenAuthLink.concat(cmrGraphqlLink)
+    cmrTokenAuthLink.concat(cmrGraphqlLink)
   )
 
   // Create a new ApolloClient instance

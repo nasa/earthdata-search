@@ -1,8 +1,6 @@
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
-  GENERATE_NOTEBOOK_STARTED,
-  GENERATE_NOTEBOOK_FINISHED,
   RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
@@ -266,24 +264,6 @@ const uiReducer = (state = initialState, action = {}) => {
           }
         }
       }
-    }
-
-    case GENERATE_NOTEBOOK_STARTED: {
-      return {
-        ...state,
-        generateNotebook: {
-          ...state.generateNotebook,
-          [action.payload]: 'loading'
-        }
-      }
-    }
-
-    case GENERATE_NOTEBOOK_FINISHED: {
-      const nextState = { ...state }
-
-      delete nextState.generateNotebook[action.payload]
-
-      return nextState
     }
 
     case TOGGLE_DEPRECATED_PARAMETER_MODAL: {

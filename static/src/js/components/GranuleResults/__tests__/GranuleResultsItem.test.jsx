@@ -36,7 +36,6 @@ const defaultProps = {
   collectionTags: {},
   directDistributionInformation: {},
   focusedGranule: '',
-  generateNotebook: {},
   isCollectionInProject: false,
   isGranuleInProject: jest.fn(() => false),
   isFocused: false,
@@ -45,7 +44,6 @@ const defaultProps = {
   location: { search: 'location' },
   onAddGranuleToProjectCollection: jest.fn(),
   onExcludeGranule: jest.fn(),
-  onGenerateNotebook: jest.fn(),
   onMetricsDataAccess: jest.fn(),
   onMetricsAddGranuleProject: jest.fn(),
   onRemoveGranuleFromProjectCollection: jest.fn(),
@@ -244,7 +242,6 @@ const hasGenerateNotebookTagProps = {
       }
     }
   },
-  generateNotebook: {},
   granule: {
     id: 'granuleId',
     browseFlag: true,
@@ -265,8 +262,7 @@ const hasGenerateNotebookTagProps = {
       }
     ],
     s3Links: []
-  },
-  onGenerateNotebook: jest.fn()
+  }
 }
 
 const staticCoverageProps = {
@@ -329,6 +325,7 @@ const setup = setupTest({
       removeGranuleFromProjectCollection: jest.fn()
     }
   },
+  withApolloClient: true,
   withRouter: true
 })
 

@@ -2,8 +2,6 @@ import uiReducer from '../ui'
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
-  GENERATE_NOTEBOOK_FINISHED,
-  GENERATE_NOTEBOOK_STARTED,
   RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
@@ -447,47 +445,6 @@ describe('EXPORT_FINISHED', () => {
     }
 
     expect(uiReducer(initial, action)).toEqual(expectedState)
-  })
-})
-
-describe('GENERATE_NOTEBOOK_STARTED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: GENERATE_NOTEBOOK_STARTED,
-      payload: 'G123456789-PROV1'
-    }
-
-    const expectedState = {
-      ...initialState,
-      generateNotebook: {
-        'G123456789-PROV1': 'loading'
-      }
-    }
-
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('GENERATE_NOTEBOOK_FINISHED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: GENERATE_NOTEBOOK_FINISHED,
-      payload: 'G234578901-PROV2'
-    }
-
-    const initialStateOverride = {
-      ...initialState,
-      generateNotebook: {
-        'G234578901-PROV2': 'loading'
-      }
-    }
-
-    const expectedState = {
-      ...initialState,
-      generateNotebook: {}
-    }
-
-    expect(uiReducer(initialStateOverride, action)).toEqual(expectedState)
   })
 })
 
