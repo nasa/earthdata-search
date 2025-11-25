@@ -75,7 +75,7 @@ export const fetchGranuleLinks = async ({
       if (retrievalCollectionRows.length > 1) {
         // Combine the `order_information` objects from each row into a single object keyed by the `jobID`
         const combinedOrderInformation = retrievalCollectionRows.reduce((acc, curr) => {
-          const { order_information: currentOrderInformation } = curr
+          const { order_information: currentOrderInformation = {} } = curr
           const {
             jobID: jobId
           } = currentOrderInformation
@@ -111,7 +111,7 @@ export const fetchGranuleLinks = async ({
         // Combine the `order_information` objects from each row into a single object keyed by the `jobID`
         const combinedOrderInformation = retrievalCollectionRows.reduce((acc, curr) => {
           const { order_information: currentOrderInformation } = curr
-          const { downloadUrls, order } = currentOrderInformation
+          const { downloadUrls, order = {} } = currentOrderInformation
           const { orderId } = order
 
           // Initialize the accumulator for this jobID if it doesn't exist
