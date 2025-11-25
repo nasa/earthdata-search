@@ -64,7 +64,6 @@ innerElementType.propTypes = {
  * @param {String} props.collectionId - The collection ID.
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
- * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Number} props.height - The height of the container provided by AutoSizer.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
@@ -74,7 +73,6 @@ innerElementType.propTypes = {
  * @param {Number} props.itemCount - Number of total granule list items.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
- * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
@@ -87,7 +85,6 @@ export const GranuleResultsListBody = ({
   collectionId,
   directDistributionInformation,
   excludedGranuleIds,
-  generateNotebook,
   granules,
   height,
   isCollectionInProject,
@@ -96,7 +93,6 @@ export const GranuleResultsListBody = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   readableGranuleName,
@@ -238,7 +234,6 @@ export const GranuleResultsListBody = ({
                 collectionTags,
                 directDistributionInformation,
                 excludedGranuleIds,
-                generateNotebook,
                 getRowHeight,
                 granules,
                 isCollectionInProject,
@@ -248,7 +243,6 @@ export const GranuleResultsListBody = ({
                 location,
                 numColumns,
                 onExcludeGranule: excludeGranule,
-                onGenerateNotebook,
                 onMetricsAddGranuleProject,
                 onMetricsDataAccess,
                 readableGranuleName,
@@ -290,7 +284,6 @@ GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
@@ -299,7 +292,6 @@ GranuleResultsListBody.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,

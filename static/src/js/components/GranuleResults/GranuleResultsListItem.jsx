@@ -34,7 +34,6 @@ export const GranuleResultsListItem = memo(({
     collectionQuerySpatial,
     collectionTags,
     directDistributionInformation,
-    generateNotebook,
     granules,
     isCollectionInProject,
     isGranuleInProject,
@@ -42,7 +41,6 @@ export const GranuleResultsListItem = memo(({
     location,
     numColumns,
     onExcludeGranule,
-    onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
     readableGranuleName,
@@ -108,13 +106,11 @@ export const GranuleResultsListItem = memo(({
           collectionQuerySpatial={collectionQuerySpatial}
           collectionTags={collectionTags}
           directDistributionInformation={directDistributionInformation}
-          generateNotebook={generateNotebook}
           granule={granules[index]}
           isCollectionInProject={isCollectionInProject}
           isGranuleInProject={isGranuleInProject}
           location={location}
           onExcludeGranule={onExcludeGranule}
-          onGenerateNotebook={onGenerateNotebook}
           onMetricsDataAccess={onMetricsDataAccess}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           readableGranuleName={readableGranuleName}
@@ -134,7 +130,6 @@ GranuleResultsListItem.propTypes = {
     collectionQuerySpatial: PropTypes.shape({}).isRequired,
     collectionTags: PropTypes.shape({}).isRequired,
     directDistributionInformation: PropTypes.shape({}),
-    generateNotebook: PropTypes.shape({}).isRequired,
     granules: PropTypes.arrayOf(PropTypes.shape({})),
     isCollectionInProject: PropTypes.bool,
     isGranuleInProject: PropTypes.func,
@@ -142,7 +137,6 @@ GranuleResultsListItem.propTypes = {
     location: PropTypes.shape({}),
     numColumns: PropTypes.number,
     onExcludeGranule: PropTypes.func,
-    onGenerateNotebook: PropTypes.func,
     onMetricsAddGranuleProject: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
     readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,

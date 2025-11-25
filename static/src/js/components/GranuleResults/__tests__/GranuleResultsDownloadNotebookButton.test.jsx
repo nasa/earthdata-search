@@ -11,6 +11,20 @@ import {
   GranuleResultsDownloadNotebookButton,
   CustomDownloadNotebookToggle
 } from '../GranuleResultsDownloadNotebookButton'
+import GET_NOTEBOOK_GRANULES from '../../../operations/queries/getNotebookGranules'
+import { buildNotebook } from '../../../util/notebooks/buildNotebook'
+import { downloadFile } from '../../../util/notebooks/downloadFile'
+
+jest.mock('../../../util/notebooks/buildNotebook', () => ({
+  buildNotebook: jest.fn().mockReturnValue({
+    fileName: 'test_notebook.ipynb',
+    notebook: { mock: 'notebook' }
+  })
+}))
+
+jest.mock('../../../util/notebooks/downloadFile', () => ({
+  downloadFile: jest.fn()
+}))
 
 Object.defineProperty(window, 'location', {
   get() {
@@ -22,20 +36,52 @@ const setup = setupTest({
   Component: GranuleResultsDownloadNotebookButton,
   defaultProps: {
     collectionQuerySpatial: {},
-    generateNotebook: {},
     generateNotebookTag: {
-      variableConceptId: 'V-123456789-TESTPROV'
+      variable_concept_id: 'V2028632042-POCLOUD'
     },
-    granuleId: 'G123456789-TESTPROV',
-    onGenerateNotebook: jest.fn()
-  }
+    granuleId: 'G3879539904-POCLOUD'
+  },
+  defaultApolloClientMocks: [{
+    request: {
+      query: GET_NOTEBOOK_GRANULES,
+      variables: {
+        granulesParams: { conceptId: 'G3879539904-POCLOUD' },
+        variablesParams: { conceptId: 'V2028632042-POCLOUD' }
+      }
+    },
+    result: {
+      data: {
+        granules: {
+          items: [
+            {
+              conceptId: 'G3879539904-POCLOUD',
+              title: '20251124090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1',
+              collection: {
+                conceptId: 'C1996881146-POCLOUD',
+                shortName: 'MUR-JPL-L4-GLOB-v4.1',
+                title: 'GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)',
+                variables: {
+                  items: [
+                    {
+                      name: 'analysed_sst'
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }],
+  withApolloClient: true
 })
 
 describe('GranuleResultsDownloadNotebookButton component', () => {
   describe('when the Generate Notebook button is clicked', () => {
     describe('when a bounding box is not applied', () => {
-      test('calls onGenerateNotebook without a bounding box', async () => {
-        const { props, user } = setup()
+      test('downloads the file', async () => {
+        const { user } = setup()
 
         const dropdownButton = screen.getByLabelText('Download sample notebook')
 
@@ -46,20 +92,35 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
         await user.click(downloadButton)
 
         await waitFor(() => {
-          expect(props.onGenerateNotebook).toHaveBeenCalledWith({
-            granuleId: 'G123456789-TESTPROV',
-            referrerUrl: 'https://www.test-location.com/?param=value',
-            variableId: 'V-123456789-TESTPROV'
-          })
+          expect(buildNotebook).toHaveBeenCalledTimes(1)
         })
 
-        expect(props.onGenerateNotebook).toHaveBeenCalledTimes(1)
+        expect(buildNotebook).toHaveBeenCalledWith({
+          boundingBox: undefined,
+          granuleId: 'G3879539904-POCLOUD',
+          granules: {
+            items: [{
+              collection: {
+                conceptId: 'C1996881146-POCLOUD',
+                shortName: 'MUR-JPL-L4-GLOB-v4.1',
+                title: 'GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)',
+                variables: { items: [{ name: 'analysed_sst' }] }
+              },
+              conceptId: 'G3879539904-POCLOUD',
+              title: '20251124090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1'
+            }]
+          },
+          referrerUrl: 'https://www.test-location.com/?param=value'
+        })
+
+        expect(downloadFile).toHaveBeenCalledTimes(1)
+        expect(downloadFile).toHaveBeenCalledWith('test_notebook.ipynb', { mock: 'notebook' })
       })
     })
 
     describe('when a bounding box is applied', () => {
       test('calls onGenerateNotebook with a bounding box', async () => {
-        const { props, user } = setup({
+        const { user } = setup({
           overrideProps: {
             collectionQuerySpatial: {
               boundingBox: ['-1,0,1,0']
@@ -76,23 +137,158 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
         await user.click(downloadButton)
 
         await waitFor(() => {
-          expect(props.onGenerateNotebook).toHaveBeenCalledWith({
-            boundingBox: '-1,0,1,0',
-            granuleId: 'G123456789-TESTPROV',
-            referrerUrl: 'https://www.test-location.com/?param=value',
-            variableId: 'V-123456789-TESTPROV'
-          })
+          expect(buildNotebook).toHaveBeenCalledTimes(1)
         })
 
-        expect(props.onGenerateNotebook).toHaveBeenCalledTimes(1)
+        expect(buildNotebook).toHaveBeenCalledWith({
+          boundingBox: '-1,0,1,0',
+          granuleId: 'G3879539904-POCLOUD',
+          granules: {
+            items: [{
+              collection: {
+                conceptId: 'C1996881146-POCLOUD',
+                shortName: 'MUR-JPL-L4-GLOB-v4.1',
+                title: 'GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)',
+                variables: { items: [{ name: 'analysed_sst' }] }
+              },
+              conceptId: 'G3879539904-POCLOUD',
+              title: '20251124090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1'
+            }]
+          },
+          referrerUrl: 'https://www.test-location.com/?param=value'
+        })
+
+        expect(downloadFile).toHaveBeenCalledTimes(1)
+        expect(downloadFile).toHaveBeenCalledWith('test_notebook.ipynb', { mock: 'notebook' })
       })
     })
 
     describe('when a variable id is not applied', () => {
       test('calls onGenerateNotebook without a variable id', async () => {
-        const { props, user } = setup({
+        const { user } = setup({
           overrideProps: {
             generateNotebookTag: {}
+          },
+          overrideApolloClientMocks: [{
+            request: {
+              query: GET_NOTEBOOK_GRANULES,
+              variables: {
+                granulesParams: { conceptId: 'G3879539904-POCLOUD' },
+                variablesParams: { conceptId: undefined }
+              }
+            },
+            result: {
+              data: {
+                granules: {
+                  items: [
+                    {
+                      conceptId: 'G3879539904-POCLOUD',
+                      title: '20251124090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1',
+                      collection: {
+                        conceptId: 'C1996881146-POCLOUD',
+                        shortName: 'MUR-JPL-L4-GLOB-v4.1',
+                        title: 'GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)',
+                        variables: {
+                          items: [{
+                            name: 'analysed_sst'
+                          }, {
+                            name: 'analysis_error'
+                          }, {
+                            name: 'lat'
+                          }, {
+                            name: 'lon'
+                          }, {
+                            name: 'mask'
+                          }, {
+                            name: 'sea_ice_fraction'
+                          }, {
+                            name: 'sst_anomaly'
+                          }, {
+                            name: 'time'
+                          }]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }]
+        })
+
+        const dropdownButton = screen.getByLabelText('Download sample notebook')
+
+        await user.click(dropdownButton)
+
+        const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
+
+        await user.click(downloadButton)
+
+        await waitFor(() => {
+          expect(buildNotebook).toHaveBeenCalledTimes(1)
+        })
+
+        expect(buildNotebook).toHaveBeenCalledWith({
+          boundingBox: undefined,
+          granuleId: 'G3879539904-POCLOUD',
+          granules: {
+            items: [{
+              collection: {
+                conceptId: 'C1996881146-POCLOUD',
+                shortName: 'MUR-JPL-L4-GLOB-v4.1',
+                title: 'GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)',
+                variables: {
+                  items: [{
+                    name: 'analysed_sst'
+                  }, {
+                    name: 'analysis_error'
+                  }, {
+                    name: 'lat'
+                  }, {
+                    name: 'lon'
+                  }, {
+                    name: 'mask'
+                  }, {
+                    name: 'sea_ice_fraction'
+                  }, {
+                    name: 'sst_anomaly'
+                  }, {
+                    name: 'time'
+                  }]
+                }
+              },
+              conceptId: 'G3879539904-POCLOUD',
+              title: '20251124090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1'
+            }]
+          },
+          referrerUrl: 'https://www.test-location.com/?param=value'
+        })
+
+        expect(downloadFile).toHaveBeenCalledTimes(1)
+        expect(downloadFile).toHaveBeenCalledWith('test_notebook.ipynb', { mock: 'notebook' })
+      })
+    })
+
+    describe('when the request fails', () => {
+      test('calls handleError', async () => {
+        const { user, zustandState } = setup({
+          overrideProps: {
+            generateNotebookTag: {}
+          },
+          overrideApolloClientMocks: [{
+            request: {
+              query: GET_NOTEBOOK_GRANULES,
+              variables: {
+                granulesParams: { conceptId: 'G3879539904-POCLOUD' },
+                variablesParams: { conceptId: undefined }
+              }
+            },
+            error: new Error('Network error')
+          }],
+          overrideZustandState: {
+            errors: {
+              handleError: jest.fn()
+            }
           }
         })
 
@@ -105,13 +301,15 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
         await user.click(downloadButton)
 
         await waitFor(() => {
-          expect(props.onGenerateNotebook).toHaveBeenCalledWith({
-            granuleId: 'G123456789-TESTPROV',
-            referrerUrl: 'https://www.test-location.com/?param=value'
-          })
+          expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         })
 
-        expect(props.onGenerateNotebook).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+          action: 'generateNotebook',
+          error: new Error('Network error')
+        })
+
+        expect(buildNotebook).toHaveBeenCalledTimes(0)
       })
     })
   })

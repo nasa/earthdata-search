@@ -18,11 +18,9 @@ const setup = setupTest({
   defaultProps: {
     collectionId: 'collectionId',
     directDistributionInformation: {},
-    generateNotebook: {},
     isOpenSearch: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
-    onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     panelView: 'list'
@@ -88,7 +86,6 @@ describe('GranuleResultsBody component', () => {
       collectionId: 'collectionId',
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      generateNotebook: {},
       granules: [{
         browseFlag: true,
         browseUrl: undefined,
@@ -188,7 +185,6 @@ describe('GranuleResultsBody component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
       readableGranuleName: [''],
@@ -209,7 +205,6 @@ describe('GranuleResultsBody component', () => {
       collectionId: 'collectionId',
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      generateNotebook: {},
       granules: [{
         browseFlag: true,
         browseUrl: undefined,
@@ -309,7 +304,6 @@ describe('GranuleResultsBody component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
