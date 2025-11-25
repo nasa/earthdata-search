@@ -1,75 +1,166 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import RegionSearchResults from '../RegionSearchResults'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    regionSearchResults: {
-      byId: {},
-      allIds: []
+const setup = setupTest({
+  Component: RegionSearchResults,
+  defaultProps: {
+    regionResults: {
+      count: 1,
+      error: undefined,
+      keyword: '1234',
+      loading: false,
+      regions: [{
+        name: 'Upper Creek',
+        id: '1234',
+        type: 'huc'
+      }]
     },
     setModalOverlay: jest.fn(),
-    setFieldValue: jest.fn(),
-    ...overrideProps
+    setFieldValue: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<RegionSearchResults {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('RegionSearchResults component', () => {
-  test('should render the region search form results', () => {
-    const { enzymeWrapper } = setup()
+  test('should render a note to select a region', () => {
+    setup()
 
-    expect(enzymeWrapper.type()).toEqual('div')
+    expect(screen.getByText('Select a region from the list below to filter your search results.')).toBeInTheDocument()
   })
 
-  test('should render a note to select a region', () => {
-    const { enzymeWrapper } = setup({
-      regionSearchResults: {
-        isLoading: false,
-        isLoaded: true,
-        byId: {
-          1234: {
-            name: 'Upper Creek',
-            id: '1234',
-            type: 'huc'
+  describe('when the results are loading', () => {
+    test('renders a spinner', () => {
+      setup({
+        overrideProps: {
+          regionResults: {
+            count: 0,
+            error: undefined,
+            keyword: '1234',
+            loading: true,
+            regions: []
           }
-        },
-        allIds: ['1234']
-      }
+        }
+      })
+
+      expect(screen.getByRole('status')).toBeInTheDocument()
+    })
+  })
+
+  describe('when no regions are returned', () => {
+    test('renders a message indicating no regions were found', () => {
+      setup({
+        overrideProps: {
+          regionResults: {
+            count: 0,
+            error: undefined,
+            keyword: '1234',
+            loading: false,
+            regions: []
+          }
+        }
+      })
+
+      expect(screen.getByText(/Your search returned no results./)).toBeInTheDocument()
     })
 
-    expect(enzymeWrapper.find('.region-search-results__list-intro').text())
-      .toContain('Select a region from the list below to filter your search results')
+    describe('when clicking Try again', () => {
+      test('calls setModalOverlay', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            regionResults: {
+              count: 0,
+              error: undefined,
+              keyword: '1234',
+              loading: false,
+              regions: []
+            }
+          }
+        })
+
+        const button = screen.getByRole('button', { name: 'Try again' })
+        await user.click(button)
+
+        expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
+        expect(props.setModalOverlay).toHaveBeenCalledWith(null)
+      })
+    })
   })
 
-  describe('onSetSelected', () => {
-    test('sets the field value', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.instance().onSetSelected({
-        test: 'test'
+  describe('when an error is returned', () => {
+    test('shows the error message', () => {
+      setup({
+        overrideProps: {
+          regionResults: {
+            count: 0,
+            error: 'An error occurred',
+            keyword: '1234',
+            loading: false,
+            regions: []
+          }
+        }
       })
+
+      expect(screen.getByText(/An error occurred/)).toBeInTheDocument()
+
+      expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument()
+    })
+
+    describe('when clicking Try again', () => {
+      test('calls setModalOverlay', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            regionResults: {
+              count: 0,
+              error: 'An error occurred',
+              keyword: '1234',
+              loading: false,
+              regions: []
+            }
+          }
+        })
+
+        const button = screen.getByRole('button', { name: 'Try again' })
+        await user.click(button)
+
+        expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
+        expect(props.setModalOverlay).toHaveBeenCalledWith(null)
+      })
+    })
+  })
+
+  describe('when selecting a value', () => {
+    test('calls setFieldValue and setModalOverlay', async () => {
+      const { props, user } = setup()
+
+      const button = screen.getByRole('button', { name: '1234' })
+      await user.click(button)
 
       expect(props.setFieldValue).toHaveBeenCalledTimes(1)
       expect(props.setFieldValue).toHaveBeenCalledWith(
         'regionSearch.selectedRegion',
         {
-          test: 'test'
+          name: 'Upper Creek',
+          id: '1234',
+          type: 'huc'
         }
       )
+
+      expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
+      expect(props.setModalOverlay).toHaveBeenCalledWith(null)
+    })
+  })
+
+  describe('when clicking Back to Feature', () => {
+    test('calls setModalOverlay', async () => {
+      const { props, user } = setup()
+
+      const button = screen.getByRole('button', { name: 'Back to Feature' })
+      await user.click(button)
+
+      expect(props.setModalOverlay).toHaveBeenCalledTimes(1)
+      expect(props.setModalOverlay).toHaveBeenCalledWith(null)
     })
   })
 })

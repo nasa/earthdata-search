@@ -659,24 +659,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * Region Search
-     */
-    const regionSearchNestedStack = new cdk.NestedStack(scope, 'RegionSearchNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(regionSearchNestedStack, 'RegionSearchLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        methods: ['GET'],
-        path: 'regions'
-      },
-      entry: '../../serverless/src/regionSearch/handler.js',
-      functionName: 'regionSearch',
-      functionNamePrefix
-    })
-
-    /**
      * Relevancy Logger
      */
     const relevancyLoggerNestedStack = new cdk.NestedStack(scope, 'RelevancyLoggerNestedStack')

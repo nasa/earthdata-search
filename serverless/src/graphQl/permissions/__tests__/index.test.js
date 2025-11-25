@@ -57,6 +57,7 @@ describe('permissions', () => {
           colormaps: allow,
           project: allow,
           projects: isValidUser,
+          regions: allow,
           retrieval: isValidUser,
           retrievalCollection: isValidUser,
           retrieveGranuleLinks: isValidUser,

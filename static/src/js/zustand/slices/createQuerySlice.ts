@@ -40,9 +40,6 @@ export const initialState = {
     tagKey: '',
     temporal: {}
   },
-  region: {
-    exact: false
-  },
   selectedRegion: {},
   nlpCollection: null
 }
@@ -147,20 +144,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       } = configureStore()
       // Clear any subscription disabledFields
       reduxDispatch(actions.removeSubscriptionDisabledFields())
-    },
-
-    changeRegionQuery: (query) => {
-      set((state) => {
-        state.query.region = {
-          ...state.query.region,
-          ...query
-        }
-      })
-
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      reduxDispatch(actions.getRegions())
     },
 
     clearFilters: async () => {

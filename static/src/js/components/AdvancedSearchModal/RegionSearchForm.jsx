@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
@@ -10,54 +10,48 @@ import Button from '../Button/Button'
 import EDSCAlert from '../EDSCAlert/EDSCAlert'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
-export class RegionSearchForm extends Component {
-  constructor(props) {
-    super(props)
-    this.endpoints = [
-      {
-        type: 'huc',
-        label: 'HUC ID',
-        value: 'huc',
-        placeholder: 'ex. 1805000301'
-      },
-      {
-        type: 'region',
-        label: 'HUC Region',
-        value: 'region',
-        placeholder: 'ex. Colorado Mine'
-      },
-      {
-        type: 'reach',
-        label: 'River Reach',
-        value: 'rivers/reach',
-        placeholder: 'ex. 11410000013'
-      }
-    ]
-
-    this.handleKeypress = this.handleKeypress.bind(this)
+const endpoints = [
+  {
+    type: 'huc',
+    label: 'HUC ID',
+    value: 'huc',
+    placeholder: 'ex. 1805000301'
+  },
+  {
+    type: 'region',
+    label: 'HUC Region',
+    value: 'region',
+    placeholder: 'ex. Colorado Mine'
+  },
+  {
+    type: 'reach',
+    label: 'River Reach',
+    value: 'rivers/reach',
+    placeholder: 'ex. 11410000013'
   }
+]
 
-  componentDidMount() {
-    const {
-      regionSearchForm
-    } = this.props
+const RegionSearchForm = ({
+  regionSearchForm,
+  selectedRegion = {},
+  onRemoveSelected
+}) => {
+  const {
+    errors,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    isValid,
+    touched,
+    validateForm,
+    values
+  } = regionSearchForm
 
-    const {
-      validateForm
-    } = regionSearchForm
-
+  useEffect(() => {
     validateForm()
-  }
+  }, [])
 
-  handleKeypress(event) {
-    const {
-      regionSearchForm
-    } = this.props
-
-    const {
-      handleSubmit
-    } = regionSearchForm
-
+  const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleSubmit()
 
@@ -66,197 +60,174 @@ export class RegionSearchForm extends Component {
     }
   }
 
-  getEndpointData(endpoint) {
-    return this.endpoints.find(({
-      value
-    }) => value === endpoint)
-  }
+  const getEndpointData = (endpoint) => endpoints.find(
+    ({ value }) => value === endpoint
+  )
 
-  render() {
-    const {
-      regionSearchForm,
-      selectedRegion,
-      onRemoveSelected
-    } = this.props
+  const {
+    keyword: keywordErrors
+  } = errors
 
-    const {
-      errors,
-      handleBlur,
-      handleChange,
-      handleSubmit,
-      touched,
-      values,
-      isValid
-    } = regionSearchForm
+  const {
+    keyword: keywordTouched
+  } = touched
 
-    const {
-      keyword: keywordErrors
-    } = errors
+  const {
+    endpoint,
+    keyword = '',
+    exact = false
+  } = values
 
-    const {
-      keyword: keywordTouched
-    } = touched
-
-    const {
-      endpoint,
-      keyword = '',
-      exact = false
-    } = values
-
-    return (
-      <Row className="region-search">
-        <Col>
-          {
-            isEmpty(selectedRegion) && (
-              <Row>
-                <Col sm="6">
-                  <Form.Group
-                    className="mb-3"
-                    as={Row}
-                    controlId="endpoint"
-                  >
-                    <Col>
-                      <Form.Select
-                        name="endpoint"
-                        onChange={handleChange}
-                        role="combobox"
-                        value={endpoint}
-                      >
-                        {
-                          this.endpoints.map(({
-                            label,
-                            value
-                          }) => (
-                            <option
-                              key={value}
-                              value={value}
-                            >
-                              {label}
-                            </option>
-                          ))
-                        }
-                      </Form.Select>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group
-                    className="mb-3"
-                    as={Row}
-                    controlId="keyword"
-                  >
-                    <Col>
-                      <Form.Control
-                        autoComplete="off"
-                        name="keyword"
-                        as="input"
-                        placeholder={this.getEndpointData(endpoint).placeholder}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={keyword}
-                        onKeyPress={this.handleKeypress}
-                        isInvalid={keywordErrors && keywordTouched}
-                      />
-                      {
-                        (keywordErrors && keywordTouched) && (
-                          <Form.Control.Feedback type="invalid">
-                            {keywordErrors}
-                          </Form.Control.Feedback>
-                        )
-                      }
-                    </Col>
-                  </Form.Group>
-                  <Row>
-                    <Col>
-                      <Row className="align-items-center">
-                        <Col>
-                          <Form.Group controlId="exact" className="mb-0">
-                            <Form.Check
-                              name="exact"
-                              type="checkbox"
-                              label="Exact match"
-                              onChange={handleChange}
-                              value={exact}
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col sm="auto">
-                          <Button
-                            label="Search"
-                            variant="full"
-                            bootstrapVariant="light"
-                            disabled={!isValid}
-                            onClick={handleSubmit}
-                            type="button"
-                          >
-                            Search
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col>
-                  {
-                    (endpoint === 'huc' || endpoint === 'region') && (
-                      <EDSCAlert
-                        variant="small"
-                        bootstrapVariant="light"
-                        icon={FaQuestionCircle}
-                      >
-                        Find more information about Hydrological Units at
-                        {' '}
-                        <ExternalLink href="https://water.usgs.gov/GIS/huc.html">
-                          https://water.usgs.gov/GIS/huc.html
-                        </ExternalLink>
-                      </EDSCAlert>
-                    )
-                  }
-                  {
-                    endpoint === 'rivers/reach' && (
-                      <EDSCAlert
-                        variant="small"
-                        bootstrapVariant="light"
-                        icon={FaQuestionCircle}
-                      >
-                        Find River Reach IDs in the SWOT River Database (SWORD):
-                        {' '}
-                        <ExternalLink href="https://www.swordexplorer.com/">
-                          https://www.swordexplorer.com
-                        </ExternalLink>
-                      </EDSCAlert>
-                    )
-                  }
-                </Col>
-              </Row>
-            )
-          }
-          {
-            !isEmpty(selectedRegion) && (
-              <p className="region-search__selected-region">
-                <span className="region-search__selected-region-id">{`${selectedRegion.type.toUpperCase()} ${selectedRegion.id}`}</span>
-                <span className="region-search__selected-region-name">
-                  (
-                  {selectedRegion.name}
-                  )
-                </span>
-                <Button
-                  bootstrapVariant="light"
-                  bootstrapSize="sm"
-                  label="Remove"
-                  onClick={onRemoveSelected}
+  return (
+    <Row className="region-search">
+      <Col>
+        {
+          isEmpty(selectedRegion) && (
+            <Row>
+              <Col sm="6">
+                <Form.Group
+                  className="mb-3"
+                  as={Row}
+                  controlId="endpoint"
                 >
-                  Remove
-                </Button>
-              </p>
-            )
-          }
-        </Col>
-      </Row>
-    )
-  }
-}
+                  <Col>
+                    <Form.Select
+                      name="endpoint"
+                      onChange={handleChange}
+                      role="combobox"
+                      value={endpoint}
+                    >
+                      {
+                        endpoints.map(({
+                          label,
+                          value
+                        }) => (
+                          <option
+                            key={value}
+                            value={value}
+                          >
+                            {label}
+                          </option>
+                        ))
+                      }
+                    </Form.Select>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  as={Row}
+                  controlId="keyword"
+                >
+                  <Col>
+                    <Form.Control
+                      autoComplete="off"
+                      name="keyword"
+                      as="input"
+                      placeholder={getEndpointData(endpoint).placeholder}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={keyword}
+                      onKeyDown={handleKeyDown}
+                      isInvalid={keywordErrors && keywordTouched}
+                    />
+                    {
+                      (keywordErrors && keywordTouched) && (
+                        <Form.Control.Feedback type="invalid">
+                          {keywordErrors}
+                        </Form.Control.Feedback>
+                      )
+                    }
+                  </Col>
+                </Form.Group>
+                <Row>
+                  <Col>
+                    <Row className="align-items-center">
+                      <Col>
+                        <Form.Group controlId="exact" className="mb-0">
+                          <Form.Check
+                            name="exact"
+                            type="checkbox"
+                            label="Exact match"
+                            onChange={handleChange}
+                            value={exact}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col sm="auto">
+                        <Button
+                          label="Search"
+                          variant="full"
+                          bootstrapVariant="light"
+                          disabled={!isValid}
+                          onClick={handleSubmit}
+                          type="button"
+                        >
+                          Search
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+              <Col>
+                {
+                  (endpoint === 'huc' || endpoint === 'region') && (
+                    <EDSCAlert
+                      variant="small"
+                      bootstrapVariant="light"
+                      icon={FaQuestionCircle}
+                    >
+                      Find more information about Hydrological Units at
+                      {' '}
+                      <ExternalLink href="https://water.usgs.gov/GIS/huc.html">
+                        https://water.usgs.gov/GIS/huc.html
+                      </ExternalLink>
+                    </EDSCAlert>
+                  )
+                }
+                {
+                  endpoint === 'rivers/reach' && (
+                    <EDSCAlert
+                      variant="small"
+                      bootstrapVariant="light"
+                      icon={FaQuestionCircle}
+                    >
+                      Find River Reach IDs in the SWOT River Database (SWORD):
+                      {' '}
+                      <ExternalLink href="https://www.swordexplorer.com/">
+                        https://www.swordexplorer.com
+                      </ExternalLink>
+                    </EDSCAlert>
+                  )
+                }
+              </Col>
+            </Row>
+          )
+        }
+        {
+          !isEmpty(selectedRegion) && (
+            <p className="region-search__selected-region">
+              <span className="region-search__selected-region-id">{`${selectedRegion.type.toUpperCase()} ${selectedRegion.id}`}</span>
+              <span className="region-search__selected-region-name">
+                (
+                {selectedRegion.name}
+                )
+              </span>
 
-RegionSearchForm.defaultProps = {
-  selectedRegion: {}
+              <Button
+                bootstrapVariant="light"
+                bootstrapSize="sm"
+                label="Remove"
+                onClick={onRemoveSelected}
+              >
+                Remove
+              </Button>
+            </p>
+          )
+        }
+      </Col>
+    </Row>
+  )
 }
 
 RegionSearchForm.propTypes = {
