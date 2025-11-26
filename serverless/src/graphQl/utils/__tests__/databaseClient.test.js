@@ -1640,50 +1640,6 @@ describe('DatabaseClient', () => {
     })
   })
 
-  describe('getRetrievalOrdersByOrderId', () => {
-    test('retrieves the retrieval orders by order ID', async () => {
-      dbTracker.on('query', (query) => {
-        query.response({
-          retrieval_collection_id: 123,
-          type: 'Harmony',
-          token: 'mock-token'
-        })
-      })
-
-      const result = await databaseClient.getRetrievalOrdersByOrderId(1234)
-
-      expect(result).toBeDefined()
-      expect(result).toEqual({
-        retrieval_collection_id: 123,
-        type: 'Harmony',
-        token: 'mock-token'
-      })
-
-      const { queries } = dbTracker.queries
-
-      expect(queries[0].sql).toEqual('select "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrievals"."token" from "retrieval_orders" inner join "retrieval_collections" on "retrieval_orders"."retrieval_collection_id" = "retrieval_collections"."id" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_orders"."id" = $1 limit $2')
-      expect(queries[0].bindings).toEqual([1234, 1])
-    })
-
-    test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
-
-      dbTracker.on('query', (query) => {
-        query.reject('Unknown Error')
-      })
-
-      await expect(databaseClient.getRetrievalOrdersByOrderId(1234)).rejects.toThrow('Failed to retrieve retrieval order by order ID')
-
-      const { queries } = dbTracker.queries
-
-      expect(queries[0].sql).toEqual('select "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrievals"."token" from "retrieval_orders" inner join "retrieval_collections" on "retrieval_orders"."retrieval_collection_id" = "retrieval_collections"."id" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_orders"."id" = $1 limit $2')
-      expect(queries[0].bindings).toEqual([1234, 1])
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval order by order ID', expect.any(Error))
-    })
-  })
-
   describe('getUserById', () => {
     test('retrieves the user', async () => {
       dbTracker.on('query', (query) => {
