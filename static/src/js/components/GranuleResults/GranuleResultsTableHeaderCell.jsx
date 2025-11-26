@@ -42,11 +42,9 @@ const GranuleResultsTableHeaderCell = (props) => {
     collectionQuerySpatial,
     collectionTags,
     directDistributionInformation,
-    generateNotebook,
     isGranuleInProject,
     location,
     onExcludeGranule,
-    onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
     removeGranuleFromProjectCollection
@@ -152,9 +150,7 @@ const GranuleResultsTableHeaderCell = (props) => {
             <GranuleResultsDownloadNotebookButton
               collectionQuerySpatial={collectionQuerySpatial}
               granuleId={id}
-              generateNotebook={generateNotebook}
               generateNotebookTag={generateNotebookTag}
-              onGenerateNotebook={onGenerateNotebook}
             />
           )
         }
@@ -206,13 +202,11 @@ GranuleResultsTableHeaderCell.propTypes = {
       collectionQuerySpatial: PropTypes.shape({}).isRequired,
       collectionTags: PropTypes.shape({}).isRequired,
       directDistributionInformation: PropTypes.shape({}),
-      generateNotebook: PropTypes.shape({}).isRequired,
       isGranuleInProject: PropTypes.func,
       location: PropTypes.shape({
         search: PropTypes.string
       }),
       onExcludeGranule: PropTypes.func,
-      onGenerateNotebook: PropTypes.func.isRequired,
       onMetricsAddGranuleProject: PropTypes.func,
       onMetricsDataAccess: PropTypes.func,
       removeGranuleFromProjectCollection: PropTypes.func

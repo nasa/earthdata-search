@@ -10,11 +10,9 @@ const defaultCustomProps = {
   collectionQuerySpatial: {},
   collectionTags: {},
   directDistributionInformation: {},
-  generateNotebook: {},
   isGranuleInProject: jest.fn().mockReturnValue(false),
   location: {},
   onExcludeGranule: jest.fn(),
-  onGenerateNotebook: jest.fn(),
   onMetricsAddGranuleProject: jest.fn(),
   onMetricsDataAccess: jest.fn(),
   removeGranuleFromProjectCollection: jest.fn()
@@ -50,6 +48,7 @@ const setup = setupTest({
       }
     }
   },
+  withApolloClient: true,
   withRouter: true
 })
 

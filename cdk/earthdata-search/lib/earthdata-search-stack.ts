@@ -20,7 +20,6 @@ const logGroupSuffix = ''
 const {
   CACHE_KEY_EXPIRE_SECONDS = '84000',
   CLOUDFRONT_BUCKET_NAME = 'local-bucket',
-  CLOUDFRONT_OAI_ID = 'local-oai',
   COLORMAP_JOB_ENABLED,
   GIBS_JOB_ENABLED,
   LOG_DESTINATION_ARN = 'local-arn',
@@ -29,7 +28,6 @@ const {
   OBFUSCATION_SPIN_SHAPEFILES = '',
   ORDER_DELAY_SECONDS = '1',
   ORDER_STATUS_REFRESH_TIME = '60000',
-  S3_OBJECTS_EXPIRATION_IN_DAYS = '30',
   STAGE_NAME = 'dev',
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
@@ -161,14 +159,11 @@ export class EarthdataSearchStack extends cdk.Stack {
       apiScope: apiNestedStack,
       authorizers,
       cloudfrontBucketName: CLOUDFRONT_BUCKET_NAME,
-      cloudfrontOaiId: CLOUDFRONT_OAI_ID,
       colormapJobEnabled: COLORMAP_JOB_ENABLED === 'true',
       defaultLambdaConfig,
       gibsJobEnabled: GIBS_JOB_ENABLED === 'true',
       queues,
-      s3ObjectsExpirationInDays: parseInt(S3_OBJECTS_EXPIRATION_IN_DAYS, 10),
-      stageName: STAGE_NAME,
-      vpcId: VPC_ID
+      stageName: STAGE_NAME
     })
 
     // eslint-disable-next-line no-new

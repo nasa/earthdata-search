@@ -140,7 +140,6 @@ This will start everything you need to run Earthdata Search locally.
 - Watch for code changes to the `serverless` directory
 - ElasticMQ container for SQS Queues.
 - Mock SQS service to trigger lambdas on SQS messages.
-- Mock S3 service for generating notebooks.
 
 #### Optional Services
 
@@ -202,7 +201,7 @@ Test coverage will be updated in the coverage directory to see breakdown use
 
 To run Playwright tests, you must first install Playwright:
 
-    npx playwright install  
+    npx playwright install
 
 To run Playwright in `ui` mode:
 

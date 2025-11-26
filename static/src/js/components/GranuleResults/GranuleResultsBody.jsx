@@ -22,10 +22,8 @@ import './GranuleResultsBody.scss'
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
- * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.
@@ -33,10 +31,8 @@ import './GranuleResultsBody.scss'
 const GranuleResultsBody = ({
   collectionId,
   directDistributionInformation,
-  generateNotebook,
   isOpenSearch,
   loadNextPage,
-  onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   panelView
@@ -199,7 +195,6 @@ const GranuleResultsBody = ({
           readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
-          generateNotebook={generateNotebook}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
           isOpenSearch={isOpenSearch}
@@ -207,7 +202,6 @@ const GranuleResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onMetricsDataAccess={onMetricsDataAccess}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
@@ -224,13 +218,11 @@ const GranuleResultsBody = ({
           collectionId={collectionId}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
-          generateNotebook={generateNotebook}
           granules={granulesList}
           isOpenSearch={isOpenSearch}
           itemCount={itemCount}
           isItemLoaded={isItemLoaded}
           loadMoreItems={loadMoreItems}
-          onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onMetricsDataAccess={onMetricsDataAccess}
           visibleMiddleIndex={visibleMiddleIndex}
@@ -271,10 +263,8 @@ const GranuleResultsBody = ({
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
-  generateNotebook: PropTypes.shape({}).isRequired,
   isOpenSearch: PropTypes.bool.isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired
