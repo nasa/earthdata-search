@@ -52,6 +52,13 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
+const mockExportCollections = jest.fn()
+jest.mock('../../../hooks/useExportCollections', () => ({
+  useExportCollections: () => ({
+    exportCollections: mockExportCollections
+  })
+}))
+
 const PAGE_ROUTE = '/search/:activePanel1?/:activePanel2?/*'
 
 const setup = setupTest({
@@ -61,16 +68,11 @@ const setup = setupTest({
   defaultPropsByRoute: {
     [PAGE_ROUTE]: {
       collectionSubscriptions: [],
-      isExportRunning: {
-        csv: false,
-        json: false
-      },
       setCollectionId: jest.fn(),
       onMetricsCollectionSortChange: jest.fn(),
       onToggleAboutCSDAModal: jest.fn(),
       onToggleAboutCwicModal: jest.fn(),
       onTogglePanels: jest.fn(),
-      onExport: jest.fn(),
       panels: {
         activePanel: '0.0.0',
         isOpen: true
@@ -385,6 +387,38 @@ describe('SearchPanels component', () => {
             panelScrollableNodeRef: { current: null },
             panelView: 'list'
           }, {})
+        })
+      })
+    })
+
+    describe('when exporting collections', () => {
+      describe('when exporting CSV', () => {
+        test('calls exportCollections', async () => {
+          const { user } = setup()
+
+          const button = screen.getAllByRole('button', { name: 'More actions' })[0]
+          await user.click(button)
+
+          const exportButton = screen.getByRole('button', { name: 'Export CSV' })
+          await user.click(exportButton)
+
+          expect(mockExportCollections).toHaveBeenCalledTimes(1)
+          expect(mockExportCollections).toHaveBeenCalledWith('csv')
+        })
+      })
+
+      describe('when exporting JSON', () => {
+        test('calls exportCollections', async () => {
+          const { user } = setup()
+
+          const button = screen.getAllByRole('button', { name: 'More actions' })[0]
+          await user.click(button)
+
+          const exportButton = screen.getByRole('button', { name: 'Export JSON' })
+          await user.click(exportButton)
+
+          expect(mockExportCollections).toHaveBeenCalledTimes(1)
+          expect(mockExportCollections).toHaveBeenCalledWith('json')
         })
       })
     })

@@ -11,7 +11,7 @@ import Button from '../Button/Button'
 import useEdscStore from '../../zustand/useEdscStore'
 
 import { buildNotebook } from '../../util/notebooks/buildNotebook'
-import { downloadFile } from '../../util/notebooks/downloadFile'
+import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 
 import GET_NOTEBOOK_GRANULES from '../../operations/queries/getNotebookGranules'
 import { apolloClientNames } from '../../constants/apolloClientNames'
@@ -110,7 +110,7 @@ export const GranuleResultsDownloadNotebookButton = ({
       })
 
       // Download the notebook file
-      downloadFile(fileName, notebook)
+      constructDownloadableFile(JSON.stringify(notebook), fileName, 'application/x-ipynb+json')
     }
   }, [data])
 

@@ -1,6 +1,4 @@
 import {
-  EXPORT_FINISHED,
-  EXPORT_STARTED,
   RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
@@ -42,12 +40,6 @@ const initialState = {
     isOpen: false,
     subscriptionConceptId: '',
     type: ''
-  },
-  export: {
-    isExportRunning: {
-      csv: false,
-      json: false
-    }
   },
   facetsModal: {
     isOpen: false
@@ -237,30 +229,6 @@ const uiReducer = (state = initialState, action = {}) => {
         ...state,
         timeline: {
           isOpen: action.payload
-        }
-      }
-    }
-
-    case EXPORT_STARTED: {
-      return {
-        ...state,
-        export: {
-          isExportRunning: {
-            ...state.export.isExportRunning,
-            [action.payload]: true
-          }
-        }
-      }
-    }
-
-    case EXPORT_FINISHED: {
-      return {
-        ...state,
-        export: {
-          isExportRunning: {
-            ...state.export.isExportRunning,
-            [action.payload]: false
-          }
         }
       }
     }
