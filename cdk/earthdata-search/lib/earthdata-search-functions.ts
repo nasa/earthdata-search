@@ -78,7 +78,6 @@ export class Functions extends Construct {
       apiGatewayRestApi
     })
     const {
-      collectionsApiGatewayResource,
       opensearchApiGatewayResource,
       retrievalsApiGatewayResource,
       retrievalsIdApiGatewayResource,
@@ -272,28 +271,6 @@ export class Functions extends Construct {
       entry: '../../serverless/src/errorLogger/handler.js',
       functionName: 'errorLogger',
       functionNamePrefix
-    })
-
-    /**
-     * Export Search
-     */
-    const exportSearchNestedStack = new cdk.NestedStack(scope, 'ExportSearchNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(exportSearchNestedStack, 'ExportSearchLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlOptionalAuthorizer,
-        methods: ['POST'],
-        parentId: collectionsApiGatewayResource?.ref,
-        parentPath: 'collections',
-        path: 'export'
-      },
-      entry: '../../serverless/src/exportSearch/handler.js',
-      functionName: 'exportSearch',
-      functionNamePrefix,
-      memorySize: 192
     })
 
     /**

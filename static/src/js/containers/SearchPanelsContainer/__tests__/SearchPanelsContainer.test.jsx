@@ -19,22 +19,10 @@ const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
     collectionSubscriptions: [],
-    isExportRunning: {
-      csv: false,
-      json: false
-    },
-    match: {
-      url: '/search'
-    },
     onChangePath: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
-    onToggleAboutCwicModal: jest.fn(),
-    onExport: jest.fn(),
-    panels: {
-      activePanel: '0.0.0',
-      isOpen: false
-    }
+    onToggleAboutCwicModal: jest.fn()
   },
   defaultZustandState: {
     preferences: {
@@ -99,37 +87,14 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(true)
   })
-
-  test('onExport calls actions.exportSearch', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'exportSearch')
-
-    mapDispatchToProps(dispatch).onExport('json')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('json')
-  })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
-    const store = {
-      ui: {
-        export: {
-          isExportRunning: {
-            csv: false,
-            json: false
-          }
-        }
-      }
-    }
+    const store = {}
 
     const expectedState = {
-      collectionSubscriptions: [],
-      isExportRunning: {
-        csv: false,
-        json: false
-      }
+      collectionSubscriptions: []
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -147,12 +112,7 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledWith(
       {
         collectionSubscriptions: [],
-        isExportRunning: {
-          csv: false,
-          json: false
-        },
         onChangePath: props.onChangePath,
-        onExport: props.onExport,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         onToggleAboutCwicModal: props.onToggleAboutCwicModal

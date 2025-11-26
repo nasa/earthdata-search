@@ -12,8 +12,6 @@ export interface SharedApiGatewayResourcesProps {
 }
 
 export class SharedApiGatewayResources extends Construct {
-  public readonly collectionsApiGatewayResource: apigateway.CfnResource
-
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
 
   public readonly retrievalsApiGatewayResource: apigateway.CfnResource
@@ -31,25 +29,6 @@ export class SharedApiGatewayResources extends Construct {
       apiGatewayDeployment,
       apiGatewayRestApi
     } = props
-
-    /**
-     * Collections API Gateway Resource
-     */
-    const collectionsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceCollections', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'collections',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'CollectionsOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: collectionsApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['POST'],
-      name: 'Collections'
-    })
-
-    this.collectionsApiGatewayResource = collectionsApiGatewayResource
 
     /**
      * OpenSearch API Gateway Resource
