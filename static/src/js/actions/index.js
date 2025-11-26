@@ -30,7 +30,6 @@ import {
   toggleTimeline
 } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
-import { getRegions } from './regions'
 import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
@@ -56,7 +55,6 @@ const actions = {
   exportSearch,
   generateNotebook,
   getGranuleSubscriptions,
-  getRegions,
   getSubscriptions,
   getViewAllFacets,
   handleAlert,

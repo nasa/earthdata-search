@@ -1,84 +1,92 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import Form from 'react-bootstrap/Form'
+import { screen } from '@testing-library/react'
 
-import Button from '../../Button/Button'
-import EDSCAlert from '../../EDSCAlert/EDSCAlert'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import RegionSearchForm from '../RegionSearchForm'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    regionSearchForm: {
-      errors: {},
-      handleBlur: jest.fn(),
-      handleChange: jest.fn(),
-      handleSubmit: jest.fn(),
-      touched: {},
-      values: {
-        endpoint: 'huc'
-      },
-      validateForm: jest.fn(),
-      isValid: false
-    },
-    selectedRegion: {},
-    onRemoveSelected: jest.fn(),
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<RegionSearchForm {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
+const regionSearchForm = {
+  errors: {},
+  handleBlur: jest.fn(),
+  handleChange: jest.fn(),
+  handleSubmit: jest.fn(),
+  isValid: false,
+  touched: {},
+  validateForm: jest.fn(),
+  values: {
+    endpoint: 'huc'
   }
 }
 
-beforeEach(() => {
-  jest.clearAllMocks()
+const setup = setupTest({
+  Component: RegionSearchForm,
+  defaultProps: {
+    regionSearchForm,
+    selectedRegion: {},
+    onRemoveSelected: jest.fn()
+  }
 })
 
 describe('RegionSearchForm component', () => {
-  test('should render the region search form elements', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.prop('className')).toEqual('region-search')
-  })
-
   describe('when not searched or selected', () => {
-    test('renders the regionType select', () => {
-      const { enzymeWrapper } = setup()
+    test('renders the form', () => {
+      setup()
 
-      expect(enzymeWrapper.find(Form.Select).at(0).prop('name')).toEqual('endpoint')
-    })
+      expect(screen.getByRole('combobox', { value: 'huc' })).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('ex. 1805000301')).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: 'Exact match' })).not.toBeChecked()
 
-    test('renders the searchValue input', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find(Form.Control).at(0).prop('name')).toEqual('keyword')
-    })
-
-    test('renders the exactMatch input', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find(Form.Check).at(0).prop('name')).toEqual('exact')
-    })
-
-    test('renders the submit', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find(Button).at(0).prop('label')).toEqual('Search')
+      expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
     })
 
     describe('when clicking the submit button', () => {
-      test('calls onSetResults', () => {
-        const { enzymeWrapper, props } = setup()
+      test('calls handleSubmit', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            regionSearchForm: {
+              ...regionSearchForm,
+              isValid: true,
+              touched: {
+                keyword: true
+              },
+              values: {
+                endpoint: 'huc',
+                keyword: '1111'
+              }
+            }
+          }
+        })
 
-        const searchButton = enzymeWrapper.find(Button).at(0)
+        const searchButton = screen.getByRole('button', { name: 'Search' })
 
-        searchButton.simulate('click')
+        await user.click(searchButton)
+
+        expect(props.regionSearchForm.handleSubmit).toHaveBeenCalledTimes(1)
+        expect(props.regionSearchForm.handleSubmit).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'click'
+        }))
+      })
+    })
+
+    describe('when pressing enter', () => {
+      test('calls handleSubmit', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            regionSearchForm: {
+              ...regionSearchForm,
+              isValid: true,
+              touched: {
+                keyword: true
+              },
+              values: {
+                endpoint: 'huc',
+                keyword: '1111'
+              }
+            }
+          }
+        })
+
+        const input = screen.getByPlaceholderText('ex. 1805000301')
+        await user.type(input, '{enter}')
 
         expect(props.regionSearchForm.handleSubmit).toHaveBeenCalledTimes(1)
         expect(props.regionSearchForm.handleSubmit).toHaveBeenCalledWith()
@@ -88,120 +96,96 @@ describe('RegionSearchForm component', () => {
 
   describe('shows extra information in an alert box', () => {
     test('when the huc endpoint is selected', () => {
-      const { enzymeWrapper } = setup({
-        regionSearchForm: {
-          errors: {},
-          handleBlur: jest.fn(),
-          handleChange: jest.fn(),
-          handleSubmit: jest.fn(),
-          touched: {},
-          values: {
-            endpoint: 'huc'
-          },
-          validateForm: jest.fn(),
-          isValid: false
-        },
-        selectedRegion: {},
-        onRemoveSelected: jest.fn()
-      })
+      setup()
 
-      const alertChildren = enzymeWrapper.find(EDSCAlert).children()
+      expect(screen.getByText('Find more information about Hydrological Units at')).toBeInTheDocument()
 
-      expect(alertChildren.at(0).text()).toEqual('Find more information about Hydrological Units at')
-      expect(alertChildren.at(2).prop('href')).toEqual('https://water.usgs.gov/GIS/huc.html')
-      expect(alertChildren.at(2).children().text()).toEqual('https://water.usgs.gov/GIS/huc.html')
+      expect(screen.getByRole('link', { value: 'https://water.usgs.gov/GIS/huc.html' })).toHaveAttribute('href', 'https://water.usgs.gov/GIS/huc.html')
     })
 
     test('when the rivers/reach endpoint is selected', () => {
-      const { enzymeWrapper } = setup({
-        regionSearchForm: {
-          errors: {},
-          handleBlur: jest.fn(),
-          handleChange: jest.fn(),
-          handleSubmit: jest.fn(),
-          touched: {},
-          values: {
-            endpoint: 'rivers/reach'
-          },
-          validateForm: jest.fn(),
-          isValid: false
-        },
-        selectedRegion: {},
-        onRemoveSelected: jest.fn()
+      setup({
+        overrideProps: {
+          regionSearchForm: {
+            ...regionSearchForm,
+            values: {
+              endpoint: 'rivers/reach'
+            }
+          }
+        }
       })
 
-      const alertChildren = enzymeWrapper.find(EDSCAlert).children()
-
-      expect(alertChildren.at(0).text()).toEqual('Find River Reach IDs in the SWOT River Database (SWORD):')
-      expect(alertChildren.at(2).prop('href')).toEqual('https://www.swordexplorer.com/')
-      expect(alertChildren.at(2).children().text()).toEqual('https://www.swordexplorer.com')
+      expect(screen.getByText('Find River Reach IDs in the SWOT River Database (SWORD):')).toBeInTheDocument()
+      expect(screen.getByRole('link', { value: 'https://www.swordexplorer.com/' })).toHaveAttribute('href', 'https://www.swordexplorer.com/')
     })
   })
 
   describe('when keyword input is invalid', () => {
-    const { enzymeWrapper } = setup({
-      regionSearchForm: {
-        errors: {
-          keyword: 'The keyword is invalid'
-        },
-        handleBlur: jest.fn(),
-        handleChange: jest.fn(),
-        handleSubmit: jest.fn(),
-        touched: {
-          keyword: true
-        },
-        values: {
-          endpoint: 'huc'
-        },
-        validateForm: jest.fn(),
-        isValid: false
-      },
-      selectedRegion: {},
-      onRemoveSelected: jest.fn()
-    })
+    test('shows the invalid feedback', () => {
+      setup({
+        overrideProps: {
+          regionSearchForm: {
+            ...regionSearchForm,
+            errors: {
+              keyword: 'The keyword is invalid'
+            },
+            touched: {
+              keyword: true
+            },
+            values: {
+              endpoint: 'huc'
+            },
+            validateForm: jest.fn(),
+            isValid: false
+          }
+        }
+      })
 
-    expect(enzymeWrapper.find({ name: 'keyword' }).prop('isInvalid')).toEqual(true)
+      expect(screen.getByText('The keyword is invalid')).toBeInTheDocument()
+    })
   })
 
   describe('when searched and selected', () => {
     test('renders the selected result', () => {
-      const { enzymeWrapper } = setup({
-        selectedRegion: {
-          type: 'huc',
-          id: '12341231235',
-          name: 'Upper Cayote Creek',
-          polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
+      setup({
+        overrideProps: {
+          selectedRegion: {
+            type: 'huc',
+            id: '12341231235',
+            name: 'Upper Cayote Creek',
+            polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
+          }
         }
       })
 
-      expect(enzymeWrapper.find('.region-search__selected-region')
-        .length).toEqual(1)
+      expect(screen.getByText('HUC 12341231235')).toBeInTheDocument()
+      expect(screen.getByText('(Upper Cayote Creek)')).toBeInTheDocument()
 
-      expect(enzymeWrapper.find('.region-search__selected-region-id')
-        .text()).toEqual('HUC 12341231235')
-
-      expect(enzymeWrapper.find('.region-search__selected-region-name')
-        .text()).toEqual('(Upper Cayote Creek)')
+      expect(screen.getByRole('button', { name: 'Remove' })).toBeInTheDocument()
     })
 
     describe('when clicking the remove button', () => {
-      const { enzymeWrapper, props } = setup({
-        selectedRegion: {
-          type: 'huc',
-          id: '12341231235',
-          name: 'Upper Cayote Creek',
-          polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
-        }
+      test('calls onRemoveSelected', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            selectedRegion: {
+              type: 'huc',
+              id: '12341231235',
+              name: 'Upper Cayote Creek',
+              polygon: '30.57275390625,61.4593006372525,24.90106201171875,56.06661507755054,36.52569580078125,51.63698756452315,30.57275390625,61.4593006372525'
+            }
+          }
+        })
+
+        const button = screen.getByRole('button', { name: 'Remove' })
+
+        await user.click(button)
+
+        expect(props.onRemoveSelected).toHaveBeenCalledTimes(1)
+        expect(props.onRemoveSelected).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'click'
+        }))
       })
-
-      const button = enzymeWrapper.find(Button)
-
-      expect(button.prop('label')).toEqual('Remove')
-
-      button.simulate('click')
-
-      expect(props.onRemoveSelected).toHaveBeenCalledTimes(1)
-      expect(props.onRemoveSelected).toHaveBeenCalledWith()
     })
   })
 })
