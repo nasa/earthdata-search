@@ -122,6 +122,58 @@ describe('Project Resolver', () => {
             }
           })
         })
+
+        test('creates a new project when the project has no user_id', async () => {
+          const databaseClient = {
+            getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+              id: 1,
+              name: 'Test Project',
+              path: '/search?ff=Test%20Project',
+              // User_id is missing
+              updated_at: '2023-06-27T20:22:47.400Z',
+              created_at: '2023-06-27T20:22:47.400Z'
+            }),
+            createProject: jest.fn().mockResolvedValue({
+              id: 2,
+              name: 'Test Project',
+              path: '/search?ff=Test%20Project',
+              user_id: 42, // Creates the same project for the current user
+              updated_at: '2023-06-27T20:22:47.400Z',
+              created_at: '2023-06-27T20:22:47.400Z'
+            })
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient
+          })
+
+          const response = await server.executeOperation({
+            query: GET_PROJECT,
+            variables: { obfuscatedId: 'test-obfuscated-id' }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledWith('test-obfuscated-id')
+          expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.createProject).toHaveBeenCalledWith({
+            name: 'Test Project',
+            path: '/search?ff=Test%20Project',
+            userId: 42
+          })
+
+          expect(data).toEqual({
+            project: {
+              createdAt: '2023-06-27T20:22:47.400Z',
+              name: 'Test Project',
+              obfuscatedId: '7023641925',
+              path: '/search?ff=Test%20Project',
+              updatedAt: '2023-06-27T20:22:47.400Z'
+            }
+          })
+        })
       })
     })
 
