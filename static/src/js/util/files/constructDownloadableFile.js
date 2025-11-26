@@ -15,5 +15,3 @@ export const constructDownloadableFile = (contents, name, type = 'text/plain;cha
 
   clickableElement.click()
 }
-
-export default constructDownloadableFile

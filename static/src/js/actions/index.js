@@ -42,7 +42,6 @@ import {
   updateSubscription,
   updateSubscriptionDisabledFields
 } from './subscriptions'
-import { exportSearch } from './exportSearch'
 
 const actions = {
   changePath,
@@ -51,7 +50,6 @@ const actions = {
   createSubscription,
   deleteCollectionSubscription,
   deleteSubscription,
-  exportSearch,
   getGranuleSubscriptions,
   getSubscriptions,
   getViewAllFacets,

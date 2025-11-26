@@ -1,3 +1,5 @@
+import { CollectionMetadata } from '../../types/sharedTypes'
+
 // Pretty headers for the CSV file
 const headers = [
   'Data Provider',
@@ -25,25 +27,27 @@ const keysToMap = [
 /**
  * Replacement function for JSON.stringify, replaces null values with an empty string
  */
-const replacer = (_key, value) => (value === null ? undefined : value)
+const replacer = (_key: string, value: string) => (value === null ? undefined : value)
 
 /**
  * Converts JSON array to CSV for search exports
  * @param {Array} jsonArray JSON to convert
  */
-export const jsonToCsv = (jsonArray) => {
+export const jsonToCsv = (jsonArray: CollectionMetadata[]) => {
   // Build the header line
   let csvString = `${headers.join(',')}\r\n`
 
   // Loop through the JSON array and builds a line of CSV data for each collection
   jsonArray.forEach((collection) => {
-    const collectionValues = []
+    const collectionValues: string[] = []
 
     // Loop through the metadata keys to build the collection data
     keysToMap.forEach((key) => {
       // If the key is platforms, join the array of shortnames
       if (key === 'platforms') {
-        const shortNames = collection[key].map((platform) => platform.shortName)
+        const shortNames = collection[key].map(
+          (platform: { shortName: string }) => platform.shortName
+        )
 
         collectionValues.push(JSON.stringify(shortNames.join(', '), replacer))
       } else if (key === 'processingLevel') {
