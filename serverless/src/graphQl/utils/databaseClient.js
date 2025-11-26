@@ -115,7 +115,6 @@ export default class DatabaseClient {
         })
         .returning('*')
 
-
       return project
     } catch (error) {
       const errorMessage = 'Failed to create project'
