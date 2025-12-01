@@ -33,7 +33,8 @@ export const getFocusedCollectionSubscriptions = (
   state: EdscStore
 ) => {
   const collectionMetadata = getFocusedCollectionMetadata(state)
-  const { subscriptions = {} } = collectionMetadata
+  // `collectionMetadata.subscriptions` can be `null` (not just `undefined`). Using a fallback with `|| {}`
+  const subscriptions = collectionMetadata.subscriptions || {}
   const { items = [] } = subscriptions
 
   return items
