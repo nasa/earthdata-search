@@ -123,6 +123,61 @@ describe('Project Resolver', () => {
           })
         })
       })
+
+      describe('when the user is not authenticated', () => {
+        test('creates a new project when the project has no user_id', async () => {
+          const databaseClient = {
+            getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+              id: 1,
+              name: 'Test Project',
+              path: '/search?ff=Test%20Project',
+              user_id: null, // `user_id` is missing
+              updated_at: '2023-06-27T20:22:47.400Z',
+              created_at: '2023-06-27T20:22:47.400Z'
+            }),
+            createProject: jest.fn().mockResolvedValue({
+              id: 2,
+              name: 'Test Project',
+              path: '/search?ff=Test%20Project',
+              user_id: undefined, // Creates the same project for the current user
+              updated_at: '2023-06-27T20:22:47.400Z',
+              created_at: '2023-06-27T20:22:47.400Z'
+            })
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            loggedOut: true
+          })
+
+          const response = await server.executeOperation({
+            query: GET_PROJECT,
+            variables: { obfuscatedId: 'test-obfuscated-id' }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledWith('test-obfuscated-id')
+          expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.createProject).toHaveBeenCalledWith({
+            name: 'Test Project',
+            path: '/search?ff=Test%20Project',
+            userId: undefined
+          })
+
+          expect(data).toEqual({
+            project: {
+              createdAt: '2023-06-27T20:22:47.400Z',
+              name: 'Test Project',
+              obfuscatedId: '7023641925',
+              path: '/search?ff=Test%20Project',
+              updatedAt: '2023-06-27T20:22:47.400Z'
+            }
+          })
+        })
+      })
     })
 
     describe('projects', () => {
@@ -533,6 +588,50 @@ describe('Project Resolver', () => {
 
           expect(data).toEqual({
             updateProject: null
+          })
+        })
+      })
+
+      describe('when a user is not authenticated', () => {
+        test('can update the project', async () => {
+          const databaseClient = {
+            updateProject: jest.fn().mockResolvedValue({
+              id: 1,
+              name: 'Updated Project',
+              path: '/updated/project',
+              created_at: '2025-09-16T20:59:44.874Z',
+              updated_at: '2025-09-16T20:59:44.874Z'
+            })
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            loggedOut: true
+          })
+
+          const response = await server.executeOperation({
+            query: UPDATE_PROJECT,
+            variables: {
+              obfuscatedId: '4517239960',
+              name: 'Updated Project',
+              path: '/updated/project'
+            }
+          }, {
+            contextValue
+          })
+
+          const { data, errors } = response.body.singleResult
+
+          expect(errors).toBeUndefined()
+
+          expect(data).toEqual({
+            updateProject: {
+              createdAt: '2025-09-16T20:59:44.874Z',
+              obfuscatedId: '4517239960',
+              name: 'Updated Project',
+              path: '/updated/project',
+              updatedAt: '2025-09-16T20:59:44.874Z'
+            }
           })
         })
       })

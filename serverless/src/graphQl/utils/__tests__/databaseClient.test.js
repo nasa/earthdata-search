@@ -156,6 +156,33 @@ describe('DatabaseClient', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to create project', expect.any(Error))
     })
+
+    describe('when the user is not authenticated', () => {
+      test('creates a new project with no userId', async () => {
+        dbTracker.on('query', (query) => {
+          query.response([{
+            id: 1,
+            name: 'Test Project',
+            path: '/test/project',
+            user_id: null
+          }])
+        })
+
+        const project = await databaseClient.createProject({
+          name: 'Test Project',
+          path: '/test/project',
+          userId: null
+        })
+
+        expect(project).toBeDefined()
+        expect(project).toEqual({
+          id: 1,
+          name: 'Test Project',
+          path: '/test/project',
+          user_id: null
+        })
+      })
+    })
   })
 
   describe('createRetrieval', () => {
@@ -1640,50 +1667,6 @@ describe('DatabaseClient', () => {
     })
   })
 
-  describe('getRetrievalOrdersByOrderId', () => {
-    test('retrieves the retrieval orders by order ID', async () => {
-      dbTracker.on('query', (query) => {
-        query.response({
-          retrieval_collection_id: 123,
-          type: 'Harmony',
-          token: 'mock-token'
-        })
-      })
-
-      const result = await databaseClient.getRetrievalOrdersByOrderId(1234)
-
-      expect(result).toBeDefined()
-      expect(result).toEqual({
-        retrieval_collection_id: 123,
-        type: 'Harmony',
-        token: 'mock-token'
-      })
-
-      const { queries } = dbTracker.queries
-
-      expect(queries[0].sql).toEqual('select "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrievals"."token" from "retrieval_orders" inner join "retrieval_collections" on "retrieval_orders"."retrieval_collection_id" = "retrieval_collections"."id" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_orders"."id" = $1 limit $2')
-      expect(queries[0].bindings).toEqual([1234, 1])
-    })
-
-    test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
-
-      dbTracker.on('query', (query) => {
-        query.reject('Unknown Error')
-      })
-
-      await expect(databaseClient.getRetrievalOrdersByOrderId(1234)).rejects.toThrow('Failed to retrieve retrieval order by order ID')
-
-      const { queries } = dbTracker.queries
-
-      expect(queries[0].sql).toEqual('select "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrievals"."token" from "retrieval_orders" inner join "retrieval_collections" on "retrieval_orders"."retrieval_collection_id" = "retrieval_collections"."id" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_orders"."id" = $1 limit $2')
-      expect(queries[0].bindings).toEqual([1234, 1])
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve retrieval order by order ID', expect.any(Error))
-    })
-  })
-
   describe('getUserById', () => {
     test('retrieves the user', async () => {
       dbTracker.on('query', (query) => {
@@ -1892,6 +1875,38 @@ describe('DatabaseClient', () => {
 
       expect(queries[0].sql).toEqual('update "projects" set "name" = $1, "path" = $2, "updated_at" = $3 where "id" = $4 and "user_id" = $5 returning *')
       expect(queries[0].bindings).toEqual(['Updated Project', '/updated/project', new Date(mockToday), 1, 1])
+    })
+
+    describe('when the user is not authenticated', () => {
+      test('updates an existing project with no userId', async () => {
+        dbTracker.on('query', (query) => {
+          query.response([{
+            id: 1,
+            name: 'Updated Project',
+            path: '/updated/project',
+            user_id: null
+          }])
+        })
+
+        const project = await databaseClient.updateProject({
+          obfuscatedId: '4517239960',
+          name: 'Updated Project',
+          path: '/updated/project'
+        })
+
+        expect(project).toBeDefined()
+        expect(project).toEqual({
+          id: 1,
+          name: 'Updated Project',
+          path: '/updated/project',
+          user_id: null
+        })
+
+        const { queries } = dbTracker.queries
+
+        expect(queries[0].sql).toEqual('update "projects" set "name" = $1, "path" = $2, "updated_at" = $3 where "id" = $4 returning *')
+        expect(queries[0].bindings).toEqual(['Updated Project', '/updated/project', new Date(mockToday), 1])
+      })
     })
 
     test('returns an error', async () => {

@@ -58,7 +58,7 @@ export default {
   },
   Mutation: {
     createProject: async (parent, args, context) => {
-      const { databaseClient, user } = context
+      const { databaseClient, user = {} } = context
       const { id: userId } = user
       const { name, path } = args
 
@@ -88,7 +88,7 @@ export default {
     },
 
     updateProject: async (parent, args, context) => {
-      const { databaseClient, user } = context
+      const { databaseClient, user = {} } = context
       const { id: userId } = user
 
       const { obfuscatedId, name, path } = args
