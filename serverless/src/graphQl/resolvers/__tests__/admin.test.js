@@ -1436,6 +1436,49 @@ describe('Admin Resolver', () => {
           })
         })
       })
+
+      describe('when SKIP_SQS is true', () => {
+        beforeEach(() => {
+          process.env.SKIP_SQS = 'true'
+        })
+
+        test('does not send a message to SQS', async () => {
+          const databaseClient = {
+            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+              retrieval_collection_id: 1234,
+              token: 'fake-access-token',
+              type: ACCESS_METHOD_TYPES.HARMONY
+            })
+          }
+
+          const sqs = {
+            send: jest.fn()
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            sqs
+          })
+
+          const response = await server.executeOperation({
+            query: ADMIN_REQUEUE_ORDER,
+            variables: {
+              retrievalOrderId: 4
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(data).toEqual({ adminRequeueOrder: true })
+
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledWith(4)
+
+          expect(sqs.send).toHaveBeenCalledTimes(0)
+        })
+      })
     })
   })
 })

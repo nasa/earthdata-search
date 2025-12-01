@@ -76,11 +76,6 @@ const setup = setupTest({
   ComponentsByRoute: {
     [`${routes.ADMIN_RETRIEVALS}/:obfuscatedId`]: AdminRetrievalDetails
   },
-  defaultPropsByRoute: {
-    [`${routes.ADMIN_RETRIEVALS}/:obfuscatedId`]: {
-      onRequeueOrder: jest.fn()
-    }
-  },
   defaultApolloClientMocks: [
     adminRetrievalMock
   ],
@@ -151,7 +146,7 @@ describe('AdminRetrievalDetails component', () => {
   })
 
   describe('when clicking Requeue order button', () => {
-    test('clicking on the Requeue button calls onRequeueOrder', async () => {
+    test('clicking on the Requeue button calls requeueOrder', async () => {
       const { user } = setup({
         overrideApolloClientMocks: [
           adminRetrievalMock,
