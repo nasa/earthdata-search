@@ -16,7 +16,6 @@ import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
 jest.mock('../../../actions', () => ({
   getCollections: jest.fn(),
   getSearchGranules: jest.fn(),
-  getRegions: jest.fn(),
   removeSubscriptionDisabledFields: jest.fn(),
   toggleDrawingNewLayer: jest.fn()
 }))
@@ -495,7 +494,7 @@ describe('createQuerySlice', () => {
 
   describe('clearFilters', () => {
     describe('when not on the granules page', () => {
-      test('updates the region query and calls getRegions', async () => {
+      test('updates the query and calls get functions', async () => {
         useEdscStore.setState((state) => {
           state.collections.getCollections = jest.fn()
           state.granules.getGranules = jest.fn()
@@ -536,7 +535,7 @@ describe('createQuerySlice', () => {
     })
 
     describe('when on the granules page', () => {
-      test('updates the region query and calls getRegions', async () => {
+      test('updates the query and calls get functions', async () => {
         routerHelper.router = {
           navigate: jest.fn(),
           state: {
