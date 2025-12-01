@@ -34,7 +34,8 @@ export const getFocusedCollectionSubscriptions = (
 ) => {
   const collectionMetadata = getFocusedCollectionMetadata(state)
   const { subscriptions = {} } = collectionMetadata
-  const { items = [] } = subscriptions
+  // `subscriptions` can be `null` in some cases. Use an empty object as a fallback.
+  const { items = [] } = subscriptions || {}
 
   return items
 }
