@@ -131,7 +131,7 @@ describe('Project Resolver', () => {
               id: 1,
               name: 'Test Project',
               path: '/search?ff=Test%20Project',
-              user_id: null, // User_id is missing
+              user_id: null, // `user_id` is missing
               updated_at: '2023-06-27T20:22:47.400Z',
               created_at: '2023-06-27T20:22:47.400Z'
             }),
