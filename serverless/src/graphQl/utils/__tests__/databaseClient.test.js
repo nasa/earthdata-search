@@ -156,6 +156,33 @@ describe('DatabaseClient', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to create project', expect.any(Error))
     })
+
+    describe('when the user is not authenticated', () => {
+      test('creates a new project with no userId', async () => {
+        dbTracker.on('query', (query) => {
+          query.response([{
+            id: 1,
+            name: 'Test Project',
+            path: '/test/project',
+            user_id: null
+          }])
+        })
+
+        const project = await databaseClient.createProject({
+          name: 'Test Project',
+          path: '/test/project',
+          userId: null
+        })
+
+        expect(project).toBeDefined()
+        expect(project).toEqual({
+          id: 1,
+          name: 'Test Project',
+          path: '/test/project',
+          user_id: null
+        })
+      })
+    })
   })
 
   describe('createRetrieval', () => {
@@ -1850,34 +1877,36 @@ describe('DatabaseClient', () => {
       expect(queries[0].bindings).toEqual(['Updated Project', '/updated/project', new Date(mockToday), 1, 1])
     })
 
-    test('updates an existing project with no userId', async () => {
-      dbTracker.on('query', (query) => {
-        query.response([{
+    describe('when the user is not authenticated', () => {
+      test('updates an existing project with no userId', async () => {
+        dbTracker.on('query', (query) => {
+          query.response([{
+            id: 1,
+            name: 'Updated Project',
+            path: '/updated/project',
+            user_id: null
+          }])
+        })
+
+        const project = await databaseClient.updateProject({
+          obfuscatedId: '4517239960',
+          name: 'Updated Project',
+          path: '/updated/project'
+        })
+
+        expect(project).toBeDefined()
+        expect(project).toEqual({
           id: 1,
           name: 'Updated Project',
           path: '/updated/project',
           user_id: null
-        }])
+        })
+
+        const { queries } = dbTracker.queries
+
+        expect(queries[0].sql).toEqual('update "projects" set "name" = $1, "path" = $2, "updated_at" = $3 where "id" = $4 returning *')
+        expect(queries[0].bindings).toEqual(['Updated Project', '/updated/project', new Date(mockToday), 1])
       })
-
-      const project = await databaseClient.updateProject({
-        obfuscatedId: '4517239960',
-        name: 'Updated Project',
-        path: '/updated/project'
-      })
-
-      expect(project).toBeDefined()
-      expect(project).toEqual({
-        id: 1,
-        name: 'Updated Project',
-        path: '/updated/project',
-        user_id: null
-      })
-
-      const { queries } = dbTracker.queries
-
-      expect(queries[0].sql).toEqual('update "projects" set "name" = $1, "path" = $2, "updated_at" = $3 where "id" = $4 returning *')
-      expect(queries[0].bindings).toEqual(['Updated Project', '/updated/project', new Date(mockToday), 1])
     })
 
     test('returns an error', async () => {
