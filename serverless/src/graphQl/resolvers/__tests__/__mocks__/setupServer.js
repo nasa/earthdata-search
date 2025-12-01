@@ -13,7 +13,8 @@ import typeDefs from '../../../types'
  */
 const setupServer = ({
   databaseClient,
-  sqs
+  sqs,
+  loggedOut = false
 }) => {
   const contextValue = {
     databaseClient,
@@ -21,7 +22,7 @@ const setupServer = ({
     edlToken: 'token',
     loaders: getLoaders({ databaseClient }),
     sqs,
-    user: {
+    user: loggedOut ? undefined : {
       id: 42,
       urs_id: 'testuser'
     }
