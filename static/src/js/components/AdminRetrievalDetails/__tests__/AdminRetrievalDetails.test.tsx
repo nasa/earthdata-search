@@ -8,72 +8,76 @@ import AdminRetrievalDetails from '../AdminRetrievalDetails'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_RETRIEVAL from '../../../operations/queries/adminRetrieval'
 import { routes } from '../../../constants/routes'
+import ADMIN_REQUEUE_ORDER from '../../../operations/mutations/adminRequeueOrder'
+
+// @ts-expect-error This file does not have types
+import addToast from '../../../util/addToast'
+
+jest.mock('../../../util/addToast', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
+
+const adminRetrievalMock = {
+  request: {
+    query: ADMIN_RETRIEVAL,
+    variables: {
+      obfuscatedId: '06347346'
+    }
+  },
+  result: {
+    data: {
+      adminRetrieval: {
+        id: 1,
+        obfuscatedId: '06347346',
+        jsondata: {
+          portal_id: 'testPortal',
+          source: '?mock-source'
+        },
+        environment: 'prod',
+        user: {
+          id: 1,
+          ursId: 'test-ursid'
+        },
+        createdAt: '2024-08-25T11:59:14.390Z',
+        updatedAt: '2024-08-25T11:59:14.390Z',
+        retrievalCollections: [{
+          id: 1,
+          accessMethod: {
+            type: 'Harmony'
+          },
+          collectionId: 'C123451234-EDSC',
+          collectionMetadata: {
+            dataCenter: 'EDSC'
+          },
+          granuleCount: 4,
+          createdAt: '2024-08-25T11:59:14.390Z',
+          updatedAt: '2024-08-25T11:59:14.390Z',
+          retrievalOrders: [
+            {
+              id: 42,
+              state: 'initialized',
+              orderInformation: {
+                jobId: '12341234-asdfasdf-12341234-asdfasdf'
+              },
+              orderNumber: '12341234-asdfasdf-12341234-asdfasdf',
+              type: 'Harmony',
+              createdAt: '2024-08-25T11:59:14.390Z',
+              updatedAt: '2024-08-25T11:59:14.390Z'
+            }
+          ]
+        }]
+      }
+    }
+  }
+}
 
 const setup = setupTest({
   ComponentsByRoute: {
     [`${routes.ADMIN_RETRIEVALS}/:obfuscatedId`]: AdminRetrievalDetails
   },
-  defaultPropsByRoute: {
-    [`${routes.ADMIN_RETRIEVALS}/:obfuscatedId`]: {
-      onRequeueOrder: jest.fn()
-    }
-  },
   defaultApolloClientMocks: [
-    {
-      request: {
-        query: ADMIN_RETRIEVAL,
-        variables: {
-          params: {
-            obfuscatedId: '06347346'
-          }
-        }
-      },
-      result: {
-        data: {
-          adminRetrieval: {
-            id: 1,
-            obfuscatedId: '06347346',
-            jsondata: {
-              portal_id: 'testPortal',
-              source: '?mock-source'
-            },
-            environment: 'prod',
-            user: {
-              id: 1,
-              ursId: 'test-ursid'
-            },
-            createdAt: '2024-08-25T11:59:14.390Z',
-            updatedAt: '2024-08-25T11:59:14.390Z',
-            retrievalCollections: [{
-              id: 1,
-              accessMethod: {
-                type: 'Harmony'
-              },
-              collectionId: 'C123451234-EDSC',
-              collectionMetadata: {
-                dataCenter: 'EDSC'
-              },
-              granuleCount: 4,
-              createdAt: '2024-08-25T11:59:14.390Z',
-              updatedAt: '2024-08-25T11:59:14.390Z',
-              retrievalOrders: [
-                {
-                  id: 42,
-                  state: 'initialized',
-                  orderInformation: {
-                    jobId: '12341234-asdfasdf-12341234-asdfasdf'
-                  },
-                  orderNumber: '12341234-asdfasdf-12341234-asdfasdf',
-                  type: 'Harmony',
-                  createdAt: '2024-08-25T11:59:14.390Z',
-                  updatedAt: '2024-08-25T11:59:14.390Z'
-                }
-              ]
-            }]
-          }
-        }
-      }
-    }
+    adminRetrievalMock
   ],
   defaultRouterEntries: [`${routes.ADMIN_RETRIEVALS}/06347346`],
   withRouter: true,
@@ -142,8 +146,25 @@ describe('AdminRetrievalDetails component', () => {
   })
 
   describe('when clicking Requeue order button', () => {
-    test('clicking on the Requeue button calls onRequeueOrder', async () => {
-      const { user, props } = setup()
+    test('clicking on the Requeue button calls requeueOrder', async () => {
+      const { user } = setup({
+        overrideApolloClientMocks: [
+          adminRetrievalMock,
+          {
+            request: {
+              query: ADMIN_REQUEUE_ORDER,
+              variables: {
+                retrievalOrderId: 42
+              }
+            },
+            result: {
+              data: {
+                adminRequeueOrder: true
+              }
+            }
+          }
+        ]
+      })
 
       await waitFor(() => {
         expect(screen.getByText('06347346')).toBeInTheDocument()
@@ -151,8 +172,51 @@ describe('AdminRetrievalDetails component', () => {
 
       await user.click(screen.getByRole('button', { name: /Requeue/ }))
 
-      expect(props.onRequeueOrder).toHaveBeenCalledTimes(1)
-      expect(props.onRequeueOrder).toHaveBeenCalledWith(42)
+      expect(addToast).toHaveBeenCalledTimes(1)
+      expect(addToast).toHaveBeenCalledWith('Order Requeued for processing', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+
+    describe('when the request fails', () => {
+      test('calls handleError', async () => {
+        const { user, zustandState } = setup({
+          overrideApolloClientMocks: [
+            adminRetrievalMock,
+            {
+              request: {
+                query: ADMIN_REQUEUE_ORDER,
+                variables: {
+                  retrievalOrderId: 42
+                }
+              },
+              error: new Error('Failed to requeue order')
+            }
+          ],
+          overrideZustandState: {
+            errors: {
+              handleError: jest.fn()
+            }
+          }
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText('06347346')).toBeInTheDocument()
+        })
+
+        await user.click(screen.getByRole('button', { name: /Requeue/ }))
+
+        expect(addToast).toHaveBeenCalledTimes(0)
+
+        expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+        expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+          action: 'requeueOrder',
+          error: new Error('Failed to requeue order'),
+          notificationType: 'toast',
+          resource: 'admin retrievals'
+        })
+      })
     })
   })
 })

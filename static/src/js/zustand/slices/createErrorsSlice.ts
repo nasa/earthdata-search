@@ -4,8 +4,7 @@ import { ErrorsSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error There are no types for this file
 import addToast from '../../util/addToast'
-// @ts-expect-error There are no types for this file
-import { displayNotificationType } from '../../constants/enums'
+import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationType'
 // @ts-expect-error There are no types for this file
 import { parseError } from '../../../../../sharedUtils/parseError'
 // @ts-expect-error There are no types for this file
@@ -28,7 +27,7 @@ const createErrorsSlice: ImmerStateCreator<ErrorsSlice> = (set) => ({
       action,
       resource,
       verb = 'retrieving',
-      notificationType = displayNotificationType.banner,
+      notificationType = DISPLAY_NOTIFICATION_TYPE.BANNER,
       requestObject,
       showAlertButton,
       title

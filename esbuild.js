@@ -1,6 +1,6 @@
 /**
  * This esbuild config will bundle all the lambda functions in the serverless/src directory
- * and output them to the serverless/dist directory.
+ * and output them to the .serverless-dist directory.
  *
  * This is currently only used for the local development environment.
  */
@@ -14,7 +14,7 @@ build({
   ],
   bundle: true,
   platform: 'node',
-  outdir: 'serverless/dist',
+  outdir: '.serverless-dist',
   loader: {
     '.ipynb': 'json',
     '.svg': 'text',

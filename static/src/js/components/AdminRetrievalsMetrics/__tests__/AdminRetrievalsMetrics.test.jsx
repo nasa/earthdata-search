@@ -81,10 +81,8 @@ describe('AdminRetrievalsMetrics component', () => {
           request: {
             query: ADMIN_RETRIEVALS_METRICS,
             variables: {
-              params: {
-                startDate: '2025-11-14 00:00:00',
-                endDate: '2025-11-14 23:59:59'
-              }
+              startDate: '2025-11-14 00:00:00',
+              endDate: '2025-11-14 23:59:59'
             }
           },
           result: {
@@ -159,10 +157,8 @@ describe('AdminRetrievalsMetrics component', () => {
           request: {
             query: ADMIN_RETRIEVALS_METRICS,
             variables: {
-              params: {
-                startDate: '2025-11-14 00:00:00',
-                endDate: '2025-11-14 23:59:59'
-              }
+              startDate: '2025-11-14 00:00:00',
+              endDate: '2025-11-14 23:59:59'
             }
           },
           result: {

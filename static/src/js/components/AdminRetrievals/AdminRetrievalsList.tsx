@@ -78,14 +78,12 @@ const AdminRetrievalsList = () => {
 
   const { data, error, loading } = useQuery<AdminRetrievalsQueryData>(ADMIN_RETRIEVALS, {
     variables: {
-      params: {
-        limit: pageSize,
-        offset: (currentPage - 1) * pageSize,
-        obfuscatedId: searchType === 'obfuscatedId' && debouncedSearchValue ? debouncedSearchValue : undefined,
-        retrievalCollectionId: searchType === 'retrievalCollectionId' && debouncedSearchValue ? Number(debouncedSearchValue) : undefined,
-        ursId: searchType === 'ursId' && debouncedSearchValue ? debouncedSearchValue : undefined,
-        sortKey
-      }
+      limit: pageSize,
+      offset: (currentPage - 1) * pageSize,
+      obfuscatedId: searchType === 'obfuscatedId' && debouncedSearchValue ? debouncedSearchValue : undefined,
+      retrievalCollectionId: searchType === 'retrievalCollectionId' && debouncedSearchValue ? Number(debouncedSearchValue) : undefined,
+      ursId: searchType === 'ursId' && debouncedSearchValue ? debouncedSearchValue : undefined,
+      sortKey
     }
   })
 

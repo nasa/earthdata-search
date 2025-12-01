@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "build:api": "rm -rf serverless/dist && node esbuild.js",
+    "build:api": "rm -rf .serverless-dist && node esbuild.js",
     "watch:api": "nodemon --watch serverless/src --ext js,ts,graphql --exec 'npm run build:api'",
     "prestart:api": "npm run build:api",
     "start:api": "dotenvx run nodemon -- --config api.nodemon.json bin/api.mjs cdk/earthdata-search/cdk.out/earthdata-search-dev.template.json",

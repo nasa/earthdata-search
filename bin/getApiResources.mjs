@@ -168,7 +168,7 @@ export const getApiResources = (templateFilePath) => {
         )
 
         authorizer.functionName = authorizerFunctionName
-        authorizer.path = `../serverless/dist/${getLambdaName(authorizerFunctionName)}/handler.js`
+        authorizer.path = `../.serverless-dist/${getLambdaName(authorizerFunctionName)}/handler.js`
       }
 
       // Get the function name from the lambda integration
@@ -185,7 +185,7 @@ export const getApiResources = (templateFilePath) => {
         // Get the function configuration from the lambda function
         const lambdaFunction = {
           functionName,
-          path: `../serverless/dist/${getLambdaName(functionName)}/handler.js`
+          path: `../.serverless-dist/${getLambdaName(functionName)}/handler.js`
         }
 
         const name = apiGatewayResource.replace('referencetoearthdatasearchdev', '')

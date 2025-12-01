@@ -1,13 +1,48 @@
+import ADMIN_IS_AUTHORIZED from '../../../../../static/src/js/operations/queries/adminIsAuthorized'
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
+import ADMIN_PROJECT from '../../../../../static/src/js/operations/queries/adminProject'
+import ADMIN_PROJECTS from '../../../../../static/src/js/operations/queries/adminProjects'
+import ADMIN_REQUEUE_ORDER from '../../../../../static/src/js/operations/mutations/adminRequeueOrder'
 import ADMIN_RETRIEVAL from '../../../../../static/src/js/operations/queries/adminRetrieval'
 import ADMIN_RETRIEVALS from '../../../../../static/src/js/operations/queries/adminRetrievals'
 import ADMIN_RETRIEVALS_METRICS from '../../../../../static/src/js/operations/queries/adminRetrievalsMetrics'
-import ADMIN_PROJECT from '../../../../../static/src/js/operations/queries/adminProject'
-import ADMIN_PROJECTS from '../../../../../static/src/js/operations/queries/adminProjects'
+
 import setupServer from './__mocks__/setupServer'
+
+import { ACCESS_METHOD_TYPES } from '../../../../../sharedConstants/accessMethodTypes'
+
+const OLD_ENV = process.env
+
+beforeEach(() => {
+  process.env = { ...OLD_ENV }
+  delete process.env.NODE_ENV
+
+  process.env.SKIP_SQS = 'false'
+  process.env.CATALOG_REST_QUEUE_URL = 'mock-catalog-rest-queue-url'
+  process.env.CMR_ORDERING_ORDER_QUEUE_URL = 'mock-cmr-ordering-order-queue-url'
+  process.env.HARMONY_QUEUE_URL = 'mock-harmony-queue-url'
+})
 
 describe('Admin Resolver', () => {
   describe('Query', () => {
+    describe('adminIsAuthorized', () => {
+      test('returns true', async () => {
+        const { contextValue, server } = setupServer({})
+
+        const response = await server.executeOperation({
+          query: ADMIN_IS_AUTHORIZED
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(data).toEqual({
+          adminIsAuthorized: true
+        })
+      })
+    })
+
     describe('adminPreferencesMetrics', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
@@ -198,7 +233,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_PROJECT,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -237,7 +274,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_PROJECT,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -289,10 +328,8 @@ describe('Admin Resolver', () => {
         const response = await server.executeOperation({
           query: ADMIN_PROJECTS,
           variables: {
-            params: {
-              limit: 2,
-              offset: 0
-            }
+            limit: 2,
+            offset: 0
           }
         }, {
           contextValue
@@ -416,10 +453,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_PROJECTS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 0
-              }
+              limit: 2,
+              offset: 0
             }
           }, {
             contextValue
@@ -519,10 +554,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_PROJECTS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 2
-              }
+              limit: 2,
+              offset: 2
             }
           }, {
             contextValue
@@ -635,7 +668,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVAL,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -708,7 +743,9 @@ describe('Admin Resolver', () => {
 
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVAL,
-          variables: { params: { obfuscatedId: 'test-obfuscated-id' } }
+          variables: {
+            obfuscatedId: 'test-obfuscated-id'
+          }
         }, {
           contextValue
         })
@@ -765,10 +802,8 @@ describe('Admin Resolver', () => {
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVALS,
           variables: {
-            params: {
-              limit: 2,
-              offset: 0
-            }
+            limit: 2,
+            offset: 0
           }
         }, {
           contextValue
@@ -909,10 +944,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_RETRIEVALS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 0
-              }
+              limit: 2,
+              offset: 0
             }
           }, {
             contextValue
@@ -1028,10 +1061,8 @@ describe('Admin Resolver', () => {
           const response = await server.executeOperation({
             query: ADMIN_RETRIEVALS,
             variables: {
-              params: {
-                limit: 2,
-                offset: 2
-              }
+              limit: 2,
+              offset: 2
             }
           }, {
             contextValue
@@ -1127,10 +1158,8 @@ describe('Admin Resolver', () => {
         const response = await server.executeOperation({
           query: ADMIN_RETRIEVALS_METRICS,
           variables: {
-            params: {
-              startDate: '2020-02-01 23:59:59',
-              endDate: '2025-02-01 23:59:59'
-            }
+            startDate: '2020-02-01 23:59:59',
+            endDate: '2025-02-01 23:59:59'
           }
         }, {
           contextValue
@@ -1195,7 +1224,11 @@ describe('Admin Resolver', () => {
         })
 
         const response = await server.executeOperation({
-          query: ADMIN_RETRIEVALS_METRICS
+          query: ADMIN_RETRIEVALS_METRICS,
+          variables: {
+            startDate: '2020-02-01 23:59:59',
+            endDate: '2025-02-01 23:59:59'
+          }
         }, {
           contextValue
         })
@@ -1209,6 +1242,242 @@ describe('Admin Resolver', () => {
         })
 
         expect(errors[0].message).toEqual(errorMessage)
+      })
+    })
+  })
+
+  describe('Mutation', () => {
+    describe('adminRequeueOrder', () => {
+      describe('when the access method type is ESI', () => {
+        test('sends a message to SQS', async () => {
+          const databaseClient = {
+            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+              retrieval_collection_id: 1234,
+              token: 'fake-access-token',
+              type: ACCESS_METHOD_TYPES.ESI
+            })
+          }
+
+          const sqs = {
+            send: jest.fn()
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            sqs
+          })
+
+          const response = await server.executeOperation({
+            query: ADMIN_REQUEUE_ORDER,
+            variables: {
+              retrievalOrderId: 4
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(data).toEqual({ adminRequeueOrder: true })
+
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledWith(4)
+
+          expect(sqs.send).toHaveBeenCalledTimes(1)
+          expect(sqs.send).toHaveBeenCalledWith({
+            deserialize: expect.any(Function),
+            input: {
+              Entries: [{
+                Id: '1234',
+                MessageBody: '{"accessToken":"fake-access-token","id":4}'
+              }],
+              QueueUrl: 'mock-catalog-rest-queue-url'
+            },
+            middlewareStack: {
+              add: expect.any(Function),
+              addRelativeTo: expect.any(Function),
+              applyToStack: expect.any(Function),
+              clone: expect.any(Function),
+              concat: expect.any(Function),
+              identify: expect.any(Function),
+              identifyOnResolve: expect.any(Function),
+              remove: expect.any(Function),
+              removeByTag: expect.any(Function),
+              resolve: expect.any(Function),
+              use: expect.any(Function)
+            },
+            serialize: expect.any(Function)
+          })
+        })
+      })
+
+      describe('when the access method type is ECHO ORDERS', () => {
+        test('sends a message to SQS', async () => {
+          const databaseClient = {
+            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+              retrieval_collection_id: 1234,
+              token: 'fake-access-token',
+              type: ACCESS_METHOD_TYPES.ECHO_ORDERS
+            })
+          }
+
+          const sqs = {
+            send: jest.fn()
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            sqs
+          })
+
+          const response = await server.executeOperation({
+            query: ADMIN_REQUEUE_ORDER,
+            variables: {
+              retrievalOrderId: 4
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(data).toEqual({ adminRequeueOrder: true })
+
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledWith(4)
+
+          expect(sqs.send).toHaveBeenCalledTimes(1)
+          expect(sqs.send).toHaveBeenCalledWith({
+            deserialize: expect.any(Function),
+            input: {
+              Entries: [{
+                Id: '1234',
+                MessageBody: '{"accessToken":"fake-access-token","id":4}'
+              }],
+              QueueUrl: 'mock-cmr-ordering-order-queue-url'
+            },
+            middlewareStack: {
+              add: expect.any(Function),
+              addRelativeTo: expect.any(Function),
+              applyToStack: expect.any(Function),
+              clone: expect.any(Function),
+              concat: expect.any(Function),
+              identify: expect.any(Function),
+              identifyOnResolve: expect.any(Function),
+              remove: expect.any(Function),
+              removeByTag: expect.any(Function),
+              resolve: expect.any(Function),
+              use: expect.any(Function)
+            },
+            serialize: expect.any(Function)
+          })
+        })
+      })
+
+      describe('when the access method type is Harmony', () => {
+        test('sends a message to SQS', async () => {
+          const databaseClient = {
+            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+              retrieval_collection_id: 1234,
+              token: 'fake-access-token',
+              type: ACCESS_METHOD_TYPES.HARMONY
+            })
+          }
+
+          const sqs = {
+            send: jest.fn()
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            sqs
+          })
+
+          const response = await server.executeOperation({
+            query: ADMIN_REQUEUE_ORDER,
+            variables: {
+              retrievalOrderId: 4
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(data).toEqual({ adminRequeueOrder: true })
+
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledWith(4)
+
+          expect(sqs.send).toHaveBeenCalledTimes(1)
+          expect(sqs.send).toHaveBeenCalledWith({
+            deserialize: expect.any(Function),
+            input: {
+              Entries: [{
+                Id: '1234',
+                MessageBody: '{"accessToken":"fake-access-token","id":4}'
+              }],
+              QueueUrl: 'mock-harmony-queue-url'
+            },
+            middlewareStack: {
+              add: expect.any(Function),
+              addRelativeTo: expect.any(Function),
+              applyToStack: expect.any(Function),
+              clone: expect.any(Function),
+              concat: expect.any(Function),
+              identify: expect.any(Function),
+              identifyOnResolve: expect.any(Function),
+              remove: expect.any(Function),
+              removeByTag: expect.any(Function),
+              resolve: expect.any(Function),
+              use: expect.any(Function)
+            },
+            serialize: expect.any(Function)
+          })
+        })
+      })
+
+      describe('when SKIP_SQS is true', () => {
+        beforeEach(() => {
+          process.env.SKIP_SQS = 'true'
+        })
+
+        test('does not send a message to SQS', async () => {
+          const databaseClient = {
+            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+              retrieval_collection_id: 1234,
+              token: 'fake-access-token',
+              type: ACCESS_METHOD_TYPES.HARMONY
+            })
+          }
+
+          const sqs = {
+            send: jest.fn()
+          }
+
+          const { contextValue, server } = setupServer({
+            databaseClient,
+            sqs
+          })
+
+          const response = await server.executeOperation({
+            query: ADMIN_REQUEUE_ORDER,
+            variables: {
+              retrievalOrderId: 4
+            }
+          }, {
+            contextValue
+          })
+
+          const { data } = response.body.singleResult
+
+          expect(data).toEqual({ adminRequeueOrder: true })
+
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getRetrievalOrdersByOrderId).toHaveBeenCalledWith(4)
+
+          expect(sqs.send).toHaveBeenCalledTimes(0)
+        })
       })
     })
   })

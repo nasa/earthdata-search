@@ -1,52 +1,72 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
+import { waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { AdminLayout } from '../AdminLayout'
+import AdminLayout from '../AdminLayout'
 
 // @ts-expect-error The file does not have types
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import ADMIN_IS_AUTHORIZED from '../../../operations/queries/adminIsAuthorized'
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  Outlet: jest.fn(() => <div>Outlet</div>)
+  Outlet: jest.fn(() => <div>Outlet</div>),
+  Navigate: jest.fn(() => <div>Navigate</div>)
 }))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 
 const setup = setupTest({
   Component: AdminLayout,
-  defaultProps: {
-    isAuthorized: true,
-    onAdminIsAuthorized: jest.fn()
-  },
-  withRedux: true,
+  defaultApolloClientMocks: [
+    {
+      request: {
+        query: ADMIN_IS_AUTHORIZED
+      },
+      result: {
+        data: {
+          adminIsAuthorized: true
+        }
+      }
+    }
+  ],
+  withApolloClient: true,
   withRouter: true
 })
 
 describe('AdminLayout', () => {
-  test('calls onAdminIsAuthorized on mount', () => {
-    const { props } = setup()
-
-    expect(props.onAdminIsAuthorized).toHaveBeenCalledTimes(1)
-    expect(props.onAdminIsAuthorized).toHaveBeenCalledWith()
-  })
-
-  test('does not render anything when not authorized', () => {
+  test('does not render anything when not authorized', async () => {
     setup({
-      overrideProps: {
-        isAuthorized: false
-      }
+      overrideApolloClientMocks: [{
+        request: {
+          query: ADMIN_IS_AUTHORIZED
+        },
+        error: new Error('Not authorized')
+      }]
     })
+
+    await waitFor(() => {
+      expect(Navigate).toHaveBeenCalledTimes(1)
+    })
+
+    expect(Navigate).toHaveBeenCalledWith({
+      replace: true,
+      to: '/'
+    }, {})
 
     expect(PortalLinkContainer).toHaveBeenCalledTimes(0)
   })
 
-  test('renders the admin layout when authorized', () => {
+  test('renders the admin layout when authorized', async () => {
     setup()
 
-    expect(Outlet).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(Outlet).toHaveBeenCalledTimes(1)
+    })
+
     expect(Outlet).toHaveBeenCalledWith({}, {})
   })
 })

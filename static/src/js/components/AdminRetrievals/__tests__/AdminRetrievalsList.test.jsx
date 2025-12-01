@@ -21,10 +21,8 @@ const defaultApolloClientMocks = [
     request: {
       query: ADMIN_RETRIEVALS,
       variables: {
-        params: {
-          limit: 20,
-          offset: 0
-        }
+        limit: 20,
+        offset: 0
       }
     },
     result: {
@@ -129,11 +127,9 @@ describe('AdminRetrievalsList component', () => {
               request: {
                 query: ADMIN_RETRIEVALS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.ursIdDescending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.ursIdDescending
                 }
               },
               result: {
@@ -179,11 +175,9 @@ describe('AdminRetrievalsList component', () => {
               request: {
                 query: ADMIN_RETRIEVALS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.ursIdAscending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.ursIdAscending
                 }
               },
               result: {
@@ -258,11 +252,9 @@ describe('AdminRetrievalsList component', () => {
               request: {
                 query: ADMIN_RETRIEVALS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.createdAtDescending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.createdAtDescending
                 }
               },
               result: {
@@ -308,11 +300,9 @@ describe('AdminRetrievalsList component', () => {
               request: {
                 query: ADMIN_RETRIEVALS,
                 variables: {
-                  params: {
-                    limit: 20,
-                    offset: 0,
-                    sortKey: adminSortKeys.createdAtAscending
-                  }
+                  limit: 20,
+                  offset: 0,
+                  sortKey: adminSortKeys.createdAtAscending
                 }
               },
               result: {

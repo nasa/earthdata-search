@@ -8,7 +8,7 @@
   ],
   "watch": [
     "*.config.json",
-    "serverless/dist"
+    ".serverless-dist"
   ],
   "delay": 2000
 }
