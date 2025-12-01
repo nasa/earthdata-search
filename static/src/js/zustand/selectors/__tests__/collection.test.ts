@@ -142,6 +142,25 @@ describe('collection selectors', () => {
         }
       ])
     })
+
+    test('returns an empty array when subscriptions are null', () => {
+      useEdscStore.setState(() => ({
+        collection: {
+          collectionId: 'collection1',
+          collectionMetadata: {
+            collection1: {
+              id: 'collection1',
+              title: 'Collection 1',
+              description: 'Description for Collection 1',
+              subscriptions: null
+            }
+          }
+        }
+      }))
+
+      const result = getFocusedCollectionSubscriptions(useEdscStore.getState())
+      expect(result).toEqual([])
+    })
   })
 
   describe('getFocusedCollectionTags', () => {
