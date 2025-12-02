@@ -13,7 +13,7 @@ export const getHandoffLinks = ({
   map
 }) => {
   const { tools = {} } = collectionMetadata
-  let { items: toolItems } = tools
+  let { items: toolItems } = tools || {}
 
   if (!toolItems) toolItems = []
 

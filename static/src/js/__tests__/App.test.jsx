@@ -10,6 +10,8 @@ import setupTest from '../../../../jestConfigs/setupTest'
 import App from '../App'
 import GraphQlProvider from '../providers/GraphQlProvider'
 import { routes } from '../constants/routes'
+import RouterErrorBoundary from '../components/Errors/RouterErrorBoundary'
+import AppLayout from '../layouts/AppLayout/AppLayout'
 
 jest.mock('../../../../sharedUtils/config', () => ({
   getEnvironmentConfig: jest.fn().mockReturnValue({
@@ -75,6 +77,8 @@ describe('App component', () => {
         routes: [
           expect.objectContaining({
             path: routes.HOME,
+            element: <AppLayout />,
+            errorElement: <RouterErrorBoundary />,
             children: [
               expect.objectContaining({
                 index: true
