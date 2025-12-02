@@ -16,7 +16,6 @@ import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
 jest.mock('../../../actions', () => ({
   getCollections: jest.fn(),
   getSearchGranules: jest.fn(),
-  getRegions: jest.fn(),
   removeSubscriptionDisabledFields: jest.fn(),
   toggleDrawingNewLayer: jest.fn()
 }))
@@ -39,7 +38,6 @@ describe('createQuerySlice', () => {
       ...initialState,
       changeQuery: expect.any(Function),
       changeGranuleQuery: expect.any(Function),
-      changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
       excludeGranule: expect.any(Function),
       initializeGranuleQuery: expect.any(Function),
@@ -494,28 +492,9 @@ describe('createQuerySlice', () => {
     })
   })
 
-  describe('changeRegionQuery', () => {
-    test('updates the region query and calls getRegions', async () => {
-      const zustandState = useEdscStore.getState()
-      const { query } = zustandState
-      const { changeRegionQuery } = query
-      await changeRegionQuery({ keyword: 'test' })
-
-      const updatedState = useEdscStore.getState()
-      const {
-        query: updatedQuery
-      } = updatedState
-
-      expect(updatedQuery.region.keyword).toEqual('test')
-
-      expect(actions.getRegions).toHaveBeenCalledTimes(1)
-      expect(actions.getRegions).toHaveBeenCalledWith()
-    })
-  })
-
   describe('clearFilters', () => {
     describe('when not on the granules page', () => {
-      test('updates the region query and calls getRegions', async () => {
+      test('updates the query and calls get functions', async () => {
         useEdscStore.setState((state) => {
           state.collections.getCollections = jest.fn()
           state.granules.getGranules = jest.fn()
@@ -556,7 +535,7 @@ describe('createQuerySlice', () => {
     })
 
     describe('when on the granules page', () => {
-      test('updates the region query and calls getRegions', async () => {
+      test('updates the query and calls get functions', async () => {
         routerHelper.router = {
           navigate: jest.fn(),
           state: {

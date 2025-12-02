@@ -1,0 +1,41 @@
+type Region {
+  "A unique identifier for the region"
+  id: String
+
+  "The name of the region"
+  name: String
+
+  "The spatial data of the region"
+  spatial: String
+
+  "The type of the region"
+  type: String
+}
+
+type RegionResponse {
+  "Number of regions returned"
+  count: Int
+
+  "The keyword used for the search"
+  keyword: String
+
+  "The list of regions returned"
+  regions: [Region]
+
+  "The time taken to fetch the regions"
+  time: Float
+}
+
+type Query {
+  "Fetch regions based on endpoint, exact match flag, and query string"
+  regions(
+    "The endpoint to search within"
+    endpoint: String
+
+    "Whether to match the query exactly"
+    exact: Boolean
+
+    "The query string to search for"
+    keyword: String
+  ): RegionResponse
+}

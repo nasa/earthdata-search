@@ -43,21 +43,10 @@ const setup = setupTest({
         }
       ]
     },
-    errors: {},
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    onChangeRegionQuery: jest.fn(),
-    regionSearchResults: {},
+    handleSearch: jest.fn(),
     setFieldValue: jest.fn(),
     setModalOverlay: jest.fn(),
-    touched: {},
-    values: {},
-    validateForm: jest.fn()
-  },
-  defaultZustandState: {
-    query: {
-      changeRegionQuery: jest.fn()
-    }
+    values: {}
   }
 })
 
@@ -117,8 +106,8 @@ describe('RegionSearch component', () => {
   })
 
   describe('when submitting the form', () => {
-    test('calls changeRegionQuery and setModalOverlay', async () => {
-      const { props, zustandState } = setup({
+    test('calls handleSearch and setModalOverlay', async () => {
+      const { props } = setup({
         overrideProps: {
           values: {
             regionSearch: {
@@ -135,10 +124,10 @@ describe('RegionSearch component', () => {
       })
 
       await waitFor(() => {
-        expect(zustandState.query.changeRegionQuery).toHaveBeenCalledTimes(1)
+        expect(props.handleSearch).toHaveBeenCalledTimes(1)
       })
 
-      expect(zustandState.query.changeRegionQuery).toHaveBeenCalledWith({
+      expect(props.handleSearch).toHaveBeenCalledWith({
         keyword: 'Test',
         endpoint: 'region',
         exact: true

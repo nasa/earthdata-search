@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+
 import RegionSearch from './RegionSearch'
 
 import './AdvancedSearchForm.scss'
@@ -21,115 +22,103 @@ import './AdvancedSearchForm.scss'
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
-class AdvancedSearchForm extends Component {
-  componentDidMount() {
-    const {
-      values,
-      validateForm
-    } = this.props
-
+const AdvancedSearchForm = ({
+  fields,
+  errors,
+  handleBlur,
+  handleChange,
+  handleSearch,
+  setFieldValue,
+  setModalOverlay = null,
+  touched,
+  validateForm,
+  values
+}) => {
+  useEffect(() => {
     validateForm(values)
-  }
+  }, [validateForm, values])
 
-  render() {
-    const {
-      fields,
-      errors,
-      handleBlur,
-      handleChange,
-      regionSearchResults,
-      setFieldValue,
-      setModalOverlay,
-      touched,
-      values
-    } = this.props
+  return (
+    <FormikForm className="advanced-search-form">
+      {
+        fields.map((field) => {
+          const {
+            description,
+            name,
+            placeholder,
+            label,
+            text,
+            type
+          } = field
 
-    return (
-      <FormikForm className="advanced-search-form">
-        {
-          fields.map((field) => {
-            const {
-              description,
-              name,
-              placeholder,
-              label,
-              text,
-              type
-            } = field
-
-            return (
-              <div className="advanced-search-form" key={name}>
-                <Row>
-                  <Col>
-                    <Form.Group controlId={name}>
-                      <Form.Label className="advanced-search-form__label">
-                        {label}
-                      </Form.Label>
-                      {
-                        description && (
-                          <p className="text-muted advanced-search-form__description">
-                            {description}
-                          </p>
-                        )
-                      }
-                      {
-                        type === 'input' && (
-                          <>
-                            <Form.Control
-                              name={name}
-                              as={type}
-                              value={values[name]}
-                              placeholder={placeholder}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              isInvalid={errors[name]}
-                            />
-                            {
-                              text && (
-                                <Form.Text className="text-muted">
-                                  {text}
-                                </Form.Text>
-                              )
-                            }
-                            {
-                              errors[name] && (
-                                <Form.Control.Feedback type="invalid">
-                                  {errors[name]}
-                                </Form.Control.Feedback>
-                              )
-                            }
-                          </>
-                        )
-                      }
-                      {
-                        type === 'regionSearch' && (
-                          <RegionSearch
-                            errors={errors}
-                            field={field}
-                            values={values}
-                            handleBlur={handleBlur}
-                            handleChange={handleChange}
-                            regionSearchResults={regionSearchResults}
-                            setFieldValue={setFieldValue}
-                            setModalOverlay={setModalOverlay}
-                            touched={touched}
+          return (
+            <div className="advanced-search-form" key={name}>
+              <Row>
+                <Col>
+                  <Form.Group controlId={name}>
+                    <Form.Label className="advanced-search-form__label">
+                      {label}
+                    </Form.Label>
+                    {
+                      description && (
+                        <p className="text-muted advanced-search-form__description">
+                          {description}
+                        </p>
+                      )
+                    }
+                    {
+                      type === 'input' && (
+                        <>
+                          <Form.Control
+                            name={name}
+                            as={type}
+                            value={values[name]}
+                            placeholder={placeholder}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={errors[name]}
                           />
-                        )
-                      }
-                    </Form.Group>
-                  </Col>
-                </Row>
-              </div>
-            )
-          })
-        }
-      </FormikForm>
-    )
-  }
-}
-
-AdvancedSearchForm.defaultProps = {
-  setModalOverlay: null
+                          {
+                            text && (
+                              <Form.Text className="text-muted">
+                                {text}
+                              </Form.Text>
+                            )
+                          }
+                          {
+                            errors[name] && (
+                              <Form.Control.Feedback type="invalid">
+                                {errors[name]}
+                              </Form.Control.Feedback>
+                            )
+                          }
+                        </>
+                      )
+                    }
+                    {
+                      type === 'regionSearch' && (
+                        <RegionSearch
+                          errors={errors}
+                          field={field}
+                          values={values}
+                          handleBlur={handleBlur}
+                          handleChange={handleChange}
+                          handleSearch={handleSearch}
+                          setFieldValue={setFieldValue}
+                          setModalOverlay={setModalOverlay}
+                          touched={touched}
+                        />
+                      )
+                    }
+                  </Form.Group>
+                </Col>
+              </Row>
+            </div>
+          )
+        })
+      }
+    </FormikForm>
+  )
 }
 
 AdvancedSearchForm.propTypes = {
@@ -137,7 +126,7 @@ AdvancedSearchForm.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  regionSearchResults: PropTypes.shape({}).isRequired,
+  handleSearch: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setModalOverlay: PropTypes.func,
   touched: PropTypes.shape({}).isRequired,

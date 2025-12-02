@@ -22,10 +22,6 @@ const setup = setupTest({
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
-    regionSearchResults: {
-      byId: {},
-      allIds: []
-    },
     resetForm: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
@@ -51,9 +47,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      searchResults: {
-        regions: {}
-      },
       ui: {
         advancedSearchModal: {
           isOpen: false
@@ -62,8 +55,7 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      isOpen: false,
-      regionSearchResults: {}
+      isOpen: false
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -84,10 +76,6 @@ describe('AdvancedSearchModalContainer component', () => {
       isOpen: true,
       isValid: true,
       onToggleAdvancedSearchModal: expect.any(Function),
-      regionSearchResults: {
-        allIds: [],
-        byId: {}
-      },
       resetForm: expect.any(Function),
       setFieldTouched: expect.any(Function),
       setFieldValue: expect.any(Function),
