@@ -1,6 +1,10 @@
 @use '../../../css/utils';
 
 .error-boundary {
+  &__heading {
+    color: utils.$color__spacesuit-white;
+  }
+
   &__link {
     color: utils.$color__spacesuit-white;
 
