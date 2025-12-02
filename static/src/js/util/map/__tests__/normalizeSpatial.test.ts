@@ -2,6 +2,8 @@ import normalizeSpatial from '../normalizeSpatial'
 
 import useEdscStore from '../../../zustand/useEdscStore'
 
+import type { GranuleMetadata } from '../../../types/sharedTypes'
+
 describe('normalizeSpatial', () => {
   describe('when the granule has no spatial information', () => {
     test('returns null', () => {
@@ -568,17 +570,63 @@ describe('normalizeSpatial', () => {
 
         expect(errors.handleError).toHaveBeenCalledTimes(2)
         expect(errors.handleError).toHaveBeenNthCalledWith(1, {
-          action: 'interpolatePolygon',
+          action: 'interpolateGeodeticPolygon',
           error: expect.any(Error),
           message: expect.stringContaining('Error interpolating points: start: 180,-90, end: 180,90. All coordiates: [{"lat":-90,"lng":-180},{"lat":-90,"lng":180},{"lat":90,"lng":180},{"lat":90,"lng":-180},{"lat":-90,"lng":-180}].'),
           notificationType: 'none'
         })
 
         expect(errors.handleError).toHaveBeenNthCalledWith(2, {
-          action: 'interpolatePolygon',
+          action: 'interpolateGeodeticPolygon',
           error: expect.any(Error),
           message: expect.stringContaining('Error interpolating points: start: -180,90, end: -180,-90. All coordiates: [{"lat":-90,"lng":-180},{"lat":-90,"lng":180},{"lat":90,"lng":180},{"lat":90,"lng":-180},{"lat":-90,"lng":-180}].'),
           notificationType: 'none'
+        })
+      })
+    })
+
+    describe('when the granule has Cartesian polygons', () => {
+      test('returns a geojson multi polygon', () => {
+        const granule = {
+          coordinateSystem: 'CARTESIAN',
+          polygons: [
+            [
+              '0 -180 0 -170 60 -170 60 -180 0 -180'
+            ],
+            [
+              '0 80 0 180 60 180 60 80 0 80'
+            ]
+          ]
+        }
+
+        const response = normalizeSpatial(granule as GranuleMetadata)
+
+        expect(response).toEqual({
+          geometry: {
+            coordinates: [
+              [
+                [
+                  [-180, 0],
+                  [-170, 0],
+                  [-170, 60],
+                  [-180, 60],
+                  [-180, 0]
+                ]
+              ],
+              [
+                [
+                  [80, 0],
+                  [180, 0],
+                  [180, 60],
+                  [80, 60],
+                  [80, 0]
+                ]
+              ]
+            ],
+            type: 'MultiPolygon'
+          },
+          properties: {},
+          type: 'Feature'
         })
       })
     })

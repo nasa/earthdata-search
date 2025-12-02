@@ -78,7 +78,7 @@ export default class GranuleRequest extends CmrRequest {
       }
 
       // Create a GeoJSON representation of the granule spatial
-      updatedGranule.spatial = normalizeSpatial(granule)
+      updatedGranule.spatial = normalizeSpatial(camelcaseKeys(granule))
 
       return updatedGranule
     })

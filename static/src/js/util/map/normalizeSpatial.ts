@@ -20,8 +20,10 @@ import {
 
 // @ts-expect-error The file does not have types
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import {
+
+import type {
   BoundingBoxString,
+  CoordinateSystem,
   LineString,
   PointString,
   PolygonString
@@ -32,7 +34,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 const { mapPointsSimplifyThreshold } = getApplicationConfig()
 
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
-export const interpolatePolygon = (coordinates: { lng: number, lat: number }[]) => {
+export const interpolateGeodeticPolygon = (coordinates: { lng: number, lat: number }[]) => {
   const interpolatedCoordinates = []
 
   // Iterate over the coordinates and add the original point and the interpolated points
@@ -84,7 +86,7 @@ export const interpolatePolygon = (coordinates: { lng: number, lat: number }[]) 
       })
     } catch (error) {
       useEdscStore.getState().errors.handleError({
-        action: 'interpolatePolygon',
+        action: 'interpolateGeodeticPolygon',
         error: error as Error,
         message: `Error interpolating points: start: ${coordinate}, end: ${nextCoordinate}. All coordiates: ${JSON.stringify(coordinates)}. Full error: ${error}`,
         notificationType: 'none'
@@ -98,41 +100,67 @@ export const interpolatePolygon = (coordinates: { lng: number, lat: number }[]) 
   return [interpolatedCoordinates]
 }
 
+// This is a cartesian interpolation function that adds points between each point in the polygon
+const cartesianInterpolate = (coordinates: number[][], tolerance: number) => {
+  const interpolatedPoints: number[][] = []
+
+  // Iterate over the coordinates and add the original point and the interpolated points
+  coordinates.forEach((point: number[], index: number) => {
+    interpolatedPoints.push(point)
+
+    const nextIndex = index + 1 === coordinates.length ? 0 : index + 1
+    const nextPoint = coordinates[nextIndex]
+
+    // Take the average of the two points to get the midpoint
+    const lng = (point[0] + nextPoint[0]) / 2
+    const lat = (point[1] + nextPoint[1]) / 2
+    const newPoint = [lng, lat]
+
+    // Find the distance between the two points
+    const pointDistance = distance(point, newPoint)
+
+    // If the distance between the two points is greater than the tolerance, add the new point
+    if (pointDistance > tolerance) {
+      interpolatedPoints.push(newPoint)
+    }
+  })
+
+  return interpolatedPoints
+}
+
+// This function adds midpoints between each point in a polygon using Cartesian coordinates
+const interpolateCartesianPolygon = (coordinates: { lng: number, lat: number }[]) => {
+  const interpolatedCoordinates = []
+
+  // Translate the coordinates from { lng: number, lat: number } to [lng, lat]
+  const newCoordinates = coordinates.map((coordinate) => [coordinate.lng, coordinate.lat])
+
+  const maxDepth = 6
+
+  // Interpolate the polygon until it has more points than the threshold
+  for (let i = 0; i < maxDepth; i += 1) {
+    const newInterpolatedPoints = cartesianInterpolate(newCoordinates, 250)
+
+    // If the new interpolated points are greater than the threshold, break
+    if (newInterpolatedPoints.length > mapPointsSimplifyThreshold) {
+      break
+    }
+
+    // Replace the interpolated polygon with the new interpolated points
+    interpolatedCoordinates.splice(0, interpolatedCoordinates.length)
+    interpolatedCoordinates.push(...newInterpolatedPoints)
+  }
+
+  return [interpolatedCoordinates]
+}
+
 // Interpolate the points of a polygon derived from a bounding box
 export const interpolateBoxPolygon = (polygon: number[][], tolerance: number, maxDepth: number) => {
   const interpolatedPolygon = polygon
 
-  // This is a cartesian interpolation function that adds points between each point in the polygon
-  const interpolate = (coordinates: number[][]) => {
-    const interpolatedPoints: number[][] = []
-
-    // Iterate over the coordinates and add the original point and the interpolated points
-    coordinates.forEach((point: number[], index: number) => {
-      interpolatedPoints.push(point)
-
-      const nextIndex = index + 1 === coordinates.length ? 0 : index + 1
-      const nextPoint = coordinates[nextIndex]
-
-      // Take the average of the two points to get the midpoint
-      const lng = (point[0] + nextPoint[0]) / 2
-      const lat = (point[1] + nextPoint[1]) / 2
-      const newPoint = [lng, lat]
-
-      // Find the distance between the two points
-      const pointDistance = distance(point, newPoint)
-
-      // If the distance between the two points is greater than the tolerance, add the new point
-      if (pointDistance > tolerance) {
-        interpolatedPoints.push(newPoint)
-      }
-    })
-
-    return interpolatedPoints
-  }
-
   // Interpolate the polygon until it has more points than the threshold
   for (let i = 0; i < maxDepth; i += 1) {
-    const newInterpolatedPoints = interpolate(interpolatedPolygon)
+    const newInterpolatedPoints = cartesianInterpolate(interpolatedPolygon, tolerance)
 
     // If the new interpolated points are greater than the threshold, break
     if (newInterpolatedPoints.length > mapPointsSimplifyThreshold) {
@@ -208,12 +236,14 @@ const makeClockwise = (polygon: number[][]) => {
 // Normalize spatial metadata (boxes, lines, points, polygons) to polygons for simplified handling on the map
 const normalizeSpatial = (metadata: {
   boxes?: BoundingBoxString[]
+  coordinateSystem?: CoordinateSystem
   lines?: LineString[]
   points?: PointString[]
   polygons?: PolygonString[][]
 }): Feature<Geometry, GeoJsonProperties> | null => {
   const {
     boxes,
+    coordinateSystem = 'GEODETIC',
     lines,
     points,
     polygons
@@ -409,7 +439,7 @@ const normalizeSpatial = (metadata: {
         closedDividedCoordinates.forEach((polygonPoints: { lat: number, lng: number}[]) => {
           if (polygonPoints.length < 3) return
 
-          const interpolatedPolygon = interpolatePolygon(polygonPoints)
+          const interpolatedPolygon = coordinateSystem === 'GEODETIC' ? interpolateGeodeticPolygon(polygonPoints) : interpolateCartesianPolygon(polygonPoints)
 
           // If polygonWithHolesIndex is 0, it is an exterior polygon
           if (polygonWithHolesIndex === 0) {
