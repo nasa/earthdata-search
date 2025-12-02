@@ -24,7 +24,7 @@ export const buildEsi = (serviceItem) => {
 
     const { urlValue } = url
 
-    const { items: orderOptionsItems } = orderOptions
+    const { items: orderOptionsItems } = orderOptions || {}
 
     if (orderOptionsItems === null) return {}
 

@@ -41,7 +41,7 @@ export const NotFound = () => {
 
   return (
     <div className="wrap">
-      <h2 className="h1">Sorry! The page you were looking for does not exist.</h2>
+      <h2 className="h1 not-found__heading">Sorry! The page you were looking for does not exist.</h2>
       <p>
         Please refer to the ID
         {' '}
