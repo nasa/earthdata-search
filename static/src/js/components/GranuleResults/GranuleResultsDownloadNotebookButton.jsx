@@ -82,7 +82,6 @@ export const GranuleResultsDownloadNotebookButton = ({
         conceptId: variableId
       }
     },
-    fetchPolicy: 'no-cache',
     context: {
       clientName: apolloClientNames.CMR_GRAPHQL
     }

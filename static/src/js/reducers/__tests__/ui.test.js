@@ -53,7 +53,6 @@ const initialState = {
   facetsModal: {
     isOpen: false
   },
-  generateNotebook: {},
   granuleResultsPanel: {
     searchValue: '',
     sortOrder: '-start_date'

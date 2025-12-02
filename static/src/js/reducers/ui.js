@@ -59,7 +59,6 @@ const initialState = {
   keyboardShortcutsModal: {
     isOpen: false
   },
-  generateNotebook: {},
   map: {
     drawingNewLayer: false
   },

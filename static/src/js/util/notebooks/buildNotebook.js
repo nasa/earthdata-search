@@ -11,7 +11,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
  * @param {String} params.granuleId Granule identifier
  * @param {Object} params.granules Granules object
  * @param {String} params.referrerUrl Referrer URL
- * @returns
+ * @returns {Object} An object containing the notebook JSON and the file name
  */
 export const buildNotebook = ({
   boundingBox,
