@@ -20,6 +20,7 @@ import Home from './routes/Home/Home'
 // Components
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
+import RouterErrorBoundary from './components/Errors/RouterErrorBoundary'
 import Spinner from './components/Spinner/Spinner'
 
 // Containers
@@ -75,6 +76,7 @@ const browserRouter = createBrowserRouter([
   {
     path: routes.HOME,
     element: <AppLayout />,
+    errorElement: <RouterErrorBoundary />,
     children: [
       {
         index: true,

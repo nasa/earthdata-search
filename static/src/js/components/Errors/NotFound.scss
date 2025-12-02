@@ -1,6 +1,10 @@
 @use '../../../css/utils';
 
 .not-found {
+  &__heading {
+    color: utils.$color__spacesuit-white;
+  }
+
   &__link {
     color: utils.$color__spacesuit-white;
 

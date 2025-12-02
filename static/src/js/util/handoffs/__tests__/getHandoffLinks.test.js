@@ -117,12 +117,35 @@ describe('getHandoffLinks', () => {
     expect(response).toEqual([])
   })
 
-  test('does not return a handoff object if no tools exist', () => {
+  test('does not return a handoff object if no tool items exist', () => {
     const collectionMetadata = {
       tags: {},
       tools: {
         items: []
       }
+    }
+
+    const collectionQuery = {
+      spatial: {
+        boundingBox: ['-77.60234,37.00428,-75.15486,40.06987']
+      },
+      temporal: {
+        startDate: '2021-07-22T00:55:39.384Z'
+      }
+    }
+
+    const response = getHandoffLinks({
+      collectionMetadata,
+      collectionQuery
+    })
+
+    expect(response).toEqual([])
+  })
+
+  test('does not return a handoff object if no tools exist', () => {
+    const collectionMetadata = {
+      tags: {},
+      tools: null
     }
 
     const collectionQuery = {

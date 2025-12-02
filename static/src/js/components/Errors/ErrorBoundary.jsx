@@ -59,7 +59,7 @@ class ErrorBoundary extends Component {
     if (hasError) {
       return (
         <div className="wrap">
-          <h2 className="h1">
+          <h2 className="h1 error-boundary__heading">
             We&#39;re sorry, but something went wrong.
           </h2>
           <p>
