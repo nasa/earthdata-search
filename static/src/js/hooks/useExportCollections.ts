@@ -29,7 +29,7 @@ export const useExportCollections = () => {
   // The collection parameters used in the export query
   const [exportParams, setExportParams] = useState({})
 
-  const [loading, setLoading] = useState<false | 'csv' | 'json'>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [collections, setCollections] = useState<CollectionMetadata[]>([])
 
@@ -63,14 +63,14 @@ export const useExportCollections = () => {
     // If there is no `data`, return early. (`data` is reset when the next request starts)
     if (isEmpty(data)) return
 
-    const { collections: collectionsData = {} } = data || {}
+    const { collections: collectionsData = {} } = data
     const {
       cursor,
       items = []
-    } = collectionsData
+    } = collectionsData || {}
 
     // If there are items in the current page, add them to the collections state and fetch the next page
-    if (items && items.length > 0) {
+    if (items.length > 0) {
       setCollections((previousCollections) => [
         ...previousCollections,
         ...items
@@ -109,7 +109,7 @@ export const useExportCollections = () => {
     if (loading !== false) return
 
     // Set the loading to the current export type
-    setLoading(type)
+    setLoading(true)
 
     // Set the export format so we remember which format is being exported
     setExportFormat(type)
@@ -151,6 +151,7 @@ export const useExportCollections = () => {
 
   return {
     exportCollections,
+    exportFormat,
     exportLoading: loading
   }
 }

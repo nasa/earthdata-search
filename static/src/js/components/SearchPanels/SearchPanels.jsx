@@ -109,7 +109,11 @@ const SearchPanels = ({
   const location = useLocation()
   const params = useParams()
 
-  const { exportCollections, exportLoading } = useExportCollections()
+  const {
+    exportCollections,
+    exportFormat,
+    exportLoading
+  } = useExportCollections()
 
   const {
     collectionListView,
@@ -308,13 +312,13 @@ const SearchPanels = ({
       title: 'Export CSV',
       label: 'CSV',
       onClick: () => exportCollections('csv'),
-      inProgress: exportLoading === 'csv'
+      inProgress: exportLoading && exportFormat === 'csv'
     },
     {
       title: 'Export JSON',
       label: 'JSON',
       onClick: () => exportCollections('json'),
-      inProgress: exportLoading === 'json'
+      inProgress: exportLoading && exportFormat === 'json'
     }
   ]
 

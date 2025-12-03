@@ -16,11 +16,18 @@ jest.mock('../../util/files/constructDownloadableFile', () => ({
 const TestComponent = () => {
   const {
     exportCollections,
+    exportFormat,
     exportLoading
   } = useExportCollections()
 
   return (
     <div>
+      <span>
+        Export Format:
+        {' '}
+        {exportFormat}
+      </span>
+
       <span>
         Loading:
         {' '}
@@ -212,8 +219,10 @@ describe('useExportCollections', () => {
       await user.click(button)
 
       await waitFor(() => {
-        expect(screen.getByText('Loading: csv')).toBeInTheDocument()
+        expect(screen.getByText('Loading: true')).toBeInTheDocument()
       })
+
+      expect(screen.getByText('Export Format: csv')).toBeInTheDocument()
 
       expect(constructDownloadableFile).toHaveBeenCalledTimes(1)
       expect(constructDownloadableFile).toHaveBeenCalledWith(
@@ -234,8 +243,10 @@ describe('useExportCollections', () => {
       await user.click(button)
 
       await waitFor(() => {
-        expect(screen.getByText('Loading: json')).toBeInTheDocument()
+        expect(screen.getByText('Loading: true')).toBeInTheDocument()
       })
+
+      expect(screen.getByText('Export Format: json')).toBeInTheDocument()
 
       expect(constructDownloadableFile).toHaveBeenCalledTimes(1)
       expect(constructDownloadableFile).toHaveBeenCalledWith(
