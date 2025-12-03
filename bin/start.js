@@ -55,10 +55,6 @@ const defaultCommands = [{
   // when the lambdas are rebuilt by the `watch` service.
   command: 'npm run start:api',
   name: 'api'
-}, {
-  // Run the S3 server
-  command: 'npm run start:s3',
-  name: 's3'
 }]
 
 // Start the services

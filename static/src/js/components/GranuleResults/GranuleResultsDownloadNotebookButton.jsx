@@ -1,11 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { PropTypes } from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaFileCode } from 'react-icons/fa'
+import { useLazyQuery } from '@apollo/client'
 
 import Button from '../Button/Button'
+
+import useEdscStore from '../../zustand/useEdscStore'
+
+import { buildNotebook } from '../../util/notebooks/buildNotebook'
+import { downloadFile } from '../../util/notebooks/downloadFile'
+
+import GET_NOTEBOOK_GRANULES from '../../operations/queries/getNotebookGranules'
+import { apolloClientNames } from '../../constants/apolloClientNames'
 
 import './GranuleResultsDownloadNotebookButton.scss'
 
@@ -50,41 +59,60 @@ CustomDownloadNotebookToggle.propTypes = {
  * Renders GranuleResultsDownloadNotebookButton.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionQuerySpatial - The current collection spatial.
- * @param {String} props.generateNotebook - The state for generating notebooks
  * @param {Object} props.generateNotebookTag - The contents of the generate_notebook tag
  * @param {Array} props.granuleId - The granule id
- * @param {Array} props.onGenerateNotebook - A callback to trigger the notebook generation
  */
 export const GranuleResultsDownloadNotebookButton = ({
   collectionQuerySpatial,
-  generateNotebook,
   generateNotebookTag,
-  granuleId,
-  onGenerateNotebook
+  granuleId
 }) => {
+  const handleError = useEdscStore((state) => state.errors.handleError)
   const dropdownMenuRef = useRef(null)
-  const { variableConceptId: variableId } = generateNotebookTag
+  const { variable_concept_id: variableId } = generateNotebookTag
   const { boundingBox: boundingBoxes } = collectionQuerySpatial
   const [boundingBox] = boundingBoxes || []
 
-  let generateNotebookParams = {
-    granuleId,
-    referrerUrl: window.location.href
-  }
-
-  if (boundingBox) {
-    generateNotebookParams = {
-      ...generateNotebookParams,
-      boundingBox
+  const [generateNotebook, { data, loading, error }] = useLazyQuery(GET_NOTEBOOK_GRANULES, {
+    variables: {
+      granulesParams: {
+        conceptId: granuleId
+      },
+      variablesParams: {
+        conceptId: variableId
+      }
+    },
+    context: {
+      clientName: apolloClientNames.CMR_GRAPHQL
     }
-  }
+  })
 
-  if (variableId) {
-    generateNotebookParams = {
-      ...generateNotebookParams,
-      variableId
+  useEffect(() => {
+    if (error) {
+      handleError({
+        error,
+        action: 'generateNotebook'
+      })
     }
-  }
+  }, [error])
+
+  useEffect(() => {
+    // If data was retrieved, generate the notebook for download
+    if (data) {
+      const { granules } = data
+
+      // Build the notebook file
+      const { fileName, notebook } = buildNotebook({
+        boundingBox,
+        granuleId,
+        granules,
+        referrerUrl: window.location.href
+      })
+
+      // Download the notebook file
+      downloadFile(fileName, notebook)
+    }
+  }, [data])
 
   const rootElement = document.getElementById('#root') || document.body
 
@@ -117,10 +145,10 @@ export const GranuleResultsDownloadNotebookButton = ({
                 this granule with Python, on your computer or in the cloud.
               </p>
               <Button
-                spinner={generateNotebook[granuleId] === 'loading'}
+                spinner={loading}
                 bootstrapVariant="primary"
                 icon={Download}
-                onClick={() => onGenerateNotebook(generateNotebookParams)}
+                onClick={() => generateNotebook()}
               >
                 Download Notebook
               </Button>
@@ -141,10 +169,8 @@ GranuleResultsDownloadNotebookButton.propTypes = {
     boundingBox: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   generateNotebookTag: PropTypes.shape({
-    variableConceptId: PropTypes.string
-  }).isRequired,
-  generateNotebook: PropTypes.shape({}).isRequired,
-  onGenerateNotebook: PropTypes.func.isRequired
+    variable_concept_id: PropTypes.string
+  }).isRequired
 }
 
 export default GranuleResultsDownloadNotebookButton

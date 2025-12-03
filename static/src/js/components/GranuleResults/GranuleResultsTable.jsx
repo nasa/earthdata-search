@@ -19,14 +19,12 @@ import './GranuleResultsTable.scss'
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
  * @param {Object} props.directDistributionInformation - The direct distribution information.
- * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.
  * @param {Function} props.isGranuleInProject - Function to determine if the granule is in the project.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
- * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
@@ -36,13 +34,11 @@ import './GranuleResultsTable.scss'
 export const GranuleResultsTable = ({
   collectionId,
   directDistributionInformation,
-  generateNotebook,
   granules,
   isGranuleInProject,
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   setVisibleMiddleIndex = null,
@@ -76,12 +72,10 @@ export const GranuleResultsTable = ({
         collectionQuerySpatial,
         collectionTags,
         directDistributionInformation,
-        generateNotebook,
         GranuleResultsTableHeaderCell,
         isGranuleInProject,
         location,
         onExcludeGranule: excludeGranule,
-        onGenerateNotebook,
         onMetricsAddGranuleProject,
         onMetricsDataAccess,
         removeGranuleFromProjectCollection
@@ -223,13 +217,11 @@ export const GranuleResultsTable = ({
 GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
-  generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
