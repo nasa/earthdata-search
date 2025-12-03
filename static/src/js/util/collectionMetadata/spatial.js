@@ -90,28 +90,41 @@ export const getCollectionGeoFeatures = (collectionMetadata) => {
 
   const {
     boxes,
+    coordinateSystem,
     lines,
     points,
     polygons
   } = collectionMetadata
 
   if (boxes) {
-    const boxFeatures = normalizeSpatial({ boxes })
+    const boxFeatures = normalizeSpatial({
+      boxes,
+      coordinateSystem
+    })
     collectionGeoFeatures.push(boxFeatures)
   }
 
   if (lines) {
-    const linesFeatures = normalizeSpatial({ lines })
+    const linesFeatures = normalizeSpatial({
+      coordinateSystem,
+      lines
+    })
     collectionGeoFeatures.push(linesFeatures)
   }
 
   if (points) {
-    const pointsFeatures = normalizeSpatial({ points })
+    const pointsFeatures = normalizeSpatial({
+      coordinateSystem,
+      points
+    })
     collectionGeoFeatures.push(pointsFeatures)
   }
 
   if (polygons) {
-    const polygonsFeatures = normalizeSpatial({ polygons })
+    const polygonsFeatures = normalizeSpatial({
+      coordinateSystem,
+      polygons
+    })
     collectionGeoFeatures.push(polygonsFeatures)
   }
 

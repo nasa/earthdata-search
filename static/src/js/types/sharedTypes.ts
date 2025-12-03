@@ -36,6 +36,9 @@ export type PointString = string
 /** A polygon string following the CMR format This does not check the format of the string but is used to signify that the string should follow a valid datetime string format. */
 export type PolygonString = string
 
+/** The coordinate system used for spatial data */
+export type CoordinateSystem = 'GEODETIC' | 'CARTESIAN'
+
 /** The spatial object */
 export interface Spatial {
   /** The bounding box coordinates, if applied */

@@ -11,7 +11,7 @@ import {
 import { splitListOfPoints } from '@edsc/geo-utils'
 
 import { crsProjections, projectionConfigs } from './crs'
-import { interpolateBoxPolygon, interpolatePolygon } from './normalizeSpatial'
+import { interpolateBoxPolygon, interpolateGeodeticPolygon } from './normalizeSpatial'
 import projectionCodes from '../../constants/projectionCodes'
 import {
   spatialSearchMarkerStyle,
@@ -211,7 +211,7 @@ const drawSpatialSearch = ({
     }, [])
 
     // Interpolate the polygon so that it follows the curvature of the earth
-    const interpolatedCoordinates = interpolatePolygon(coordinates)
+    const interpolatedCoordinates = interpolateGeodeticPolygon(coordinates)
 
     const polygon = new Polygon(interpolatedCoordinates)
 

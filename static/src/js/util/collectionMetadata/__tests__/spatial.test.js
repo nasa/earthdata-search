@@ -388,7 +388,7 @@ describe('getCollectionGeoFeatures', () => {
       test('returns normalized feature collection', () => {
         const metadata = {
           boxes: null,
-          coordinateSystem: 'CARTESIAN',
+          coordinateSystem: 'GEODETIC',
           lines: null,
           points: null,
           polygons: [
