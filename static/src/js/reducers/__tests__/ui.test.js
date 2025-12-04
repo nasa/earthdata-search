@@ -1,7 +1,5 @@
 import uiReducer from '../ui'
 import {
-  EXPORT_FINISHED,
-  EXPORT_STARTED,
   RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
@@ -43,12 +41,6 @@ const initialState = {
     isOpen: false,
     subscriptionConceptId: '',
     type: ''
-  },
-  export: {
-    isExportRunning: {
-      csv: false,
-      json: false
-    }
   },
   facetsModal: {
     isOpen: false
@@ -392,58 +384,6 @@ describe('TOGGLE_EDIT_SUBSCRIPTION_MODAL', () => {
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('EXPORT_STARTED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: EXPORT_STARTED,
-      payload: 'json'
-    }
-
-    const expectedState = {
-      ...initialState,
-      export: {
-        isExportRunning: {
-          csv: false,
-          json: true
-        }
-      }
-    }
-
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('EXPORT_FINISHED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: EXPORT_FINISHED,
-      payload: 'json'
-    }
-
-    const initial = {
-      ...initialState,
-      export: {
-        isExportRunning: {
-          csv: false,
-          json: true
-        }
-      }
-    }
-
-    const expectedState = {
-      ...initialState,
-      export: {
-        isExportRunning: {
-          csv: false,
-          json: false
-        }
-      }
-    }
-
-    expect(uiReducer(initial, action)).toEqual(expectedState)
   })
 })
 

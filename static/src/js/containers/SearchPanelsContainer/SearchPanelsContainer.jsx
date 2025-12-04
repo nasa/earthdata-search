@@ -11,8 +11,7 @@ import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
 export const mapStateToProps = (state) => ({
-  collectionSubscriptions: getCollectionSubscriptions(state),
-  isExportRunning: state.ui.export.isExportRunning
+  collectionSubscriptions: getCollectionSubscriptions(state)
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -23,8 +22,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
-    (state) => dispatch(actions.toggleAboutCwicModal(state)),
-  onExport: (format) => dispatch(actions.exportSearch(format))
+    (state) => dispatch(actions.toggleAboutCwicModal(state))
 })
 
 /**
@@ -37,12 +35,10 @@ export const mapDispatchToProps = (dispatch) => ({
  */
 export const SearchPanelsContainer = ({
   collectionSubscriptions,
-  isExportRunning,
   onChangePath,
   onMetricsCollectionSortChange,
   onToggleAboutCSDAModal,
-  onToggleAboutCwicModal,
-  onExport
+  onToggleAboutCwicModal
 }) => (
   <Routes>
     <Route
@@ -51,9 +47,7 @@ export const SearchPanelsContainer = ({
         (
           <SearchPanels
             collectionSubscriptions={collectionSubscriptions}
-            isExportRunning={isExportRunning}
             onChangePath={onChangePath}
-            onExport={onExport}
             onMetricsCollectionSortChange={onMetricsCollectionSortChange}
             onToggleAboutCSDAModal={onToggleAboutCSDAModal}
             onToggleAboutCwicModal={onToggleAboutCwicModal}
@@ -67,12 +61,10 @@ export const SearchPanelsContainer = ({
 
 SearchPanelsContainer.propTypes = {
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  isExportRunning: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  onToggleAboutCwicModal: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired
+  onToggleAboutCwicModal: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)

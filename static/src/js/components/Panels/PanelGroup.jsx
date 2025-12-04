@@ -47,7 +47,6 @@ export const PanelGroup = ({
   headerMetaPrimaryLoading = false,
   headerMetaPrimaryText = null,
   isActive = false,
-  isExportRunning = false,
   isOpen = false,
   moreActionsDropdownItems = [],
   onChangePanel = null,
@@ -99,7 +98,6 @@ export const PanelGroup = ({
         headerMessage={headerMessage}
         headerMetaPrimaryLoading={headerMetaPrimaryLoading}
         headerMetaPrimaryText={headerMetaPrimaryText}
-        isExportRunning={isExportRunning}
         moreActionsDropdownItems={moreActionsDropdownItems}
         panelGroupId={panelGroupId}
         panelGroupIsActive={isActive}
@@ -131,7 +129,6 @@ PanelGroup.propTypes = {
   headerMetaPrimaryLoading: PropTypes.bool,
   headerMetaPrimaryText: PropTypes.string,
   isActive: PropTypes.bool,
-  isExportRunning: PropTypes.bool,
   isOpen: PropTypes.bool,
   onChangePanel: PropTypes.func,
   moreActionsDropdownItems: PropTypes.arrayOf(

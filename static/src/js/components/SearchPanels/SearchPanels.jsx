@@ -54,6 +54,8 @@ import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule
 import { getGranules } from '../../zustand/selectors/granules'
 import { getEdlToken, getSitePreferences } from '../../zustand/selectors/user'
 
+import { useExportCollections } from '../../hooks/useExportCollections'
+
 import { routes } from '../../constants/routes'
 
 import './SearchPanels.scss'
@@ -76,8 +78,6 @@ const defaultPanelStateFromProps = (value) => {
 
 const SearchPanels = ({
   collectionSubscriptions,
-  isExportRunning,
-  onExport,
   onMetricsCollectionSortChange,
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal
@@ -108,6 +108,12 @@ const SearchPanels = ({
 
   const location = useLocation()
   const params = useParams()
+
+  const {
+    exportCollections,
+    exportFormat,
+    exportLoading
+  } = useExportCollections()
 
   const {
     collectionListView,
@@ -301,22 +307,18 @@ const SearchPanels = ({
     }
   ]
 
-  const {
-    csv: csvExportRunning,
-    json: jsonExportRunning
-  } = isExportRunning
   const exportsArray = [
     {
       title: 'Export CSV',
       label: 'CSV',
-      onClick: () => onExport('csv'),
-      inProgress: csvExportRunning
+      onClick: () => exportCollections('csv'),
+      inProgress: exportLoading && exportFormat === 'csv'
     },
     {
       title: 'Export JSON',
       label: 'JSON',
-      onClick: () => onExport('json'),
-      inProgress: jsonExportRunning
+      onClick: () => exportCollections('json'),
+      inProgress: exportLoading && exportFormat === 'json'
     }
   ]
 
@@ -800,11 +802,6 @@ const SearchPanels = ({
 
 SearchPanels.propTypes = {
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  isExportRunning: PropTypes.shape({
-    csv: PropTypes.bool,
-    json: PropTypes.bool
-  }).isRequired,
-  onExport: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired

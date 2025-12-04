@@ -13,7 +13,7 @@ import {
 } from '../GranuleResultsDownloadNotebookButton'
 import GET_NOTEBOOK_GRANULES from '../../../operations/queries/getNotebookGranules'
 import { buildNotebook } from '../../../util/notebooks/buildNotebook'
-import { downloadFile } from '../../../util/notebooks/downloadFile'
+import { constructDownloadableFile } from '../../../util/files/constructDownloadableFile'
 
 jest.mock('../../../util/notebooks/buildNotebook', () => ({
   buildNotebook: jest.fn().mockReturnValue({
@@ -22,8 +22,8 @@ jest.mock('../../../util/notebooks/buildNotebook', () => ({
   })
 }))
 
-jest.mock('../../../util/notebooks/downloadFile', () => ({
-  downloadFile: jest.fn()
+jest.mock('../../../util/files/constructDownloadableFile', () => ({
+  constructDownloadableFile: jest.fn()
 }))
 
 Object.defineProperty(window, 'location', {
@@ -113,8 +113,12 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           referrerUrl: 'https://www.test-location.com/?param=value'
         })
 
-        expect(downloadFile).toHaveBeenCalledTimes(1)
-        expect(downloadFile).toHaveBeenCalledWith('test_notebook.ipynb', { mock: 'notebook' })
+        expect(constructDownloadableFile).toHaveBeenCalledTimes(1)
+        expect(constructDownloadableFile).toHaveBeenCalledWith(
+          JSON.stringify({ mock: 'notebook' }),
+          'test_notebook.ipynb',
+          'application/x-ipynb+json'
+        )
       })
     })
 
@@ -158,8 +162,12 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           referrerUrl: 'https://www.test-location.com/?param=value'
         })
 
-        expect(downloadFile).toHaveBeenCalledTimes(1)
-        expect(downloadFile).toHaveBeenCalledWith('test_notebook.ipynb', { mock: 'notebook' })
+        expect(constructDownloadableFile).toHaveBeenCalledTimes(1)
+        expect(constructDownloadableFile).toHaveBeenCalledWith(
+          JSON.stringify({ mock: 'notebook' }),
+          'test_notebook.ipynb',
+          'application/x-ipynb+json'
+        )
       })
     })
 
@@ -264,8 +272,12 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           referrerUrl: 'https://www.test-location.com/?param=value'
         })
 
-        expect(downloadFile).toHaveBeenCalledTimes(1)
-        expect(downloadFile).toHaveBeenCalledWith('test_notebook.ipynb', { mock: 'notebook' })
+        expect(constructDownloadableFile).toHaveBeenCalledTimes(1)
+        expect(constructDownloadableFile).toHaveBeenCalledWith(
+          JSON.stringify({ mock: 'notebook' }),
+          'test_notebook.ipynb',
+          'application/x-ipynb+json'
+        )
       })
     })
 
