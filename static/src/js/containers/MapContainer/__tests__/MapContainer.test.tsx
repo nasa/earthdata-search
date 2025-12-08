@@ -1,9 +1,6 @@
 import React from 'react'
 
-// @ts-expect-error The file does not have types
-import actions from '../../../actions'
-
-import { mapDispatchToProps, mapStateToProps } from '../MapContainer'
+import { mapDispatchToProps } from '../MapContainer'
 
 // @ts-expect-error The file does not have types
 import * as metricsMap from '../../../middleware/metrics/actions'
@@ -20,57 +17,5 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('mockType')
-  })
-
-  test('onToggleDrawingNewLayer calls actions.toggleDrawingNewLayer', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleDrawingNewLayer')
-
-    mapDispatchToProps(dispatch).onToggleDrawingNewLayer('point')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('point')
-  })
-
-  test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleShapefileUploadModal')
-
-    mapDispatchToProps(dispatch).onToggleShapefileUploadModal(true)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(true)
-  })
-
-  test('onToggleTooManyPointsModal calls actions.toggleTooManyPointsModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleTooManyPointsModal')
-
-    mapDispatchToProps(dispatch).onToggleTooManyPointsModal(true)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(true)
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      ui: {
-        map: {
-          drawingNewLayer: false
-        },
-        spatialPolygonWarning: {
-          isDisplayed: false
-        }
-      }
-    }
-
-    const expectedState = {
-      displaySpatialPolygonWarning: false,
-      drawingNewLayer: false
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
   })
 })

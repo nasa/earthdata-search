@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { withFormik } from 'formik'
 import { splitListOfPoints } from '@edsc/geo-utils'
 import { LineString, Polygon } from 'ol/geom'
 
-import actions from '../../actions'
 import { getValidationSchema } from '../../util/forms'
 
 import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSearchModal'
@@ -15,15 +13,6 @@ import { mapEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getSelectedRegionQuery } from '../../zustand/selectors/query'
-
-export const mapStateToProps = (state) => ({
-  isOpen: state.ui.advancedSearchModal.isOpen
-})
-
-export const mapDispatchToProps = (dispatch) => ({
-  onToggleAdvancedSearchModal:
-    (state) => dispatch(actions.toggleAdvancedSearchModal(state))
-})
 
 /**
  * Renders AdvancedSearchModalContainer.
@@ -45,14 +34,12 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.values - Form values provided by Formik.
  */
 export const AdvancedSearchModalContainer = ({
-  isOpen,
   fields,
   errors,
   handleBlur,
   handleChange,
   handleSubmit,
   isValid,
-  onToggleAdvancedSearchModal,
   resetForm,
   setFieldValue,
   setFieldTouched,
@@ -61,9 +48,7 @@ export const AdvancedSearchModalContainer = ({
   validateForm
 }) => (
   <AdvancedSearchModal
-    isOpen={isOpen}
     fields={fields}
-    onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
     errors={errors}
     handleBlur={handleBlur}
     handleChange={handleChange}
@@ -166,7 +151,6 @@ const AdvancedSearchModalContainerWrapper = (props) => {
 }
 
 AdvancedSearchModalContainer.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   fields: PropTypes.arrayOf(
     PropTypes.shape({})
   ).isRequired,
@@ -180,8 +164,7 @@ AdvancedSearchModalContainer.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
-  validateForm: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  validateForm: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchModalContainerWrapper)
+export default AdvancedSearchModalContainerWrapper

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
-import PropTypes from 'prop-types'
 import { isEqual } from 'lodash-es'
-
 import { FaCrop } from 'react-icons/fa'
 
 import Col from 'react-bootstrap/Col'
@@ -37,15 +34,16 @@ import './SpatialDisplay.scss'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
-const SpatialDisplay = ({
-  displaySpatialPolygonWarning,
-  drawingNewLayer
-}) => {
+const SpatialDisplay = () => {
   const {
     changeQuery,
+    displaySpatialPolygonWarning,
+    drawingNewLayer,
     removeSpatialFilter
   } = useEdscStore((state) => ({
     changeQuery: state.query.changeQuery,
+    displaySpatialPolygonWarning: state.ui.map.displaySpatialPolygonWarning,
+    drawingNewLayer: state.ui.map.drawingNewLayer,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
   const nlpCollection = useEdscStore(getNlpCollection)
@@ -769,14 +767,6 @@ const SpatialDisplay = ({
       {items}
     </>
   )
-}
-
-SpatialDisplay.propTypes = {
-  displaySpatialPolygonWarning: PropTypes.bool.isRequired,
-  drawingNewLayer: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]).isRequired
 }
 
 export default SpatialDisplay

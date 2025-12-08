@@ -11,6 +11,7 @@ import EDSCTimeline from '@edsc/timeline'
 import Timeline from '../Timeline'
 import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('@edsc/timeline', () => jest.fn(() => <div />))
 
@@ -30,7 +31,6 @@ const setup = setupTest({
     showOverrideModal: false,
     pathname: '/search/granules',
     projectCollectionsIds: ['collectionId'],
-    onToggleOverrideTemporalModal: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleTimeline: jest.fn(),
     isOpen: true
@@ -41,6 +41,11 @@ const setup = setupTest({
     },
     timeline: {
       setQuery: jest.fn()
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
     }
   }
 })
@@ -71,8 +76,8 @@ describe('Timeline component', () => {
     }), {})
   })
 
-  test('calls onToggleOverrideTemporalModal on page load if spatial and focus both exist', async () => {
-    const { props } = setup({
+  test('calls setOpenModal on page load if spatial and focus both exist', async () => {
+    const { zustandState } = setup({
       overrideProps: {
         pathname: '/projects',
         showOverrideModal: true
@@ -100,12 +105,12 @@ describe('Timeline component', () => {
       }
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(true)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.OVERRIDE_TEMPORAL)
   })
 
-  test('does not call onToggleOverrideTemporalModal on page load if spatial and focus don\'t both exist', () => {
-    const { props } = setup({
+  test('does not call setOpenModal on page load if spatial and focus don\'t both exist', () => {
+    const { zustandState } = setup({
       overrideProps: {
         pathname: '/projects',
         showOverrideModal: true,
@@ -126,7 +131,7 @@ describe('Timeline component', () => {
       }
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
   })
 
   test('converts timeline intervals into the correct format for EDSCTimeline', () => {
@@ -386,8 +391,8 @@ describe('handleTemporalSet', () => {
     })
   })
 
-  test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', async () => {
-    const { props } = setup({
+  test('calls setOpenModal when setting temporal and focus already exists', async () => {
+    const { zustandState } = setup({
       overrideProps: {
         pathname: '/projects',
         showOverrideModal: true
@@ -417,11 +422,12 @@ describe('handleTemporalSet', () => {
       })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.OVERRIDE_TEMPORAL)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting temporal and focus does not exist', async () => {
-    const { props } = setup({
+  test('does not call setOpenModal when setting temporal and focus does not exist', async () => {
+    const { zustandState } = setup({
       pathname: '/projects',
       showOverrideModal: true
     }, {
@@ -438,11 +444,11 @@ describe('handleTemporalSet', () => {
       })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', async () => {
-    const { props } = setup({
+  test('does not call setOpenModal when setting temporal and focus exists on the granules page', async () => {
+    const { zustandState } = setup({
       pathname: '/search/granules',
       showOverrideModal: false
     }, {
@@ -469,7 +475,7 @@ describe('handleTemporalSet', () => {
       })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
   })
 })
 
@@ -530,8 +536,8 @@ describe('handleFocusedSet', () => {
     })
   })
 
-  test('calls onToggleOverrideTemporalModal when setting focus and temporal already exists', async () => {
-    const { props } = setup({
+  test('calls setOpenModal when setting focus and temporal already exists', async () => {
+    const { zustandState } = setup({
       overrideProps: {
         pathname: '/projects',
         showOverrideModal: true
@@ -559,12 +565,12 @@ describe('handleFocusedSet', () => {
       })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(true)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.OVERRIDE_TEMPORAL)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting focus and temporal does not exist', async () => {
-    const { props } = setup({
+  test('does not call setOpenModal when setting focus and temporal does not exist', async () => {
+    const { zustandState } = setup({
       pathname: '/projects',
       showOverrideModal: true
     })
@@ -579,11 +585,11 @@ describe('handleFocusedSet', () => {
       })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
   })
 
-  test('does not call onToggleOverrideTemporalModal when setting focus and temporal exists on the granules page', async () => {
-    const { props } = setup({
+  test('does not call setOpenModal when setting focus and temporal exists on the granules page', async () => {
+    const { zustandState } = setup({
       pathname: '/search/granules',
       showOverrideModal: false,
       temporalSearch: {
@@ -602,7 +608,7 @@ describe('handleFocusedSet', () => {
       })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
   })
 })
 

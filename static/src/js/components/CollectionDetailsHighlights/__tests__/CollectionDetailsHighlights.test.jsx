@@ -7,6 +7,7 @@ import CollectionDetailsHighlights, { granuleListTotalStyle } from '../Collectio
 import Skeleton from '../../Skeleton/Skeleton'
 import { collectionDetailsParagraph, collectionDetailsRow } from '../skeleton'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(() => <div />))
@@ -37,9 +38,6 @@ const collectionMetadata = {
 
 const setup = setupTest({
   Component: CollectionDetailsHighlights,
-  defaultProps: {
-    onToggleRelatedUrlsModal: jest.fn()
-  },
   defaultZustandState: {
     collection: {
       collectionId: 'collectionId',
@@ -51,6 +49,11 @@ const setup = setupTest({
       collections: {
         isLoaded: true,
         isLoading: false
+      }
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
       }
     }
   }
@@ -159,13 +162,13 @@ describe('CollectionDetailsHighlights component', () => {
     })
 
     describe('when clicking the View All Related URLs button', () => {
-      test('calls onToggleRelatedUrlsModal', async () => {
-        const { props, user } = setup()
+      test('calls setOpenModal', async () => {
+        const { user, zustandState } = setup()
 
         await user.click(screen.getByText('View All Related URLs'))
 
-        expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledWith(true)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.RELATED_URLS)
       })
     })
   })

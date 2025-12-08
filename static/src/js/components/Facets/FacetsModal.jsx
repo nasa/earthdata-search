@@ -11,6 +11,9 @@ import FacetsModalNav from './FacetsModalNav'
 import Skeleton from '../Skeleton/Skeleton'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import './FacetsModal.scss'
 
@@ -27,7 +30,6 @@ const matchingCollectionsSkeleton = [
 
 const FacetsModal = ({
   collectionHits = null,
-  isOpen,
   onToggleFacetsModal,
   viewAllFacets
 }) => {
@@ -45,10 +47,13 @@ const FacetsModal = ({
     applyViewAllFacets: state.facetParams.applyViewAllFacets,
     setViewAllFacets: state.facetParams.setViewAllFacets
   }))
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.VIEW_ALL_FACETS))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
-  if (!selectedCategory) return null
+  if (!isOpen || !selectedCategory) return null
 
   const onModalClose = () => {
+    setOpenModal(null)
     onToggleFacetsModal(false)
   }
 
@@ -128,7 +133,6 @@ const FacetsModal = ({
 
 FacetsModal.propTypes = {
   collectionHits: PropTypes.number,
-  isOpen: PropTypes.bool.isRequired,
   onToggleFacetsModal: PropTypes.func.isRequired,
   viewAllFacets: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),

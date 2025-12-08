@@ -91,10 +91,6 @@ const setup = (renderMethod, overrideProps = {}) => {
   )
 }
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('Panels component', () => {
   test('renders itself and its children correctly', () => {
     setup(render)
@@ -102,9 +98,9 @@ describe('Panels component', () => {
     expect(screen.getByTestId('panels-section')).toHaveStyle('width: 600px;')
 
     // Panels is re-rendered after the width has been determined, so we want to check the last calls to the children components
-    expect(PanelSection).toHaveBeenCalledTimes(4)
+    expect(PanelSection).toHaveBeenCalledTimes(2)
     expect(PanelSection).toHaveBeenNthCalledWith(
-      3,
+      1,
       expect.objectContaining({
         isActive: true,
         isOpen: true,
@@ -114,18 +110,18 @@ describe('Panels component', () => {
     )
 
     expect(PanelSection).toHaveBeenNthCalledWith(
-      4,
+      2,
       expect.objectContaining({
-        isActive: false,
-        isOpen: false,
-        panelSectionId: '1'
+        isActive: true,
+        isOpen: true,
+        panelSectionId: '0'
       }),
       {}
     )
 
-    expect(PanelGroup).toHaveBeenCalledTimes(8)
+    expect(PanelGroup).toHaveBeenCalledTimes(4)
     expect(PanelGroup).toHaveBeenNthCalledWith(
-      5,
+      1,
       expect.objectContaining({
         activePanelId: '0',
         isActive: true,
@@ -137,7 +133,7 @@ describe('Panels component', () => {
     )
 
     expect(PanelGroup).toHaveBeenNthCalledWith(
-      6,
+      2,
       expect.objectContaining({
         activePanelId: '0',
         isActive: false,
@@ -149,30 +145,30 @@ describe('Panels component', () => {
     )
 
     expect(PanelGroup).toHaveBeenNthCalledWith(
-      7,
+      3,
       expect.objectContaining({
         activePanelId: '0',
-        isActive: false,
-        isOpen: false,
+        isActive: true,
+        isOpen: true,
         panelGroupId: '0',
-        primaryHeading: 'Panel Group 1.0'
+        primaryHeading: 'Panel Group 0.0'
       }),
       {}
     )
 
     expect(PanelGroup).toHaveBeenNthCalledWith(
-      8,
+      4,
       expect.objectContaining({
         activePanelId: '0',
         isActive: false,
         isOpen: false,
         panelGroupId: '1',
-        primaryHeading: 'Panel Group 1.1'
+        primaryHeading: 'Panel Group 0.1'
       }),
       {}
     )
 
-    expect(PanelItem).toHaveBeenCalledTimes(7)
+    expect(PanelItem).toHaveBeenCalledTimes(3)
     expect(PanelItem).toHaveBeenNthCalledWith(
       1,
       { children: 'Panel 0.0.0 Content' },
@@ -193,33 +189,6 @@ describe('Panels component', () => {
       },
       {}
     )
-
-    expect(PanelItem).toHaveBeenNthCalledWith(
-      4,
-      {
-        children: 'Panel 1.0.0 Content',
-        footer: <div className="fake-footer">A fake footer</div>
-      },
-      {}
-    )
-
-    expect(PanelItem).toHaveBeenNthCalledWith(
-      5,
-      { children: 'Panel 1.0.1 Content' },
-      {}
-    )
-
-    expect(PanelItem).toHaveBeenNthCalledWith(
-      6,
-      { children: 'Panel 1.1.0 Content' },
-      {}
-    )
-
-    expect(PanelItem).toHaveBeenNthCalledWith(
-      7,
-      { children: 'Panel 1.1.1 Content' },
-      {}
-    )
   })
 
   describe('After switching a panel section', () => {
@@ -229,19 +198,19 @@ describe('Panels component', () => {
       setup(rerender, { activePanel: '1.0.0' })
 
       // Panels is re-rendered after the props have changed, so we want to check the last calls to the children components
-      expect(PanelSection).toHaveBeenCalledTimes(6)
+      expect(PanelSection).toHaveBeenCalledTimes(3)
       expect(PanelSection).toHaveBeenNthCalledWith(
-        5,
+        2,
         expect.objectContaining({
-          isActive: false,
-          isOpen: false,
+          isActive: true,
+          isOpen: true,
           panelSectionId: '0'
         }),
         {}
       )
 
       expect(PanelSection).toHaveBeenNthCalledWith(
-        6,
+        3,
         expect.objectContaining({
           isActive: true,
           isOpen: true,
@@ -250,13 +219,13 @@ describe('Panels component', () => {
         {}
       )
 
-      expect(PanelGroup).toHaveBeenCalledTimes(12)
+      expect(PanelGroup).toHaveBeenCalledTimes(6)
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        9,
+        3,
         expect.objectContaining({
           activePanelId: '0',
-          isActive: false,
-          isOpen: false,
+          isActive: true,
+          isOpen: true,
           panelGroupId: '0',
           primaryHeading: 'Panel Group 0.0'
         }),
@@ -264,7 +233,7 @@ describe('Panels component', () => {
       )
 
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        10,
+        4,
         expect.objectContaining({
           activePanelId: '0',
           isActive: false,
@@ -276,7 +245,7 @@ describe('Panels component', () => {
       )
 
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        11,
+        5,
         expect.objectContaining({
           activePanelId: '0',
           isActive: true,
@@ -288,7 +257,7 @@ describe('Panels component', () => {
       )
 
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        12,
+        6,
         expect.objectContaining({
           activePanelId: '0',
           isActive: false,
@@ -308,9 +277,9 @@ describe('Panels component', () => {
       setup(rerender, { activePanel: '0.1.0' })
 
       // Panels is re-rendered after the props have changed, so we want to check the last calls to the children components
-      expect(PanelSection).toHaveBeenCalledTimes(6)
+      expect(PanelSection).toHaveBeenCalledTimes(3)
       expect(PanelSection).toHaveBeenNthCalledWith(
-        5,
+        2,
         expect.objectContaining({
           isActive: true,
           isOpen: true,
@@ -320,18 +289,42 @@ describe('Panels component', () => {
       )
 
       expect(PanelSection).toHaveBeenNthCalledWith(
-        6,
+        3,
         expect.objectContaining({
-          isActive: false,
-          isOpen: false,
-          panelSectionId: '1'
+          isActive: true,
+          isOpen: true,
+          panelSectionId: '0'
         }),
         {}
       )
 
-      expect(PanelGroup).toHaveBeenCalledTimes(12)
+      expect(PanelGroup).toHaveBeenCalledTimes(6)
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        9,
+        3,
+        expect.objectContaining({
+          activePanelId: '0',
+          isActive: true,
+          isOpen: true,
+          panelGroupId: '0',
+          primaryHeading: 'Panel Group 0.0'
+        }),
+        {}
+      )
+
+      expect(PanelGroup).toHaveBeenNthCalledWith(
+        4,
+        expect.objectContaining({
+          activePanelId: '0',
+          isActive: false,
+          isOpen: false,
+          panelGroupId: '1',
+          primaryHeading: 'Panel Group 0.1'
+        }),
+        {}
+      )
+
+      expect(PanelGroup).toHaveBeenNthCalledWith(
+        5,
         expect.objectContaining({
           activePanelId: '0',
           isActive: false,
@@ -343,37 +336,13 @@ describe('Panels component', () => {
       )
 
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        10,
+        6,
         expect.objectContaining({
           activePanelId: '0',
           isActive: true,
           isOpen: true,
           panelGroupId: '1',
           primaryHeading: 'Panel Group 0.1'
-        }),
-        {}
-      )
-
-      expect(PanelGroup).toHaveBeenNthCalledWith(
-        11,
-        expect.objectContaining({
-          activePanelId: '0',
-          isActive: false,
-          isOpen: false,
-          panelGroupId: '0',
-          primaryHeading: 'Panel Group 1.0'
-        }),
-        {}
-      )
-
-      expect(PanelGroup).toHaveBeenNthCalledWith(
-        12,
-        expect.objectContaining({
-          activePanelId: '0',
-          isActive: false,
-          isOpen: false,
-          panelGroupId: '1',
-          primaryHeading: 'Panel Group 1.1'
         }),
         {}
       )
@@ -387,9 +356,9 @@ describe('Panels component', () => {
       setup(rerender, { activePanel: '0.0.1' })
 
       // Panels is re-rendered after the props have changed, so we want to check the last calls to the children components
-      expect(PanelSection).toHaveBeenCalledTimes(6)
+      expect(PanelSection).toHaveBeenCalledTimes(3)
       expect(PanelSection).toHaveBeenNthCalledWith(
-        5,
+        2,
         expect.objectContaining({
           isActive: true,
           isOpen: true,
@@ -399,18 +368,42 @@ describe('Panels component', () => {
       )
 
       expect(PanelSection).toHaveBeenNthCalledWith(
-        6,
+        3,
         expect.objectContaining({
-          isActive: false,
-          isOpen: false,
-          panelSectionId: '1'
+          isActive: true,
+          isOpen: true,
+          panelSectionId: '0'
         }),
         {}
       )
 
-      expect(PanelGroup).toHaveBeenCalledTimes(12)
+      expect(PanelGroup).toHaveBeenCalledTimes(6)
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        9,
+        3,
+        expect.objectContaining({
+          activePanelId: '0',
+          isActive: true,
+          isOpen: true,
+          panelGroupId: '0',
+          primaryHeading: 'Panel Group 0.0'
+        }),
+        {}
+      )
+
+      expect(PanelGroup).toHaveBeenNthCalledWith(
+        4,
+        expect.objectContaining({
+          activePanelId: '0',
+          isActive: false,
+          isOpen: false,
+          panelGroupId: '1',
+          primaryHeading: 'Panel Group 0.1'
+        }),
+        {}
+      )
+
+      expect(PanelGroup).toHaveBeenNthCalledWith(
+        5,
         expect.objectContaining({
           activePanelId: '1',
           isActive: true,
@@ -422,37 +415,13 @@ describe('Panels component', () => {
       )
 
       expect(PanelGroup).toHaveBeenNthCalledWith(
-        10,
+        6,
         expect.objectContaining({
           activePanelId: '1',
           isActive: false,
           isOpen: false,
           panelGroupId: '1',
           primaryHeading: 'Panel Group 0.1'
-        }),
-        {}
-      )
-
-      expect(PanelGroup).toHaveBeenNthCalledWith(
-        11,
-        expect.objectContaining({
-          activePanelId: '1',
-          isActive: false,
-          isOpen: false,
-          panelGroupId: '0',
-          primaryHeading: 'Panel Group 1.0'
-        }),
-        {}
-      )
-
-      expect(PanelGroup).toHaveBeenNthCalledWith(
-        12,
-        expect.objectContaining({
-          activePanelId: '1',
-          isActive: false,
-          isOpen: false,
-          panelGroupId: '1',
-          primaryHeading: 'Panel Group 1.1'
         }),
         {}
       )

@@ -19,6 +19,7 @@ import CollectionDetailsBodyContainer from '../../../containers/CollectionDetail
 import SubscriptionsBodyContainer from '../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
 import GranuleResultsFocusedMetaContainer from '../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 import GranuleDetailsBody from '../../GranuleDetails/GranuleDetailsBody'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn().mockReturnValue('')
@@ -70,8 +71,6 @@ const setup = setupTest({
       collectionSubscriptions: [],
       setCollectionId: jest.fn(),
       onMetricsCollectionSortChange: jest.fn(),
-      onToggleAboutCSDAModal: jest.fn(),
-      onToggleAboutCwicModal: jest.fn(),
       onTogglePanels: jest.fn(),
       panels: {
         activePanel: '0.0.0',
@@ -114,6 +113,11 @@ const setup = setupTest({
     query: {
       changeGranuleQuery: jest.fn(),
       changeQuery: jest.fn()
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
     }
   },
   defaultRouterEntries: ['/search'],
@@ -754,8 +758,8 @@ describe('SearchPanels component', () => {
       })
 
       describe('when clicking More Details', () => {
-        test('calls onToggleAboutCwicModal', async () => {
-          const { props, user } = setup({
+        test('calls setOpenModal', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               collection: {
                 collectionMetadata: {
@@ -776,8 +780,8 @@ describe('SearchPanels component', () => {
           const moreDetails = screen.getByRole('button', { name: 'More details' })
           await user.click(moreDetails)
 
-          expect(props.onToggleAboutCwicModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleAboutCwicModal).toHaveBeenCalledWith(true)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.ABOUT_CWIC)
         })
       })
     })
@@ -805,8 +809,8 @@ describe('SearchPanels component', () => {
       })
 
       describe('when clicking More Details', () => {
-        test('calls onToggleAboutCSDAModal', async () => {
-          const { props, user } = setup({
+        test('calls setOpenModal', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               collection: {
                 collectionMetadata: {
@@ -826,8 +830,8 @@ describe('SearchPanels component', () => {
           const moreDetails = screen.getByRole('button', { name: 'More details' })
           await user.click(moreDetails)
 
-          expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.ABOUT_CSDA)
         })
       })
     })

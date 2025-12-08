@@ -18,7 +18,6 @@ const setup = setupTest({
   Component: EsiStatusItem,
   defaultProps: {
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalCollection: {
       collectionMetadata: {
         directDistributionInformation: {},
@@ -84,7 +83,7 @@ describe('EsiStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup()
+      setup()
 
       expect(OrderStatusItem).toHaveBeenCalledTimes(1)
       expect(OrderStatusItem).toHaveBeenCalledWith({
@@ -95,7 +94,6 @@ describe('EsiStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.COMPLETE,
         orderStatus: 'complete',
@@ -239,7 +237,7 @@ describe('EsiStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -271,7 +269,6 @@ describe('EsiStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.CREATING,
         orderStatus: 'creating',
@@ -298,7 +295,7 @@ describe('EsiStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -330,7 +327,6 @@ describe('EsiStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.IN_PROGRESS,
         orderStatus: 'in_progress',
@@ -357,7 +353,7 @@ describe('EsiStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -389,7 +385,6 @@ describe('EsiStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.FAILED,
         orderStatus: 'failed',
@@ -416,7 +411,7 @@ describe('EsiStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -448,7 +443,6 @@ describe('EsiStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.CANCELED,
         orderStatus: 'canceled',

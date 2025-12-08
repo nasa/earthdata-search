@@ -3,6 +3,30 @@ import { ImmerStateCreator, UiSlice } from '../types'
 
 const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
   ui: {
+    map: {
+      displaySpatialPolygonWarning: false,
+      setDisplaySpatialPolygonWarning: (displaySpatialPolygonWarning) => {
+        set((state) => {
+          state.ui.map.displaySpatialPolygonWarning = displaySpatialPolygonWarning
+        })
+      },
+      drawingNewLayer: false,
+      setDrawingNewLayer: (drawingNewLayer) => {
+        set((state) => {
+          state.ui.map.drawingNewLayer = drawingNewLayer
+        })
+      }
+    },
+    modals: {
+      openModal: null,
+      modalData: undefined,
+      setOpenModal: (modalName, modalData) => {
+        set((state) => {
+          state.ui.modals.openModal = modalName
+          state.ui.modals.modalData = modalData
+        })
+      }
+    },
     panels: {
       panelsWidth: 0,
       setPanelsWidth: (panelsWidth) => {

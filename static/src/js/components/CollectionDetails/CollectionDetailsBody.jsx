@@ -30,6 +30,9 @@ import renderTooltip from '../../util/renderTooltip'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
+
 import './CollectionDetailsBody.scss'
 
 const buildRelatedUrlsList = (relatedUrls) => {
@@ -126,17 +129,11 @@ const buildForDeveloperLink = (linkData, token) => {
   )
 }
 
-/**
- * Renders CollectionDetailsBody.
- * @param {Object} props - The props passed into the component.
- * @param {Object} props  collectionMetadata - Focused collection passed from redux store.
- * @param {Function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
- */
 export const CollectionDetailsBody = ({
   isActive,
-  onMetricsRelatedCollection,
-  onToggleRelatedUrlsModal
+  onMetricsRelatedCollection
 }) => {
+  const setOpenModal = useEdscStore(setOpenModalFunction)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const {
     abstract,
@@ -329,7 +326,7 @@ export const CollectionDetailsBody = ({
                           variant="link"
                           bootstrapVariant="link"
                           label="View All Related URLs"
-                          onClick={() => onToggleRelatedUrlsModal(true)}
+                          onClick={() => setOpenModal(MODAL_NAMES.RELATED_URLS)}
                         >
                           View All Related URLs
                         </Button>
@@ -600,8 +597,7 @@ export const CollectionDetailsBody = ({
 
 CollectionDetailsBody.propTypes = {
   isActive: PropTypes.bool.isRequired,
-  onMetricsRelatedCollection: PropTypes.func.isRequired,
-  onToggleRelatedUrlsModal: PropTypes.func.isRequired
+  onMetricsRelatedCollection: PropTypes.func.isRequired
 }
 
 export default CollectionDetailsBody

@@ -561,6 +561,9 @@ export class Panels extends PureComponent {
     panelSectionProps.isOpen = !!(panelSectionProps.panelSectionId === activePanelSectionId)
     panelSectionProps.isActive = !!(panelSectionProps.panelSectionId === activePanelSectionId)
 
+    // If the panelSection is not active, do not render it
+    if (!panelSectionProps.isActive) return null
+
     const panelGroups = Children.map(children, (childValue, childIndex) => {
       const panelGroupProps = { ...childValue.props }
       if (!panelGroupProps.panelGroupId) panelGroupProps.panelGroupId = `${childIndex}`

@@ -10,25 +10,7 @@ import {
   changePath,
   updateStore
 } from './urlQuery'
-import {
-  toggleAdvancedSearchModal,
-  toggleAboutCSDAModal,
-  toggleAboutCwicModal,
-  toggleChunkedOrderModal,
-  toggleDeprecatedParameterModal,
-  toggleDrawingNewLayer,
-  toggleEditSubscriptionModal,
-  toggleFacetsModal,
-  toggleOverrideTemporalModal,
-  togglePortalBrowserModal,
-  toggleRelatedUrlsModal,
-  toggleSecondaryOverlayPanel,
-  toggleShapefileUploadModal,
-  toggleSpatialPolygonWarning,
-  toggleTooManyPointsModal,
-  toggleKeyboardShortcutsModal,
-  toggleTimeline
-} from './ui'
+import { toggleFacetsModal } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
 import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
@@ -58,23 +40,7 @@ const actions = {
   onFacetsLoaded,
   onFacetsLoading,
   removeSubscriptionDisabledFields,
-  toggleAboutCSDAModal,
-  toggleAboutCwicModal,
-  toggleAdvancedSearchModal,
-  toggleChunkedOrderModal,
-  toggleDeprecatedParameterModal,
-  toggleDrawingNewLayer,
-  toggleEditSubscriptionModal,
   toggleFacetsModal,
-  toggleKeyboardShortcutsModal,
-  toggleOverrideTemporalModal,
-  togglePortalBrowserModal,
-  toggleRelatedUrlsModal,
-  toggleSecondaryOverlayPanel,
-  toggleShapefileUploadModal,
-  toggleSpatialPolygonWarning,
-  toggleTimeline,
-  toggleTooManyPointsModal,
   updateFacets,
   updateStore,
   updateSubscription,

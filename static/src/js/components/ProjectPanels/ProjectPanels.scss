@@ -2,6 +2,25 @@
 @use '../../../css/utils';
 
 .project-panels {
+  &__note {
+    display: block;
+    margin-bottom: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--50;
+    font-size: 0.875rem;
+  }
+
+  &__note-emph {
+    font-weight: 500;
+
+    &--opensearch {
+      color: utils.$color__international-orange;
+    }
+
+    &--csda {
+      color: utils.$color__international-orange;
+    }
+  }
+
   &__footer {
     display: flex;
     flex-direction: row;

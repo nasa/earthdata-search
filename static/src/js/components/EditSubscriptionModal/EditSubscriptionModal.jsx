@@ -10,16 +10,26 @@ import Form from 'react-bootstrap/Form'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionSubscriptions } from '../../zustand/selectors/collection'
+import {
+  isModalOpen,
+  openModalData,
+  setOpenModalFunction
+} from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 const EditSubscriptionModal = ({
-  isOpen,
-  onToggleEditSubscriptionModal,
   onUpdateSubscription,
-  subscriptions,
-  subscriptionConceptId,
-  subscriptionType
+  subscriptions
 }) => {
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.EDIT_SUBSCRIPTION))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+  const modalData = useEdscStore(openModalData)
   const granuleSubscriptions = useEdscStore(getFocusedCollectionSubscriptions)
+
+  const {
+    subscriptionConceptId,
+    subscriptionType
+  } = modalData
 
   const [subscription, setSubscription] = useState({
     name: '',
@@ -32,6 +42,7 @@ const EditSubscriptionModal = ({
   // Memoize the currently selected subscription based on props
   const selectedSubscriptionFromProps = useMemo(() => {
     if (!subscriptionConceptId) return {}
+
     if (subscriptionType === 'granule') {
       return (
         granuleSubscriptions.find(
@@ -54,6 +65,7 @@ const EditSubscriptionModal = ({
   useEffect(() => {
     const currentConceptId = subscription?.conceptId
     const nextConceptId = selectedSubscriptionFromProps?.conceptId
+
     if (currentConceptId !== nextConceptId) {
       setSubscription(selectedSubscriptionFromProps || {})
     }
@@ -63,15 +75,12 @@ const EditSubscriptionModal = ({
   ])
 
   const onModalClose = useCallback(() => {
-    onToggleEditSubscriptionModal({
-      isOpen: false,
-      subscriptionConceptId: '',
-      type: ''
-    })
-  }, [onToggleEditSubscriptionModal])
+    setOpenModal(null)
+  }, [])
 
   const onSubscriptionNameChange = useCallback((event) => {
     const { value } = event.target
+
     setSubscription((prev) => ({
       ...prev,
       name: value
@@ -80,11 +89,13 @@ const EditSubscriptionModal = ({
 
   const onUpdateQueryToggleChange = useCallback((event) => {
     const { checked } = event.target
+
     setShouldUpdateQuery(checked)
   }, [])
 
   const onSubscriptionEditSubmit = useCallback(async () => {
     setIsSubmitting(true)
+
     try {
       await onUpdateSubscription({
         subscription,
@@ -101,6 +112,8 @@ const EditSubscriptionModal = ({
     shouldUpdateQuery,
     subscription
   ])
+
+  if (!isOpen) return null
 
   const { name = '' } = subscription || {}
 
@@ -153,14 +166,10 @@ const EditSubscriptionModal = ({
 }
 
 EditSubscriptionModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onToggleEditSubscriptionModal: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
   subscriptions: PropTypes.shape({
     byId: PropTypes.shape({})
-  }).isRequired,
-  subscriptionConceptId: PropTypes.string.isRequired,
-  subscriptionType: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default EditSubscriptionModal

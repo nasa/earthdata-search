@@ -2,22 +2,22 @@ import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import AboutCwicModal from '../AboutCwicModal'
+import TooManyPointsModal from '../TooManyPointsModal'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
 const setup = setupTest({
-  Component: AboutCwicModal,
+  Component: TooManyPointsModal,
   defaultZustandState: {
     ui: {
       modals: {
-        openModal: MODAL_NAMES.ABOUT_CWIC,
+        openModal: MODAL_NAMES.TOO_MANY_POINTS,
         setOpenModal: jest.fn()
       }
     }
   }
 })
 
-describe('AboutCwicModal component', () => {
+describe('TooManyPointsModal component', () => {
   test('does not render when modal is closed', () => {
     setup({
       overrideZustandState: {
@@ -41,13 +41,13 @@ describe('AboutCwicModal component', () => {
   test('should render a title', () => {
     setup()
 
-    expect(screen.getByText("What's Int'l / Interagency Data")).toBeInTheDocument()
+    expect(screen.getByText('Shape file has too many points')).toBeInTheDocument()
   })
 
-  test('should render the body', () => {
+  test('should render a message', () => {
     setup()
 
-    expect(screen.getByText(/This collection uses external services to find granules through a system called CWIC/)).toBeInTheDocument()
+    expect(screen.getByText('To improve search performance, your shapefile has been simplified. Your original shapefile will be used for spatial subsetting if you choose to enable that setting during download.')).toBeInTheDocument()
   })
 
   test('should call setOpenModal when the modal is closed', async () => {

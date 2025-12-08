@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 
 import { collectionDetailsParagraph, collectionDetailsRow } from './skeleton'
@@ -11,21 +10,22 @@ import Skeleton from '../Skeleton/Skeleton'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import { routes } from '../../constants/routes'
 
 import './CollectionDetailsHighlights.scss'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 export const granuleListTotalStyle = {
   height: '18px',
   width: '225px'
 }
 
-export const CollectionDetailsHighlights = ({
-  onToggleRelatedUrlsModal
-}) => {
+export const CollectionDetailsHighlights = () => {
   const location = useLocation()
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
   const {
     abstract,
@@ -108,7 +108,7 @@ export const CollectionDetailsHighlights = ({
               variant="link"
               bootstrapVariant="link"
               label="View All Related URLs"
-              onClick={() => onToggleRelatedUrlsModal(true)}
+              onClick={() => setOpenModal(MODAL_NAMES.RELATED_URLS)}
             >
               View All Related URLs
             </Button>
@@ -194,10 +194,6 @@ export const CollectionDetailsHighlights = ({
       </div>
     </div>
   )
-}
-
-CollectionDetailsHighlights.propTypes = {
-  onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 
 export default CollectionDetailsHighlights

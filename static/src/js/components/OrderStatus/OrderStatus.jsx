@@ -32,12 +32,10 @@ import './OrderStatus.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.onChangePath - Selects an access method.
  * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
- * @param {Function} props.onToggleAboutCSDAModal - Callback to toggle the About CSDA Modal.
  */
 const OrderStatus = ({
   onChangePath,
-  onMetricsRelatedCollection,
-  onToggleAboutCSDAModal
+  onMetricsRelatedCollection
 }) => {
   const params = useParams()
   const { id: retrievalId } = params
@@ -151,7 +149,6 @@ const OrderStatus = ({
                 <OrderStatusList
                   retrievalCollections={retrievalCollections}
                   retrievalId={retrievalId}
-                  onToggleAboutCSDAModal={onToggleAboutCSDAModal}
                 />
               )
             }
@@ -325,8 +322,7 @@ const OrderStatus = ({
 
 OrderStatus.propTypes = {
   onChangePath: PropTypes.func.isRequired,
-  onMetricsRelatedCollection: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired
+  onMetricsRelatedCollection: PropTypes.func.isRequired
 }
 
 export default OrderStatus

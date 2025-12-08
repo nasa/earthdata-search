@@ -1,3 +1,4 @@
+import { MODAL_NAMES } from '../../../constants/modalNames'
 import useEdscStore from '../../useEdscStore'
 
 describe('createUiSlice', () => {
@@ -6,6 +7,17 @@ describe('createUiSlice', () => {
     const { ui } = zustandState
 
     expect(ui).toEqual({
+      map: {
+        displaySpatialPolygonWarning: false,
+        setDisplaySpatialPolygonWarning: expect.any(Function),
+        drawingNewLayer: false,
+        setDrawingNewLayer: expect.any(Function)
+      },
+      modals: {
+        openModal: null,
+        modalData: undefined,
+        setOpenModal: expect.any(Function)
+      },
       panels: {
         panelsWidth: 0,
         setPanelsWidth: expect.any(Function),
@@ -19,6 +31,70 @@ describe('createUiSlice', () => {
         setRunTour: expect.any(Function),
         onSearchLoaded: expect.any(Function)
       }
+    })
+  })
+
+  describe('map', () => {
+    describe('setDisplaySpatialPolygonWarning', () => {
+      test('sets displaySpatialPolygonWarning', () => {
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { map } = ui
+        const { setDisplaySpatialPolygonWarning } = map
+        setDisplaySpatialPolygonWarning(true)
+
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { map: updatedMap } = updatedUi
+        expect(updatedMap.displaySpatialPolygonWarning).toBe(true)
+      })
+    })
+
+    describe('setDrawingNewLayer', () => {
+      test('sets drawingNewLayer', () => {
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { map } = ui
+        const { setDrawingNewLayer } = map
+        setDrawingNewLayer(true)
+
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { map: updatedMap } = updatedUi
+        expect(updatedMap.drawingNewLayer).toBe(true)
+      })
+    })
+  })
+
+  describe('modals', () => {
+    describe('setOpenModal', () => {
+      test('sets the openModal', () => {
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { modals } = ui
+        const { setOpenModal } = modals
+        setOpenModal(MODAL_NAMES.ABOUT_CSDA)
+
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { modals: updatedModals } = updatedUi
+        expect(updatedModals.openModal).toBe(MODAL_NAMES.ABOUT_CSDA)
+        expect(updatedModals.modalData).toBe(undefined)
+      })
+
+      test('sets the openModal and modalData', () => {
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { modals } = ui
+        const { setOpenModal } = modals
+        setOpenModal(MODAL_NAMES.ABOUT_CSDA, { deprecatedUrlParams: ['test'] })
+
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { modals: updatedModals } = updatedUi
+        expect(updatedModals.openModal).toBe(MODAL_NAMES.ABOUT_CSDA)
+        expect(updatedModals.modalData).toEqual({ deprecatedUrlParams: ['test'] })
+      })
     })
   })
 

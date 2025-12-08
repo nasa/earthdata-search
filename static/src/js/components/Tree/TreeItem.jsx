@@ -188,6 +188,7 @@ export const TreeItem = ({
                 <button
                   className="tree-item__info-button"
                   type="button"
+                  aria-label="View details"
                   onClick={() => onViewDetails(item.variable, index)}
                 >
                   <EDSCIcon

@@ -33,8 +33,6 @@ import type { RetrievalCollection } from '../../../types/sharedTypes'
 interface OpendapStatusItemProps {
   /** Whether the item is expanded/opened by default */
   defaultOpen?: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** The retrieval collection */
   retrievalCollection: RetrievalCollection
   /** The retrieval ID */
@@ -43,7 +41,6 @@ interface OpendapStatusItemProps {
 
 const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalCollection,
   retrievalId
 }) => {
@@ -208,7 +205,6 @@ const OpendapStatusItem: React.FC<OpendapStatusItemProps> = ({
       messageIsError={false}
       messages={[]}
       opened={opened}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       orderInfo={STATUS_MESSAGES.DOWNLOAD.COMPLETE}
       orderStatus={orderStatus}
       progressPercentage={100}

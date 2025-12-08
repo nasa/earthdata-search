@@ -91,14 +91,14 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       // CWIC does not support polygon search, if this is a CWIC collection
       // fire an action that will display a notice to the user about using a MBR
       if (isOpenSearch && polygon) {
-        reduxDispatch(actions.toggleSpatialPolygonWarning(true))
+        zustandState.ui.map.setDisplaySpatialPolygonWarning(true)
       } else {
-        reduxDispatch(actions.toggleSpatialPolygonWarning(false))
+        zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
       }
 
       // Fetch granules for the focused collection.
       // This will ensure CMR granules are retrieved as soon as possible.
-      get().granules.getGranules()
+      zustandState.granules.getGranules()
 
       // If we already have the metadata for the focusedCollection, don't fetch it again
       if (hasAllMetadata) {
@@ -283,11 +283,14 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const isProjectPage = pathname.includes(routes.PROJECT)
       if (!collectionId && isProjectPage) return
 
+      const zustandState = get()
+
       if (!collectionId || collectionId === '') {
         // If clearing the focused collection, also clear the focused granule
-        get().granule.setGranuleId(null)
+        zustandState.granule.setGranuleId(null)
+
         // And clear the spatial polygon warning if there is no focused collection
-        reduxDispatch(actions.toggleSpatialPolygonWarning(false))
+        zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
 
         // If clearing the focused collection, redirect the user back to the search page
         reduxDispatch(actions.changeUrl({
@@ -296,7 +299,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         }))
       } else {
         // Initialize a nested query element for the new focused collection
-        const zustandState = get()
         const {
           query,
           timeline

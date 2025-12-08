@@ -7,6 +7,7 @@ import OrderStatusItem from '../OrderStatusItem'
 
 // @ts-expect-error This file does not have types
 import ProgressRing from '../../ProgressRing/ProgressRing'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../../ProgressRing/ProgressRing', () => jest.fn(() => <div />))
 
@@ -23,7 +24,6 @@ const setup = setupTest({
     messageIsError: false,
     messages: [],
     opened: true,
-    onToggleAboutCSDAModal: jest.fn(),
     orderInfo: '',
     orderStatus: 'complete',
     progressPercentage: 100,
@@ -33,6 +33,13 @@ const setup = setupTest({
     totalCompleteOrders: 0,
     totalOrders: 0,
     updatedAt: '2025-01-24T02:34:33.340Z'
+  },
+  defaultZustandState: {
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
+    }
   }
 })
 
@@ -160,8 +167,8 @@ describe('OrderStatusItem', () => {
       })
 
       describe('when clicking on the More Details link', () => {
-        test('calls onToggleAboutCSDAModal', async () => {
-          const { props, user } = setup({
+        test('calls setOpenModal', async () => {
+          const { user, zustandState } = setup({
             overrideProps: {
               collectionIsCSDA: true
             }
@@ -170,8 +177,8 @@ describe('OrderStatusItem', () => {
           const button = screen.getByRole('button', { name: 'More details' })
           await user.click(button)
 
-          expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.ABOUT_CSDA)
         })
       })
     })

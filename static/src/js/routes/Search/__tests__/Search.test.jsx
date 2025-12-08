@@ -20,10 +20,10 @@ jest.spyOn(document, 'querySelector').mockImplementation(() => ({
 }))
 
 // Mock router components
-jest.mock('../../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer', () => {
-  const RelatedUrlsModalContainer = () => <div data-testid="mocked-RelatedUrlsModalContainer" />
+jest.mock('../../../components/CollectionDetails/RelatedUrlsModal', () => {
+  const RelatedUrlsModal = () => <div data-testid="mocked-RelatedUrlsModal" />
 
-  return RelatedUrlsModalContainer
+  return RelatedUrlsModal
 })
 
 jest.mock('../../../containers/FacetsModalContainer/FacetsModalContainer', () => {
@@ -44,10 +44,10 @@ jest.mock('../../../containers/MapContainer/MapContainer', () => {
   return MapContainer
 })
 
-jest.mock('../../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer', () => {
-  const CollectionDetailsHighlightsContainer = () => <div data-testid="mock-CollectionDetailsHighlightsContainer" />
+jest.mock('../../../components/CollectionDetailsHighlights/CollectionDetailsHighlights', () => {
+  const CollectionDetailsHighlights = () => <div data-testid="mock-CollectionDetailsHighlights" />
 
-  return CollectionDetailsHighlightsContainer
+  return CollectionDetailsHighlights
 })
 
 jest.mock('../../../components/GranuleResultsHighlights/GranuleResultsHighlights', () => {

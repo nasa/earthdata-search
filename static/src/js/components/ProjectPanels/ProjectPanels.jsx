@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { parse } from 'qs'
-import { isEmpty, uniq } from 'lodash-es'
+import { isEmpty } from 'lodash-es'
 import { Settings, CheckCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { FaMap, FaQuestionCircle } from 'react-icons/fa'
@@ -13,196 +14,98 @@ import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
+
 import AccessMethod from '../AccessMethod/AccessMethod'
 import CollectionDetails from './CollectionDetails'
-import VariableTreePanel from './VariableTreePanel'
-import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
+import VariableDetailsPanel from './VariableDetailsPanel'
+import VariableTreePanel from './VariableTreePanel'
+
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { isAccessMethodValid } from '../../util/accessMethods'
-import { locationPropType } from '../../util/propTypes/location'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
 
 import { routes } from '../../constants/routes'
+import { MODAL_NAMES } from '../../constants/modalNames'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 import './ProjectPanels.scss'
 
 /**
  * Renders ProjectPanels.
- * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
- * @param {String} collectionId - The focused collection ID.
- * @param {Object} collection - The current collection.
- * @param {String} collectionId - The current collection ID.
- * @param {Object} location - The location from the store.
- * @param {Object} panels - The current panels state.
- * @param {Object} project - The project from the store.
- * @param {Object} spatial - The spatial from the store.
- * @param {Object} projectCollection - The project collection.
  * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onSelectAccessMethod - Selects an access method.
- * @param {Function} onSetActivePanel - Switches the currently active panel.
- * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
- * @param {Function} onSetActivePanelGroup - Callback to set the page number.
- * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
- * @param {Function} onTogglePanels - Toggles the panels opened or closed.
- * @param {Function} onUpdateAccessMethod - Callback to update the access method.
- * @param {Function} setCollectionId - Callback to update the focused collection.
  */
-class ProjectPanels extends PureComponent {
-  constructor(props) {
-    super(props)
+const ProjectPanels = ({
+  onChangePath
+}) => {
+  const location = useLocation()
+  const { search } = location
 
-    this.state = {
-      selectedVariable: null,
-      selectedVariables: {},
-      variables: null
-    }
+  const [selectedVariable, setSelectedVariable] = useState(null)
 
-    this.onPanelClose = this.onPanelClose.bind(this)
-    this.onPanelOpen = this.onPanelOpen.bind(this)
-    this.onChangePanel = this.onChangePanel.bind(this)
-    this.onCheckboxChange = this.onCheckboxChange.bind(this)
-    this.onSelectedVariablesChange = this.onSelectedVariablesChange.bind(this)
-    this.clearSelectedVariable = this.clearSelectedVariable.bind(this)
-    this.onViewDetails = this.onViewDetails.bind(this)
-    this.backToOptions = this.backToOptions.bind(this)
-    this.resetForm = this.resetForm.bind(this)
+  // Pull values from Zustand
+  const {
+    dataQualitySummaries,
+    panels,
+    projectCollections,
+    selectAccessMethod,
+    setActivePanel,
+    setCollectionId,
+    togglePanels,
+    updateAccessMethod
+  } = useEdscStore((state) => ({
+    dataQualitySummaries: state.dataQualitySummaries.byCollectionId,
+    panels: state.projectPanels.panels,
+    projectCollections: state.project.collections,
+    selectAccessMethod: state.project.selectAccessMethod,
+    setActivePanel: state.projectPanels.setActivePanel,
+    setCollectionId: state.collection.setCollectionId,
+    togglePanels: state.projectPanels.setIsOpen,
+    updateAccessMethod: state.project.updateAccessMethod
+  }))
+  const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
+  const collectionQuery = useEdscStore(getCollectionsQuery)
+  const {
+    byId: granulesQueries,
+    overrideTemporal,
+    spatial,
+    temporal
+  } = collectionQuery
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
+  // Handlers for panel open and close
+  const onPanelOpen = () => {
+    togglePanels(true)
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {
-      collectionId: focusedCollectionId,
-      onSetActivePanelGroup,
-      onTogglePanels,
-      panels
-    } = this.props
-
-    const {
-      projectCollections: nextProjectCollections,
-      collectionId: nextFocusedCollection
-    } = nextProps
-
-    const { byId, allIds } = nextProjectCollections
-
-    const {
-      activePanel
-    } = panels
-
-    const selectedVariables = {}
-
-    allIds.forEach((collectionId) => {
-      const { accessMethods = {}, selectedAccessMethod } = byId[collectionId]
-
-      if (selectedAccessMethod) {
-        const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
-
-        const {
-          selectedVariables: nextSelectedVariables = []
-        } = accessMethod
-
-        if (nextSelectedVariables.length > 0) {
-          selectedVariables[collectionId] = nextSelectedVariables
-        }
-      }
-    })
-
-    const nextFocusedCollectionIndex = allIds.indexOf(nextFocusedCollection).toString()
-    const newFocusedCollectionIndex = activePanel.split('.')[1].toString()
-
-    if (
-      nextFocusedCollectionIndex > -1
-      && nextFocusedCollectionIndex !== newFocusedCollectionIndex
-    ) {
-      onSetActivePanelGroup(nextFocusedCollectionIndex)
-      onTogglePanels(true)
-    } else if (focusedCollectionId !== nextFocusedCollection && nextFocusedCollection === '') {
-      onTogglePanels(false)
-    }
-
-    this.setState({
-      selectedVariables
-    })
-  }
-
-  onPanelOpen() {
-    const { onTogglePanels } = this.props
-    onTogglePanels(true)
-  }
-
-  onPanelClose() {
-    const { onTogglePanels, setCollectionId } = this.props
+  // Handlers for panel open and close
+  const onPanelClose = () => {
     setCollectionId(null)
-    onTogglePanels(false)
+    togglePanels(false)
   }
 
-  onChangePanel(activePanel) {
-    const {
-      onSetActivePanel,
-      onTogglePanels,
-      setCollectionId,
-      projectCollections
-    } = this.props
-
+  // Handler for changing the active panel
+  const onChangePanel = useCallback((activePanel) => {
     const { allIds } = projectCollections
 
     const newFocusedCollectionIndex = activePanel.split('.')[1]
     const newFocusedCollectionId = allIds[newFocusedCollectionIndex]
 
     setCollectionId(newFocusedCollectionId)
-    onSetActivePanel(activePanel)
-    onTogglePanels(true)
-  }
+    setActivePanel(activePanel)
+    togglePanels(true)
+  }, [JSON.stringify(projectCollections)])
 
-  onCheckboxChange(e, variableId, collectionId) {
-    const { selectedVariables, variables } = this.state
-    let newVariables = []
-    const selectedForCollection = selectedVariables[collectionId] || []
-
-    if (variableId === 'all') {
-      if (e.target.checked) {
-        newVariables = [
-          ...selectedForCollection,
-          ...Object.keys(variables)
-        ]
-      } else {
-        // Remove the selected variable if it exists in the selectedForCollection
-        newVariables = selectedForCollection.filter((selectedVariable) => (
-          Object.keys(variables).indexOf(selectedVariable) === -1
-        ))
-      }
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (e.target.checked) {
-        newVariables = [
-          ...selectedForCollection,
-          variableId
-        ]
-      } else {
-        newVariables = selectedForCollection.filter((variable) => variable !== variableId)
-      }
-    }
-
-    this.setState({
-      selectedVariables: {
-        ...selectedVariables,
-        [collectionId]: uniq(newVariables)
-      }
-    })
-  }
-
-  onSelectedVariablesChange(selectedVariables, collectionId) {
-    this.setState({
-      selectedVariables: {
-        [collectionId]: selectedVariables
-      }
-    })
-
-    const { projectCollections, onUpdateAccessMethod } = this.props
-
+  // Handler for changing selected variables
+  const onSelectedVariablesChange = useCallback((newSelectedVariables, collectionId) => {
     const { byId: projectCollectionsById } = projectCollections
     const projectCollection = projectCollectionsById[collectionId]
     const {
@@ -211,34 +114,31 @@ class ProjectPanels extends PureComponent {
     } = projectCollection
     const selectedMethod = accessMethods[selectedAccessMethod]
 
-    onUpdateAccessMethod({
+    updateAccessMethod({
       collectionId,
       method: {
         [selectedAccessMethod]: {
           ...selectedMethod,
-          selectedVariables
+          selectedVariables: newSelectedVariables
         }
       }
     })
+  }, [JSON.stringify(projectCollections)])
+
+  // Handler for viewing details of a variable
+  const onViewDetails = (variable, index) => {
+    setSelectedVariable(variable)
+    onChangePanel(`0.${index}.2`)
   }
 
-  onViewDetails(variable, index) {
-    this.setState({ selectedVariable: variable })
-    this.onChangePanel(`0.${index}.2`)
+  // Handler for clearing the selected variable
+  const clearSelectedVariable = (panelId) => {
+    setSelectedVariable(null)
+    onChangePanel(panelId)
   }
 
-  backToOptions() {
-    this.setState({
-      variables: null
-    })
-  }
-
-  clearSelectedVariable(panelId) {
-    this.setState({ selectedVariable: null })
-    this.onChangePanel(panelId)
-  }
-
-  canResetForm(accessMethods, selectedAccessMethod) {
+  // Function to check if the form can be reset
+  const canResetForm = (accessMethods, selectedAccessMethod) => {
     if (!accessMethods || !selectedAccessMethod) return false
 
     const { type = '' } = accessMethods[selectedAccessMethod]
@@ -248,10 +148,9 @@ class ProjectPanels extends PureComponent {
     return false
   }
 
-  resetForm(collectionId, selectedAccessMethod) {
-    const { onUpdateAccessMethod } = this.props
-
-    onUpdateAccessMethod({
+  // Function to reset the form
+  const resetForm = (collectionId, selectedAccessMethod) => {
+    updateAccessMethod({
       collectionId,
       method: {
         [selectedAccessMethod]: {
@@ -262,442 +161,403 @@ class ProjectPanels extends PureComponent {
     })
   }
 
-  render() {
+  const {
+    allIds: projectIds,
+    byId: projectCollectionsById
+  } = projectCollections
+
+  const { activePanel, isOpen } = panels
+
+  // Check if collection metadata is loaded for any project collection
+  const collectionMetadataLoaded = projectIds.some((collectionId) => {
+    const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
+
+    const { hasAllMetadata = false } = collectionMetadata
+
+    return hasAllMetadata === true
+  })
+
+  const panelSectionCollectionDetails = []
+  const panelSectionEditOptions = []
+
+  // Iterate over each project collection ID to add panel sections
+  projectIds.forEach((collectionId, index) => {
+    const { [collectionId]: projectCollection } = projectCollectionsById
+
     const {
-      dataQualitySummaries,
-      granulesQueries,
-      location,
-      onChangePath,
-      onSelectAccessMethod,
-      onSetActivePanel,
-      onToggleAboutCSDAModal,
-      onTogglePanels,
-      onUpdateAccessMethod,
-      panels,
-      projectCollections,
-      projectCollectionsMetadata,
-      spatial,
-      temporal,
-      overrideTemporal
-    } = this.props
-
-    const { selectedVariable } = this.state
+      accessMethods,
+      selectedAccessMethod,
+      granules: projectCollectionGranules = {}
+    } = projectCollection
 
     const {
-      allIds: projectIds,
-      byId: projectCollectionsById
-    } = projectCollections
+      allIds: granulesAllIds = [],
+      count: granuleCount
+    } = projectCollectionGranules
 
-    const { activePanel, isOpen } = panels
-    const panelSectionEditOptions = []
-    const panelSectionCollectionDetails = []
+    const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
 
-    const collectionMetadataLoaded = projectIds.some((collectionId) => {
-      const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
+    const {
+      title,
+      isCSDA: collectionIsCSDA,
+      cloudHosted,
+      duplicateCollections = []
+    } = collectionMetadata
 
-      const { hasAllMetadata = false } = collectionMetadata
+    const { granules: granulesQuery = {} } = granulesQueries[collectionId] || {}
+    const { temporal: granuleTemporal = {} } = granulesQuery
 
-      return hasAllMetadata === true
-    })
+    // Default the preferredTemporal to global temporal
+    let preferredTemporal = temporal
 
-    projectIds.forEach((collectionId, index) => {
-      const { [collectionId]: projectCollection } = projectCollectionsById
+    // If overrideTemporal is provided, use that value
+    if (!isEmpty(overrideTemporal)) preferredTemporal = overrideTemporal
+    // If granuleTemporal is provided, use that value
+    if (!isEmpty(granuleTemporal)) preferredTemporal = granuleTemporal
 
-      const {
-        accessMethods,
-        selectedAccessMethod,
-        granules: projectCollectionGranules = {}
-      } = projectCollection
+    let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
 
-      const {
-        allIds: granulesAllIds = [],
-        count: granuleCount
-      } = projectCollectionGranules
+    const hasDataQualitySummary = collectionDataQualitySummaries.length > 0
 
-      const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
+    const hasDuplicateCollection = duplicateCollections.length > 0
 
-      const {
-        title,
-        isCSDA: collectionIsCSDA,
-        cloudHosted,
-        duplicateCollections = []
-      } = collectionMetadata
+    const dataQualityHeader = (() => {
+      if (hasDataQualitySummary && hasDuplicateCollection) {
+        return 'Important data quality and availability information'
+      }
 
-      const { granules: granulesQuery = {} } = granulesQueries[collectionId] || {}
-      const { temporal: granuleTemporal = {} } = granulesQuery
-
-      // Default the preferredTemporal to global temporal
-      let preferredTemporal = temporal
-
-      // If overrideTemporal is provided, use that value
-      if (!isEmpty(overrideTemporal)) preferredTemporal = overrideTemporal
-      // If granuleTemporal is provided, use that value
-      if (!isEmpty(granuleTemporal)) preferredTemporal = granuleTemporal
-
-      let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
-
-      const hasDataQualitySummary = collectionDataQualitySummaries.length > 0
-
-      const hasDuplicateCollection = duplicateCollections.length > 0
-
-      const dataQualityHeader = (() => {
-        if (hasDataQualitySummary && hasDuplicateCollection) {
-          return 'Important data quality and availability information'
-        }
-
-        if (hasDataQualitySummary) {
-          return 'Important data quality information'
-        }
-
-        if (hasDuplicateCollection) {
-          return 'Important data availability information'
-        }
-
-        return ''
-      })()
+      if (hasDataQualitySummary) {
+        return 'Important data quality information'
+      }
 
       if (hasDuplicateCollection) {
-        const duplicateCollectionId = duplicateCollections[0]
-
-        const params = parse(location.search, {
-          parseArrays: false,
-          ignoreQueryPrefix: true
-        })
-
-        // Adding duplicateCollectionId to the front makes it the focused collection
-        const p = [duplicateCollectionId, ...projectIds].join('!')
-
-        const newSearch = stringify({
-          ...params,
-          p
-        })
-
-        collectionDataQualitySummaries = [...collectionDataQualitySummaries, {
-          id: 'duplicate-collection',
-          summary: cloudHosted
-            ? (
-              <>
-                <span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>
-                <PortalLinkContainer
-                  to={
-                    {
-                      pathname: routes.GRANULES,
-                      search: newSearch
-                    }
-                  }
-                  onClick={() => { onChangePath(`${routes.GRANULES}${newSearch}`) }}
-                >
-                  hosted in a NASA datacenter
-                </PortalLinkContainer>
-                <span>, and may have different services available.</span>
-              </>
-            )
-            : (
-              <>
-                <span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>
-                <PortalLinkContainer
-                  to={
-                    {
-                      pathname: routes.GRANULES,
-                      search: newSearch
-                    }
-                  }
-                  onClick={() => { onChangePath(`${routes.GRANULES}${newSearch}`) }}
-                >
-                  hosted in the Earthdata Cloud
-                </PortalLinkContainer>
-                <span>, and may have different services available.</span>
-              </>
-            )
-        }]
+        return 'Important data availability information'
       }
 
-      const { valid: isValid } = isAccessMethodValid(projectCollection, collectionMetadata)
+      return ''
+    })()
 
-      const projectGranulesHeaderMetaPrimaryText = `Showing ${commafy(granulesAllIds.length)} of ${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`
+    if (hasDuplicateCollection) {
+      const duplicateCollectionId = duplicateCollections[0]
 
-      const backButtonOptions = {
-        text: 'Edit Options',
-        location: `0.${index}.0`,
-        callback: this.backToOptions
+      const params = parse(search, {
+        parseArrays: false,
+        ignoreQueryPrefix: true
+      })
+
+      // Adding duplicateCollectionId to the front makes it the focused collection
+      const p = [duplicateCollectionId, ...projectIds].join('!')
+
+      const newSearch = stringify({
+        ...params,
+        p
+      })
+
+      const navigateToDuplicateCollection = () => {
+        onChangePath(`${routes.GRANULES}${newSearch}`)
       }
 
-      const editOptionsFooter = (
-        <div className="project-panels__footer">
-          {
-            !isValid && (
-              <span className="project-panels__collection-status project-panels__collection-status--invalid">
-                <EDSCIcon icon={AlertInformation} />
-              </span>
-            )
-          }
-          {
-            isValid && (
-              <span className="project-panels__collection-status project-panels__collection-status--valid">
-                <EDSCIcon icon={CheckCircled} />
-              </span>
-            )
-          }
-          <span className="project-panels__collection-count">
-            {`Collection ${index + 1} of ${projectIds.length}`}
-          </span>
-          {
-            this.canResetForm(accessMethods, selectedAccessMethod) && (
-              <Button
-                className="project-panels__action"
-                label="Previous Collection"
-                bootstrapVariant="light"
-                onClick={() => this.resetForm(collectionId, selectedAccessMethod)}
+      collectionDataQualitySummaries = [...collectionDataQualitySummaries, {
+        id: 'duplicate-collection',
+        summary: cloudHosted
+          ? (
+            <>
+              <span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>
+              <PortalLinkContainer
+                to={
+                  {
+                    pathname: routes.GRANULES,
+                    search: newSearch
+                  }
+                }
+                onClick={navigateToDuplicateCollection}
               >
-                Reset Form
-              </Button>
-            )
-          }
-          {
-            index > 0 && (
-              <Button
-                className="project-panels__action"
-                label="Previous Collection"
-                bootstrapVariant="light"
-                onClick={() => this.onChangePanel(`0.${index - 1}.0`)}
+                hosted in a NASA datacenter
+              </PortalLinkContainer>
+              <span>, and may have different services available.</span>
+            </>
+          )
+          : (
+            <>
+              <span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>
+              <PortalLinkContainer
+                to={
+                  {
+                    pathname: routes.GRANULES,
+                    search: newSearch
+                  }
+                }
+                onClick={navigateToDuplicateCollection}
               >
-                Back
-              </Button>
-            )
-          }
-          {
-            index < projectIds.length - 1 && (
-              <Button
-                className="project-panels__action"
-                label="Next Collection"
-                bootstrapVariant="primary"
-                onClick={() => this.onChangePanel(`0.${index + 1}.0`)}
-              >
-                Next
-              </Button>
-            )
-          }
-          {
-            index === projectIds.length - 1 && (
-              <Button
-                className="project-panels__action"
-                label="Done"
-                bootstrapVariant="primary"
-                onClick={() => this.onPanelClose()}
-              >
-                Done
-              </Button>
-            )
-          }
-        </div>
-      )
+                hosted in the Earthdata Cloud
+              </PortalLinkContainer>
+              <span>, and may have different services available.</span>
+            </>
+          )
+      }]
+    }
 
-      const variableDetailsFooter = (
-        <div className="project-panels__footer">
-          <Button
-            type="button"
-            label="Back"
-            bootstrapVariant="primary"
-            className="project-panels__action"
-            onClick={() => this.clearSelectedVariable(`0.${index}.1`)}
-          >
-            Back
-          </Button>
-        </div>
-      )
+    const { valid: isValid } = isAccessMethodValid(projectCollection, collectionMetadata)
 
-      // Panels are controlled using the onSetActivePanel action. The parameters are
-      // dot separated indexes of the panel you would like to trigger.
-      // They should be passed like so:
-      // {'{Panel Section ID}.{Panel Group ID}.{Panel Item ID}'}
-      panelSectionEditOptions.push(
-        <PanelGroup
-          key={`${collectionId}_edit-options`}
-          primaryHeading="Edit Options"
-          headerMessage={
-            (
-              collectionIsCSDA && (
-                <Col className="search-panels__note">
-                  {'This collection is made available through the '}
-                  <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                  <Button
-                    className="search-panels__header-message-link"
-                    dataTestId="search-panels__csda-modal-button"
-                    onClick={() => onToggleAboutCSDAModal(true)}
-                    variant="link"
-                    bootstrapVariant="link"
-                    icon={FaQuestionCircle}
-                    label="More details"
-                  >
-                    More Details
-                  </Button>
-                </Col>
-              )
-            )
-          }
-          breadcrumbs={
-            [
-              {
-                title,
-                onClick: () => this.onChangePanel(`1.${index}.0`)
-              }
-            ]
-          }
-          moreActionsDropdownItems={
-            [
-              {
-                title: 'View Project Granules',
-                icon: FaMap,
-                onClick: () => this.onChangePanel(`1.${index}.0`)
-              }
-            ]
-          }
-          footer={editOptionsFooter}
-        >
-          <PanelItem
-            header={
-              (
-                <DataQualitySummary
-                  dataQualitySummaries={collectionDataQualitySummaries}
-                  dataQualityHeader={dataQualityHeader}
-                />
-              )
-            }
-          >
-            <AccessMethod
-              accessMethods={accessMethods}
-              index={index}
-              metadata={collectionMetadata}
-              onSelectAccessMethod={onSelectAccessMethod}
-              onSetActivePanel={onSetActivePanel}
-              onTogglePanels={onTogglePanels}
-              onUpdateAccessMethod={onUpdateAccessMethod}
-              selectedAccessMethod={selectedAccessMethod}
-              spatial={spatial}
-              temporal={preferredTemporal}
-              projectCollection={projectCollection}
-            />
-          </PanelItem>
-          <PanelItem
-            hideFooter
-            backButtonOptions={backButtonOptions}
-          >
-            <VariableTreePanel
-              accessMethods={accessMethods}
-              collectionId={collectionId}
-              index={index}
-              selectedAccessMethod={selectedAccessMethod}
-              onUpdateSelectedVariables={this.onSelectedVariablesChange}
-              onViewDetails={this.onViewDetails}
-            />
-          </PanelItem>
-          <PanelItem
-            footer={variableDetailsFooter}
-            backButtonOptions={backButtonOptions}
-          >
-            <VariableDetailsPanel
-              variable={selectedVariable}
-            />
-          </PanelItem>
-        </PanelGroup>
-      )
+    const projectGranulesHeaderMetaPrimaryText = `Showing ${commafy(granulesAllIds.length)} of ${commafy(granuleCount)} ${pluralize('granule', granuleCount)} in project`
 
-      panelSectionCollectionDetails.push(
-        <PanelGroup
-          key={`${collectionId}_collection-details`}
-          moreActionsDropdownItems={
-            [
-              {
-                title: 'Edit Project Options',
-                icon: Settings,
-                onClick: () => this.onChangePanel(`0.${index}.0`)
-              }
-            ]
-          }
-          primaryHeading={title}
-          headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
-          headerMessage={
-            (
-              collectionIsCSDA && (
-                <Col className="search-panels__note">
-                  {'This collection is made available through the '}
-                  <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                  <Button
-                    className="search-panels__header-message-link"
-                    dataTestId="search-panels__csda-modal-button"
-                    onClick={() => onToggleAboutCSDAModal(true)}
-                    variant="link"
-                    bootstrapVariant="link"
-                    icon={FaQuestionCircle}
-                    label="More details"
-                  >
-                    More Details
-                  </Button>
-                </Col>
-              )
-            )
-          }
-        >
-          <PanelItem scrollable={false}>
-            <CollectionDetails
-              collectionId={collectionId}
-              projectCollection={projectCollection}
-            />
-          </PanelItem>
-        </PanelGroup>
-      )
-    })
+    const backButtonOptions = {
+      text: 'Edit Options',
+      location: `0.${index}.0`
+    }
 
-    // Don't display the panels if the project doesn't have any collections
-    if (projectIds.length === 0) return null
-
-    return (
-      <Panels
-        draggable
-        show={collectionMetadataLoaded && isOpen}
-        activePanel={activePanel}
-        onPanelClose={this.onPanelClose}
-        onPanelOpen={this.onPanelOpen}
-        onChangePanel={this.onChangePanel}
-      >
-        <PanelSection>
-          {panelSectionEditOptions}
-        </PanelSection>
-        <PanelSection>
-          {panelSectionCollectionDetails}
-        </PanelSection>
-      </Panels>
+    const editOptionsFooter = (
+      <div className="project-panels__footer">
+        {
+          !isValid && (
+            <span className="project-panels__collection-status project-panels__collection-status--invalid">
+              <EDSCIcon icon={AlertInformation} />
+            </span>
+          )
+        }
+        {
+          isValid && (
+            <span className="project-panels__collection-status project-panels__collection-status--valid">
+              <EDSCIcon icon={CheckCircled} />
+            </span>
+          )
+        }
+        <span className="project-panels__collection-count">
+          {`Collection ${index + 1} of ${projectIds.length}`}
+        </span>
+        {
+          canResetForm(accessMethods, selectedAccessMethod) && (
+            <Button
+              className="project-panels__action"
+              label="Reset Form"
+              bootstrapVariant="light"
+              onClick={() => resetForm(collectionId, selectedAccessMethod)}
+            >
+              Reset Form
+            </Button>
+          )
+        }
+        {
+          index > 0 && (
+            <Button
+              className="project-panels__action"
+              label="Previous Collection"
+              bootstrapVariant="light"
+              onClick={() => onChangePanel(`0.${index - 1}.0`)}
+            >
+              Back
+            </Button>
+          )
+        }
+        {
+          index < projectIds.length - 1 && (
+            <Button
+              className="project-panels__action"
+              label="Next Collection"
+              bootstrapVariant="primary"
+              onClick={() => onChangePanel(`0.${index + 1}.0`)}
+            >
+              Next
+            </Button>
+          )
+        }
+        {
+          index === projectIds.length - 1 && (
+            <Button
+              className="project-panels__action"
+              label="Done"
+              bootstrapVariant="primary"
+              onClick={onPanelClose}
+            >
+              Done
+            </Button>
+          )
+        }
+      </div>
     )
-  }
+
+    const variableDetailsFooter = (
+      <div className="project-panels__footer">
+        <Button
+          type="button"
+          label="Back"
+          bootstrapVariant="primary"
+          className="project-panels__action"
+          onClick={() => clearSelectedVariable(`0.${index}.1`)}
+        >
+          Back
+        </Button>
+      </div>
+    )
+
+    // Panels are controlled using the onSetActivePanel action. The parameters are
+    // dot separated indexes of the panel you would like to trigger.
+    // They should be passed like so:
+    // {'{Panel Section ID}.{Panel Group ID}.{Panel Item ID}'}
+    panelSectionEditOptions.push(
+      <PanelGroup
+        key={`${collectionId}_edit-options`}
+        primaryHeading="Edit Options"
+        headerMessage={
+          (
+            // TODO EDSC-4611 move this code
+            collectionIsCSDA && (
+              <Col className="project-panels__note mx-3">
+                {'This collection is made available through the '}
+                <span className="project-panels__note-emph project-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                <Button
+                  className="project-panels__header-message-link"
+                  onClick={() => setOpenModal(MODAL_NAMES.ABOUT_CSDA)}
+                  variant="link"
+                  bootstrapVariant="link"
+                  icon={FaQuestionCircle}
+                  label="More details"
+                >
+                  More Details
+                </Button>
+              </Col>
+            )
+          )
+        }
+        breadcrumbs={
+          [
+            {
+              title,
+              onClick: () => onChangePanel(`1.${index}.0`)
+            }
+          ]
+        }
+        moreActionsDropdownItems={
+          [
+            {
+              title: 'View Project Granules',
+              icon: FaMap,
+              onClick: () => onChangePanel(`1.${index}.0`)
+            }
+          ]
+        }
+        footer={editOptionsFooter}
+      >
+        <PanelItem
+          header={
+            (
+              <DataQualitySummary
+                dataQualitySummaries={collectionDataQualitySummaries}
+                dataQualityHeader={dataQualityHeader}
+              />
+            )
+          }
+        >
+          <AccessMethod
+            accessMethods={accessMethods}
+            index={index}
+            metadata={collectionMetadata}
+            onSelectAccessMethod={selectAccessMethod}
+            onSetActivePanel={setActivePanel}
+            onTogglePanels={togglePanels}
+            onUpdateAccessMethod={updateAccessMethod}
+            selectedAccessMethod={selectedAccessMethod}
+            spatial={spatial}
+            temporal={preferredTemporal}
+            projectCollection={projectCollection}
+          />
+        </PanelItem>
+        <PanelItem
+          hideFooter
+          backButtonOptions={backButtonOptions}
+        >
+          <VariableTreePanel
+            accessMethods={accessMethods}
+            collectionId={collectionId}
+            index={index}
+            selectedAccessMethod={selectedAccessMethod}
+            onUpdateSelectedVariables={onSelectedVariablesChange}
+            onViewDetails={onViewDetails}
+          />
+        </PanelItem>
+        <PanelItem
+          footer={variableDetailsFooter}
+          backButtonOptions={backButtonOptions}
+        >
+          <VariableDetailsPanel
+            variable={selectedVariable}
+          />
+        </PanelItem>
+      </PanelGroup>
+    )
+
+    panelSectionCollectionDetails.push(
+      <PanelGroup
+        key={`${collectionId}_collection-details`}
+        moreActionsDropdownItems={
+          [
+            {
+              title: 'Edit Project Options',
+              icon: Settings,
+              onClick: () => onChangePanel(`0.${index}.0`)
+            }
+          ]
+        }
+        primaryHeading={title}
+        headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
+        headerMessage={
+          (
+            // TODO EDSC-4611 move this code
+            collectionIsCSDA && (
+              <Col className="project-panels__note mx-3">
+                {'This collection is made available through the '}
+                <span className="project-panels__note-emph project-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                <Button
+                  className="project-panels__header-message-link"
+                  onClick={() => setOpenModal(MODAL_NAMES.ABOUT_CSDA)}
+                  variant="link"
+                  bootstrapVariant="link"
+                  icon={FaQuestionCircle}
+                  label="More details"
+                >
+                  More Details
+                </Button>
+              </Col>
+            )
+          )
+        }
+      >
+        <PanelItem scrollable={false}>
+          <CollectionDetails
+            collectionId={collectionId}
+            projectCollection={projectCollection}
+          />
+        </PanelItem>
+      </PanelGroup>
+    )
+  })
+
+  // Don't display the panels if the project doesn't have any collections
+  if (projectIds.length === 0) return null
+
+  return (
+    <Panels
+      draggable
+      show={collectionMetadataLoaded && isOpen}
+      activePanel={activePanel}
+      onPanelClose={onPanelClose}
+      onPanelOpen={onPanelOpen}
+      onChangePanel={onChangePanel}
+    >
+      <PanelSection>
+        {panelSectionEditOptions}
+      </PanelSection>
+      <PanelSection>
+        {panelSectionCollectionDetails}
+      </PanelSection>
+    </Panels>
+  )
 }
 
 ProjectPanels.propTypes = {
-  dataQualitySummaries: PropTypes.shape({}).isRequired,
-  collectionId: PropTypes.string.isRequired,
-  granulesQueries: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
-  onChangePath: PropTypes.func.isRequired,
-  onSelectAccessMethod: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  onSetActivePanelGroup: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
-  onUpdateAccessMethod: PropTypes.func.isRequired,
-  setCollectionId: PropTypes.func.isRequired,
-  overrideTemporal: PropTypes.shape({}).isRequired,
-  panels: PropTypes.shape({
-    activePanel: PropTypes.string,
-    isOpen: PropTypes.bool
-  }).isRequired,
-  projectCollections: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    byId: PropTypes.shape({})
-  }).isRequired,
-  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
-  spatial: PropTypes.shape({}).isRequired,
-  temporal: PropTypes.shape({}).isRequired
+  onChangePath: PropTypes.func.isRequired
 }
 
 export default ProjectPanels

@@ -14,8 +14,6 @@ import { useQuery } from '@apollo/client'
 import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 
 // @ts-expect-error The file does not have types
-import actions from '../../actions'
-// @ts-expect-error The file does not have types
 import { metricsMap } from '../../middleware/metrics/actions'
 
 import { eventEmitter } from '../../events/events'
@@ -42,6 +40,7 @@ import {
 import projectionCodes from '../../constants/projectionCodes'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
+import { MODAL_NAMES } from '../../constants/modalNames'
 import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -56,6 +55,7 @@ import { getFocusedCollectionMapLayers } from '../../zustand/selectors/map'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import type {
   Colormap,
@@ -73,44 +73,17 @@ import './MapContainer.scss'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onMetricsMap:
-    (type: string) => dispatch(metricsMap(type)),
-  onToggleDrawingNewLayer:
-    (state: string | boolean) => dispatch(actions.toggleDrawingNewLayer(state)),
-  onToggleShapefileUploadModal:
-    (state: boolean) => dispatch(actions.toggleShapefileUploadModal(state)),
-  onToggleTooManyPointsModal:
-    (state: boolean) => dispatch(actions.toggleTooManyPointsModal(state))
-})
-
-// @ts-expect-error Don't want to define types for all of Redux
-export const mapStateToProps = (state) => ({
-  displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
-  drawingNewLayer: state.ui.map.drawingNewLayer
+    (type: string) => dispatch(metricsMap(type))
 })
 
 interface MapContainerProps {
-  /** The display spatial polygon warning flag */
-  displaySpatialPolygonWarning: boolean
-  /** The drawing new layer flag */
-  drawingNewLayer: string | boolean
   /** Function to call the metrics map */
   onMetricsMap: (type: string) => void
-  /** Function to toggle the drawing new layer */
-  onToggleDrawingNewLayer: (state: string | boolean) => void
-  /** Function to toggle the shapefile upload modal */
-  onToggleShapefileUploadModal: (state: boolean) => void
-  /** Function to toggle the too many points modal */
-  onToggleTooManyPointsModal: (state: boolean) => void
 }
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
-    displaySpatialPolygonWarning,
-    drawingNewLayer,
-    onMetricsMap,
-    onToggleDrawingNewLayer,
-    onToggleShapefileUploadModal,
-    onToggleTooManyPointsModal
+    onMetricsMap
   } = props
 
   const location = useLocation()
@@ -132,6 +105,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   } = spatialQuery
 
   const {
+    displaySpatialPolygonWarning,
+    drawingNewLayer,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -141,6 +116,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onUpdateShapefile,
     panelsLoaded,
     projectCollections,
+    setDrawingNewLayer,
     setGranuleId,
     setLayerOpacity,
     setMapLayersOrder,
@@ -151,6 +127,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     startDrawing,
     toggleLayerVisibility
   } = useEdscStore((state) => ({
+    displaySpatialPolygonWarning: state.ui.map.displaySpatialPolygonWarning,
+    drawingNewLayer: state.ui.map.drawingNewLayer,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -160,6 +138,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onUpdateShapefile: state.shapefile.updateShapefile,
     panelsLoaded: state.ui.panels.panelsLoaded,
     projectCollections: state.project.collections,
+    setDrawingNewLayer: state.ui.map.setDrawingNewLayer,
     setGranuleId: state.granule.setGranuleId,
     setLayerOpacity: state.map.setLayerOpacity,
     setMapLayers: state.map.setMapLayers,
@@ -184,6 +163,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const nlpCollection = useEdscStore(getNlpCollection)
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
 
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
   // Default the granuleMetadata to the granulesById. These are the granules we want to show
   // on the search page
   let granuleMetadata = {
@@ -195,7 +176,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   useLayoutEffect(() => {
     if (startDrawing && mapReady) {
       if (startDrawing === 'file') {
-        onToggleShapefileUploadModal(true)
+        setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)
       } else {
         eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
       }
@@ -561,9 +542,9 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       onExcludeGranule={onExcludeGranule}
       onMapReady={setMapReady}
       onMetricsMap={onMetricsMap}
-      onToggleDrawingNewLayer={onToggleDrawingNewLayer}
-      onToggleShapefileUploadModal={onToggleShapefileUploadModal}
-      onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+      onToggleDrawingNewLayer={setDrawingNewLayer}
+      onToggleShapefileUploadModal={() => setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)}
+      onToggleTooManyPointsModal={() => setOpenModal(MODAL_NAMES.TOO_MANY_POINTS)}
       onUpdateShapefile={onUpdateShapefile}
       overlays={overlays}
       projectionCode={projection}
@@ -576,4 +557,4 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)
+export default connect(null, mapDispatchToProps)(MapContainer)

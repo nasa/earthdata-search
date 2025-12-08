@@ -40,7 +40,7 @@ const simplifyShape = ({
   /** The geometry to simplify */
   geometry: SimpleGeometry
   /** Callback to toggle the too many points modal */
-  onToggleTooManyPointsModal: (isOpen: boolean) => void
+  onToggleTooManyPointsModal: () => void
   /** If the shapefile was just added */
   shapefileAdded: boolean
 }): SimpleGeometry => {
@@ -48,7 +48,8 @@ const simplifyShape = ({
   const numPoints = coordinates.length / 2
 
   if (shapefileAdded && numPoints > MAX_POLYGON_SIZE) {
-    onToggleTooManyPointsModal(true)
+    console.log('too many points')
+    onToggleTooManyPointsModal()
   }
 
   const turfGeometry = new GeoJSON().writeGeometryObject(geometry) as GeoJsonGeometry
@@ -101,7 +102,7 @@ const drawShapefile = ({
   /** Callback to send metrics events */
   onMetricsMap: (eventName: string) => void
   /** Callback to toggle the too many points modal */
-  onToggleTooManyPointsModal: (isOpen: boolean) => void
+  onToggleTooManyPointsModal: () => void
   /** Callback to update the shapefile */
   onUpdateShapefile: ShapefileSlice['shapefile']['updateShapefile']
   /** The current map projection */

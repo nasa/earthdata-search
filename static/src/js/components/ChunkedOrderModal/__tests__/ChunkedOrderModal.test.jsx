@@ -6,6 +6,7 @@ import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMark
 
 import ChunkedOrderModal from '../ChunkedOrderModal'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 // In order to pass out of scope variables into `jest` they must be prefixed with `mock`
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => (
@@ -31,10 +32,6 @@ jest.mock('../../../hooks/useCreateRetrieval', () => ({
 
 const setup = setupTest({
   Component: ChunkedOrderModal,
-  defaultProps: {
-    isOpen: true,
-    onToggleChunkedOrderModal: jest.fn()
-  },
   defaultZustandState: {
     collection: {
       collectionMetadata: {
@@ -54,12 +51,32 @@ const setup = setupTest({
           }
         }
       }
+    },
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.CHUNKED_ORDER,
+        setOpenModal: jest.fn()
+      }
     }
   },
   withRouter: true
 })
 
 describe('ChunkedOrderModal component', () => {
+  test('does not render when modal is closed', () => {
+    setup({
+      overrideZustandState: {
+        ui: {
+          modals: {
+            openModal: null
+          }
+        }
+      }
+    })
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   test('should render a title', () => {
     setup()
 
@@ -188,35 +205,35 @@ describe('ChunkedOrderModal component', () => {
   })
 
   describe('modal actions', () => {
-    test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
-      const { props, user } = setup()
+    test('\'Refine your search\' button should trigger setOpenModal', async () => {
+      const { user, zustandState } = setup()
 
       await user.click(screen.getByText('Refine your search'))
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
 
       expect(mockCreateRetrieval).toHaveBeenCalledTimes(0)
     })
 
-    test('\'Change access methods\' button should trigger onToggleChunkedOrderModal', async () => {
-      const { props, user } = setup()
+    test('\'Change access methods\' button should trigger setOpenModal', async () => {
+      const { user, zustandState } = setup()
 
       await user.click(screen.getByRole('button', { name: 'Change access methods' }))
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
 
       expect(mockCreateRetrieval).toHaveBeenCalledTimes(0)
     })
 
-    test('\'Continue\' button should trigger onToggleChunkedOrderModal', async () => {
-      const { props, user } = setup()
+    test('\'Continue\' button should trigger setOpenModal', async () => {
+      const { user, zustandState } = setup()
 
       await user.click(screen.getByRole('button', { name: 'Continue' }))
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
 
       expect(mockCreateRetrieval).toHaveBeenCalledTimes(1)
       expect(mockCreateRetrieval).toHaveBeenCalledWith()

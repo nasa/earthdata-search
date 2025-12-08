@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { useLocation } from 'react-router-dom'
@@ -16,26 +15,31 @@ import {
   getProjectCollectionsMetadata,
   getProjectCollectionsRequiringChunking
 } from '../../zustand/selectors/project'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import { useCreateRetrieval } from '../../hooks/useCreateRetrieval'
 
 import './ChunkedOrderModal.scss'
 
-const ChunkedOrderModal = ({
-  isOpen,
-  onToggleChunkedOrderModal
-}) => {
+const ChunkedOrderModal = () => {
   const location = useLocation()
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.CHUNKED_ORDER))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
+
   const { createRetrieval } = useCreateRetrieval()
 
+  if (!isOpen) return null
+
   const onModalClose = () => {
-    onToggleChunkedOrderModal(false)
+    setOpenModal(null)
   }
 
   const onClickContinue = () => {
-    onToggleChunkedOrderModal(false)
+    setOpenModal(null)
 
     createRetrieval()
   }
@@ -165,11 +169,6 @@ const ChunkedOrderModal = ({
       onSecondaryAction={onModalClose}
     />
   )
-}
-
-ChunkedOrderModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onToggleChunkedOrderModal: PropTypes.func.isRequired
 }
 
 export default ChunkedOrderModal

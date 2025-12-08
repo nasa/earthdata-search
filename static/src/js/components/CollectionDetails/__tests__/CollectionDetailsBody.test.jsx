@@ -7,6 +7,7 @@ import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 import RelatedCollection from '../../RelatedCollection/RelatedCollection'
 import Skeleton from '../../Skeleton/Skeleton'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../CollectionDetailsMinimap', () => jest.fn(() => <div />))
 jest.mock('../../RelatedCollection/RelatedCollection', () => jest.fn(() => <div />))
@@ -61,14 +62,18 @@ const setup = setupTest({
     location: {
       pathname: '/search'
     },
-    onMetricsRelatedCollection: jest.fn(),
-    onToggleRelatedUrlsModal: jest.fn()
+    onMetricsRelatedCollection: jest.fn()
   },
   defaultZustandState: {
     collection: {
       collectionId: 'collectionId',
       collectionMetadata: {
         collectionId: defaultCollectionMetadata
+      }
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
       }
     }
   }
@@ -270,7 +275,7 @@ describe('CollectionDetailsBody component', () => {
 
     describe('Related URLs', () => {
       test('renders its links correctly', async () => {
-        const { props, user } = setup({
+        const { user, zustandState } = setup({
           overrideZustandState: {
             collection: {
               collectionMetadata: {
@@ -394,8 +399,8 @@ describe('CollectionDetailsBody component', () => {
 
         await user.click(screen.getByRole('button', { name: 'View All Related URLs' }))
 
-        expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledWith(true)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.RELATED_URLS)
 
         // The .html url is the  `View More Info` link
         const htmlLink = screen.getByRole('link', { name: 'View More Info' })

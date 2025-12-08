@@ -39,8 +39,6 @@ interface OrderStatusCollectionProps {
   }
   /** Sets the item open on initial render */
   defaultOpen?: boolean
-  /** Callback to toggle the About CSDA modal */
-  onToggleAboutCSDAModal: () => void
   /** The retrieval ID */
   retrievalId: string
 }
@@ -50,13 +48,11 @@ interface OrderStatusCollectionProps {
  * @param {Object} params - The props passed into the component.
  * @param {Object} params.collection - The collection state.
  * @param {Boolean} params.defaultOpen - Sets the item open on initial render.
- * @param {Function} params.onToggleAboutCSDAModal - Callback to toggle the About CSDA modal.
  * @param {String} params.retrievalId - The retrieval ID.
 */
 const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
   collection,
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalId
 }) => {
   const handleError = useEdscStore((state) => state.errors.handleError)
@@ -162,7 +158,6 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
   return (
     <OrderStatusItemComponent
       defaultOpen={defaultOpen}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       retrievalCollection={retrievalCollection}
       retrievalId={retrievalId}
     />

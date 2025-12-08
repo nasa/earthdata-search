@@ -18,7 +18,6 @@ const setup = setupTest({
   Component: HarmonyStatusItem,
   defaultProps: {
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalCollection: {
       collectionMetadata: {
         directDistributionInformation: {},
@@ -134,7 +133,7 @@ describe('HarmonyStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup()
+      setup()
 
       expect(OrderStatusItem).toHaveBeenCalledTimes(1)
       expect(OrderStatusItem).toHaveBeenCalledWith({
@@ -145,7 +144,6 @@ describe('HarmonyStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.COMPLETE,
         orderStatus: 'complete',
@@ -360,7 +358,7 @@ describe('HarmonyStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -392,7 +390,6 @@ describe('HarmonyStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.CREATING,
         orderStatus: 'creating',
@@ -419,7 +416,7 @@ describe('HarmonyStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -518,7 +515,6 @@ describe('HarmonyStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.IN_PROGRESS,
         orderStatus: 'in_progress',
@@ -545,7 +541,7 @@ describe('HarmonyStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -600,7 +596,6 @@ describe('HarmonyStatusItem', () => {
         hasStatus: true,
         messageIsError: true,
         messages: ['Order Failed.'],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.FAILED,
         orderStatus: 'failed',
@@ -627,7 +622,7 @@ describe('HarmonyStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -682,7 +677,6 @@ describe('HarmonyStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: ['Canceled by admin.'],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ESI.CANCELED,
         orderStatus: 'canceled',

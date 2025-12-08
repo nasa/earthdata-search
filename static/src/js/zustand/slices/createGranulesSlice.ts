@@ -14,12 +14,6 @@ import GranuleRequest from '../../util/request/granuleRequest'
 // @ts-expect-error There are no types for this file
 import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleRequest'
 
-// @ts-expect-error There are no types for this file
-import configureStore from '../../store/configureStore'
-
-// @ts-expect-error There are no types for this file
-import actions from '../../actions'
-
 import {
   populateGranuleResults,
   prepareGranuleParams,
@@ -45,10 +39,6 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
     granules: initialState,
 
     getGranules: async () => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const zustandState = get()
       const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
@@ -111,7 +101,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         state.granules.granules.isLoading = true
       })
 
-      reduxDispatch(actions.toggleSpatialPolygonWarning(false))
+      zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
 
       const searchParams = buildGranuleSearchParams(granuleParams)
 
@@ -125,7 +115,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
         // OpenSearch does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
         if (polygon) {
-          reduxDispatch(actions.toggleSpatialPolygonWarning(true))
+          zustandState.ui.map.setDisplaySpatialPolygonWarning(true)
 
           const {
             swLat,

@@ -3,16 +3,13 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EditSubscriptionModal from '../EditSubscriptionModal'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 const setup = setupTest({
   Component: EditSubscriptionModal,
   defaultProps: {
-    isOpen: true,
-    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
-    subscriptions: {},
-    subscriptionConceptId: '',
-    subscriptionType: 'collection'
+    subscriptions: {}
   },
   defaultZustandState: {
     collection: {
@@ -24,11 +21,35 @@ const setup = setupTest({
           }
         }
       }
+    },
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.EDIT_SUBSCRIPTION,
+        modalData: {
+          subscriptionConceptId: '',
+          subscriptionType: 'collection'
+        },
+        setOpenModal: jest.fn()
+      }
     }
   }
 })
 
 describe('EditSubscriptionModal component', () => {
+  test('does not render when modal is closed', () => {
+    setup({
+      overrideZustandState: {
+        ui: {
+          modals: {
+            openModal: null
+          }
+        }
+      }
+    })
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   test('should render a Modal', () => {
     setup()
 
@@ -51,8 +72,17 @@ describe('EditSubscriptionModal component', () => {
                 name: 'Original Name'
               }
             }
-          },
-          subscriptionConceptId: 'SUB1'
+          }
+        },
+        overrideZustandState: {
+          ui: {
+            modals: {
+              modalData: {
+                subscriptionConceptId: 'SUB1',
+                subscriptionType: 'collection'
+              }
+            }
+          }
         }
       })
 
@@ -69,7 +99,16 @@ describe('EditSubscriptionModal component', () => {
               }
             }
           },
-          subscriptionConceptId: 'SUB1'
+          overrideZustandState: {
+            ui: {
+              modals: {
+                modalData: {
+                  subscriptionConceptId: 'SUB1',
+                  subscriptionType: 'collection'
+                }
+              }
+            }
+          }
         }
       })
 
@@ -80,10 +119,6 @@ describe('EditSubscriptionModal component', () => {
   describe('when a granule subscription is defined', () => {
     test('sets the value of the name input', () => {
       setup({
-        overrideProps: {
-          subscriptionConceptId: 'SUB1',
-          subscriptionType: 'granule'
-        },
         overrideZustandState: {
           collection: {
             collectionMetadata: {
@@ -94,6 +129,14 @@ describe('EditSubscriptionModal component', () => {
                     name: 'Original Name (Granule)'
                   }]
                 }
+              }
+            }
+          },
+          ui: {
+            modals: {
+              modalData: {
+                subscriptionConceptId: 'SUB1',
+                subscriptionType: 'granule'
               }
             }
           }
@@ -105,10 +148,6 @@ describe('EditSubscriptionModal component', () => {
 
     test('defaults the checkbox to unchecked', () => {
       setup({
-        overrideProps: {
-          subscriptionConceptId: 'SUB1',
-          subscriptionType: 'granule'
-        },
         overrideZustandState: {
           collection: {
             collectionMetadata: {
@@ -121,6 +160,14 @@ describe('EditSubscriptionModal component', () => {
                 }
               }
             }
+          },
+          ui: {
+            modals: {
+              modalData: {
+                subscriptionConceptId: 'SUB1',
+                subscriptionType: 'granule'
+              }
+            }
           }
         }
       })
@@ -130,8 +177,8 @@ describe('EditSubscriptionModal component', () => {
   })
 
   describe('onSubscriptionEditSubmit', () => {
-    test('calls onUpdateSubscription and onToggleEditSubscriptionModal', async () => {
-      const { props, user } = setup({
+    test('calls onUpdateSubscription and setOpenModal', async () => {
+      const { props, user, zustandState } = setup({
         overrideProps: {
           subscriptions: {
             byId: {
@@ -141,8 +188,17 @@ describe('EditSubscriptionModal component', () => {
                 nativeId: 'mock-guid'
               }
             }
-          },
-          subscriptionConceptId: 'SUB1'
+          }
+        },
+        overrideZustandState: {
+          ui: {
+            modals: {
+              modalData: {
+                subscriptionConceptId: 'SUB1',
+                subscriptionType: 'collection'
+              }
+            }
+          }
         }
       })
 
@@ -159,12 +215,8 @@ describe('EditSubscriptionModal component', () => {
         }
       })
 
-      expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledWith({
-        isOpen: false,
-        subscriptionConceptId: '',
-        type: ''
-      })
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 })

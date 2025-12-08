@@ -19,7 +19,6 @@ const setup = setupTest({
   Component: OpendapStatusItem,
   defaultProps: {
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalCollection: {
       collectionMetadata: {
         directDistributionInformation: {},
@@ -47,7 +46,7 @@ describe('OpendapStatusItem', () => {
       percentDone: '100'
     })
 
-    const { props } = setup()
+    setup()
 
     expect(OrderStatusItem).toHaveBeenCalledTimes(1)
     expect(OrderStatusItem).toHaveBeenCalledWith({
@@ -58,7 +57,6 @@ describe('OpendapStatusItem', () => {
       hasStatus: false,
       messageIsError: false,
       messages: [],
-      onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
       opened: true,
       orderInfo: STATUS_MESSAGES.OPENDAP.COMPLETE,
       orderStatus: 'creating',

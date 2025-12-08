@@ -20,6 +20,10 @@ import commafy from '../../util/commafy'
 import pluralize from '../../util/pluralize'
 // @ts-expect-error The file does not have types
 import { formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
+import { MODAL_NAMES } from '../../constants/modalNames'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 interface OrderStatusItemProps {
   /** The type of access method */
@@ -38,8 +42,6 @@ interface OrderStatusItemProps {
   messages: string[]
   /** Whether the item is expanded/opened */
   opened: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** Additional information about the order */
   orderInfo: string
   /** Current status of the order */
@@ -69,7 +71,6 @@ const OrderStatusItem: React.FC<OrderStatusItemProps> = ({
   messageIsError,
   messages,
   opened,
-  onToggleAboutCSDAModal,
   orderInfo,
   orderStatus,
   progressPercentage,
@@ -79,199 +80,203 @@ const OrderStatusItem: React.FC<OrderStatusItemProps> = ({
   totalCompleteOrders,
   totalOrders,
   updatedAt
-}) => (
-  <li className={className}>
-    <header className="order-status-item__header">
-      <h4 className="order-status-item__heading" title={title}>{title}</h4>
-      {
-        !opened && (
-          <>
-            <span className="order-status-item__meta-column order-status-item__meta-column--progress">
-              <ProgressRing
-                className="order-status-item__progress-ring--closed"
-                width={22}
-                strokeWidth={3}
-                progress={progressPercentage}
-              />
-              <span
-                className="order-status-item__status"
-                aria-label="Order Status"
-              >
-                {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
+}) => {
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
+  return (
+    <li className={className}>
+      <header className="order-status-item__header">
+        <h4 className="order-status-item__heading" title={title}>{title}</h4>
+        {
+          !opened && (
+            <>
+              <span className="order-status-item__meta-column order-status-item__meta-column--progress">
+                <ProgressRing
+                  className="order-status-item__progress-ring--closed"
+                  width={22}
+                  strokeWidth={3}
+                  progress={progressPercentage}
+                />
+                <span
+                  className="order-status-item__status"
+                  aria-label="Order Status"
+                >
+                  {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
+                </span>
+                {
+                  (progressPercentage != null && progressPercentage >= 0) && (
+                    <span
+                      className="order-status-item__percentage"
+                      aria-label="Order Progress Percentage"
+                    >
+                      {`(${progressPercentage}%)`}
+                    </span>
+                  )
+                }
               </span>
-              {
-                (progressPercentage != null && progressPercentage >= 0) && (
-                  <span
-                    className="order-status-item__percentage"
-                    aria-label="Order Progress Percentage"
-                  >
-                    {`(${progressPercentage}%)`}
-                  </span>
-                )
-              }
-            </span>
-            <span
-              className="order-status-item__meta-column order-status-item__meta-column--access-method"
-              aria-label="Access Method Type"
-            >
-              {upperFirst(accessMethodType)}
-            </span>
-            <span
-              className="order-status-item__meta-column order-status-item__meta-column--granules"
-              aria-label="Granule Count"
-            >
-              {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
-            </span>
-          </>
-        )
-      }
-      <Button
-        className="order-status-item__button"
-        type="icon"
-        icon={opened ? ArrowChevronUp : ArrowChevronDown}
-        label={opened ? 'Close details' : 'Show details'}
-        title={opened ? 'Close details' : 'Show details'}
-        onClick={() => setOpened(!opened)}
-      />
-    </header>
-    {
-      opened && (
-        <div className="order-status-item__body">
-          <div className="order-status-item__body-header" data-testid="order-status-item__body-header">
-            <div className="order-status-item__body-header-primary">
-              <div className="order-status-item__meta-row">
-                <div className="order-status-item__meta">
-                  <h4 className="order-status-item__meta-heading">Status</h4>
-                  <div className="order-status-item__meta-body order-status-item__meta-body--progress">
-                    <ProgressRing
-                      className="order-status-item__progress-ring"
-                      width={22}
-                      strokeWidth={3}
-                      progress={progressPercentage}
-                    />
-                    <div className="order-status-item__progress-meta">
-                      <div className="d-flex align-items-center">
-                        <span
-                          className="order-status-item__status"
-                          aria-label="Order Status"
-                        >
-                          {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
-                        </span>
+              <span
+                className="order-status-item__meta-column order-status-item__meta-column--access-method"
+                aria-label="Access Method Type"
+              >
+                {upperFirst(accessMethodType)}
+              </span>
+              <span
+                className="order-status-item__meta-column order-status-item__meta-column--granules"
+                aria-label="Granule Count"
+              >
+                {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+              </span>
+            </>
+          )
+        }
+        <Button
+          className="order-status-item__button"
+          type="icon"
+          icon={opened ? ArrowChevronUp : ArrowChevronDown}
+          label={opened ? 'Close details' : 'Show details'}
+          title={opened ? 'Close details' : 'Show details'}
+          onClick={() => setOpened(!opened)}
+        />
+      </header>
+      {
+        opened && (
+          <div className="order-status-item__body">
+            <div className="order-status-item__body-header" data-testid="order-status-item__body-header">
+              <div className="order-status-item__body-header-primary">
+                <div className="order-status-item__meta-row">
+                  <div className="order-status-item__meta">
+                    <h4 className="order-status-item__meta-heading">Status</h4>
+                    <div className="order-status-item__meta-body order-status-item__meta-body--progress">
+                      <ProgressRing
+                        className="order-status-item__progress-ring"
+                        width={22}
+                        strokeWidth={3}
+                        progress={progressPercentage}
+                      />
+                      <div className="order-status-item__progress-meta">
+                        <div className="d-flex align-items-center">
+                          <span
+                            className="order-status-item__status"
+                            aria-label="Order Status"
+                          >
+                            {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
+                          </span>
+                          {
+                            (progressPercentage != null && progressPercentage >= 0) && (
+                              <span
+                                className="order-status-item__percentage"
+                                aria-label="Order Progress Percentage"
+                              >
+                                {`(${progressPercentage}%)`}
+                              </span>
+                            )
+                          }
+                        </div>
                         {
-                          (progressPercentage != null && progressPercentage >= 0) && (
+                          totalOrders > 0 && (
                             <span
-                              className="order-status-item__percentage"
-                              aria-label="Order Progress Percentage"
+                              className="order-status-item__orders-processed"
+                              aria-label="Orders Processed Count"
                             >
-                              {`(${progressPercentage}%)`}
+                              {`${totalCompleteOrders}/${totalOrders} orders complete`}
                             </span>
                           )
                         }
+                        <span
+                          className="order-status-item__last-updated"
+                          aria-label="Order Last Updated Time"
+                        >
+                          Updated:
+                          {' '}
+                          {moment(updatedAt).format('MM-DD-YYYY hh:mm:ss a')}
+                        </span>
                       </div>
-                      {
-                        totalOrders > 0 && (
-                          <span
-                            className="order-status-item__orders-processed"
-                            aria-label="Orders Processed Count"
-                          >
-                            {`${totalCompleteOrders}/${totalOrders} orders complete`}
-                          </span>
-                        )
-                      }
-                      <span
-                        className="order-status-item__last-updated"
-                        aria-label="Order Last Updated Time"
-                      >
-                        Updated:
-                        {' '}
-                        {moment(updatedAt).format('MM-DD-YYYY hh:mm:ss a')}
-                      </span>
+                    </div>
+                  </div>
+                  <div className="order-status-item__meta">
+                    <h4 className="order-status-item__meta-heading">Access Method</h4>
+                    <div
+                      className="order-status-item__meta-body order-status-item__meta-body--access-method"
+                      aria-label="Access Method Type"
+                    >
+                      <span className="order-status-item__status">{upperFirst(accessMethodType)}</span>
+                    </div>
+                  </div>
+                  <div className="order-status-item__meta">
+                    <h4 className="order-status-item__meta-heading">Granules</h4>
+                    <div
+                      className="order-status-item__meta-body order-status-item__meta-body--granules"
+                      aria-label="Granule Count"
+                    >
+                      <span className="order-status-item__status">{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</span>
                     </div>
                   </div>
                 </div>
-                <div className="order-status-item__meta">
-                  <h4 className="order-status-item__meta-heading">Access Method</h4>
-                  <div
-                    className="order-status-item__meta-body order-status-item__meta-body--access-method"
-                    aria-label="Access Method Type"
+              </div>
+              <div>
+                {
+                  orderInfo && (
+                    <div
+                      className="order-status-item__order-info"
+                      aria-label="Order Information"
+                    >
+                      {orderInfo}
+                    </div>
+                  )
+                }
+              </div>
+              {
+                collectionIsCSDA && (
+                  <Col
+                    className="order-status-item__note mb-3"
+                    aria-label="CSDA Note"
                   >
-                    <span className="order-status-item__status">{upperFirst(accessMethodType)}</span>
-                  </div>
-                </div>
-                <div className="order-status-item__meta">
-                  <h4 className="order-status-item__meta-heading">Granules</h4>
-                  <div
-                    className="order-status-item__meta-body order-status-item__meta-body--granules"
-                    aria-label="Granule Count"
-                  >
-                    <span className="order-status-item__status">{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</span>
-                  </div>
-                </div>
+                    {'This collection is made available through the '}
+                    <span className="order-status-item__note-emph order-status-item__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                    <Button
+                      className="order-status-item__header-message-link"
+                      dataTestId="order-status-item__csda-modal-button"
+                      onClick={() => setOpenModal(MODAL_NAMES.ABOUT_CSDA)}
+                      variant="link"
+                      bootstrapVariant="link"
+                      icon={FaQuestionCircle}
+                      label="More details"
+                    >
+                      More Details
+                    </Button>
+                  </Col>
+                )
+              }
+              <div className="order-status-item__additional-info">
+                {
+                  messages.length > 0 && (
+                    <div className={`order-status-item__message${messageIsError ? ' order-status-item__message--is-error' : ''}`}>
+                      <h3 className="order-status-item__message-heading">Service has responded with message:</h3>
+                      <ul className="order-status-item__message-body">
+                        {
+                          messages.map((message, i) => {
+                            const messagesKey = `message-${i}`
+
+                            return (
+                              <li key={messagesKey}>{message}</li>
+                            )
+                          })
+                        }
+                      </ul>
+                    </div>
+                  )
+                }
               </div>
             </div>
-            <div>
-              {
-                orderInfo && (
-                  <div
-                    className="order-status-item__order-info"
-                    aria-label="Order Information"
-                  >
-                    {orderInfo}
-                  </div>
-                )
-              }
-            </div>
-            {
-              collectionIsCSDA && (
-                <Col
-                  className="order-status-item__note mb-3"
-                  aria-label="CSDA Note"
-                >
-                  {'This collection is made available through the '}
-                  <span className="order-status-item__note-emph order-status-item__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                  <Button
-                    className="order-status-item__header-message-link"
-                    dataTestId="order-status-item__csda-modal-button"
-                    onClick={() => onToggleAboutCSDAModal(true)}
-                    variant="link"
-                    bootstrapVariant="link"
-                    icon={FaQuestionCircle}
-                    label="More details"
-                  >
-                    More Details
-                  </Button>
-                </Col>
-              )
-            }
-            <div className="order-status-item__additional-info">
-              {
-                messages.length > 0 && (
-                  <div className={`order-status-item__message${messageIsError ? ' order-status-item__message--is-error' : ''}`}>
-                    <h3 className="order-status-item__message-heading">Service has responded with message:</h3>
-                    <ul className="order-status-item__message-body">
-                      {
-                        messages.map((message, i) => {
-                          const messagesKey = `message-${i}`
-
-                          return (
-                            <li key={messagesKey}>{message}</li>
-                          )
-                        })
-                      }
-                    </ul>
-                  </div>
-                )
-              }
-            </div>
+            <EDSCTabs className="order-status-item__tabs">
+              {tabs}
+            </EDSCTabs>
           </div>
-          <EDSCTabs className="order-status-item__tabs">
-            {tabs}
-          </EDSCTabs>
-        </div>
-      )
-    }
-  </li>
-)
+        )
+      }
+    </li>
+  )
+}
 
 export default OrderStatusItem

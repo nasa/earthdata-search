@@ -3,7 +3,6 @@ import { waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import actions from '../../../actions'
 import * as metrics from '../../../middleware/metrics/actions'
 import {
   CollectionDetailsBodyContainer,
@@ -17,22 +16,11 @@ const setup = setupTest({
   Component: CollectionDetailsBodyContainer,
   defaultProps: {
     isActive: true,
-    onToggleRelatedUrlsModal: jest.fn(),
     onMetricsRelatedCollection: jest.fn()
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onToggleRelatedUrlsModal calls actions.toggleRelatedUrlsModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleRelatedUrlsModal')
-
-    mapDispatchToProps(dispatch).onToggleRelatedUrlsModal(false)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(false)
-  })
-
   test('onMetricsRelatedCollection calls metricsRelatedCollection', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metrics, 'metricsRelatedCollection')
@@ -54,7 +42,6 @@ describe('CollectionDetailsBodyContainer component', () => {
 
     expect(CollectionDetailsBody).toHaveBeenCalledWith({
       isActive: true,
-      onToggleRelatedUrlsModal: expect.any(Function),
       onMetricsRelatedCollection: expect.any(Function)
     }, {})
   })

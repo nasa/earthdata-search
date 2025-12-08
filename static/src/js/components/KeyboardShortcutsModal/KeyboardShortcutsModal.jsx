@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -7,31 +6,36 @@ import Row from 'react-bootstrap/Row'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+import useEdscStore from '../../zustand/useEdscStore'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
-export class KeyboardShortcutsModal extends Component {
-  constructor(props) {
-    super(props)
-    this.keyboardShortcuts = {
-      toggleModal: '?',
-      escapeModal: 'Escape'
-    }
+export const keyboardShortcutsList = {
+  ']': 'Toggle main search result/granules panel',
+  g: 'Toggle granule filters panel',
+  a: 'Toggle advanced search modal',
+  '/': 'Focus on search input field',
+  l: 'Toggle layers panel',
+  t: 'Toggle timeline',
+  '?': 'Display all keyboard shortcuts',
+  Alt: 'Hold to rotate the map when in a polar projection'
+}
 
-    this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
+const KeyboardShortcutsModal = () => {
+  const keyboardShortcuts = {
+    toggleModal: '?',
+    escapeModal: 'Escape'
   }
 
-  componentDidMount() {
-    window.addEventListener('keyup', this.onWindowKeyUp)
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.KEYBOARD_SHORTCUTS))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
+  const onModalClose = () => {
+    setOpenModal(null)
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.onWindowKeyUp)
-  }
-
-  onWindowKeyUp(event) {
-    const { keyboardShortcuts } = this
-    const { isOpen, onToggleKeyboardShortcutsModal } = this.props
-
-    const toggleModal = () => onToggleKeyboardShortcutsModal(!isOpen)
+  const onWindowKeyUp = (event) => {
+    const toggleModal = () => setOpenModal(isOpen ? null : MODAL_NAMES.KEYBOARD_SHORTCUTS)
 
     triggerKeyboardShortcut({
       event,
@@ -40,55 +44,42 @@ export class KeyboardShortcutsModal extends Component {
     })
   }
 
-  render() {
-    const {
-      isOpen,
-      onToggleKeyboardShortcutsModal
-    } = this.props
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyUp)
 
-    const keyboardShortcutsList = {
-      ']': 'Toggle main search result/granules panel',
-      g: 'Toggle granule filters panel',
-      a: 'Toggle advanced search modal',
-      '/': 'Focus on search input field',
-      l: 'Toggle layers panel',
-      t: 'Toggle timeline',
-      '?': 'Display all keyboard shortcuts',
-      Alt: 'Hold to rotate the map when in a polar projection'
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyUp)
     }
+  }, [])
 
-    return (
-      <EDSCModalContainer
-        isOpen={isOpen}
-        size="md"
-        id="keyboardShortcut"
-        onClose={() => onToggleKeyboardShortcutsModal(false)}
-        body={
-          (
-            <Container>
-              {
-                Object.entries(keyboardShortcutsList).map((shortcut) => (
-                  <Row key={shortcut[0]} className="mb-1">
-                    <Col xs="auto">
-                      <kbd>{shortcut[0]}</kbd>
-                    </Col>
-                    :
-                    <Col>{shortcut[1]}</Col>
-                  </Row>
-                ))
-              }
-            </Container>
-          )
-        }
-        title="Keyboard Shortcuts"
-      />
-    )
-  }
-}
+  if (!isOpen) return null
 
-KeyboardShortcutsModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onToggleKeyboardShortcutsModal: PropTypes.func.isRequired
+  return (
+    <EDSCModalContainer
+      isOpen={isOpen}
+      size="md"
+      id="keyboardShortcut"
+      onClose={onModalClose}
+      body={
+        (
+          <Container>
+            {
+              Object.entries(keyboardShortcutsList).map((shortcut) => (
+                <Row key={shortcut[0]} className="mb-1">
+                  <Col xs="auto">
+                    <kbd>{shortcut[0]}</kbd>
+                  </Col>
+                  :
+                  <Col>{shortcut[1]}</Col>
+                </Row>
+              ))
+            }
+          </Container>
+        )
+      }
+      title="Keyboard Shortcuts"
+    />
+  )
 }
 
 export default KeyboardShortcutsModal

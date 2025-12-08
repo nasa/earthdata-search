@@ -18,7 +18,6 @@ const setup = setupTest({
   Component: EchoOrderStatusItem,
   defaultProps: {
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalCollection: {
       collectionMetadata: {
         directDistributionInformation: {},
@@ -54,7 +53,7 @@ describe('EchoOrderStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup()
+      setup()
 
       expect(OrderStatusItem).toHaveBeenCalledTimes(1)
       expect(OrderStatusItem).toHaveBeenCalledWith({
@@ -65,7 +64,6 @@ describe('EchoOrderStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ECHO_ORDERS.FAILED,
         orderStatus: 'failed',
@@ -128,7 +126,7 @@ describe('EchoOrderStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -160,7 +158,6 @@ describe('EchoOrderStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ECHO_ORDERS.IN_PROGRESS,
         orderStatus: 'creating',
@@ -187,7 +184,7 @@ describe('EchoOrderStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -219,7 +216,6 @@ describe('EchoOrderStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.ECHO_ORDERS.COMPLETE,
         orderStatus: 'complete',

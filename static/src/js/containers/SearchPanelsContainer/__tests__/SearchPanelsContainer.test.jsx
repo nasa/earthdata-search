@@ -20,9 +20,7 @@ const setup = setupTest({
   defaultProps: {
     collectionSubscriptions: [],
     onChangePath: jest.fn(),
-    onMetricsCollectionSortChange: jest.fn(),
-    onToggleAboutCSDAModal: jest.fn(),
-    onToggleAboutCwicModal: jest.fn()
+    onMetricsCollectionSortChange: jest.fn()
   },
   defaultZustandState: {
     preferences: {
@@ -67,26 +65,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
-
-  test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
-
-    mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(true)
-  })
-
-  test('onToggleAboutCwicModal calls actions.toggleAboutCwicModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleAboutCwicModal')
-
-    mapDispatchToProps(dispatch).onToggleAboutCwicModal(true)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(true)
-  })
 })
 
 describe('mapStateToProps', () => {
@@ -113,9 +91,7 @@ describe('SearchPanelsContainer component', () => {
       {
         collectionSubscriptions: [],
         onChangePath: props.onChangePath,
-        onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
-        onToggleAboutCwicModal: props.onToggleAboutCwicModal
+        onMetricsCollectionSortChange: props.onMetricsCollectionSortChange
       },
       {}
     )

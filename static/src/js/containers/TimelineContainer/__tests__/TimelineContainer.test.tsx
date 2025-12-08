@@ -1,13 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-// @ts-expect-error The file does not have types
-import actions from '../../../actions'
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  TimelineContainer
-} from '../TimelineContainer'
+import { mapDispatchToProps, TimelineContainer } from '../TimelineContainer'
 
 // @ts-expect-error The file does not have types
 import Timeline from '../../../components/Timeline/Timeline'
@@ -35,7 +29,6 @@ const setup = setupTest({
   defaultProps: {
     isOpen: true,
     onMetricsTimeline: jest.fn(),
-    onToggleOverrideTemporalModal: jest.fn(),
     onToggleTimeline: jest.fn()
   },
   defaultZustandState: {
@@ -60,16 +53,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onToggleOverrideTemporalModal calls actions.toggleOverrideTemporalModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleOverrideTemporalModal')
-
-    mapDispatchToProps(dispatch).onToggleOverrideTemporalModal(false)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(false)
-  })
-
   test('onMetricsTimeline calls metricsTimeline', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsTimeline, 'metricsTimeline')
@@ -78,34 +61,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('mock-type')
-  })
-
-  test('onToggleTimeline calls actions.toggleTimeline', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleTimeline')
-
-    mapDispatchToProps(dispatch).onToggleTimeline(false)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(false)
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      ui: {
-        timeline: {
-          isOpen: false
-        }
-      }
-    }
-
-    const expectedState = {
-      isOpen: false
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
   })
 })
 
@@ -133,7 +88,6 @@ describe('TimelineContainer component', () => {
         },
         isOpen: true,
         onMetricsTimeline: expect.any(Function),
-        onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
         pathname: routes.GRANULES,
         projectCollectionsIds: ['projectCollectionId'],
@@ -161,7 +115,6 @@ describe('TimelineContainer component', () => {
         },
         isOpen: true,
         onMetricsTimeline: expect.any(Function),
-        onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
         pathname: routes.PROJECT,
         projectCollectionsIds: ['projectCollectionId'],

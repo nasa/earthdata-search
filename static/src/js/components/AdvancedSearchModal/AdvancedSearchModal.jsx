@@ -13,6 +13,9 @@ import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationTy
 import REGIONS from '../../operations/queries/regions'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import './AdvancedSearchModal.scss'
 
@@ -28,9 +31,7 @@ const keyboardShortcuts = {
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
- * @param {Boolean} props.isOpen - The modal state.
  * @param {Boolean} props.isValid - Flag provided from Formik
- * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
  * @param {Function} props.resetForm - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
@@ -44,9 +45,7 @@ const AdvancedSearchModal = ({
   handleBlur,
   handleChange,
   handleSubmit,
-  isOpen,
   isValid,
-  onToggleAdvancedSearchModal,
   resetForm,
   setFieldTouched,
   setFieldValue,
@@ -55,6 +54,8 @@ const AdvancedSearchModal = ({
   values
 }) => {
   const handleError = useEdscStore((state) => state.errors.handleError)
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.ADVANCED_SEARCH))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
   const [regionsQuery, { data, loading, error }] = useLazyQuery(REGIONS)
 
@@ -95,12 +96,12 @@ const AdvancedSearchModal = ({
 
   const resetAndClose = () => {
     resetForm()
-    onToggleAdvancedSearchModal(false)
+    setOpenModal(null)
   }
 
   const onApplyClick = (event) => {
     handleSubmit(event)
-    onToggleAdvancedSearchModal(false)
+    setOpenModal(null)
   }
 
   const onCancelClick = () => {
@@ -112,7 +113,7 @@ const AdvancedSearchModal = ({
   }
 
   const onWindowKeyUp = (event) => {
-    const toggleModal = () => onToggleAdvancedSearchModal(!isOpen)
+    const toggleModal = () => setOpenModal(isOpen ? null : MODAL_NAMES.ADVANCED_SEARCH)
 
     triggerKeyboardShortcut({
       event,
@@ -136,6 +137,8 @@ const AdvancedSearchModal = ({
     loading,
     regions
   }), [count, error, keyword, loading, regions])
+
+  if (!isOpen) return null
 
   const regionSearchResultsOverlay = (
     <RegionSearchResults
@@ -184,7 +187,6 @@ const AdvancedSearchModal = ({
 }
 
 AdvancedSearchModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   fields: PropTypes.arrayOf(
     PropTypes.shape({})
   ).isRequired,
@@ -198,8 +200,7 @@ AdvancedSearchModal.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
-  validateForm: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  validateForm: PropTypes.func.isRequired
 }
 
 export default AdvancedSearchModal

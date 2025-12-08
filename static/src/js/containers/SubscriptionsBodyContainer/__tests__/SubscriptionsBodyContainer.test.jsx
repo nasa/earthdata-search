@@ -21,7 +21,6 @@ const setup = setupTest({
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
     onFetchCollectionSubscriptions: jest.fn(),
-    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
     onUpdateSubscriptionDisabledFields: jest.fn()
   }
@@ -75,15 +74,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
   })
-
-  test('onToggleEditSubscriptionModal calls actions.updateSubscriptionDisabledFields', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleEditSubscriptionModal')
-
-    mapDispatchToProps(dispatch).onToggleEditSubscriptionModal()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
 })
 
 describe('mapStateToProps', () => {
@@ -116,7 +106,6 @@ describe('SubscriptionsBodyContainer component', () => {
       disabledFields: {},
       onCreateSubscription: expect.any(Function),
       onDeleteSubscription: expect.any(Function),
-      onToggleEditSubscriptionModal: expect.any(Function),
       onUpdateSubscription: expect.any(Function),
       onUpdateSubscriptionDisabledFields: expect.any(Function),
       query: {},
@@ -137,7 +126,6 @@ describe('SubscriptionsBodyContainer component', () => {
       disabledFields: {},
       onCreateSubscription: expect.any(Function),
       onDeleteSubscription: expect.any(Function),
-      onToggleEditSubscriptionModal: expect.any(Function),
       onUpdateSubscription: expect.any(Function),
       onUpdateSubscriptionDisabledFields: expect.any(Function),
       query: {

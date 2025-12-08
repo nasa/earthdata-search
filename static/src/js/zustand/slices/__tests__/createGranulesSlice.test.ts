@@ -6,9 +6,6 @@ import useEdscStore from '../../useEdscStore'
 import configureStore from '../../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import actions from '../../../actions'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
@@ -17,8 +14,7 @@ import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 import OpenSearchGranuleRequest from '../../../util/request/openSearchGranuleRequest'
 
 jest.mock('../../../actions', () => ({
-  handleError: jest.fn(),
-  toggleSpatialPolygonWarning: jest.fn()
+  handleError: jest.fn()
 }))
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -77,12 +73,17 @@ describe('createGranulesSlice', () => {
         state.collection.collectionId = 'collectionId'
         state.errors.handleError = jest.fn()
         state.user.edlToken = 'mock-token'
+        state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
       })
 
       const { granules, errors } = useEdscStore.getState()
       await granules.getGranules()
 
-      const { granules: updatedGranules } = useEdscStore.getState()
+      const {
+        granules: updatedGranules,
+        ui
+      } = useEdscStore.getState()
+
       expect(updatedGranules.granules).toEqual({
         collectionConceptId: 'collectionId',
         count: 1,
@@ -96,8 +97,8 @@ describe('createGranulesSlice', () => {
         loadTime: expect.any(Number)
       })
 
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
+      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
+      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
 
       expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
@@ -127,12 +128,17 @@ describe('createGranulesSlice', () => {
 
         state.errors.handleError = jest.fn()
         state.user.edlToken = 'mock-token'
+        state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
       })
 
       const { granules, errors } = useEdscStore.getState()
       await granules.getGranules()
 
-      const { granules: updatedGranules } = useEdscStore.getState()
+      const {
+        granules: updatedGranules,
+        ui
+      } = useEdscStore.getState()
+
       expect(updatedGranules.granules).toEqual({
         count: 1,
         collectionConceptId: 'collectionId',
@@ -155,9 +161,9 @@ describe('createGranulesSlice', () => {
         loadTime: expect.any(Number)
       })
 
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(2)
+      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
+      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
 
       expect(errors.handleError).toHaveBeenCalledTimes(0)
 

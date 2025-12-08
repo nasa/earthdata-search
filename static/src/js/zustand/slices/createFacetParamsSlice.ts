@@ -52,9 +52,21 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         dispatch: reduxDispatch
       } = configureStore()
 
+      const zustandState = get()
+      const {
+        facetParams,
+        ui
+      } = zustandState
+
+      const { modals } = ui
+      const { setOpenModal } = modals
+      setOpenModal(null)
       reduxDispatch(actions.toggleFacetsModal(false))
 
-      const { setCmrFacets, viewAllFacets } = get().facetParams
+      const {
+        setCmrFacets,
+        viewAllFacets
+      } = facetParams
 
       setCmrFacets(viewAllFacets)
 

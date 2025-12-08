@@ -18,6 +18,7 @@ import {
   UrsProfile,
   ShapefileRequestParams
 } from '../types/sharedTypes'
+import { ModalName } from '../constants/modalNames'
 
 export type CollectionSlice = {
   /**
@@ -1055,9 +1056,39 @@ export type TimelineSlice = {
   }
 }
 
+type DeprecateModalData = {
+  deprecatedUrlParams: string[]
+}
+
+type EditSubscriptionModalData = {
+  subscriptionConceptId: string
+  subscriptionType: string
+}
+
+/** The data associated with the currently open modal */
+type ModalData = DeprecateModalData | EditSubscriptionModalData
+
 export type UiSlice = {
   /** The UI Slice of the store */
   ui: {
+    map: {
+      /** Flag to show the spatial polygon warning */
+      displaySpatialPolygonWarning: boolean
+      /** Function to set the displaySpatialPolygonWarning value */
+      setDisplaySpatialPolygonWarning: (displaySpatialPolygonWarning: boolean) => void
+      /** Flag to show the map drawing new layer */
+      drawingNewLayer: string | boolean
+      /** Function to set the mapDrawingNewLayer value */
+      setDrawingNewLayer: (drawingNewLayer: string | boolean) => void
+    }
+    modals: {
+      /** The currently open modal */
+      openModal: ModalName | null
+      /** The data associated with the currently open modal */
+      modalData?: ModalData
+      /** Function to set the currently open modal and its data */
+      setOpenModal: (modalName: ModalName | null, modalData?: ModalData) => void
+    }
     panels: {
       /** Width of the panels */
       panelsWidth: number
