@@ -138,16 +138,16 @@ test.describe('Temporal Dropdown Behavior', () => {
     })
 
     test('search parameters are used to render dropdown menu', async ({ page }) => {
-      // Check if the Start Date input is blank
+      // Check if the Start Date input is filled in
       const startDateInput = page.getByRole('textbox', { name: 'Start Date' })
       await expect(startDateInput).toHaveValue('2021-03-04 00:00:00')
 
-      // Check if the End Date input is blank
+      // Check if the End Date input is filled in
       const endDateInput = page.getByRole('textbox', { name: 'End Date' })
       await expect(endDateInput).toHaveValue('2022-04-02 23:59:59')
     })
 
-    test('clicking Clear from DatePicker modal clears the date', async ({ page }) => {
+    test('clicking Clear from Start DatePicker modal clears the date', async ({ page }) => {
       const startDateInput = page.getByLabel('Temporal', { exact: true }).getByRole('textbox', { name: 'Start Date' })
       const endDateInput = page.getByLabel('Temporal', { exact: true }).getByRole('textbox', { name: 'End Date' })
       await startDateInput.click()
@@ -161,6 +161,26 @@ test.describe('Temporal Dropdown Behavior', () => {
       await endDateInput.click()
       const endClearButton = page.getByRole('button', { name: 'Clear' }).nth(2)
       await endClearButton.click()
+
+      // Check both dates are now cleared
+      await expect(startDateInput).toHaveValue('')
+      await expect(endDateInput).toHaveValue('')
+    })
+
+    test('clicking Clear from End DatePicker modal clears the date', async ({ page }) => {
+      const startDateInput = page.getByLabel('Temporal', { exact: true }).getByRole('textbox', { name: 'Start Date' })
+      const endDateInput = page.getByLabel('Temporal', { exact: true }).getByRole('textbox', { name: 'End Date' })
+      await endDateInput.click()
+      const endClearButton = page.getByRole('button', { name: 'Clear' }).nth(2)
+      await endClearButton.click()
+
+      // Check only end date has changed
+      await expect(startDateInput).toHaveValue('2021-03-04 00:00:00')
+      await expect(endDateInput).toHaveValue('')
+
+      await startDateInput.click()
+      const startClearButton = page.getByRole('button', { name: 'Clear' }).nth(2)
+      await startClearButton.click()
 
       // Check both dates are now cleared
       await expect(startDateInput).toHaveValue('')

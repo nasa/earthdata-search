@@ -84,7 +84,7 @@ export const buildUrls = (json, edlToken, earthdataEnvironment) => {
 
     if (edlToken) {
       // If an auth token is provided add it as a query param
-      cmrGranulesUrl += `?token=Bearer%20${edlToken}`
+      cmrGranulesUrl += `&token=Bearer%20${edlToken}`
     }
 
     urls.granuleDatasource = {
