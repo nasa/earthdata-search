@@ -21,7 +21,7 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onUpdateSubscription calls actions.toggleEditSubscriptionModal', () => {
+  test('onUpdateSubscription calls actions.updateSubscription', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateSubscription')
 

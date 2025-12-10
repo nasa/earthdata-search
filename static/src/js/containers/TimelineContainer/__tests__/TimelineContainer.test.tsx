@@ -28,8 +28,7 @@ const setup = setupTest({
   Component: TimelineContainer,
   defaultProps: {
     isOpen: true,
-    onMetricsTimeline: jest.fn(),
-    onToggleTimeline: jest.fn()
+    onMetricsTimeline: jest.fn()
   },
   defaultZustandState: {
     collection: {

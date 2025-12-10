@@ -1623,7 +1623,7 @@ describe('AccessMethod component', () => {
 
     describe('when a service name is passed in', () => {
       describe('when the service type is `Harmony`', () => {
-        test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
+        test('edit variables button calls `onSetActivePanel`', async () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
 

@@ -17,21 +17,18 @@ import { getSelectedRegionQuery } from '../../zustand/selectors/query'
 /**
  * Renders AdvancedSearchModalContainer.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.advancedSearch - The collections.
- * @param {Boolean} props.isOpen - The modal state.
  * @param {Object} props.fields - The advanced search fields.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
  * @param {Boolean} props.isValid - Flag provided from Formik.
- * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
  * @param {Function} props.resetForm - Callback function provided by Formik.
- * @param {Object} props.regionSearchResults - The current region search results.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
+ * @param {Function} props.validateForm - Callback function provided by Formik.
  */
 export const AdvancedSearchModalContainer = ({
   fields,
