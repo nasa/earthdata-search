@@ -498,7 +498,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
         zustandState.project.startProjectGranulesTimer(collectionId)
 
-        zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
+        zustandState.ui.map.setDisplaySpatialMbrWarning(false)
 
         const searchParams = buildGranuleSearchParams(granuleParams)
 
@@ -519,7 +519,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
           if (polygon && polygon.length > 0) {
-            zustandState.ui.map.setDisplaySpatialPolygonWarning(true)
+            zustandState.ui.map.setDisplaySpatialMbrWarning(true)
 
             const {
               swLat,

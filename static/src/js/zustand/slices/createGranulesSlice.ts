@@ -101,7 +101,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         state.granules.granules.isLoading = true
       })
 
-      zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
+      zustandState.ui.map.setDisplaySpatialMbrWarning(false)
 
       const searchParams = buildGranuleSearchParams(granuleParams)
 
@@ -115,7 +115,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
         // OpenSearch does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
         if (polygon) {
-          zustandState.ui.map.setDisplaySpatialPolygonWarning(true)
+          zustandState.ui.map.setDisplaySpatialMbrWarning(true)
 
           const {
             swLat,

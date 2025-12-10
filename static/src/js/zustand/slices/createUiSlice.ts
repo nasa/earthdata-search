@@ -4,10 +4,10 @@ import { ImmerStateCreator, UiSlice } from '../types'
 const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
   ui: {
     map: {
-      displaySpatialPolygonWarning: false,
-      setDisplaySpatialPolygonWarning: (displaySpatialPolygonWarning) => {
+      displaySpatialMbrWarning: false,
+      setDisplaySpatialMbrWarning: (displaySpatialMbrWarning) => {
         set((state) => {
-          state.ui.map.displaySpatialPolygonWarning = displaySpatialPolygonWarning
+          state.ui.map.displaySpatialMbrWarning = displaySpatialMbrWarning
         })
       },
       drawingNewLayer: false,

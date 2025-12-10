@@ -91,9 +91,9 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       // CWIC does not support polygon search, if this is a CWIC collection
       // fire an action that will display a notice to the user about using a MBR
       if (isOpenSearch && polygon) {
-        zustandState.ui.map.setDisplaySpatialPolygonWarning(true)
+        zustandState.ui.map.setDisplaySpatialMbrWarning(true)
       } else {
-        zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
+        zustandState.ui.map.setDisplaySpatialMbrWarning(false)
       }
 
       // Fetch granules for the focused collection.
@@ -290,7 +290,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         zustandState.granule.setGranuleId(null)
 
         // And clear the spatial polygon warning if there is no focused collection
-        zustandState.ui.map.setDisplaySpatialPolygonWarning(false)
+        zustandState.ui.map.setDisplaySpatialMbrWarning(false)
 
         // If clearing the focused collection, redirect the user back to the search page
         reduxDispatch(actions.changeUrl({

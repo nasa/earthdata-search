@@ -13,9 +13,9 @@ import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import { routes } from '../../constants/routes'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import './CollectionDetailsHighlights.scss'
-import { MODAL_NAMES } from '../../constants/modalNames'
 
 export const granuleListTotalStyle = {
   height: '18px',

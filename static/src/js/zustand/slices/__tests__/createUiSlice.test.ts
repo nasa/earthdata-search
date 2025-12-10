@@ -8,8 +8,8 @@ describe('createUiSlice', () => {
 
     expect(ui).toEqual({
       map: {
-        displaySpatialPolygonWarning: false,
-        setDisplaySpatialPolygonWarning: expect.any(Function),
+        displaySpatialMbrWarning: false,
+        setDisplaySpatialMbrWarning: expect.any(Function),
         drawingNewLayer: false,
         setDrawingNewLayer: expect.any(Function)
       },
@@ -35,18 +35,18 @@ describe('createUiSlice', () => {
   })
 
   describe('map', () => {
-    describe('setDisplaySpatialPolygonWarning', () => {
-      test('sets displaySpatialPolygonWarning', () => {
+    describe('setDisplaySpatialMbrWarning', () => {
+      test('sets displaySpatialMbrWarning', () => {
         const zustandState = useEdscStore.getState()
         const { ui } = zustandState
         const { map } = ui
-        const { setDisplaySpatialPolygonWarning } = map
-        setDisplaySpatialPolygonWarning(true)
+        const { setDisplaySpatialMbrWarning } = map
+        setDisplaySpatialMbrWarning(true)
 
         const updatedState = useEdscStore.getState()
         const { ui: updatedUi } = updatedState
         const { map: updatedMap } = updatedUi
-        expect(updatedMap.displaySpatialPolygonWarning).toBe(true)
+        expect(updatedMap.displaySpatialMbrWarning).toBe(true)
       })
     })
 

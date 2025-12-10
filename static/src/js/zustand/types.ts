@@ -1056,26 +1056,31 @@ export type TimelineSlice = {
   }
 }
 
-type DeprecateModalData = {
+/** The modal data for the deprecate parameters modal */
+type DeprecateParametersModalData = {
+  /** The deprecated URL parameters */
   deprecatedUrlParams: string[]
 }
 
+/** The modal data for the edit subscription modal */
 type EditSubscriptionModalData = {
+  /** The subscription concept ID */
   subscriptionConceptId: string
+  /** The subscription type */
   subscriptionType: string
 }
 
 /** The data associated with the currently open modal */
-type ModalData = DeprecateModalData | EditSubscriptionModalData
+type ModalData = DeprecateParametersModalData | EditSubscriptionModalData
 
 export type UiSlice = {
   /** The UI Slice of the store */
   ui: {
     map: {
-      /** Flag to show the spatial polygon warning */
-      displaySpatialPolygonWarning: boolean
-      /** Function to set the displaySpatialPolygonWarning value */
-      setDisplaySpatialPolygonWarning: (displaySpatialPolygonWarning: boolean) => void
+      /** Flag to show the spatial mbr warning */
+      displaySpatialMbrWarning: boolean
+      /** Function to set the displaySpatialMbrWarning value */
+      setDisplaySpatialMbrWarning: (displaySpatialMbrWarning: boolean) => void
       /** Flag to show the map drawing new layer */
       drawingNewLayer: string | boolean
       /** Function to set the mapDrawingNewLayer value */

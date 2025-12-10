@@ -105,7 +105,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   } = spatialQuery
 
   const {
-    displaySpatialPolygonWarning,
+    displaySpatialMbrWarning,
     drawingNewLayer,
     map: mapProps,
     onChangeMap,
@@ -127,7 +127,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     startDrawing,
     toggleLayerVisibility
   } = useEdscStore((state) => ({
-    displaySpatialPolygonWarning: state.ui.map.displaySpatialPolygonWarning,
+    displaySpatialMbrWarning: state.ui.map.displaySpatialMbrWarning,
     drawingNewLayer: state.ui.map.drawingNewLayer,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
@@ -492,12 +492,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     lineSearch,
     pointSearch,
     polygonSearch,
-    showMbr: showMbr || displaySpatialPolygonWarning
+    showMbr: showMbr || displaySpatialMbrWarning
   }), [
     selectedRegion,
     boundingBoxSearch,
     circleSearch,
-    displaySpatialPolygonWarning,
+    displaySpatialMbrWarning,
     drawingNewLayer,
     lineSearch,
     pointSearch,

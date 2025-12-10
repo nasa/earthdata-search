@@ -19,8 +19,9 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
-import './Timeline.scss'
 import { MODAL_NAMES } from '../../constants/modalNames'
+
+import './Timeline.scss'
 
 const earliestStart = '1960-01-01'
 

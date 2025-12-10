@@ -1209,7 +1209,7 @@ describe('createProjectSlice', () => {
           isVisible: true
         }
 
-        state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -1223,9 +1223,9 @@ describe('createProjectSlice', () => {
         ui
       } = updatedState
 
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(2)
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(2, false)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(2)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(2, false)
 
       const { collection1 } = updatedProject.collections.byId
       const { collection2 } = updatedProject.collections.byId
@@ -1267,7 +1267,7 @@ describe('createProjectSlice', () => {
             isVisible: true
           }
 
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1280,8 +1280,8 @@ describe('createProjectSlice', () => {
           ui
         } = updatedState
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
 
         const { collection1 } = updatedProject.collections.byId
 
@@ -1335,7 +1335,7 @@ describe('createProjectSlice', () => {
             polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
 
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1348,9 +1348,9 @@ describe('createProjectSlice', () => {
           ui
         } = updatedState
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(2)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(2)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(2, true)
 
         const { collection1 } = updatedProject.collections.byId
 

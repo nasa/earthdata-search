@@ -48,7 +48,6 @@ const simplifyShape = ({
   const numPoints = coordinates.length / 2
 
   if (shapefileAdded && numPoints > MAX_POLYGON_SIZE) {
-    console.log('too many points')
     onToggleTooManyPointsModal()
   }
 

@@ -79,7 +79,7 @@ describe('createCollectionSlice', () => {
           }
 
           state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const { collection } = useEdscStore.getState()
@@ -100,8 +100,8 @@ describe('createCollectionSlice', () => {
           }
         })
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -126,7 +126,7 @@ describe('createCollectionSlice', () => {
 
         useEdscStore.setState((state) => {
           state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const { collection } = useEdscStore.getState()
@@ -148,7 +148,7 @@ describe('createCollectionSlice', () => {
           search: '?zoom=4'
         })
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(0)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(0)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(0)
         expect(granules.getGranules).toHaveBeenCalledTimes(0)
       })
@@ -177,7 +177,7 @@ describe('createCollectionSlice', () => {
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
             state.granules.getGranules = jest.fn()
-            state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+            state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
           })
 
           const { collection } = useEdscStore.getState()
@@ -266,8 +266,8 @@ describe('createCollectionSlice', () => {
             }
           })
 
-          expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-          expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+          expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+          expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -311,7 +311,7 @@ describe('createCollectionSlice', () => {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
 
-              state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+              state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
             })
 
             const { collection } = useEdscStore.getState()
@@ -402,8 +402,8 @@ describe('createCollectionSlice', () => {
               }
             })
 
-            expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-            expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(true)
+            expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+            expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(true)
 
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -447,7 +447,7 @@ describe('createCollectionSlice', () => {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
 
-              state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+              state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
             })
 
             const { collection } = useEdscStore.getState()
@@ -539,8 +539,8 @@ describe('createCollectionSlice', () => {
               }
             })
 
-            expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-            expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(true)
+            expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+            expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(true)
 
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -577,7 +577,7 @@ describe('createCollectionSlice', () => {
             state.collection.collectionId = 'C10000000000-EDSC'
             state.collection.setCollectionId = jest.fn()
             state.granules.getGranules = jest.fn()
-            state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+            state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
           })
 
           const { collection } = useEdscStore.getState()
@@ -600,8 +600,8 @@ describe('createCollectionSlice', () => {
             search: '?p=C10000000000-EDSC'
           })
 
-          expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-          expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+          expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+          expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -639,7 +639,7 @@ describe('createCollectionSlice', () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
           state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const { collection } = useEdscStore.getState()
@@ -659,8 +659,8 @@ describe('createCollectionSlice', () => {
           })
         })
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -746,7 +746,7 @@ describe('createCollectionSlice', () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
           state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const expectedItems = [
@@ -775,8 +775,8 @@ describe('createCollectionSlice', () => {
           })
         })
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -799,7 +799,7 @@ describe('createCollectionSlice', () => {
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'C10000000000-EDSC'
         state.granules.getGranules = jest.fn()
-        state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
       })
 
       const { collection } = useEdscStore.getState()
@@ -816,8 +816,8 @@ describe('createCollectionSlice', () => {
 
       expect(updatedCollection.collectionMetadata).toEqual({})
 
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
       expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
       expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
@@ -908,7 +908,7 @@ describe('createCollectionSlice', () => {
           state.granule.setGranuleId = jest.fn()
           state.query.changeGranuleQuery = jest.fn()
           state.timeline.getTimeline = jest.fn()
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -934,8 +934,8 @@ describe('createCollectionSlice', () => {
         expect(granule.setGranuleId).toHaveBeenCalledTimes(1)
         expect(granule.setGranuleId).toHaveBeenCalledWith(null)
 
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
         expect(actions.changeUrl).toHaveBeenCalledTimes(1)
         expect(actions.changeUrl).toHaveBeenCalledWith({
@@ -1010,7 +1010,7 @@ describe('createCollectionSlice', () => {
           state.granule.setGranuleId = jest.fn()
           state.query.changeGranuleQuery = jest.fn()
           state.timeline.getTimeline = jest.fn()
-          state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1035,7 +1035,7 @@ describe('createCollectionSlice', () => {
         expect(updatedCollection.collectionId).toEqual(null)
 
         expect(granule.setGranuleId).toHaveBeenCalledTimes(0)
-        expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(0)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(0)
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
         expect(getCollectionMetadata).toHaveBeenCalledTimes(0)
         expect(query.changeGranuleQuery).toHaveBeenCalledTimes(0)

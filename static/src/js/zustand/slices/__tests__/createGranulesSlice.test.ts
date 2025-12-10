@@ -73,7 +73,7 @@ describe('createGranulesSlice', () => {
         state.collection.collectionId = 'collectionId'
         state.errors.handleError = jest.fn()
         state.user.edlToken = 'mock-token'
-        state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
       })
 
       const { granules, errors } = useEdscStore.getState()
@@ -97,8 +97,8 @@ describe('createGranulesSlice', () => {
         loadTime: expect.any(Number)
       })
 
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(1)
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledWith(false)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
       expect(errors.handleError).toHaveBeenCalledTimes(0)
     })
@@ -128,7 +128,7 @@ describe('createGranulesSlice', () => {
 
         state.errors.handleError = jest.fn()
         state.user.edlToken = 'mock-token'
-        state.ui.map.setDisplaySpatialPolygonWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
       })
 
       const { granules, errors } = useEdscStore.getState()
@@ -161,9 +161,9 @@ describe('createGranulesSlice', () => {
         loadTime: expect.any(Number)
       })
 
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenCalledTimes(2)
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-      expect(ui.map.setDisplaySpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(2)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(2, true)
 
       expect(errors.handleError).toHaveBeenCalledTimes(0)
 

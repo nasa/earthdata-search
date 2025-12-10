@@ -165,7 +165,7 @@ describe('SpatialDisplay component', () => {
     })
   })
 
-  describe('with polygonSearch and displaySpatialPolygonWarning', () => {
+  describe('with polygonSearch and displaySpatialMbrWarning', () => {
     test('should render without spatial info and a warning', () => {
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
@@ -183,7 +183,7 @@ describe('SpatialDisplay component', () => {
           },
           ui: {
             map: {
-              displaySpatialPolygonWarning: true
+              displaySpatialMbrWarning: true
             }
           }
         }

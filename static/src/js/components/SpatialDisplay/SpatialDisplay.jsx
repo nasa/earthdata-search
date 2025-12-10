@@ -37,12 +37,12 @@ const { defaultSpatialDecimalSize } = getApplicationConfig()
 const SpatialDisplay = () => {
   const {
     changeQuery,
-    displaySpatialPolygonWarning,
+    displaySpatialMbrWarning,
     drawingNewLayer,
     removeSpatialFilter
   } = useEdscStore((state) => ({
     changeQuery: state.query.changeQuery,
-    displaySpatialPolygonWarning: state.ui.map.displaySpatialPolygonWarning,
+    displaySpatialMbrWarning: state.ui.map.displaySpatialMbrWarning,
     drawingNewLayer: state.ui.map.drawingNewLayer,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
@@ -717,7 +717,7 @@ const SpatialDisplay = () => {
 
     secondaryTitle = 'Polygon'
 
-    if (displaySpatialPolygonWarning) {
+    if (displaySpatialMbrWarning) {
       spatialError = 'This collection does not support polygon search. Your polygon has been converted to a bounding box.'
     }
 
