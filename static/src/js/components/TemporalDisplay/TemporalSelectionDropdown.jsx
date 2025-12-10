@@ -36,8 +36,6 @@ const TemporalSelectionDropdown = ({
   const {
     startDate = '',
     endDate = '',
-    recurringDayStart = '',
-    recurringDayEnd = '',
     isRecurring = false
   } = temporalSearch
 
@@ -46,8 +44,6 @@ const TemporalSelectionDropdown = ({
   const [temporal, setTemporal] = useState({
     startDate,
     endDate,
-    recurringDayStart,
-    recurringDayEnd,
     isRecurring
   })
   const [datesSelected, setDatesSelected] = useState({
@@ -86,19 +82,12 @@ const TemporalSelectionDropdown = ({
       isRecurring: existingIsRecurring,
       startDate: existingStartDate
     } = temporal
+    console.log("🚀 ~ TemporalSelectionDropdown.jsx:89 ~ onApplyClick ~ temporal:", temporal)
 
     const newTemporal = {
-      startDate: existingStartDate,
-      endDate: existingEndDate,
+      startDate: existingStartDate || moment.utc('1960-01-01').toISOString(),
+      endDate: existingEndDate || moment().utc().toISOString(),
       isRecurring: existingIsRecurring
-    }
-
-    if (existingIsRecurring) {
-      newTemporal.recurringDayStart = `${moment(existingStartDate).utc().dayOfYear()}`
-
-      // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
-      const startYear = moment(existingStartDate).utc().year()
-      newTemporal.recurringDayEnd = `${moment(existingEndDate).utc().year(startYear).dayOfYear()}`
     }
 
     if (onMetricsTemporalFilter) {
@@ -137,8 +126,6 @@ const TemporalSelectionDropdown = ({
     setTemporal({
       startDate: '',
       endDate: '',
-      recurringDayStart: '',
-      recurringDayEnd: '',
       isRecurring: false
     })
 
