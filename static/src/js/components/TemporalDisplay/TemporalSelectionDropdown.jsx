@@ -82,7 +82,6 @@ const TemporalSelectionDropdown = ({
       isRecurring: existingIsRecurring,
       startDate: existingStartDate
     } = temporal
-    console.log("🚀 ~ TemporalSelectionDropdown.jsx:89 ~ onApplyClick ~ temporal:", temporal)
 
     const newTemporal = {
       startDate: existingStartDate || moment.utc('1960-01-01').toISOString(),
