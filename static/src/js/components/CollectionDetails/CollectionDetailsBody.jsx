@@ -129,6 +129,12 @@ const buildForDeveloperLink = (linkData, token) => {
   )
 }
 
+/**
+ * Renders CollectionDetailsBody.
+ * @param {Object} props - The props passed into the component.
+ * @param {Boolean} props.isActive - Flag to determine if the collection is active.
+ * @param {Function} props.onMetricsRelatedCollection - Function to handle the metrics related collection.
+ */
 export const CollectionDetailsBody = ({
   isActive,
   onMetricsRelatedCollection
