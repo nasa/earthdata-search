@@ -9,7 +9,7 @@ import { usePortalLogo } from '../../hooks/usePortalLogo'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
-import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
+import SearchForm from '../SearchForm/SearchForm'
 import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -42,7 +42,7 @@ export const SearchSidebarHeader = () => {
   if (portalId === getApplicationConfig().defaultPortal) {
     return (
       <header className="search-sidebar-header">
-        <SearchFormContainer />
+        <SearchForm />
       </header>
     )
   }
@@ -162,7 +162,7 @@ export const SearchSidebarHeader = () => {
 
         </div>
       </section>
-      <SearchFormContainer />
+      <SearchForm />
     </header>
   )
 }

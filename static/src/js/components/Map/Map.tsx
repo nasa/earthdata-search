@@ -320,11 +320,10 @@ interface MapProps {
   /** Function to call when a new drawing layer is toggled */
   onToggleDrawingNewLayer: (state: string | boolean) => void
   /** Function to call when the shapefile upload modal is toggled */
-  onToggleShapefileUploadModal: (state: boolean) => void
+  onToggleShapefileUploadModal: () => void
   /** Function to call when the too many points modal is toggled */
-  onToggleTooManyPointsModal: (state: boolean) => void
+  onToggleTooManyPointsModal: () => void
   /** Function to call when the shapefile is updated */
-  // onUpdateShapefile: (data: Partial<Shapefile>) => void
   onUpdateShapefile: ShapefileSlice['shapefile']['updateShapefile']
   /** The overlays of the map */
   overlays: {

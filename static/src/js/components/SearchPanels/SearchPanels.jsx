@@ -59,6 +59,8 @@ import { useExportCollections } from '../../hooks/useExportCollections'
 import { routes } from '../../constants/routes'
 
 import './SearchPanels.scss'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 const { edscHost } = getEnvironmentConfig()
 
@@ -78,10 +80,9 @@ const defaultPanelStateFromProps = (value) => {
 
 const SearchPanels = ({
   collectionSubscriptions,
-  onMetricsCollectionSortChange,
-  onToggleAboutCSDAModal,
-  onToggleAboutCwicModal
+  onMetricsCollectionSortChange
 }) => {
+  const setOpenModal = useEdscStore(setOpenModalFunction)
   const edlToken = useEdscStore(getEdlToken)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
@@ -402,15 +403,16 @@ const SearchPanels = ({
 
   if (isInternationalInteragency) {
     consortiumInfo = (
-      <Col className="search-panels__note ms-3">
+      <Col className="search-panels__note mx-3">
         {'This is '}
         <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
         {' data. Searches will be performed by external services which may vary in performance and available features. '}
         {
+          // TODO EDSC-4611 move this code
           collectionIsOpenSearch && (
             <Button
               className="search-panels__header-message-link"
-              onClick={() => onToggleAboutCwicModal(true)}
+              onClick={() => setOpenModal(MODAL_NAMES.ABOUT_CWIC)}
               variant="link"
               bootstrapVariant="link"
               icon={FaQuestionCircle}
@@ -435,15 +437,16 @@ const SearchPanels = ({
           <>
             {consortiumInfo}
             {
+              // TODO EDSC-4611 move this code
               collectionIsCSDA && (
-                <Col className="search-panels__note ms-3">
+                <Col className="search-panels__note mx-3">
                   {'This collection is made available through the '}
                   <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
                   {' for NASA funded researchers. Access to the data will require additional authentication. '}
                   <Button
                     className="search-panels__header-message-link"
                     dataTestId="search-panels__csda-modal-button"
-                    onClick={() => onToggleAboutCSDAModal(true)}
+                    onClick={() => setOpenModal(MODAL_NAMES.ABOUT_CSDA)}
                     variant="link"
                     bootstrapVariant="link"
                     icon={FaQuestionCircle}
@@ -802,9 +805,7 @@ const SearchPanels = ({
 
 SearchPanels.propTypes = {
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  onMetricsCollectionSortChange: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  onToggleAboutCwicModal: PropTypes.func.isRequired
+  onMetricsCollectionSortChange: PropTypes.func.isRequired
 }
 
 export default SearchPanels

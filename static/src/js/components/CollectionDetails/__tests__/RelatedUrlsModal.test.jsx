@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import RelatedUrlsModal from '../RelatedUrlsModal'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 const collectionMetadata = {
   hasAllMetadata: true,
@@ -116,15 +117,17 @@ const collectionMetadata = {
 
 const setup = setupTest({
   Component: RelatedUrlsModal,
-  defaultProps: {
-    isOpen: true,
-    onToggleRelatedUrlsModal: jest.fn()
-  },
   defaultZustandState: {
     collection: {
       collectionId: 'collectionId',
       collectionMetadata: {
         collectionId: collectionMetadata
+      }
+    },
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.RELATED_URLS,
+        setOpenModal: jest.fn()
       }
     }
   }
@@ -139,11 +142,15 @@ describe('RelatedUrlsModal component', () => {
     })
   })
 
-  describe('when the isOpen prop for the Modal is off', () => {
+  describe('when the modal is closed', () => {
     test('renders correctly', () => {
       setup({
-        overrideProps: {
-          isOpen: false
+        overrideZustandState: {
+          ui: {
+            modals: {
+              openModal: null
+            }
+          }
         }
       })
 
@@ -195,16 +202,16 @@ describe('RelatedUrlsModal component', () => {
     })
 
     describe('when the clicking the close button on the modal', () => {
-      test('calls the `onToggleRelatedUrlsModal` function with false', async () => {
-        const { props, user } = setup()
+      test('calls the `setOpenModal` function with false', async () => {
+        const { user, zustandState } = setup()
 
         const closeButton = screen.getByRole('button')
         await user.click(closeButton)
 
         expect(screen.getByText('Related URLs')).toBeInTheDocument()
 
-        expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledWith(false)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
     })
   })

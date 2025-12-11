@@ -1,8 +1,4 @@
 import React, {} from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-
-import actions from '../../actions'
 
 import { eventEmitter } from '../../events/events'
 import { shapefileEventTypes } from '../../constants/eventTypes'
@@ -10,11 +6,8 @@ import { shapefileEventTypes } from '../../constants/eventTypes'
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
 import useEdscStore from '../../zustand/useEdscStore'
-
-export const mapDispatchToProps = (dispatch) => ({
-  onToggleShapefileUploadModal:
-    (state) => dispatch(actions.toggleShapefileUploadModal(state))
-})
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 // Add an edscId to each feature in the shapefile
 const addEdscIdsToShapefile = (file) => {
@@ -53,9 +46,7 @@ const dropzoneOptions = {
   previewTemplate: '<div>' // Remove the dropzone preview
 }
 
-export const ShapefileDropzoneContainer = ({
-  onToggleShapefileUploadModal
-}) => {
+export const ShapefileDropzoneContainer = () => {
   const {
     onShapefileErrored,
     onShapefileLoading,
@@ -67,6 +58,8 @@ export const ShapefileDropzoneContainer = ({
     onSaveShapefile: state.shapefile.saveShapefile,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.SHAPEFILE_UPLOAD))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
   return (
     <ShapefileDropzone
@@ -97,7 +90,9 @@ export const ShapefileDropzoneContainer = ({
 
           eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
 
-          onToggleShapefileUploadModal(false)
+          // Only close the modal if it is currently open
+          // This keeps it from closing the TOO_MANY_POINTS modal if that has been opened
+          if (isOpen) setOpenModal(null)
 
           onSaveShapefile({
             file: fileWithIds,
@@ -110,7 +105,8 @@ export const ShapefileDropzoneContainer = ({
         (file) => {
           let shapefileError = ''
 
-          onToggleShapefileUploadModal(false)
+          if (isOpen) setOpenModal(null)
+
           if (file.name.match('.*(zip|shp|dbf|shx)$')) {
             shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
           } else if (file.name.match('.*(kml|kmz)$')) {
@@ -137,8 +133,4 @@ export const ShapefileDropzoneContainer = ({
   )
 }
 
-ShapefileDropzoneContainer.propTypes = {
-  onToggleShapefileUploadModal: PropTypes.func.isRequired
-}
-
-export default connect(null, mapDispatchToProps)(ShapefileDropzoneContainer)
+export default ShapefileDropzoneContainer

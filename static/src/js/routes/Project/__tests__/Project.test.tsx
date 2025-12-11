@@ -6,19 +6,17 @@ import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { mapDispatchToProps, Project } from '../Project'
-
-// @ts-expect-error This file does not have types
-import actions from '../../../actions'
+import Project from '../Project'
 
 import MapContainer from '../../../containers/MapContainer/MapContainer'
-import OverrideTemporalModalContainer from '../../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
+import OverrideTemporalModal from '../../../components/OverrideTemporalModal/OverrideTemporalModal'
 // @ts-expect-error This file does not have types
 import SidebarContainer from '../../../containers/SidebarContainer/SidebarContainer'
 import Spinner from '../../../components/Spinner/Spinner'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
-jest.mock('../../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer', () => jest.fn(() => <div />))
+jest.mock('../../../components/OverrideTemporalModal/OverrideTemporalModal', () => jest.fn(() => <div />))
 jest.mock('../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/SidebarContainer/SidebarContainer', () => jest.fn(() => <button type="submit">Submit</button>))
 jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
@@ -52,28 +50,18 @@ jest.mock('../../../hooks/useCreateRetrieval', () => ({
 
 const setup = setupTest({
   Component: Project,
-  defaultProps: {
-    onToggleChunkedOrderModal: jest.fn()
-  },
   defaultZustandState: {
     savedProject: {
       project: {
         name: 'Test Project'
       }
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
     }
   }
-})
-
-describe('mapDispatchToProps', () => {
-  test('onToggleChunkedOrderModal calls actions.toggleChunkedOrderModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleChunkedOrderModal')
-
-    mapDispatchToProps(dispatch).onToggleChunkedOrderModal(true)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(true)
-  })
 })
 
 describe('Project component', () => {
@@ -91,7 +79,7 @@ describe('Project component', () => {
       expect(document.title).toEqual('Test Project')
     })
 
-    expect(OverrideTemporalModalContainer).toHaveBeenCalledTimes(1)
+    expect(OverrideTemporalModal).toHaveBeenCalledTimes(1)
     expect(SidebarContainer).toHaveBeenCalledTimes(1)
     expect(MapContainer).toHaveBeenCalledTimes(1)
   })
@@ -107,8 +95,8 @@ describe('Project component', () => {
       expect(mockCreateRetrieval).toHaveBeenCalledWith()
     })
 
-    test('calls onToggleChunkedOrderModal when any collections require chunking', async () => {
-      const { props, user } = setup({
+    test('calls setOpenModal when any collections require chunking', async () => {
+      const { user, zustandState } = setup({
         overrideZustandState: {
           project: {
             collections: {
@@ -129,8 +117,8 @@ describe('Project component', () => {
       const button = screen.getByRole('button', { name: 'Submit' })
       await user.click(button)
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(true)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.CHUNKED_ORDER)
 
       expect(mockCreateRetrieval).toHaveBeenCalledTimes(0)
     })

@@ -17,6 +17,9 @@ import getObjectKeyByValue from '../../util/object'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
+
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import './Timeline.scss'
 
@@ -26,12 +29,12 @@ export const Timeline = ({
   collectionMetadata,
   isOpen,
   onMetricsTimeline,
-  onToggleOverrideTemporalModal,
   onToggleTimeline,
   pathname,
   projectCollectionsIds,
   showOverrideModal
 }) => {
+  const setOpenModal = useEdscStore(setOpenModalFunction)
   const temporalSearch = useEdscStore(getCollectionsQueryTemporal)
   const {
     changeQuery,
@@ -131,7 +134,7 @@ export const Timeline = ({
       && focusedStart
       && focusedEnd
     ) {
-      onToggleOverrideTemporalModal(true)
+      setOpenModal(MODAL_NAMES.OVERRIDE_TEMPORAL)
     }
   }, [pathname])
 
@@ -218,7 +221,7 @@ export const Timeline = ({
         } = timelineQuery
 
         if (focusStart && focusEnd) {
-          onToggleOverrideTemporalModal(true)
+          setOpenModal(MODAL_NAMES.OVERRIDE_TEMPORAL)
         }
       }
 
@@ -263,7 +266,7 @@ export const Timeline = ({
       // If temporalSearch exists and we are on the project page, show the modal
       if (showOverrideModal) {
         if (Object.keys(temporalSearch).length > 0) {
-          onToggleOverrideTemporalModal(true)
+          setOpenModal(MODAL_NAMES.OVERRIDE_TEMPORAL)
         } else {
           // If we shouldn't show the modal, just update the query
           changeQuery(newQuery)
@@ -449,7 +452,6 @@ Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,

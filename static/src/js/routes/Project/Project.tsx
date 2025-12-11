@@ -1,13 +1,9 @@
 import React, { lazy, Suspense } from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
 // @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
 // @ts-expect-error This file does not have types
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-// @ts-expect-error This file does not have types
-import actions from '../../actions'
 
 // @ts-expect-error This file does not have types
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
@@ -16,8 +12,7 @@ import ProjectCollectionsContainer
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
 // @ts-expect-error This file does not have types
 import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
-import OverrideTemporalModalContainer
-  from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
+import OverrideTemporalModal from '../../components/OverrideTemporalModal/OverrideTemporalModal'
 
 import Spinner from '../../components/Spinner/Spinner'
 
@@ -26,35 +21,27 @@ import { getProjectCollectionsRequiringChunking } from '../../zustand/selectors/
 import { getSavedProjectName } from '../../zustand/selectors/savedProject'
 
 import { useCreateRetrieval } from '../../hooks/useCreateRetrieval'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
-export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onToggleChunkedOrderModal:
-    (isOpen: boolean) => dispatch(actions.toggleChunkedOrderModal(isOpen))
-})
-
 const { edscHost } = getEnvironmentConfig()
-
-interface ProjectProps {
-  onToggleChunkedOrderModal: (isOpen: boolean) => void
-}
 
 /**
  * The Project route component
 */
-export const Project: React.FC<ProjectProps> = ({
-  onToggleChunkedOrderModal
-}) => {
+const Project = () => {
   const { createRetrieval } = useCreateRetrieval()
   const name = useEdscStore(getSavedProjectName)
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (Object.keys(projectCollectionsRequiringChunking).length > 0) {
-      onToggleChunkedOrderModal(true)
+      setOpenModal(MODAL_NAMES.CHUNKED_ORDER)
     } else {
       createRetrieval()
     }
@@ -80,7 +67,7 @@ export const Project: React.FC<ProjectProps> = ({
         <SidebarContainer panels={<ProjectPanelsContainer />}>
           <ProjectCollectionsContainer />
         </SidebarContainer>
-        <OverrideTemporalModalContainer />
+        <OverrideTemporalModal />
       </form>
 
       <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
@@ -90,4 +77,4 @@ export const Project: React.FC<ProjectProps> = ({
   )
 }
 
-export default connect(null, mapDispatchToProps)(Project)
+export default Project

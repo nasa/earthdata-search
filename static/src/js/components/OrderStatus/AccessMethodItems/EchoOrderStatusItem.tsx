@@ -32,8 +32,6 @@ import type { RetrievalCollection } from '../../../types/sharedTypes'
 interface EchoOrderStatusItemProps {
   /** Whether the item is expanded/opened by default */
   defaultOpen?: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** The retrieval collection */
   retrievalCollection: RetrievalCollection
   /** The retrieval ID */
@@ -42,7 +40,6 @@ interface EchoOrderStatusItemProps {
 
 const EchoOrderStatusItem: React.FC<EchoOrderStatusItemProps> = ({
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalCollection,
   retrievalId
 }) => {
@@ -155,7 +152,6 @@ const EchoOrderStatusItem: React.FC<EchoOrderStatusItemProps> = ({
       messageIsError={false}
       messages={messages}
       opened={opened}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       orderInfo={orderInfo!}
       orderStatus={orderStatus}
       progressPercentage={progressPercentage}

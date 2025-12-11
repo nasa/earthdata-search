@@ -16,12 +16,11 @@ import AdvancedSearchModalContainer
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import RelatedUrlsModalContainer
-  from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
-import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHeader'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
+import RelatedUrlsModal from '../../components/CollectionDetails/RelatedUrlsModal'
+import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHeader'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
@@ -34,7 +33,7 @@ import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { routes } from '../../constants/routes'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
-const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
+const CollectionDetailsHighlights = lazy(() => import('../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'))
 const GranuleResultsHighlights = lazy(() => import('../../components/GranuleResultsHighlights/GranuleResultsHighlights'))
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
 
@@ -156,7 +155,7 @@ export const Search = () => {
                     titleIcon={AlertInformation}
                   >
                     <Suspense fallback={<div />}>
-                      <CollectionDetailsHighlightsContainer />
+                      <CollectionDetailsHighlights />
                     </Suspense>
                   </SidebarSection>
                 )
@@ -219,7 +218,7 @@ export const Search = () => {
           </Routes>
         </SidebarContainer>
         <div className="route-wrapper__content route-wrapper__content--dark">
-          <RelatedUrlsModalContainer />
+          <RelatedUrlsModal />
           <FacetsModalContainer />
           <PortalFeatureContainer advancedSearch>
             <AdvancedSearchModalContainer

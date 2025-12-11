@@ -33,8 +33,6 @@ import type { RetrievalCollection } from '../../../types/sharedTypes'
 interface DownloadStatusItemProps {
   /** Whether the item is expanded/opened by default */
   defaultOpen?: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** The retrieval collection */
   retrievalCollection: RetrievalCollection
   /** The retrieval ID */
@@ -43,7 +41,6 @@ interface DownloadStatusItemProps {
 
 const DownloadStatusItem: React.FC<DownloadStatusItemProps> = ({
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalCollection,
   retrievalId
 }) => {
@@ -209,7 +206,6 @@ const DownloadStatusItem: React.FC<DownloadStatusItemProps> = ({
       messageIsError={false}
       messages={[]}
       opened={opened}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       orderInfo={STATUS_MESSAGES.DOWNLOAD.COMPLETE}
       orderStatus={orderStatus}
       progressPercentage={100}

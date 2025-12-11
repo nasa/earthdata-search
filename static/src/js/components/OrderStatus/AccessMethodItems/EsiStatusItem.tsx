@@ -34,8 +34,6 @@ import type { RetrievalCollection, EsiOrderInformation } from '../../../types/sh
 interface EsiStatusItemProps {
   /** Whether the item is expanded/opened by default */
   defaultOpen?: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** The retrieval collection */
   retrievalCollection: RetrievalCollection
   /** The retrieval ID */
@@ -44,7 +42,6 @@ interface EsiStatusItemProps {
 
 const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalCollection,
   retrievalId
 }) => {
@@ -276,7 +273,6 @@ const EsiStatusItem: React.FC<EsiStatusItemProps> = ({
       messageIsError={false}
       messages={messages}
       opened={opened}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       orderInfo={orderInfo!}
       orderStatus={orderStatus}
       progressPercentage={progressPercentage}

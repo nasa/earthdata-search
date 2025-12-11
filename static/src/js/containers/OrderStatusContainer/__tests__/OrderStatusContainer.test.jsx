@@ -13,8 +13,7 @@ const setup = setupTest({
   Component: OrderStatusContainer,
   defaultProps: {
     onChangePath: jest.fn(),
-    onMetricsRelatedCollection: jest.fn(),
-    onToggleAboutCSDAModal: jest.fn()
+    onMetricsRelatedCollection: jest.fn()
   }
 })
 
@@ -27,16 +26,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onToggleAboutCSDAModal calls actions.onToggleAboutCSDAModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
-
-    mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(true)
   })
 
   test('onChangePath calls actions.changePath', () => {
@@ -59,8 +48,7 @@ describe('OrderStatusContainer component', () => {
       expect(OrderStatus).toHaveBeenCalledWith(
         {
           onChangePath: expect.any(Function),
-          onMetricsRelatedCollection: expect.any(Function),
-          onToggleAboutCSDAModal: expect.any(Function)
+          onMetricsRelatedCollection: expect.any(Function)
         },
         {}
       )

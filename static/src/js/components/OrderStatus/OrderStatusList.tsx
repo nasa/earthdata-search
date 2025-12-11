@@ -11,14 +11,11 @@ interface OrderStatusListProps {
   retrievalCollections?: RetrievalCollection[]
   /** The retrieval ID */
   retrievalId: string
-  /** Callback to toggle the About CSDA modal */
-  onToggleAboutCSDAModal: () => void
 }
 
 const OrderStatusList: React.FC<OrderStatusListProps> = ({
   retrievalCollections = [],
-  retrievalId,
-  onToggleAboutCSDAModal
+  retrievalId
 }) => (
   <div className="order-status-list">
     <ul className="order-status-list__list">
@@ -34,7 +31,6 @@ const OrderStatusList: React.FC<OrderStatusListProps> = ({
               collection={collection}
               defaultOpen={retrievalCollections.length === 1}
               key={obfuscatedId + collectionId}
-              onToggleAboutCSDAModal={onToggleAboutCSDAModal}
               retrievalId={retrievalId}
             />
           )

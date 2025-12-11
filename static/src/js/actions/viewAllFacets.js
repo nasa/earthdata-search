@@ -12,6 +12,8 @@ import {
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 import { getEdlToken } from '../zustand/selectors/user'
+import { setOpenModalFunction } from '../zustand/selectors/ui'
+import { MODAL_NAMES } from '../constants/modalNames'
 
 export const updateViewAllFacets = (payload) => ({
   type: UPDATE_VIEW_ALL_FACETS,
@@ -47,8 +49,10 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const zustandState = useEdscStore.getState()
   const edlToken = getEdlToken(zustandState)
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  const setOpenModal = setOpenModalFunction(zustandState)
 
   dispatch(onViewAllFacetsLoading(category))
+  setOpenModal(MODAL_NAMES.VIEW_ALL_FACETS)
   dispatch(toggleFacetsModal(true))
 
   // `onViewAllFacetsLoading` changes the state, use getState() again here to ensure the

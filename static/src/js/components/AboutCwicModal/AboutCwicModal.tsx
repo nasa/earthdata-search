@@ -6,20 +6,18 @@ import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalCon
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 // @ts-expect-error: This file does not have types
 import ExternalLink from '../ExternalLink/ExternalLink'
+import useEdscStore from '../../zustand/useEdscStore'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
-interface AboutCwicModalProps {
-  /** Whether the modal is open. */
-  isOpen: boolean
-  /** Function to toggle the modal's open state. */
-  onToggleAboutCwicModal: (isOpen: boolean) => void
-}
+export const AboutCwicModal = () => {
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.ABOUT_CWIC))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
-export const AboutCwicModal: React.FC<AboutCwicModalProps> = ({
-  isOpen,
-  onToggleAboutCwicModal
-}) => {
+  if (!isOpen) return null
+
   const onModalClose = () => {
-    onToggleAboutCwicModal(false)
+    setOpenModal(null)
   }
 
   const body = (

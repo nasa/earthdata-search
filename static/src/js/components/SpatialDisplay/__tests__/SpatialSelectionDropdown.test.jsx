@@ -9,6 +9,7 @@ import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
 import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes } from '../../../constants/eventTypes'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 // Mock react react-router-dom so that the tests do not think we are on the homepage
 jest.mock('react-router-dom', () => ({
@@ -36,9 +37,15 @@ const setup = setupTest({
     searchParams: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn(),
-    onToggleShapefileUploadModal: jest.fn(),
     onMetricsSpatialSelection: jest.fn(),
     location: '/search'
+  },
+  defaultZustandState: {
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
+    }
   }
 })
 
@@ -127,16 +134,16 @@ describe('SpatialSelectionDropdown component', () => {
     expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'circle' })
   })
 
-  test('clicking the shapefile dropdown calls onToggleShapefileUploadModal', async () => {
-    const { props, user } = setup()
+  test('clicking the shapefile dropdown calls setOpenModal', async () => {
+    const { props, user, zustandState } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
     await user.click(dropdownSelectionButton)
 
     await user.click(screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' }))
 
-    expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-    expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(true)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+    expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.SHAPEFILE_UPLOAD)
 
     expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
     expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'file' })
@@ -148,7 +155,7 @@ describe('SpatialSelectionDropdown component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      const { props, user } = setup()
+      const { props, user, zustandState } = setup()
 
       const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
       await user.click(dropdownSelectionButton)
@@ -157,7 +164,7 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(shapeFileSelectionButton)
 
       expect(shapeFileSelectionButton).toHaveClass('disabled')
-      expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(0)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
       expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(0)
     })
 

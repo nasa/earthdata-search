@@ -16,14 +16,13 @@ const setup = setupTest({
     retrievalCollections: Object.values(
       retrievalStatusPropsEchoOrder.retrieval.retrievalCollections
     ),
-    retrievalId: '1',
-    onToggleAboutCSDAModal: jest.fn()
+    retrievalId: '1'
   }
 })
 
 describe('OrderStatus component', () => {
   test('renders a list of OrderStatusItem components', () => {
-    const { props } = setup()
+    setup()
 
     expect(OrderStatusCollection).toHaveBeenCalledTimes(1)
     expect(OrderStatusCollection).toHaveBeenCalledWith({
@@ -67,7 +66,6 @@ describe('OrderStatus component', () => {
         }]
       },
       defaultOpen: true,
-      onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
       retrievalId: '1'
     }, {})
   })

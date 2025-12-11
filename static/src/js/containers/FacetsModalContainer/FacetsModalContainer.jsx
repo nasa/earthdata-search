@@ -8,8 +8,7 @@ import FacetsModal from '../../components/Facets/FacetsModal'
 
 export const mapStateToProps = (state) => ({
   collectionHits: state.searchResults.viewAllFacets.hits,
-  viewAllFacets: state.searchResults.viewAllFacets,
-  isOpen: state.ui.facetsModal.isOpen
+  viewAllFacets: state.searchResults.viewAllFacets
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -19,13 +18,11 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const FacetsModalContainer = ({
   collectionHits = null,
-  isOpen,
   onToggleFacetsModal,
   viewAllFacets
 }) => (
   <FacetsModal
     collectionHits={collectionHits}
-    isOpen={isOpen}
     onToggleFacetsModal={onToggleFacetsModal}
     viewAllFacets={viewAllFacets}
   />
@@ -33,7 +30,6 @@ export const FacetsModalContainer = ({
 
 FacetsModalContainer.propTypes = {
   collectionHits: PropTypes.number,
-  isOpen: PropTypes.bool.isRequired,
   onToggleFacetsModal: PropTypes.func.isRequired,
   viewAllFacets: PropTypes.shape({}).isRequired
 }

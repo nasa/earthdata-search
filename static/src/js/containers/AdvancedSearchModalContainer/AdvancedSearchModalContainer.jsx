@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { withFormik } from 'formik'
 import { splitListOfPoints } from '@edsc/geo-utils'
 import { LineString, Polygon } from 'ol/geom'
 
-import actions from '../../actions'
 import { getValidationSchema } from '../../util/forms'
 
 import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSearchModal'
@@ -16,43 +14,29 @@ import { mapEventTypes } from '../../constants/eventTypes'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getSelectedRegionQuery } from '../../zustand/selectors/query'
 
-export const mapStateToProps = (state) => ({
-  isOpen: state.ui.advancedSearchModal.isOpen
-})
-
-export const mapDispatchToProps = (dispatch) => ({
-  onToggleAdvancedSearchModal:
-    (state) => dispatch(actions.toggleAdvancedSearchModal(state))
-})
-
 /**
  * Renders AdvancedSearchModalContainer.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.advancedSearch - The collections.
- * @param {Boolean} props.isOpen - The modal state.
  * @param {Object} props.fields - The advanced search fields.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
  * @param {Boolean} props.isValid - Flag provided from Formik.
- * @param {Function} props.onToggleAdvancedSearchModal - Callback function close the modal.
  * @param {Function} props.resetForm - Callback function provided by Formik.
- * @param {Object} props.regionSearchResults - The current region search results.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
+ * @param {Function} props.validateForm - Callback function provided by Formik.
  */
 export const AdvancedSearchModalContainer = ({
-  isOpen,
   fields,
   errors,
   handleBlur,
   handleChange,
   handleSubmit,
   isValid,
-  onToggleAdvancedSearchModal,
   resetForm,
   setFieldValue,
   setFieldTouched,
@@ -61,9 +45,7 @@ export const AdvancedSearchModalContainer = ({
   validateForm
 }) => (
   <AdvancedSearchModal
-    isOpen={isOpen}
     fields={fields}
-    onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
     errors={errors}
     handleBlur={handleBlur}
     handleChange={handleChange}
@@ -166,7 +148,6 @@ const AdvancedSearchModalContainerWrapper = (props) => {
 }
 
 AdvancedSearchModalContainer.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   fields: PropTypes.arrayOf(
     PropTypes.shape({})
   ).isRequired,
@@ -180,8 +161,7 @@ AdvancedSearchModalContainer.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
-  validateForm: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  validateForm: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchModalContainerWrapper)
+export default AdvancedSearchModalContainerWrapper

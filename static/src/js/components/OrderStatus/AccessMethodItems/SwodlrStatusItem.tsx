@@ -34,8 +34,6 @@ import type { RetrievalCollection, SwodlrOrderInformation } from '../../../types
 interface SwodlrStatusItemProps {
   /** Whether the item is expanded/opened by default */
   defaultOpen?: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** The retrieval collection */
   retrievalCollection: RetrievalCollection
   /** The retrieval ID */
@@ -44,7 +42,6 @@ interface SwodlrStatusItemProps {
 
 const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalCollection,
   retrievalId
 }) => {
@@ -249,7 +246,6 @@ const SwodlrStatusItem: React.FC<SwodlrStatusItemProps> = ({
       messageIsError={messageIsError}
       messages={messages}
       opened={opened}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       orderInfo={orderInfo!}
       orderStatus={orderStatus}
       progressPercentage={progressPercentage}

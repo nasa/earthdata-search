@@ -8,28 +8,24 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import AdvancedSearchModal from '../AdvancedSearchModal'
 
-import * as triggerKeyboardShortcut from '../../../util/triggerKeyboardShortcut'
 import AdvancedSearchForm from '../AdvancedSearchForm'
 import RegionSearchResults from '../RegionSearchResults'
 
 import REGIONS from '../../../operations/queries/regions'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../AdvancedSearchForm', () => jest.fn(() => null))
 jest.mock('../RegionSearchResults', () => jest.fn(() => null))
 
-const windowEventMap = {}
-
 const setup = setupTest({
   Component: AdvancedSearchModal,
   defaultProps: {
-    isOpen: false,
     fields: [],
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
     isValid: true,
-    onToggleAdvancedSearchModal: jest.fn(),
     resetForm: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
@@ -37,31 +33,37 @@ const setup = setupTest({
     values: {},
     validateForm: jest.fn()
   },
+  defaultZustandState: {
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.ADVANCED_SEARCH,
+        setOpenModal: jest.fn()
+      }
+    }
+  },
   withApolloClient: true
 })
 
-beforeEach(() => {
-  window.addEventListener = jest.fn((event, cb) => {
-    windowEventMap[event] = cb
-  })
-})
-
 describe('AdvancedSearchModal component', () => {
-  describe('when isOpen is false', () => {
+  describe('when the modal is not open', () => {
     test('should not render the form', () => {
-      setup()
+      setup({
+        overrideZustandState: {
+          ui: {
+            modals: {
+              openModal: null
+            }
+          }
+        }
+      })
 
       expect(AdvancedSearchForm).toHaveBeenCalledTimes(0)
     })
   })
 
-  describe('when isOpen is true', () => {
+  describe('when the modal is open', () => {
     test('should render a form', () => {
-      setup({
-        overrideProps: {
-          isOpen: true
-        }
-      })
+      setup()
 
       expect(AdvancedSearchForm).toHaveBeenCalledTimes(1)
       expect(AdvancedSearchForm).toHaveBeenCalledWith({
@@ -86,103 +88,74 @@ describe('AdvancedSearchModal component', () => {
 
   describe('onModalClose', () => {
     test('should call the callback to close the modal', async () => {
-      const { props, user } = setup({
-        overrideProps: {
-          isOpen: true
-        }
-      })
+      const { user, zustandState } = setup()
 
       const button = screen.getByRole('button', { name: 'Close' })
       await user.click(button)
 
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 
   describe('onApplyClick', () => {
     test('should call the callback to close the modal', async () => {
-      const { props, user } = setup({
-        overrideProps: {
-          isOpen: true
-        }
-      })
+      const { user, zustandState } = setup()
 
       const button = screen.getByRole('button', { name: 'Apply' })
       await user.click(button)
 
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 
   describe('onCancelClick', () => {
     test('should call the callback to close the modal', async () => {
-      const { props, user } = setup({
-        overrideProps: {
-          isOpen: true
-        }
-      })
+      const { user, zustandState } = setup()
 
       const button = screen.getByRole('button', { name: 'Cancel' })
       await user.click(button)
 
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 
   describe('onWindowKeyup', () => {
     describe('when the "a" key is pressed', () => {
-      test('opens the modal when it is closed', () => {
-        const preventDefaultMock = jest.fn()
-        const stopPropagationMock = jest.fn()
-
-        const shortcutSpy = jest.spyOn(triggerKeyboardShortcut, 'triggerKeyboardShortcut')
-
-        const { props } = setup({
-          overrideProps: {
-            isOpen: false
+      test('opens the modal when it is closed', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            ui: {
+              modals: {
+                openModal: null
+              }
+            }
           }
         })
 
-        windowEventMap.keyup({
-          key: 'a',
-          tagName: 'body',
-          type: 'keyup',
-          preventDefault: preventDefaultMock,
-          stopPropagation: stopPropagationMock
+        await user.keyboard('a')
+
+        await waitFor(() => {
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
         })
 
-        expect(shortcutSpy).toHaveBeenCalledTimes(1)
-        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
-        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
-        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(
+          MODAL_NAMES.ADVANCED_SEARCH
+        )
       })
 
-      test('closes the modal when it is opened', () => {
-        const preventDefaultMock = jest.fn()
-        const stopPropagationMock = jest.fn()
+      test('closes the modal when it is opened', async () => {
+        const { user, zustandState } = setup()
 
-        const { props } = setup({
-          overrideProps: {
-            isOpen: true
-          }
+        await user.keyboard('a')
+
+        await waitFor(() => {
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
         })
 
-        windowEventMap.keyup({
-          key: 'a',
-          tagName: 'body',
-          type: 'keyup',
-          preventDefault: preventDefaultMock,
-          stopPropagation: stopPropagationMock
-        })
-
-        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
-        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
-        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
     })
   })

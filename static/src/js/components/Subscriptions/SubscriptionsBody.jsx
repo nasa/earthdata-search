@@ -43,7 +43,6 @@ export const SubscriptionsBody = ({
   subscriptionType,
   onCreateSubscription,
   onDeleteSubscription,
-  onToggleEditSubscriptionModal,
   onUpdateSubscription,
   onUpdateSubscriptionDisabledFields
 }) => {
@@ -224,7 +223,6 @@ export const SubscriptionsBody = ({
                     subscriptionType={subscriptionType}
                     onUpdateSubscription={onUpdateSubscription}
                     onDeleteSubscription={onDeleteSubscription}
-                    onToggleEditSubscriptionModal={onToggleEditSubscriptionModal}
                     exactlyMatchingSubscriptions={exactlyMatchingSubscriptions}
                     hasNullCmrQuery={hasNullCmrQuery}
                   />
@@ -280,7 +278,6 @@ SubscriptionsBody.propTypes = {
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
-  onToggleEditSubscriptionModal: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
   onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }

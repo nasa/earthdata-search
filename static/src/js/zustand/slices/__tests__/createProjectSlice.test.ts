@@ -30,8 +30,7 @@ jest.mock('../../../store/configureStore', () => jest.fn())
 
 jest.mock('../../../actions', () => ({
   handleAlert: jest.fn(),
-  handleError: jest.fn(),
-  toggleSpatialPolygonWarning: jest.fn()
+  handleError: jest.fn()
 }))
 
 jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
@@ -1209,6 +1208,8 @@ describe('createProjectSlice', () => {
           granules: initialGranuleState,
           isVisible: true
         }
+
+        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -1216,14 +1217,15 @@ describe('createProjectSlice', () => {
 
       await project.getProjectGranules()
 
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-      expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, false)
-
       const updatedState = useEdscStore.getState()
       const {
-        project: updatedProject
+        project: updatedProject,
+        ui
       } = updatedState
+
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(2)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
+      expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(2, false)
 
       const { collection1 } = updatedProject.collections.byId
       const { collection2 } = updatedProject.collections.byId
@@ -1264,19 +1266,22 @@ describe('createProjectSlice', () => {
             granules: initialGranuleState,
             isVisible: true
           }
+
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
         const { project } = zustandState
         await project.getProjectGranules()
 
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-
         const updatedState = useEdscStore.getState()
         const {
-          project: updatedProject
+          project: updatedProject,
+          ui
         } = updatedState
+
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
 
         const { collection1 } = updatedProject.collections.byId
 
@@ -1329,20 +1334,23 @@ describe('createProjectSlice', () => {
           state.query.collection.spatial = {
             polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
+
+          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
         const { project } = zustandState
         await project.getProjectGranules()
 
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
-
         const updatedState = useEdscStore.getState()
         const {
-          project: updatedProject
+          project: updatedProject,
+          ui
         } = updatedState
+
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(2)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(1, false)
+        expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenNthCalledWith(2, true)
 
         const { collection1 } = updatedProject.collections.byId
 

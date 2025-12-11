@@ -18,7 +18,6 @@ const setup = setupTest({
   Component: DownloadStatusItem,
   defaultProps: {
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalCollection: {
       collectionMetadata: {
         directDistributionInformation: {},
@@ -46,7 +45,7 @@ describe('DownloadStatusItem', () => {
       percentDone: '100'
     })
 
-    const { props } = setup()
+    setup()
 
     expect(OrderStatusItem).toHaveBeenCalledTimes(1)
     expect(OrderStatusItem).toHaveBeenCalledWith({
@@ -57,7 +56,6 @@ describe('DownloadStatusItem', () => {
       hasStatus: false,
       messageIsError: false,
       messages: [],
-      onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
       opened: true,
       orderInfo: STATUS_MESSAGES.DOWNLOAD.COMPLETE,
       orderStatus: 'creating',

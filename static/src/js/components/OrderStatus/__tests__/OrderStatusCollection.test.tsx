@@ -30,7 +30,6 @@ const setup = setupTest({
       obfuscatedId: '12345'
     },
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalId: '42'
   },
   withApolloClient: true
@@ -141,7 +140,7 @@ describe('OrderStatusCollection', () => {
 
   describe('when the collection\'s access method is download', () => {
     test('renders a DownloadStatusItem', async () => {
-      const { props } = setup({
+      setup({
         overrideApolloClientMocks: [{
           request: {
             query: GET_RETRIEVAL_COLLECTION,
@@ -173,7 +172,6 @@ describe('OrderStatusCollection', () => {
 
       expect(DownloadStatusItem).toHaveBeenCalledWith({
         defaultOpen: true,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollection: {
           accessMethod: { type: 'download' },
           collectionMetadata,
@@ -204,7 +202,7 @@ describe('OrderStatusCollection', () => {
         }
       }
 
-      const { props } = setup({
+      setup({
         overrideApolloClientMocks: [{
           request: {
             query: GET_RETRIEVAL_COLLECTION,
@@ -234,7 +232,6 @@ describe('OrderStatusCollection', () => {
 
       expect(EchoOrderStatusItem).toHaveBeenCalledWith({
         defaultOpen: true,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollection: {
           accessMethod,
           collectionMetadata,
@@ -274,7 +271,7 @@ describe('OrderStatusCollection', () => {
         type: 'ESI'
       }]
 
-      const { props } = setup({
+      setup({
         overrideApolloClientMocks: [{
           request: {
             query: GET_RETRIEVAL_COLLECTION,
@@ -304,7 +301,6 @@ describe('OrderStatusCollection', () => {
 
       expect(EsiStatusItem).toHaveBeenCalledWith({
         defaultOpen: true,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollection: {
           accessMethod,
           collectionMetadata,
@@ -341,7 +337,7 @@ describe('OrderStatusCollection', () => {
           type: 'ESI'
         }]
 
-        const { props } = setup({
+        setup({
           overrideApolloClientMocks: [{
             request: {
               query: GET_RETRIEVAL_COLLECTION,
@@ -392,7 +388,6 @@ describe('OrderStatusCollection', () => {
 
         expect(EsiStatusItem).toHaveBeenNthCalledWith(1, {
           defaultOpen: true,
-          onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
           retrievalCollection: {
             accessMethod,
             collectionMetadata,
@@ -419,7 +414,6 @@ describe('OrderStatusCollection', () => {
 
         expect(EsiStatusItem).toHaveBeenNthCalledWith(1, {
           defaultOpen: true,
-          onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
           retrievalCollection: {
             accessMethod,
             collectionMetadata,
@@ -465,7 +459,7 @@ describe('OrderStatusCollection', () => {
         type: 'Harmony'
       }]
 
-      const { props } = setup({
+      setup({
         overrideApolloClientMocks: [{
           request: {
             query: GET_RETRIEVAL_COLLECTION,
@@ -495,7 +489,6 @@ describe('OrderStatusCollection', () => {
 
       expect(HarmonyStatusItem).toHaveBeenCalledWith({
         defaultOpen: true,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollection: {
           accessMethod,
           collectionMetadata,
@@ -532,7 +525,7 @@ describe('OrderStatusCollection', () => {
           type: 'Harmony'
         }]
 
-        const { props } = setup({
+        setup({
           overrideApolloClientMocks: [{
             request: {
               query: GET_RETRIEVAL_COLLECTION,
@@ -583,7 +576,6 @@ describe('OrderStatusCollection', () => {
 
         expect(HarmonyStatusItem).toHaveBeenNthCalledWith(1, {
           defaultOpen: true,
-          onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
           retrievalCollection: {
             accessMethod,
             collectionMetadata,
@@ -610,7 +602,6 @@ describe('OrderStatusCollection', () => {
 
         expect(HarmonyStatusItem).toHaveBeenNthCalledWith(1, {
           defaultOpen: true,
-          onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
           retrievalCollection: {
             accessMethod,
             collectionMetadata,
@@ -637,7 +628,7 @@ describe('OrderStatusCollection', () => {
     }
 
     test('renders an OpendapStatusItem', async () => {
-      const { props } = setup({
+      setup({
         overrideApolloClientMocks: [{
           request: {
             query: GET_RETRIEVAL_COLLECTION,
@@ -667,7 +658,6 @@ describe('OrderStatusCollection', () => {
 
       expect(OpendapStatusItem).toHaveBeenCalledWith({
         defaultOpen: true,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollection: {
           accessMethod,
           collectionMetadata,
@@ -725,7 +715,7 @@ describe('OrderStatusCollection', () => {
         type: 'SWODLR'
       }]
 
-      const { props } = setup({
+      setup({
         overrideApolloClientMocks: [{
           request: {
             query: GET_RETRIEVAL_COLLECTION,
@@ -755,7 +745,6 @@ describe('OrderStatusCollection', () => {
 
       expect(SwodlrStatusItem).toHaveBeenCalledWith({
         defaultOpen: true,
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollection: {
           accessMethod,
           collectionMetadata,
@@ -806,7 +795,7 @@ describe('OrderStatusCollection', () => {
           type: 'SWODLR'
         }]
 
-        const { props } = setup({
+        setup({
           overrideApolloClientMocks: [{
             request: {
               query: GET_RETRIEVAL_COLLECTION,
@@ -857,7 +846,6 @@ describe('OrderStatusCollection', () => {
 
         expect(SwodlrStatusItem).toHaveBeenNthCalledWith(1, {
           defaultOpen: true,
-          onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
           retrievalCollection: {
             accessMethod,
             collectionMetadata,
@@ -884,7 +872,6 @@ describe('OrderStatusCollection', () => {
 
         expect(SwodlrStatusItem).toHaveBeenNthCalledWith(1, {
           defaultOpen: true,
-          onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
           retrievalCollection: {
             accessMethod,
             collectionMetadata,

@@ -3,36 +3,32 @@ import Modal from 'react-bootstrap/Modal'
 
 import Button from '../Button/Button'
 
-import useEdscStore from '../../zustand/useEdscStore'
-
-import './OverrideTemporalModal.scss'
-
 // @ts-expect-error: Types do not exist for this file
 import focusedImage from '../../../assets/images/blue-bars-circle.png?format=webp'
 // @ts-expect-error: Types do not exist for this file
 import temporalImage from '../../../assets/images/orange-bars-circle.png?format=webp'
+
+import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
-interface OverrideTemporalModalProps {
-  /** Whether the modal is open */
-  isOpen: boolean
-  /** Function to toggle the override temporal modal */
-  onToggleOverrideTemporalModal: (open: boolean) => void
-}
+import './OverrideTemporalModal.scss'
 
-const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
-  isOpen,
-  onToggleOverrideTemporalModal
-}) => {
+const OverrideTemporalModal = () => {
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const temporalQuery = useEdscStore(getCollectionsQueryTemporal)
   const timelineQuery = useEdscStore((state) => state.timeline.query)
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.OVERRIDE_TEMPORAL))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
+  if (!isOpen) return null
 
   /**
    * Called when the modal closes, sets the modal as closed in the store
    */
   const onModalClose = () => {
-    onToggleOverrideTemporalModal(false)
+    setOpenModal(null)
   }
 
   /**

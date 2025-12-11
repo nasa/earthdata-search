@@ -11,8 +11,6 @@ import {
 } from '../util/url/url'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
-import { RESTORE_FROM_URL } from '../constants/actionTypes'
-
 import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
@@ -21,29 +19,25 @@ import availablePortals from '../../../../portals/availablePortals.json'
 import useEdscStore from '../zustand/useEdscStore'
 
 import routerHelper from '../router/router'
-import { routes } from '../constants/routes'
 
-const restoreFromUrl = (payload) => ({
-  type: RESTORE_FROM_URL,
-  payload
-})
+import { routes } from '../constants/routes'
+import { MODAL_NAMES } from '../constants/modalNames'
 
 export const updateStore = ({
   cmrFacets,
-  collections,
+  deprecatedUrlParams,
   earthdataEnvironment,
   featureFacets,
   focusedCollection,
   focusedGranule,
-  deprecatedUrlParams,
   mapView,
   portalId,
   project,
   query,
-  shapefile,
   selectedRegion,
+  shapefile,
   timeline
-}, newPathname) => async (dispatch) => {
+}, newPathname) => async () => {
   const { location } = routerHelper.router.state
   const { pathname } = location
 
@@ -58,14 +52,16 @@ export const updateStore = ({
 
   // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
-    await dispatch(restoreFromUrl({
-      collections,
-      deprecatedUrlParams
-    }))
-
     useEdscStore.setState((zustandState) => {
       // Use merge on the queries to correctly use the initial state as a fallback for `undefined` decoded values
       const mergedQuery = merge({}, zustandState.query, query)
+
+      const modals = { ...zustandState.ui.modals }
+
+      if (deprecatedUrlParams.length > 0) {
+        modals.openModal = MODAL_NAMES.DEPRECATED_PARAMETER
+        modals.modalData = { deprecatedUrlParams }
+      }
 
       return ({
         ...zustandState,
@@ -104,7 +100,11 @@ export const updateStore = ({
           }
         },
         shapefile: merge({}, zustandState.shapefile, shapefile),
-        timeline: merge({}, zustandState.timeline, timeline)
+        timeline: merge({}, zustandState.timeline, timeline),
+        ui: {
+          ...zustandState.ui,
+          modals
+        }
       })
     })
   } else {

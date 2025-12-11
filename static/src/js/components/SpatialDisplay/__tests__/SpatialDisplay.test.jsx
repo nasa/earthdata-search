@@ -9,18 +9,6 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const setup = setupTest({
   Component: SpatialDisplay,
-  defaultProps: {
-    boundingBoxSearch: [],
-    circleSearch: [],
-    displaySpatialPolygonWarning: false,
-    drawingNewLayer: false,
-    lineSearch: [],
-    pointSearch: [],
-    polygonSearch: [],
-    onChangeQuery: jest.fn(),
-    onRemoveSpatialFilter: jest.fn(),
-    shapefile: {}
-  },
   defaultZustandState: {
     query: {
       changeQuery: jest.fn(),
@@ -163,8 +151,12 @@ describe('SpatialDisplay component', () => {
 
     test('should render a hint to draw the polygon on the map', () => {
       setup({
-        overrideProps: {
-          drawingNewLayer: spatialTypes.POLYGON
+        overrideZustandState: {
+          ui: {
+            map: {
+              drawingNewLayer: spatialTypes.POLYGON
+            }
+          }
         }
       })
 
@@ -173,7 +165,7 @@ describe('SpatialDisplay component', () => {
     })
   })
 
-  describe('with polygonSearch and displaySpatialPolygonWarning', () => {
+  describe('with polygonSearch and displaySpatialMbrWarning', () => {
     test('should render without spatial info and a warning', () => {
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
@@ -181,15 +173,17 @@ describe('SpatialDisplay component', () => {
         + '-77.04444122314453,38.99228142151045'
 
       setup({
-        overrideProps: {
-          displaySpatialPolygonWarning: true
-        },
         overrideZustandState: {
           query: {
             collection: {
               spatial: {
                 polygon: [newPolygon]
               }
+            }
+          },
+          ui: {
+            map: {
+              displaySpatialMbrWarning: true
             }
           }
         }

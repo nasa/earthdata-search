@@ -208,7 +208,8 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
     },
 
     removeSpatialFilter: async () => {
-      await get().query.changeQuery({
+      const zustandState = get()
+      await zustandState.query.changeQuery({
         collection: {
           spatial: initialState.collection.spatial
         },
@@ -217,12 +218,8 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      reduxDispatch(actions.toggleDrawingNewLayer(false))
-
-      get().shapefile.clearShapefile()
+      zustandState.ui.map.setDrawingNewLayer(false)
+      zustandState.shapefile.clearShapefile()
     },
 
     undoExcludeGranule: (collectionId) => {

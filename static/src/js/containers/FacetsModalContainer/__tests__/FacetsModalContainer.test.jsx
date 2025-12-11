@@ -16,7 +16,6 @@ const setup = setupTest({
   Component: FacetsModalContainer,
   defaultProps: {
     collectionHits: 1,
-    isOpen: true,
     onApplyViewAllFacets: jest.fn(),
     onChangeViewAllFacet: jest.fn(),
     onToggleFacetsModal: jest.fn(),
@@ -43,11 +42,6 @@ describe('mapStateToProps', () => {
         viewAllFacets: {
           hits: 42
         }
-      },
-      ui: {
-        facetsModal: {
-          isOpen: false
-        }
       }
     }
 
@@ -55,8 +49,7 @@ describe('mapStateToProps', () => {
       collectionHits: 42,
       viewAllFacets: {
         hits: 42
-      },
-      isOpen: false
+      }
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -70,7 +63,6 @@ describe('FacetsModalContainer component', () => {
     expect(FacetsModal).toHaveBeenCalledTimes(1)
     expect(FacetsModal).toHaveBeenCalledWith({
       collectionHits: 1,
-      isOpen: true,
       onToggleFacetsModal: expect.any(Function),
       viewAllFacets: { value: 'viewAllFacets' }
     }, {})

@@ -15,27 +15,13 @@ jest.mock('../../../components/EditSubscriptionModal/EditSubscriptionModal', () 
 const setup = setupTest({
   Component: EditSubscriptionModalContainer,
   defaultProps: {
-    isOpen: true,
-    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
-    subscriptionConceptId: 'SUB1',
-    subscriptions: {},
-    subscriptionType: 'granule'
+    subscriptions: {}
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onToggleEditSubscriptionModal calls actions.toggleEditSubscriptionModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleEditSubscriptionModal')
-
-    mapDispatchToProps(dispatch).onToggleEditSubscriptionModal(false)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(false)
-  })
-
-  test('onUpdateSubscription calls actions.toggleEditSubscriptionModal', () => {
+  test('onUpdateSubscription calls actions.updateSubscription', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateSubscription')
 
@@ -49,20 +35,10 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      subscriptions: {
-
-      },
-      ui: {
-        editSubscriptionModal: {
-          isOpen: false,
-          subscriptionConceptId: 'SUB1'
-        }
-      }
+      subscriptions: {}
     }
 
     const expectedState = {
-      isOpen: false,
-      subscriptionConceptId: 'SUB1',
       subscriptions: {}
     }
 
@@ -76,12 +52,8 @@ describe('EditSubscriptionModalContainer component', () => {
 
     expect(EditSubscriptionModal).toHaveBeenCalledTimes(1)
     expect(EditSubscriptionModal).toHaveBeenCalledWith({
-      isOpen: true,
-      onToggleEditSubscriptionModal: expect.any(Function),
       onUpdateSubscription: expect.any(Function),
-      subscriptionConceptId: 'SUB1',
-      subscriptions: {},
-      subscriptionType: 'granule'
+      subscriptions: {}
     }, {})
   })
 })

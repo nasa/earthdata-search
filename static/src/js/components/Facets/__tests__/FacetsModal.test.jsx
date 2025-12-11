@@ -11,6 +11,7 @@ import Skeleton from '../../Skeleton/Skeleton'
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
 import useEdscStore from '../../../zustand/useEdscStore'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../../../containers/EDSCModalContainer/EDSCModalContainer', () => jest.fn((props) => (
   <>
@@ -38,7 +39,6 @@ const setup = setupTest({
       isLoading: false,
       selectedCategory: 'Test Category'
     },
-    isOpen: false,
     onApplyViewAllFacets: jest.fn(),
     onChangeViewAllFacet: jest.fn(),
     onToggleFacetsModal: jest.fn()
@@ -47,6 +47,12 @@ const setup = setupTest({
     facetParams: {
       applyViewAllFacets: jest.fn(),
       setViewAllFacets: jest.fn()
+    },
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.VIEW_ALL_FACETS,
+        setOpenModal: jest.fn()
+      }
     }
   }
 })
@@ -64,6 +70,13 @@ describe('FacetsModal component', () => {
             isLoading: false,
             selectedCategory: null
           }
+        },
+        overrideZustandState: {
+          ui: {
+            modals: {
+              openModal: null
+            }
+          }
         }
       })
 
@@ -73,50 +86,19 @@ describe('FacetsModal component', () => {
 
   describe('when selected category is defined', () => {
     test('the modal is not visible', () => {
-      setup()
+      setup({
+        overrideZustandState: {
+          ui: {
+            modals: {
+              openModal: null
+            }
+          }
+        }
+      })
 
-      expect(EDSCModalContainer).toHaveBeenCalledTimes(1)
-      expect(EDSCModalContainer).toHaveBeenCalledWith(
-        expect.objectContaining({
-          bodyPadding: false,
-          className: 'facets-modal',
-          fixedHeight: 'lg',
-          id: 'facets',
-          isOpen: false,
-          onClose: expect.any(Function),
-          onPrimaryAction: expect.any(Function),
-          onSecondaryAction: expect.any(Function),
-          primaryAction: 'Apply',
-          secondaryAction: 'Cancel',
-          size: 'lg',
-          spinner: false,
-          title: 'Filter collections by Test Category'
-        }),
-        {}
-      )
-
-      expect(FacetsModalNav).toHaveBeenCalledTimes(1)
-      expect(FacetsModalNav).toHaveBeenCalledWith(
-        {
-          activeLetters: undefined
-        },
-        {}
-      )
-
-      expect(FacetsList).toHaveBeenCalledTimes(1)
-      expect(FacetsList).toHaveBeenCalledWith(
-        {
-          changeHandler: expect.any(Function),
-          facetCategory: 'Test Category',
-          facets: undefined,
-          liftSelectedFacets: false,
-          sortBy: 'alpha',
-          variation: 'light'
-        },
-        {}
-      )
-
-      expect(screen.getByText('null Matching Collection')).toBeInTheDocument()
+      expect(EDSCModalContainer).toHaveBeenCalledTimes(0)
+      expect(FacetsModalNav).toHaveBeenCalledTimes(0)
+      expect(FacetsList).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -134,8 +116,7 @@ describe('FacetsModal component', () => {
             isLoaded: false,
             isLoading: true,
             selectedCategory: 'Test Category'
-          },
-          isOpen: true
+          }
         }
       })
 
@@ -210,8 +191,7 @@ describe('FacetsModal component', () => {
             isLoaded: true,
             isLoading: false,
             selectedCategory: 'Test Category'
-          },
-          isOpen: true
+          }
         }
       })
 
@@ -270,7 +250,7 @@ describe('FacetsModal component', () => {
 
   describe('when the close button is clicked', () => {
     test('the callback fires correctly', () => {
-      const { props } = setup({
+      const { zustandState } = setup({
         overrideProps: {
           collectionHits: 100,
           viewAllFacets: {
@@ -293,15 +273,14 @@ describe('FacetsModal component', () => {
             isLoaded: true,
             isLoading: false,
             selectedCategory: 'Test Category'
-          },
-          isOpen: true
+          }
         }
       })
 
       EDSCModalContainer.mock.calls[0][0].onClose()
 
-      expect(props.onToggleFacetsModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleFacetsModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 
@@ -330,8 +309,7 @@ describe('FacetsModal component', () => {
             isLoaded: true,
             isLoading: false,
             selectedCategory: 'Test Category'
-          },
-          isOpen: true
+          }
         }
       })
 
@@ -372,8 +350,7 @@ describe('FacetsModal component', () => {
             isLoaded: true,
             isLoading: false,
             selectedCategory: 'Test Category'
-          },
-          isOpen: true
+          }
         }
       })
 

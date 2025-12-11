@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import SearchSidebarHeader from '../SearchSidebarHeader'
-import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
+import SearchForm from '../../SearchForm/SearchForm'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 // References portals/__mocks__/availablePortals.json in test
@@ -17,16 +17,16 @@ import availablePortals from '../../../../../../portals/availablePortals.json'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
-  <mock-SearchFormContainer data-testid="SearchFormContainer">
+jest.mock('../../SearchForm/SearchForm', () => jest.fn(({ children }) => (
+  <div>
     {children}
-  </mock-SearchFormContainer>
+  </div>
 )))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => (
-  <mock-PortalLinkContainer data-testid="PortalLinkContainer">
+  <div>
     {children}
-  </mock-PortalLinkContainer>
+  </div>
 )))
 
 // Use virtual mocks of modules that don't exist anywhere in the system
@@ -58,14 +58,14 @@ beforeEach(() => {
 })
 
 describe('SearchSidebarHeader component', () => {
-  test('renders the SearchFormContainer', async () => {
+  test('renders the SearchForm', async () => {
     setup()
 
     await waitFor(() => {
-      expect(SearchFormContainer).toHaveBeenCalledTimes(1)
+      expect(SearchForm).toHaveBeenCalledTimes(1)
     })
 
-    expect(SearchFormContainer).toHaveBeenCalledWith({}, {})
+    expect(SearchForm).toHaveBeenCalledWith({}, {})
   })
 
   describe('when a portal is loaded', () => {

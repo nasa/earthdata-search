@@ -36,8 +36,6 @@ import type { RetrievalCollection, HarmonyOrderInformation } from '../../../type
 interface HarmonyStatusItemProps {
   /** Whether the item is expanded/opened by default */
   defaultOpen?: boolean
-  /** Handler to toggle the CSDA modal */
-  onToggleAboutCSDAModal: (state: boolean) => void
   /** The retrieval collection */
   retrievalCollection: RetrievalCollection
   /** The retrieval ID */
@@ -46,7 +44,6 @@ interface HarmonyStatusItemProps {
 
 const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
   defaultOpen = false,
-  onToggleAboutCSDAModal,
   retrievalCollection,
   retrievalId
 }) => {
@@ -318,7 +315,6 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
       messageIsError={messageIsError}
       messages={messages}
       opened={opened}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       orderInfo={orderInfo!}
       orderStatus={orderStatus}
       progressPercentage={progressPercentage}

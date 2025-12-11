@@ -49,23 +49,23 @@ window.reactToastProvider = React.createRef()
 // }
 
 // Lazy loaded routes
-const AboutCSDAModalContainer = lazy(() => import('./containers/AboutCSDAModalContainer/AboutCSDAModalContainer'))
-const AboutCwicModalContainer = lazy(() => import('./containers/AboutCwicModalContainer/AboutCwicModalContainer'))
-const ChunkedOrderModalContainer = lazy(() => import('./containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'))
+const AboutCSDAModal = lazy(() => import('./components/AboutCSDAModal/AboutCSDAModal'))
+const AboutCwicModal = lazy(() => import('./components/AboutCwicModal/AboutCwicModal'))
+const ChunkedOrderModal = lazy(() => import('./components/ChunkedOrderModal/ChunkedOrderModal'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
-const DeprecatedParameterModalContainer = lazy(() => import('./containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'))
+const DeprecatedParameterModal = lazy(() => import('./components/DeprecatedParameterModal/DeprecatedParameterModal'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
 const EditSubscriptionModalContainer = lazy(() => import('./containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'))
-const KeyboardShortcutsModalContainer = lazy(() => import('./containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'))
+const KeyboardShortcutsModal = lazy(() => import('./components/KeyboardShortcutsModal/KeyboardShortcutsModal'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
 const Projects = lazy(() => import('./routes/Projects/Projects'))
 const Search = lazy(() => import('./routes/Search/Search'))
 const SearchTour = lazy(() => import('./components/SearchTour/SearchTour'))
 const ShapefileDropzoneContainer = lazy(() => import('./containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'))
-const ShapefileUploadModalContainer = lazy(() => import('./containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'))
+const ShapefileUploadModal = lazy(() => import('./components/ShapefileUploadModal/ShapefileUploadModal'))
 const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
-const TooManyPointsModalContainer = lazy(() => import('./containers/TooManyPointsModalContainer/TooManyPointsModalContainer'))
+const TooManyPointsModal = lazy(() => import('./components/TooManyPointsModal/TooManyPointsModal'))
 
 const AdminLayout = lazy(() => import('./layouts/AdminLayout/AdminLayout'))
 const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
@@ -92,14 +92,14 @@ const browserRouter = createBrowserRouter([
           <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
             <SearchTour />
             <Search />
-            <AboutCSDAModalContainer />
-            <AboutCwicModalContainer />
+            <AboutCSDAModal />
+            <AboutCwicModal />
             <EditSubscriptionModalContainer />
-            <DeprecatedParameterModalContainer />
-            <KeyboardShortcutsModalContainer />
+            <DeprecatedParameterModal />
+            <KeyboardShortcutsModal />
             <ShapefileDropzoneContainer />
-            <ShapefileUploadModalContainer />
-            <TooManyPointsModalContainer />
+            <ShapefileUploadModal />
+            <TooManyPointsModal />
           </Suspense>
         )
       },
@@ -109,8 +109,8 @@ const browserRouter = createBrowserRouter([
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
               <Project />
-              <AboutCSDAModalContainer />
-              <ChunkedOrderModalContainer />
+              <AboutCSDAModal />
+              <ChunkedOrderModal />
             </Suspense>
           </AuthRequiredContainer>
         )

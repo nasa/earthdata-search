@@ -3,8 +3,6 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 
-import { RESTORE_FROM_URL } from '../../constants/actionTypes'
-
 import * as urlQuery from '../urlQuery'
 import useEdscStore from '../../zustand/useEdscStore'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
@@ -35,6 +33,7 @@ describe('updateStore', () => {
   test('calls restoreFromUrl and gets new search results', async () => {
     const params = {
       cmrFacets: {},
+      deprecatedUrlParams: [],
       earthdataEnvironment: 'prod',
       featureFacets: {
         availableInEarthdataCloud: false,
@@ -71,25 +70,6 @@ describe('updateStore', () => {
     const store = mockStore()
 
     await store.dispatch(urlQuery.updateStore(params))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        ...params,
-        cmrFacets: undefined,
-        earthdataEnvironment: undefined,
-        featureFacets: undefined,
-        focusedCollection: undefined,
-        focusedGranule: undefined,
-        mapView: undefined,
-        portal: undefined,
-        project: undefined,
-        query: undefined,
-        selectedRegion: undefined,
-        timeline: undefined
-      },
-      type: RESTORE_FROM_URL
-    })
 
     // Expect the zustand store to be updated
     const initialState = useEdscStore.getInitialState()
@@ -171,6 +151,7 @@ describe('updateStore', () => {
     test('calls restoreFromUrl and gets new search results', async () => {
       const params = {
         cmrFacets: {},
+        deprecatedUrlParams: [],
         earthdataEnvironment: 'prod',
         featureFacets: {
           availableInEarthdataCloud: false,
@@ -219,25 +200,6 @@ describe('updateStore', () => {
 
       const store = mockStore()
       await store.dispatch(urlQuery.updateStore(params, '/projects'))
-
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          ...params,
-          cmrFacets: undefined,
-          earthdataEnvironment: undefined,
-          featureFacets: undefined,
-          focusedCollection: undefined,
-          focusedGranule: undefined,
-          mapView: undefined,
-          portal: undefined,
-          project: undefined,
-          query: undefined,
-          selectedRegion: undefined,
-          timeline: undefined
-        },
-        type: RESTORE_FROM_URL
-      })
 
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
 
@@ -326,6 +288,7 @@ describe('updateStore', () => {
 
       const params = {
         cmrFacets: {},
+        deprecatedUrlParams: [],
         earthdataEnvironment: 'prod',
         featureFacets: {
           availableInEarthdataCloud: false,
@@ -369,26 +332,6 @@ describe('updateStore', () => {
 
       const store = mockStore()
       await store.dispatch(urlQuery.updateStore(params, '/projects'))
-
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          ...params,
-          cmrFacets: undefined,
-          earthdataEnvironment: undefined,
-          featureFacets: undefined,
-          focusedCollection: undefined,
-          focusedGranule: undefined,
-          mapView: undefined,
-          portalId: undefined,
-          portal: undefined,
-          project: undefined,
-          query: undefined,
-          selectedRegion: undefined,
-          timeline: undefined
-        },
-        type: RESTORE_FROM_URL
-      })
 
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
 

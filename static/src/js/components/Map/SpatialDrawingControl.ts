@@ -13,7 +13,7 @@ import './SpatialDrawingControl.scss'
 
 export type SpatialDrawingControlOptions = {
   /** The function to call when the shapefile upload modal is toggled */
-  onToggleShapefileUploadModal: (state: boolean) => void
+  onToggleShapefileUploadModal: () => void
   /** The icon to use for the circle button */
   CircleIcon: React.ReactNode
   /** The icon to use for the point button */
@@ -30,7 +30,7 @@ class SpatialDrawingControl extends Control {
   className: string
 
   /** The function to call when the shapefile upload modal is toggled */
-  onToggleShapefileUploadModal: (state: boolean) => void
+  onToggleShapefileUploadModal: () => void
 
   /** The cancel button element */
   cancelButton: HTMLButtonElement
@@ -233,7 +233,7 @@ class SpatialDrawingControl extends Control {
   handleShapefileClick(event: Event) {
     event.stopPropagation()
 
-    this.onToggleShapefileUploadModal(true)
+    this.onToggleShapefileUploadModal()
   }
 
   /**

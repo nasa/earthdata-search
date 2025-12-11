@@ -1,38 +1,28 @@
 import React from 'react'
-
 import { act } from '@testing-library/react'
-import actions from '../../../actions'
+
 import * as EventEmitter from '../../../events/events'
-import { mapDispatchToProps, ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
+import { ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
 import ShapefileDropzone from '../../../components/Dropzone/ShapefileDropzone'
 
 import { shapefileEventTypes } from '../../../constants/eventTypes'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../../../components/Dropzone/ShapefileDropzone', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: ShapefileDropzoneContainer,
-  defaultProps: {
-    onToggleShapefileUploadModal: jest.fn()
-  },
   defaultZustandState: {
     query: {
       removeSpatialFilter: jest.fn()
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
     }
   }
-})
-
-describe('mapDispatchToProps', () => {
-  test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleShapefileUploadModal')
-
-    mapDispatchToProps(dispatch).onToggleShapefileUploadModal({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('ShapefileDropzoneContainer component', () => {
@@ -94,13 +84,13 @@ describe('ShapefileDropzoneContainer component', () => {
   })
 
   describe('when onSuccess is triggered', () => {
-    test('calls onToggleShapefileUploadModal and onSaveShapefile', async () => {
+    test('calls onSaveShapefile', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       eventEmitterEmitMock.mockImplementation(() => jest.fn())
       const filesizeMock = jest.fn(() => '200KB')
       const onSaveShapefileMock = jest.fn()
 
-      const { props } = setup({
+      const { zustandState } = setup({
         overrideZustandState: {
           shapefile: {
             saveShapefile: onSaveShapefileMock
@@ -182,8 +172,7 @@ describe('ShapefileDropzoneContainer component', () => {
         }
       )
 
-      expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
       expect(onSaveShapefileMock).toHaveBeenCalledTimes(1)
       expect(onSaveShapefileMock).toHaveBeenCalledWith({
@@ -213,6 +202,68 @@ describe('ShapefileDropzoneContainer component', () => {
         size: '200KB'
       })
     })
+
+    describe('when the shapefile modal is open', () => {
+      test('calls setOpenModal to close the modal', async () => {
+        const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+        eventEmitterEmitMock.mockImplementation(() => jest.fn())
+        const filesizeMock = jest.fn(() => '200KB')
+        const onSaveShapefileMock = jest.fn()
+
+        const { zustandState } = setup({
+          overrideZustandState: {
+            shapefile: {
+              saveShapefile: onSaveShapefileMock
+            },
+            ui: {
+              modals: {
+                openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
+              }
+            }
+          }
+        })
+
+        const mockFile = {
+          name: 'test-file-name.zip',
+          size: 200
+        }
+
+        const mockResponse = {
+          name: 'SOMEBIGHASHtest-file-name',
+          features: [
+            {
+              type: 'Feature',
+              geometry: {
+                type: 'LineString',
+                coordinates: [
+                  [-106, 35],
+                  [-105, 36],
+                  [-94, 33],
+                  [-95, 30],
+                  [-93, 31],
+                  [-92, 3]
+                ]
+              }
+            }
+          ]
+        }
+
+        const mockDropzoneEl = {
+          filesize: filesizeMock,
+          removeFile: jest.fn()
+        }
+
+        const componentProps = ShapefileDropzone.mock.calls[0][0]
+        const { onSuccess } = componentProps
+
+        await act(() => {
+          onSuccess(mockFile, mockResponse, mockDropzoneEl)
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+      })
+    })
   })
 
   describe('when onError is triggered', () => {
@@ -225,7 +276,7 @@ describe('ShapefileDropzoneContainer component', () => {
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -244,8 +295,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -257,7 +307,7 @@ describe('ShapefileDropzoneContainer component', () => {
       describe('when zip/shp/dbf/shx is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -276,8 +326,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -294,7 +343,7 @@ describe('ShapefileDropzoneContainer component', () => {
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -313,8 +362,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -326,7 +374,7 @@ describe('ShapefileDropzoneContainer component', () => {
       describe('when kml/kmz is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -345,8 +393,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -363,7 +410,7 @@ describe('ShapefileDropzoneContainer component', () => {
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -382,8 +429,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -395,7 +441,7 @@ describe('ShapefileDropzoneContainer component', () => {
       describe('when json/geojson is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -414,8 +460,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -433,7 +478,7 @@ describe('ShapefileDropzoneContainer component', () => {
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -452,8 +497,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -465,7 +509,7 @@ describe('ShapefileDropzoneContainer component', () => {
       describe('when rss/georss/xml is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
-          const { props } = setup({
+          const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
                 setErrored: onShapefileErroredMock
@@ -484,8 +528,7 @@ describe('ShapefileDropzoneContainer component', () => {
             onError(mockFile)
           })
 
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-          expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
           expect(onShapefileErroredMock).toHaveBeenCalledWith({
@@ -498,7 +541,7 @@ describe('ShapefileDropzoneContainer component', () => {
     describe('when given a unrecognized file type', () => {
       test('calls onShapefileErrored with the correct message', async () => {
         const onShapefileErroredMock = jest.fn()
-        const { props } = setup({
+        const { zustandState } = setup({
           overrideZustandState: {
             shapefile: {
               setErrored: onShapefileErroredMock
@@ -517,13 +560,44 @@ describe('ShapefileDropzoneContainer component', () => {
           onError(mockFile)
         })
 
-        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
         expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
         expect(onShapefileErroredMock).toHaveBeenCalledWith({
           message: 'Invalid file format.'
         })
+      })
+    })
+
+    describe('when the shapefile modal is open', () => {
+      test('calls setOpenModal to close the modal', async () => {
+        const onShapefileErroredMock = jest.fn()
+        const { zustandState } = setup({
+          overrideZustandState: {
+            shapefile: {
+              setErrored: onShapefileErroredMock
+            },
+            ui: {
+              modals: {
+                openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
+              }
+            }
+          }
+        })
+
+        const mockFile = {
+          name: 'test-file-name.svg'
+        }
+
+        const componentProps = ShapefileDropzone.mock.calls[0][0]
+        const { onError } = componentProps
+
+        await act(() => {
+          onError(mockFile)
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
     })
   })

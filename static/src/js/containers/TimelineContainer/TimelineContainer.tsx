@@ -1,10 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { useLocation } from 'react-router-dom'
-
-// @ts-expect-error The file does not have types
-import actions from '../../actions/index'
 
 // @ts-expect-error The file does not have types
 import { metricsTimeline } from '../../middleware/metrics/actions'
@@ -22,42 +19,22 @@ import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import { routes } from '../../constants/routes'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onToggleOverrideTemporalModal:
-    (open: boolean) => dispatch(actions.toggleOverrideTemporalModal(open)),
   onMetricsTimeline:
-    (type: string) => dispatch(metricsTimeline(type)),
-  onToggleTimeline:
-    (open: boolean) => dispatch(actions.toggleTimeline(open))
-})
-
-// @ts-expect-error Don't want to define types for all of Redux
-export const mapStateToProps = (state) => ({
-  isOpen: state.ui.timeline.isOpen
+    (type: string) => dispatch(metricsTimeline(type))
 })
 
 interface TimelineContainerProps {
-  /** Whether the timeline is open */
-  isOpen: boolean
   /** Function to handle metrics timeline */
   onMetricsTimeline: (type: string) => void
-  /** Function to toggle the override temporal modal */
-  onToggleOverrideTemporalModal: (open: boolean) => void
-  /** Function to toggle the timeline */
-  onToggleTimeline: (open: boolean) => void
 }
 
-export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
+export const TimelineContainer: React.FC<TimelineContainerProps> = ({ onMetricsTimeline }) => {
   const location = useLocation()
   const {
     pathname = ''
   } = location
 
-  const {
-    isOpen,
-    onMetricsTimeline,
-    onToggleOverrideTemporalModal,
-    onToggleTimeline
-  } = props
+  const [isOpen, setIsOpen] = useState(true)
 
   const collectionsMetadata = useEdscStore(getCollectionsMetadata)
   const focusedCollectionId = useEdscStore(getCollectionId)
@@ -91,8 +68,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
       collectionMetadata={collectionMetadata}
       isOpen={isOpen}
       onMetricsTimeline={onMetricsTimeline}
-      onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
-      onToggleTimeline={onToggleTimeline}
+      onToggleTimeline={setIsOpen}
       pathname={pathname}
       projectCollectionsIds={projectCollectionsIds}
       showOverrideModal={isProjectPage}
@@ -100,4 +76,4 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)
+export default connect(null, mapDispatchToProps)(TimelineContainer)

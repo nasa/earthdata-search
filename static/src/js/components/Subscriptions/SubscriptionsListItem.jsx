@@ -10,8 +10,14 @@ import moment from 'moment'
 import Button from '../Button/Button'
 import { SubscriptionsQueryList } from '../SubscriptionsList/SubscriptionsQueryList'
 
-import './SubscriptionsListItem.scss'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+import { MODAL_NAMES } from '../../constants/modalNames'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
+
+import './SubscriptionsListItem.scss'
 
 const dateFormat = getApplicationConfig().temporalDateFormatFull
 
@@ -20,9 +26,10 @@ export const SubscriptionsListItem = ({
   hasNullCmrQuery,
   subscription,
   subscriptionType,
-  onDeleteSubscription,
-  onToggleEditSubscriptionModal
+  onDeleteSubscription
 }) => {
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
   const {
     collectionConceptId,
     creationDate,
@@ -96,11 +103,13 @@ export const SubscriptionsListItem = ({
           label="Edit Subscription"
           onClick={
             () => {
-              onToggleEditSubscriptionModal({
-                isOpen: true,
-                subscriptionConceptId: conceptId,
-                type: subscriptionType
-              })
+              setOpenModal(
+                MODAL_NAMES.EDIT_SUBSCRIPTION,
+                {
+                  subscriptionConceptId: conceptId,
+                  subscriptionType
+                }
+              )
             }
           }
         >
@@ -124,7 +133,6 @@ export const SubscriptionsListItem = ({
 SubscriptionsListItem.propTypes = {
   hasNullCmrQuery: PropTypes.bool.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
-  onToggleEditSubscriptionModal: PropTypes.func.isRequired,
   exactlyMatchingSubscriptions: PropTypes.arrayOf(
     PropTypes.shape({
       conceptId: PropTypes.string

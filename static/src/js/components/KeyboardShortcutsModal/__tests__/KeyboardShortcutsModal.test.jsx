@@ -1,113 +1,110 @@
-import React from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen, waitFor } from '@testing-library/react'
 
-import Modal from 'react-bootstrap/Modal'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
 
-import EDSCModal from '../../EDSCModal/EDSCModal'
-import KeyboardShortcutsModal from '../KeyboardShortcutsModal'
+import KeyboardShortcutsModal, { keyboardShortcutsList } from '../KeyboardShortcutsModal'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-const windowEventMap = {}
-const documentEventMap = {}
-
-beforeEach(() => {
-  jest.clearAllTimers()
-  jest.clearAllMocks()
-
-  window.addEventListener = jest.fn((event, cb) => {
-    windowEventMap[event] = cb
-  })
-
-  window.removeEventListener = jest.fn()
-
-  document.addEventListener = jest.fn((event, cb) => {
-    documentEventMap[event] = cb
-  })
-
-  document.removeEventListener = jest.fn()
+const setup = setupTest({
+  Component: KeyboardShortcutsModal,
+  defaultZustandState: {
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.KEYBOARD_SHORTCUTS,
+        setOpenModal: jest.fn()
+      }
+    }
+  }
 })
 
-const setup = (visibility) => {
-  const props = {
-    isOpen: visibility,
-    onToggleKeyboardShortcutsModal: jest.fn()
-  }
-
-  const enzymeWrapper = mount(<KeyboardShortcutsModal {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
 describe('KeyboardShortcutsModal component', () => {
-  test('initial state of modal', () => {
-    const { enzymeWrapper } = setup(false)
-    expect(enzymeWrapper.find(EDSCModal).props().isOpen).toEqual(false)
+  test('does not render when modal is closed', () => {
+    setup({
+      overrideZustandState: {
+        ui: {
+          modals: {
+            openModal: null
+          }
+        }
+      }
+    })
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  test('when modal is visible', () => {
-    const { enzymeWrapper } = setup(true)
-    expect(enzymeWrapper.find(EDSCModal).props().isOpen).toEqual(true)
+  test('should render a Modal', () => {
+    setup()
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
 
-  test('modal should be centered', () => {
-    const { enzymeWrapper } = setup(true)
-    expect(enzymeWrapper.find(Modal).props().centered).toEqual(true)
+  test('should render a title', () => {
+    setup()
+
+    expect(screen.getByText('Keyboard Shortcuts')).toBeInTheDocument()
   })
 
-  test('modal shouldn\'t be empty', () => {
-    const { enzymeWrapper } = setup(true)
-    expect(enzymeWrapper.find('kbd').length).not.toEqual(0)
-  })
+  test('should render the keyboard shortcuts list', () => {
+    setup()
 
-  test('modal should have a close button', () => {
-    const { enzymeWrapper } = setup(true)
-    expect(enzymeWrapper.find('button').length).not.toEqual(0)
+    Object.keys(keyboardShortcutsList).forEach((key) => {
+      const value = keyboardShortcutsList[key]
+
+      const element = getByTextWithMarkup(`${key}:${value}`)
+      expect(element).toBeInTheDocument()
+    })
   })
 })
 
 describe('KeyboardShortcutsModal actions', () => {
-  test('keyboard action for displaying the modal', () => {
-    const { props } = setup(false)
-    const preventDefaultMock = jest.fn()
-    const stopPropagationMock = jest.fn()
-    windowEventMap.keyup({
-      key: '?',
-      tagName: 'input',
-      type: 'keyup',
-      preventDefault: preventDefaultMock,
-      stopPropagation: stopPropagationMock
+  describe('when the user presses the ? key while the modal is not open', () => {
+    test('the modal opens', async () => {
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          ui: {
+            modals: {
+              openModal: null
+            }
+          }
+        }
+      })
+
+      await user.keyboard('?')
+
+      await waitFor(() => {
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      })
+
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(
+        MODAL_NAMES.KEYBOARD_SHORTCUTS
+      )
     })
 
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledTimes(1)
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledWith(true)
-  })
+    describe('when the user presses the ? key while the modal is open', () => {
+      test('the modal opens', async () => {
+        const { user, zustandState } = setup()
 
-  test('keyboard action for closing the modal by pressing ?', () => {
-    const { props } = setup(true)
-    const preventDefaultMock = jest.fn()
-    const stopPropagationMock = jest.fn()
-    windowEventMap.keyup({
-      key: '?',
-      tagName: 'input',
-      type: 'keyup',
-      preventDefault: preventDefaultMock,
-      stopPropagation: stopPropagationMock
+        await user.keyboard('?')
+
+        await waitFor(() => {
+          expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+      })
     })
 
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledTimes(1)
-    expect(props.onToggleKeyboardShortcutsModal).toHaveBeenCalledWith(false)
-  })
+    describe('when the clicking the close button on the modal', () => {
+      test('calls the `setOpenModal` function with null', async () => {
+        const { user, zustandState } = setup()
 
-  test('closing the modal by pressing Close button', () => {
-    const { enzymeWrapper } = setup(true)
-    enzymeWrapper.find('button').simulate('click')
+        const closeButton = screen.getByRole('button')
+        await user.click(closeButton)
 
-    expect(enzymeWrapper.props().onToggleKeyboardShortcutsModal).toHaveBeenCalledTimes(1)
-    expect(enzymeWrapper.props().onToggleKeyboardShortcutsModal).toHaveBeenCalledWith(false)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+      })
+    })
   })
 })

@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react'
 
 import SearchForm from '../SearchForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => (
   <div>Temporal Selection</div>
@@ -16,7 +17,7 @@ jest.mock('../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay', () 
   <div>Advanced Search Display</div>
 )))
 
-jest.mock('../../../containers/SpatialDisplayContainer/SpatialDisplayContainer', () => jest.fn(() => (
+jest.mock('../../SpatialDisplay/SpatialDisplay', () => jest.fn(() => (
   <div>Spatial Display</div>
 )))
 
@@ -30,10 +31,15 @@ jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', (
 
 const setup = setupTest({
   Component: SearchForm,
-  defaultProps: {
-    onClearFilters: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn(),
-    selectedRegion: {}
+  defaultZustandState: {
+    query: {
+      clearFilters: jest.fn()
+    },
+    ui: {
+      modals: {
+        setOpenModal: jest.fn()
+      }
+    }
   }
 })
 
@@ -51,26 +57,28 @@ describe('SearchForm component', () => {
   })
 
   test('should call onClearFilters when the Clear Button is clicked', async () => {
-    const { user, props } = setup()
+    const { user, zustandState } = setup()
 
-    const clearButton = screen.getByRole('button', { name: /clear all search filters/i })
+    const clearButton = screen.getByRole('button', { name: 'Clear all search filters' })
     await user.click(clearButton)
 
-    expect(props.onClearFilters).toHaveBeenCalledTimes(1)
-    expect(props.onClearFilters).toHaveBeenCalledWith()
+    expect(zustandState.query.clearFilters).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.clearFilters).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'click'
+    }))
   })
 
   describe('advanced search button', () => {
     test('fires the action to open the advanced search modal', async () => {
-      const { user, props } = setup()
+      const { user, zustandState } = setup()
 
       const advancedSearchButton = screen.getByRole('button', { name: /show advanced search options/i })
       expect(advancedSearchButton).toBeInTheDocument()
 
       await user.click(advancedSearchButton)
 
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.ADVANCED_SEARCH)
     })
   })
 })

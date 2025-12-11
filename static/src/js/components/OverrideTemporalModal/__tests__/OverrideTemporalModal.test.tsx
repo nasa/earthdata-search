@@ -2,13 +2,10 @@ import { screen } from '@testing-library/react'
 
 import OverrideTemporalModal from '../OverrideTemporalModal'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import { MODAL_NAMES } from '../../../constants/modalNames'
 
 const setup = setupTest({
   Component: OverrideTemporalModal,
-  defaultProps: {
-    isOpen: true,
-    onToggleOverrideTemporalModal: jest.fn()
-  },
   defaultZustandState: {
     query: {
       collection: {
@@ -24,14 +21,34 @@ const setup = setupTest({
         end: 1548979199999,
         start: 1546300800000
       }
+    },
+    ui: {
+      modals: {
+        openModal: MODAL_NAMES.OVERRIDE_TEMPORAL,
+        setOpenModal: jest.fn()
+      }
     }
   }
 })
 
 describe('OverrideTemporalModal component', () => {
+  test('does not render when modal is closed', () => {
+    setup({
+      overrideZustandState: {
+        ui: {
+          modals: {
+            openModal: null
+          }
+        }
+      }
+    })
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   describe('when the temporal search is selected', () => {
     test('the callback fires correctly', async () => {
-      const { props, user, zustandState } = setup()
+      const { user, zustandState } = setup()
 
       const button = await screen.findByLabelText('Use Temporal Constraint')
       await user.click(button)
@@ -46,14 +63,14 @@ describe('OverrideTemporalModal component', () => {
         }
       })
 
-      expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 
   describe('when the focused date is selected', () => {
     test('the callback fires correctly', async () => {
-      const { props, user, zustandState } = setup()
+      const { user, zustandState } = setup()
 
       const button = await screen.findByLabelText('Use Focused Time Span')
       await user.click(button)
@@ -68,8 +85,8 @@ describe('OverrideTemporalModal component', () => {
         }
       })
 
-      expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(false)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 })

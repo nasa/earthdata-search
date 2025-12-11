@@ -25,7 +25,6 @@ function setup(overrideProps) {
     },
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
-    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
     onUpdateSubscriptionDisabledFields: jest.fn(),
     subscriptions: [],

@@ -18,6 +18,7 @@ import {
   UrsProfile,
   ShapefileRequestParams
 } from '../types/sharedTypes'
+import { ModalName } from '../constants/modalNames'
 
 export type CollectionSlice = {
   /**
@@ -1055,9 +1056,44 @@ export type TimelineSlice = {
   }
 }
 
+/** The modal data for the deprecate parameters modal */
+type DeprecateParametersModalData = {
+  /** The deprecated URL parameters */
+  deprecatedUrlParams: string[]
+}
+
+/** The modal data for the edit subscription modal */
+type EditSubscriptionModalData = {
+  /** The subscription concept ID */
+  subscriptionConceptId: string
+  /** The subscription type */
+  subscriptionType: string
+}
+
+/** The data associated with the currently open modal */
+type ModalData = DeprecateParametersModalData | EditSubscriptionModalData
+
 export type UiSlice = {
   /** The UI Slice of the store */
   ui: {
+    map: {
+      /** Flag to show the spatial mbr warning */
+      displaySpatialMbrWarning: boolean
+      /** Function to set the displaySpatialMbrWarning value */
+      setDisplaySpatialMbrWarning: (displaySpatialMbrWarning: boolean) => void
+      /** Flag to show the map drawing new layer */
+      drawingNewLayer: string | boolean
+      /** Function to set the mapDrawingNewLayer value */
+      setDrawingNewLayer: (drawingNewLayer: string | boolean) => void
+    }
+    modals: {
+      /** The currently open modal */
+      openModal: ModalName | null
+      /** The data associated with the currently open modal */
+      modalData?: ModalData
+      /** Function to set the currently open modal and its data */
+      setOpenModal: (modalName: ModalName | null, modalData?: ModalData) => void
+    }
     panels: {
       /** Width of the panels */
       panelsWidth: number

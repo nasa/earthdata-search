@@ -18,7 +18,6 @@ const setup = setupTest({
   Component: SwodlrStatusItem,
   defaultProps: {
     defaultOpen: true,
-    onToggleAboutCSDAModal: jest.fn(),
     retrievalCollection: {
       collectionMetadata: {
         directDistributionInformation: {},
@@ -68,7 +67,7 @@ describe('SwodlrStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup()
+      setup()
 
       expect(OrderStatusItem).toHaveBeenCalledTimes(1)
       expect(OrderStatusItem).toHaveBeenCalledWith({
@@ -79,7 +78,6 @@ describe('SwodlrStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.SWODLR.COMPLETE,
         orderStatus: 'complete',
@@ -195,7 +193,7 @@ describe('SwodlrStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -227,7 +225,6 @@ describe('SwodlrStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.SWODLR.CREATING,
         orderStatus: 'creating',
@@ -254,7 +251,7 @@ describe('SwodlrStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -293,7 +290,6 @@ describe('SwodlrStatusItem', () => {
         hasStatus: true,
         messageIsError: false,
         messages: [],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.SWODLR.IN_PROGRESS,
         orderStatus: 'in_progress',
@@ -320,7 +316,7 @@ describe('SwodlrStatusItem', () => {
         percentDone: '100'
       })
 
-      const { props } = setup({
+      setup({
         overrideProps: {
           retrievalCollection: {
             collectionMetadata: {
@@ -359,7 +355,6 @@ describe('SwodlrStatusItem', () => {
         hasStatus: true,
         messageIsError: true,
         messages: ['Mock Error'],
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         opened: true,
         orderInfo: STATUS_MESSAGES.SWODLR.FAILED,
         orderStatus: 'failed',

@@ -38,7 +38,6 @@ const setup = setupTest({
   }],
   defaultProps: {
     onMetricsRelatedCollection: jest.fn(),
-    onToggleAboutCSDAModal: jest.fn(),
     onChangePath: jest.fn()
   },
   defaultZustandState: {
@@ -128,13 +127,12 @@ describe('OrderStatus component', () => {
 
   describe('when the retrieval has loaded', () => {
     test('renders and OrderStatusList', async () => {
-      const { props } = setup()
+      setup()
 
       expect(await screen.findByText('Download Status')).toBeInTheDocument()
 
       expect(OrderStatusList).toHaveBeenCalledTimes(1)
       expect(OrderStatusList).toHaveBeenCalledWith({
-        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         retrievalCollections: [{
           collectionId: 'TEST_COLLECTION_111',
           collectionMetadata: {

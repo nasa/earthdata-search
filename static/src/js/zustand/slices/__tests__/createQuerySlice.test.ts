@@ -16,8 +16,7 @@ import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
 jest.mock('../../../actions', () => ({
   getCollections: jest.fn(),
   getSearchGranules: jest.fn(),
-  removeSubscriptionDisabledFields: jest.fn(),
-  toggleDrawingNewLayer: jest.fn()
+  removeSubscriptionDisabledFields: jest.fn()
 }))
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -662,6 +661,7 @@ describe('createQuerySlice', () => {
         }
 
         state.shapefile.clearShapefile = jest.fn()
+        state.ui.map.setDrawingNewLayer = jest.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -672,13 +672,14 @@ describe('createQuerySlice', () => {
       const updatedState = useEdscStore.getState()
       const {
         query: updatedQuery,
-        shapefile
+        shapefile,
+        ui
       } = updatedState
 
       expect(updatedQuery.collection.spatial).toEqual(initialState.collection.spatial)
 
-      expect(actions.toggleDrawingNewLayer).toHaveBeenCalledTimes(1)
-      expect(actions.toggleDrawingNewLayer).toHaveBeenCalledWith(false)
+      expect(ui.map.setDrawingNewLayer).toHaveBeenCalledTimes(1)
+      expect(ui.map.setDrawingNewLayer).toHaveBeenCalledWith(false)
 
       expect(shapefile.clearShapefile).toHaveBeenCalledTimes(1)
       expect(shapefile.clearShapefile).toHaveBeenCalledWith()

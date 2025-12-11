@@ -5,19 +5,18 @@ import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalCon
 // @ts-expect-error: This file does not have types
 import ExternalLink from '../ExternalLink/ExternalLink'
 
-interface AboutCSDAModalProps {
-  /** Whether the modal is open. */
-  isOpen: boolean
-  /** Function to toggle the modal's open state. */
-  onToggleAboutCSDAModal: (isOpen: boolean) => void
-}
+import useEdscStore from '../../zustand/useEdscStore'
+import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
-export const AboutCSDAModal: React.FC<AboutCSDAModalProps> = ({
-  isOpen,
-  onToggleAboutCSDAModal
-}) => {
+export const AboutCSDAModal = () => {
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.ABOUT_CSDA))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+
+  if (!isOpen) return null
+
   const onModalClose = () => {
-    onToggleAboutCSDAModal(false)
+    setOpenModal(null)
   }
 
   const body = (

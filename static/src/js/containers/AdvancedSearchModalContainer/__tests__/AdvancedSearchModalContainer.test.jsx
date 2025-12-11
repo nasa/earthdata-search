@@ -2,12 +2,7 @@ import React from 'react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import actions from '../../../actions'
-import {
-  AdvancedSearchModalContainer,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../AdvancedSearchModalContainer'
+import { AdvancedSearchModalContainer } from '../AdvancedSearchModalContainer'
 import AdvancedSearchModal from '../../../components/AdvancedSearchModal/AdvancedSearchModal'
 
 jest.mock('../../../components/AdvancedSearchModal/AdvancedSearchModal', () => jest.fn(() => <div />))
@@ -15,7 +10,6 @@ jest.mock('../../../components/AdvancedSearchModal/AdvancedSearchModal', () => j
 const setup = setupTest({
   Component: AdvancedSearchModalContainer,
   defaultProps: {
-    isOpen: true,
     isValid: true,
     errors: {},
     fields: [],
@@ -27,39 +21,8 @@ const setup = setupTest({
     setFieldTouched: jest.fn(),
     touched: {},
     values: {},
-    validateForm: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn()
+    validateForm: jest.fn()
   }
-})
-
-describe('mapDispatchToProps', () => {
-  test('onToggleAdvancedSearchModal calls actions.toggleAdvancedSearchModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleAdvancedSearchModal')
-
-    mapDispatchToProps(dispatch).onToggleAdvancedSearchModal({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      ui: {
-        advancedSearchModal: {
-          isOpen: false
-        }
-      }
-    }
-
-    const expectedState = {
-      isOpen: false
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
 })
 
 describe('AdvancedSearchModalContainer component', () => {
@@ -73,9 +36,7 @@ describe('AdvancedSearchModalContainer component', () => {
       handleBlur: expect.any(Function),
       handleChange: expect.any(Function),
       handleSubmit: expect.any(Function),
-      isOpen: true,
       isValid: true,
-      onToggleAdvancedSearchModal: expect.any(Function),
       resetForm: expect.any(Function),
       setFieldTouched: expect.any(Function),
       setFieldValue: expect.any(Function),

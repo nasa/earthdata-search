@@ -22,9 +22,11 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
+import { MODAL_NAMES } from '../../constants/modalNames'
 import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import './SpatialSelectionDropdown.scss'
 
@@ -34,7 +36,6 @@ type SpatialSelectionDropdownProps = {
   }
   onChangeUrl: (url: string) => void
   onChangePath: (path: string) => void
-  onToggleShapefileUploadModal: (show: boolean) => void
   onMetricsSpatialSelection: (data: { item: string }) => void
 }
 
@@ -43,11 +44,11 @@ const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
     searchParams,
     onChangeUrl,
     onChangePath,
-    onToggleShapefileUploadModal,
     onMetricsSpatialSelection
   } = props
 
   const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
+  const setOpenModal = useEdscStore(setOpenModalFunction)
 
   const location = useLocation()
   const { pathname } = location
@@ -78,7 +79,7 @@ const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
       setStartDrawing(spatialType)
     } else {
       if (spatialType === 'file') {
-        onToggleShapefileUploadModal(true)
+        setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)
 
         return
       }

@@ -12,27 +12,22 @@ export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
     (path) => dispatch(actions.changePath(path)),
   onMetricsRelatedCollection:
-    (data) => dispatch(metricsRelatedCollection(data)),
-  onToggleAboutCSDAModal:
-    (state) => dispatch(actions.toggleAboutCSDAModal(state))
+    (data) => dispatch(metricsRelatedCollection(data))
 })
 
 export const OrderStatusContainer = ({
   onChangePath,
-  onMetricsRelatedCollection,
-  onToggleAboutCSDAModal
+  onMetricsRelatedCollection
 }) => (
   <OrderStatus
     onChangePath={onChangePath}
     onMetricsRelatedCollection={onMetricsRelatedCollection}
-    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
   />
 )
 
 OrderStatusContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired,
-  onMetricsRelatedCollection: PropTypes.func.isRequired,
-  onToggleAboutCSDAModal: PropTypes.func.isRequired
+  onMetricsRelatedCollection: PropTypes.func.isRequired
 }
 
 export default connect(null, mapDispatchToProps)(OrderStatusContainer)
