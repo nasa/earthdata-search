@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import moment from 'moment'
-import { isEmpty } from 'lodash-es'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -56,14 +55,12 @@ const TemporalSelectionDropdown = ({
   const isHomePage = pathname === routes.HOME
 
   useEffect(() => {
-    if (!isEmpty(temporalSearch)) {
-      setTemporal(temporalSearch)
+    setTemporal(temporalSearch)
 
-      setDatesSelected({
-        start: !!temporalSearch.startDate,
-        end: !!temporalSearch.endDate
-      })
-    }
+    setDatesSelected({
+      start: !!temporalSearch.startDate,
+      end: !!temporalSearch.endDate
+    })
   }, [temporalSearch])
 
   /**

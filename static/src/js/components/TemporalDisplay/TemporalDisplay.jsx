@@ -26,7 +26,11 @@ export const TemporalDisplay = () => {
   const handleRemove = (() => {
     changeQuery({
       collection: {
-        temporal: {}
+        temporal: {
+          startDate: '',
+          endDate: '',
+          isRecurring: false
+        }
       }
     })
   })
