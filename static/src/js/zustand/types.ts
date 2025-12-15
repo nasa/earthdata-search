@@ -700,6 +700,8 @@ export type ProjectCollections = {
     /** The project collection ID */
     [key: string]: ProjectCollection
   }
+  /** Loading state of project collections */
+  isLoading: boolean
 }
 
 /** The project granule results */

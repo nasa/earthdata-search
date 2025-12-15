@@ -21,12 +21,15 @@ import Button from '../Button/Button'
 import ExternalLink from '../ExternalLink/ExternalLink'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import RadioList from '../FormFields/RadioList/RadioList'
+import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 import SwodlrForm from './SwodlrForm'
 
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import useEdscStore from '../../zustand/useEdscStore'
+
+import { accessMethodsSkeleton } from './skeleton'
 
 import './AccessMethod.scss'
 
@@ -68,6 +71,8 @@ const AccessMethod = ({
   }))
 
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
+
+  const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
     form,
@@ -680,6 +685,21 @@ const AccessMethod = ({
 
   const harmonyMethods = accessMethodsByType.Harmony
 
+  const accessMethodsList = (radioList.length === 0 && hasHarmony === false)
+    ? (
+      <Alert
+        variant="warning"
+      >
+        No access methods exist for this collection.
+      </Alert>
+    )
+    : getAccessMethodTypes(
+      hasHarmony,
+      radioList,
+      collectionId,
+      selectedAccessMethod
+    )
+
   return (
     <div className="access-method">
       <ProjectPanelSection
@@ -688,20 +708,18 @@ const AccessMethod = ({
       >
         <div className="access-method__radio-list">
           {
-            radioList.length === 0 && hasHarmony === false
-              ? (
-                <Alert
-                  variant="warning"
-                >
-                  No access methods exist for this collection.
-                </Alert>
-              )
-              : getAccessMethodTypes(
-                hasHarmony,
-                radioList,
-                collectionId,
-                selectedAccessMethod
-              )
+            isLoading ? (
+              <Skeleton
+                shapes={accessMethodsSkeleton}
+                containerStyle={
+                  {
+                    height: '6rem',
+                    width: '100%'
+                  }
+                }
+                variant="dark"
+              />
+            ) : accessMethodsList
           }
         </div>
       </ProjectPanelSection>

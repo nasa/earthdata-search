@@ -1,3 +1,14 @@
+export const breadcrumbSkeleton = [
+  {
+    shape: 'rectangle',
+    left: 0,
+    top: 0,
+    height: 22,
+    width: 280,
+    radius: 2
+  }
+]
+
 export const titleSkeleton = [
   {
     shape: 'rectangle',

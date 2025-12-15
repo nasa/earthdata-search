@@ -93,7 +93,8 @@ const processResults = (results: ProjectGranuleResults['results']) => {
 export const initialState = {
   collections: {
     allIds: [],
-    byId: {}
+    byId: {},
+    isLoading: false
   },
   isSubmitted: false,
   isSubmitting: false
@@ -208,6 +209,8 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
       // If the user isn't logged in, return null
       if (!edlToken) return null
+
+      set((state) => { state.project.collections.isLoading = true })
 
       const {
         defaultCmrSearchTags,
@@ -462,6 +465,8 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           title: 'Something went wrong fetching collection metadata'
         })
       }
+
+      set((state) => { state.project.collections.isLoading = false })
 
       return null
     },

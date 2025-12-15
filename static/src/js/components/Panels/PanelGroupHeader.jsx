@@ -11,7 +11,11 @@ import {
 import { upperFirst } from 'lodash-es'
 import { humanizeSortKey } from '../../util/humanizedQueryValueFormatters'
 
-import { headerMetaSkeleton, titleSkeleton } from './skeleton'
+import {
+  breadcrumbSkeleton,
+  headerMetaSkeleton,
+  titleSkeleton
+} from './skeleton'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -93,76 +97,89 @@ export const PanelGroupHeader = ({
             data-testid="panel-group-header__breadcrumbs"
           >
             {
-              breadcrumbs.map((crumb, i) => {
-                const key = `breadcrumb__${i}`
-                const {
-                  icon = '',
-                  title = '',
-                  link = {},
-                  onClick = null,
-                  options = {}
-                } = crumb
-
-                const {
-                  pathname = '',
-                  search = ''
-                } = link
-
-                const {
-                  shrink = false
-                } = options
-
-                const className = classNames([
-                  'panel-group-header__breadcrumb',
-                  {
-                    'panel-group-header__breadcrumb--shrink': shrink
-                  }
-                ])
-
-                if (!link || !pathname) {
-                  return (
-                    <Button
-                      key={`${key}_portal-link_${panelGroupId}`}
-                      type="button"
-                      bootstrapVariant="link"
-                      className={className}
-                      icon={icon}
-                      label={title}
-                      onClick={onClick}
-                      dataTestId="breadcrumb-button"
-                    >
-                      {title}
-                    </Button>
-                  )
-                }
-
-                return (
-                  <Fragment key={`${key}_portal-link_${panelGroupId}`}>
-                    <PortalLinkContainer
-                      className={className}
-                      type="button"
-                      bootstrapVariant="link"
-                      icon={icon}
-                      label={title}
-                      onClick={onClick}
-                      to={
-                        {
-                          pathname,
-                          search
-                        }
-                      }
-                      dataTestId="breadcrumb-button"
-                    >
-                      {title}
-                    </PortalLinkContainer>
+              headerLoading ? (
+                <Skeleton
+                  className="panel-group-header__breadcrumbs-skeleton"
+                  containerStyle={
                     {
-                      i < breadcrumbs.length - 1 && (
-                        <span className="panel-group-header__breadcrumb-divider">/</span>
-                      )
+                      height: '1rem',
+                      width: '100%'
                     }
-                  </Fragment>
-                )
-              })
+                  }
+                  shapes={breadcrumbSkeleton}
+                />
+              ) : (
+                breadcrumbs.map((crumb, i) => {
+                  const key = `breadcrumb__${i}`
+                  const {
+                    icon = '',
+                    title = '',
+                    link = {},
+                    onClick = null,
+                    options = {}
+                  } = crumb
+
+                  const {
+                    pathname = '',
+                    search = ''
+                  } = link
+
+                  const {
+                    shrink = false
+                  } = options
+
+                  const className = classNames([
+                    'panel-group-header__breadcrumb',
+                    {
+                      'panel-group-header__breadcrumb--shrink': shrink
+                    }
+                  ])
+
+                  if (!link || !pathname) {
+                    return (
+                      <Button
+                        key={`${key}_portal-link_${panelGroupId}`}
+                        type="button"
+                        bootstrapVariant="link"
+                        className={className}
+                        icon={icon}
+                        label={title}
+                        onClick={onClick}
+                        dataTestId="breadcrumb-button"
+                      >
+                        {title}
+                      </Button>
+                    )
+                  }
+
+                  return (
+                    <Fragment key={`${key}_portal-link_${panelGroupId}`}>
+                      <PortalLinkContainer
+                        className={className}
+                        type="button"
+                        bootstrapVariant="link"
+                        icon={icon}
+                        label={title}
+                        onClick={onClick}
+                        to={
+                          {
+                            pathname,
+                            search
+                          }
+                        }
+                        dataTestId="breadcrumb-button"
+                      >
+                        {title}
+                      </PortalLinkContainer>
+                      {
+                        i < breadcrumbs.length - 1 && (
+                          <span className="panel-group-header__breadcrumb-divider">/</span>
+                        )
+                      }
+                    </Fragment>
+                  )
+                })
+              )
             }
           </nav>
         )
