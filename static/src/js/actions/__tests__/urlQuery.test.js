@@ -47,7 +47,8 @@ describe('updateStore', () => {
       project: {
         collections: {
           allIds: [],
-          byId: {}
+          byId: {},
+          isLoading: false
         }
       },
       query: {
@@ -116,7 +117,8 @@ describe('updateStore', () => {
     expect(project).toEqual(expect.objectContaining({
       collections: {
         allIds: [],
-        byId: {}
+        byId: {},
+        isLoading: false
       }
     }))
 
