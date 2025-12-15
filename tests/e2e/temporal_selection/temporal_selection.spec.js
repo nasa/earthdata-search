@@ -80,6 +80,20 @@ test.describe('Temporal Dropdown Behavior', () => {
       await expect(page.getByText(mockEndDate)).toBeVisible()
     })
 
+    test('typing in the year and pressing tab auto-fills in the rest of the date', async ({ page }) => {
+      // Type in year for start date
+      await page.getByRole('textbox', { name: 'Start Date' }).click()
+      await page.getByRole('textbox', { name: 'Start Date' }).fill('2020')
+      await page.getByRole('textbox', { name: 'Start Date' }).press('Tab')
+
+      // Type in year for end date
+      await page.getByRole('textbox', { name: 'End Date' }).fill('2020')
+      await page.getByRole('textbox', { name: 'End Date' }).press('Tab')
+
+      await expect(page.getByRole('textbox', { name: 'Start Date' })).toHaveValue('2020-01-01 00:00:00')
+      await expect(page.getByRole('textbox', { name: 'End Date' })).toHaveValue('2020-12-31 23:59:59')
+    })
+
     test.describe('when user selects Use Recurring Date', () => {
       test('default values for start and end are filled in if none are provided', async ({ page }) => {
         // Mock current date

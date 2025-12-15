@@ -270,6 +270,11 @@ const TemporalSelectionDropdown = ({
       startDate: existingStartDate
     } = temporal
 
+    setDatesSelected((prev) => ({
+      ...prev,
+      start: true
+    }))
+
     if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: `Set Start Date - ${metricType}`,
@@ -291,11 +296,6 @@ const TemporalSelectionDropdown = ({
       // eslint-disable-next-line no-underscore-dangle
       startDate: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
     }))
-
-    setDatesSelected((prevDatesSelected) => ({
-      ...prevDatesSelected,
-      start: newStartDate.isValid()
-    }))
   }
 
   /**
@@ -309,6 +309,11 @@ const TemporalSelectionDropdown = ({
       endDate: existingEndDate,
       isRecurring: existingIsRecurring
     } = temporal
+
+    setDatesSelected((prev) => ({
+      ...prev,
+      end: true
+    }))
 
     if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
@@ -330,11 +335,6 @@ const TemporalSelectionDropdown = ({
       ...prevTemporal,
       // eslint-disable-next-line no-underscore-dangle
       endDate: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
-    }))
-
-    setDatesSelected((prevDatesSelected) => ({
-      ...prevDatesSelected,
-      end: newEndDate.isValid()
     }))
   }
 
