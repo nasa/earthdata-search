@@ -97,89 +97,94 @@ export const PanelGroupHeader = ({
             data-testid="panel-group-header__breadcrumbs"
           >
             {
-              headerLoading ? (
-                <Skeleton
-                  className="panel-group-header__breadcrumbs-skeleton"
-                  containerStyle={
-                    {
-                      height: '1rem',
-                      width: '100%'
-                    }
+              breadcrumbs.map((crumb, i) => {
+                const key = `breadcrumb__${i}`
+                const {
+                  icon = '',
+                  title = '',
+                  link = {},
+                  onClick = null,
+                  options = {},
+                  isLoading = false
+                } = crumb
+
+                const {
+                  pathname = '',
+                  search = ''
+                } = link
+
+                const {
+                  shrink = false
+                } = options
+
+                const className = classNames([
+                  'panel-group-header__breadcrumb',
+                  {
+                    'panel-group-header__breadcrumb--shrink': shrink
                   }
-                  shapes={breadcrumbSkeleton}
-                />
-              ) : (
-                breadcrumbs.map((crumb, i) => {
-                  const key = `breadcrumb__${i}`
-                  const {
-                    icon = '',
-                    title = '',
-                    link = {},
-                    onClick = null,
-                    options = {}
-                  } = crumb
+                ])
 
-                  const {
-                    pathname = '',
-                    search = ''
-                  } = link
-
-                  const {
-                    shrink = false
-                  } = options
-
-                  const className = classNames([
-                    'panel-group-header__breadcrumb',
-                    {
-                      'panel-group-header__breadcrumb--shrink': shrink
-                    }
-                  ])
-
-                  if (!link || !pathname) {
-                    return (
-                      <Button
-                        key={`${key}_portal-link_${panelGroupId}`}
-                        type="button"
-                        bootstrapVariant="link"
-                        className={className}
-                        icon={icon}
-                        label={title}
-                        onClick={onClick}
-                        dataTestId="breadcrumb-button"
-                      >
-                        {title}
-                      </Button>
-                    )
-                  }
-
+                if (isLoading) {
                   return (
-                    <Fragment key={`${key}_portal-link_${panelGroupId}`}>
-                      <PortalLinkContainer
-                        className={className}
-                        type="button"
-                        bootstrapVariant="link"
-                        icon={icon}
-                        label={title}
-                        onClick={onClick}
-                        to={
-                          {
-                            pathname,
-                            search
-                          }
+                    <Skeleton
+                      className="panel-group-header__breadcrumbs-skeleton"
+                      dataTestId="breadcrumbs-skeleton"
+                      containerStyle={
+                        {
+                          height: '1rem',
+                          width: '100%'
                         }
-                        dataTestId="breadcrumb-button"
-                      >
-                        {title}
-                      </PortalLinkContainer>
-                      {
-                        i < breadcrumbs.length - 1 && (
-                          <span className="panel-group-header__breadcrumb-divider">/</span>
-                        )
                       }
-                    </Fragment>
+                      key={`${title}_breadcrumb-skeleton`}
+                      shapes={breadcrumbSkeleton}
+                    />
                   )
-                })
-              )
+                }
+
+                if (!link || !pathname) {
+                  return (
+                    <Button
+                      key={`${key}_portal-link_${panelGroupId}`}
+                      type="button"
+                      bootstrapVariant="link"
+                      className={className}
+                      icon={icon}
+                      label={title}
+                      onClick={onClick}
+                      dataTestId="breadcrumb-button"
+                    >
+                      {title}
+                    </Button>
+                  )
+                }
+
+                return (
+                  <Fragment key={`${key}_portal-link_${panelGroupId}`}>
+                    <PortalLinkContainer
+                      className={className}
+                      type="button"
+                      bootstrapVariant="link"
+                      icon={icon}
+                      label={title}
+                      onClick={onClick}
+                      to={
+                        {
+                          pathname,
+                          search
+                        }
+                      }
+                      dataTestId="breadcrumb-button"
+                    >
+                      {title}
+                    </PortalLinkContainer>
+                    {
+                      i < breadcrumbs.length - 1 && (
+                        <span className="panel-group-header__breadcrumb-divider">/</span>
+                      )
+                    }
+                  </Fragment>
+                )
+              })
             }
           </nav>
         )

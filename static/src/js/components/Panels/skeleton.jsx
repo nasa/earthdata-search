@@ -2,8 +2,8 @@ export const breadcrumbSkeleton = [
   {
     shape: 'rectangle',
     left: 0,
-    top: 0,
-    height: 22,
+    top: 6,
+    height: 12,
     width: 280,
     radius: 2
   }

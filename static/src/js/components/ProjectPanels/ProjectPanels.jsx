@@ -418,7 +418,8 @@ const ProjectPanels = ({
           [
             {
               title,
-              onClick: () => onChangePanel(`1.${index}.0`)
+              onClick: () => onChangePanel(`1.${index}.0`),
+              isLoading
             }
           ]
         }
