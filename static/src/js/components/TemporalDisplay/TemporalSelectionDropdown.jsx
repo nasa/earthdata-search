@@ -74,28 +74,16 @@ const TemporalSelectionDropdown = ({
    * Sets the current start and end dates values in the Redux store
    */
   const onApplyClick = () => {
-    const {
-      endDate: existingEndDate,
-      isRecurring: existingIsRecurring,
-      startDate: existingStartDate
-    } = temporal
-
-    const newTemporal = {
-      startDate: existingStartDate || moment.utc('1960-01-01').toISOString(),
-      endDate: existingEndDate || moment().utc().toISOString(),
-      isRecurring: existingIsRecurring
-    }
-
     if (onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: 'Apply Temporal Filter',
-        value: JSON.stringify(newTemporal)
+        value: JSON.stringify(temporal)
       })
     }
 
     const newParams = {
       collection: {
-        temporal: newTemporal
+        temporal
       }
     }
 
