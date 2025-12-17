@@ -239,6 +239,7 @@ export const decodeUrlParams = (paramString) => {
   }
   collectionQuery.hasGranulesOrCwic = decodeHelp(params, 'hasGranulesOrCwic')
   collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
+  collectionQuery.nlpQuery = decodeHelp(params, 'nlpSearch')
   collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
   collectionQuery.spatial = spatial
@@ -304,7 +305,6 @@ export const decodeUrlParams = (paramString) => {
 
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
   const portalId = decodePortal(params)
-  const nlpQuery = decodeHelp(params, 'nlpSearch')
 
   return {
     earthdataEnvironment,
@@ -319,8 +319,7 @@ export const decodeUrlParams = (paramString) => {
     project,
     query: {
       ...query,
-      collection: collectionQuery,
-      nlpCollection: nlpQuery ? { query: nlpQuery } : null
+      collection: collectionQuery
     },
     selectedRegion,
     shapefile,

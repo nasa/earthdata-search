@@ -2,6 +2,9 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
 
+import commonHeaders from './__mocks__/common_collections.headers.json'
+import nlpCollections from './__mocks__/nlp/nlp_collections.body.json'
+
 const screenshotClip = {
   x: 950,
   y: 90,
@@ -17,56 +20,56 @@ test.describe('Map: NLP spatial rendering', () => {
     })
 
     // Intercept NLP search endpoint
-    await page.route('**/search/nlp/query.json**', (route) => {
-      const response = {
-        data: {
-          queryInfo: {
-            spatial: {
-              geoJson: {
-                type: 'Polygon',
-                coordinates: [[
-                  [-107, 25],
-                  [-93, 25],
-                  [-93, 37],
-                  [-107, 37],
-                  [-107, 25]
-                ]]
-              },
-              geoLocation: 'Texas'
-            }
-          },
-          metadata: {
-            feed: {
-              entry: []
-            }
-          }
+    await page.route(/nlp\/query\.json/, async (route) => {
+      const request = route.request()
+
+      // Match the request body to ensure it's the expected NLP query
+      const requestBody = request.postData()
+
+      expect(requestBody).toEqual('embedding=false&q=rainfall in DC&search_params[include_facets]=v2&search_params[include_granule_counts]=true&search_params[include_has_granules]=true&search_params[include_tags]=edsc.*,opensearch.granule.osdd&search_params[page_size]=20&search_params[sort_key][]=has_granules_or_cwic&search_params[sort_key][]=-score&search_params[sort_key][]=-create-data-date&search_params[has_granules_or_cwic]=true&search_params[page_num]=1')
+
+      await route.fulfill({
+        json: nlpCollections,
+        headers: {
+          ...commonHeaders,
+          'cmr-hits': '17'
         }
-      }
-
-      route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify(response)
       })
     })
 
-    // Mock timeline call
-    await page.route('**/search/granules/timeline', (route) => {
-      route.fulfill({
-        body: JSON.stringify([])
+    await page.route(/shapefiles$/, async (route) => {
+      await route.fulfill({
+        json: { shapefile_id: '1' },
+        headers: { 'content-type': 'application/json; charset=utf-8' }
       })
     })
+
+    await page.goto('/')
   })
 
   test('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/\d+/)
+    await page.getByRole('textbox', { name: 'Type to search for data' }).fill('rainfall in DC')
 
-    await page.goto('/search?nlp=texas')
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
 
+    await page.getByRole('button', { name: 'Search' }).click()
+
+    // Wait for the map to load
     await initialMapPromise
 
+    // Displays a modal
+    await expect(page.getByTestId('edsc-modal__title')).toHaveText('Shape file has too many points')
+
+    // Closes the modal
+    await page.getByLabel('Close').click()
+
     // NLP label is shown in the Spatial section
-    await expect(page.getByText('Texas', { exact: true })).toBeVisible()
+    await expect(page.getByText('Shape File:DC.json(30.21 KB)')).toBeVisible()
+
+    // Check collection results count
+    await expect(page.getByText('Showing 17 of 17 matching collections')).toBeVisible()
+
+    await expect(page).toHaveURL(/search\?q=rainfall&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-77\.\d+&zoom=10\.\d+/)
 
     // Allow time for MOVEMAP and render
     await page.waitForTimeout(250)

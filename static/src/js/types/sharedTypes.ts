@@ -39,6 +39,14 @@ export type PolygonString = string
 /** The coordinate system used for spatial data */
 export type CoordinateSystem = 'GEODETIC' | 'CARTESIAN'
 
+/** A GeoJSON shapefile object */
+export type GeoJSONShapefile = {
+  /** The GeoJSON spatial data */
+  geoJson: Geometry
+  /** The location name from NLP */
+  geoLocation: string
+}
+
 /** The spatial object */
 export interface Spatial {
   /** The bounding box coordinates, if applied */
@@ -51,6 +59,8 @@ export interface Spatial {
   point?: PointString[]
   /** The polygon coordinates, if applied */
   polygon?: PolygonString[]
+  /** The shapefile object */
+  shapefile?: FeatureCollection
 }
 
 /** The latitude of a coordinate */
@@ -393,6 +403,10 @@ export type RequestResponseData = EmptyObject | [] | TimelineResponseData[] | Gr
 export type CollectionRequestParams = {
   /** The collection concept id */
   conceptId: string
+  /** The shapefile spatial data */
+  shapefile?: FeatureCollection
+  /** Additional request parameters */
+  [key: string]: unknown
 }
 
 export type ShapefileFile = FeatureCollection & {
@@ -550,24 +564,6 @@ export type SubscriptionResponse = {
   count: number
   /** The list of subscriptions */
   items: Subscription[]
-}
-
-/** NLP Collection Query Parameters */
-export type NlpCollectionQuery = {
-  /** The original search query string */
-  query: string
-  /** The spatial data extracted from NLP */
-  spatial?: {
-    /** The GeoJSON spatial data */
-    geoJson: Geometry
-    /** The location name from NLP */
-    geoLocation: string
-  }
-  /** The temporal data extracted from NLP */
-  temporal?: {
-    startDate: string
-    endDate: string
-  }
 }
 
 /**

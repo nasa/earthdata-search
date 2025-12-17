@@ -1,6 +1,10 @@
 import { test, expect } from 'playwright-test-coverage'
 
+import {
+  interceptUnauthenticatedCollections
+} from '../../../../../support/interceptUnauthenticatedCollections'
 import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuery'
+import { matchesFormData } from '../../../../../support/matchesFormData'
 import { setupTests } from '../../../../../support/setupTests'
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
@@ -226,22 +230,21 @@ test.describe('Path /search/granules/collection-details', () => {
       const cmrHits = 12345
       const granuleHits = 0
 
-      await page.route(/collections.json/, async (route) => {
-        const query = route.request().postData()
-        expect(query).toEqual('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score&sort_key[]=-create-data-date')
-
-        await route.fulfill({
-          json: collectionsBody.body,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
+      await interceptUnauthenticatedCollections({
+        page,
+        body: collectionsBody,
+        headers: commonHeaders
       })
 
       await page.route(/granules.json/, async (route) => {
-        const query = route.request().postData()
-        expect(query).toBe('echo_collection_id=C1240222820-ECHO_REST&page_num=1&page_size=20&sort_key=-start_date')
+        const granulesFormData = {
+          echo_collection_id: 'C1240222820-ECHO_REST',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
+
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         await route.fulfill({
           json: associatedDoisGranulesBody.body,
@@ -261,7 +264,7 @@ test.describe('Path /search/granules/collection-details', () => {
         }
       })
 
-      await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
+      await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat')
 
       // Ensure title renders on page correctly
       testCollectionTitle(page, 'Mapping Example for UMM-C 1.16.1')
@@ -297,22 +300,21 @@ test.describe('Path /search/granules/collection-details', () => {
       const cmrHits = 8180
       const granuleHits = 6338
 
-      await page.route(/collections.json/, async (route) => {
-        const query = route.request().postData()
-        expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-        await route.fulfill({
-          json: collectionsBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
+      await interceptUnauthenticatedCollections({
+        page,
+        body: collectionsBody,
+        headers: commonHeaders
       })
 
       await page.route(/granules.json/, async (route) => {
-        const query = route.request().postData()
-        expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
+        const granulesFormData = {
+          echo_collection_id: 'C1996546500-GHRC_DAAC',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
+
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         await route.fulfill({
           json: reformattingsGranulesBody,
@@ -396,38 +398,39 @@ test.describe('Path /search/granules/collection-details', () => {
   })
 
   test.describe('When collection has spatial', () => {
+    test.beforeEach(async ({ page }) => {
+      const granuleHits = 6338
+
+      await interceptUnauthenticatedCollections({
+        page,
+        body: collectionsBody,
+        headers: commonHeaders
+      })
+
+      await page.route(/granules.json/, async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1996546500-GHRC_DAAC',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
+
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
+
+        await route.fulfill({
+          json: reformattingsGranulesBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': granuleHits.toString()
+          }
+        })
+      })
+    })
+
     // Bounding box, line, point, and polygon
     test.describe('with a bounding box', () => {
       test('displays the box spatial on the minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
-        const cmrHits = 8180
-        const granuleHits = 6338
-
-        await page.route(/collections.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          await route.fulfill({
-            json: collectionsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
-
-        await page.route(/granules.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
-
-          await route.fulfill({
-            json: reformattingsGranulesBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': granuleHits.toString()
-            }
-          })
-        })
 
         await page.route(/graphql.*\/api/, async (route) => {
           if (isGetCollectionQuery(route, conceptId)) {
@@ -450,34 +453,6 @@ test.describe('Path /search/granules/collection-details', () => {
     test.describe('with a point', () => {
       test('displays the point spatial, as a circle around it on the minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
-        const cmrHits = 8180
-        const granuleHits = 6338
-
-        await page.route(/collections.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          await route.fulfill({
-            json: collectionsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
-
-        await page.route(/granules.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
-
-          await route.fulfill({
-            json: reformattingsGranulesBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': granuleHits.toString()
-            }
-          })
-        })
 
         await page.route(/graphql.*\/api/, async (route) => {
           if (isGetCollectionQuery(route, conceptId)) {
@@ -500,34 +475,6 @@ test.describe('Path /search/granules/collection-details', () => {
     test.describe('with lines', () => {
       test('displays the lines spatial on the minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
-        const cmrHits = 8180
-        const granuleHits = 6338
-
-        await page.route(/collections.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          await route.fulfill({
-            json: collectionsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
-
-        await page.route(/granules.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
-
-          await route.fulfill({
-            json: reformattingsGranulesBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': granuleHits.toString()
-            }
-          })
-        })
 
         await page.route(/graphql.*\/api/, async (route) => {
           if (isGetCollectionQuery(route, conceptId)) {
@@ -550,34 +497,6 @@ test.describe('Path /search/granules/collection-details', () => {
     test.describe('with polygons', () => {
       test('display the polygons minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
-        const cmrHits = 8180
-        const granuleHits = 6338
-
-        await page.route(/collections.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          await route.fulfill({
-            json: collectionsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
-
-        await page.route(/granules.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
-
-          await route.fulfill({
-            json: reformattingsGranulesBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': granuleHits.toString()
-            }
-          })
-        })
 
         await page.route(/graphql.*\/api/, async (route) => {
           if (isGetCollectionQuery(route, conceptId)) {
@@ -601,34 +520,6 @@ test.describe('Path /search/granules/collection-details', () => {
       test.describe('when a polygon is small', () => {
         test('draw it as a circle on the minimap @screenshot', async ({ page }) => {
           const conceptId = 'C1996546500-GHRC_DAAC'
-          const cmrHits = 8180
-          const granuleHits = 6338
-
-          await page.route(/collections.json/, async (route) => {
-            const query = route.request().postData()
-            expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            await route.fulfill({
-              json: collectionsBody,
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
-            })
-          })
-
-          await page.route(/granules.json/, async (route) => {
-            const query = route.request().postData()
-            expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
-
-            await route.fulfill({
-              json: reformattingsGranulesBody,
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': granuleHits.toString()
-              }
-            })
-          })
 
           await page.route(/graphql.*\/api/, async (route) => {
             if (isGetCollectionQuery(route, conceptId)) {
@@ -651,34 +542,6 @@ test.describe('Path /search/granules/collection-details', () => {
     test.describe('with multiple shape types', () => {
       test('displays all the shapes on the minimap and the label @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
-        const cmrHits = 8180
-        const granuleHits = 6338
-
-        await page.route(/collections.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          await route.fulfill({
-            json: collectionsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
-
-        await page.route(/granules.json/, async (route) => {
-          const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
-
-          await route.fulfill({
-            json: reformattingsGranulesBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': granuleHits.toString()
-            }
-          })
-        })
 
         await page.route(/graphql.*\/api/, async (route) => {
           if (isGetCollectionQuery(route, conceptId)) {

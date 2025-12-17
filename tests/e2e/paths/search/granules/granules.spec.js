@@ -7,6 +7,7 @@ import {
 import { isGetCollectionQuery } from '../../../../support/isGetCollectionQuery'
 import { isGetGranuleQuery } from '../../../../support/isGetGranuleQuery'
 import { login } from '../../../../support/login'
+import { defaultCollectionFormData, matchesFormData } from '../../../../support/matchesFormData'
 import { setupTests } from '../../../../support/setupTests'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
@@ -130,6 +131,12 @@ test.describe('Path /search/granules', () => {
     })
 
     await page.clock.setFixedTime(new Date('2021-06-01'))
+
+    await interceptUnauthenticatedCollections({
+      page,
+      body: collectionsBody,
+      headers: collectionsHeaders
+    })
   })
 
   test.describe('When the path is loaded with only the collectionId', () => {
@@ -137,11 +144,15 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059170
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(noParamsGranulesBody),
@@ -190,11 +201,17 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          'options[readable_granule_name][pattern]': 'true',
+          page_num: '1',
+          page_size: '20',
+          'readable_granule_name[]': 'S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGranulesBody),
@@ -245,11 +262,16 @@ test.describe('Path /search/granules', () => {
         const conceptId = 'C1214470488-ASF'
         const cmrHits = 17231
 
-        await page.route('**/search/granules.json', (route) => {
-          const request = route.request()
-          const body = request.postData()
+        await page.route('**/search/granules.json', async (route) => {
+          const granulesFormData = {
+            echo_collection_id: 'C1214470488-ASF',
+            page_num: '1',
+            page_size: '20',
+            sort_key: '-start_date',
+            temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+          }
 
-          expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&sort_key=-start_date')
+          expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
           route.fulfill({
             body: JSON.stringify(temporalGranulesBody),
@@ -303,11 +325,16 @@ test.describe('Path /search/granules', () => {
         const conceptId = 'C1214470488-ASF'
         const cmrHits = 72946
 
-        await page.route('**/search/granules.json', (route) => {
-          const request = route.request()
-          const body = request.postData()
+        await page.route('**/search/granules.json', async (route) => {
+          const granulesFormData = {
+            echo_collection_id: 'C1214470488-ASF',
+            page_num: '1',
+            page_size: '20',
+            sort_key: '-start_date',
+            temporal: '2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31'
+          }
 
-          expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31&sort_key=-start_date')
+          expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
           route.fulfill({
             body: JSON.stringify(recurringTemporalGranulesBody),
@@ -364,11 +391,16 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 0
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          browse_only: 'true',
+          echo_collection_id: 'C1214470488-ASF',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(browseOnlyGranulesBody),
@@ -419,11 +451,16 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059331
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          online_only: 'true',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(onlineOnlyGranulesBody),
@@ -474,11 +511,17 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 227
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          'orbit_number[min]': '30000',
+          'orbit_number[max]': '30005',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(orbitNumberGranulesBody),
@@ -529,11 +572,17 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1251101828-GES_DISC'
       const cmrHits = 6078
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1251101828-GES_DISC',
+          'equator_crossing_longitude[min]': '-5',
+          'equator_crossing_longitude[max]': '5',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGranulesBody),
@@ -584,11 +633,16 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1251101828-GES_DISC'
       const cmrHits = 31
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1251101828-GES_DISC',
+          equator_crossing_date: '2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGranulesBody),
@@ -639,11 +693,15 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 1059866
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-end_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-end_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(sortKeyGranulesBody),
@@ -694,11 +752,16 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 15600
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          cloud_cover: '10,15',
+          echo_collection_id: 'C194001210-LPDAAC_ECS',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(cloudCoverGranulesBody),
@@ -749,11 +812,16 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275357
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          day_night_flag: 'BOTH',
+          echo_collection_id: 'C194001210-LPDAAC_ECS',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(dayNightGranulesBody),
@@ -803,11 +871,17 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 868
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C194001210-LPDAAC_ECS',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date',
+          'two_d_coordinate_system[name]': 'MODIS Tile SIN',
+          'two_d_coordinate_system[coordinates]': '0-0:0-0,15-15:15-15'
+        }
 
-        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(gridCoordsGranulesBody),
@@ -872,11 +946,17 @@ test.describe('Path /search/granules', () => {
         })
       })
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          'options[readable_granule_name][pattern]': 'true',
+          page_num: '1',
+          page_size: '20',
+          'readable_granule_name[]': 'S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(timelineGranulesBody),
@@ -931,11 +1011,15 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C194001210-LPDAAC_ECS',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(focusedGranuleGranulesBody),
@@ -992,18 +1076,14 @@ test.describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
-      await interceptUnauthenticatedCollections({
-        page,
-        body: collectionsBody,
-        headers: collectionsHeaders
-      })
-
       // Intercept granules.json request
       await page.route('**/search/granules.json', async (route) => {
-        const request = route.request()
-        const body = request.postData()
-
-        if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date') {
+        if (await matchesFormData(route.request(), {
+          echo_collection_id: 'C194001210-LPDAAC_ECS',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        })) {
           await route.fulfill({
             body: JSON.stringify(projectGranuleGranulesBody),
             headers: {
@@ -1012,7 +1092,13 @@ test.describe('Path /search/granules', () => {
               'cmr-hits': cmrHits.toString()
             }
           })
-        } else if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS&sort_key=-start_date') {
+        } else if (await matchesFormData(route.request(), {
+          'concept_id[]': 'G2058417402-LPDAAC_ECS',
+          echo_collection_id: 'C194001210-LPDAAC_ECS',
+          page_num: '1',
+          page_size: '1',
+          sort_key: '-start_date'
+        })) {
           await route.fulfill({
             body: JSON.stringify(projectGranuleProjectGranuleBody),
             headers: {
@@ -1026,12 +1112,12 @@ test.describe('Path /search/granules', () => {
 
       // Intercept granules timeline request
       await page.route('**/search/granules/timeline', async (route) => {
-        const request = route.request()
-        const body = request.postData()
-
-        if (body) {
-          expect(body).toBe('end_date=2310-01-01T00:00:00.000Z&interval=year&start_date=1710-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
-        }
+        expect(await matchesFormData(route.request(), {
+          'concept_id[]': 'C194001210-LPDAAC_ECS',
+          end_date: '2310-01-01T00:00:00.000Z',
+          interval: 'year',
+          start_date: '1710-01-01T00:00:00.000Z'
+        })).toEqual(true)
 
         await route.fulfill({
           body: JSON.stringify(projectGranuleTimelineBody),
@@ -1087,11 +1173,15 @@ test.describe('Path /search/granules', () => {
     test('loads with all granules in the project', async ({ page }) => {
       const cmrHits = 15073
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
+      await page.route('**/search/granules.json', async (route) => {
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          page_num: '1',
+          page_size: '20',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(noParamsGranulesBody),
@@ -1149,10 +1239,12 @@ test.describe('Path /search/granules', () => {
       await login(page, context)
 
       await page.route('**/collections.json', async (route) => {
-        const request = route.request()
-        const body = request.postData()
+        const collectionsFormData = {
+          ...defaultCollectionFormData,
+          'point[]': '-77.04119,38.80585'
+        }
 
-        expect(body).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
+        expect(await matchesFormData(route.request(), collectionsFormData)).toEqual(true)
 
         await route.fulfill({
           body: JSON.stringify(commonBody),
@@ -1161,10 +1253,15 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/granules.json', async (route) => {
-        const request = route.request()
-        const body = request.postData()
+        const granulesFormData = {
+          echo_collection_id: 'C1214470488-ASF',
+          page_num: '1',
+          page_size: '20',
+          'point[]': '-77.04119,38.80585',
+          sort_key: '-start_date'
+        }
 
-        expect(body).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         await route.fulfill({
           body: JSON.stringify(subscriptionGranulesBody),

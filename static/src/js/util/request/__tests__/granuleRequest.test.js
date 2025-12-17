@@ -47,6 +47,7 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'point',
       'polygon',
       'readable_granule_name',
+      'shapefile',
       'sort_key',
       'temporal',
       'two_d_coordinate_system'

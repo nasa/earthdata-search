@@ -1,4 +1,4 @@
-import qs from 'qs'
+import { defaultCollectionFormData, matchesFormData } from './matchesFormData'
 
 /**
  * Intercepts the default unauthenticated request and return the body and headers provided
@@ -14,18 +14,18 @@ export const interceptUnauthenticatedCollections = async ({
 }) => {
   // Intercept collections call before every test, its generic and doesn't change between tests
   await page.route(/search\/collections.json/, async (route) => {
-    const query = route.request().postData()
+    const request = route.request()
 
-    if (includeDefault && query === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date') {
+    if (includeDefault && await matchesFormData(request, defaultCollectionFormData)) {
       await route.fulfill({
         json: body,
         headers
       })
+
+      return
     }
 
     if (additionalRequests.length) {
-      const parsedQuery = qs.parse(query, { ignoreQueryPrefix: true })
-
       await Promise.all(additionalRequests.map(async (additionalRequest) => {
         const {
           body: additionalBody,
@@ -33,7 +33,7 @@ export const interceptUnauthenticatedCollections = async ({
           paramCheck
         } = additionalRequest
 
-        if (paramCheck(parsedQuery)) {
+        if (await paramCheck(request)) {
           await route.fulfill({
             json: additionalBody,
             headers: additionalHeaders

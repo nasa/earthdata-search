@@ -14,7 +14,6 @@ import {
   unselectedShapefileStyle
 } from './styles'
 import { crsProjections } from './crs'
-import getQueryFromShapefileFeature from './getQueryFromShapefileFeature'
 import projectionCodes from '../../constants/projectionCodes'
 import simplifySpatial from '../geometry/simplifySpatial'
 
@@ -71,6 +70,7 @@ const simplifyShape = ({
  * @param {String} params.projectionCode - The current map projection
  * @param {Boolean} params.shapefileAdded - If the shapefile was just added
  * @param {Boolean} params.showMbr - If the spatial polygon warning should be displayed
+ * @param {Boolean} [params.updateQuery=true] - Whether to update the spatial query
  * @param {Object} params.vectorSource - The source to draw the shapefile on
  */
 const drawShapefile = ({
@@ -85,6 +85,7 @@ const drawShapefile = ({
   projectionCode,
   shapefileAdded,
   showMbr,
+  updateQuery = true,
   vectorSource
 }: {
   /** If a new layer is being drawn */
@@ -110,6 +111,8 @@ const drawShapefile = ({
   shapefileAdded: boolean
   /** If the spatial polygon warning should be displayed */
   showMbr: boolean
+  /** Whether to update the spatial query */
+  updateQuery?: boolean
   /** The source to draw the shapefile on */
   vectorSource: VectorSource
 }) => {
@@ -209,12 +212,21 @@ const drawShapefile = ({
   if (!selectedFeatures && numFeatures === 1) {
     const feature = features[0]
 
-    // Add the feature's geometry as the spatial query
-    onChangeQuery({
-      collection: {
-        spatial: getQueryFromShapefileFeature(feature)
-      }
+    const newGeoJson = new GeoJSON().writeFeaturesObject(features, {
+      rightHanded: true,
+      featureProjection: crsProjections[projectionCode]
     })
+
+    // Add the feature's geometry as the spatial query
+    if (shapefileAdded && updateQuery) {
+      onChangeQuery({
+        collection: {
+          spatial: {
+            shapefile: newGeoJson
+          }
+        }
+      })
+    }
 
     // Set the selectedFeatures in the shapefile
     const edscId = feature.get('edscId')

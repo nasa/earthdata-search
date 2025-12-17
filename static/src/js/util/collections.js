@@ -43,7 +43,8 @@ export const prepareCollectionParams = (state) => {
     circle,
     line,
     point,
-    polygon
+    polygon,
+    shapefile
   } = spatial
 
   const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
@@ -102,6 +103,7 @@ export const prepareCollectionParams = (state) => {
     point,
     polygon,
     serviceType,
+    shapefile,
     sortKey,
     tagKey,
     temporalString,
@@ -165,6 +167,7 @@ export const buildCollectionSearchParams = (params) => {
     project,
     provider,
     serviceType,
+    shapefile,
     sortKey: selectedSortKey,
     spatialKeyword,
     standardProduct,
@@ -267,6 +270,7 @@ export const buildCollectionSearchParams = (params) => {
     provider,
     scienceKeywordsH: facetsToSend.science_keywords_h,
     serviceType,
+    shapefile,
     spatialKeyword,
     standardProduct,
     tagKey,

@@ -1,6 +1,10 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuery'
+import {
+  interceptUnauthenticatedCollections
+} from '../../../../../support/interceptUnauthenticatedCollections'
+import { matchesFormData } from '../../../../../support/matchesFormData'
 import { setupTests } from '../../../../../support/setupTests'
 
 import collectionsBody from './__mocks__/collections.body.json'
@@ -23,7 +27,6 @@ test.describe('Path /search/granules/granule-details', () => {
   test('granule loads correctly', async ({ page }) => {
     const collectionId = 'C1214470488-ASF'
     const granuleId = 'G1287941210-ASF'
-    const cmrHits = 8180
     const granuleHits = 1074221
 
     await page.route(/graphql.*\/api/, (route) => {
@@ -40,22 +43,21 @@ test.describe('Path /search/granules/granule-details', () => {
       }
     })
 
-    await page.route(/collections.json/, (route) => {
-      // Check that the request bodies match up
-      expect(route.request().postData()).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-      route.fulfill({
-        json: collectionsBody,
-        headers: {
-          ...commonHeaders,
-          'cmr-hits': cmrHits.toString()
-        }
-      })
+    await interceptUnauthenticatedCollections({
+      page,
+      body: collectionsBody,
+      headers: commonHeaders
     })
 
-    await page.route(/granules.json/, (route) => {
-      // Check that the request bodies match up
-      expect(route.request().postData()).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
+    await page.route(/granules.json/, async (route) => {
+      const granulesFormData = {
+        echo_collection_id: 'C1214470488-ASF',
+        page_num: '1',
+        page_size: '20',
+        sort_key: '-start_date'
+      }
+
+      expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
       route.fulfill({
         json: granulesBody,

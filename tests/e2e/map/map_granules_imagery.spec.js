@@ -17,6 +17,7 @@ import gibsCollectionsBody from './__mocks__/gibs/collections.body.json'
 import gibsGranuleGraphQlBody from './__mocks__/gibs/granule_graphql.body.json'
 import gibsGranulesBody from './__mocks__/gibs/granules.body.json'
 import gibsGranulesHeaders from './__mocks__/gibs/granules.headers.json'
+import { matchesFormData } from '../../support/matchesFormData'
 
 const screenshotClip = {
   x: 950,
@@ -53,9 +54,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         })
 
         await page.route(/search\/granules.json/, async (route) => {
-          const query = route.request().postData()
+          const granulesFormData = {
+            echo_collection_id: 'C2930727817-LARC_CLOUD',
+            'options[readable_granule_name][pattern]': 'true',
+            page_num: '1',
+            page_size: '20',
+            'readable_granule_name[]': [
+              'TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc',
+              'TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc'
+            ],
+            sort_key: '-start_date'
+          }
 
-          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&sort_key=-start_date`) {
+          if (await matchesFormData(route.request(), granulesFormData)) {
             await route.fulfill({
               json: gibsGranulesBody,
               headers: gibsGranulesHeaders
@@ -141,9 +152,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         })
 
         await page.route(/search\/granules.json/, async (route) => {
-          const query = route.request().postData()
+          const granulesFormData = {
+            echo_collection_id: 'C2930727817-LARC_CLOUD',
+            'options[readable_granule_name][pattern]': 'true',
+            page_num: '1',
+            page_size: '20',
+            'readable_granule_name[]': [
+              'TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc',
+              'TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc'
+            ],
+            sort_key: '-start_date'
+          }
 
-          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&sort_key=-start_date`) {
+          if (await matchesFormData(route.request(), granulesFormData)) {
             await route.fulfill({
               json: gibsGranulesBody,
               headers: gibsGranulesHeaders
@@ -323,9 +344,16 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         })
 
         await page.route(/search\/granules.json/, async (route) => {
-          const query = route.request().postData()
+          const granulesFormData = {
+            echo_collection_id: 'C3091256524-NSIDC_CPRD',
+            'options[readable_granule_name][pattern]': 'true',
+            page_num: '1',
+            page_size: '20',
+            'readable_granule_name[]': 'MYD10A1.A2025014.h22v16.061.2025016045026.hdf',
+            sort_key: '-start_date'
+          }
 
-          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=MYD10A1.A2025014.h22v16.061.2025016045026.hdf&sort_key=-start_date`) {
+          if (await matchesFormData(route.request(), granulesFormData)) {
             await route.fulfill({
               json: antarcticGranules,
               headers: {
@@ -380,9 +408,16 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         })
 
         await page.route(/search\/granules.json/, async (route) => {
-          const query = route.request().postData()
+          const granulesFormData = {
+            echo_collection_id: 'C3091256524-NSIDC_CPRD',
+            'options[readable_granule_name][pattern]': 'true',
+            page_num: '1',
+            page_size: '20',
+            'readable_granule_name[]': 'MYD10A1.A2025301.h11v02.061.2025303033037.hdf',
+            sort_key: '-start_date'
+          }
 
-          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=MYD10A1.A2025301.h11v02.061.2025303033037.hdf&sort_key=-start_date`) {
+          if (await matchesFormData(route.request(), granulesFormData)) {
             await route.fulfill({
               json: arcticGranules,
               headers: {

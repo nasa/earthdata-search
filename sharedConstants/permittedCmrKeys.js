@@ -38,6 +38,7 @@ export const collectionRequestPermittedCmrKeys = [
   'provider',
   'science_keywords_h',
   'service_type',
+  'shapefile',
   'sort_key',
   'spatial_keyword',
   'standard_product',
@@ -67,6 +68,7 @@ export const granuleRequestPermittedCmrKeys = [
   'point',
   'polygon',
   'readable_granule_name',
+  'shapefile',
   'sort_key',
   'temporal',
   'two_d_coordinate_system'

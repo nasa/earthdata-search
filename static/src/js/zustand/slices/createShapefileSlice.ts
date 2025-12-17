@@ -1,3 +1,5 @@
+import GeoJSON from 'ol/format/GeoJSON'
+
 import { ImmerStateCreator, ShapefileSlice } from '../types'
 
 import ShapefileRequest from '../../util/request/shapefileRequest'
@@ -32,7 +34,18 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
     fetchShapefile: async (shapefileId) => {
       const zustandState = get()
 
-      zustandState.shapefile.setLoading()
+      const {
+        query,
+        shapefile
+      } = zustandState
+      const { changeQuery } = query
+      const {
+        selectedFeatures,
+        setLoading,
+        updateShapefile
+      } = shapefile
+
+      setLoading()
 
       const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
@@ -41,7 +54,36 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
 
       requestObject.fetch(shapefileId)
         .then((responseObject) => {
-          get().shapefile.updateShapefile(responseObject.data)
+          const { data } = responseObject
+          const { file } = data
+
+          updateShapefile({
+            ...data,
+            shapefileId
+          })
+
+          // Create a limited geojson file using the file and selectedFeatures
+          if (selectedFeatures && selectedFeatures.length > 0) {
+            const features = new GeoJSON().readFeatures(file)
+
+            const selectedFeaturesList = features.filter((featureItem) => {
+              const featureEdscId = featureItem.get('edscId')
+
+              return selectedFeatures.includes(featureEdscId)
+            })
+
+            const limitedGeoJson = new GeoJSON().writeFeaturesObject(selectedFeaturesList, {
+              rightHanded: true
+            })
+
+            changeQuery({
+              collection: {
+                spatial: {
+                  shapefile: limitedGeoJson
+                }
+              }
+            })
+          }
         })
         .catch((error) => {
           zustandState.errors.handleError({
@@ -55,9 +97,9 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
 
     saveShapefile: async (data) => {
       const {
+        file,
         filename: shapefileName,
-        size: shapefileSize,
-        file
+        size: shapefileSize
       } = data
 
       const zustandState = get()

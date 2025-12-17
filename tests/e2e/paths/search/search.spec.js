@@ -3,6 +3,9 @@ import { test, expect } from 'playwright-test-coverage'
 import { commafy } from '../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../static/src/js/util/pluralize'
 
+import {
+  interceptUnauthenticatedCollections
+} from '../../../support/interceptUnauthenticatedCollections'
 import { setupTests } from '../../../support/setupTests'
 
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
@@ -30,6 +33,8 @@ import spatialPolygonBody from './__mocks__/spatial_polygon.body.json'
 import temporalBody from './__mocks__/temporal.body.json'
 import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
+import { defaultCollectionFormData, matchesFormData } from '../../../support/matchesFormData'
+import { getShapefileFromRequest } from '../../../support/getShapefileFromRequest'
 
 const screenshotClip = {
   x: 950,
@@ -41,12 +46,10 @@ const screenshotClip = {
 const defaultCmrPageSize = 20
 
 /**
- * Test that the provided facet group is expanded and the others not
- * @param {String} facetGroup Name of the facet that should be expanded
+ * Test that the provided facet groups are expanded and the others not
+ * @param {Array<String>} expandedFacetGroups Array of facet group names that should be expanded
  */
-const testFacetGroupExistence = async (page, facetGroup) => {
-  await expect(page.getByTestId(`facet-${facetGroup}`)).toBeVisible()
-
+const testFacetGroupExistence = async (page, expandedFacetGroups) => {
   const facetGroups = [
     'features',
     'keywords',
@@ -60,9 +63,15 @@ const testFacetGroupExistence = async (page, facetGroup) => {
     'horizontal-data-resolution'
   ]
 
+  // Ensure all expandedFacetGroups are visible
+  await Promise.all(
+    expandedFacetGroups.map((group) => expect(page.getByTestId(`facet-${group}`)).toBeVisible())
+  )
+
+  // Ensure all other facet groups are not visible
   await Promise.all(
     facetGroups
-      .filter((group) => group !== facetGroup)
+      .filter((group) => !expandedFacetGroups.includes(group))
       .map((group) => expect(page.getByTestId(`facet-${group}`)).not.toBeVisible())
   )
 }
@@ -99,19 +108,10 @@ test.describe('Path /search', () => {
     test('loads correctly', async ({ page }) => {
       const cmrHits = 8098
 
-      await page.route('**/search/collections.json', (route, request) => {
-        if (request.method() === 'POST') {
-          const body = request.postData()
-          expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          route.fulfill({
-            body: JSON.stringify(commonBody),
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits
-            }
-          })
-        }
+      await interceptUnauthenticatedCollections({
+        page,
+        body: commonBody,
+        headers: commonHeaders
       })
 
       await page.goto('/search')
@@ -123,7 +123,7 @@ test.describe('Path /search', () => {
       await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
       // Ensure facet group bodies are shown correctly
-      await testFacetGroupExistence(page, 'features')
+      await testFacetGroupExistence(page, ['features'])
     })
   })
 
@@ -131,19 +131,22 @@ test.describe('Path /search', () => {
     test('loads with the keyword query populated', async ({ page }) => {
       const cmrHits = 1248
 
-      await page.route('**/search/collections.json', (route, request) => {
-        if (request.method() === 'POST') {
-          const body = request.postData()
-          expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=modis*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          route.fulfill({
-            body: JSON.stringify(keywordBody),
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits
-            }
+      await interceptUnauthenticatedCollections({
+        page,
+        body: commonBody,
+        headers: commonHeaders,
+        includeDefault: false,
+        additionalRequests: [{
+          body: keywordBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          },
+          paramCheck: async (request) => matchesFormData(request, {
+            ...defaultCollectionFormData,
+            keyword: 'modis*'
           })
-        }
+        }]
       })
 
       await page.goto('/search?q=modis')
@@ -155,7 +158,7 @@ test.describe('Path /search', () => {
       await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('modis')
 
       // Ensure facet group bodies are shown correctly
-      await testFacetGroupExistence(page, 'features')
+      await testFacetGroupExistence(page, ['features'])
     })
   })
 
@@ -164,19 +167,23 @@ test.describe('Path /search', () => {
       test('loads with the temporal query applied', async ({ page }) => {
         const cmrHits = 2434
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2021-01-01T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(temporalBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: temporalBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'options[temporal][limit_to_granules]': 'true',
+              temporal: '2020-01-01T00:00:00.000Z,2021-01-01T23:59:59.999Z'
             })
-          }
+          }]
         })
 
         await page.goto('/search?qt=2020-01-01T00%3A00%3A00.000Z%2C2021-01-01T23%3A59%3A59.999Z')
@@ -188,7 +195,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         const temporalInputs = page.locator('.filter-stack-contents__body')
         await expect(temporalInputs.first()).toHaveText('2020-01-01 00:00:00')
@@ -200,19 +207,23 @@ test.describe('Path /search', () => {
       test('loads with the temporal query applied', async ({ page }) => {
         const cmrHits = 5521
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2000-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z,1,31&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(temporalRecurringBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: temporalRecurringBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'options[temporal][limit_to_granules]': 'true',
+              temporal: '2000-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z,1,31'
             })
-          }
+          }]
         })
 
         await page.goto('/search?qt=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31')
@@ -224,7 +235,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         const temporalInputs = page.locator('.filter-stack-contents__body')
         await expect(temporalInputs.first()).toHaveText('01-01 00:00:00')
@@ -239,19 +250,22 @@ test.describe('Path /search', () => {
       test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5079
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=65.44171,4.33676&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(spatialPointBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: spatialPointBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'point[]': '65.44171,4.33676'
             })
-          }
+          }]
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -267,7 +281,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.33676,65.44171')
 
@@ -282,19 +296,22 @@ test.describe('Path /search', () => {
       test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5133
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=64.87748,1.3704,59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(spatialPolygonBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: spatialPolygonBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'polygon[]': '64.87748,1.3704,59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704'
             })
-          }
+          }]
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -310,7 +327,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
@@ -325,19 +342,22 @@ test.describe('Path /search', () => {
       test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5080
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=62.18209,2.22154,100000&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(spatialCircleBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: spatialCircleBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'circle[]': '62.18209,2.22154,100000'
             })
-          }
+          }]
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -353,7 +373,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('2.22154,62.18209')
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('100000')
@@ -369,19 +389,22 @@ test.describe('Path /search', () => {
       test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5209
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=5.02679,0.99949,32.8678,26.17555&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(spatialBoundingBoxBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: spatialBoundingBoxBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'bounding_box[]': '5.02679,0.99949,32.8678,26.17555'
             })
-          }
+          }]
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -397,7 +420,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('0.99949,5.02679')
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue('26.17555,32.8678')
@@ -445,20 +468,46 @@ test.describe('Path /search', () => {
           })
         })
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            // Const body = request.postData()
-            // TODO: This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. How do we only run this expect on the second run?
-            // expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704,59.34354,-9.21839&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: temporalBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => getShapefileFromRequest(request)
+              .then((shapefile) => {
+                const matches = shapefile === JSON.stringify({
+                  type: 'FeatureCollection',
+                  features: [{
+                    type: 'Feature',
+                    geometry: {
+                      type: 'Polygon',
+                      coordinates: [
+                        [
+                          [64.87748, 1.3704],
+                          [59.34354, -9.21839],
+                          [78.35163, -11.89902],
+                          [64.87748, 1.3704]
+                        ]
+                      ]
+                    },
+                    properties: {},
+                    id: 'simple-id'
+                  }]
+                })
 
-            route.fulfill({
-              body: JSON.stringify(spatialPolygonBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
-            })
-          }
+                expect(matches).toBe(true)
+
+                return matches
+              })
+              // This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. Ignore errors from the first call.
+              .catch(() => true)
+          }]
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -471,13 +520,13 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // URL has the polygon added from the shapefile
-        await expect(page).toHaveURL('search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&long=60')
+        await expect(page).toHaveURL('search?sf=123&long=60')
 
         // Keyword input is empty
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
@@ -495,19 +544,22 @@ test.describe('Path /search', () => {
       test('loads with the feature facet applied', async ({ page }) => {
         const cmrHits = 720
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(awsCloudBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: awsCloudBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              cloud_hosted: 'true'
             })
-          }
+          }]
         })
 
         await page.goto('/search?ff=Available%20in%20Earthdata%20Cloud')
@@ -524,7 +576,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
       })
     })
 
@@ -532,19 +584,22 @@ test.describe('Path /search', () => {
       test('loads with the feature facet applied', async ({ page }) => {
         const cmrHits = 233
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=esi&service_type[]=opendap&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            route.fulfill({
-              body: JSON.stringify(customizableBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: customizableBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'service_type[]': ['esi', 'opendap', 'harmony']
             })
-          }
+          }]
         })
 
         await page.goto('/search?ff=Customizable')
@@ -561,7 +616,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
       })
     })
 
@@ -569,19 +624,22 @@ test.describe('Path /search', () => {
       test('loads with the feature facet applied', async ({ page }) => {
         const cmrHits = 394
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date&tag_key[]=edsc.extra.serverless.gibs')
-
-            route.fulfill({
-              body: JSON.stringify(mapImageryBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: mapImageryBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'tag_key[]': 'edsc.extra.serverless.gibs'
             })
-          }
+          }]
         })
 
         await page.goto('/search?ff=Map%20Imagery')
@@ -598,7 +656,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
       })
     })
   })
@@ -608,22 +666,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 1
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h[0][topic]=Aerosols&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(keywordsBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: keywordsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'science_keywords_h[0][topic]': 'Aerosols'
             })
-          }
+          }]
         })
 
         await page.goto('/search?fst0=Aerosols')
@@ -643,10 +701,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'keywords'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-keywords').click()
         await expect(page.locator('label[title="Aerosols"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -657,22 +714,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 108
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&platforms_h[0][basis]=Aircraft&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(platformsBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: platformsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'platforms_h[0][basis]': 'Aircraft'
             })
-          }
+          }]
         })
 
         await page.goto('/search?fpb0=Aircraft')
@@ -692,10 +749,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'platforms'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-platforms').click()
         await expect(page.locator('label[title="AIRCRAFT"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -706,25 +762,25 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 104
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(instrumentsBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: instrumentsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'instrument_h[]': 'AIRS'
             })
-          }
+          }]
         })
 
-        await page.goto('/search?ffi=AIRS')
+        await page.goto('/search?fi=AIRS')
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -741,10 +797,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'instruments'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-instruments').click()
         await expect(page.locator('label[title="AIRS"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -755,22 +810,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 128
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&data_center_h[]=Alaska Satellite Facility&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(organizationsBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: organizationsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'data_center_h[]': 'Alaska Satellite Facility'
             })
-          }
+          }]
         })
 
         await page.goto('/search?fdc=Alaska%20Satellite%20Facility')
@@ -790,10 +845,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'organizations'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-organizations').click()
         await expect(page.locator('label[title="Alaska Satellite Facility"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -804,22 +858,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 175
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&project_h[]=ABoVE&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(projectsBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: projectsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'project_h[]': 'ABoVE'
             })
-          }
+          }]
         })
 
         await page.goto('/search?fpj=ABoVE')
@@ -839,10 +893,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'projects'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-projects').click()
         await expect(page.locator('label[title="ABoVE"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -853,22 +906,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 50
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h[]=0 - Raw Data&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(processingLevelsBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: processingLevelsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'processing_level_id_h[]': '0 - Raw Data'
             })
-          }
+          }]
         })
 
         await page.goto('/search?fl=0%20-%20Raw%20Data')
@@ -888,10 +941,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'processing-levels'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-processing-levels').click()
         await expect(page.locator('label[title="0 - Raw Data"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -902,22 +954,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 5
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h[]=ArcGIS&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(dataFormatBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: dataFormatBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'granule_data_format_h[]': 'ArcGIS'
             })
-          }
+          }]
         })
 
         await page.goto('/search?gdf=ArcGIS')
@@ -937,10 +989,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'data-format'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-data-format').click()
         await expect(page.locator('label[title="ArcGIS"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -951,22 +1002,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 69
 
-        await page.route('**/search/collections.json', async (route, request) => {
-          if (request.method() === 'POST') {
-            const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date&two_d_coordinate_system_name[]=CALIPSO')
-
-            // Delay the response to be more realistic to CMR
-            await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-            route.fulfill({
-              body: JSON.stringify(tilingSystemBody),
-              headers: {
-                ...commonHeaders,
-                'cmr-hits': cmrHits.toString()
-              }
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: tilingSystemBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'two_d_coordinate_system_name[]': 'CALIPSO'
             })
-          }
+          }]
         })
 
         await page.goto('/search?s2n=CALIPSO')
@@ -986,10 +1037,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'tiling-system'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-tiling-system').click()
         await expect(page.locator('label[title="CALIPSO"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -1000,20 +1050,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 41
 
-        await page.route('**/search/collections.json', async (route) => {
-          const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range[]=0 to 1 meter&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          // Delay the response to be more realistic to CMR
-          await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-          route.fulfill({
-            body: JSON.stringify(horizontalDataResolutionBody),
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: horizontalDataResolutionBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': cmrHits
-            }
-          })
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'horizontal_data_resolution_range[]': '0 to 1 meter'
+            })
+          }]
         })
 
         await page.goto('/search?hdr=0%20to%201%20meter')
@@ -1033,10 +1085,9 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features', 'horizontal-data-resolution'])
 
         // Ensure the facet is selected
-        await page.getByTestId('facet_group-horizontal-data-resolution').click()
         await expect(page.locator('label[title="0 to 1 meter"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -1047,20 +1098,22 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 11
 
-        await page.route('**/search/collections.json', async (route) => {
-          const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&latency[]=1 to 3 hours&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          // Delay the response to be more realistic to CMR
-          await new Promise((resolve) => { setTimeout(resolve, 1000) })
-
-          route.fulfill({
-            body: JSON.stringify(latencyBody),
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: latencyBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': cmrHits
-            }
-          })
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'latency[]': '1 to 3 hours'
+            })
+          }]
         })
 
         await page.goto('/search?lf=1%20to%203%20hours')
@@ -1080,10 +1133,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
-
-        // Ensure the facet is selected
-        await page.getByTestId('facet_group-latency').click()
+        await testFacetGroupExistence(page, ['features', 'latency'])
 
         // Assert the checkbox is checked
         await expect(page.locator('label[title="1 to 3 hours"] input[type="checkbox"]')).toBeChecked()
@@ -1096,17 +1146,27 @@ test.describe('Path /search', () => {
       test('loads with the checkbox selected', async ({ page }) => {
         const cmrHits = 28270
 
-        await page.route('**/search/collections.json', (route) => {
-          const req = route.request()
-          expect(req.postData()).toBe('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          route.fulfill({
-            body: JSON.stringify(noGranulesBody),
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: noGranulesBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': cmrHits
-            }
-          })
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              include_facets: 'v2',
+              include_granule_counts: 'true',
+              include_has_granules: 'true',
+              include_tags: 'edsc.*,opensearch.granule.osdd',
+              page_num: '1',
+              page_size: '20',
+              'sort_key[]': ['-score', '-create-data-date']
+            })
+          }]
         })
 
         await page.goto('/search?ac=true')
@@ -1123,7 +1183,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         // Ensure the correct checkbox is checked
         await expect(page.getByTestId('input_only-granules')).toBeChecked()
@@ -1136,17 +1196,22 @@ test.describe('Path /search', () => {
       test('loads with the checkbox selected', async ({ page }) => {
         const cmrHits = 7704
 
-        await page.route('**/search/collections.json', (route) => {
-          const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&consortium[]=EOSDIS&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
-
-          route.fulfill({
-            body: JSON.stringify(nonEosdisBody),
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          includeDefault: false,
+          additionalRequests: [{
+            body: nonEosdisBody,
             headers: {
               ...commonHeaders,
-              'cmr-hits': cmrHits
-            }
-          })
+              'cmr-hits': cmrHits.toString()
+            },
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              'consortium[]': 'EOSDIS'
+            })
+          }]
         })
 
         await page.goto('/search?oe=t')
@@ -1163,7 +1228,7 @@ test.describe('Path /search', () => {
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
-        await testFacetGroupExistence(page, 'features')
+        await testFacetGroupExistence(page, ['features'])
 
         // Ensure the correct checkbox is checked
         await expect(page.getByTestId('input_non-eosdis')).toBeChecked()
@@ -1197,7 +1262,7 @@ test.describe('Path /search', () => {
       await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
 
       // Ensure facet group bodies are shown correctly
-      await testFacetGroupExistence(page, 'features')
+      await testFacetGroupExistence(page, ['features'])
     })
   })
 })

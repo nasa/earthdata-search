@@ -6,6 +6,7 @@ import React, {
   useMemo
 } from 'react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash-es'
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form'
 import * as Select from '@radix-ui/react-select'
@@ -642,6 +643,7 @@ const AccessMethod = ({
   } = temporal
 
   const nonBoundingBoxSpatialType = ['polygon', 'point', 'line', 'circle'].find((spatialType) => spatial[spatialType] && spatial[spatialType].length > 0)
+  const hasShapefile = !isEmpty(spatial.shapefile)
 
   const harmonyMbrWarning = useMemo(() => {
     let warning
@@ -650,9 +652,9 @@ const AccessMethod = ({
       enableSpatialSubsetting
       && supportsBoundingBoxSubsetting
       && !supportsShapefileSubsetting
-      && nonBoundingBoxSpatialType
+      && (nonBoundingBoxSpatialType || hasShapefile)
     ) {
-      warning = `Only bounding boxes are supported. If this option is enabled, your ${nonBoundingBoxSpatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
+      warning = `Only bounding boxes are supported. If this option is enabled, your ${nonBoundingBoxSpatialType || 'shapefile'} will be automatically converted into the bounding box shown above and outlined on the map.`
     }
 
     return warning

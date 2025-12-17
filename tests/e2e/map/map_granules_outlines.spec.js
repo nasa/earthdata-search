@@ -19,6 +19,7 @@ import granuleCrossingGranuleGraphQlBody from './__mocks__/cmr_granules/granule_
 import granuleCrossingGranulesBody from './__mocks__/cmr_granules/granule_crossing_granules.body.json'
 import granuleCrossingGranulesHeaders from './__mocks__/cmr_granules/granule_crossing_granules.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
+import { defaultCollectionFormData, matchesFormData } from '../../support/matchesFormData'
 
 const temporalLabelClass = '.map__focused-granule-overlay__granule-label-temporal'
 const screenshotClip = {
@@ -57,15 +58,25 @@ test.describe('Map: Granule interactions', () => {
               ...commonHeaders,
               'cmr-hits': '1'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+            paramCheck: async (request) => matchesFormData(request, {
+              ...defaultCollectionFormData,
+              keyword: 'C1214470488-ASF*',
+              'polygon[]': '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+            })
           }],
           includeDefault: false
         })
 
         await page.route(/search\/granules.json/, async (route) => {
-          const query = route.request().postData()
+          const granulesFormData = {
+            echo_collection_id: 'C1214470488-ASF',
+            page_num: '1',
+            page_size: '20',
+            'polygon[]': '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647',
+            sort_key: '-start_date'
+          }
 
-          expect(query).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key=-start_date')
+          expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
           await route.fulfill({
             json: cmrGranulesBody,
@@ -237,15 +248,25 @@ test.describe('Map: Granule interactions', () => {
             ...commonHeaders,
             'cmr-hits': '1'
           },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+          paramCheck: async (request) => matchesFormData(request, {
+            ...defaultCollectionFormData,
+            keyword: 'C1258816710-ASDC_DEV*'
+          })
         }],
         includeDefault: false
       })
 
       await page.route(/search\/granules.json/, async (route) => {
-        const query = route.request().postData()
+        const granulesFormData = {
+          echo_collection_id: 'C1258816710-ASDC_DEV2',
+          'options[readable_granule_name][pattern]': 'true',
+          page_num: '1',
+          page_size: '20',
+          'readable_granule_name[]': 'PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc',
+          sort_key: '-start_date'
+        }
 
-        expect(query).toEqual('echo_collection_id=C1258816710-ASDC_DEV2&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&sort_key=-start_date')
+        expect(await matchesFormData(route.request(), granulesFormData)).toEqual(true)
 
         await route.fulfill({
           json: granuleCrossingGranulesBody,

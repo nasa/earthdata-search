@@ -74,7 +74,8 @@ export const extractGranuleSearchParams = (collectionId) => {
     circle,
     point,
     polygon,
-    line
+    line,
+    shapefile
   } = spatial
 
   const { [collectionId]: collectionQuery = {} } = collectionQueryById
@@ -117,6 +118,7 @@ export const extractGranuleSearchParams = (collectionId) => {
     point,
     polygon,
     readableGranuleName,
+    shapefile,
     sortKey,
     temporal,
     tilingSystem
@@ -182,6 +184,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     polygon,
     readableGranuleName,
     removedGranuleIds = [],
+    shapefile,
     sortKey,
     temporal,
     tilingSystem
@@ -275,6 +278,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     point,
     polygon,
     readableGranuleName,
+    shapefile,
     sortKey,
     temporalString,
     tilingSystem
@@ -312,6 +316,7 @@ export const buildGranuleSearchParams = (params) => {
     point,
     polygon,
     readableGranuleName,
+    shapefile,
     sortKey,
     temporalString,
     tilingSystem
@@ -347,6 +352,7 @@ export const buildGranuleSearchParams = (params) => {
     point,
     polygon,
     readableGranuleName,
+    shapefile,
     sortKey,
     temporal: temporalString,
     twoDCoordinateSystem

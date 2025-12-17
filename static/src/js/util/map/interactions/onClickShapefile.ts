@@ -1,8 +1,8 @@
 import { Map } from 'ol'
 import VectorSource from 'ol/source/Vector'
+import GeoJSON from 'ol/format/GeoJSON'
 
 import spatialTypes from '../../../constants/spatialTypes'
-import getQueryFromShapefileFeature from '../getQueryFromShapefileFeature'
 import {
   spatialSearchMarkerStyle,
   spatialSearchStyle,
@@ -10,11 +10,7 @@ import {
   unselectedShapefileStyle
 } from '../styles'
 import findShapefileFeature from './findShapefileFeature'
-import {
-  Query,
-  SpatialQueryType,
-  SpatialSearch
-} from '../../../types/sharedTypes'
+import { Query } from '../../../types/sharedTypes'
 import { ShapefileSlice } from '../../../zustand/types'
 
 /**
@@ -26,7 +22,6 @@ import { ShapefileSlice } from '../../../zustand/types'
  * @param {Function} params.onUpdateShapefile - Callback to update the shapefile
  * @param {Object} params.shapefile - The current shapefile state
  * @param {Object} params.spatialDrawingSource - The source of the spatial drawing layer
- * @param {Object} params.spatialSearch - The current spatial search state
  */
 const onClickShapefile = ({
   coordinate,
@@ -34,8 +29,7 @@ const onClickShapefile = ({
   onChangeQuery,
   onUpdateShapefile,
   shapefile,
-  spatialDrawingSource,
-  spatialSearch
+  spatialDrawingSource
 }: {
   /** The coordinate of the click */
   coordinate: number[]
@@ -49,8 +43,6 @@ const onClickShapefile = ({
   shapefile: ShapefileSlice['shapefile']
   /** The source of the spatial drawing layer */
   spatialDrawingSource: VectorSource
-  /** The current spatial search state */
-  spatialSearch: SpatialSearch
 }) => {
   const feature = findShapefileFeature({
     coordinate,
@@ -75,69 +67,40 @@ const onClickShapefile = ({
 
   feature.setStyle(style)
 
-  // Add the feature's geometry as the spatial query
-
   const edscId = feature.get('edscId')
-  let query
   let selectedFeatures
 
   const { selectedFeatures: currentSelectedFeatures = [] } = shapefile
   const updatedSelectedFeatures = [...currentSelectedFeatures]
 
-  const currentQuery = {
-    boundingBox: spatialSearch.boundingBoxSearch,
-    circle: spatialSearch.circleSearch,
-    line: spatialSearch.lineSearch,
-    point: spatialSearch.pointSearch,
-    polygon: spatialSearch.polygonSearch
-  }
-
-  const newQuery = getQueryFromShapefileFeature(feature)
-  const [queryType] = Object.keys(newQuery) as SpatialQueryType[]
-  const queryValues = newQuery[queryType] || []
-
-  // If newSelected is true, add the spatial, else remove it
+  // If newSelected is true, add the feature to the selectedFeatures array
   if (newSelected) {
-    // Add all queryValues to the existing spatial query (for multi-geometries)
-    const currentQueryValue = currentQuery[queryType]
-
-    const updatedQueryValue = currentQueryValue
-      ? currentQueryValue.concat(queryValues)
-      : queryValues
-
-    query = {
-      ...currentQuery,
-      [queryType]: updatedQueryValue
-    }
-
-    // Add the feature to the selectedFeatures
     selectedFeatures = updatedSelectedFeatures.concat(edscId)
   } else {
-    // Remove all queryValues from the existing spatial query (for multi-geometries)
-    const currentQueryValue = [...currentQuery[queryType] || []]
-
-    queryValues.forEach((queryValue) => {
-      const queryIndex = currentQueryValue.indexOf(queryValue)
-
-      if (queryIndex > -1) {
-        currentQueryValue.splice(queryIndex, 1)
-      }
-    })
-
-    query = {
-      ...currentQuery,
-      [queryType]: currentQueryValue
-    }
-
-    // Remove the feature from the selectedFeatures
+    // If newSelected is false, remove the feature from the selectedFeatures array
     const featuresIndex = updatedSelectedFeatures.indexOf(edscId)
     updatedSelectedFeatures.splice(featuresIndex, 1)
     selectedFeatures = updatedSelectedFeatures
   }
 
+  // Create a new FeatureCollection from the selectedFeatures
+  const features = spatialDrawingSource.getFeatures()
+  const selectedFeaturesList = features.filter((featureItem) => {
+    const featureEdscId = featureItem.get('edscId')
+
+    return selectedFeatures.includes(featureEdscId)
+  })
+
+  const selectedFeatureCollection = new GeoJSON().writeFeaturesObject(selectedFeaturesList, {
+    rightHanded: true
+  })
+
+  // Update the query with the new spatial
   onChangeQuery({
     collection: {
-      spatial: query
+      spatial: {
+        shapefile: selectedFeaturesList.length > 0 ? selectedFeatureCollection : undefined
+      }
     }
   })
 

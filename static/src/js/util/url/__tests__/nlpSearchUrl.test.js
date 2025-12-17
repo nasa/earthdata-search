@@ -18,7 +18,10 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
-        nlpCollection: { query: 'climate data' }
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          nlpQuery: 'climate data'
+        }
       }
     }
 

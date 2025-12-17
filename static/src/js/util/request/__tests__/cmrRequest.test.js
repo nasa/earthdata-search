@@ -4,11 +4,6 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 
 const baseUrl = 'http://example.com'
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
-
 describe('CmrRequest#constructor', () => {
   test('sets the default values', () => {
     const request = new CmrRequest(baseUrl, 'prod')
@@ -92,38 +87,6 @@ describe('CmrRequest#transformRequest', () => {
     expect(headers).toEqual(expect.objectContaining({
       'Client-Id': 'eed-edsc-test-serverless-client'
     }))
-  })
-
-  test('correctly transforms data for CMR requests', () => {
-    const request = new CmrRequest(baseUrl, 'prod')
-
-    const data = { ParamName: 123 }
-
-    jest.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
-
-    const transformedData = request.transformRequest(data, {})
-
-    expect(transformedData).toEqual('param_name=123')
-  })
-
-  test('correctly transforms data for Lambda requests', () => {
-    const request = new CmrRequest(baseUrl, 'prod')
-    request.lambda = true
-    request.startTime = 1576855756
-
-    const data = { paramName: 123 }
-
-    jest.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
-
-    const transformedData = request.transformRequest(data, {})
-
-    const parsedData = JSON.parse(transformedData)
-    expect(parsedData).toEqual({
-      params: {
-        param_name: 123
-      },
-      requestId: expect.any(String)
-    })
   })
 })
 

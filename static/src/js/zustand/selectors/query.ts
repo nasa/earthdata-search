@@ -40,29 +40,6 @@ import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../../u
 export const getCollectionsQuery = (state: EdscStore) => state.query?.collection || {}
 
 /**
- * Retrieve NLP collection data
- */
-export const getNlpCollection = (state: EdscStore) => state.query?.nlpCollection || null
-
-/**
- * Retrieve NLP spatial data
- */
-export const getNlpSpatialData = (state: EdscStore) => {
-  const nlpCollection = getNlpCollection(state)
-
-  return nlpCollection?.spatial || null
-}
-
-/**
- * Retrieve NLP temporal data
- */
-export const getNlpTemporalData = (state: EdscStore) => {
-  const nlpCollection = getNlpCollection(state)
-
-  return nlpCollection?.temporal || null
-}
-
-/**
  * Retrieve current collection spatial information
  */
 export const getCollectionsQuerySpatial = (state: EdscStore) => {

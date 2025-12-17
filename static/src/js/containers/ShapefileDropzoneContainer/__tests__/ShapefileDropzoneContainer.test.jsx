@@ -8,6 +8,9 @@ import ShapefileDropzone from '../../../components/Dropzone/ShapefileDropzone'
 import { shapefileEventTypes } from '../../../constants/eventTypes'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
+import addShapefile from '../../../util/addShapefile'
+
+jest.mock('../../../util/addShapefile', () => jest.fn())
 
 jest.mock('../../../components/Dropzone/ShapefileDropzone', () => jest.fn(() => <div />))
 
@@ -84,9 +87,7 @@ describe('ShapefileDropzoneContainer component', () => {
   })
 
   describe('when onSuccess is triggered', () => {
-    test('calls onSaveShapefile', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+    test('calls addShapefile', async () => {
       const filesizeMock = jest.fn(() => '200KB')
       const onSaveShapefileMock = jest.fn()
 
@@ -141,62 +142,19 @@ describe('ShapefileDropzoneContainer component', () => {
         size: 200
       })
 
-      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-      expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        shapefileEventTypes.ADDSHAPEFILE,
-        {
-          name: 'test-file-name.zip',
-          size: 200
-        },
-        {
-          features: [
-            {
-              type: 'Feature',
-              properties: {
-                edscId: '0'
-              },
-              geometry: {
-                type: 'LineString',
-                coordinates: [
-                  [-106, 35],
-                  [-105, 36],
-                  [-94, 33],
-                  [-95, 30],
-                  [-93, 31],
-                  [-92, 3]
-                ]
-              }
-            }
-          ],
-          name: 'test-file-name.zip'
-        }
-      )
-
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
-      expect(onSaveShapefileMock).toHaveBeenCalledTimes(1)
-      expect(onSaveShapefileMock).toHaveBeenCalledWith({
+      expect(addShapefile).toHaveBeenCalledTimes(1)
+      expect(addShapefile).toHaveBeenCalledWith({
         file: {
-          features: [
-            {
-              type: 'Feature',
-              properties: {
-                edscId: '0'
-              },
-              geometry: {
-                type: 'LineString',
-                coordinates: [
-                  [-106, 35],
-                  [-105, 36],
-                  [-94, 33],
-                  [-95, 30],
-                  [-93, 31],
-                  [-92, 3]
-                ]
-              }
-            }
-          ],
-          name: 'test-file-name.zip'
+          features: [{
+            geometry: {
+              coordinates: [[-106, 35], [-105, 36], [-94, 33], [-95, 30], [-93, 31], [-92, 3]],
+              type: 'LineString'
+            },
+            type: 'Feature'
+          }],
+          name: 'SOMEBIGHASHtest-file-name'
         },
         filename: 'test-file-name.zip',
         size: '200KB'
@@ -205,8 +163,6 @@ describe('ShapefileDropzoneContainer component', () => {
 
     describe('when the shapefile modal is open', () => {
       test('calls setOpenModal to close the modal', async () => {
-        const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-        eventEmitterEmitMock.mockImplementation(() => jest.fn())
         const filesizeMock = jest.fn(() => '200KB')
         const onSaveShapefileMock = jest.fn()
 

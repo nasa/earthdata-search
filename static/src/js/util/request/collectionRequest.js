@@ -40,6 +40,13 @@ export default class CollectionRequest extends CmrRequest {
     return this.post(this.searchPath, params)
   }
 
+  transformRequest(data, headers) {
+    // eslint-disable-next-line no-param-reassign
+    headers['Content-Type'] = 'multipart/form-data'
+
+    return super.transformRequest(data, headers)
+  }
+
   /**
    * Transform the response before completing the Promise.
    * @param {Object} data - Response object from the object.

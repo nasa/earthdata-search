@@ -204,35 +204,6 @@ describe('SpatialDisplay component', () => {
     })
   })
 
-  describe('with nlp spatial', () => {
-    test('should display NLP geoLocation name in dedicated section when NLP data exists', () => {
-      setup({
-        overrideZustandState: {
-          query: {
-            nlpCollection: {
-              spatial: {
-                geoJson: {
-                  type: 'Polygon',
-                  coordinates: [
-                    [
-                      [-77.04444122314, 38.99228142151],
-                      [-77.01992797851, 38.79166886339],
-                      [-76.89415168762, 38.90262994792],
-                      [-77.04444122314, 38.99228142151]
-                    ]
-                  ]
-                },
-                geoLocation: 'Texas'
-              }
-            }
-          }
-        }
-      })
-
-      expect(screen.queryAllByText('Texas')).toHaveLength(1)
-    })
-  })
-
   describe('with lineSearch', () => {
     test('should render without spatial info', () => {
       const line = '-77.04444122314453,38.99228142151045,'

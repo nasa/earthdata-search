@@ -103,7 +103,7 @@ export default class Request {
    * Transforms data before sending it as a payload to an HTTP endpoint
    * @param {Object} data - An object representing an HTTP request payload
    */
-  transformData(data: RequestParams) {
+  transformData(data: RequestParams): RequestParams | FormData {
     return data
   }
 

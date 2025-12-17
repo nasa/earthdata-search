@@ -17,18 +17,10 @@ import {
   Search
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import { connect, MapDispatchToProps } from 'react-redux'
-import { type Dispatch } from 'redux'
 
 import Button from '../../components/Button/Button'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
-import SpatialSelectionDropdownContainer
-// @ts-expect-error: Types do not exist for this file
-  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
-import TemporalSelectionDropdownContainer
-// @ts-expect-error: Types do not exist for this file
-  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import TopicCard from './HomeTopicCard'
@@ -53,8 +45,6 @@ import heroImgSourcesSmall from '~Images/homepage-hero/MODIS-Terra-Swirling-Clou
 import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg?format=webp&w=1280;1920;2560;3840;5120'
 
 // @ts-expect-error: Types do not exist for this file
-import actions from '../../actions'
-// @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
@@ -62,6 +52,9 @@ import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 import { routes } from '../../constants/routes'
 
 import type{ PortalConfig } from '../../types/sharedTypes'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
@@ -86,10 +79,6 @@ const preloadRoutes = () => {
   import('../../containers/MapContainer/MapContainer')
 }
 
-export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
-  onChangePath:
-    (path: string) => dispatch(actions.changePath(path))
-})
 export interface HomeTopic {
   /** The title of the topic */
   title: string
@@ -152,25 +141,20 @@ const topics: HomeTopic[] = [
   }
 ]
 
-interface HomeDispatchProps {
-  /** The Redux action to change the path */
-  onChangePath: (path: string) => void
-}
-
-type HomeProps = HomeDispatchProps
-
 /**
  * The Home route component
 */
-export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
+export const Home: React.FC = () => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
+  const { isLoading } = useEdscStore(getCollectionsPageInfo)
+  const getCollections = useEdscStore((state) => state.collections.getCollections)
+  const getNlpCollections = useEdscStore((state) => state.collections.getNlpCollections)
+
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
-  const { nlpSearch } = getApplicationConfig()
-  const isNlpEnabled = nlpSearch === 'true'
-  const showSearchButtons = !isNlpEnabled
+  const { numberOfGranules } = getApplicationConfig()
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -208,8 +192,27 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
     setKeyword(e.target.value)
   }
 
-  const searchParams = {
-    q: keyword
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    // Fetch the collections using the NLP search
+    const trimmedKeyword = keyword.trim()
+
+    if (!trimmedKeyword) {
+      // If the user did not type anything, call getCollections to load collections directly from CMR
+      getCollections().then(() => {
+        // After collections are fetched, navigate to the Search route
+        navigate('/search')
+      })
+
+      return
+    }
+
+    // Fetch collections using NLP search
+    getNlpCollections(trimmedKeyword).then(() => {
+      // After collections are fetched, navigate to the Search route
+      navigate('/search')
+    })
   }
 
   return (
@@ -227,27 +230,20 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
             />
           </picture>
           <div className="text-center z-1 d-flex gap-3 flex-column">
-            <h1 className="text-white display-7">Search NASA&apos;s 1.8 billion+ Earth observations</h1>
+            <h1 className="text-white display-7">
+              Search NASA&apos;s
+              {' '}
+              {numberOfGranules}
+              {' '}
+              Earth observations
+            </h1>
             <p className="text-white mb-0 lead">Use keywords and filter by time and spatial area to search NASA&apos;s Earth science data</p>
           </div>
           <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
             <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
               <form
                 className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
-                onSubmit={
-                  (e) => {
-                    e.preventDefault()
-
-                    const trimmedKeyword = keyword.trim()
-                    const queryParam = isNlpEnabled ? 'nlp' : 'q'
-                    const url = trimmedKeyword
-                      ? `/search?${queryParam}=${encodeURIComponent(trimmedKeyword)}`
-                      : '/search'
-
-                    onChangePath(url)
-                    navigate(url)
-                  }
-                }
+                onSubmit={handleSubmit}
               >
                 <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
                   <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px" />
@@ -260,15 +256,15 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     ref={inputRef}
                   />
                 </div>
-                {
-                  showSearchButtons && (
-                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                      <TemporalSelectionDropdownContainer searchParams={searchParams} />
-                      <SpatialSelectionDropdownContainer searchParams={searchParams} />
-                    </div>
-                  )
-                }
-                <Button type="submit" className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light" bootstrapVariant="primary" bootstrapSize="lg">Search</Button>
+                <Button
+                  type="submit"
+                  className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
+                  bootstrapVariant="primary"
+                  bootstrapSize="lg"
+                  spinner={isLoading}
+                >
+                  Search
+                </Button>
               </form>
             </div>
             <div className="d-flex flex-grow-1 justify-content-center">
@@ -418,4 +414,4 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   )
 }
 
-export default connect(null, mapDispatchToProps)(Home)
+export default Home

@@ -37,6 +37,13 @@ export default class GranuleRequest extends CmrRequest {
     return granuleRequestNonIndexedCmrKeys
   }
 
+  transformRequest(data, headers) {
+    // eslint-disable-next-line no-param-reassign
+    headers['Content-Type'] = 'multipart/form-data'
+
+    return super.transformRequest(data, headers)
+  }
+
   transformResponse(data) {
     super.transformResponse(data)
 

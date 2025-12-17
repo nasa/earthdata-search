@@ -67,6 +67,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'provider',
       'science_keywords_h',
       'service_type',
+      'shapefile',
       'sort_key',
       'spatial_keyword',
       'standard_product',

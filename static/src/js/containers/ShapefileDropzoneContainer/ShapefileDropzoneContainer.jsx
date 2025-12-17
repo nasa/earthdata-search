@@ -1,31 +1,16 @@
 import React, {} from 'react'
 
 import { eventEmitter } from '../../events/events'
+
 import { shapefileEventTypes } from '../../constants/eventTypes'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
+import addShapefile from '../../util/addShapefile'
+
 import useEdscStore from '../../zustand/useEdscStore'
 import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
-import { MODAL_NAMES } from '../../constants/modalNames'
-
-// Add an edscId to each feature in the shapefile
-const addEdscIdsToShapefile = (file) => {
-  const fileWithIds = file
-  const { features } = file
-
-  const newFeatures = features.map((feature, index) => ({
-    ...feature,
-    properties: {
-      ...feature.properties,
-      edscId: `${index}`
-    }
-  }))
-
-  fileWithIds.features = newFeatures
-
-  return fileWithIds
-}
 
 const dropzoneOptions = {
   // Official Ogre web service
@@ -50,12 +35,10 @@ export const ShapefileDropzoneContainer = () => {
   const {
     onShapefileErrored,
     onShapefileLoading,
-    onSaveShapefile,
     removeSpatialFilter
   } = useEdscStore((state) => ({
     onShapefileErrored: state.shapefile.setErrored,
     onShapefileLoading: state.shapefile.setLoading,
-    onSaveShapefile: state.shapefile.saveShapefile,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
   const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.SHAPEFILE_UPLOAD))
@@ -82,23 +65,15 @@ export const ShapefileDropzoneContainer = () => {
 
           dropzoneEl.removeFile(file)
 
-          // Update the name to the original name (ogre puts a hash into this name field)
-          const updatedResponse = resp
-          updatedResponse.name = name
-
-          const fileWithIds = addEdscIdsToShapefile(updatedResponse)
-
-          eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
+          addShapefile({
+            file: resp,
+            filename: name,
+            size: fileSize
+          })
 
           // Only close the modal if it is currently open
           // This keeps it from closing the TOO_MANY_POINTS modal if that has been opened
           if (isOpen) setOpenModal(null)
-
-          onSaveShapefile({
-            file: fileWithIds,
-            filename: name,
-            size: fileSize
-          })
         }
       }
       onError={

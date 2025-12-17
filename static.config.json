@@ -28,7 +28,6 @@
       "edsc.*",
       "opensearch.granule.osdd"
     ],
-    "nlpSearch": "false",
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
     "defaultSpatialDecimalSize": 5,
@@ -53,7 +52,8 @@
     "disableSwodlr": "false",
     "mapPointsSimplifyThreshold": 2000,
     "emergencyNotification": "false",
-    "emergencyNotificationType": "error"
+    "emergencyNotificationType": "error",
+    "numberOfGranules": "2.2 billion+"
   },
   "environment": {
     "test": {

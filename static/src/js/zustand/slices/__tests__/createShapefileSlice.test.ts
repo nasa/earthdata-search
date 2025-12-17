@@ -6,9 +6,6 @@ import { initialState } from '../createShapefileSlice'
 
 import ShapefileRequest from '../../../util/request/shapefileRequest'
 
-// @ts-expect-error Types are not defined for this module
-import configureStore from '../../../store/configureStore'
-
 import { ShapefileFile } from '../../../types/sharedTypes'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -83,12 +80,6 @@ describe('createShapefileSlice', () => {
   describe('fetchShapefile', () => {
     describe('when the shapefile is fetched successfully', () => {
       test('fetches the shapefile', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         const zustandInitialState = useEdscStore.getInitialState()
         useEdscStore.setState({
           shapefile: {
@@ -137,14 +128,66 @@ describe('createShapefileSlice', () => {
       })
     })
 
-    describe('when the shapefile fails to fetch', () => {
-      test('sets the error state', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
+    describe('when there are selected features', () => {
+      test('creates a limited geojson file', async () => {
+        nock(/localhost/)
+          .get(/shapefiles/)
+          .reply(200, {
+            file: mockshapefile,
+            shapefileName: 'MockShapefile.geojson',
+            selectedFeatures: ['0']
+          })
+
+        useEdscStore.setState((state) => {
+          state.shapefile.selectedFeatures = ['0']
+          state.query.changeQuery = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { shapefile } = zustandState
+        const { fetchShapefile } = shapefile
+
+        await fetchShapefile('12345')
+
+        await waitFor(() => {
+          const updatedState = useEdscStore.getState()
+          const { shapefile: updatedShapefile } = updatedState
+          expect(updatedShapefile).toEqual({
+            isErrored: false,
+            isLoaded: true,
+            isLoading: false,
+            file: mockshapefile,
+            shapefileId: '12345',
+            shapefileName: 'MockShapefile.geojson',
+            shapefileSize: undefined,
+            selectedFeatures: ['0'],
+            ...shapefileFunctions
           })
         })
 
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+          collection: {
+            spatial: {
+              shapefile: {
+                features: [{
+                  geometry: {
+                    coordinates: [-77.0163, 38.883],
+                    type: 'Point'
+                  },
+                  properties: { edscId: '0' },
+                  type: 'Feature'
+                }],
+                type: 'FeatureCollection'
+              }
+            }
+          }
+        })
+      })
+    })
+
+    describe('when the shapefile fails to fetch', () => {
+      test('sets the error state', async () => {
         nock(/localhost/)
           .get(/shapefiles/)
           .reply(500, {
@@ -206,12 +249,6 @@ describe('createShapefileSlice', () => {
   describe('saveShapefile', () => {
     describe('when the shapefile is saved successfully', () => {
       test('saves the shapefile', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         nock(/localhost/)
           .post(/shapefiles/)
           .reply(200, {
@@ -223,8 +260,6 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
-          earthdataEnvironment: 'prod',
-          edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
           file: mockshapefile
@@ -257,12 +292,6 @@ describe('createShapefileSlice', () => {
 
     describe('when the shapefile fails to save', () => {
       test('sets the error state', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         nock(/localhost/)
           .post(/shapefiles/)
           .reply(500, {
@@ -282,8 +311,6 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
-          earthdataEnvironment: 'prod',
-          edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
           file: mockshapefile

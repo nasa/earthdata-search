@@ -1,6 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
+import { getFormDataObject } from '../../support/matchesFormData'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -65,7 +66,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-28\.\d+,-9\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -112,7 +114,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-28\.\d+,-9\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -157,7 +160,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,4\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/42\.\d+,4\.\d+/)
             }]
           })
 
@@ -208,7 +212,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,-7\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/42\.\d+,-7\.\d+/)
             },
             {
               body: pointBodyEdited,
@@ -216,7 +221,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '3'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,-24\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/42\.\d+,-24\.\d+/)
             }]
           })
 
@@ -280,7 +286,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-28\.\d+,-9\.\d+,195\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]'].match(/-28\.\d+,-9\.\d+,195\d+/)
             }]
           })
 
@@ -329,7 +335,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-28\.\d+,-9\.\d+,195\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]'].match(/-28\.\d+,-9\.\d+,195\d+/)
             }]
           })
 
@@ -376,7 +382,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/42\.\d+,4\.\d+,156\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]'].match(/42\.\d+,4\.\d+,156\d+/)
             }]
           })
 
@@ -429,7 +435,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/42\.\d+,-7\.\d+,156\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]'].match(/42\.\d+,-7\.\d+,156\d+/)
             },
             {
               body: circleBodyEdited,
@@ -437,7 +443,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '3'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/42\.\d+,-14\.\d+,156\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]'].match(/42\.\d+,-14\.\d+,156\d+/)
             }]
           })
 
@@ -504,8 +510,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-28\.\d+,-44\.\d+,-11\.\d+,-9\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/-28\.\d+,-44\.\d+,-11\.\d+,-9\.\d+/)
             }]
           })
 
@@ -554,8 +560,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-28\.\d+,-44\.\d+,-11\.\d+,-9\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/-28\.\d+,-44\.\d+,-11\.\d+,-9\.\d+/)
             }]
           })
 
@@ -602,8 +608,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/42\.\d+,-9\.\d+,56\.\d+,4\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/42\.\d+,-9\.\d+,56\.\d+,4\.\d+/)
             }]
           })
 
@@ -656,8 +662,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/42\.\d+,-21\.\d+,56\.\d+,-7\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/42\.\d+,-21\.\d+,56\.\d+,-7\.\d+/)
             },
             {
               body: boundingBoxBodyEdited,
@@ -665,8 +671,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '3'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/42\.\d+,-21\.\d+,56\.\d+,6\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/42\.\d+,-21\.\d+,56\.\d+,6\.\d+/)
             }]
           })
 
@@ -733,8 +739,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-11\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-11\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -796,8 +802,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-11\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-11\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -853,8 +859,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,56\.\d+,-21\.\d+,42\.\d+,-7\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,56\.\d+,-21\.\d+,42\.\d+,-7\.\d+/)
             },
             {
               body: polygonBodyEdited,
@@ -862,8 +868,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '3'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,63\.\d+,-28\.\d+,42\.\d+,-7\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,63\.\d+,-28\.\d+,42\.\d+,-7\.\d+/)
             }]
           })
 
@@ -953,7 +959,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.line?.[0]?.match(/-90\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['line[]']
+                .match(/-90\.\d+/)
             }]
           })
 
@@ -1014,7 +1021,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]?.match(/-89.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/-89.\d+/)
             }]
           })
 
@@ -1079,7 +1087,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-10(8|9)\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1126,7 +1135,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-10(8|9)\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1171,7 +1181,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-109\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['point[]']
+                .match(/-109\.\d+,76\.\d+/)
             }]
           })
 
@@ -1225,7 +1236,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,16(5|6)\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]']
+                .match(/-10(8|9)\.\d+,76\.\d+,16(5|6)\d+/)
             }]
           })
 
@@ -1276,7 +1288,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,16(5|6)\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]']
+                .match(/-10(8|9)\.\d+,76\.\d+,16(5|6)\d+/)
             }]
           })
 
@@ -1323,7 +1336,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-109\.\d+,76\.\d+,166\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['circle[]']
+                .match(/-109\.\d+,76\.\d+,166\d+/)
             }]
           })
 
@@ -1380,8 +1394,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-10(8|9)\.\d+,68\.\d+,-57\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/-10(8|9)\.\d+,68\.\d+,-57\.\d+,76\.\d+/)
             }]
           })
 
@@ -1430,8 +1444,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-10(8|9)\.\d+,68\.\d+,-57\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/-10(8|9)\.\d+,68\.\d+,-57\.\d+,76\.\d+/)
             }]
           })
 
@@ -1478,8 +1492,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-109\.\d+,70\.\d+,-58\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['bounding_box[]']
+                .match(/-109\.\d+,70\.\d+,-58\.\d+,76\.\d+/)
             }]
           })
 
@@ -1534,8 +1548,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-10(8|9)\.\d+,76\.\d+,-75\.\d+,65\.\d+,-57\.\d+,68\.\d+,-10(8|9)\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/-10(8|9)\.\d+,76\.\d+,-75\.\d+,65\.\d+,-57\.\d+,68\.\d+,-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1597,8 +1611,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-10(8|9)\.\d+,76\.\d+,-75\.\d+,65\.\d+,-57\.\d+,68\.\d+,-10(8|9)\.\d+,76\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/-10(8|9)\.\d+,76\.\d+,-75\.\d+,65\.\d+,-57\.\d+,68\.\d+,-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1671,7 +1685,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.line?.[0]?.match(/-90\.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['line[]']
+                .match(/-90\.\d+/)
             }]
           })
 
@@ -1732,7 +1747,8 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]?.match(/-89.\d+/)
+              paramCheck: async (request) => (await getFormDataObject(request))['polygon[]']
+                .match(/-89.\d+/)
             }]
           })
 
@@ -1795,7 +1811,7 @@ test.describe('Map: Spatial interactions', () => {
             ...commonHeaders,
             'cmr-hits': '1'
           },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword.includes(conceptId) && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+          paramCheck: async (request) => (await getFormDataObject(request))['polygon[]'] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
         }],
         includeDefault: false
       })

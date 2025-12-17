@@ -1,4 +1,5 @@
 import { mbr } from '@edsc/geo-utils'
+import { bbox } from '@turf/turf'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
@@ -60,7 +61,8 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
     circle,
     line,
     point,
-    polygon
+    polygon,
+    shapefile
   } = spatial
 
   if (boundingBox) {
@@ -70,20 +72,30 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
   }
 
   if (usingMbr) {
-    const {
-      swLat,
-      swLng,
-      neLat,
-      neLng
-    } = mbr({
-      boundingBox: boundingBox && boundingBox[0],
-      circle: circle && circle[0],
-      line: line && line[0],
-      point: point && point[0],
-      polygon: polygon && polygon[0]
-    }, {
-      precision: defaultSpatialDecimalSize
-    })
+    let swLat
+    let swLng
+    let neLat
+    let neLng
+
+    if (shapefile) {
+      // Get the MBR of the shapefile (the extent of the features)
+      ([swLat, swLng, neLat, neLng] = bbox(shapefile))
+    } else {
+      ({
+        swLat,
+        swLng,
+        neLat,
+        neLng
+      } = mbr({
+        boundingBox: boundingBox && boundingBox[0],
+        circle: circle && circle[0],
+        line: line && line[0],
+        point: point && point[0],
+        polygon: polygon && polygon[0]
+      }, {
+        precision: defaultSpatialDecimalSize
+      }))
+    }
 
     return `SW: (${swLat}, ${swLng}) NE: (${neLat}, ${neLng})`
   }
@@ -110,6 +122,14 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
     const pointCount = (pointArray / 2) - 1
 
     return `${pointCount} Points`
+  }
+
+  if (shapefile && shapefile.name) {
+    return `Shapefile: ${shapefile.name}`
+  }
+
+  if (shapefile) {
+    return 'Shapefile'
   }
 
   return ''

@@ -1,15 +1,20 @@
 import { pick } from 'lodash-es'
 // @ts-expect-error Types are not defined for this module
 import snakeCaseKeys from 'snakecase-keys'
+import type { FeatureCollection } from 'geojson'
 
 import Request from './request'
 
 // @ts-expect-error Types are not defined for this module
 import { getClientId } from '../../../../../sharedUtils/getClientId'
-
 // @ts-expect-error Types are not defined for this module
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
-import type { CmrHeaders, RequestParams } from '../../types/sharedTypes'
+
+import type {
+  CmrHeaders,
+  CollectionRequestParams,
+  RequestParams
+} from '../../types/sharedTypes'
 
 /**
  * Parent class for the application API layer to communicate with external services
@@ -56,10 +61,48 @@ export default class CmrRequest extends Request {
    * @param {Object} data - An object representing an HTTP request payload
    */
   transformData(data: RequestParams) {
-    return prepKeysForCmr(
-      super.transformData(data),
+    const dataCopy = { ...data } as CollectionRequestParams
+
+    // Shapefiles need to be handled differently
+    const { shapefile } = dataCopy
+    delete dataCopy.shapefile
+
+    // Convert the data to a query string suitable for CMR
+    const queryString = prepKeysForCmr(
+      super.transformData(dataCopy),
       this.nonIndexedKeys()
     )
+
+    const queryStringParts: string[] = queryString.split('&')
+
+    const formData = new FormData()
+
+    // Add each part of the query string to the form data
+    queryStringParts.forEach((part) => {
+      const [key, value] = part.split('=')
+
+      formData.append(key, decodeURIComponent(value))
+    })
+
+    // Add the shapefile to the form data if it exists
+    if (shapefile) {
+      // Remove EDSC specific properties from each feature in the shapefile
+      const filteredShapefile = { ...shapefile } as FeatureCollection
+      filteredShapefile.features = filteredShapefile.features.map((feature) => ({
+        ...feature,
+        properties: {}
+      }))
+
+      // Convert the GeoJSON to a Blob to append to the FormData as a file
+      const geojsonBlob = new Blob(
+        [JSON.stringify(filteredShapefile)],
+        { type: 'application/geo+json' }
+      )
+
+      formData.append('shapefile', geojsonBlob, 'shapefile.geojson')
+    }
+
+    return formData
   }
 
   /**
