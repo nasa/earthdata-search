@@ -128,7 +128,6 @@ export const PanelGroupHeader = ({
                   return (
                     <Skeleton
                       className="panel-group-header__breadcrumbs-skeleton"
-                      dataTestId="breadcrumbs-skeleton"
                       containerStyle={
                         {
                           height: '1rem',
