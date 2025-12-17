@@ -1,13 +1,12 @@
 import { StateCreator } from 'zustand'
 
-import {
+import type {
   CollectionMetadata,
   CollectionsMetadata,
   GranuleMetadata,
   GranulesMetadata,
   PortalConfig,
   ProjectionCode,
-  NlpCollectionQuery,
   ScienceKeyword,
   ShapefileFile,
   Spatial,
@@ -15,8 +14,7 @@ import {
   Temporal,
   TimelineIntervals,
   VariableMetadata,
-  UrsProfile,
-  ShapefileRequestParams
+  UrsProfile
 } from '../types/sharedTypes'
 import { ModalName } from '../constants/modalNames'
 
@@ -60,9 +58,9 @@ export type CollectionsSlice = {
       items: CollectionMetadata[]
     }
     /** Function to fetch the collections from CMR */
-    getCollections: () => void
+    getCollections: () => Promise<void>
     /** Function to perform NLP search and process results */
-    getNlpCollections: () => Promise<void>
+    getNlpCollections: (query: string) => Promise<void>
   }
 }
 
@@ -899,8 +897,6 @@ export type QuerySlice = {
     collection: CollectionQuery
     /** The selected region (to use as a spatial query to CMR) */
     selectedRegion: SelectedRegion
-    /** The NLP collection query data */
-    nlpCollection: NlpCollectionQuery | null
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */
@@ -1007,7 +1003,14 @@ export type ShapefileSlice = {
     /** Function to clear the shapefile */
     clearShapefile: () => void
     /** Function to save the shapefile */
-    saveShapefile: (data: ShapefileRequestParams) => Promise<void>
+    saveShapefile: (data: {
+      /** The shapefile filename */
+      filename: string
+      /** The shapefile size */
+      size: string
+      /** The shapefile contents */
+      file: ShapefileFile
+    }) => Promise<void>
     /** Function to fetch the shapefile */
     fetchShapefile: (shapefileId: string) => Promise<void>
   }

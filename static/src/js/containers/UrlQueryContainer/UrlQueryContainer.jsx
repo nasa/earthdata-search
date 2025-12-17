@@ -10,11 +10,7 @@ import { encodeUrlQuery, urlPathsWithoutUrlParams } from '../../util/url/url'
 import isPath from '../../util/isPath'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import {
-  getCollectionsQuery,
-  getSelectedRegionQuery,
-  getNlpCollection
-} from '../../zustand/selectors/query'
+import { getCollectionsQuery, getSelectedRegionQuery } from '../../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
 import { getGranuleId } from '../../zustand/selectors/granule'
@@ -76,7 +72,6 @@ export const UrlQueryContainer = (props) => {
     processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
     projectCollections: state.project.collections,
     projectFacets: state.facetParams.cmrFacets.project_h,
-    nlpSearch: getNlpCollection(state)?.query,
     scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
     selectedFeatures: state.shapefile.selectedFeatures,
     selectedRegion: getSelectedRegionQuery(state),

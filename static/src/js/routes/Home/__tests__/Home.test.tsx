@@ -6,14 +6,7 @@ import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
-// @ts-expect-error: No types for sharedUtils/config in tests
-import * as sharedConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-
-// @ts-expect-error This file does not have types
-import SpatialSelectionDropdownContainer from '../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
-// @ts-expect-error This file does not have types
-import TemporalSelectionDropdownContainer from '../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 
 jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => jest.fn(() => <div />))
 
@@ -59,7 +52,7 @@ jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <
 jest.mock('../../../../../../sharedUtils/config', () => ({
   ...jest.requireActual('../../../../../../sharedUtils/config'),
   getApplicationConfig: jest.fn(() => ({
-    nlpSearch: 'false'
+    numberOfGranules: '42'
   }))
 }))
 
@@ -74,6 +67,12 @@ const setup = setupTest({
   Component: Home,
   defaultProps: {
     onChangePath: jest.fn()
+  },
+  defaultZustandState: {
+    collections: {
+      getCollections: jest.fn().mockResolvedValue(undefined),
+      getNlpCollections: jest.fn().mockResolvedValue(undefined)
+    }
   },
   withRedux: true,
   withRouter: true
@@ -99,7 +98,7 @@ describe('Home', () => {
   test('renders the hero section with the correct text', () => {
     setup()
 
-    expect(screen.getByText("Search NASA's 1.8 billion+ Earth observations")).toBeInTheDocument()
+    expect(screen.getByText("Search NASA's 42 Earth observations")).toBeInTheDocument()
     expect(screen.getByText("Use keywords and filter by time and spatial area to search NASA's Earth science data")).toBeInTheDocument()
   })
 
@@ -114,34 +113,46 @@ describe('Home', () => {
     expect(searchInput).toHaveValue('test keyword')
   })
 
-  test('calls onChangePath and navigate when the search form is submitted', async () => {
-    const { props, user } = setup()
+  test('calls getCollections and navigate when the search form is submitted with no value', async () => {
+    const { user, zustandState } = setup()
+
+    await user.click(screen.getByRole('button', { name: /search/i }))
+
+    expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+    expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
+
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+  })
+
+  test('calls getNlpCollections and navigate when the search form is submitted', async () => {
+    const { user, zustandState } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
 
     await user.type(searchInput, 'test')
     await user.click(screen.getByRole('button', { name: /search/i }))
 
-    expect(props.onChangePath).toHaveBeenCalledTimes(1)
-    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
+    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
+    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
 
     expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
   })
 
   test('calls onChangePath and navigate when the enter key is pressed', async () => {
-    const { props, user } = setup()
+    const { user, zustandState } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
 
     await user.type(searchInput, 'test')
     await user.click(screen.getByRole('button', { name: /search/i }))
 
-    expect(props.onChangePath).toHaveBeenCalledTimes(1)
-    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
+    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
+    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
 
     expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
   })
 
   test('renders the topic cards', () => {
@@ -188,62 +199,5 @@ describe('Home', () => {
 
     const showFewerButton = screen.getByText('Show fewer portals')
     expect(showFewerButton).toBeInTheDocument()
-  })
-
-  test('renders the spatial and temporal dropdowns', () => {
-    setup()
-
-    expect(SpatialSelectionDropdownContainer).toHaveBeenCalledTimes(1)
-    expect(SpatialSelectionDropdownContainer).toHaveBeenCalledWith({
-      searchParams: {
-        q: ''
-      }
-    }, {})
-
-    expect(TemporalSelectionDropdownContainer).toHaveBeenCalledTimes(1)
-    expect(TemporalSelectionDropdownContainer).toHaveBeenCalledWith({
-      searchParams: {
-        q: ''
-      }
-    }, {})
-  })
-
-  test('navigates to /search when form is submitted with empty keyword', async () => {
-    const { props, user } = setup()
-
-    await user.click(screen.getByRole('button', { name: /search/i }))
-
-    expect(props.onChangePath).toHaveBeenCalledTimes(1)
-    expect(props.onChangePath).toHaveBeenCalledWith('/search')
-
-    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
-  })
-
-  describe('when nlpSearch is enabled', () => {
-    beforeEach(() => {
-      sharedConfig.getApplicationConfig.mockReturnValue({ nlpSearch: 'true' })
-    })
-
-    afterEach(() => {
-      sharedConfig.getApplicationConfig.mockReturnValue({ nlpSearch: 'false' })
-    })
-
-    test('uses nlp param and hides dropdowns', async () => {
-      const { props, user } = setup()
-      const searchInput = screen.getByPlaceholderText('Type to search for data')
-
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
-
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith('/search?nlp=test')
-
-      expect(SpatialSelectionDropdownContainer).toHaveBeenCalledTimes(0)
-      expect(TemporalSelectionDropdownContainer).toHaveBeenCalledTimes(0)
-    })
   })
 })

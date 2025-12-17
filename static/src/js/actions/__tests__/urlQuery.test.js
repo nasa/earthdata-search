@@ -633,8 +633,7 @@ describe('changePath', () => {
               pageNum: 1,
               spatial: initialQueryState.collection.spatial,
               temporal: {}
-            },
-            nlpCollection: null
+            }
           },
           shapefile: {
             shapefileId: ''
@@ -711,8 +710,7 @@ describe('changePath', () => {
           pageNum: 1,
           spatial: initialQueryState.collection.spatial,
           temporal: {}
-        },
-        nlpCollection: null
+        }
       },
       shapefile: {
         shapefileId: ''

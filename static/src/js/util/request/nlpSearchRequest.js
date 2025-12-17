@@ -1,9 +1,9 @@
-import axios from 'axios'
+import { isEmpty } from 'lodash-es'
 
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { transformCollectionEntries } from '../collections/transformCollectionEntries'
-import simplifySpatial from '../geometry/simplifySpatial'
+import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 
 /**
  * Request object for NLP search requests to CMR
@@ -16,29 +16,15 @@ export default class NlpSearchRequest extends CmrRequest {
     this.searchPath = 'search/nlp/query.json'
   }
 
-  /**
-   * Override get method to bypass Request transform hooks and preflight
-   */
-  get(url, params) {
-    this.startTimer()
-    this.setFullUrl(url)
-
-    const requestOptions = {
-      method: 'get',
-      baseURL: this.baseUrl,
-      url,
-      params,
-      transformResponse: axios.defaults.transformResponse.concat(
-        (data) => this.transformResponse({ data }, params && params.q)
-      ),
-      cancelToken: this.cancelToken.token
-    }
-
-    return axios(requestOptions)
+  transformData(data) {
+    return prepKeysForCmr(
+      data,
+      this.nonIndexedKeys()
+    )
   }
 
   search(searchParams) {
-    return this.get(this.searchPath, searchParams)
+    return this.post(this.searchPath, searchParams)
   }
 
   /**
@@ -46,7 +32,9 @@ export default class NlpSearchRequest extends CmrRequest {
    * @return {Array} An empty array
    */
   nonIndexedKeys() {
-    return []
+    return [
+      'search_params'
+    ]
   }
 
   /**
@@ -55,75 +43,57 @@ export default class NlpSearchRequest extends CmrRequest {
    */
   permittedCmrKeys() {
     return [
-      'q'
+      'embedding',
+      'q',
+      'search_params'
     ]
   }
 
   /**
    * Transforms the NLP search response to extract and format spatial/temporal data
-   * @param {Object} response - The raw NLP API response
-   * @param {String} query - The original search query string
+   * @param {Object} data - Response object from the object.
+   * @return {Object} The transformed response object
    */
-  transformResponse(response, query) {
-    const { data } = response
-    const actualData = data?.data || data
+  transformResponse(data) {
+    const {
+      metadata,
+      queryInfo = {}
+    } = data || {}
 
-    if (!actualData || !actualData.queryInfo) {
+    if (isEmpty(queryInfo)) {
       return {
+        metadata,
         queryInfo: {
-          query,
-          spatial: null,
-          temporal: null
-        },
-        collections: []
-      }
-    }
-
-    let spatialData = null
-    let geoLocation = null
-    let temporalData = null
-    let collectionsData = []
-
-    if (actualData.queryInfo.spatial) {
-      const rawSpatialData = actualData.queryInfo.spatial
-      const actualGeometry = rawSpatialData.geoJson || rawSpatialData
-      const simplifiedGeometry = (actualGeometry && actualGeometry.type)
-        ? simplifySpatial(actualGeometry)
-        : null
-
-      if (simplifiedGeometry) {
-        spatialData = simplifiedGeometry
-      }
-
-      geoLocation = rawSpatialData.geoLocation || null
-    }
-
-    if (actualData.queryInfo.temporal) {
-      const { startDate, endDate } = actualData.queryInfo.temporal
-
-      if (startDate || endDate) {
-        temporalData = {
-          startDate: startDate ? new Date(startDate).toISOString() : '',
-          endDate: endDate ? new Date(endDate).toISOString() : ''
+          keyword: null,
+          spatial: {},
+          temporal: {}
         }
       }
     }
 
+    const {
+      keyword,
+      spatial,
+      temporal
+    } = queryInfo
+
     // Transform metadata entries into collection items
-    const meta = data?.metadata || data?.data?.metadata
-    const entries = meta?.feed?.entry
-    collectionsData = transformCollectionEntries(entries, this.earthdataEnvironment)
+    const { feed } = metadata
+    const { entry } = feed
+    const transformedEntries = transformCollectionEntries(entry, this.earthdataEnvironment)
 
     return {
       queryInfo: {
-        query,
-        spatial: spatialData ? {
-          geoJson: spatialData,
-          geoLocation: geoLocation || ''
-        } : null,
-        temporal: temporalData
+        keyword,
+        spatial: spatial || {},
+        temporal: temporal || {}
       },
-      collections: collectionsData
+      metadata: {
+        feed: {
+          ...feed,
+          entry: transformedEntries
+        }
+      }
     }
   }
 }

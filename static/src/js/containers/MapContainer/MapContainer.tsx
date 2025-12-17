@@ -47,8 +47,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 import {
   getCollectionsQuerySpatial,
   getFocusedCollectionGranuleQuery,
-  getSelectedRegionQuery,
-  getNlpCollection
+  getSelectedRegionQuery
 } from '../../zustand/selectors/query'
 import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedCollectionMapLayers } from '../../zustand/selectors/map'
@@ -160,7 +159,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const granules = useEdscStore(getGranules)
   const granulesById = useEdscStore(getGranulesById)
   const mapLayers = useEdscStore(getFocusedCollectionMapLayers)
-  const nlpCollection = useEdscStore(getNlpCollection)
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
 
   const setOpenModal = useEdscStore(setOpenModalFunction)
@@ -533,7 +531,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       imageryLayers={imageryLayers}
       isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
-      nlpCollection={nlpCollection}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}

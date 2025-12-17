@@ -65,12 +65,19 @@
   &__hero-submit-button {
     background-color: utils.$color__nasa-red;
     border: 0;
+    width: 6.25rem;
 
     &:hover,
     &:focus,
     &:active {
       background-color: utils.$color__nasa-red--shade !important; // !important is needed to override the bootstrap active color
       border: 0;
+    }
+
+    &:disabled {
+      background-color: utils.$color__nasa-red;
+      border: 0;
+      opacity: 1 !important; // !important is needed to override the bootstrap opacity
     }
   }
 

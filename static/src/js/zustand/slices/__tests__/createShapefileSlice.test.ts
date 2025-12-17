@@ -6,9 +6,6 @@ import { initialState } from '../createShapefileSlice'
 
 import ShapefileRequest from '../../../util/request/shapefileRequest'
 
-// @ts-expect-error Types are not defined for this module
-import configureStore from '../../../store/configureStore'
-
 import { ShapefileFile } from '../../../types/sharedTypes'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -83,12 +80,6 @@ describe('createShapefileSlice', () => {
   describe('fetchShapefile', () => {
     describe('when the shapefile is fetched successfully', () => {
       test('fetches the shapefile', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         const zustandInitialState = useEdscStore.getInitialState()
         useEdscStore.setState({
           shapefile: {
@@ -139,12 +130,6 @@ describe('createShapefileSlice', () => {
 
     describe('when the shapefile fails to fetch', () => {
       test('sets the error state', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         nock(/localhost/)
           .get(/shapefiles/)
           .reply(500, {
@@ -206,12 +191,6 @@ describe('createShapefileSlice', () => {
   describe('saveShapefile', () => {
     describe('when the shapefile is saved successfully', () => {
       test('saves the shapefile', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         nock(/localhost/)
           .post(/shapefiles/)
           .reply(200, {
@@ -223,8 +202,6 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
-          earthdataEnvironment: 'prod',
-          edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
           file: mockshapefile
@@ -257,12 +234,6 @@ describe('createShapefileSlice', () => {
 
     describe('when the shapefile fails to save', () => {
       test('sets the error state', async () => {
-        configureStore.mockReturnValue({
-          getState: () => ({
-            earthdataEnvironment: 'prod'
-          })
-        })
-
         nock(/localhost/)
           .post(/shapefiles/)
           .reply(500, {
@@ -282,8 +253,6 @@ describe('createShapefileSlice', () => {
         const { saveShapefile } = shapefile
 
         await saveShapefile({
-          earthdataEnvironment: 'prod',
-          edlToken: 'mockEdlToken',
           filename: 'Test Shapefile',
           size: '1 MB',
           file: mockshapefile

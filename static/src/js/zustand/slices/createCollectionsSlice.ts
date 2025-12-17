@@ -1,4 +1,5 @@
 import { CancelTokenSource, isCancel } from 'axios'
+import { isEmpty } from 'lodash-es'
 
 import { CollectionsSlice, ImmerStateCreator } from '../types'
 
@@ -10,8 +11,8 @@ import actions from '../../actions'
 
 import { getEdlToken } from '../selectors/user'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { getNlpCollection } from '../selectors/query'
 
+import addShapefile from '../../util/addShapefile'
 // @ts-expect-error There are no types for this file
 import CollectionRequest from '../../util/request/collectionRequest'
 // @ts-expect-error There are no types for this file
@@ -35,13 +36,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
     getCollections: async () => {
       const zustandState = get()
-      const existingNlp = getNlpCollection(zustandState)
-
-      if (existingNlp) {
-        await zustandState.collections.getNlpCollections()
-
-        return
-      }
 
       const {
         dispatch: reduxDispatch,
@@ -137,28 +131,104 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       }
     },
 
-    getNlpCollections: async () => {
+    getNlpCollections: async (query) => {
       const zustandState = get()
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-      const nlpFromState = getNlpCollection(zustandState)
-      const searchQuery = nlpFromState!.query
 
       let nlpRequest: NlpSearchRequest
 
+      const collectionParams = prepareCollectionParams({})
+      const searchParams = buildCollectionSearchParams(collectionParams)
+
+      set((state) => {
+        state.collections.collections.isLoading = true
+      })
+
       try {
+        const timerStart = Date.now()
         nlpRequest = new NlpSearchRequest(earthdataEnvironment)
 
-        const response = await nlpRequest.search({ q: searchQuery })
-        const { data } = response
-        const { queryInfo, collections: transformedCollections = [] } = data
+        const response = await nlpRequest.search({
+          embedding: false,
+          q: query,
+          search_params: searchParams
+        })
+
+        const { data, headers } = response
+        const cmrHits = parseInt(headers['cmr-hits'], 10)
+
+        const {
+          metadata,
+          queryInfo
+        } = data
+
+        const { feed } = metadata
+        const { entry, facets = {} } = feed
+        const { children = [] } = facets
+
+        const { spatial } = queryInfo
+
+        if (!isEmpty(spatial)) {
+          const { geoJson, geoLocation } = spatial || {}
+
+          // Ensure the geoJson is a FeatureCollection
+          let featureCollection = geoJson
+          if (geoJson.type !== 'FeatureCollection') {
+            featureCollection = {
+              type: 'FeatureCollection',
+              features: [{
+                type: 'Feature',
+                geometry: geoJson,
+                properties: {}
+              }]
+            }
+          }
+
+          // Calculate the size of the geoJson
+          const { size: sizeInBytes } = new Blob([JSON.stringify(geoJson)])
+
+          const sizeInKB = sizeInBytes / 1024
+          let size = `${sizeInKB.toFixed(2)} KB`
+
+          // If the size is greater than 1 MB, convert to MB
+          if (sizeInKB > 1024) {
+            const sizeInMB = sizeInKB / 1024
+            size = `${sizeInMB.toFixed(2)} MB`
+          }
+
+          // Add the shapefile to the store
+          addShapefile({
+            delayMapMove: true,
+            file: featureCollection,
+            filename: `${geoLocation}.json`,
+            size
+          })
+        }
 
         set((state) => {
-          state.query.nlpCollection = queryInfo
+          state.query.collection = {
+            ...state.query.collection,
+            ...queryInfo
+          }
+
+          state.collections.collections.count = cmrHits
           state.collections.collections.isLoaded = true
           state.collections.collections.isLoading = false
-          state.collections.collections.count = transformedCollections.length
-          state.collections.collections.items = transformedCollections
+          state.collections.collections.items = entry
+          state.collections.collections.loadTime = Date.now() - timerStart
         })
+
+        const {
+          dispatch: reduxDispatch
+        } = configureStore()
+
+        reduxDispatch(actions.onFacetsLoaded({
+          loaded: true
+        }))
+
+        reduxDispatch(actions.updateFacets({
+          facets: children
+        }))
       } catch (error) {
         set((state) => {
           state.collections.collections.isLoading = false
