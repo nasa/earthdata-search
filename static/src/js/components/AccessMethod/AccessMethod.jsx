@@ -717,7 +717,6 @@ const AccessMethod = ({
                     width: '100%'
                   }
                 }
-                variant="dark"
               />
             ) : accessMethodsList
           }
