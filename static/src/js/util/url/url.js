@@ -239,7 +239,6 @@ export const decodeUrlParams = (paramString) => {
   }
   collectionQuery.hasGranulesOrCwic = decodeHelp(params, 'hasGranulesOrCwic')
   collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
-  collectionQuery.nlpQuery = decodeHelp(params, 'nlpSearch')
   collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
   collectionQuery.spatial = spatial

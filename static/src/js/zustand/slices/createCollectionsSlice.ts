@@ -151,7 +151,14 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         const response = await nlpRequest.search({
           embedding: false,
           q: query,
-          search_params: searchParams
+          search_params: {
+            ...searchParams,
+            options: {
+              temporal: {
+                limit_to_granules: true
+              }
+            }
+          }
         })
 
         const { data, headers } = response

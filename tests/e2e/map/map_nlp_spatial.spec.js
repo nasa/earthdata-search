@@ -26,7 +26,7 @@ test.describe('Map: NLP spatial rendering', () => {
       // Match the request body to ensure it's the expected NLP query
       const requestBody = request.postData()
 
-      expect(requestBody).toEqual('embedding=false&q=rainfall in DC&search_params[include_facets]=v2&search_params[include_granule_counts]=true&search_params[include_has_granules]=true&search_params[include_tags]=edsc.*,opensearch.granule.osdd&search_params[page_size]=20&search_params[sort_key][]=has_granules_or_cwic&search_params[sort_key][]=-score&search_params[sort_key][]=-create-data-date&search_params[has_granules_or_cwic]=true&search_params[page_num]=1')
+      expect(requestBody).toEqual('embedding=false&q=rainfall in DC&search_params[include_facets]=v2&search_params[include_granule_counts]=true&search_params[include_has_granules]=true&search_params[include_tags]=edsc.*,opensearch.granule.osdd&search_params[options][temporal][limit_to_granules]=true&search_params[page_size]=20&search_params[sort_key][]=has_granules_or_cwic&search_params[sort_key][]=-score&search_params[sort_key][]=-create-data-date&search_params[has_granules_or_cwic]=true&search_params[page_num]=1')
 
       await route.fulfill({
         json: nlpCollections,

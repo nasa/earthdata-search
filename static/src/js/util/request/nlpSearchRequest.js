@@ -3,7 +3,6 @@ import { isEmpty } from 'lodash-es'
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { transformCollectionEntries } from '../collections/transformCollectionEntries'
-import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 
 /**
  * Request object for NLP search requests to CMR
@@ -14,13 +13,6 @@ export default class NlpSearchRequest extends CmrRequest {
     super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
     this.searchPath = 'search/nlp/query.json'
-  }
-
-  transformData(data) {
-    return prepKeysForCmr(
-      data,
-      this.nonIndexedKeys()
-    )
   }
 
   search(searchParams) {
