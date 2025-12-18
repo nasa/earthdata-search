@@ -58,7 +58,7 @@ test.describe('Temporal Dropdown Behavior', () => {
       await expect(page.getByText('2025-07-10 23:59:59')).toBeVisible()
     })
 
-    test('users are able to select and apply start with no end date to accomodate searchs for ongoing projects', async ({ page }) => {
+    test('users are able to select and apply start with no end date to accommodate searches for ongoing temporal', async ({ page }) => {
       // Select a start date
       await page.getByRole('textbox', { name: 'Start Date' }).click()
       await page.getByRole('cell', { name: '2021' }).click()
