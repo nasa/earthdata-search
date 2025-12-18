@@ -38,6 +38,14 @@ function setup(options) {
         radius: 3
       }
     ]
+  } else if (options.circle) {
+    testSkeleton = [
+      {
+        shape: 'circle',
+        left: '1rem',
+        top: '2rem'
+      }
+    ]
   } else if (options.unknownShape) {
     testSkeleton = [
       {
@@ -134,6 +142,22 @@ describe('Skeleton component', () => {
         left: '1.875rem',
         top: '0.75rem',
         width: '6.25rem'
+      })
+    })
+  })
+
+  describe('when passed a circle shape', () => {
+    test('renders a multiple shapes', () => {
+      const { enzymeWrapper } = setup({ circle: true })
+      const items = enzymeWrapper.find('.skeleton__item')
+
+      expect(items.length).toEqual(1)
+      expect(items.at(0).prop('style')).toEqual({
+        borderRadius: '50%',
+        height: '1rem',
+        left: '1rem',
+        top: '2rem',
+        width: '1rem'
       })
     })
   })

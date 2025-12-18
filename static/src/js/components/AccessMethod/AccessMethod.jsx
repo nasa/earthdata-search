@@ -21,15 +21,12 @@ import Button from '../Button/Button'
 import ExternalLink from '../ExternalLink/ExternalLink'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import RadioList from '../FormFields/RadioList/RadioList'
-import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 import SwodlrForm from './SwodlrForm'
 
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import useEdscStore from '../../zustand/useEdscStore'
-
-import { accessMethodsSkeleton } from './skeleton'
 
 import './AccessMethod.scss'
 
@@ -285,21 +282,22 @@ const AccessMethod = ({
 
   const renderRadioItem = (radioItem, onPropsChange, selected) => {
     const {
-      id,
-      methodKey,
-      title,
-      subtitle,
       description,
       details,
       disabled,
       errorMessage,
-      externalLink
+      externalLink,
+      id,
+      methodKey,
+      subtitle,
+      title
     } = radioItem
 
     return (
       <AccessMethodRadio
         key={id}
         id={id}
+        isLoading={isLoading}
         value={methodKey}
         title={title}
         subtitle={subtitle}
@@ -584,6 +582,11 @@ const AccessMethod = ({
     ...accessMethodsByType.download
   ]
 
+  if (isLoading) {
+    radioList.push({ isLoading })
+    radioList.push({ isLoading })
+  }
+
   const granuleListUndefined = granuleList[0] === undefined
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
@@ -685,21 +688,6 @@ const AccessMethod = ({
 
   const harmonyMethods = accessMethodsByType.Harmony
 
-  const accessMethodsList = (radioList.length === 0 && hasHarmony === false)
-    ? (
-      <Alert
-        variant="warning"
-      >
-        No access methods exist for this collection.
-      </Alert>
-    )
-    : getAccessMethodTypes(
-      hasHarmony,
-      radioList,
-      collectionId,
-      selectedAccessMethod
-    )
-
   return (
     <div className="access-method">
       <ProjectPanelSection
@@ -708,17 +696,20 @@ const AccessMethod = ({
       >
         <div className="access-method__radio-list">
           {
-            isLoading ? (
-              <Skeleton
-                shapes={accessMethodsSkeleton}
-                containerStyle={
-                  {
-                    height: '6rem',
-                    width: '100%'
-                  }
-                }
-              />
-            ) : accessMethodsList
+            radioList.length === 0 && hasHarmony === false
+              ? (
+                <Alert
+                  variant="warning"
+                >
+                  No access methods exist for this collection.
+                </Alert>
+              )
+              : getAccessMethodTypes(
+                hasHarmony,
+                radioList,
+                collectionId,
+                selectedAccessMethod
+              )
           }
         </div>
       </ProjectPanelSection>

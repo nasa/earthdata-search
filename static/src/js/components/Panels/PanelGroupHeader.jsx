@@ -130,7 +130,7 @@ export const PanelGroupHeader = ({
                       className="panel-group-header__breadcrumbs-skeleton"
                       containerStyle={
                         {
-                          height: '1rem',
+                          height: '1.5rem',
                           width: '100%'
                         }
                       }
