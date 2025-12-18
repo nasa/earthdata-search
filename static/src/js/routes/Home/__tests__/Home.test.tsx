@@ -7,7 +7,9 @@ import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import Spinner from '../../../components/Spinner/Spinner'
 
+jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
 jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => jest.fn(() => <div />))
 
 jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => <div />))
@@ -140,7 +142,7 @@ describe('Home', () => {
     expect(mockUseNavigate).toHaveBeenCalledWith('/search')
   })
 
-  test('calls onChangePath and navigate when the enter key is pressed', async () => {
+  test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
     const { user, zustandState } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
@@ -153,6 +155,26 @@ describe('Home', () => {
 
     expect(mockUseNavigate).toHaveBeenCalledTimes(1)
     expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+  })
+
+  test('displays a spinner in the search button when loading', async () => {
+    setup({
+      overrideZustandState: {
+        collections: {
+          collections: {
+            isLoading: true
+          }
+        }
+      }
+    })
+
+    expect(Spinner).toHaveBeenCalledTimes(1)
+    expect(Spinner).toHaveBeenCalledWith({
+      color: 'white',
+      inline: true,
+      size: 'tiny',
+      type: 'dots'
+    }, {})
   })
 
   test('renders the topic cards', () => {
