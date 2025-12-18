@@ -58,6 +58,23 @@ test.describe('Temporal Dropdown Behavior', () => {
       await expect(page.getByText('2025-07-10 23:59:59')).toBeVisible()
     })
 
+    test('users are able to select and apply start with no end date to accommodate searches for ongoing temporal', async ({ page }) => {
+      // Select a start date
+      await page.getByRole('textbox', { name: 'Start Date' }).click()
+      await page.getByRole('cell', { name: '2021' }).click()
+      await page.getByRole('cell', { name: 'Mar' }).click()
+      await page.getByRole('cell', { name: '5' }).first().click()
+
+      await page.getByRole('button', {
+        name: 'Apply',
+        exact: true
+      }).click()
+
+      // Check that no Stop: was auto-filled
+      await expect(page.getByText('Start:2021-03-05 00:00:00')).toBeVisible()
+      await expect(page.getByText('Stop:')).not.toBeVisible()
+    })
+
     test('clicking Today fills in the current date appropriately', async ({ page }) => {
       // Mock date with timestamp of 00:00:00
       const startDayTimestamp = moment().startOf('day')
@@ -78,6 +95,20 @@ test.describe('Temporal Dropdown Behavior', () => {
 
       await expect(page.getByText(mockStartDate)).toBeVisible()
       await expect(page.getByText(mockEndDate)).toBeVisible()
+    })
+
+    test('typing in the year and pressing tab auto-fills in the rest of the date', async ({ page }) => {
+      // Type in year for start date
+      await page.getByRole('textbox', { name: 'Start Date' }).click()
+      await page.getByRole('textbox', { name: 'Start Date' }).fill('2020')
+      await page.getByRole('textbox', { name: 'Start Date' }).press('Tab')
+
+      // Type in year for end date
+      await page.getByRole('textbox', { name: 'End Date' }).fill('2020')
+      await page.getByRole('textbox', { name: 'End Date' }).press('Tab')
+
+      await expect(page.getByRole('textbox', { name: 'Start Date' })).toHaveValue('2020-01-01 00:00:00')
+      await expect(page.getByRole('textbox', { name: 'End Date' })).toHaveValue('2020-12-31 23:59:59')
     })
 
     test.describe('when user selects Use Recurring Date', () => {
