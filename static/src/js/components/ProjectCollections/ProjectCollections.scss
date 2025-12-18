@@ -12,6 +12,10 @@
   flex-grow: 0;
   background-color: utils.$color__spacesuit-white;
 
+  &__download-button {
+    height: 2.375rem;
+  }
+
   &__footer {
     flex-shrink: 0;
     padding: calc(bootstrap.$spacer / 2);

@@ -10,6 +10,11 @@
     flex-direction: column;
   }
 
+  &__create-button {
+    width: 12.375rem;
+    height: 2.375rem;
+  }
+
   &__row {
     &--intro {
       padding: 1rem;

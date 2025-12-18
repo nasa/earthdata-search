@@ -52,7 +52,10 @@ test.describe('Map: NLP spatial rendering', () => {
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
 
-    await page.getByRole('button', { name: 'Search' }).click()
+    await Promise.all([
+      page.getByRole('button', { name: 'Search' }).click(),
+      page.waitForURL('**/search**')
+    ])
 
     // Wait for the map to load
     await initialMapPromise
@@ -64,7 +67,7 @@ test.describe('Map: NLP spatial rendering', () => {
     await page.getByLabel('Close').click()
 
     // NLP label is shown in the Spatial section
-    await expect(page.getByText('Shape File:DC.json(30.21 KB)')).toBeVisible()
+    await expect(page.getByTestId('spatial-display_shapefile-name')).toContainText('"DC"')
 
     // Check collection results count
     await expect(page.getByText('Showing 17 of 17 matching collections')).toBeVisible()

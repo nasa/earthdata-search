@@ -645,7 +645,7 @@ const Map: React.FC<MapProps> = ({
     eventEmitter.on(mapEventTypes.MOVEMAP, handleMoveMap)
 
     // Handle the add shapefile event
-    const handleAddShapefile = (_dzFile: unknown, file: ShapefileFile, updateQuery = true) => {
+    const handleAddShapefile = (_dzFile: unknown, file: ShapefileFile, updateQuery: boolean) => {
       const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
@@ -665,6 +665,7 @@ const Map: React.FC<MapProps> = ({
     }
 
     eventEmitter.on(shapefileEventTypes.ADDSHAPEFILE, handleAddShapefile)
+    eventEmitter.setListenerReady(shapefileEventTypes.ADDSHAPEFILE)
 
     // Handle the remove shapefile event
     const handleRemoveShapefile = () => {

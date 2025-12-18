@@ -200,19 +200,19 @@ export const Home: React.FC = () => {
 
     if (!trimmedKeyword) {
       // If the user did not type anything, call getCollections to load collections directly from CMR
-      getCollections().then(() => {
-        // After collections are fetched, navigate to the Search route
-        navigate('/search')
-      })
+      await getCollections()
+
+      // After collections are fetched, navigate to the Search route
+      navigate('/search')
 
       return
     }
 
     // Fetch collections using NLP search
-    getNlpCollections(trimmedKeyword).then(() => {
-      // After collections are fetched, navigate to the Search route
-      navigate('/search')
-    })
+    await getNlpCollections(trimmedKeyword)
+
+    // After collections are fetched, navigate to the Search route
+    navigate('/search')
   }
 
   return (

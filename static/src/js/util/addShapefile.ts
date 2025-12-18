@@ -24,21 +24,25 @@ const addEdscIdsToShapefile = (file: ShapefileFile): ShapefileFile => {
 /**
  * Add a shapefile to the store and emit an event that a shapefile has been added
  * @param {Object} params
- * @param {boolean} [params.delayMapMove=false] - Whether to delay the map move event
  * @param {Object} params.file - The shapefile as a GeoJSON FeatureCollection
  * @param {string} params.filename - The name of the shapefile
  * @param {string} params.size - The size of the shapefile
+ * @param {boolean} [params.updateQuery=true] - Whether to update the query with the new shapefile
  */
 const addShapefile = ({
-  delayMapMove = false,
   file,
   filename,
-  size
+  size,
+  updateQuery = true
 }: {
-  delayMapMove?: boolean,
+  /** The shapefile as a GeoJSON FeatureCollection */
   file: ShapefileFile,
+  /** The name of the shapefile */
   filename: string,
+  /** The size of the shapefile */
   size: string
+  /** Whether to update the query with the new shapefile */
+  updateQuery?: boolean,
 }) => {
   // Update the name to the original name (ogre puts a hash into this name field)
   const updatedFile = file
@@ -57,16 +61,8 @@ const addShapefile = ({
     size
   })
 
-  if (delayMapMove) {
-    // Coming from nlp, this is getting triggered before the map is actually ready, so the
-    // movemap event doesn't end up centering the map on the file. This setTimeout delays
-    // the event emission to allow the map to be ready.
-    setTimeout(() => {
-      eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds, false)
-    }, 1000)
-  } else {
-    eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
-  }
+  // Emit the add shapefile event
+  eventEmitter.emitBuffered(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds, updateQuery)
 }
 
 export default addShapefile

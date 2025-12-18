@@ -123,6 +123,7 @@ const ProjectCollections = ({
           disabled={!isValid}
           spinner={isSubmitting}
           dataTestId="project-download-data"
+          className="project-collections__download-button"
         >
           Download Data
         </Button>

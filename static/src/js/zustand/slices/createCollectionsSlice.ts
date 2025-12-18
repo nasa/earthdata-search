@@ -20,6 +20,8 @@ import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 // @ts-expect-error There are no types for this file
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
 
+import type { ShapefileFile } from '../../types/sharedTypes'
+
 const initialState = {
   count: 0,
   isLoaded: false,
@@ -179,7 +181,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           const { geoJson, geoLocation } = spatial || {}
 
           // Ensure the geoJson is a FeatureCollection
-          let featureCollection = geoJson
+          let featureCollection: ShapefileFile = geoJson
           if (geoJson.type !== 'FeatureCollection') {
             featureCollection = {
               type: 'FeatureCollection',
@@ -190,6 +192,19 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
               }]
             }
           }
+
+          // Add nlpGenerated property to each feature
+          featureCollection.features = featureCollection.features.map((feature) => {
+            const { properties = {} } = feature
+
+            return {
+              ...feature,
+              properties: {
+                ...properties,
+                nlpGenerated: true
+              }
+            }
+          })
 
           // Calculate the size of the geoJson
           const { size: sizeInBytes } = new Blob([JSON.stringify(geoJson)])
@@ -205,10 +220,10 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
           // Add the shapefile to the store
           addShapefile({
-            delayMapMove: true,
             file: featureCollection,
-            filename: `${geoLocation}.json`,
-            size
+            filename: geoLocation,
+            size,
+            updateQuery: false
           })
         }
 

@@ -243,7 +243,6 @@ describe('createCollectionsSlice', () => {
         onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
-        query: undefined,
         sortKey: '-score',
         spatial: {
           geoJson: {
@@ -252,7 +251,9 @@ describe('createCollectionsSlice', () => {
                 coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
                 type: 'Polygon'
               },
-              properties: {},
+              properties: {
+                nlpGenerated: true
+              },
               type: 'Feature'
             }],
             type: 'FeatureCollection'
@@ -278,20 +279,22 @@ describe('createCollectionsSlice', () => {
 
       expect(addShapefile).toHaveBeenCalledTimes(1)
       expect(addShapefile).toHaveBeenCalledWith({
-        delayMapMove: true,
         file: {
           features: [{
             geometry: {
               coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
               type: 'Polygon'
             },
-            properties: {},
+            properties: {
+              nlpGenerated: true
+            },
             type: 'Feature'
           }],
           type: 'FeatureCollection'
         },
-        filename: 'Test Area.json',
-        size: '0.15 KB'
+        filename: 'Test Area',
+        size: '0.17 KB',
+        updateQuery: false
       })
     })
 
@@ -329,7 +332,6 @@ describe('createCollectionsSlice', () => {
 
         expect(addShapefile).toHaveBeenCalledTimes(1)
         expect(addShapefile).toHaveBeenCalledWith({
-          delayMapMove: true,
           file: {
             type: 'FeatureCollection',
             features: [{
@@ -338,11 +340,14 @@ describe('createCollectionsSlice', () => {
                 type: 'Polygon',
                 coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
               },
-              properties: {}
+              properties: {
+                nlpGenerated: true
+              }
             }]
           },
-          filename: 'Test Area.json',
-          size: '0.06 KB'
+          filename: 'Test Area',
+          size: '0.06 KB',
+          updateQuery: false
         })
       })
     })
@@ -389,7 +394,6 @@ describe('createCollectionsSlice', () => {
 
         expect(addShapefile).toHaveBeenCalledTimes(1)
         expect(addShapefile).toHaveBeenCalledWith({
-          delayMapMove: true,
           file: {
             type: 'FeatureCollection',
             features: [{
@@ -398,11 +402,14 @@ describe('createCollectionsSlice', () => {
                 type: 'Polygon',
                 coordinates: [largeCoordinates]
               },
-              properties: {}
+              properties: {
+                nlpGenerated: true
+              }
             }]
           },
-          filename: 'Large Area.json',
-          size: '1.31 MB'
+          filename: 'Large Area',
+          size: '1.31 MB',
+          updateQuery: false
         })
       })
     })

@@ -219,7 +219,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
         spinner
           ? (
             <span className="button__contents">
-              <span>
+              <span className="d-inline-flex">
                 <Spinner type="dots" color="white" size="tiny" inline />
               </span>
             </span>
