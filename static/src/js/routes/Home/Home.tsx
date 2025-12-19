@@ -207,10 +207,7 @@ export const Home: React.FC = () => {
     }
 
     // After collections are fetched, navigate to the Search route
-    // Use setTimeout to ensure all async state updates complete before navigation
-    setTimeout(() => {
-      navigate(`/search${window.location.search}`)
-    }, 0)
+    navigate(`/search${window.location.search}`)
   }
 
   return (

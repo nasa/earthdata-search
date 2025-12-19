@@ -61,8 +61,36 @@ const addShapefile = async ({
     size
   })
 
-  // Emit the add shapefile event
-  eventEmitter.emitBuffered(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds, updateQuery)
+  // This promise resolves once the shapefileId is set in the store.
+  // This ensures that the `saveShapefile` logic is fully complete before emitting the event
+  // and returning from this function. This means that functions calling `addShapefile` can
+  // safely assume the shapefile is fully saved once this promise resolves.
+  return new Promise<void>((resolve) => {
+    // Subscribe to the store to watch for the shapefileId to be set
+    const unsubscribe = useEdscStore.subscribe(
+      // Selector function to get the current shapefileId. This value is passed to the callback below
+      (state) => state.shapefile.shapefileId,
+      // When the shapefileId changes, this callback function is called
+      (shapefileId) => {
+        // If the shapefileId is set, emit the event and resolve the promise
+        if (shapefileId) {
+          // Emit the add shapefile event
+          eventEmitter.emitBuffered(
+            shapefileEventTypes.ADDSHAPEFILE,
+            file,
+            fileWithIds,
+            updateQuery
+          )
+
+          // Resolve the promise to indicate completion
+          resolve()
+
+          // Unsubscribe from the store updates to avoid memory leaks
+          unsubscribe()
+        }
+      }
+    )
+  })
 }
 
 export default addShapefile
