@@ -52,12 +52,9 @@ test.describe('Map: NLP spatial rendering', () => {
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
 
-    await Promise.all([
-      page.getByRole('button', { name: 'Search' }).click(),
-      page.waitForURL('**/search**')
-    ])
+    await page.getByRole('button', { name: 'Search' }).click()
 
-    // Wait for the map to load
+    // Wait for the map to load after navigation
     await initialMapPromise
 
     // Displays a modal

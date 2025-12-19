@@ -219,7 +219,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           }
 
           // Add the shapefile to the store
-          addShapefile({
+          await addShapefile({
             file: featureCollection,
             filename: geoLocation,
             size,

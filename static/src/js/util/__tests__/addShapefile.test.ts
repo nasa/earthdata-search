@@ -7,7 +7,7 @@ import * as EventEmitter from '../../events/events'
 import type { ShapefileFile } from '../../types/sharedTypes'
 
 describe('addShapefile', () => {
-  test('calls saveShapefile and emits an event', () => {
+  test('calls saveShapefile and emits an event', async () => {
     const mockFile = {
       type: 'FeatureCollection',
       features: [
@@ -46,7 +46,7 @@ describe('addShapefile', () => {
 
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emitBuffered')
 
-    addShapefile({
+    await addShapefile({
       file: mockFile,
       filename: mockFilename,
       size: mockSize,

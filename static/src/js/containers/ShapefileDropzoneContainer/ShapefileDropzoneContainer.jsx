@@ -61,13 +61,13 @@ export const ShapefileDropzoneContainer = () => {
         }
       }
       onSuccess={
-        (file, resp, dropzoneEl) => {
+        async (file, resp, dropzoneEl) => {
           const { name, size } = file
           const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
 
           dropzoneEl.removeFile(file)
 
-          addShapefile({
+          await addShapefile({
             file: resp,
             filename: name,
             size: fileSize

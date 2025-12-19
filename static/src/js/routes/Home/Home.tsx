@@ -201,18 +201,16 @@ export const Home: React.FC = () => {
     if (!trimmedKeyword) {
       // If the user did not type anything, call getCollections to load collections directly from CMR
       await getCollections()
-
-      // After collections are fetched, navigate to the Search route
-      navigate('/search')
-
-      return
+    } else {
+      // If there is a keyword, use NLP search to fetch collections
+      await getNlpCollections(trimmedKeyword)
     }
 
-    // Fetch collections using NLP search
-    await getNlpCollections(trimmedKeyword)
-
     // After collections are fetched, navigate to the Search route
-    navigate('/search')
+    // Use setTimeout to ensure all async state updates complete before navigation
+    setTimeout(() => {
+      navigate(`/search${window.location.search}`)
+    }, 0)
   }
 
   return (

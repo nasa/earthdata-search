@@ -29,7 +29,7 @@ const addEdscIdsToShapefile = (file: ShapefileFile): ShapefileFile => {
  * @param {string} params.size - The size of the shapefile
  * @param {boolean} [params.updateQuery=true] - Whether to update the query with the new shapefile
  */
-const addShapefile = ({
+const addShapefile = async ({
   file,
   filename,
   size,
@@ -55,7 +55,7 @@ const addShapefile = ({
   const { saveShapefile } = shapefile
 
   // Save the shapefile to the store
-  saveShapefile({
+  await saveShapefile({
     file: fileWithIds,
     filename,
     size
