@@ -649,5 +649,30 @@ export class Functions extends Construct {
       },
       timeout: cdk.Duration.minutes(5)
     })
+
+    /**
+     * Cleanup Old Shapefiles
+     */
+    const cleanupOldShapefilesNestedStack = new cdk.NestedStack(scope, 'CleanupOldShapefilesNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(cleanupOldShapefilesNestedStack, 'CleanupOldShapefilesLambda', {
+      ...defaultLambdaConfig,
+      description: 'Removes shapefile entries that are older than one year',
+      entry: '../../serverless/src/cleanupOldShapefiles/handler.js',
+      functionName: 'cleanupOldShapefiles',
+      functionNamePrefix,
+      schedules: [{
+        enabled: true,
+        schedule: events.Schedule.cron({
+          day: '1',
+          hour: '2',
+          minute: '0',
+          month: '*',
+          weekDay: '*',
+          year: '*'
+        })
+      }],
+      timeout: cdk.Duration.minutes(5)
+    })
   }
 }
