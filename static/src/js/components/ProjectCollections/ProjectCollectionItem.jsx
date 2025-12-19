@@ -231,7 +231,7 @@ const ProjectCollectionItem = ({
                 onClick={
                   () => {
                     setCollectionId(collectionId)
-                    onSetActivePanelSection('0')
+                    onSetActivePanel(`0.${index}.0`)
                     // If the panel is closed open it when user selects edit options for a collection
                     onTogglePanels(true)
                   }
