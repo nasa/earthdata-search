@@ -153,7 +153,6 @@ export const Home: React.FC = () => {
   const getCollections = useEdscStore((state) => state.collections.getCollections)
   const getNlpCollections = useEdscStore((state) => state.collections.getNlpCollections)
 
-  // Check if NLP search is enabled to conditionally show spatial/temporal buttons
   const { numberOfGranules } = getApplicationConfig()
 
   useEffect(() => {

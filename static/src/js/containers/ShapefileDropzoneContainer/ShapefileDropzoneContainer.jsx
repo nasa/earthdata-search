@@ -3,7 +3,6 @@ import React from 'react'
 import { eventEmitter } from '../../events/events'
 
 import { shapefileEventTypes } from '../../constants/eventTypes'
-import { MODAL_NAMES } from '../../constants/modalNames'
 
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
