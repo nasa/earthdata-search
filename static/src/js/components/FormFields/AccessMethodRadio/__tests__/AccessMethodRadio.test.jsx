@@ -3,24 +3,59 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
+import Skeleton from '../../../Skeleton/Skeleton'
+
 import AccessMethodRadio from '../AccessMethodRadio'
+
+jest.mock('../../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
+const radioSkeleton = {
+  containerStyle: {
+    height: '4.95rem',
+    width: '20rem'
+  },
+  shapes: [
+    {
+      height: 15,
+      left: '3rem',
+      radius: 2,
+      shape: 'rectangle',
+      top: '1.1rem',
+      width: 150
+    },
+    {
+      height: 12,
+      left: '3rem',
+      radius: 2,
+      shape: 'rectangle',
+      top: '3rem',
+      width: 250
+    },
+    {
+      left: '1rem',
+      shape: 'circle',
+      top: '2rem'
+    }
+  ]
+}
 
 const setup = (overrideProps) => {
   const onChange = jest.fn()
   const onClick = jest.fn()
   const props = {
-    id: 'test-id',
+    checked: false,
     description: 'test description',
     details: 'test details',
-    value: 'test value',
-    checked: false,
+    disabled: false,
+    error: '',
+    externalLink: null,
+    id: 'test-id',
+    isLoading: false,
     onChange,
     onClick,
-    title: 'test title',
     subtitle: 'test subtitle',
-    error: '',
-    disabled: false,
-    externalLink: null,
+    title: 'test title',
+    value: 'test value',
     ...overrideProps
   }
 
@@ -220,6 +255,17 @@ describe('AccessMethodRadio component', () => {
         const radioButton = screen.getByRole('radio', { value: 'test value' })
         expect(radioButton.checked).toEqual(true)
       })
+    })
+  })
+
+  describe('when isLoading is set to true', () => {
+    test('renders skeletons', () => {
+      setup({
+        isLoading: true
+      })
+
+      expect(Skeleton).toHaveBeenCalledTimes(1)
+      expect(Skeleton).toHaveBeenCalledWith(radioSkeleton, {})
     })
   })
 })

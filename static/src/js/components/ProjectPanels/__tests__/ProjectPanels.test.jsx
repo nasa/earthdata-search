@@ -4,10 +4,11 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
 
-import ProjectPanels from '../ProjectPanels'
 import AccessMethod from '../../AccessMethod/AccessMethod'
 import CollectionDetails from '../CollectionDetails'
 import DataQualitySummary from '../../DataQualitySummary/DataQualitySummary'
+import ProjectPanels from '../ProjectPanels'
+import Skeleton from '../../Skeleton/Skeleton'
 import VariableDetailsPanel from '../VariableDetailsPanel'
 import VariableTreePanel from '../VariableTreePanel'
 
@@ -75,6 +76,75 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
+const breadcrumbSkeleton = {
+  className: 'panel-group-header__breadcrumbs-skeleton',
+  containerStyle: {
+    height: '1.5rem',
+    width: '100%'
+  },
+  shapes: [
+    {
+      height: 18,
+      left: 0,
+      radius: 2,
+      shape: 'rectangle',
+      top: 3,
+      width: 280
+    }
+  ]
+}
+
+const headingSkeleton = {
+  className: 'panel-group-header__heading panel-group-header__heading--skeleton',
+  containerStyle: {
+    display: 'inline-block',
+    height: '1.25rem',
+    width: '100%'
+  },
+  shapes: [
+    {
+      height: 22,
+      left: 0,
+      radius: 2,
+      shape: 'rectangle',
+      top: 0,
+      width: 280
+    }
+  ]
+}
+
+const radioSkeleton = {
+  containerStyle: {
+    height: '4.95rem',
+    width: '20rem'
+  },
+  shapes: [
+    {
+      height: 15,
+      left: '3rem',
+      radius: 2,
+      shape: 'rectangle',
+      top: '1.1rem',
+      width: 150
+    },
+    {
+      height: 12,
+      left: '3rem',
+      radius: 2,
+      shape: 'rectangle',
+      top: '3rem',
+      width: 250
+    },
+    {
+      left: '1rem',
+      shape: 'circle',
+      top: '2rem'
+    }
+  ]
+}
+
 const setup = setupTest({
   Component: ProjectPanels,
   defaultProps: {
@@ -120,7 +190,8 @@ const setup = setupTest({
             },
             selectedAccessMethod: 'download'
           }
-        }
+        },
+        isLoading: false
       },
       updateAccessMethod: jest.fn()
     },
@@ -172,6 +243,33 @@ describe('ProjectPanels component', () => {
       expect(DataQualitySummary).toHaveBeenCalledTimes(0)
       expect(VariableDetailsPanel).toHaveBeenCalledTimes(0)
       expect(VariableTreePanel).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when project collections are loading', () => {
+    test('should render skeletons', () => {
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              isLoading: true
+            }
+          }
+        }
+      })
+
+      expect(Skeleton).toHaveBeenCalledTimes(10)
+
+      expect(Skeleton).toHaveBeenNthCalledWith(1, expect.objectContaining(breadcrumbSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(2, expect.objectContaining(headingSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(3, expect.objectContaining(radioSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining(radioSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(5, expect.objectContaining(breadcrumbSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(6, expect.objectContaining(headingSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(7, expect.objectContaining(radioSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(8, expect.objectContaining(radioSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(9, expect.objectContaining(radioSkeleton), {})
+      expect(Skeleton).toHaveBeenNthCalledWith(10, expect.objectContaining(radioSkeleton), {})
     })
   })
 

@@ -68,8 +68,8 @@ export const Skeleton = ({
               top: styles.top,
               left: styles.left,
               right: styles.right,
-              width: '1rem',
-              height: '1rem',
+              width: styles.width || '1rem',
+              height: styles.height || '1rem',
               borderRadius: '50%'
             }
           }

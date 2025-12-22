@@ -259,6 +259,9 @@ describe('createProjectSlice', () => {
         const { project } = zustandState
 
         const result = await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
         expect(result).toBeNull()
       })
     })
@@ -310,6 +313,9 @@ describe('createProjectSlice', () => {
         const { project } = zustandState
 
         const result = await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
         expect(result).toBeNull()
 
         const { errors } = useEdscStore.getState()
@@ -393,6 +399,9 @@ describe('createProjectSlice', () => {
         const { project } = zustandState
 
         await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
 
         const updatedState = useEdscStore.getState()
         const {
@@ -694,6 +703,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+
         const updatedState = useEdscStore.getState()
         const { project: updatedProject } = updatedState
         const { collections } = updatedProject
@@ -884,6 +896,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+
         const updatedState = useEdscStore.getState()
         const {
           collection,
@@ -927,6 +942,9 @@ describe('createProjectSlice', () => {
         const zustandState = useEdscStore.getState()
         const { project } = zustandState
         await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
 
         const updatedState = useEdscStore.getState()
         const {
@@ -1006,6 +1024,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+
         const updatedState = useEdscStore.getState()
         const {
           collection,
@@ -1075,6 +1096,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+
         const { errors } = useEdscStore.getState()
         expect(errors.handleError).toHaveBeenCalledTimes(1)
         expect(errors.handleError).toHaveBeenCalledWith({
@@ -1140,6 +1164,9 @@ describe('createProjectSlice', () => {
         const { project } = zustandState
 
         await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
 
         const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
         expect(setDataQualitySummaries).toHaveBeenCalledTimes(1)

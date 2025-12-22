@@ -85,7 +85,6 @@ export const AccessMethodRadio = ({
     />
   )
 
-  // Render skeleton in here
   return (
     <label
       className={labelClassName}

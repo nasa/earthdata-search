@@ -8,11 +8,15 @@ import {
 
 import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
+import Skeleton from '../../Skeleton/Skeleton'
+
 import useEdscStore from '../../../zustand/useEdscStore'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 import { echoForm, rawModel } from './mocks'
+
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
   jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
@@ -32,6 +36,36 @@ const emptySpatial = {
   line: [],
   point: [],
   polygon: []
+}
+
+const radioSkeleton = {
+  containerStyle: {
+    height: '4.95rem',
+    width: '20rem'
+  },
+  shapes: [
+    {
+      height: 15,
+      left: '3rem',
+      radius: 2,
+      shape: 'rectangle',
+      top: '1.1rem',
+      width: 150
+    },
+    {
+      height: 12,
+      left: '3rem',
+      radius: 2,
+      shape: 'rectangle',
+      top: '3rem',
+      width: 250
+    },
+    {
+      left: '1rem',
+      shape: 'circle',
+      top: '2rem'
+    }
+  ]
 }
 
 const setup = setupTest({
@@ -109,6 +143,28 @@ describe('AccessMethod component', () => {
 
         const noAccessMethodAlert = screen.getByText('No access methods exist for this collection.')
         expect(noAccessMethodAlert).toBeInTheDocument()
+      })
+
+      test('when access methods are loading', async () => {
+        setup({
+          overrideZustandState: {
+            project: {
+              collections: {
+                isLoading: true
+              }
+            }
+          }
+        })
+
+        expect(Skeleton).toHaveBeenCalledTimes(4)
+
+        expect(Skeleton).toHaveBeenNthCalledWith(1, expect.objectContaining(radioSkeleton), {})
+
+        expect(Skeleton).toHaveBeenNthCalledWith(2, expect.objectContaining(radioSkeleton), {})
+
+        expect(Skeleton).toHaveBeenNthCalledWith(3, expect.objectContaining(radioSkeleton), {})
+
+        expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining(radioSkeleton), {})
       })
     })
 

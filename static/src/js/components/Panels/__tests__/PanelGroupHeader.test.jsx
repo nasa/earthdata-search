@@ -31,12 +31,26 @@ function setup(overrideProps) {
   }
 }
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('PanelGroupHeader component', () => {
+  describe('when breadcrumbs are loading', () => {
+    const { enzymeWrapper } = setup({
+      breadcrumbs: [
+        {
+          title: 'Loading Breadcrumb',
+          isLoading: true
+        }
+      ]
+    })
+
+    test('should render the breadcrumb skeleton', () => {
+      expect(enzymeWrapper.find('.panel-group-header__breadcrumbs-skeleton').length).toEqual(1)
+      expect(enzymeWrapper.find('Skeleton').props().containerStyle).toEqual({
+        height: '1.5rem',
+        width: '100%'
+      })
+    })
+  })
+
   describe('when content is loading', () => {
     const { enzymeWrapper } = setup({
       headerMetaPrimaryLoading: true,
