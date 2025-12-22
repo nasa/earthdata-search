@@ -60,6 +60,11 @@ describe('ShapefileDropzoneContainer component', () => {
         overrideZustandState: {
           shapefile: {
             setLoading: onShapefileLoadingMock
+          },
+          ui: {
+            modals: {
+              openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
+            }
           }
         }
       })
@@ -80,41 +85,9 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(onShapefileLoadingMock).toHaveBeenCalledTimes(1)
       expect(onShapefileLoadingMock).toHaveBeenCalledWith('test-file-name.zip')
-    })
 
-    describe('when the shapefile modal is open', () => {
-      test('calls setOpenModal to close the modal', async () => {
-        const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-        eventEmitterEmitMock.mockImplementation(() => jest.fn())
-        const onSaveShapefileMock = jest.fn()
-
-        const { zustandState } = setup({
-          overrideZustandState: {
-            shapefile: {
-              saveShapefile: onSaveShapefileMock
-            },
-            ui: {
-              modals: {
-                openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
-              }
-            }
-          }
-        })
-
-        const mockFile = {
-          name: 'test-file-name.zip'
-        }
-
-        const componentProps = ShapefileDropzone.mock.calls[0][0]
-        const { onSending } = componentProps
-
-        await act(() => {
-          onSending(mockFile)
-        })
-
-        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
-        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
-      })
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
   })
 

@@ -1,4 +1,4 @@
-import React, {} from 'react'
+import React from 'react'
 
 import { eventEmitter } from '../../events/events'
 import { shapefileEventTypes } from '../../constants/eventTypes'
@@ -6,8 +6,7 @@ import { shapefileEventTypes } from '../../constants/eventTypes'
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { isModalOpen, setOpenModalFunction } from '../../zustand/selectors/ui'
-import { MODAL_NAMES } from '../../constants/modalNames'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 // Add an edscId to each feature in the shapefile
 const addEdscIdsToShapefile = (file) => {
@@ -58,7 +57,6 @@ export const ShapefileDropzoneContainer = () => {
     onSaveShapefile: state.shapefile.saveShapefile,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
-  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.SHAPEFILE_UPLOAD))
   const setOpenModal = useEdscStore(setOpenModalFunction)
 
   return (
@@ -75,7 +73,7 @@ export const ShapefileDropzoneContainer = () => {
           onShapefileLoading(name)
 
           // Ensure the shapefile is closed
-          if (isOpen) setOpenModal(null)
+          setOpenModal(null)
         }
       }
       onSuccess={
