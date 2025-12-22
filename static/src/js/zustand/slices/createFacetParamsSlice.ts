@@ -1,5 +1,5 @@
 import {
-  CMRFacets,
+  CMRFacetsParams,
   FacetKeys,
   FacetParamsSlice,
   ImmerStateCreator
@@ -41,27 +41,23 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         state.facetParams.cmrFacets = {
           ...state.facetParams.cmrFacets,
           [facetType]: [
-            ...(state.facetParams.cmrFacets[facetType] as CMRFacets[FacetKeys][] || []),
+            ...(state.facetParams.cmrFacets[facetType] as CMRFacetsParams[FacetKeys][] || []),
             facetValue
           ]
         }
       })
     },
     applyViewAllFacets: () => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const zustandState = get()
       const {
         facetParams,
+        facets,
         ui
       } = zustandState
 
-      const { modals } = ui
-      const { setOpenModal } = modals
-      setOpenModal(null)
-      reduxDispatch(actions.toggleFacetsModal(false))
+      // Close the view all facets modal
+      ui.modals.setOpenModal(null)
+      facets.viewAllFacets.resetState()
 
       const {
         setCmrFacets,
@@ -125,11 +121,7 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         }
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      // Call getViewAllFacets to populate the searchResults.viewAllFacets
-      reduxDispatch(actions.getViewAllFacets(category))
+      get().facets.viewAllFacets.getViewAllFacets(category)
     },
     triggerViewAllFacets: (category) => {
       // Copy any existing cmrFacets to viewAllFacets
@@ -139,11 +131,7 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         state.facetParams.viewAllFacets = cmrFacets
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      // Call getViewAllFacets to populate the searchResults.viewAllFacets
-      reduxDispatch(actions.getViewAllFacets(category))
+      get().facets.viewAllFacets.getViewAllFacets(category)
     }
   }
 })

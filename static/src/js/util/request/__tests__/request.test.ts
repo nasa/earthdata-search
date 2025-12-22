@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 import Request from '../request'
+import { RequestResponseData } from '../../../types/sharedTypes'
 
 const baseUrl = 'http://example.com'
 
@@ -61,30 +62,14 @@ describe('Request#transformResponse', () => {
   test('returns data', () => {
     const request = new Request(baseUrl, 'prod')
 
-    const data = {
-      data: [{
-        'concept-id': 'C123456-EDSC',
-        intervals: [
-          [123, 456]
-        ]
-      }],
-      statusCode: 200,
-      message: 'OK',
-      headers: {}
+    const data: RequestResponseData = {
+      feed: {
+        entry: []
+      }
     }
     const result = request.transformResponse(data)
 
-    expect(result).toEqual({
-      data: [{
-        'concept-id': 'C123456-EDSC',
-        intervals: [
-          [123, 456]
-        ]
-      }],
-      statusCode: 200,
-      message: 'OK',
-      headers: {}
-    })
+    expect(result).toEqual(data)
 
     expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
     expect(window.dataLayer.push).toHaveBeenCalledWith({

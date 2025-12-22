@@ -34,10 +34,10 @@ export const getCollectionsById = (
   const collections = getCollections(state)
   const { items = [] } = collections
 
-  const collectionsById = {} as CollectionsMetadata
+  const collectionsById = {} as Record<string, CollectionsMetadata>
 
   items.forEach((collection) => {
-    collectionsById[collection.id] = collection
+    collectionsById[collection.id!] = collection
   })
 
   return collectionsById

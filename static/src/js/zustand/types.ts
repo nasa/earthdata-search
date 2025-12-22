@@ -151,6 +151,63 @@ export type ErrorsSlice = {
   }
 }
 
+export type Facet = {
+  /** The facet title */
+  title: string
+  /** The facet type */
+  type: string
+  /** Whether the facet is applied */
+  applied: boolean
+  /** Whether the facet has children */
+  has_children: boolean
+  /** The child facets */
+  children?: Facet[]
+  /** The number of selected items in the facet */
+  totalSelected?: number
+  /** The starting letters for the facet */
+  startingLetters?: string[]
+}
+
+export type Facets = {
+  [key: string]: Facet
+}
+
+export type FacetsSlice = {
+  /** The Facets Slice of the store */
+  facets: {
+    facets: {
+      /** The list of all facet IDs */
+      allIds: string[]
+      /** The facets object keyed by their ID */
+      byId: Facets
+      /** Whether the facets have been loaded */
+      isLoaded: boolean
+      /** Whether the facets are currently loading */
+      isLoading: boolean
+      /** Function to update the facets */
+      updateFacets: (facets: Facet[]) => void
+    }
+    viewAllFacets: {
+      /** The list of all facet IDs for view all facets */
+      allIds: string[]
+      /** The facets object for view all facets keyed by their ID */
+      byId: Facets
+      /** The total number of collections returned for the view all facets */
+      collectionCount: number | null
+      /** Whether the view all facets have been loaded */
+      isLoaded: boolean
+      /** Whether the view all facets are currently loading */
+      isLoading: boolean
+      /** The currently selected category for view all facets */
+      selectedCategory: string | null
+      /** Function to fetch the view all facets for a category */
+      getViewAllFacets: (category: string) => Promise<void>
+      /** Function to reset the view all facets state */
+      resetState: () => void
+    }
+  }
+}
+
 type FeatureFacets = {
   /** Flag if the facet is available in Earthdata Cloud */
   availableInEarthdataCloud: boolean
@@ -184,7 +241,7 @@ type PlatformFacet = {
 export type ScienceKeywordFacet = ScienceKeyword
 
 /** The CMR Facets */
-export type CMRFacets = {
+export type CMRFacetsParams = {
   data_center_h?: string[]
   granule_data_format_h?: string[]
   horizontal_data_resolution_range?: string[]
@@ -211,11 +268,11 @@ export type FacetParamsSlice = {
     /** The feature facets */
     featureFacets: FeatureFacets
     /** The CMR facets */
-    cmrFacets: CMRFacets
+    cmrFacets: CMRFacetsParams
     /** The view all facets */
     viewAllFacets: ViewAllFacets
     /** Function to add a CMR facet from an autocomplete suggestion */
-    addCmrFacetFromAutocomplete: (facet: CMRFacets) => void
+    addCmrFacetFromAutocomplete: (facet: CMRFacetsParams) => void
     /** Function to apply the viewAllFacets params */
     applyViewAllFacets: () => void
     /** Function to reset the facet params */
@@ -223,7 +280,7 @@ export type FacetParamsSlice = {
     /** Function to set the feature facets */
     setFeatureFacets: (featureFacets: Partial<FeatureFacets>) => void
     /** Function to set the CMR facets */
-    setCmrFacets: (cmrFacets: CMRFacets) => void
+    setCmrFacets: (cmrFacets: CMRFacetsParams) => void
     /** Function to set the view all facets */
     setViewAllFacets: (viewAllFacets: ViewAllFacets, category: keyof ViewAllFacets) => void
     /** Function to trigger the View All Facets modal */
@@ -1196,6 +1253,7 @@ export type EdscStore =
   & EarthdataDownloadRedirectSlice
   & EarthdataEnvironmentSlice
   & ErrorsSlice
+  & FacetsSlice
   & FacetParamsSlice
   & GranuleSlice
   & GranulesSlice

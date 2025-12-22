@@ -159,7 +159,13 @@ export interface CollectionMetadata {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
   /** The collection concept id */
-  conceptId: string
+  conceptId?: string
+  /** The collection id */
+  id?: string
+  /** The collection tags */
+  tags?: {
+    [key: string]: string
+  }
 }
 
 /** The collections metadata object, by collection concept id */
@@ -366,6 +372,25 @@ export interface CmrHeaders {
 }
 
 /** The response data for granules */
+export type CollectionResponseData = {
+  /** The feed object containing collection entries */
+  feed?: {
+    /** The request ID */
+    id: string
+    /** The title of the feed */
+    title: string
+    /** The updated timestamp of the feed */
+    updated: string
+    /** The collection entries */
+    entry: CollectionMetadata[]
+  }
+  /** The collection items */
+  items?: CollectionMetadata[]
+  /** Any errors returned from the request */
+  errors?: string[]
+}
+
+/** The response data for granules */
 export type GranuleResponseData = {
   feed: {
     entry: GranuleMetadata[]
@@ -383,12 +408,23 @@ export type TimelineResponseData = {
 }
 
 /** The response data for our request classes */
-export type RequestResponseData = EmptyObject | [] | TimelineResponseData[] | GranuleResponseData
+export type RequestResponseData = EmptyObject
+  | []
+  | TimelineResponseData[]
+  | CollectionResponseData
+  | GranuleResponseData
 
 /** The request parameters for a collection request */
 export type CollectionRequestParams = {
   /** The collection concept id */
   conceptId: string
+  /** The 2D coordinate system for the search */
+  twoDCoordinateSystem?: {
+    /** The coordinate system type */
+    type: CoordinateSystem
+    /** The coordinates for the search */
+    coordinates?: SpatialCoordinates
+  }
   /** Additional request parameters */
   [key: string]: unknown
 }

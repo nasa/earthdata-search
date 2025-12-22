@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { changeViewAllFacet } from '../../util/facets'
 import { commafy } from '../../util/commafy'
@@ -28,11 +27,11 @@ const matchingCollectionsSkeleton = [
   }
 ]
 
-const FacetsModal = ({
-  collectionHits = null,
-  onToggleFacetsModal,
-  viewAllFacets
-}) => {
+const FacetsModal = () => {
+  const viewAllFacets = useEdscStore((state) => state.facets.viewAllFacets)
+  const collectionCount = useEdscStore((state) => state.facets.viewAllFacets.collectionCount)
+  const resetState = useEdscStore((state) => state.facets.viewAllFacets.resetState)
+
   const {
     allIds,
     byId,
@@ -54,7 +53,7 @@ const FacetsModal = ({
 
   const onModalClose = () => {
     setOpenModal(null)
-    onToggleFacetsModal(false)
+    resetState()
   }
 
   const onApplyClick = () => {
@@ -106,7 +105,7 @@ const FacetsModal = ({
       />
     )
     : (
-      <span className="facets-modal__hits">{`${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`}</span>
+      <span className="facets-modal__hits">{`${commafy(collectionCount)} Matching ${pluralize('Collection', collectionCount)}`}</span>
     )
 
   return (
@@ -129,17 +128,6 @@ const FacetsModal = ({
       title={`Filter collections by ${selectedCategory}`}
     />
   )
-}
-
-FacetsModal.propTypes = {
-  collectionHits: PropTypes.number,
-  onToggleFacetsModal: PropTypes.func.isRequired,
-  viewAllFacets: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    byId: PropTypes.shape({}),
-    isLoading: PropTypes.bool,
-    selectedCategory: PropTypes.string
-  }).isRequired
 }
 
 export default FacetsModal

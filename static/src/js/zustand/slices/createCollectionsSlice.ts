@@ -6,14 +6,10 @@ import { CollectionsSlice, ImmerStateCreator } from '../types'
 // @ts-expect-error There are no types for this file
 import configureStore from '../../store/configureStore'
 
-// @ts-expect-error There are no types for this file
-import actions from '../../actions'
-
 import { getEdlToken } from '../selectors/user'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 import addShapefile from '../../util/addShapefile'
-// @ts-expect-error There are no types for this file
 import CollectionRequest from '../../util/request/collectionRequest'
 // @ts-expect-error There are no types for this file
 import NlpSearchRequest from '../../util/request/nlpSearchRequest'
@@ -40,7 +36,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       const zustandState = get()
 
       const {
-        dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
@@ -69,9 +64,9 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       const timerStart = Date.now()
       set((state) => {
         state.collections.collections.isLoading = true
+        state.facets.facets.isLoaded = false
+        state.facets.facets.isLoading = true
       })
-
-      reduxDispatch(actions.onFacetsLoading())
 
       const requestObject = new CollectionRequest(edlToken, earthdataEnvironment)
 
@@ -100,13 +95,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           state.collections.collections.items = state.collections.collections.items.concat(entry)
         })
 
-        reduxDispatch(actions.onFacetsLoaded({
-          loaded: true
-        }))
-
-        reduxDispatch(actions.updateFacets({
-          facets: children
-        }))
+        zustandState.facets.facets.updateFacets(children)
       } catch (error) {
         if (isCancel(error)) return
 
@@ -114,13 +103,10 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           state.collections.collections.loadTime = Date.now() - timerStart
           state.collections.collections.isLoading = false
           state.collections.collections.isLoaded = false
+
+          state.facets.facets.isLoading = false
+          state.facets.facets.isLoaded = false
         })
-
-        reduxDispatch(actions.onFacetsErrored())
-
-        reduxDispatch(actions.onFacetsLoaded({
-          loaded: false
-        }))
 
         zustandState.errors.handleError({
           error: error as Error,
@@ -240,21 +226,14 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           state.collections.collections.loadTime = Date.now() - timerStart
         })
 
-        const {
-          dispatch: reduxDispatch
-        } = configureStore()
-
-        reduxDispatch(actions.onFacetsLoaded({
-          loaded: true
-        }))
-
-        reduxDispatch(actions.updateFacets({
-          facets: children
-        }))
+        zustandState.facets.facets.updateFacets(children)
       } catch (error) {
         set((state) => {
           state.collections.collections.isLoading = false
           state.collections.collections.isLoaded = false
+
+          state.facets.facets.isLoading = false
+          state.facets.facets.isLoaded = false
         })
 
         zustandState.errors.handleError({

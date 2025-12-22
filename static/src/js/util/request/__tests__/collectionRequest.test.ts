@@ -1,12 +1,14 @@
 import CollectionRequest from '../collectionRequest'
+// @ts-expect-error Types are not defined for this module
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import { CollectionResponseData } from '../../../types/sharedTypes'
 
 jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
 describe('CollectionRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
-    const request = new CollectionRequest(token)
+    const request = new CollectionRequest(token, 'prod')
 
     expect(request.authenticated).toBeTruthy()
     expect(request.edlToken).toEqual(token)
@@ -121,7 +123,7 @@ describe('CollectionRequest#transformResponse', () => {
   test('returns transformed data', () => {
     const request = new CollectionRequest(null, 'prod')
 
-    const data = {
+    const data: CollectionResponseData = {
       feed: {
         id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=1',
         title: 'ECHO collection metadata',
@@ -238,7 +240,7 @@ describe('CollectionRequest#transformResponse', () => {
 
       const request = new CollectionRequest(null, 'prod')
 
-      const data = {
+      const data: CollectionResponseData = {
         feed: {
           id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=1',
           title: 'ECHO collection metadata',
@@ -330,7 +332,7 @@ describe('CollectionRequest#transformResponse', () => {
   test('returns data if response is not successful', () => {
     const request = new CollectionRequest(null, 'prod')
 
-    const data = {
+    const data: CollectionResponseData = {
       errors: ['HTTP Request Error']
     }
 

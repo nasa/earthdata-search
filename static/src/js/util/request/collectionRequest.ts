@@ -1,18 +1,24 @@
 import CmrRequest from './cmrRequest'
+// @ts-expect-error Types are not defined for this module
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
+// @ts-expect-error Types are not defined for this module
 import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 import {
   collectionRequestNonIndexedCmrKeys
+// @ts-expect-error Types are not defined for this module
 } from '../../../../../sharedConstants/nonIndexedCmrKeys'
 
+// @ts-expect-error Types are not defined for this module
 import { transformCollectionEntries } from '../collections/transformCollectionEntries'
+
+import type { CollectionRequestParams, CollectionResponseData } from '../../types/sharedTypes'
 
 /**
  * Base Request object for collection specific requests
  */
 export default class CollectionRequest extends CmrRequest {
-  constructor(edlToken, earthdataEnvironment) {
+  constructor(edlToken: string | null, earthdataEnvironment: string) {
     super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
     this.searchPath = 'search/collections.json'
@@ -31,7 +37,7 @@ export default class CollectionRequest extends CmrRequest {
     return collectionRequestNonIndexedCmrKeys
   }
 
-  search(params) {
+  search(params: CollectionRequestParams) {
     if (params.twoDCoordinateSystem && params.twoDCoordinateSystem.coordinates) {
       // eslint-disable-next-line no-param-reassign
       delete params.twoDCoordinateSystem.coordinates
@@ -45,7 +51,7 @@ export default class CollectionRequest extends CmrRequest {
    * @param {Object} data - Response object from the object.
    * @return {Object} The object provided
    */
-  transformResponse(data) {
+  transformResponse(data: CollectionResponseData) {
     super.transformResponse(data)
 
     const { earthdataEnvironment } = this
@@ -62,9 +68,9 @@ export default class CollectionRequest extends CmrRequest {
     if (data.items) {
       entry = data.items
     } else {
-      const { feed = {} } = data;
+      const { feed } = data
 
-      ({ entry = [] } = feed)
+      entry = feed && 'entry' in feed ? feed.entry : []
     }
 
     // Transform the collection entries

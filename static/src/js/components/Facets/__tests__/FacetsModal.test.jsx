@@ -27,26 +27,23 @@ jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: FacetsModal,
-  defaultProps: {
-    collectionHits: null,
-    viewAllFacets: {
-      allIds: ['Test Category'],
-      byId: {
-        'Test Category': {}
-      },
-      hits: null,
-      isLoaded: false,
-      isLoading: false,
-      selectedCategory: 'Test Category'
-    },
-    onApplyViewAllFacets: jest.fn(),
-    onChangeViewAllFacet: jest.fn(),
-    onToggleFacetsModal: jest.fn()
-  },
   defaultZustandState: {
     facetParams: {
       applyViewAllFacets: jest.fn(),
       setViewAllFacets: jest.fn()
+    },
+    facets: {
+      viewAllFacets: {
+        allIds: ['Test Category'],
+        byId: {
+          'Test Category': {}
+        },
+        collectionCount: null,
+        isLoaded: false,
+        isLoading: false,
+        selectedCategory: 'Test Category',
+        resetState: jest.fn()
+      }
     },
     ui: {
       modals: {
@@ -61,17 +58,17 @@ describe('FacetsModal component', () => {
   describe('when selected category is not defined', () => {
     test('the modal does not render', () => {
       setup({
-        overrideProps: {
-          viewAllFacets: {
-            allIds: [],
-            byId: {},
-            hits: null,
-            isLoaded: false,
-            isLoading: false,
-            selectedCategory: null
-          }
-        },
         overrideZustandState: {
+          facets: {
+            viewAllFacets: {
+              allIds: [],
+              byId: {},
+              collectionCount: null,
+              isLoaded: false,
+              isLoading: false,
+              selectedCategory: null
+            }
+          },
           ui: {
             modals: {
               openModal: null
@@ -105,17 +102,18 @@ describe('FacetsModal component', () => {
   describe('when modal is open and is loading', () => {
     test('the modal renders correctly', () => {
       setup({
-        overrideProps: {
-          collectionHits: null,
-          viewAllFacets: {
-            allIds: [],
-            byId: {
-              'Test Category': {}
-            },
-            hits: null,
-            isLoaded: false,
-            isLoading: true,
-            selectedCategory: 'Test Category'
+        overrideZustandState: {
+          facets: {
+            viewAllFacets: {
+              allIds: [],
+              byId: {
+                'Test Category': {}
+              },
+              collectionCount: null,
+              isLoaded: false,
+              isLoading: true,
+              selectedCategory: 'Test Category'
+            }
           }
         }
       })
@@ -169,28 +167,29 @@ describe('FacetsModal component', () => {
   describe('when modal is open and has loaded', () => {
     test('the modal renders correctly', () => {
       setup({
-        overrideProps: {
-          collectionHits: 100,
-          viewAllFacets: {
-            allIds: ['Test Category'],
-            byId: {
-              'Test Category': {
-                title: 'Test Category',
-                children: [
-                  {
-                    title: '1234'
-                  },
-                  {
-                    title: 'Another'
-                  }
-                ],
-                startingLetters: ['#', 'A', 'B']
-              }
-            },
-            hits: 100,
-            isLoaded: true,
-            isLoading: false,
-            selectedCategory: 'Test Category'
+        overrideZustandState: {
+          facets: {
+            viewAllFacets: {
+              allIds: ['Test Category'],
+              byId: {
+                'Test Category': {
+                  title: 'Test Category',
+                  children: [
+                    {
+                      title: '1234'
+                    },
+                    {
+                      title: 'Another'
+                    }
+                  ],
+                  startingLetters: ['#', 'A', 'B']
+                }
+              },
+              collectionCount: 100,
+              isLoaded: true,
+              isLoading: false,
+              selectedCategory: 'Test Category'
+            }
           }
         }
       })
@@ -249,66 +248,73 @@ describe('FacetsModal component', () => {
   })
 
   describe('when the close button is clicked', () => {
-    test('the callback fires correctly', () => {
+    test('the callback fires correctly', async () => {
       const { zustandState } = setup({
-        overrideProps: {
-          collectionHits: 100,
-          viewAllFacets: {
-            allIds: ['Test Category'],
-            byId: {
-              'Test Category': {
-                title: 'Test Category',
-                children: [
-                  {
-                    title: '1234'
-                  },
-                  {
-                    title: 'Another'
-                  }
-                ],
-                startingLetters: ['#', 'A', 'B']
-              }
-            },
-            hits: 100,
-            isLoaded: true,
-            isLoading: false,
-            selectedCategory: 'Test Category'
+        overrideZustandState: {
+          facets: {
+            viewAllFacets: {
+              allIds: ['Test Category'],
+              byId: {
+                'Test Category': {
+                  title: 'Test Category',
+                  children: [
+                    {
+                      title: '1234'
+                    },
+                    {
+                      title: 'Another'
+                    }
+                  ],
+                  startingLetters: ['#', 'A', 'B']
+                }
+              },
+              collectionCount: 100,
+              isLoaded: true,
+              isLoading: false,
+              selectedCategory: 'Test Category'
+            }
           }
         }
       })
 
-      EDSCModalContainer.mock.calls[0][0].onClose()
+      await act(() => {
+        EDSCModalContainer.mock.calls[0][0].onClose()
+      })
 
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+
+      expect(zustandState.facets.viewAllFacets.resetState).toHaveBeenCalledTimes(1)
+      expect(zustandState.facets.viewAllFacets.resetState).toHaveBeenCalledWith()
     })
   })
 
   describe('when the apply button is clicked', () => {
     test('the callback fires correctly', async () => {
       setup({
-        overrideProps: {
-          collectionHits: 100,
-          viewAllFacets: {
-            allIds: ['Test Category'],
-            byId: {
-              'Test Category': {
-                title: 'Test Category',
-                children: [
-                  {
-                    title: '1234'
-                  },
-                  {
-                    title: 'Another'
-                  }
-                ],
-                startingLetters: ['#', 'A', 'B']
-              }
-            },
-            hits: 100,
-            isLoaded: true,
-            isLoading: false,
-            selectedCategory: 'Test Category'
+        overrideZustandState: {
+          facets: {
+            viewAllFacets: {
+              allIds: ['Test Category'],
+              byId: {
+                'Test Category': {
+                  title: 'Test Category',
+                  children: [
+                    {
+                      title: '1234'
+                    },
+                    {
+                      title: 'Another'
+                    }
+                  ],
+                  startingLetters: ['#', 'A', 'B']
+                }
+              },
+              collectionCount: 100,
+              isLoaded: true,
+              isLoading: false,
+              selectedCategory: 'Test Category'
+            }
           }
         }
       })
@@ -328,28 +334,29 @@ describe('FacetsModal component', () => {
   describe('when the change handler button is fired', () => {
     test('the callback fires correctly', () => {
       setup({
-        overrideProps: {
-          collectionHits: 100,
-          viewAllFacets: {
-            allIds: ['Test Category'],
-            byId: {
-              'Test Category': {
-                title: 'Test Category',
-                children: [
-                  {
-                    title: '1234'
-                  },
-                  {
-                    title: 'Another'
-                  }
-                ],
-                startingLetters: ['#', 'A', 'B']
-              }
-            },
-            hits: 100,
-            isLoaded: true,
-            isLoading: false,
-            selectedCategory: 'Test Category'
+        overrideZustandState: {
+          facets: {
+            viewAllFacets: {
+              allIds: ['Test Category'],
+              byId: {
+                'Test Category': {
+                  title: 'Test Category',
+                  children: [
+                    {
+                      title: '1234'
+                    },
+                    {
+                      title: 'Another'
+                    }
+                  ],
+                  startingLetters: ['#', 'A', 'B']
+                }
+              },
+              collectionCount: 100,
+              isLoaded: true,
+              isLoading: false,
+              selectedCategory: 'Test Category'
+            }
           }
         }
       })

@@ -9,170 +9,6 @@ import useEdscStore from '../../../zustand/useEdscStore'
 
 const setup = setupTest({
   Component: Facets,
-  defaultProps: {
-    facetsById: {
-      Keywords: {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_keyword_link'
-          },
-          title: 'Mock Keyword Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Keywords',
-        totalSelected: 0,
-        type: 'group'
-      },
-      Platforms: {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_platform_link'
-          },
-          title: 'Mock Platform Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Platforms',
-        totalSelected: 0,
-        type: 'group'
-      },
-      Instruments: {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_instrument_link'
-          },
-          title: 'Mock Instrument Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Instruments',
-        totalSelected: 0,
-        type: 'group'
-      },
-      Organizations: {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_organization_link'
-          },
-          title: 'Mock Organization Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Organizations',
-        totalSelected: 0,
-        type: 'group'
-      },
-      Projects: {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_project_link'
-          },
-          title: 'Mock Project Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Projects',
-        totalSelected: 0,
-        type: 'group'
-      },
-      'Processing Levels': {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_processing_level_link'
-          },
-          title: 'Mock Processing Level Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Processing Levels',
-        totalSelected: 0,
-        type: 'group'
-      },
-      'Data Format': {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_data_format_link'
-          },
-          title: 'Mock Data Format Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Data Format',
-        totalSelected: 0,
-        type: 'group'
-      },
-      'Tiling System': {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_tiling_system_link'
-          },
-          title: 'Mock Tiling System Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Tiling System',
-        totalSelected: 0,
-        type: 'group'
-      },
-      'Horizontal Data Resolution': {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_horizontal_data_resolution_link'
-          },
-          title: 'Mock Horizontal Data Resolution Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Horizontal Data Resolution',
-        totalSelected: 0,
-        type: 'group'
-      },
-      Latency: {
-        children: [{
-          applied: false,
-          count: 1,
-          has_children: false,
-          links: {
-            apply: 'http://example.com/apply_latency_link'
-          },
-          title: 'Mock Latency Facet',
-          type: 'filter'
-        }],
-        hasChildren: true,
-        title: 'Latency',
-        totalSelected: 0,
-        type: 'group'
-      }
-    }
-  },
   defaultZustandState: {
     facetParams: {
       featureFacets: {
@@ -184,6 +20,172 @@ const setup = setupTest({
       setCmrFacets: jest.fn(),
       setFeatureFacets: jest.fn(),
       triggerViewAllFacets: jest.fn()
+    },
+    facets: {
+      facets: {
+        byId: {
+          Keywords: {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_keyword_link'
+              },
+              title: 'Mock Keyword Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Keywords',
+            totalSelected: 0,
+            type: 'group'
+          },
+          Platforms: {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_platform_link'
+              },
+              title: 'Mock Platform Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Platforms',
+            totalSelected: 0,
+            type: 'group'
+          },
+          Instruments: {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_instrument_link'
+              },
+              title: 'Mock Instrument Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Instruments',
+            totalSelected: 0,
+            type: 'group'
+          },
+          Organizations: {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_organization_link'
+              },
+              title: 'Mock Organization Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Organizations',
+            totalSelected: 0,
+            type: 'group'
+          },
+          Projects: {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_project_link'
+              },
+              title: 'Mock Project Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Projects',
+            totalSelected: 0,
+            type: 'group'
+          },
+          'Processing Levels': {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_processing_level_link'
+              },
+              title: 'Mock Processing Level Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Processing Levels',
+            totalSelected: 0,
+            type: 'group'
+          },
+          'Data Format': {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_data_format_link'
+              },
+              title: 'Mock Data Format Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Data Format',
+            totalSelected: 0,
+            type: 'group'
+          },
+          'Tiling System': {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_tiling_system_link'
+              },
+              title: 'Mock Tiling System Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Tiling System',
+            totalSelected: 0,
+            type: 'group'
+          },
+          'Horizontal Data Resolution': {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_horizontal_data_resolution_link'
+              },
+              title: 'Mock Horizontal Data Resolution Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Horizontal Data Resolution',
+            totalSelected: 0,
+            type: 'group'
+          },
+          Latency: {
+            children: [{
+              applied: false,
+              count: 1,
+              has_children: false,
+              links: {
+                apply: 'http://example.com/apply_latency_link'
+              },
+              title: 'Mock Latency Facet',
+              type: 'filter'
+            }],
+            hasChildren: true,
+            title: 'Latency',
+            totalSelected: 0,
+            type: 'group'
+          }
+        }
+      }
     },
     portal: {
       features: {

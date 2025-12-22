@@ -10,6 +10,7 @@ import createDataQualitySummariesSlice from './slices/createDataQualitySummaries
 import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
 import createEarthdataEnvironmentSlice from './slices/createEarthdataEnvironmentSlice'
 import createErrorsSlice from './slices/createErrorsSlice'
+import createFacetsSlice from './slices/createFacetsSlice'
 import createFacetParamsSlice from './slices/createFacetParamsSlice'
 import createGranuleSlice from './slices/createGranuleSlice'
 import createGranulesSlice from './slices/createGranulesSlice'
@@ -36,6 +37,7 @@ const useEdscStore = create<EdscStore>()(
           ...createEarthdataDownloadRedirectSlice(...args),
           ...createEarthdataEnvironmentSlice(...args),
           ...createErrorsSlice(...args),
+          ...createFacetsSlice(...args),
           ...createFacetParamsSlice(...args),
           ...createGranuleSlice(...args),
           ...createGranulesSlice(...args),
