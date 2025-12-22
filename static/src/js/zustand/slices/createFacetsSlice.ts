@@ -68,22 +68,25 @@ const createFacetsSlice: ImmerStateCreator<FacetsSlice> = (set, get) => ({
 
         const requestObject = new CollectionRequest(edlToken, earthdataEnvironment)
 
-        requestObject.search(buildCollectionSearchParams(collectionParams))
+        return requestObject.search(buildCollectionSearchParams(collectionParams))
           .then((searchResponse) => {
-            const facets = searchResponse.data.feed.facets.children || []
+            const { data } = searchResponse
+            const { feed } = data
+            const { facets } = feed
+            const { children = [] } = facets
             const count = parseInt(searchResponse.headers['cmr-hits'], 10)
 
             const allIds: string[] = []
             const byId: Facets = {};
 
-            (facets as Facet[]).forEach((facetCategory) => {
+            (children as Facet[]).forEach((facetCategory) => {
               // Only add the category weve selected to the state
               if (facetCategory.title !== category) return
 
+              allIds.push(facetCategory.title)
               byId[facetCategory.title] = facetCategory
               byId[facetCategory.title].totalSelected = countSelectedFacets(facetCategory)
               byId[facetCategory.title].startingLetters = getStartingLetters(facetCategory.children)
-              allIds.push(facetCategory.title)
             })
 
             set((state) => {
@@ -119,6 +122,7 @@ const createFacetsSlice: ImmerStateCreator<FacetsSlice> = (set, get) => ({
           state.facets.viewAllFacets.collectionCount = null
           state.facets.viewAllFacets.isLoaded = false
           state.facets.viewAllFacets.isLoading = false
+          state.facets.viewAllFacets.selectedCategory = null
         })
       }
     }

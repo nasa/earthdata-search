@@ -158,6 +158,8 @@ export type Facet = {
   type: string
   /** Whether the facet is applied */
   applied: boolean
+  /** The count of items in the facet */
+  count?: number
   /** Whether the facet has children */
   has_children: boolean
   /** The child facets */
