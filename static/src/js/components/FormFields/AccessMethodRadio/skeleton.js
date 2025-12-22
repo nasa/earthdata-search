@@ -1,4 +1,4 @@
-export const radioMethodSkeleton = [
+export const radioListItemSkeleton = [
   {
     shape: 'rectangle',
     left: '3rem',
@@ -18,6 +18,8 @@ export const radioMethodSkeleton = [
   {
     shape: 'circle',
     left: '1rem',
+    height: '1rem',
+    width: '1rem',
     top: '2rem'
   }
 ]

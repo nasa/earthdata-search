@@ -16,6 +16,8 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 import { echoForm, rawModel } from './mocks'
 
+import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
+
 jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
@@ -36,36 +38,6 @@ const emptySpatial = {
   line: [],
   point: [],
   polygon: []
-}
-
-const radioSkeleton = {
-  containerStyle: {
-    height: '4.95rem',
-    width: '20rem'
-  },
-  shapes: [
-    {
-      height: 15,
-      left: '3rem',
-      radius: 2,
-      shape: 'rectangle',
-      top: '1.1rem',
-      width: 150
-    },
-    {
-      height: 12,
-      left: '3rem',
-      radius: 2,
-      shape: 'rectangle',
-      top: '3rem',
-      width: 250
-    },
-    {
-      left: '1rem',
-      shape: 'circle',
-      top: '2rem'
-    }
-  ]
 }
 
 const setup = setupTest({
@@ -158,13 +130,17 @@ describe('AccessMethod component', () => {
 
         expect(Skeleton).toHaveBeenCalledTimes(4)
 
-        expect(Skeleton).toHaveBeenNthCalledWith(1, expect.objectContaining(radioSkeleton), {})
+        expect(Skeleton).toHaveBeenNthCalledWith(1, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
 
-        expect(Skeleton).toHaveBeenNthCalledWith(2, expect.objectContaining(radioSkeleton), {})
+        expect(Skeleton).toHaveBeenNthCalledWith(2, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
 
-        expect(Skeleton).toHaveBeenNthCalledWith(3, expect.objectContaining(radioSkeleton), {})
+        expect(Skeleton).toHaveBeenNthCalledWith(3, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
 
-        expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining(radioSkeleton), {})
+        expect(Skeleton).toHaveBeenNthCalledWith(4, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
       })
     })
 

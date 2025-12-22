@@ -12,7 +12,7 @@ import AvailableCustomizationsTooltipIcons from '../../AvailableCustomizationsIc
 import MetaIcon from '../../MetaIcon/MetaIcon'
 import Skeleton from '../../Skeleton/Skeleton'
 
-import { radioMethodSkeleton } from './skeleton'
+import { radioListItemSkeleton } from './skeleton'
 
 import renderTooltip from '../../../util/renderTooltip'
 
@@ -100,7 +100,7 @@ export const AccessMethodRadio = ({
                 width: '20rem'
               }
             }
-            shapes={radioMethodSkeleton}
+            shapes={radioListItemSkeleton}
           />
         )
       }

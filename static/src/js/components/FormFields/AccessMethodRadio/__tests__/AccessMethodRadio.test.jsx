@@ -5,39 +5,11 @@ import userEvent from '@testing-library/user-event'
 
 import Skeleton from '../../../Skeleton/Skeleton'
 
+import { radioListItemSkeleton } from '../skeleton'
+
 import AccessMethodRadio from '../AccessMethodRadio'
 
 jest.mock('../../../Skeleton/Skeleton', () => jest.fn(() => <div />))
-
-const radioSkeleton = {
-  containerStyle: {
-    height: '4.95rem',
-    width: '20rem'
-  },
-  shapes: [
-    {
-      height: 15,
-      left: '3rem',
-      radius: 2,
-      shape: 'rectangle',
-      top: '1.1rem',
-      width: 150
-    },
-    {
-      height: 12,
-      left: '3rem',
-      radius: 2,
-      shape: 'rectangle',
-      top: '3rem',
-      width: 250
-    },
-    {
-      left: '1rem',
-      shape: 'circle',
-      top: '2rem'
-    }
-  ]
-}
 
 const setup = (overrideProps) => {
   const onChange = jest.fn()
@@ -265,7 +237,12 @@ describe('AccessMethodRadio component', () => {
       })
 
       expect(Skeleton).toHaveBeenCalledTimes(1)
-      expect(Skeleton).toHaveBeenCalledWith(radioSkeleton, {})
+      expect(Skeleton).toHaveBeenCalledWith(
+        expect.objectContaining({
+          shapes: radioListItemSkeleton
+        }),
+        {}
+      )
     })
   })
 })

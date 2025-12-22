@@ -43,7 +43,9 @@ function setup(options) {
       {
         shape: 'circle',
         left: '1rem',
-        top: '2rem'
+        top: '2rem',
+        height: '1rem',
+        width: '1rem'
       }
     ]
   } else if (options.unknownShape) {
@@ -147,7 +149,7 @@ describe('Skeleton component', () => {
   })
 
   describe('when passed a circle shape', () => {
-    test('renders a multiple shapes', () => {
+    test('renders a circle shapes', () => {
       const { enzymeWrapper } = setup({ circle: true })
       const items = enzymeWrapper.find('.skeleton__item')
 
