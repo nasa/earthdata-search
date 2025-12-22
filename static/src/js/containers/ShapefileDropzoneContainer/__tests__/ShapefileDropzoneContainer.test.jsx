@@ -81,6 +81,41 @@ describe('ShapefileDropzoneContainer component', () => {
       expect(onShapefileLoadingMock).toHaveBeenCalledTimes(1)
       expect(onShapefileLoadingMock).toHaveBeenCalledWith('test-file-name.zip')
     })
+
+    describe('when the shapefile modal is open', () => {
+      test('calls setOpenModal to close the modal', async () => {
+        const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+        eventEmitterEmitMock.mockImplementation(() => jest.fn())
+        const onSaveShapefileMock = jest.fn()
+
+        const { zustandState } = setup({
+          overrideZustandState: {
+            shapefile: {
+              saveShapefile: onSaveShapefileMock
+            },
+            ui: {
+              modals: {
+                openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
+              }
+            }
+          }
+        })
+
+        const mockFile = {
+          name: 'test-file-name.zip'
+        }
+
+        const componentProps = ShapefileDropzone.mock.calls[0][0]
+        const { onSending } = componentProps
+
+        await act(() => {
+          onSending(mockFile)
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+      })
+    })
   })
 
   describe('when onSuccess is triggered', () => {
@@ -200,68 +235,6 @@ describe('ShapefileDropzoneContainer component', () => {
         },
         filename: 'test-file-name.zip',
         size: '200KB'
-      })
-    })
-
-    describe('when the shapefile modal is open', () => {
-      test('calls setOpenModal to close the modal', async () => {
-        const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-        eventEmitterEmitMock.mockImplementation(() => jest.fn())
-        const filesizeMock = jest.fn(() => '200KB')
-        const onSaveShapefileMock = jest.fn()
-
-        const { zustandState } = setup({
-          overrideZustandState: {
-            shapefile: {
-              saveShapefile: onSaveShapefileMock
-            },
-            ui: {
-              modals: {
-                openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
-              }
-            }
-          }
-        })
-
-        const mockFile = {
-          name: 'test-file-name.zip',
-          size: 200
-        }
-
-        const mockResponse = {
-          name: 'SOMEBIGHASHtest-file-name',
-          features: [
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'LineString',
-                coordinates: [
-                  [-106, 35],
-                  [-105, 36],
-                  [-94, 33],
-                  [-95, 30],
-                  [-93, 31],
-                  [-92, 3]
-                ]
-              }
-            }
-          ]
-        }
-
-        const mockDropzoneEl = {
-          filesize: filesizeMock,
-          removeFile: jest.fn()
-        }
-
-        const componentProps = ShapefileDropzone.mock.calls[0][0]
-        const { onSuccess } = componentProps
-
-        await act(() => {
-          onSuccess(mockFile, mockResponse, mockDropzoneEl)
-        })
-
-        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
-        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
     })
   })
@@ -566,38 +539,6 @@ describe('ShapefileDropzoneContainer component', () => {
         expect(onShapefileErroredMock).toHaveBeenCalledWith({
           message: 'Invalid file format.'
         })
-      })
-    })
-
-    describe('when the shapefile modal is open', () => {
-      test('calls setOpenModal to close the modal', async () => {
-        const onShapefileErroredMock = jest.fn()
-        const { zustandState } = setup({
-          overrideZustandState: {
-            shapefile: {
-              setErrored: onShapefileErroredMock
-            },
-            ui: {
-              modals: {
-                openModal: MODAL_NAMES.SHAPEFILE_UPLOAD
-              }
-            }
-          }
-        })
-
-        const mockFile = {
-          name: 'test-file-name.svg'
-        }
-
-        const componentProps = ShapefileDropzone.mock.calls[0][0]
-        const { onError } = componentProps
-
-        await act(() => {
-          onError(mockFile)
-        })
-
-        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
-        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
     })
   })

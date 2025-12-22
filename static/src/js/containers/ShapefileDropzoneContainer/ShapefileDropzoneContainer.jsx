@@ -73,6 +73,9 @@ export const ShapefileDropzoneContainer = () => {
           const { name } = file
 
           onShapefileLoading(name)
+
+          // Ensure the shapefile is closed
+          if (isOpen) setOpenModal(null)
         }
       }
       onSuccess={
@@ -90,10 +93,6 @@ export const ShapefileDropzoneContainer = () => {
 
           eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
 
-          // Only close the modal if it is currently open
-          // This keeps it from closing the TOO_MANY_POINTS modal if that has been opened
-          if (isOpen) setOpenModal(null)
-
           onSaveShapefile({
             file: fileWithIds,
             filename: name,
@@ -104,8 +103,6 @@ export const ShapefileDropzoneContainer = () => {
       onError={
         (file) => {
           let shapefileError = ''
-
-          if (isOpen) setOpenModal(null)
 
           if (file.name.match('.*(zip|shp|dbf|shx)$')) {
             shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
