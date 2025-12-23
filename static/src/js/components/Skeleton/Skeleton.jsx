@@ -57,6 +57,28 @@ export const Skeleton = ({
       )
     }
 
+    if (styles.shape === 'circle') {
+      item = (
+        <div
+          key={key}
+          className={`skeleton__item skeleton__item-${i}`}
+          data-testid={styles['data-testid']}
+          style={
+            {
+              top: styles.top,
+              left: styles.left,
+              right: styles.right,
+              width: styles.width,
+              height: styles.height,
+              borderRadius: '50%'
+            }
+          }
+        >
+          <span className="skeleton__item-inner" />
+        </div>
+      )
+    }
+
     return item
   })
 

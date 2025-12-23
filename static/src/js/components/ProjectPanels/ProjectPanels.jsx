@@ -54,6 +54,7 @@ const ProjectPanels = ({
   // Pull values from Zustand
   const {
     dataQualitySummaries,
+    isLoading,
     panels,
     projectCollections,
     selectAccessMethod,
@@ -63,6 +64,7 @@ const ProjectPanels = ({
     updateAccessMethod
   } = useEdscStore((state) => ({
     dataQualitySummaries: state.dataQualitySummaries.byCollectionId,
+    isLoading: state.project.collections.isLoading,
     panels: state.projectPanels.panels,
     projectCollections: state.project.collections,
     selectAccessMethod: state.project.selectAccessMethod,
@@ -167,15 +169,6 @@ const ProjectPanels = ({
   } = projectCollections
 
   const { activePanel, isOpen } = panels
-
-  // Check if collection metadata is loaded for any project collection
-  const collectionMetadataLoaded = projectIds.some((collectionId) => {
-    const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
-
-    const { hasAllMetadata = false } = collectionMetadata
-
-    return hasAllMetadata === true
-  })
 
   const panelSectionCollectionDetails = []
   const panelSectionEditOptions = []
@@ -398,6 +391,7 @@ const ProjectPanels = ({
       <PanelGroup
         key={`${collectionId}_edit-options`}
         primaryHeading="Edit Options"
+        headerLoading={isLoading}
         headerMessage={
           (
             // TODO EDSC-4611 move this code
@@ -424,7 +418,8 @@ const ProjectPanels = ({
           [
             {
               title,
-              onClick: () => onChangePanel(`1.${index}.0`)
+              onClick: () => onChangePanel(`1.${index}.0`),
+              isLoading
             }
           ]
         }
@@ -540,7 +535,7 @@ const ProjectPanels = ({
   return (
     <Panels
       draggable
-      show={collectionMetadataLoaded && isOpen}
+      show={isOpen}
       activePanel={activePanel}
       onPanelClose={onPanelClose}
       onPanelOpen={onPanelOpen}

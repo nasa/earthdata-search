@@ -10,6 +10,9 @@ import ExternalLink from '../../ExternalLink/ExternalLink'
 import AvailableCustomizationsIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsIcons'
 import AvailableCustomizationsTooltipIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsTooltipIcons'
 import MetaIcon from '../../MetaIcon/MetaIcon'
+import Skeleton from '../../Skeleton/Skeleton'
+
+import { radioListItemSkeleton } from './skeleton'
 
 import renderTooltip from '../../../util/renderTooltip'
 
@@ -24,6 +27,7 @@ export const AccessMethodRadio = ({
   errorMessage = null,
   externalLink = null,
   id,
+  isLoading = false,
   isHarmony = false,
   onChange = null,
   onClick = null,
@@ -87,95 +91,114 @@ export const AccessMethodRadio = ({
       htmlFor={id}
       data-testid={id}
     >
-      <input
-        className="access-method-radio__input"
-        id={id}
-        type="radio"
-        name={id}
-        value={value}
-        checked={checked ? 'checked' : ''}
-        onChange={onChange}
-        onClick={onClick}
-        disabled={disabled}
-      />
-      <div className="access-method-radio__radio">
-        { checked && <EDSCIcon icon={Check} className="access-method-radio__radio-icon" /> }
-      </div>
-      <div className="access-method-radio__content">
-        <header className="access-method-radio__header">
-          <div className="access-method-radio__header-primary">
-            <span className="access-method-radio__primary-titles">
-              <h4 className="access-method-radio__title">
-                {title}
-              </h4>
-              <span className="access-method-radio__subtitle">
-                {subtitle}
-              </span>
-            </span>
-            {
-              customizationOptions && (
-                <MetaIcon
-                  id="feature-icon-list-view__customize"
-                  icon={Settings}
-                  label="Customize"
-                  tooltipClassName="text-align-left"
-                  tooltipContent={availableCustomizationsTooltipIcons}
-                  metadata={availableCustomizationsIcons}
-                />
-              )
+      {
+        isLoading && (
+          <Skeleton
+            containerStyle={
+              {
+                height: '4.95rem',
+                width: '20rem'
+              }
             }
-          </div>
-          <div className="access-method-radio__header-content">
-            <span className="access-method-radio__description">
-              {description}
-            </span>
-            {
-              errorMessage && (
-                <div className="access-method-radio__error">
-                  {errorMessage}
+            shapes={radioListItemSkeleton}
+          />
+        )
+      }
+      {
+        !isLoading && (
+          <>
+            <input
+              className="access-method-radio__input"
+              id={id}
+              type="radio"
+              name={id}
+              value={value}
+              checked={checked ? 'checked' : ''}
+              onChange={onChange}
+              onClick={onClick}
+              disabled={disabled}
+            />
+            <div className="access-method-radio__radio">
+              {checked && <EDSCIcon icon={Check} className="access-method-radio__radio-icon" />}
+            </div>
+            <div className="access-method-radio__content">
+              <header className="access-method-radio__header">
+                <div className="access-method-radio__header-primary">
+                  <span className="access-method-radio__primary-titles">
+                    <h4 className="access-method-radio__title">
+                      {title}
+                    </h4>
+                    <span className="access-method-radio__subtitle">
+                      {subtitle}
+                    </span>
+                  </span>
+                  {
+                    customizationOptions && (
+                      <MetaIcon
+                        id="feature-icon-list-view__customize"
+                        icon={Settings}
+                        label="Customize"
+                        tooltipClassName="text-align-left"
+                        tooltipContent={availableCustomizationsTooltipIcons}
+                        metadata={availableCustomizationsIcons}
+                      />
+                    )
+                  }
                 </div>
-              )
-            }
-          </div>
-        </header>
-        {
-          details && (
-            <OverlayTrigger
-              show={showTooltip}
-              placement="top"
-              onToggle={
-                (state) => {
-                  setShowTooltip(state)
-                }
-              }
-              overlay={
-                (tooltipProps) => renderTooltip({
-                  children: (
-                    <div className="access-method-radio__tooltip">
-                      <p className="mb-0">
-                        {details}
-                      </p>
-                      {
-                        externalLink && (
-                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
-                            {externalLink.message}
-                          </ExternalLink>
-                        )
+                <div className="access-method-radio__header-content">
+                  <span className="access-method-radio__description">
+                    {description}
+                  </span>
+                  {
+                    errorMessage && (
+                      <div className="access-method-radio__error">
+                        {errorMessage}
+                      </div>
+                    )
+                  }
+                </div>
+              </header>
+              {
+                details && (
+                  <OverlayTrigger
+                    show={showTooltip}
+                    placement="top"
+                    onToggle={
+                      (state) => {
+                        setShowTooltip(state)
                       }
-                    </div>
-                  ),
-                  className: 'tooltip--ta-left',
-                  onMouseEnter: () => externalLink && setShowTooltip(true),
-                  onMouseLeave: () => externalLink && setShowTooltip(false),
-                  ...tooltipProps
-                })
+                    }
+                    overlay={
+                      (tooltipProps) => renderTooltip({
+                        children: (
+                          <div className="access-method-radio__tooltip">
+                            <p className="mb-0">
+                              {details}
+                            </p>
+                            {
+                              externalLink && (
+                                <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
+                                  {externalLink.message}
+                                </ExternalLink>
+                              )
+                            }
+                          </div>
+                        ),
+                        className: 'tooltip--ta-left',
+                        onMouseEnter: () => externalLink && setShowTooltip(true),
+                        onMouseLeave: () => externalLink && setShowTooltip(false),
+                        ...tooltipProps
+                      })
+                    }
+                  >
+                    <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
+                  </OverlayTrigger>
+                )
               }
-            >
-              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
-            </OverlayTrigger>
-          )
-        }
-      </div>
+            </div>
+          </>
+        )
+      }
     </label>
   )
 }
@@ -191,6 +214,7 @@ AccessMethodRadio.propTypes = {
     PropTypes.string
   ]),
   id: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   onClick: PropTypes.func,

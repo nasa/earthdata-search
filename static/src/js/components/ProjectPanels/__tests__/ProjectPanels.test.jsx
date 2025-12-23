@@ -4,14 +4,18 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
 
-import ProjectPanels from '../ProjectPanels'
 import AccessMethod from '../../AccessMethod/AccessMethod'
 import CollectionDetails from '../CollectionDetails'
 import DataQualitySummary from '../../DataQualitySummary/DataQualitySummary'
+import ProjectPanels from '../ProjectPanels'
+import Skeleton from '../../Skeleton/Skeleton'
 import VariableDetailsPanel from '../VariableDetailsPanel'
 import VariableTreePanel from '../VariableTreePanel'
 
 import { MODAL_NAMES } from '../../../constants/modalNames'
+
+import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
+import { breadcrumbSkeleton, titleSkeleton } from '../../Panels/skeleton'
 
 // Mock components, but use the actual component
 jest.mock('../../Panels/PanelGroup', () => ({
@@ -75,6 +79,8 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
 const setup = setupTest({
   Component: ProjectPanels,
   defaultProps: {
@@ -120,7 +126,8 @@ const setup = setupTest({
             },
             selectedAccessMethod: 'download'
           }
-        }
+        },
+        isLoading: false
       },
       updateAccessMethod: jest.fn()
     },
@@ -172,6 +179,62 @@ describe('ProjectPanels component', () => {
       expect(DataQualitySummary).toHaveBeenCalledTimes(0)
       expect(VariableDetailsPanel).toHaveBeenCalledTimes(0)
       expect(VariableTreePanel).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when project collections are loading', () => {
+    test('should render skeletons', () => {
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              isLoading: true
+            }
+          }
+        }
+      })
+
+      expect(Skeleton).toHaveBeenCalledTimes(10)
+
+      expect(Skeleton).toHaveBeenNthCalledWith(1, expect.objectContaining({
+        shapes: breadcrumbSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(2, expect.objectContaining({
+        shapes: titleSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(3, expect.objectContaining({
+        shapes: radioListItemSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining({
+        shapes: radioListItemSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(5, expect.objectContaining({
+        shapes: breadcrumbSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(6, expect.objectContaining({
+        shapes: titleSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(7, expect.objectContaining({
+        shapes: radioListItemSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(8, expect.objectContaining({
+        shapes: radioListItemSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(9, expect.objectContaining({
+        shapes: radioListItemSkeleton
+      }), {})
+
+      expect(Skeleton).toHaveBeenNthCalledWith(10, expect.objectContaining({
+        shapes: radioListItemSkeleton
+      }), {})
     })
   })
 

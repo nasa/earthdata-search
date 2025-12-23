@@ -331,14 +331,14 @@ describe('ProjectCollectionItem component', () => {
   })
 
   describe('when clicking Edit options', () => {
-    test('calls onSetActivePanelSection and setCollectionId and onTogglePanels', async () => {
+    test('calls onSetActivePanel and setCollectionId and onTogglePanels', async () => {
       const { props, user, zustandState } = setup()
 
       const button = screen.getByRole('button', { name: 'Edit options' })
       await user.click(button)
 
-      expect(props.onSetActivePanelSection).toHaveBeenCalledTimes(1)
-      expect(props.onSetActivePanelSection).toHaveBeenCalledWith('0')
+      expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+      expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.0')
 
       expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
       expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith('collectionId')

@@ -3,7 +3,8 @@ import React, {
   useEffect,
   lazy,
   Suspense,
-  useMemo
+  useMemo,
+  useCallback
 } from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/Alert'
@@ -68,6 +69,8 @@ const AccessMethod = ({
   }))
 
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
+
+  const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
     form,
@@ -278,23 +281,25 @@ const AccessMethod = ({
     }
   }
 
-  const renderRadioItem = (radioItem, onPropsChange, selected) => {
+  const renderRadioItem = useCallback((radioItem, onPropsChange, selected) => {
     const {
-      id,
-      methodKey,
-      title,
-      subtitle,
       description,
       details,
       disabled,
       errorMessage,
-      externalLink
+      externalLink,
+      id,
+      isLoading: radioItemIsLoading,
+      methodKey,
+      subtitle,
+      title
     } = radioItem
 
     return (
       <AccessMethodRadio
         key={id}
         id={id}
+        isLoading={radioItemIsLoading}
         value={methodKey}
         title={title}
         subtitle={subtitle}
@@ -307,7 +312,7 @@ const AccessMethod = ({
         externalLink={externalLink}
       />
     )
-  }
+  }, [])
 
   const getAccessMethodTypes = (hasHarmony, radioList, collectionId) => {
     if (hasHarmony) {
@@ -578,6 +583,28 @@ const AccessMethod = ({
     ...accessMethodsByType.SWODLR,
     ...accessMethodsByType.download
   ]
+
+  // Push isLoading state from zustand to radioItems to enable skeleton loading
+  // Push id and other required props for key creation
+  if (isLoading) {
+    const loadingRadioProps = {
+      title: '',
+      description: '',
+      methodKey: ''
+    }
+
+    radioList.push({
+      ...loadingRadioProps,
+      id: '1',
+      isLoading
+    })
+
+    radioList.push({
+      ...loadingRadioProps,
+      id: '2',
+      isLoading
+    })
+  }
 
   const granuleListUndefined = granuleList[0] === undefined
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')

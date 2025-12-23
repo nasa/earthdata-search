@@ -580,7 +580,8 @@ const SearchPanels = ({
             },
             options: {
               shrink: true
-            }
+            },
+            isLoading: !collectionTitle
           }
         ]
       }

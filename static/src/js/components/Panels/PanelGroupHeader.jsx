@@ -11,7 +11,11 @@ import {
 import { upperFirst } from 'lodash-es'
 import { humanizeSortKey } from '../../util/humanizedQueryValueFormatters'
 
-import { headerMetaSkeleton, titleSkeleton } from './skeleton'
+import {
+  breadcrumbSkeleton,
+  headerMetaSkeleton,
+  titleSkeleton
+} from './skeleton'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -100,7 +104,8 @@ export const PanelGroupHeader = ({
                   title = '',
                   link = {},
                   onClick = null,
-                  options = {}
+                  options = {},
+                  isLoading = false
                 } = crumb
 
                 const {
@@ -118,6 +123,22 @@ export const PanelGroupHeader = ({
                     'panel-group-header__breadcrumb--shrink': shrink
                   }
                 ])
+
+                if (isLoading) {
+                  return (
+                    <Skeleton
+                      className="panel-group-header__breadcrumbs-skeleton"
+                      containerStyle={
+                        {
+                          height: '1.5rem',
+                          width: '100%'
+                        }
+                      }
+                      key={`${title}_breadcrumb-skeleton`}
+                      shapes={breadcrumbSkeleton}
+                    />
+                  )
+                }
 
                 if (!link || !pathname) {
                   return (

@@ -8,11 +8,17 @@ import {
 
 import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
+import Skeleton from '../../Skeleton/Skeleton'
+
 import useEdscStore from '../../../zustand/useEdscStore'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 import { echoForm, rawModel } from './mocks'
+
+import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
+
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
   jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
@@ -109,6 +115,32 @@ describe('AccessMethod component', () => {
 
         const noAccessMethodAlert = screen.getByText('No access methods exist for this collection.')
         expect(noAccessMethodAlert).toBeInTheDocument()
+      })
+
+      test('when access methods are loading', async () => {
+        setup({
+          overrideZustandState: {
+            project: {
+              collections: {
+                isLoading: true
+              }
+            }
+          }
+        })
+
+        expect(Skeleton).toHaveBeenCalledTimes(4)
+
+        expect(Skeleton).toHaveBeenNthCalledWith(1, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
+
+        expect(Skeleton).toHaveBeenNthCalledWith(2, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
+
+        expect(Skeleton).toHaveBeenNthCalledWith(3, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
+
+        expect(Skeleton).toHaveBeenNthCalledWith(4, expect
+          .objectContaining({ shapes: radioListItemSkeleton }), {})
       })
     })
 
