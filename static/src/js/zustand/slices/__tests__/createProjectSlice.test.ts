@@ -8,13 +8,12 @@ import { initialGranuleState, initialState } from '../createProjectSlice'
 import configureStore from '../../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import actions from '../../../actions'
-// @ts-expect-error This file does not have types
 import GranuleRequest from '../../../util/request/granuleRequest'
 
 // @ts-expect-error This file does not have types
 import * as applicationConfig from '../../../../../../sharedUtils/config'
 import { EchoOrderAccessMethod } from '../../types'
+import { handleAlert } from '../../../util/handleAlert'
 
 jest.mock('uuid', () => ({
   v4: jest.fn(() => 'mock-request-id')
@@ -28,15 +27,14 @@ jest.mock('../../../../../../sharedUtils/getClientId', () => ({
 
 jest.mock('../../../store/configureStore', () => jest.fn())
 
-jest.mock('../../../actions', () => ({
-  handleAlert: jest.fn(),
-  handleError: jest.fn()
-}))
-
 jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
   cmrHost: 'https://cmr.example.com',
   graphQlHost: 'https://graphql.example.com',
   opensearchRoot: 'https://cmr.example.com/opensearch'
+}))
+
+jest.mock('../../../util/handleAlert', () => ({
+  handleAlert: jest.fn()
 }))
 
 beforeEach(() => {
@@ -1493,8 +1491,8 @@ describe('createProjectSlice', () => {
 
         await project.getProjectGranules()
 
-        expect(actions.handleAlert).toHaveBeenCalledTimes(1)
-        expect(actions.handleAlert).toHaveBeenCalledWith({
+        expect(handleAlert).toHaveBeenCalledTimes(1)
+        expect(handleAlert).toHaveBeenCalledWith({
           action: 'getProjectGranules',
           message: 'User requested more than 1 granules. Requested 2 granules.',
           resource: 'granules',

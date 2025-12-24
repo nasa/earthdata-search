@@ -11,9 +11,6 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import actions from '../../actions'
-
-// @ts-expect-error This file does not have types
 import { buildAccessMethods } from '../../util/accessMethods/buildAccessMethods'
 // @ts-expect-error This file does not have types
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
@@ -50,6 +47,7 @@ import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleReques
 // @ts-expect-error This file does not have types
 import GraphQlRequest from '../../util/request/graphQlRequest'
 import SavedAccessConfigsRequest from '../../util/request/savedAccessConfigsRequest'
+import { handleAlert } from '../../util/handleAlert'
 
 import getProjectCollections from '../../operations/queries/getProjectCollections'
 
@@ -474,10 +472,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
     getProjectGranules: async () => {
       const { defaultCmrPageSize, maxCmrPageSize } = getApplicationConfig()
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const zustandState = get()
       const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
@@ -547,12 +541,12 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         let pageSize = defaultCmrPageSize
         if (granuleConceptIds.length > 0) {
           if (granuleConceptIds.length > maxCmrPageSize) {
-            reduxDispatch(actions.handleAlert({
+            handleAlert({
               action: 'getProjectGranules',
               message: `User requested more than ${maxCmrPageSize} granules. Requested ${granuleConceptIds.length} granules.`,
               resource: 'granules',
               requestObject
-            }))
+            })
           }
 
           pageSize = Math.min(maxCmrPageSize, granuleConceptIds.length)
