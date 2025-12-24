@@ -13,11 +13,14 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 import routerHelper from '../../../router/router'
+import { collectionRelevancyMetrics } from '../../../util/relevancy/collectionRelevancyMetrics'
+
+jest.mock('../../../util/relevancy/collectionRelevancyMetrics', () => ({
+  collectionRelevancyMetrics: jest.fn()
+}))
 
 jest.mock('../../../actions', () => ({
-  changeUrl: jest.fn(),
-  collectionRelevancyMetrics: jest.fn(),
-  handleError: jest.fn()
+  changeUrl: jest.fn()
 }))
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -103,8 +106,8 @@ describe('createCollectionSlice', () => {
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+        expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+        expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
@@ -149,7 +152,7 @@ describe('createCollectionSlice', () => {
         })
 
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(0)
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(0)
+        expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(0)
         expect(granules.getGranules).toHaveBeenCalledTimes(0)
       })
     })
@@ -269,8 +272,8 @@ describe('createCollectionSlice', () => {
           expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
           expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-          expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-          expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+          expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+          expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
           expect(granules.getGranules).toHaveBeenCalledTimes(2)
           expect(granules.getGranules).toHaveBeenNthCalledWith(1)
@@ -405,8 +408,8 @@ describe('createCollectionSlice', () => {
             expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
             expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(true)
 
-            expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-            expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+            expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+            expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
             expect(granules.getGranules).toHaveBeenCalledTimes(2)
             expect(granules.getGranules).toHaveBeenNthCalledWith(1)
@@ -542,8 +545,8 @@ describe('createCollectionSlice', () => {
             expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
             expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(true)
 
-            expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-            expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+            expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+            expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
             expect(granules.getGranules).toHaveBeenCalledTimes(2)
             expect(granules.getGranules).toHaveBeenNthCalledWith(1)
@@ -603,8 +606,8 @@ describe('createCollectionSlice', () => {
           expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
           expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-          expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-          expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+          expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+          expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
           expect(granules.getGranules).toHaveBeenCalledTimes(1)
           expect(granules.getGranules).toHaveBeenCalledWith()
@@ -662,8 +665,8 @@ describe('createCollectionSlice', () => {
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+        expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+        expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
         expect(granules.getGranules).toHaveBeenCalledTimes(2)
         expect(granules.getGranules).toHaveBeenNthCalledWith(1)
@@ -778,8 +781,8 @@ describe('createCollectionSlice', () => {
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+        expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+        expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
         expect(granules.getGranules).toHaveBeenCalledTimes(2)
         expect(granules.getGranules).toHaveBeenNthCalledWith(1)
@@ -819,8 +822,8 @@ describe('createCollectionSlice', () => {
       expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
       expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-      expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
-      expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
+      expect(collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
+      expect(collectionRelevancyMetrics).toHaveBeenCalledWith()
 
       expect(errors.handleError).toHaveBeenCalledTimes(1)
       expect(errors.handleError).toHaveBeenCalledWith(

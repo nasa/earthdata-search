@@ -13,7 +13,6 @@ import {
 import { toggleFacetsModal } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
 import { handleAlert } from './alerts'
-import { collectionRelevancyMetrics } from './relevancy'
 import {
   createSubscription,
   deleteCollectionSubscription,
@@ -28,7 +27,6 @@ import {
 const actions = {
   changePath,
   changeUrl,
-  collectionRelevancyMetrics,
   createSubscription,
   deleteCollectionSubscription,
   deleteSubscription,
