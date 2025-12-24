@@ -23,8 +23,6 @@ import { EdscStore } from '../static/src/js/zustand/types'
 type SetupTestCommonProps = {
   /** Default Apollo Client mocks for the test */
   defaultApolloClientMocks?: MockedResponse[]
-  /** Default Redux state for the test */
-  defaultReduxState?: Record<string, unknown>
   /** Default router entries for the test */
   defaultRouterEntries?: string[]
   /** Default Zustand state for the test */
@@ -68,8 +66,6 @@ export type SetupTestOverrides = {
   overrideApolloClientMocks?: MockedResponse[]
   /** Override router entries for the test */
   overrideRouterEntries?: string[]
-  /** Override Redux state for the test */
-  overrideReduxState?: Record<string, unknown>
   /** Override props to be passed to the component */
   overrideProps?: Record<string, unknown>
   /** Override props to be passed to the component */
@@ -98,7 +94,6 @@ const setupTest = ({
   defaultApolloClientMocks = [],
   defaultProps = {},
   defaultPropsByRoute = {},
-  defaultReduxState = {},
   defaultRouterEntries,
   defaultZustandState,
   withRedux = false,
@@ -107,7 +102,6 @@ const setupTest = ({
 }: SetupTestPropsSingleComponent | SetupTestPropsComponentsByRoute) => ({
   overrideApolloClientMocks = [],
   overrideRouterEntries,
-  overrideReduxState = {},
   overrideProps = {},
   overridePropsByRoute = {},
   overrideZustandState
@@ -191,11 +185,7 @@ const setupTest = ({
 
   // If withRedux is true, create a Redux store and wrap the component with the Provider
   if (withRedux) {
-    const reduxState = {
-      ...defaultReduxState,
-      ...overrideReduxState
-    }
-    const store = configureStore(reduxState)
+    const store = configureStore()
 
     // eslint-disable-next-line react/display-name
     RenderedComponent = (

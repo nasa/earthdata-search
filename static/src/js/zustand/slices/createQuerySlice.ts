@@ -5,11 +5,6 @@ import { QuerySlice, ImmerStateCreator } from '../types'
 // @ts-expect-error This file does not have types
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-// @ts-expect-error This file does not have types
-import configureStore from '../../store/configureStore'
-// @ts-expect-error This file does not have types
-import actions from '../../actions'
-
 import { getCollectionId } from '../selectors/collection'
 import { getProjectCollectionsIds } from '../selectors/project'
 
@@ -96,12 +91,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       if (projectCollectionsIds.length > 0) {
         await get().project.getProjectGranules()
       }
-
-      // Clear any subscription disabledFields
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
 
     changeGranuleQuery: async ({ collectionId, query }) => {
@@ -137,12 +126,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       }
 
       get().granules.getGranules()
-
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      // Clear any subscription disabledFields
-      reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
 
     clearFilters: async () => {

@@ -3,16 +3,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Route, Routes } from 'react-router-dom'
 
-import { getCollectionSubscriptions } from '../../selectors/subscriptions'
-
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
-
-export const mapStateToProps = (state) => ({
-  collectionSubscriptions: getCollectionSubscriptions(state)
-})
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -29,7 +23,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.match - Router match state
  */
 export const SearchPanelsContainer = ({
-  collectionSubscriptions,
   onChangePath,
   onMetricsCollectionSortChange
 }) => (
@@ -39,7 +32,6 @@ export const SearchPanelsContainer = ({
       element={
         (
           <SearchPanels
-            collectionSubscriptions={collectionSubscriptions}
             onChangePath={onChangePath}
             onMetricsCollectionSortChange={onMetricsCollectionSortChange}
           />
@@ -51,9 +43,8 @@ export const SearchPanelsContainer = ({
 )
 
 SearchPanelsContainer.propTypes = {
-  collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)
+export default connect(null, mapDispatchToProps)(SearchPanelsContainer)

@@ -6,6 +6,14 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import SubscriptionsListItem from '../SubscriptionsListItem'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
+const mockUseDeleteSubscription = jest.fn().mockReturnValue({
+  deleteSubscription: jest.fn(),
+  loading: false
+})
+jest.mock('../../../hooks/useDeleteSubscription', () => ({
+  useDeleteSubscription: () => mockUseDeleteSubscription()
+}))
+
 const defaultSubscription = {
   collectionConceptId: 'COLL-ID-1',
   conceptId: 'SUB1',
@@ -21,9 +29,9 @@ const setup = setupTest({
   defaultProps: {
     exactlyMatchingSubscriptions: [],
     hasNullCmrQuery: false,
+    newQuery: 'point[]=-76.37726,38.95159',
     subscription: defaultSubscription,
-    subscriptionType: 'granule',
-    onDeleteSubscription: jest.fn()
+    subscriptionType: 'granule'
   },
   defaultZustandState: {
     ui: {
@@ -89,8 +97,16 @@ describe('SubscriptionsBody component', () => {
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(
         MODAL_NAMES.EDIT_SUBSCRIPTION,
         {
-          subscriptionConceptId: 'SUB1',
-          subscriptionType: 'granule'
+          newQuery: 'point[]=-76.37726,38.95159',
+          subscription: {
+            collectionConceptId: 'COLL-ID-1',
+            conceptId: 'SUB1',
+            creationDate: '2022-06-14 12:00:00',
+            name: 'Subscription 1',
+            nativeId: 'SUB1-NATIVE-ID',
+            query: 'point[]=-76.37726,38.95159',
+            revisionDate: '2022-06-14 12:00:00'
+          }
         }
       )
     })
@@ -132,27 +148,34 @@ describe('SubscriptionsBody component', () => {
         const confirmMock = jest.fn(() => false)
         window.confirm = confirmMock
 
-        const { props, user } = setup()
+        const { user } = setup()
 
         const button = screen.getByRole('button', { name: 'Delete Subscription' })
         await user.click(button)
 
-        expect(props.onDeleteSubscription).toHaveBeenCalledTimes(0)
+        expect(mockUseDeleteSubscription().deleteSubscription).toHaveBeenCalledTimes(0)
       })
     })
 
     describe('if the user allows the action', () => {
-      test('should call onDeleteSubscription', async () => {
+      test('should call deleteSubscription', async () => {
         const confirmMock = jest.fn(() => true)
         window.confirm = confirmMock
 
-        const { props, user } = setup()
+        const { user } = setup()
 
         const button = screen.getByRole('button', { name: 'Delete Subscription' })
         await user.click(button)
 
-        expect(props.onDeleteSubscription).toHaveBeenCalledTimes(1)
-        expect(props.onDeleteSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'COLL-ID-1')
+        expect(mockUseDeleteSubscription().deleteSubscription).toHaveBeenCalledTimes(1)
+        expect(mockUseDeleteSubscription().deleteSubscription).toHaveBeenCalledWith({
+          variables: {
+            params: {
+              conceptId: 'SUB1',
+              nativeId: 'SUB1-NATIVE-ID'
+            }
+          }
+        })
       })
     })
   })

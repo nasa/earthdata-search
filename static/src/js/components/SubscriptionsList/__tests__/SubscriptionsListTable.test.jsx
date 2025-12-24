@@ -14,19 +14,25 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
   <mock-PortalLinkContainer {...props} aria-label={props.label} />
 )))
 
+const mockUseDeleteSubscription = jest.fn().mockReturnValue({
+  deleteSubscription: jest.fn(),
+  loading: false
+})
+jest.mock('../../../hooks/useDeleteSubscription', () => ({
+  useDeleteSubscription: () => mockUseDeleteSubscription()
+}))
+
 const setup = setupTest({
   Component: SubscriptionsListTable,
   defaultProps: {
     subscriptionsMetadata: [],
-    subscriptionType: 'collection',
-    onDeleteSubscription: jest.fn()
+    subscriptionType: 'collection'
   },
   defaultZustandState: {
     collection: {
       setCollectionId: jest.fn()
     }
-  },
-  withRedux: true
+  }
 })
 
 beforeEach(() => {
@@ -80,8 +86,8 @@ describe('SubscriptionsListTable component', () => {
       expect(within(cells[4]).getByRole('button', { name: 'Delete Subscription' })).toBeInTheDocument()
     })
 
-    test('onHandleRemove calls onDeleteSubscription', async () => {
-      const { props, user } = setup({
+    test('onHandleRemove calls deleteSubscription', async () => {
+      const { user } = setup({
         overrideProps: {
           subscriptionsMetadata: [{
             collection: {
@@ -94,8 +100,7 @@ describe('SubscriptionsListTable component', () => {
             nativeId: 'mock-guid',
             query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
           }],
-          subscriptionType: 'granule',
-          onDeleteSubscription: jest.fn()
+          subscriptionType: 'granule'
         }
       })
 
@@ -105,8 +110,15 @@ describe('SubscriptionsListTable component', () => {
 
       await user.click(removeButton)
 
-      expect(props.onDeleteSubscription).toHaveBeenCalledTimes(1)
-      expect(props.onDeleteSubscription).toHaveBeenCalledWith('SUB100000-EDSC', 'mock-guid', 'C100000-EDSC')
+      expect(mockUseDeleteSubscription().deleteSubscription).toHaveBeenCalledTimes(1)
+      expect(mockUseDeleteSubscription().deleteSubscription).toHaveBeenCalledWith({
+        variables: {
+          params: {
+            conceptId: 'SUB100000-EDSC',
+            nativeId: 'mock-guid'
+          }
+        }
+      })
     })
   })
 

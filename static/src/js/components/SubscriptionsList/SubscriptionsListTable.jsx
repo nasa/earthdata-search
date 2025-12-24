@@ -21,6 +21,8 @@ import renderTooltip from '../../util/renderTooltip'
 
 import { routes } from '../../constants/routes'
 
+import { useDeleteSubscription } from '../../hooks/useDeleteSubscription'
+
 import './SubscriptionsListTable.scss'
 
 /**
@@ -28,18 +30,27 @@ import './SubscriptionsListTable.scss'
  */
 const SubscriptionsListTable = ({
   subscriptionsMetadata,
-  subscriptionType,
-  onDeleteSubscription
+  subscriptionType
 }) => {
   const setCollectionId = useEdscStore(
     (state) => state.collection.setCollectionId
   )
-  const onHandleRemove = (conceptId, nativeId, collectionId) => {
+
+  const { deleteSubscription, loading } = useDeleteSubscription()
+
+  const onHandleRemove = (conceptId, nativeId) => {
     // eslint-disable-next-line no-alert
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
 
     if (confirmDeletion) {
-      onDeleteSubscription(conceptId, nativeId, collectionId)
+      deleteSubscription({
+        variables: {
+          params: {
+            conceptId,
+            nativeId
+          }
+        }
+      })
     }
   }
 
@@ -146,6 +157,8 @@ const SubscriptionsListTable = ({
                         variant="naked"
                         icon={Close}
                         label="Delete Subscription"
+                        spinner={loading}
+                        spinnerColor="black"
                       />
                     </div>
                   </td>
@@ -165,8 +178,7 @@ const SubscriptionsListTable = ({
 
 SubscriptionsListTable.propTypes = {
   subscriptionsMetadata: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  subscriptionType: PropTypes.string.isRequired,
-  onDeleteSubscription: PropTypes.func.isRequired
+  subscriptionType: PropTypes.string.isRequired
 }
 
 export default SubscriptionsListTable
