@@ -1,12 +1,9 @@
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
 import nock from 'nock'
 
-import { collectionRelevancyMetrics } from '../relevancy'
-import LoggerRequest from '../../util/request/loggerRequest'
-import useEdscStore from '../../zustand/useEdscStore'
-
-const mockStore = configureMockStore([thunk])
+import { collectionRelevancyMetrics } from '../collectionRelevancyMetrics'
+// @ts-expect-error This file does not have types
+import LoggerRequest from '../../request/loggerRequest'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 describe('collectionRelevancyMetrics', () => {
   test('should call LoggerRequest.logRelevancy', () => {
@@ -14,34 +11,37 @@ describe('collectionRelevancyMetrics', () => {
       .post(/relevancy_logger/)
       .reply(200)
 
-    useEdscStore.setState({
-      collection: {
-        collectionId: 'collection2',
-        collectionMetadata: {
-          collection1: {
-            id: 'collection1'
-          },
-          collection2: {
-            id: 'collection2'
-          }
-        }
-      },
-      collections: {
-        collections: {
-          items: [{
-            id: 'collection1'
-          }, {
-            id: 'collection2'
-          }]
+    useEdscStore.setState((state) => {
+      /* eslint-disable no-param-reassign */
+      state.collection.collectionId = 'collection2'
+      state.collection.collectionMetadata = {
+        collection1: {
+          conceptId: 'collection1'
+        },
+        collection2: {
+          conceptId: 'collection2'
         }
       }
-    })
 
-    const store = mockStore()
+      state.collections.collections = {
+        count: 2,
+        items: [{
+          conceptId: 'collection1',
+          id: 'collection1'
+        }, {
+          conceptId: 'collection2',
+          id: 'collection2'
+        }],
+        isLoaded: false,
+        isLoading: false,
+        loadTime: null
+      }
+      /* eslint-enable no-param-reassign */
+    })
 
     const loggerSpy = jest.spyOn(LoggerRequest.prototype, 'logRelevancy')
 
-    store.dispatch(collectionRelevancyMetrics())
+    collectionRelevancyMetrics()
 
     expect(loggerSpy).toHaveBeenCalledTimes(1)
     expect(loggerSpy).toHaveBeenCalledWith({

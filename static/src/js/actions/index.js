@@ -4,7 +4,6 @@ import {
   updateStore
 } from './urlQuery'
 import { handleAlert } from './alerts'
-import { collectionRelevancyMetrics } from './relevancy'
 import {
   createSubscription,
   deleteCollectionSubscription,
@@ -19,7 +18,6 @@ import {
 const actions = {
   changePath,
   changeUrl,
-  collectionRelevancyMetrics,
   createSubscription,
   deleteCollectionSubscription,
   deleteSubscription,
