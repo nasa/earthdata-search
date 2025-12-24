@@ -3,9 +3,6 @@ import nock from 'nock'
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
@@ -20,15 +17,6 @@ jest.mock('../../../actions', () => ({
   onFacetsLoading: jest.fn(),
   updateFacets: jest.fn()
 }))
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
-const mockDispatch = jest.fn()
-const mockGetState = jest.fn()
-configureStore.mockReturnValue({
-  dispatch: mockDispatch,
-  getState: mockGetState
-})
 
 describe('createCollectionsSlice', () => {
   test('sets the default state', () => {
@@ -89,8 +77,6 @@ describe('createCollectionsSlice', () => {
         state.facets.facets.updateFacets = jest.fn()
       })
 
-      mockGetState.mockReturnValue({})
-
       const { collections } = useEdscStore.getState()
       const { getCollections } = collections
 
@@ -133,8 +119,6 @@ describe('createCollectionsSlice', () => {
 
         state.facets.facets.updateFacets = jest.fn()
       })
-
-      mockGetState.mockReturnValue({})
 
       const { collections } = useEdscStore.getState()
       const { getCollections } = collections
@@ -413,10 +397,6 @@ describe('createCollectionsSlice', () => {
       nock(/localhost/)
         .post(/error_logger/)
         .reply(200)
-
-      mockGetState.mockReturnValue({
-        edlToken: 'test-token'
-      })
 
       useEdscStore.setState((state) => {
         state.errors.handleError = jest.fn()

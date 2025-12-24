@@ -15,10 +15,7 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
 })
 
 const setup = setupTest({
-  Component: AdminIndex,
-  defaultProps: {},
-  withRedux: false,
-  withRouter: false
+  Component: AdminIndex
 })
 
 describe('Admin', () => {

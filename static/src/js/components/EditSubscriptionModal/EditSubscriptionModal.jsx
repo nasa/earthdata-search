@@ -1,93 +1,86 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo,
   useState
 } from 'react'
-import PropTypes from 'prop-types'
 import Form from 'react-bootstrap/Form'
+import { useMutation } from '@apollo/client'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedCollectionSubscriptions } from '../../zustand/selectors/collection'
 import {
   isModalOpen,
   openModalData,
   setOpenModalFunction
 } from '../../zustand/selectors/ui'
+
 import { MODAL_NAMES } from '../../constants/modalNames'
+import { apolloClientNames } from '../../constants/apolloClientNames'
 
-const EditSubscriptionModal = ({
-  onUpdateSubscription,
-  subscriptions
-}) => {
-  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.EDIT_SUBSCRIPTION))
-  const setOpenModal = useEdscStore(setOpenModalFunction)
-  const modalData = useEdscStore(openModalData)
-  const granuleSubscriptions = useEdscStore(getFocusedCollectionSubscriptions)
+import SUBSCRIPTIONS from '../../operations/queries/subscriptions'
+import UPDATE_SUBSCRIPTION from '../../operations/mutations/updateSubscription'
 
-  const {
-    subscriptionConceptId,
-    subscriptionType
-  } = modalData
+import addToast from '../../util/addToast'
 
-  const [subscription, setSubscription] = useState({
-    name: '',
-    nativeId: '',
-    conceptId: ''
-  })
+const EditSubscriptionModal = () => {
+  const [name, setName] = useState('')
   const [shouldUpdateQuery, setShouldUpdateQuery] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Memoize the currently selected subscription based on props
-  const selectedSubscriptionFromProps = useMemo(() => {
-    if (!subscriptionConceptId) return {}
+  const isOpen = useEdscStore((state) => isModalOpen(state, MODAL_NAMES.EDIT_SUBSCRIPTION))
+  const setOpenModal = useEdscStore(setOpenModalFunction)
+  const modalData = useEdscStore(openModalData)
+  const handleError = useEdscStore((state) => state.errors.handleError)
 
-    if (subscriptionType === 'granule') {
-      return (
-        granuleSubscriptions.find(
-          (subscriptionObject) => subscriptionObject.conceptId === subscriptionConceptId
-        ) || {}
-      )
-    }
+  const [updateSubscription] = useMutation(UPDATE_SUBSCRIPTION, {
+    context: {
+      clientName: apolloClientNames.CMR_GRAPHQL
+    },
+    onCompleted: () => {
+      setIsSubmitting(false)
 
-    const { byId: subscriptionsById = {} } = subscriptions || {}
+      addToast('Subscription updated', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    },
+    onError: (error) => {
+      setIsSubmitting(false)
 
-    return subscriptionsById[subscriptionConceptId] || {}
-  }, [
-    granuleSubscriptions,
-    subscriptionConceptId,
-    subscriptionType,
-    subscriptions
-  ])
+      handleError({
+        error,
+        action: 'updateSubscription',
+        resource: 'subscription',
+        verb: 'updating',
+        showAlertButton: true,
+        title: 'Something went wrong updating your subscription'
+      })
+    },
+    refetchQueries: [SUBSCRIPTIONS]
+  })
 
-  // Mirror getDerivedStateFromProps: only update when the conceptId changes
+  const {
+    subscription,
+    newQuery
+  } = modalData
+  const { name: previousName } = subscription || {}
+
   useEffect(() => {
-    const currentConceptId = subscription?.conceptId
-    const nextConceptId = selectedSubscriptionFromProps?.conceptId
-
-    if (currentConceptId !== nextConceptId) {
-      setSubscription(selectedSubscriptionFromProps || {})
-    }
-  }, [
-    selectedSubscriptionFromProps,
-    subscription?.conceptId
-  ])
+    setName(previousName || '')
+  }, [previousName])
 
   const onModalClose = useCallback(() => {
     setOpenModal(null)
   }, [])
 
-  const onSubscriptionNameChange = useCallback((event) => {
+  const handleSubscriptionNameChange = useCallback((event) => {
     const { value } = event.target
 
-    setSubscription((prev) => ({
-      ...prev,
-      name: value
-    }))
+    setName(value)
   }, [])
 
-  const onUpdateQueryToggleChange = useCallback((event) => {
+  const handleUpdateQueryToggleChange = useCallback((event) => {
     const { checked } = event.target
 
     setShouldUpdateQuery(checked)
@@ -96,26 +89,40 @@ const EditSubscriptionModal = ({
   const onSubscriptionEditSubmit = useCallback(async () => {
     setIsSubmitting(true)
 
-    try {
-      await onUpdateSubscription({
-        subscription,
-        shouldUpdateQuery
-      })
-    } finally {
-      setIsSubmitting(false)
+    const {
+      collectionConceptId,
+      nativeId,
+      query: existingQuery,
+      subscriberId,
+      type
+    } = subscription
+
+    const query = shouldUpdateQuery ? newQuery : existingQuery
+
+    const variables = {
+      params: {
+        collectionConceptId,
+        name,
+        nativeId,
+        query,
+        subscriberId,
+        type
+      }
     }
+
+    updateSubscription({
+      variables
+    })
 
     onModalClose()
   }, [
-    onUpdateSubscription,
-    onModalClose,
     shouldUpdateQuery,
-    subscription
+    subscription,
+    name,
+    newQuery
   ])
 
   if (!isOpen) return null
-
-  const { name = '' } = subscription || {}
 
   const body = (
     <>
@@ -125,9 +132,9 @@ const EditSubscriptionModal = ({
           id="update-subscription-name"
           type="text"
           value={name}
-          onChange={onSubscriptionNameChange}
-          onBlur={onSubscriptionNameChange}
-          onKeyUp={onSubscriptionNameChange}
+          onChange={handleSubscriptionNameChange}
+          onBlur={handleSubscriptionNameChange}
+          onKeyUp={handleSubscriptionNameChange}
         />
       </Form.Group>
       <Form.Group>
@@ -139,7 +146,7 @@ const EditSubscriptionModal = ({
             id="update-subscription-query-checkbox"
             type="checkbox"
             checked={shouldUpdateQuery}
-            onChange={onUpdateQueryToggleChange}
+            onChange={handleUpdateQueryToggleChange}
           />
           Update this subscription to match my current search query
         </label>
@@ -163,13 +170,6 @@ const EditSubscriptionModal = ({
       onSecondaryAction={onModalClose}
     />
   )
-}
-
-EditSubscriptionModal.propTypes = {
-  onUpdateSubscription: PropTypes.func.isRequired,
-  subscriptions: PropTypes.shape({
-    byId: PropTypes.shape({})
-  }).isRequired
 }
 
 export default EditSubscriptionModal

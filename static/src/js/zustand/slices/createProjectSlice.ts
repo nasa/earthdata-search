@@ -194,11 +194,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
     }),
 
     getProjectCollections: async () => {
-      const {
-        getState: reduxGetState
-      } = configureStore()
-      const reduxState = reduxGetState()
-
       const zustandState = get()
       const edlToken = getEdlToken(zustandState)
       const username = getUsername(zustandState)
@@ -273,7 +268,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         }
       }
 
-      const collectionParams = prepareCollectionParams(reduxState)
+      const collectionParams = prepareCollectionParams()
 
       const searchParams = buildCollectionSearchParams(collectionParams)
 

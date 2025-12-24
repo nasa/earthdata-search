@@ -3,15 +3,6 @@ import snakecaseKeys from 'snakecase-keys'
 
 import { EdscStore, GranuleQuery } from '../types'
 
-// @ts-expect-error The file does not have types
-import configureStore from '../../store/configureStore'
-
-import {
-  getCollectionSubscriptionDisabledFields,
-  getGranuleSubscriptionDisabledFields
-// @ts-expect-error The file does not have types
-} from '../../selectors/subscriptions'
-
 import { getCollectionId, getFocusedCollectionMetadata } from './collection'
 
 // @ts-expect-error The file does not have types
@@ -109,10 +100,7 @@ export const getGranuleSubscriptionQueryObj = (state: EdscStore) => {
 /**
  * Retrieve the granule subscription query string
  */
-export const getGranuleSubscriptionQueryString = (state: EdscStore) => {
-  const { getState: reduxGetState } = configureStore()
-  const disabledFields = getGranuleSubscriptionDisabledFields(reduxGetState())
-
+export const getGranuleSubscriptionQueryString = (state: EdscStore, disabledFields: unknown) => {
   const queryObj = getGranuleSubscriptionQueryObj(state)
 
   const queryWithDisabledRemoved = removeDisabledFieldsFromQuery(queryObj, disabledFields)
@@ -129,8 +117,7 @@ export const getGranuleSubscriptionQueryString = (state: EdscStore) => {
  * Retrieve the collection subscription query object
  */
 export const getCollectionSubscriptionQueryObj = () => {
-  const { getState: reduxGetState } = configureStore()
-  const collectionParams = prepareCollectionParams(reduxGetState())
+  const collectionParams = prepareCollectionParams()
 
   const searchParams = buildCollectionSearchParams(collectionParams)
   const subscriptionQuery = prepareSubscriptionQuery(searchParams)
@@ -141,10 +128,7 @@ export const getCollectionSubscriptionQueryObj = () => {
 /**
  * Retrieve the collection subscription query string
  */
-export const getCollectionSubscriptionQueryString = () => {
-  const { getState: reduxGetState } = configureStore()
-  const disabledFields = getCollectionSubscriptionDisabledFields(reduxGetState())
-
+export const getCollectionSubscriptionQueryString = (disabledFields: unknown) => {
   const queryObj = getCollectionSubscriptionQueryObj()
 
   const queryWithDisabledRemoved = removeDisabledFieldsFromQuery(queryObj, disabledFields)
