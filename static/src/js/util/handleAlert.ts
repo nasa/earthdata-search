@@ -1,15 +1,23 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import LoggerRequest from '../util/request/loggerRequest'
-import routerHelper from '../router/router'
+// @ts-expect-error This file does not have types
+import LoggerRequest from './request/loggerRequest'
+import routerHelper, { type Router } from '../router/router'
 
 export const handleAlert = ({
   message,
   action,
   resource,
   requestObject
-}) => () => {
-  const { location } = routerHelper.router
+}: {
+  message: string,
+  action: string,
+  resource?: string,
+  requestObject?: {
+    requestId: string
+  }
+}) => {
+  const { location } = routerHelper.router?.state || {} as Router['state']
 
   let requestId = uuidv4()
   if (requestObject) {
