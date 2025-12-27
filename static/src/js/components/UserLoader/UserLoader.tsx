@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import GET_USER from '../../operations/queries/getUser'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getEdlToken } from '../../zustand/selectors/user'
+import { getEdlToken, getUsername } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import Spinner from '../Spinner/Spinner'
@@ -28,6 +28,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
   const setUsername = useEdscStore((state) => state.user.setUsername)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const handleError = useEdscStore((state) => state.errors.handleError)
+  const username = useEdscStore(getUsername)
 
   const navigate = useNavigate()
 
@@ -107,9 +108,9 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
     }
   }, [data])
 
-  // If the user is logged in, but doesn't have preferences from either local storage
+  // If the user is logged in, but doesn't have a username and preferences from either local storage
   // or the API, show a spinner
-  if (edlToken && !preferencesLoaded) {
+  if (edlToken && !username && !preferencesLoaded) {
     return (
       <Spinner
         className="root__spinner spinner spinner--dots spinner--small"

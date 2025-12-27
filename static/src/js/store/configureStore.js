@@ -2,7 +2,6 @@
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from '@redux-devtools/extension'
-import createRootReducer from '../reducers'
 import { metricsMiddleware } from '../middleware/metrics'
 
 let store
@@ -13,7 +12,7 @@ export const configureStore = (initialState = {}) => {
 
   // Create the redux store and immediately dispatch the actions we want to occur on load
   store = createStore(
-    createRootReducer(),
+    () => {},
     initialState,
 
     // Build out the Redux middleware

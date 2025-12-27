@@ -1,24 +1,5 @@
 import useEdscStore from '../../useEdscStore'
 
-// @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
-import actions from '../../../actions'
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
-jest.mock('../../../actions', () => ({
-  removeSubscriptionDisabledFields: jest.fn()
-}))
-
-const mockDispatch = jest.fn()
-const mockGetState = jest.fn()
-configureStore.mockReturnValue({
-  dispatch: mockDispatch,
-  getState: mockGetState
-})
-
 describe('createFacetParamsSlice', () => {
   test('sets the default state', () => {
     const zustandState = useEdscStore.getState()
@@ -91,8 +72,6 @@ describe('createFacetParamsSlice', () => {
           term: 'Soils'
         }]
       })
-
-      expect(mockDispatch).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -193,9 +172,6 @@ describe('createFacetParamsSlice', () => {
           pageNum: 1
         }
       })
-
-      expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-      expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
     })
   })
 
@@ -237,9 +213,6 @@ describe('createFacetParamsSlice', () => {
               pageNum: 1
             }
           })
-
-          expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-          expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
         })
 
         describe('when the facet is being removed', () => {
@@ -247,12 +220,6 @@ describe('createFacetParamsSlice', () => {
             useEdscStore.setState((state) => {
               state.collections.getCollections = jest.fn()
               state.query.changeQuery = jest.fn()
-            })
-
-            mockGetState.mockReturnValue({
-              autocomplete: {
-                selected: {}
-              }
             })
 
             const zustandState = useEdscStore.getState()
@@ -280,9 +247,6 @@ describe('createFacetParamsSlice', () => {
                 pageNum: 1
               }
             })
-
-            expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-            expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
           })
         })
       })
@@ -324,9 +288,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -362,9 +323,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -400,9 +358,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -438,9 +393,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -476,9 +428,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -514,9 +463,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -552,9 +498,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -590,9 +533,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -628,9 +568,6 @@ describe('createFacetParamsSlice', () => {
             pageNum: 1
           }
         })
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
   })

@@ -6,9 +6,6 @@ import EXPORT_COLLECTIONS from '../operations/queries/exportCollections'
 
 import useEdscStore from '../zustand/useEdscStore'
 
-// @ts-expect-error There are no types for this file
-import configureStore from '../store/configureStore'
-
 // @ts-expect-error This file does not have types
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { jsonToCsv } from '../util/export/jsonToCsv'
@@ -117,14 +114,8 @@ export const useExportCollections = () => {
     // Clear the current collections before starting a new export
     setCollections([])
 
-    // Get the current Redux state
-    const {
-      getState: reduxGetState
-    } = configureStore()
-    const reduxState = reduxGetState()
-
     // Prepare the collection parameters for the export query
-    const collectionParams = prepareCollectionParams(reduxState)
+    const collectionParams = prepareCollectionParams()
 
     // Build the search parameters for the export query
     const params = {

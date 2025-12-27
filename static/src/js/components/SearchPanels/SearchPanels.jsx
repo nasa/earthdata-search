@@ -30,8 +30,6 @@ import GranuleResultsFocusedMetaContainer
   from '../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-import SubscriptionsBodyContainer
-  from '../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
@@ -42,6 +40,7 @@ import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
+import SubscriptionsBody from '../Subscriptions/SubscriptionsBody'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollections } from '../../zustand/selectors/collections'
@@ -53,14 +52,14 @@ import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/sel
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getGranules } from '../../zustand/selectors/granules'
 import { getEdlToken, getSitePreferences } from '../../zustand/selectors/user'
+import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import { useExportCollections } from '../../hooks/useExportCollections'
 
 import { routes } from '../../constants/routes'
+import { MODAL_NAMES } from '../../constants/modalNames'
 
 import './SearchPanels.scss'
-import { setOpenModalFunction } from '../../zustand/selectors/ui'
-import { MODAL_NAMES } from '../../constants/modalNames'
 
 const { edscHost } = getEnvironmentConfig()
 
@@ -79,7 +78,6 @@ const defaultPanelStateFromProps = (value) => {
 }
 
 const SearchPanels = ({
-  collectionSubscriptions,
   onMetricsCollectionSortChange
 }) => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
@@ -128,6 +126,8 @@ const SearchPanels = ({
   const [granulePanelView, setGranulePanelView] = useState(
     defaultPanelStateFromProps(granuleListView)
   )
+
+  const [subscriptionCount, setSubscriptionCount] = useState(0)
 
   const loggedIn = !!edlToken
 
@@ -328,7 +328,7 @@ const SearchPanels = ({
       'search-panels__action',
       'search-panels__action--subscriptions',
       {
-        'search-panels__action--is-active': collectionSubscriptions.length > 0
+        'search-panels__action--is-active': subscriptionCount > 0
       }
     ])
 
@@ -341,9 +341,9 @@ const SearchPanels = ({
               icon={Subscribe}
               className={subscriptionButtonClassnames}
               dataTestId="search-panels-actions__subscriptions-button"
-              label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
-              title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
-              badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
+              label={subscriptionCount ? 'View or edit subscriptions' : 'Create subscription'}
+              title={subscriptionCount ? 'View or edit subscriptions' : 'Create subscription'}
+              badge={subscriptionCount ? `${subscriptionCount}` : false}
               naked
               to={
                 {
@@ -664,7 +664,9 @@ const SearchPanels = ({
       <PanelItem>
         <PortalFeatureContainer authentication>
           <AuthRequiredContainer noRedirect>
-            <SubscriptionsBodyContainer subscriptionType="granule" />
+            <SubscriptionsBody
+              subscriptionType="granule"
+            />
           </AuthRequiredContainer>
         </PortalFeatureContainer>
       </PanelItem>
@@ -693,7 +695,10 @@ const SearchPanels = ({
       <PanelItem>
         <PortalFeatureContainer authentication>
           <AuthRequiredContainer noRedirect>
-            <SubscriptionsBodyContainer subscriptionType="collection" />
+            <SubscriptionsBody
+              setSubscriptionCount={setSubscriptionCount}
+              subscriptionType="collection"
+            />
           </AuthRequiredContainer>
         </PortalFeatureContainer>
       </PanelItem>
@@ -805,7 +810,6 @@ const SearchPanels = ({
 }
 
 SearchPanels.propTypes = {
-  collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired
 }
 

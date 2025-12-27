@@ -3,9 +3,6 @@ import { isEmpty } from 'lodash-es'
 
 import { CollectionsSlice, ImmerStateCreator } from '../types'
 
-// @ts-expect-error There are no types for this file
-import configureStore from '../../store/configureStore'
-
 import { getEdlToken } from '../selectors/user'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
@@ -35,11 +32,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
     getCollections: async () => {
       const zustandState = get()
 
-      const {
-        getState: reduxGetState
-      } = configureStore()
-      const reduxState = reduxGetState()
-
       const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
@@ -48,7 +40,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         cancelToken.cancel()
       }
 
-      const collectionParams = prepareCollectionParams(reduxState)
+      const collectionParams = prepareCollectionParams()
 
       const {
         pageNum

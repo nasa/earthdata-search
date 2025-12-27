@@ -1,32 +1,11 @@
 import useEdscStore from '../../useEdscStore'
 import { initialState } from '../createQuerySlice'
 
-// @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
-import actions from '../../../actions'
-
 import * as EventEmitter from '../../../events/events'
 import routerHelper from '../../../router/router'
 
 // @ts-expect-error This file does not have types
 import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
-
-jest.mock('../../../actions', () => ({
-  getCollections: jest.fn(),
-  getSearchGranules: jest.fn(),
-  removeSubscriptionDisabledFields: jest.fn()
-}))
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
-const mockDispatch = jest.fn()
-const mockGetState = jest.fn()
-configureStore.mockReturnValue({
-  dispatch: mockDispatch,
-  getState: mockGetState
-})
 
 describe('createQuerySlice', () => {
   test('sets the default state', () => {
@@ -79,9 +58,6 @@ describe('createQuerySlice', () => {
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -130,9 +106,6 @@ describe('createQuerySlice', () => {
         expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -174,9 +147,6 @@ describe('createQuerySlice', () => {
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
         expect(project.getProjectGranules).toHaveBeenCalledWith()
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -347,9 +317,6 @@ describe('createQuerySlice', () => {
 
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -389,9 +356,6 @@ describe('createQuerySlice', () => {
 
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -435,9 +399,6 @@ describe('createQuerySlice', () => {
 
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
@@ -484,9 +445,6 @@ describe('createQuerySlice', () => {
 
         expect(granules.getGranules).toHaveBeenCalledTimes(1)
         expect(granules.getGranules).toHaveBeenCalledWith()
-
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
-        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
   })

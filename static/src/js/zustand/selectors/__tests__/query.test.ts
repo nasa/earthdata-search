@@ -12,9 +12,6 @@ import {
 
 import useEdscStore from '../../useEdscStore'
 
-// @ts-expect-error: This file does not have types
-import configureStore from '../../../store/configureStore'
-
 import { initialState } from '../../slices/createQuerySlice'
 
 // @ts-expect-error: This file does not have types
@@ -86,10 +83,6 @@ describe('query selectors', () => {
 
   describe('getGranuleSubscriptionQueryObj', () => {
     test('returns the granule subscription query object', () => {
-      configureStore.mockReturnValue({
-        getState: () => ({})
-      })
-
       useEdscStore.setState(() => ({
         collection: {
           collectionId: 'collectionId',
@@ -128,16 +121,6 @@ describe('query selectors', () => {
 
   describe('getGranuleSubscriptionQueryString', () => {
     test('returns the granule subscription query string', () => {
-      configureStore.mockReturnValue({
-        getState: () => ({
-          subscriptions: {
-            disabledFields: {
-              granule: {}
-            }
-          }
-        })
-      })
-
       useEdscStore.setState(() => ({
         collection: {
           collectionId: 'collectionId',
@@ -166,25 +149,16 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString(useEdscStore.getState())
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString(
+        useEdscStore.getState(),
+        {}
+      )
       expect(granuleSubscriptionQuery).toEqual('browse_only=true&point=0,0')
     })
   })
 
   describe('getCollectionSubscriptionQueryObj', () => {
     test('returns the collection subscription query object', () => {
-      configureStore.mockReturnValue({
-        getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          }
-        })
-      })
-
       useEdscStore.setState(() => ({
         facetParams: {
           featureFacets: {
@@ -228,25 +202,6 @@ describe('query selectors', () => {
 
   describe('getCollectionSubscriptionQueryString', () => {
     test('returns the collection subscription query string', () => {
-      configureStore.mockReturnValue({
-        getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          },
-          subscriptions: {
-            disabledFields: {
-              collection: {
-                keyword: true
-              }
-            }
-          }
-        })
-      })
-
       useEdscStore.setState(() => ({
         facetParams: {
           featureFacets: {
@@ -274,7 +229,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const collectionSubscriptionQuery = getCollectionSubscriptionQueryString()
+      const collectionSubscriptionQuery = getCollectionSubscriptionQueryString({ keyword: true })
       expect(collectionSubscriptionQuery).toEqual('cloud_hosted=true&has_granules_or_cwic=true&data_center_h[]=National Snow and Ice Data Center (NSIDC)&point=0,0')
     })
   })

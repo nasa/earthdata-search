@@ -5,12 +5,6 @@ import {
   ImmerStateCreator
 } from '../types'
 
-// @ts-expect-error: This file does not have types
-import configureStore from '../../store/configureStore'
-
-// @ts-expect-error: This file does not have types
-import actions from '../../actions'
-
 const initialState = {
   featureFacets: {
     availableInEarthdataCloud: false,
@@ -80,38 +74,24 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         }
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       // Reset collection pageNum to 1 when facets are changing
       get().query.changeQuery({
         collection: {
           pageNum: 1
         }
       })
-
-      // Clear any subscription disabledFields
-      reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
     setCmrFacets: (cmrFacets) => {
       set((state) => {
         state.facetParams.cmrFacets = cmrFacets
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       // Reset collection pageNum to 1 when facets are changing
       get().query.changeQuery({
         collection: {
           pageNum: 1
         }
       })
-
-      // Clear any subscription disabledFields
-      reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
     setViewAllFacets: (viewAllFacets, category) => {
       set((state) => {

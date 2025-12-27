@@ -7,9 +7,9 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 
 import Subscriptions from '../Subscriptions'
-import SubscriptionsListContainer from '../../../containers/SubscriptionsListContainer/SubscriptionsListContainer'
+import SubscriptionsList from '../../../components/SubscriptionsList/SubscriptionsList'
 
-jest.mock('../../../containers/SubscriptionsListContainer/SubscriptionsListContainer', () => jest.fn(() => <div />))
+jest.mock('../../../components/SubscriptionsList/SubscriptionsList', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: Subscriptions
@@ -43,7 +43,7 @@ describe('Subscriptions component', () => {
   test('displays the subscription list', () => {
     setup()
 
-    expect(SubscriptionsListContainer).toHaveBeenCalledTimes(1)
-    expect(SubscriptionsListContainer).toHaveBeenCalledWith({}, {})
+    expect(SubscriptionsList).toHaveBeenCalledTimes(1)
+    expect(SubscriptionsList).toHaveBeenCalledWith({}, {})
   })
 })

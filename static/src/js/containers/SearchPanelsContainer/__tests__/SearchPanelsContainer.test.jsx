@@ -6,11 +6,7 @@ import actions from '../../../actions'
 import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
 
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  SearchPanelsContainer
-} from '../SearchPanelsContainer'
+import { mapDispatchToProps, SearchPanelsContainer } from '../SearchPanelsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
@@ -18,7 +14,6 @@ jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <
 const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
-    collectionSubscriptions: [],
     onChangePath: jest.fn(),
     onMetricsCollectionSortChange: jest.fn()
   },
@@ -67,18 +62,6 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {}
-
-    const expectedState = {
-      collectionSubscriptions: []
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', async () => {
     const { props } = setup()
@@ -89,7 +72,6 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
       {
-        collectionSubscriptions: [],
         onChangePath: props.onChangePath,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange
       },
