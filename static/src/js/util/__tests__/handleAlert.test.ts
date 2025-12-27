@@ -1,10 +1,5 @@
 import nock from 'nock'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-
-import { handleAlert } from '../alerts'
-
-const mockStore = configureMockStore([thunk])
+import { handleAlert } from '../handleAlert'
 
 describe('handleAlert', () => {
   test('calls lambda to log alert', async () => {
@@ -21,17 +16,14 @@ describe('handleAlert', () => {
       })
       .reply(200)
 
-    // MockStore with initialState
-    const store = mockStore({})
-
-    await store.dispatch(handleAlert({
+    handleAlert({
       action: 'mockAction',
       message: 'Mock message',
       resource: 'mockResource',
       requestObject: {
         requestId: 'mockRequestId'
       }
-    }))
+    })
 
     expect(consoleMock).toHaveBeenCalledTimes(1)
     expect(consoleMock).toHaveBeenCalledWith('Action [mockAction] alert: Mock message')

@@ -12,7 +12,6 @@ import {
 } from './urlQuery'
 import { toggleFacetsModal } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
-import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
   createSubscription,
@@ -35,7 +34,6 @@ const actions = {
   getGranuleSubscriptions,
   getSubscriptions,
   getViewAllFacets,
-  handleAlert,
   onFacetsErrored,
   onFacetsLoaded,
   onFacetsLoading,
