@@ -26,16 +26,16 @@ jest.mock('../../../components/CollectionDetails/RelatedUrlsModal', () => {
   return RelatedUrlsModal
 })
 
-jest.mock('../../../containers/FacetsModalContainer/FacetsModalContainer', () => {
-  const FacetsModalContainer = () => <div data-testid="mocked-FacetsModalContainer" />
+jest.mock('../../../components/Facets/FacetsModal', () => {
+  const FacetsModal = () => <div data-testid="mocked-FacetsModal" />
 
-  return FacetsModalContainer
+  return FacetsModal
 })
 
-jest.mock('../../../containers/FacetsContainer/FacetsContainer', () => {
-  const FacetsContainer = () => <div data-testid="mocked-FacetsContainer" />
+jest.mock('../../../components/Facets/Facets', () => {
+  const Facets = () => <div data-testid="mocked-Facets" />
 
-  return FacetsContainer
+  return Facets
 })
 
 jest.mock('../../../containers/MapContainer/MapContainer', () => {

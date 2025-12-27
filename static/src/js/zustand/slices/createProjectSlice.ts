@@ -398,7 +398,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             ...focusedMetadata
           }
 
-          const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+          const { [conceptId!]: savedAccessConfig } = savedAccessConfigs
 
           const accessMethods = buildAccessMethods(metadata, isOpenSearch)
 
@@ -417,7 +417,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           // Set the access methods
           set((state) => {
-            const collection = state.project.collections.byId[conceptId]
+            const collection = state.project.collections.byId[conceptId!]
             const existingAccessMethods = collection?.accessMethods || {}
 
             Object.keys(methods).forEach((key) => {
@@ -436,7 +436,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
               newCollection.selectedAccessMethod = selectedAccessMethod
             }
 
-            state.project.collections.byId[conceptId] = {
+            state.project.collections.byId[conceptId!] = {
               ...collection,
               ...newCollection
             }
@@ -445,13 +445,13 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           if (dataQualitySummaries) {
             const { items: dqsItems = [] } = dataQualitySummaries
             if (dqsItems && dqsItems.length > 0) {
-              get().dataQualitySummaries.setDataQualitySummaries(conceptId, dqsItems)
+              get().dataQualitySummaries.setDataQualitySummaries(conceptId!, dqsItems)
             }
           }
 
           // Update metadata in the store
           set((state) => {
-            state.collection.collectionMetadata[conceptId] = collectionMetadata
+            state.collection.collectionMetadata[conceptId!] = collectionMetadata
           })
 
           return response

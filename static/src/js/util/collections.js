@@ -2,7 +2,6 @@ import { categoryNameToCMRParam } from './facets'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
-import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withSelectedRegion } from './withSelectedRegion'
 import { collectionSortKeys } from '../constants/collectionSortKeys'
 
@@ -11,18 +10,16 @@ import { getCollectionsQuery, getSelectedRegionQuery } from '../zustand/selector
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
- * @param {Object} state Current Redux State
  * @returns {Object} Parameters used in buildCollectionSearchParams
  */
-export const prepareCollectionParams = (state) => {
-  const {
-    autocomplete = {},
-    searchResults = {}
-  } = state
-
+export const prepareCollectionParams = () => {
   const zustandState = useEdscStore.getState()
 
-  const { portal, facetParams } = zustandState
+  const {
+    portal,
+    facetParams,
+    facets
+  } = zustandState
   const collectionQuery = getCollectionsQuery(zustandState)
   const selectedRegion = getSelectedRegionQuery(zustandState)
 
@@ -46,7 +43,7 @@ export const prepareCollectionParams = (state) => {
     polygon
   } = spatial
 
-  const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
+  const { viewAllFacets: viewAllFacetsSearchResults = {} } = facets
   const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults
 
   // If we have an overrideTemporal use it, if not use temporal
@@ -113,20 +110,6 @@ export const prepareCollectionParams = (state) => {
       ...portalConsortium
     ]
   }
-
-  // Add the autocomplete selected parameters if the type is not a CMR Facet
-  const { selected = [] } = autocomplete
-  selected.forEach((param) => {
-    const { type, value } = param
-
-    if (!autocompleteFacetsMap[type]) {
-      if (collectionParams[type]) {
-        collectionParams[type].push(value)
-      } else {
-        collectionParams[type] = [value]
-      }
-    }
-  })
 
   // Apply any overrides for advanced search
   const paramsWithSelectedRegion = withSelectedRegion(collectionParams, selectedRegion)

@@ -6,7 +6,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import type {
   CmrHeaders,
   RequestParams,
-  Response
+  RequestResponseData
 } from '../../types/sharedTypes'
 import { routes } from '../../constants/routes'
 
@@ -147,7 +147,7 @@ export default class Request {
    * @param {Object} data - Response object from the request.
    * @return {Object} The transformed response.
    */
-  transformResponse(data: Response) {
+  transformResponse(data: RequestResponseData) {
     const timing = Date.now() - this.startTime!
 
     const { dataLayer = [] } = window
@@ -182,7 +182,7 @@ export default class Request {
         ...defaultTransformRequest
       ],
       transformResponse: defaultTransformResponse.concat(
-        (responseData: Response) => this.transformResponse(responseData)
+        (responseData: RequestResponseData) => this.transformResponse(responseData)
       ),
       cancelToken: this.cancelToken.token
     })
@@ -210,7 +210,7 @@ export default class Request {
       url,
       params,
       transformResponse: defaultTransformResponse.concat(
-        (data: Response) => this.transformResponse(data)
+        (data: RequestResponseData) => this.transformResponse(data)
       ),
       cancelToken: this.cancelToken.token,
       headers: {}
@@ -262,7 +262,7 @@ export default class Request {
       baseURL: this.baseUrl,
       url,
       transformResponse: defaultTransformResponse.concat(
-        (data: Response) => this.transformResponse(data)
+        (data: RequestResponseData) => this.transformResponse(data)
       ),
       headers: {}
     }

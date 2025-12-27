@@ -9,9 +9,7 @@ import actions from '../../../actions'
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 jest.mock('../../../actions', () => ({
-  getViewAllFacets: jest.fn(),
-  removeSubscriptionDisabledFields: jest.fn(),
-  toggleFacetsModal: jest.fn()
+  removeSubscriptionDisabledFields: jest.fn()
 }))
 
 const mockDispatch = jest.fn()
@@ -109,6 +107,9 @@ describe('createFacetParamsSlice', () => {
         state.facetParams.setCmrFacets = jest.fn()
         state.facetParams.viewAllFacets.instrument_h = ['AIRS']
         state.query.changeQuery = jest.fn()
+
+        state.facets.viewAllFacets.resetState = jest.fn()
+        state.ui.modals.setOpenModal = jest.fn()
       })
 
       // Apply the viewAllFacets
@@ -116,7 +117,9 @@ describe('createFacetParamsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const {
-        facetParams: updatedFacetParams
+        facetParams: updatedFacetParams,
+        facets,
+        ui
       } = updatedState
 
       expect(updatedFacetParams.setCmrFacets).toHaveBeenCalledTimes(1)
@@ -124,8 +127,11 @@ describe('createFacetParamsSlice', () => {
         instrument_h: ['AIRS']
       })
 
-      expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
-      expect(actions.toggleFacetsModal).toHaveBeenCalledWith(false)
+      expect(ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+      expect(ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+
+      expect(facets.viewAllFacets.resetState).toHaveBeenCalledTimes(1)
+      expect(facets.viewAllFacets.resetState).toHaveBeenCalledWith()
     })
 
     test('clears viewAllFacets after applying them', () => {
@@ -632,6 +638,10 @@ describe('createFacetParamsSlice', () => {
   describe('setViewAllFacets', () => {
     describe('when setting instruments', () => {
       test('updates viewAllFacets', () => {
+        useEdscStore.setState((state) => {
+          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+        })
+
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
         const { setViewAllFacets } = facetParams
@@ -640,7 +650,14 @@ describe('createFacetParamsSlice', () => {
         }, 'instrument_h')
 
         const updatedState = useEdscStore.getState()
-        const { facetParams: updatedFacetParams } = updatedState
+        const {
+          facetParams: updatedFacetParams,
+          facets
+        } = updatedState
+
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledTimes(1)
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledWith('instrument_h')
+
         expect(updatedFacetParams.viewAllFacets).toEqual({
           instrument_h: ['AIRS']
         })
@@ -649,6 +666,10 @@ describe('createFacetParamsSlice', () => {
 
     describe('when setting organizations', () => {
       test('updates viewAllFacets', () => {
+        useEdscStore.setState((state) => {
+          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+        })
+
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
         const { setViewAllFacets } = facetParams
@@ -657,7 +678,14 @@ describe('createFacetParamsSlice', () => {
         }, 'data_center_h')
 
         const updatedState = useEdscStore.getState()
-        const { facetParams: updatedFacetParams } = updatedState
+        const {
+          facetParams: updatedFacetParams,
+          facets
+        } = updatedState
+
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledTimes(1)
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledWith('data_center_h')
+
         expect(updatedFacetParams.viewAllFacets).toEqual({
           data_center_h: ['Alaska+Satellite+Facility']
         })
@@ -666,6 +694,10 @@ describe('createFacetParamsSlice', () => {
 
     describe('when setting projects', () => {
       test('updates viewAllFacets', () => {
+        useEdscStore.setState((state) => {
+          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+        })
+
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
         const { setViewAllFacets } = facetParams
@@ -674,7 +706,14 @@ describe('createFacetParamsSlice', () => {
         }, 'project_h')
 
         const updatedState = useEdscStore.getState()
-        const { facetParams: updatedFacetParams } = updatedState
+        const {
+          facetParams: updatedFacetParams,
+          facets
+        } = updatedState
+
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledTimes(1)
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledWith('project_h')
+
         expect(updatedFacetParams.viewAllFacets).toEqual({
           project_h: ['ABoVE']
         })
@@ -683,6 +722,10 @@ describe('createFacetParamsSlice', () => {
 
     describe('when setting data format', () => {
       test('updates viewAllFacets', () => {
+        useEdscStore.setState((state) => {
+          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+        })
+
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
         const { setViewAllFacets } = facetParams
@@ -691,7 +734,14 @@ describe('createFacetParamsSlice', () => {
         }, 'granule_data_format_h')
 
         const updatedState = useEdscStore.getState()
-        const { facetParams: updatedFacetParams } = updatedState
+        const {
+          facetParams: updatedFacetParams,
+          facets
+        } = updatedState
+
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledTimes(1)
+        expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledWith('granule_data_format_h')
+
         expect(updatedFacetParams.viewAllFacets).toEqual({
           granule_data_format_h: ['ASCII']
         })
@@ -705,24 +755,24 @@ describe('createFacetParamsSlice', () => {
       const { facetParams } = zustandState
       const { triggerViewAllFacets } = facetParams
 
-      useEdscStore.setState({
-        facetParams: {
-          ...facetParams,
-          cmrFacets: {
-            instrument_h: ['AIRS']
-          }
-        }
+      useEdscStore.setState((state) => {
+        state.facetParams.cmrFacets.instrument_h = ['AIRS']
+        state.facets.viewAllFacets.getViewAllFacets = jest.fn()
       })
 
       // Trigger the View All Facets modal for instruments
       triggerViewAllFacets('instrument_h')
 
-      expect(actions.getViewAllFacets).toHaveBeenCalledTimes(1)
-      expect(actions.getViewAllFacets).toHaveBeenCalledWith('instrument_h')
-
       // Check that the viewAllFacets state is set to the current cmrFacets
       const updatedState = useEdscStore.getState()
-      const { facetParams: updatedFacetParams } = updatedState
+      const {
+        facetParams: updatedFacetParams,
+        facets
+      } = updatedState
+
+      expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledTimes(1)
+      expect(facets.viewAllFacets.getViewAllFacets).toHaveBeenCalledWith('instrument_h')
+
       expect(updatedFacetParams.viewAllFacets).toEqual({
         instrument_h: ['AIRS']
       })

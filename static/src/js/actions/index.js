@@ -1,17 +1,8 @@
 import {
-  updateFacets,
-  onFacetsLoading,
-  onFacetsLoaded,
-  onFacetsErrored
-} from './facets'
-
-import {
   changeUrl,
   changePath,
   updateStore
 } from './urlQuery'
-import { toggleFacetsModal } from './ui'
-import { getViewAllFacets } from './viewAllFacets'
 import { handleAlert } from './alerts'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
@@ -34,14 +25,8 @@ const actions = {
   deleteSubscription,
   getGranuleSubscriptions,
   getSubscriptions,
-  getViewAllFacets,
   handleAlert,
-  onFacetsErrored,
-  onFacetsLoaded,
-  onFacetsLoading,
   removeSubscriptionDisabledFields,
-  toggleFacetsModal,
-  updateFacets,
   updateStore,
   updateSubscription,
   updateSubscriptionDisabledFields

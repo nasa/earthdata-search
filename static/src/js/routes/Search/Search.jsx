@@ -13,8 +13,8 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
-import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
-import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
+import Facets from '../../components/Facets/Facets'
+import FacetsModal from '../../components/Facets/FacetsModal'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
@@ -178,7 +178,7 @@ export const Search = () => {
                         <SidebarFiltersItem
                           hasPadding={false}
                         >
-                          <FacetsContainer />
+                          <Facets />
                         </SidebarFiltersItem>
                         <PortalFeatureContainer
                           onlyGranulesCheckbox
@@ -219,7 +219,7 @@ export const Search = () => {
         </SidebarContainer>
         <div className="route-wrapper__content route-wrapper__content--dark">
           <RelatedUrlsModal />
-          <FacetsModalContainer />
+          <FacetsModal />
           <PortalFeatureContainer advancedSearch>
             <AdvancedSearchModalContainer
               fields={advancedSearchFields}

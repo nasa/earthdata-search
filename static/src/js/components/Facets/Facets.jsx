@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { camelCase } from 'lodash-es'
 
 import { FaMap } from 'react-icons/fa'
@@ -12,10 +11,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import './Facets.scss'
 
-const Facets = (props) => {
-  const {
-    facetsById
-  } = props
+const Facets = () => {
+  const facetsById = useEdscStore((state) => state.facets.facets.byId)
 
   const {
     featureFacets,
@@ -211,10 +208,6 @@ const Facets = (props) => {
       {facetsGroups}
     </ul>
   )
-}
-
-Facets.propTypes = {
-  facetsById: PropTypes.shape({}).isRequired
 }
 
 export default Facets

@@ -6,9 +6,6 @@ import useEdscStore from '../../useEdscStore'
 import configureStore from '../../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import actions from '../../../actions'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
@@ -88,6 +85,8 @@ describe('createCollectionsSlice', () => {
 
         state.granules.getGranules = jest.fn()
         state.user.edlToken = 'mock-token'
+
+        state.facets.facets.updateFacets = jest.fn()
       })
 
       mockGetState.mockReturnValue({})
@@ -97,7 +96,8 @@ describe('createCollectionsSlice', () => {
 
       await getCollections()
       const {
-        collections: updatedCollections
+        collections: updatedCollections,
+        facets: updatedFacets
       } = useEdscStore.getState()
 
       expect(updatedCollections.collections).toEqual({
@@ -108,14 +108,8 @@ describe('createCollectionsSlice', () => {
         loadTime: expect.any(Number)
       })
 
-      expect(actions.onFacetsLoading).toHaveBeenCalledTimes(1)
-      expect(actions.onFacetsLoading).toHaveBeenCalledWith()
-
-      expect(actions.onFacetsLoaded).toHaveBeenCalledTimes(1)
-      expect(actions.onFacetsLoaded).toHaveBeenCalledWith({ loaded: true })
-
-      expect(actions.updateFacets).toHaveBeenCalledTimes(1)
-      expect(actions.updateFacets).toHaveBeenCalledWith({ facets: [] })
+      expect(updatedFacets.facets.updateFacets).toHaveBeenCalledTimes(1)
+      expect(updatedFacets.facets.updateFacets).toHaveBeenCalledWith([])
     })
 
     test('does not call updateCollectionResults on error', async () => {
@@ -136,6 +130,8 @@ describe('createCollectionsSlice', () => {
 
         state.errors.handleError = jest.fn()
         state.granules.getGranules = jest.fn()
+
+        state.facets.facets.updateFacets = jest.fn()
       })
 
       mockGetState.mockReturnValue({})
@@ -147,7 +143,8 @@ describe('createCollectionsSlice', () => {
 
       const {
         collections: updatedCollections,
-        errors
+        errors,
+        facets: updatedFacets
       } = useEdscStore.getState()
 
       expect(updatedCollections.collections).toEqual({
@@ -158,13 +155,7 @@ describe('createCollectionsSlice', () => {
         loadTime: expect.any(Number)
       })
 
-      expect(actions.onFacetsLoading).toHaveBeenCalledTimes(1)
-      expect(actions.onFacetsLoading).toHaveBeenCalledWith()
-
-      expect(actions.onFacetsLoaded).toHaveBeenCalledTimes(1)
-      expect(actions.onFacetsLoaded).toHaveBeenCalledWith({ loaded: false })
-
-      expect(actions.updateFacets).toHaveBeenCalledTimes(0)
+      expect(updatedFacets.facets.updateFacets).toHaveBeenCalledTimes(0)
 
       expect(errors.handleError).toHaveBeenCalledTimes(1)
       expect(errors.handleError).toHaveBeenCalledWith(
