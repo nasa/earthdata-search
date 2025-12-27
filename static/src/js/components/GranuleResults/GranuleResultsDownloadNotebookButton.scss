@@ -24,6 +24,11 @@
     padding: 0;
   }
 
+  &__menu-button {
+    width: 12.375rem;
+    height: 2.375rem;
+  }
+
   &__menu-panel-heading {
     padding: 0.325rem 1rem;
     background: utils.$color__spacesuit-white;

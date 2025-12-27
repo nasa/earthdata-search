@@ -71,6 +71,7 @@ const simplifyShape = ({
  * @param {String} params.projectionCode - The current map projection
  * @param {Boolean} params.shapefileAdded - If the shapefile was just added
  * @param {Boolean} params.showMbr - If the spatial polygon warning should be displayed
+ * @param {Boolean} [params.updateQuery=true] - Whether to update the query when drawing the shapefile
  * @param {Object} params.vectorSource - The source to draw the shapefile on
  */
 const drawShapefile = ({
@@ -85,6 +86,7 @@ const drawShapefile = ({
   projectionCode,
   shapefileAdded,
   showMbr,
+  updateQuery = true,
   vectorSource
 }: {
   /** If a new layer is being drawn */
@@ -110,6 +112,8 @@ const drawShapefile = ({
   shapefileAdded: boolean
   /** If the spatial polygon warning should be displayed */
   showMbr: boolean
+  /** Whether to update the query when drawing the shapefile */
+  updateQuery?: boolean
   /** The source to draw the shapefile on */
   vectorSource: VectorSource
 }) => {
@@ -210,11 +214,13 @@ const drawShapefile = ({
     const feature = features[0]
 
     // Add the feature's geometry as the spatial query
-    onChangeQuery({
-      collection: {
-        spatial: getQueryFromShapefileFeature(feature)
-      }
-    })
+    if (shapefileAdded && updateQuery) {
+      onChangeQuery({
+        collection: {
+          spatial: getQueryFromShapefileFeature(feature)
+        }
+      })
+    }
 
     // Set the selectedFeatures in the shapefile
     const edscId = feature.get('edscId')

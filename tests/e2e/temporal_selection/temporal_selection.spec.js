@@ -77,11 +77,11 @@ test.describe('Temporal Dropdown Behavior', () => {
 
     test('clicking Today fills in the current date appropriately', async ({ page }) => {
       // Mock date with timestamp of 00:00:00
-      const startDayTimestamp = moment().startOf('day')
+      const startDayTimestamp = moment().utc().startOf('day')
       const mockStartDate = startDayTimestamp.format('YYYY-MM-DD HH:mm:ss')
 
       // Mock date with teimestamp of 23:59:59
-      const endDayTimestamp = moment().endOf('day')
+      const endDayTimestamp = moment().utc().endOf('day')
       const mockEndDate = endDayTimestamp.format('YYYY-MM-DD HH:mm:ss')
 
       await page.getByRole('textbox', { name: 'Start Date' }).click()
@@ -114,7 +114,7 @@ test.describe('Temporal Dropdown Behavior', () => {
     test.describe('when user selects Use Recurring Date', () => {
       test('default values for start and end are filled in if none are provided', async ({ page }) => {
         // Mock current date
-        const currentDate = moment().endOf('day')
+        const currentDate = moment().utc().endOf('day')
         const mockCurrentDate = currentDate.format('MM-DD HH:mm:ss')
 
         await page.getByRole('checkbox', { name: 'Use a recurring date range' }).check()

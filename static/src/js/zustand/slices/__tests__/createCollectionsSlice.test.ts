@@ -12,6 +12,9 @@ import actions from '../../../actions'
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import addShapefile from '../../../util/addShapefile'
+
+jest.mock('../../../util/addShapefile', () => jest.fn())
 
 jest.mock('../../../actions', () => ({
   handleError: jest.fn(),
@@ -178,13 +181,23 @@ describe('createCollectionsSlice', () => {
 
   describe('getNlpCollections', () => {
     test('successfully performs NLP search and processes response', async () => {
-      const mockNlpResponse = {
-        data: {
+      nock(/cmr/)
+        .post(/search\/nlp\/query\.json/)
+        .reply(200, {
           queryInfo: {
             spatial: {
               geoJson: {
-                type: 'Polygon',
-                coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+                type: 'FeatureCollection',
+                features: [
+                  {
+                    type: 'Feature',
+                    geometry: {
+                      type: 'Polygon',
+                      coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+                    },
+                    properties: {}
+                  }
+                ]
               },
               geoLocation: 'Test Area'
             },
@@ -207,35 +220,50 @@ describe('createCollectionsSlice', () => {
               ]
             }
           }
-        }
-      }
-
-      nock(/cmr/)
-        .get(/search\/nlp\/query\.json/)
-        .reply(200, mockNlpResponse)
+        }, {
+          'cmr-hits': '2'
+        })
 
       useEdscStore.setState((state) => {
-        state.query.nlpCollection = { query: 'test query' }
         state.user.edlToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections()
+      await getNlpCollections('test query')
 
       const updatedState = useEdscStore.getState()
       const { query: updatedQuery, collections: updatedCollections } = updatedState
 
-      expect(updatedQuery.nlpCollection).toEqual({
-        query: 'test query',
-        spatial: expect.objectContaining({
-          geoJson: expect.objectContaining({ type: 'Polygon' }),
+      expect(updatedQuery.collection).toEqual({
+        byId: {},
+        hasGranulesOrCwic: true,
+        keyword: undefined,
+        onlyEosdisCollections: false,
+        overrideTemporal: {},
+        pageNum: 1,
+        sortKey: '-score',
+        spatial: {
+          geoJson: {
+            features: [{
+              geometry: {
+                coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
+                type: 'Polygon'
+              },
+              properties: {
+                nlpGenerated: true
+              },
+              type: 'Feature'
+            }],
+            type: 'FeatureCollection'
+          },
           geoLocation: 'Test Area'
-        }),
+        },
+        tagKey: '',
         temporal: {
-          startDate: '2023-01-01T00:00:00.000Z',
-          endDate: '2023-12-31T23:59:59.999Z'
+          endDate: '2023-12-31T23:59:59.999Z',
+          startDate: '2023-01-01T00:00:00.000Z'
         }
       })
 
@@ -248,64 +276,147 @@ describe('createCollectionsSlice', () => {
       ]))
 
       expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
+
+      expect(addShapefile).toHaveBeenCalledTimes(1)
+      expect(addShapefile).toHaveBeenCalledWith({
+        file: {
+          features: [{
+            geometry: {
+              coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
+              type: 'Polygon'
+            },
+            properties: {
+              nlpGenerated: true
+            },
+            type: 'Feature'
+          }],
+          type: 'FeatureCollection'
+        },
+        filename: 'Test Area',
+        size: '0.17 KB',
+        updateQuery: false
+      })
     })
 
-    test('handles NLP search with only spatial data', async () => {
-      const mockNlpResponse = {
-        data: {
-          queryInfo: {
-            spatial: {
-              geoJson: {
-                type: 'Point',
-                coordinates: [0, 0]
+    describe('when the spatial value is a geometry object', () => {
+      test('processes the geometry correctly and adds the shapefile', async () => {
+        nock(/cmr/)
+          .post(/search\/nlp\/query\.json/)
+          .reply(200, {
+            queryInfo: {
+              spatial: {
+                geoJson: {
+                  type: 'Polygon',
+                  coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+                },
+                geoLocation: 'Test Area'
+              }
+            },
+            metadata: {
+              feed: {
+                entry: []
+              }
+            }
+          }, {
+            'cmr-hits': '0'
+          })
+
+        useEdscStore.setState((state) => {
+          state.user.edlToken = 'test-token'
+        })
+
+        const { collections } = useEdscStore.getState()
+        const { getNlpCollections } = collections
+
+        await getNlpCollections('geometry query')
+
+        expect(addShapefile).toHaveBeenCalledTimes(1)
+        expect(addShapefile).toHaveBeenCalledWith({
+          file: {
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              geometry: {
+                type: 'Polygon',
+                coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
               },
-              geoLocation: 'Point Location'
-            }
+              properties: {
+                nlpGenerated: true
+              }
+            }]
           },
-          metadata: {
-            feed: {
-              entry: []
-            }
-          }
+          filename: 'Test Area',
+          size: '0.06 KB',
+          updateQuery: false
+        })
+      })
+    })
+
+    describe('when the geojson is greater than 1 MB', () => {
+      test('calculates and formats the size in MB', async () => {
+        // Create a large geojson object (>1 MB)
+        const largeCoordinates = []
+        for (let i = 0; i < 100000; i += 1) {
+          largeCoordinates.push([i, i])
         }
-      }
 
-      nock(/cmr/)
-        .get(/search\/nlp\/query\.json/)
-        .reply(200, mockNlpResponse)
+        largeCoordinates.push([0, 0]) // Close the polygon
 
-      useEdscStore.setState((state) => {
-        state.query.nlpCollection = { query: 'spatial query' }
-        state.user.edlToken = 'test-token'
+        nock(/cmr/)
+          .post(/search\/nlp\/query\.json/)
+          .reply(200, {
+            queryInfo: {
+              spatial: {
+                geoJson: {
+                  type: 'Polygon',
+                  coordinates: [largeCoordinates]
+                },
+                geoLocation: 'Large Area'
+              }
+            },
+            metadata: {
+              feed: {
+                entry: []
+              }
+            }
+          }, {
+            'cmr-hits': '0'
+          })
+
+        useEdscStore.setState((state) => {
+          state.user.edlToken = 'test-token'
+        })
+
+        const { collections } = useEdscStore.getState()
+        const { getNlpCollections } = collections
+
+        await getNlpCollections('large geojson query')
+
+        expect(addShapefile).toHaveBeenCalledTimes(1)
+        expect(addShapefile).toHaveBeenCalledWith({
+          file: {
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              geometry: {
+                type: 'Polygon',
+                coordinates: [largeCoordinates]
+              },
+              properties: {
+                nlpGenerated: true
+              }
+            }]
+          },
+          filename: 'Large Area',
+          size: '1.31 MB',
+          updateQuery: false
+        })
       })
-
-      const { collections } = useEdscStore.getState()
-      const { getNlpCollections } = collections
-
-      await getNlpCollections()
-
-      const updatedState = useEdscStore.getState()
-      const { query: updatedQuery, collections: updatedCollections } = updatedState
-
-      expect(updatedQuery.nlpCollection).toEqual({
-        query: 'spatial query',
-        spatial: expect.objectContaining({
-          geoJson: expect.objectContaining({ type: 'Point' }),
-          geoLocation: 'Point Location'
-        }),
-        temporal: null
-      })
-
-      expect(updatedCollections.collections.count).toBe(0)
-      expect(updatedCollections.collections.isLoaded).toBe(true)
-      expect(updatedCollections.collections.isLoading).toBe(false)
-      expect(updatedCollections.collections.items).toEqual([])
-      expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
     })
 
     test('handles NLP search errors', async () => {
       nock(/cmr/)
-        .get(/search\/nlp\/query\.json/)
+        .post(/search\/nlp\/query\.json/)
         .reply(500, { error: 'Server error' })
 
       nock(/localhost/)
@@ -317,7 +428,6 @@ describe('createCollectionsSlice', () => {
       })
 
       useEdscStore.setState((state) => {
-        state.query.nlpCollection = { query: 'error query' }
         state.errors.handleError = jest.fn()
         state.user.edlToken = 'test-token'
       })
@@ -325,7 +435,7 @@ describe('createCollectionsSlice', () => {
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections()
+      await getNlpCollections('error query')
 
       const { errors } = useEdscStore.getState()
 
@@ -347,38 +457,42 @@ describe('createCollectionsSlice', () => {
     })
 
     test('handles empty NLP response', async () => {
-      const mockNlpResponse = {
-        data: {
+      nock(/cmr/)
+        .post(/search\/nlp\/query\.json/)
+        .reply(200, {
           queryInfo: {},
           metadata: {
             feed: {
               entry: []
             }
           }
-        }
-      }
-
-      nock(/cmr/)
-        .get(/search\/nlp\/query\.json/)
-        .reply(200, mockNlpResponse)
+        }, {
+          'cmr-hits': '0'
+        })
 
       useEdscStore.setState((state) => {
-        state.query.nlpCollection = { query: 'empty query' }
         state.user.edlToken = 'test-token'
       })
 
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections()
+      await getNlpCollections('empty query')
 
       const updatedState = useEdscStore.getState()
       const { query: updatedQuery, collections: updatedCollectionsEmpty } = updatedState
 
-      expect(updatedQuery.nlpCollection).toEqual({
-        query: 'empty query',
-        spatial: null,
-        temporal: null
+      expect(updatedQuery.collection).toEqual({
+        byId: {},
+        hasGranulesOrCwic: true,
+        keyword: null,
+        onlyEosdisCollections: false,
+        overrideTemporal: {},
+        pageNum: 1,
+        sortKey: '-score',
+        spatial: {},
+        tagKey: '',
+        temporal: {}
       })
 
       expect(updatedCollectionsEmpty.collections.count).toBe(0)

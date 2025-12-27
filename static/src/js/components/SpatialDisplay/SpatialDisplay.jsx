@@ -28,7 +28,7 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuerySpatial, getNlpCollection } from '../../zustand/selectors/query'
+import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
 
 import './SpatialDisplay.scss'
 
@@ -46,7 +46,6 @@ const SpatialDisplay = () => {
     drawingNewLayer: state.ui.map.drawingNewLayer,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
-  const nlpCollection = useEdscStore(getNlpCollection)
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
   const {
     boundingBox: boundingBoxSearch,
@@ -381,36 +380,14 @@ const SpatialDisplay = () => {
   let secondaryTitle = ''
   let spatialError = error
 
-  if (nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoLocation) {
-    entry = (
-      <SpatialDisplayEntry>
-        <Row className="spatial-display__form-row">
-          <span className="spatial-display__text-primary">
-            {nlpCollection.spatial.geoLocation}
-          </span>
-        </Row>
-      </SpatialDisplayEntry>
-    )
-
-    secondaryTitle = nlpCollection.spatial.geoJson.type
-
-    contents.push((
-      <FilterStackContents
-        key="filter__nlp-spatial"
-        body={entry}
-        title={nlpCollection.spatial.geoLocation}
-      />
-    ))
-  }
-
   const {
     isErrored: shapefileError,
     isLoading: shapefileLoading,
     isLoaded: shapefileLoaded,
+    file,
     selectedFeatures = [],
     shapefileName,
-    shapefileId,
-    shapefileSize
+    shapefileId
   } = shapefile
 
   let hint = ''
@@ -420,6 +397,11 @@ const SpatialDisplay = () => {
     || drawingNewLayer === 'shapefile') {
     // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
     // render the shapefile display
+    const { features = [] } = file || {}
+    const [firstFeature = {}] = features
+    const { properties = {} } = firstFeature
+    const { nlpGenerated = false } = properties
+
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
@@ -427,18 +409,11 @@ const SpatialDisplay = () => {
             shapefileName && (
               <>
                 <span
-                  className="spatial-display__text-primary"
+                  className="spatial-display__text-primary d-inline-flex"
                   data-testid="spatial-display_shapefile-name"
                 >
-                  {shapefileName}
+                  {nlpGenerated ? `"${shapefileName}"` : shapefileName}
                 </span>
-                {
-                  shapefileSize && (
-                    <span className="spatial-display__text-secondary">
-                      {`(${shapefileSize})`}
-                    </span>
-                  )
-                }
                 {
                   shapefileLoading && (
                     <span className="spatial-display__loading" data-testid="spatial-display__loading">
@@ -474,7 +449,7 @@ const SpatialDisplay = () => {
       spatialError = message
     }
 
-    secondaryTitle = 'Shape File'
+    secondaryTitle = nlpGenerated ? 'Matched Area' : 'Shape File'
 
     contents.push((
       <FilterStackContents

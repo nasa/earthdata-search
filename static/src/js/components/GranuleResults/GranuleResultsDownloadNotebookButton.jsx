@@ -147,6 +147,7 @@ export const GranuleResultsDownloadNotebookButton = ({
               <Button
                 spinner={loading}
                 bootstrapVariant="primary"
+                className="granule-results-download-notebook-button__menu-button"
                 icon={Download}
                 onClick={() => generateNotebook()}
               >

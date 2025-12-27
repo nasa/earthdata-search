@@ -36,8 +36,7 @@ export const emptyDecodedResult = {
       tagKey: undefined,
       temporal: {},
       hasGranulesOrCwic: true
-    },
-    nlpCollection: null
+    }
   },
   selectedRegion: undefined,
   shapefile: {

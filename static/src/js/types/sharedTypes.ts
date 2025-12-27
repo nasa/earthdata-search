@@ -1,16 +1,12 @@
-import {
+import type {
   AxiosHeaderValue,
   AxiosResponseHeaders,
   HttpStatusCode
 } from 'axios'
-import {
-  FeatureCollection,
-  GeoJsonObject,
-  Geometry
-} from 'geojson'
-import { Style } from 'ol/style'
-import { crsProjections } from '../util/map/crs'
-import { PreferencesData, MapLayer } from '../zustand/types'
+import type { FeatureCollection, GeoJsonObject } from 'geojson'
+import type { Style } from 'ol/style'
+import type { crsProjections } from '../util/map/crs'
+import type { PreferencesData, MapLayer } from '../zustand/types'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -393,11 +389,13 @@ export type RequestResponseData = EmptyObject | [] | TimelineResponseData[] | Gr
 export type CollectionRequestParams = {
   /** The collection concept id */
   conceptId: string
+  /** Additional request parameters */
+  [key: string]: unknown
 }
 
 export type ShapefileFile = FeatureCollection & {
-  name: string
-  type: string
+  /** The name of the shapefile */
+  name?: string
 }
 
 export type ShapefileRequestParams = {
@@ -550,24 +548,6 @@ export type SubscriptionResponse = {
   count: number
   /** The list of subscriptions */
   items: Subscription[]
-}
-
-/** NLP Collection Query Parameters */
-export type NlpCollectionQuery = {
-  /** The original search query string */
-  query: string
-  /** The spatial data extracted from NLP */
-  spatial?: {
-    /** The GeoJSON spatial data */
-    geoJson: Geometry
-    /** The location name from NLP */
-    geoLocation: string
-  }
-  /** The temporal data extracted from NLP */
-  temporal?: {
-    startDate: string
-    endDate: string
-  }
 }
 
 /**

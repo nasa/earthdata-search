@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import { EdscStore } from './types'
@@ -26,35 +26,37 @@ import createUiSlice from './slices/createUiSlice'
 import createUserSlice from './slices/createUserSlice'
 
 const useEdscStore = create<EdscStore>()(
-  immer(
-    devtools(
-      (...args) => ({
-        ...createCollectionSlice(...args),
-        ...createCollectionsSlice(...args),
-        ...createDataQualitySummariesSlice(...args),
-        ...createEarthdataDownloadRedirectSlice(...args),
-        ...createEarthdataEnvironmentSlice(...args),
-        ...createErrorsSlice(...args),
-        ...createFacetParamsSlice(...args),
-        ...createGranuleSlice(...args),
-        ...createGranulesSlice(...args),
-        ...createHomeSlice(...args),
-        ...createMapSlice(...args),
-        ...createProjectPanelsSlice(...args),
-        ...createPortalSlice(...args),
-        ...createProjectSlice(...args),
-        ...createQuerySlice(...args),
-        ...createSavedProjectSlice(...args),
-        ...createShapefileSlice(...args),
-        ...createTimelineSlice(...args),
-        ...createUiSlice(...args),
-        ...createUserSlice(...args)
-      }),
-      {
-        name: 'edsc-store',
-        // Enable the devtools in non-test environments
-        enabled: process.env.NODE_ENV !== 'test'
-      }
+  subscribeWithSelector(
+    immer(
+      devtools(
+        (...args) => ({
+          ...createCollectionSlice(...args),
+          ...createCollectionsSlice(...args),
+          ...createDataQualitySummariesSlice(...args),
+          ...createEarthdataDownloadRedirectSlice(...args),
+          ...createEarthdataEnvironmentSlice(...args),
+          ...createErrorsSlice(...args),
+          ...createFacetParamsSlice(...args),
+          ...createGranuleSlice(...args),
+          ...createGranulesSlice(...args),
+          ...createHomeSlice(...args),
+          ...createMapSlice(...args),
+          ...createProjectPanelsSlice(...args),
+          ...createPortalSlice(...args),
+          ...createProjectSlice(...args),
+          ...createQuerySlice(...args),
+          ...createSavedProjectSlice(...args),
+          ...createShapefileSlice(...args),
+          ...createTimelineSlice(...args),
+          ...createUiSlice(...args),
+          ...createUserSlice(...args)
+        }),
+        {
+          name: 'edsc-store',
+          // Enable the devtools in non-test environments
+          enabled: process.env.NODE_ENV !== 'test'
+        }
+      )
     )
   )
 )

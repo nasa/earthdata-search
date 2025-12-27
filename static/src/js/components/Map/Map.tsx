@@ -71,7 +71,6 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
-import { drawNlpSpatialData } from '../../util/map/drawNlpSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -93,7 +92,6 @@ import {
   GranuleMetadata,
   ImageryLayers,
   MapGranule,
-  NlpCollectionQuery,
   ProjectionCode,
   Query,
   ShapefileFile,
@@ -298,8 +296,6 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
-  /** The NLP collection data */
-  nlpCollection: NlpCollectionQuery | null
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -387,7 +383,6 @@ const Map: React.FC<MapProps> = ({
   imageryLayers,
   isFocusedCollectionPage,
   isProjectPage,
-  nlpCollection,
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
@@ -650,7 +645,7 @@ const Map: React.FC<MapProps> = ({
     eventEmitter.on(mapEventTypes.MOVEMAP, handleMoveMap)
 
     // Handle the add shapefile event
-    const handleAddShapefile = (_dzFile: unknown, file: ShapefileFile) => {
+    const handleAddShapefile = (_dzFile: unknown, file: ShapefileFile, updateQuery: boolean) => {
       const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
@@ -664,11 +659,13 @@ const Map: React.FC<MapProps> = ({
         shapefile: file,
         shapefileAdded: true,
         showMbr,
+        updateQuery,
         vectorSource: spatialDrawingSource
       })
     }
 
     eventEmitter.on(shapefileEventTypes.ADDSHAPEFILE, handleAddShapefile)
+    eventEmitter.setListenerReady(shapefileEventTypes.ADDSHAPEFILE)
 
     // Handle the remove shapefile event
     const handleRemoveShapefile = () => {
@@ -1046,25 +1043,6 @@ const Map: React.FC<MapProps> = ({
       vectorSource: spatialDrawingSource
     })
   }, [spatialSearch])
-
-  // Draw NLP spatial features when NLP collection data changes
-  useEffect(() => {
-    // Clear any existing NLP spatial features when no geoJson data exists
-    if (!nlpCollection?.spatial?.geoJson) {
-      nlpSpatialSource.clear()
-
-      return
-    }
-
-    const { geoJson } = nlpCollection.spatial
-
-    // Draw the NLP-generated spatial boundary on the map
-    drawNlpSpatialData({
-      geometry: geoJson,
-      projectionCode,
-      vectorSource: nlpSpatialSource
-    })
-  }, [nlpCollection, projectionCode])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {

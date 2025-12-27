@@ -40,8 +40,7 @@ export const initialState = {
     tagKey: '',
     temporal: {}
   },
-  selectedRegion: {},
-  nlpCollection: null
+  selectedRegion: {}
 }
 
 const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({

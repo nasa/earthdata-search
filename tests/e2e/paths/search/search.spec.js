@@ -447,8 +447,8 @@ test.describe('Path /search', () => {
 
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
-            // Const body = request.postData()
             // TODO: This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. How do we only run this expect on the second run?
+            // const body = request.postData()
             // expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704,59.34354,-9.21839&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
             route.fulfill({
@@ -462,7 +462,7 @@ test.describe('Path /search', () => {
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/search?sf=123&long=60')
+        await page.goto('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&sfs[0]=0&long=60')
 
         // Wait for the map to load
         await initialMapPromise
@@ -471,7 +471,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // URL has the polygon added from the shapefile
-        await expect(page).toHaveURL('search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&long=60')
+        await expect(page).toHaveURL('search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&sfs[0]=0&long=60')
 
         // Keyword input is empty
         await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
