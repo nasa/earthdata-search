@@ -7,12 +7,11 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 // @ts-expect-error This file does not have types
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
-import ProjectCollectionsContainer
-  // @ts-expect-error This file does not have types
-  from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
 // @ts-expect-error This file does not have types
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 import OverrideTemporalModal from '../../components/OverrideTemporalModal/OverrideTemporalModal'
+// @ts-expect-error This file does not have types
+import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 import Spinner from '../../components/Spinner/Spinner'
 
@@ -65,7 +64,7 @@ const Project = () => {
         className="route-wrapper route-wrapper--dark"
       >
         <SidebarContainer panels={<ProjectPanels />}>
-          <ProjectCollectionsContainer />
+          <ProjectCollections />
         </SidebarContainer>
         <OverrideTemporalModal />
       </form>

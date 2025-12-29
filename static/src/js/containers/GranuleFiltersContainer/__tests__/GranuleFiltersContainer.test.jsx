@@ -2,9 +2,8 @@ import React from 'react'
 import { waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import * as metrics from '../../../middleware/metrics/actions'
 
-import { GranuleFiltersContainer, mapDispatchToProps } from '../GranuleFiltersContainer'
+import { GranuleFiltersContainer } from '../GranuleFiltersContainer'
 
 import GranuleFiltersForm from '../../../components/GranuleFilters/GranuleFiltersForm'
 
@@ -19,7 +18,6 @@ const setup = setupTest({
     handleChange: jest.fn(),
     handleReset: jest.fn(),
     handleSubmit: jest.fn(),
-    onMetricsGranuleFilter: jest.fn(),
     setFieldTouched: jest.fn(),
     setFieldValue: jest.fn(),
     setGranuleFiltersNeedReset: jest.fn(),
@@ -38,18 +36,6 @@ const setup = setupTest({
   withRouter: true
 })
 
-describe('mapDispatchToProps', () => {
-  test('onMetricsGranuleFilter calls metricsGranuleFilter', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metrics, 'metricsGranuleFilter')
-
-    mapDispatchToProps(dispatch).onMetricsGranuleFilter('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-})
-
 describe('GranuleFiltersContainer component', () => {
   test('renders the GranuleFiltersForm', () => {
     setup()
@@ -60,7 +46,6 @@ describe('GranuleFiltersContainer component', () => {
       handleBlur: expect.any(Function),
       handleChange: expect.any(Function),
       handleSubmit: expect.any(Function),
-      onMetricsGranuleFilter: expect.any(Function),
       setFieldTouched: expect.any(Function),
       setFieldValue: expect.any(Function),
       touched: {},

@@ -30,7 +30,6 @@ export const CollectionResultsListItem = memo(({
   const {
     collectionsMetadata,
     isItemLoaded,
-    onMetricsAddCollectionProject,
     setSize,
     windowWidth
   } = data
@@ -72,7 +71,6 @@ export const CollectionResultsListItem = memo(({
     <li className="collection-results-list-item" style={style}>
       <CollectionResultsItem
         collectionMetadata={collectionsMetadata[index]}
-        onMetricsAddCollectionProject={onMetricsAddCollectionProject}
         ref={element}
       />
     </li>
@@ -87,7 +85,6 @@ CollectionResultsListItem.propTypes = {
       collectionMetadataPropType
     ),
     isItemLoaded: PropTypes.func,
-    onMetricsAddCollectionProject: PropTypes.func,
     setSize: PropTypes.func,
     windowWidth: PropTypes.number
   }).isRequired,

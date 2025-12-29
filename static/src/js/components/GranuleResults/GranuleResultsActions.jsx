@@ -13,6 +13,7 @@ import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
+import { metricsAddCollectionToProject } from '../../util/metrics/metricsAddCollectionToProject'
 import { commafy } from '../../util/commafy'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -39,7 +40,6 @@ import './GranuleResultsActions.scss'
  * @param {Number} props.granuleLimit - The granule limit.
  * @param {Boolean} props.initialLoading - Flag designating the initial loading state.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
- * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  */
 const GranuleResultsActions = ({
   addedGranuleIds,
@@ -49,7 +49,6 @@ const GranuleResultsActions = ({
   handoffLinks = [],
   initialLoading,
   isCollectionInProject,
-  onMetricsAddCollectionProject,
   projectGranuleCount = 0,
   removedGranuleIds,
   searchGranuleCount = 0
@@ -71,7 +70,8 @@ const GranuleResultsActions = ({
       onClick={
         () => {
           addProjectCollection(focusedCollectionId)
-          onMetricsAddCollectionProject({
+
+          metricsAddCollectionToProject({
             collectionConceptId: focusedCollectionId,
             page: 'granules',
             view: ''
@@ -243,7 +243,6 @@ GranuleResultsActions.propTypes = {
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   searchGranuleCount: PropTypes.number

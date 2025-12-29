@@ -4,6 +4,11 @@ import { screen, within } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleResultsActions from '../GranuleResultsActions'
+import { metricsAddCollectionToProject } from '../../../util/metrics/metricsAddCollectionToProject'
+
+jest.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
+  metricsAddCollectionToProject: jest.fn()
+}))
 
 jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 
@@ -34,7 +39,6 @@ const setup = setupTest({
     handoffLinks: [],
     initialLoading: false,
     isCollectionInProject: false,
-    onMetricsAddCollectionProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     removedGranuleIds: [],
     searchGranuleCount: 5000
@@ -108,7 +112,7 @@ describe('GranuleResultsActions component', () => {
 
   describe('addToProjectButton', () => {
     test('calls onAddProjectCollection', async () => {
-      const { props, user, zustandState } = setup()
+      const { user, zustandState } = setup()
 
       const button = screen.getByRole('button', { name: 'Add collection to the current project' })
       await user.click(button)
@@ -116,8 +120,8 @@ describe('GranuleResultsActions component', () => {
       expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(1)
       expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
-      expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+      expect(metricsAddCollectionToProject).toHaveBeenCalledTimes(1)
+      expect(metricsAddCollectionToProject).toHaveBeenCalledWith({
         collectionConceptId: 'collectionId',
         page: 'granules',
         view: ''

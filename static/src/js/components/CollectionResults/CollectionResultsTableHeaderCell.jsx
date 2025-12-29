@@ -6,6 +6,7 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import useEdscStore from '../../zustand/useEdscStore'
+import { metricsAddCollectionToProject } from '../../util/metrics/metricsAddCollectionToProject'
 
 /**
  * Renders CollectionResultsTableHeaderCell.
@@ -24,14 +25,9 @@ const CollectionResultsTableHeaderCell = (props) => {
     viewCollectionGranules: state.collection.viewCollectionGranules
   }))
 
-  const { column, cell, row } = props
-  const { customProps } = column
+  const { cell, row } = props
   const { original: rowProps } = row
   const { collectionId, isCollectionInProject } = rowProps
-
-  const {
-    onMetricsAddCollectionProject
-  } = customProps
 
   const { value } = cell
 
@@ -81,7 +77,8 @@ const CollectionResultsTableHeaderCell = (props) => {
                   onClick={
                     (event) => {
                       addProjectCollection(collectionId)
-                      onMetricsAddCollectionProject({
+
+                      metricsAddCollectionToProject({
                         collectionConceptId: collectionId,
                         view: 'table',
                         page: 'collections'
@@ -117,11 +114,6 @@ const CollectionResultsTableHeaderCell = (props) => {
 CollectionResultsTableHeaderCell.propTypes = {
   cell: PropTypes.shape({
     value: PropTypes.string
-  }).isRequired,
-  column: PropTypes.shape({
-    customProps: PropTypes.shape({
-      onMetricsAddCollectionProject: PropTypes.func
-    })
   }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({

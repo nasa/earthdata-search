@@ -1,11 +1,6 @@
 import React from 'react'
 
-import * as metricsActions from '../../../middleware/metrics/actions'
-
-import {
-  mapDispatchToProps,
-  GranuleResultsActionsContainer
-} from '../GranuleResultsActionsContainer'
+import GranuleResultsActionsContainer from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -16,9 +11,6 @@ jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest
 
 const setup = setupTest({
   Component: GranuleResultsActionsContainer,
-  defaultProps: {
-    onMetricsAddCollectionProject: jest.fn()
-  },
   defaultZustandState: {
     collection: {
       collectionId: 'collectionId'
@@ -57,18 +49,6 @@ const setup = setupTest({
   }
 })
 
-describe('mapDispatchToProps', () => {
-  test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
-
-    mapDispatchToProps(dispatch).onMetricsAddCollectionProject({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-})
-
 describe('GranuleResultsActionsContainer component', () => {
   test('passes its props and renders a single GranuleResultsActions component', () => {
     setup()
@@ -95,7 +75,6 @@ describe('GranuleResultsActionsContainer component', () => {
       handoffLinks: [],
       initialLoading: false,
       isCollectionInProject: true,
-      onMetricsAddCollectionProject: expect.any(Function),
       projectCollectionIds: ['collectionId'],
       projectGranuleCount: 100,
       removedGranuleIds: [],

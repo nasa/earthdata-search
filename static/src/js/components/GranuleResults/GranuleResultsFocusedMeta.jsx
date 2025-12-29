@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import {
@@ -18,6 +17,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { isLinkBrowse } from '../../../../../sharedUtils/isLinkBrowse'
 
 import renderTooltip from '../../util/renderTooltip'
+import { metricsBrowseGranuleImage } from '../../util/metrics/metricsBrowseGranuleImage'
 
 import Button from '../Button/Button'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -31,12 +31,8 @@ import './GranuleResultsFocusedMeta.scss'
 
 /**
  * Renders GranuleResultsFocusedMeta.
- * @param {Object} props - The props passed into the component.
- * @param {String} props.onMetricsBrowseGranuleImage - Callback function passed from actions to track metrics.
  */
-const GranuleResultsFocusedMeta = ({
-  onMetricsBrowseGranuleImage
-}) => {
+const GranuleResultsFocusedMeta = () => {
   const focusedGranuleId = useEdscStore(getGranuleId)
   const granulesById = useEdscStore(getGranulesById)
   const focusedGranuleMetadata = granulesById[focusedGranuleId] || {}
@@ -122,7 +118,7 @@ const GranuleResultsFocusedMeta = ({
         label="View available browse imagery"
         onClick={
           () => {
-            onMetricsBrowseGranuleImage({
+            metricsBrowseGranuleImage({
               modalOpen: modalIsOpen,
               granuleId: focusedGranuleId,
               value: 'View List'
@@ -271,7 +267,8 @@ const GranuleResultsFocusedMeta = ({
                     onClick={
                       () => {
                         onModalOpen(true)
-                        onMetricsBrowseGranuleImage({
+
+                        metricsBrowseGranuleImage({
                           modalOpen: false,
                           granuleId: focusedGranuleId,
                           value: 'Expand'
@@ -293,7 +290,8 @@ const GranuleResultsFocusedMeta = ({
                           onClick={
                             () => {
                               onClickPreviousButton()
-                              onMetricsBrowseGranuleImage({
+
+                              metricsBrowseGranuleImage({
                                 modalOpen: false,
                                 granuleId: focusedGranuleId,
                                 value: 'Previous'
@@ -310,7 +308,8 @@ const GranuleResultsFocusedMeta = ({
                           onClick={
                             () => {
                               onClickNextButton()
-                              onMetricsBrowseGranuleImage({
+
+                              metricsBrowseGranuleImage({
                                 modalOpen: false,
                                 granuleId: focusedGranuleId,
                                 value: 'Next'
@@ -422,7 +421,8 @@ const GranuleResultsFocusedMeta = ({
                             onClick={
                               () => {
                                 onClickModalPreviousButton()
-                                onMetricsBrowseGranuleImage({
+
+                                metricsBrowseGranuleImage({
                                   modalOpen: true,
                                   granuleId: focusedGranuleId,
                                   value: 'Previous'
@@ -438,7 +438,8 @@ const GranuleResultsFocusedMeta = ({
                             onClick={
                               () => {
                                 onClickModalNextButton()
-                                onMetricsBrowseGranuleImage({
+
+                                metricsBrowseGranuleImage({
                                   modalOpen: true,
                                   granuleId: focusedGranuleId,
                                   value: 'Next'
@@ -463,7 +464,7 @@ const GranuleResultsFocusedMeta = ({
                             target="_blank"
                             onClick={
                               () => {
-                                onMetricsBrowseGranuleImage({
+                                metricsBrowseGranuleImage({
                                   modalOpen: true,
                                   granuleId: focusedGranuleId,
                                   value: 'Download'
@@ -487,10 +488,6 @@ const GranuleResultsFocusedMeta = ({
       />
     </>
   )
-}
-
-GranuleResultsFocusedMeta.propTypes = {
-  onMetricsBrowseGranuleImage: PropTypes.func.isRequired
 }
 
 export default GranuleResultsFocusedMeta

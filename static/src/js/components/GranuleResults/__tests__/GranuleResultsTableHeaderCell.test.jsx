@@ -3,6 +3,11 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleResultsTableHeaderCell from '../GranuleResultsTableHeaderCell'
+import { metricsAddGranuleToProject } from '../../../util/metrics/metricsAddGranuleToProject'
+
+jest.mock('../../../util/metrics/metricsAddGranuleToProject', () => ({
+  metricsAddGranuleToProject: jest.fn()
+}))
 
 const defaultCustomProps = {
   addGranuleToProjectCollection: jest.fn(),
@@ -13,7 +18,6 @@ const defaultCustomProps = {
   isGranuleInProject: jest.fn().mockReturnValue(false),
   location: {},
   onExcludeGranule: jest.fn(),
-  onMetricsAddGranuleProject: jest.fn(),
   onMetricsDataAccess: jest.fn(),
   removeGranuleFromProjectCollection: jest.fn()
 }
@@ -135,7 +139,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
   })
 
-  test('clicking the add button calls addGranuleToProjectCollection and onMetricsAddGranuleProject', async () => {
+  test('clicking the add button calls addGranuleToProjectCollection and metricsAddGranuleToProject', async () => {
     const { props, user } = setup()
 
     const addGranuleButton = screen.getByRole('button', {
@@ -150,8 +154,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
       granuleId: 'one'
     })
 
-    expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledTimes(1)
-    expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledWith({
+    expect(metricsAddGranuleToProject).toHaveBeenCalledTimes(1)
+    expect(metricsAddGranuleToProject).toHaveBeenCalledWith({
       collectionConceptId: 'collectionId',
       granuleConceptId: 'one',
       page: 'granules',

@@ -12,6 +12,11 @@ import Timeline from '../Timeline'
 import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
+import { metricsTimeline } from '../../../util/metrics/metricsTimeline'
+
+jest.mock('../../../util/metrics/metricsTimeline', () => ({
+  metricsTimeline: jest.fn()
+}))
 
 jest.mock('@edsc/timeline', () => jest.fn(() => <div />))
 
@@ -31,7 +36,6 @@ const setup = setupTest({
     showOverrideModal: false,
     pathname: '/search/granules',
     projectCollectionsIds: ['collectionId'],
-    onMetricsTimeline: jest.fn(),
     onToggleTimeline: jest.fn(),
     isOpen: true
   },
@@ -706,99 +710,99 @@ describe('handle toggleTimeline', () => {
 })
 
 describe('Metrics methods', () => {
-  test('oArrowKeyPan calls onMetricsTimeline(\'Left/Right Arrow Pan\')', async () => {
-    const { props } = setup()
+  test('oArrowKeyPan calls metricsTimeline(\'Left/Right Arrow Pan\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onArrowKeyPan({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Left/Right Arrow Pan')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Left/Right Arrow Pan')
   })
 
-  test('onButtonPan calls onMetricsTimeline(\'Button Pan\')', async () => {
-    const { props } = setup()
+  test('onButtonPan calls metricsTimeline(\'Button Pan\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onButtonPan({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Button Pan')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Button Pan')
   })
 
-  test('onButtonZoom calls onMetricsTimeline(\'Button Zoom\')', async () => {
-    const { props } = setup()
+  test('onButtonZoom calls metricsTimeline(\'Button Zoom\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onButtonZoom({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Button Zoom')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Button Zoom')
   })
 
-  test('onTemporalSet calls onMetricsTimeline(\'Created Temporal\')', async () => {
-    const { props } = setup()
+  test('onTemporalSet calls metricsTimeline(\'Created Temporal\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onTemporalSet({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Created Temporal')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Created Temporal')
   })
 
-  test('onDragPan calls onMetricsTimeline(\'Dragging Pan\')', async () => {
-    const { props } = setup()
+  test('onDragPan calls metricsTimeline(\'Dragging Pan\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onDragPan({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Dragging Pan')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Dragging Pan')
   })
 
-  test('onFocusedIntervalClick calls onMetricsTimeline(\'Click Label\')', async () => {
-    const { props } = setup()
+  test('onFocusedIntervalClick calls metricsTimeline(\'Click Label\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onFocusedIntervalClick({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Click Label')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Click Label')
   })
 
-  test('onScrollPan calls onMetricsTimeline(\'Scroll Pan\')', async () => {
-    const { props } = setup()
+  test('onScrollPan calls metricsTimeline(\'Scroll Pan\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onScrollPan({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Scroll Pan')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Scroll Pan')
   })
 
-  test('onScrollZoom calls onMetricsTimeline(\'Scroll Zoom\')', async () => {
-    const { props } = setup()
+  test('onScrollZoom calls metricsTimeline(\'Scroll Zoom\')', async () => {
+    setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     await act(() => {
       timelineProps.onScrollZoom({})
     })
 
-    expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsTimeline).toHaveBeenCalledWith('Scroll Zoom')
+    expect(metricsTimeline).toHaveBeenCalledTimes(1)
+    expect(metricsTimeline).toHaveBeenCalledWith('Scroll Zoom')
   })
 })

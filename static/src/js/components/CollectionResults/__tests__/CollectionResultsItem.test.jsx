@@ -7,9 +7,14 @@ import { collectionListItemProps } from './mocks'
 import { retrieveThumbnail } from '../../../util/retrieveThumbnail'
 
 import { CollectionResultsItem } from '../CollectionResultsItem'
+import { metricsAddCollectionToProject } from '../../../util/metrics/metricsAddCollectionToProject'
 
 jest.mock('../../../../assets/images/image-unavailable.svg', () => 'test-file-stub')
 jest.mock('../../../util/retrieveThumbnail')
+
+jest.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
+  metricsAddCollectionToProject: jest.fn()
+}))
 
 // Return block is because `PortalFeatureContainer` is a named export
 // https://stackoverflow.com/questions/71454705/element-type-is-invalid-expected-a-string-for-built-in-components-or-a-class
@@ -715,17 +720,17 @@ describe('CollectionResultsList component', () => {
       })
     })
 
-    test('clicking the button calls onMetricsAddCollectionProject', async () => {
-      const { props, user } = setup()
+    test('clicking the button calls metricsAddCollectionToProject', async () => {
+      const { user } = setup()
 
       const addProjectButton = screen.getByRole('button', { name: 'Add collection to the current project' })
       await user.click(addProjectButton)
 
       await waitFor(() => {
-        expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
+        expect(metricsAddCollectionToProject).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+      expect(metricsAddCollectionToProject).toHaveBeenCalledWith({
         collectionConceptId: 'collectionId1',
         view: 'list',
         page: 'collections'

@@ -2,7 +2,6 @@
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from '@redux-devtools/extension'
-import { metricsMiddleware } from '../middleware/metrics'
 
 let store
 
@@ -17,7 +16,7 @@ export const configureStore = (initialState = {}) => {
 
     // Build out the Redux middleware
     composeWithDevTools(
-      applyMiddleware(metricsMiddleware, thunk)
+      applyMiddleware(thunk)
     )
   )
 

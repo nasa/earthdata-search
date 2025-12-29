@@ -21,8 +21,6 @@ const setup = setupTest({
     isOpenSearch: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
-    onMetricsDataAccess: jest.fn(),
-    onMetricsAddGranuleProject: jest.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
@@ -185,8 +183,6 @@ describe('GranuleResultsBody component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      onMetricsAddGranuleProject: expect.any(Function),
-      onMetricsDataAccess: expect.any(Function),
       readableGranuleName: [''],
       setVisibleMiddleIndex: expect.any(Function),
       visibleMiddleIndex: null
@@ -304,8 +300,6 @@ describe('GranuleResultsBody component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      onMetricsAddGranuleProject: expect.any(Function),
-      onMetricsDataAccess: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
       visibleMiddleIndex: null
     }, {})

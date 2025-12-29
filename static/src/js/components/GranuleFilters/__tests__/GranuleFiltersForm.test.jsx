@@ -5,6 +5,11 @@ import MockDate from 'mockdate'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
+import { metricsGranuleFilter } from '../../../util/metrics/metricsGranuleFilter'
+
+jest.mock('../../../util/metrics/metricsGranuleFilter', () => ({
+  metricsGranuleFilter: jest.fn()
+}))
 
 jest.mock('formik', () => ({
   Form: jest.fn(({ children }) => (
@@ -24,7 +29,6 @@ const setup = setupTest({
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
-    onMetricsGranuleFilter: jest.fn(),
     setFieldValue: jest.fn(),
     setFieldTouched: jest.fn(),
     touched: {},
@@ -216,8 +220,8 @@ describe('GranuleFiltersForm component', () => {
           })
         )
 
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(metricsGranuleFilter).toHaveBeenCalledWith({
           type: 'readableGranuleName',
           value: ''
         })
@@ -307,8 +311,8 @@ describe('GranuleFiltersForm component', () => {
           expect(props.handleSubmit).toHaveBeenCalledTimes(1)
           expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Start Date',
             value: '2019-08-13T00:00:00.000Z'
           })
@@ -343,8 +347,8 @@ describe('GranuleFiltersForm component', () => {
           expect(props.handleSubmit).toHaveBeenCalledTimes(1)
           expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Start Date',
             value: ''
           })
@@ -378,7 +382,7 @@ describe('GranuleFiltersForm component', () => {
           expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '9')
 
           expect(props.handleSubmit).toHaveBeenCalledTimes(0)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(0)
         })
 
         test('calls the correct callbacks on endDate submit', async () => {
@@ -407,8 +411,8 @@ describe('GranuleFiltersForm component', () => {
           expect(props.handleSubmit).toHaveBeenCalledTimes(1)
           expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
             value: '2019-08-14T23:59:59.000Z'
           })
@@ -443,8 +447,8 @@ describe('GranuleFiltersForm component', () => {
           expect(props.handleSubmit).toHaveBeenCalledTimes(1)
           expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
             value: ''
           })
@@ -479,7 +483,7 @@ describe('GranuleFiltersForm component', () => {
           expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
 
           expect(props.handleSubmit).toHaveBeenCalledTimes(0)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(0)
         })
 
         test('calls the correct callbacks on onRecurringToggle', async () => {
@@ -510,8 +514,8 @@ describe('GranuleFiltersForm component', () => {
 
           expect(isRecurringCheckbox.checked).toBe(true)
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Recurring',
             value: true
           })
@@ -671,8 +675,8 @@ describe('GranuleFiltersForm component', () => {
             })
           )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'browseOnly',
             value: true
           })
@@ -713,8 +717,8 @@ describe('GranuleFiltersForm component', () => {
             })
           )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'onlineOnly',
             value: true
           })
@@ -927,8 +931,8 @@ describe('GranuleFiltersForm component', () => {
             })
           )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'orbitNumber.min',
             value: ''
           })
@@ -1023,8 +1027,8 @@ describe('GranuleFiltersForm component', () => {
             })
           )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'orbitNumber.max',
             value: ''
           })
@@ -1124,8 +1128,8 @@ describe('GranuleFiltersForm component', () => {
             })
           )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'equatorCrossingLongitude.min',
             value: ''
           })
@@ -1227,8 +1231,8 @@ describe('GranuleFiltersForm component', () => {
             })
           )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(metricsGranuleFilter).toHaveBeenCalledWith({
             type: 'equatorCrossingLongitude.max',
             value: ''
           })
@@ -1376,8 +1380,8 @@ describe('GranuleFiltersForm component', () => {
         expect(props.handleSubmit).toHaveBeenCalledTimes(1)
         expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(metricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set Start Date',
           value: '2019-08-13T00:00:00.000Z'
         })
@@ -1424,8 +1428,8 @@ describe('GranuleFiltersForm component', () => {
         expect(props.handleSubmit).toHaveBeenCalledTimes(1)
         expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(metricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set Start Date',
           value: ''
         })
@@ -1471,7 +1475,7 @@ describe('GranuleFiltersForm component', () => {
         expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '9')
 
         expect(props.handleSubmit).toHaveBeenCalledTimes(0)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(0)
       })
 
       test('calls the correct callbacks on endDate submit', async () => {
@@ -1514,8 +1518,8 @@ describe('GranuleFiltersForm component', () => {
         expect(props.handleSubmit).toHaveBeenCalledTimes(1)
         expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(metricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set End Date',
           value: '2019-08-14T23:59:59.000Z'
         })
@@ -1564,8 +1568,8 @@ describe('GranuleFiltersForm component', () => {
         expect(props.handleSubmit).toHaveBeenCalledTimes(1)
         expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(metricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set End Date',
           value: ''
         })
@@ -1613,7 +1617,7 @@ describe('GranuleFiltersForm component', () => {
         expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
 
         expect(props.handleSubmit).toHaveBeenCalledTimes(0)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+        expect(metricsGranuleFilter).toHaveBeenCalledTimes(0)
       })
     })
   })
@@ -1692,8 +1696,8 @@ describe('GranuleFiltersForm component', () => {
         })
       )
 
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith(
+      expect(metricsGranuleFilter).toHaveBeenCalledTimes(1)
+      expect(metricsGranuleFilter).toHaveBeenCalledWith(
         {
           type: 'tilingSystem',
           value: 'MISR'
@@ -1774,7 +1778,7 @@ describe('GranuleFiltersForm component', () => {
       expect(props.handleSubmit).toHaveBeenCalled()
 
       // Verify metrics were recorded
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+      expect(metricsGranuleFilter).toHaveBeenCalledWith({
         type: 'Set Recurring',
         value: true
       })
@@ -1831,7 +1835,7 @@ describe('GranuleFiltersForm component', () => {
       )
 
       expect(props.handleSubmit).toHaveBeenCalled()
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+      expect(metricsGranuleFilter).toHaveBeenCalledWith({
         type: 'Set Start Date',
         value: '2024-03-15T00:00:00.000Z'
       })
@@ -1867,7 +1871,7 @@ describe('GranuleFiltersForm component', () => {
       )
 
       expect(props.handleSubmit).toHaveBeenCalled()
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+      expect(metricsGranuleFilter).toHaveBeenCalledWith({
         type: 'Set End Date',
         value: '2024-12-15T23:59:59.000Z'
       })

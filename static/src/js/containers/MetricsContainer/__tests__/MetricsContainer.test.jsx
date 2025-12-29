@@ -1,10 +1,19 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import { mapDispatchToProps, MetricsContainer } from '../MetricsContainer'
-import * as metricsClick from '../../../middleware/metrics/actions'
+import MetricsContainer from '../MetricsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import * as metricsEvents from '../../../middleware/metrics/events'
+
+import { metricsDefaultClick } from '../../../util/metrics/metricsDefaultClick'
+import { metricsVirtualPageview } from '../../../util/metrics/metricsVirtualPageview'
+
+jest.mock('../../../util/metrics/metricsDefaultClick', () => ({
+  metricsDefaultClick: jest.fn()
+}))
+
+jest.mock('../../../util/metrics/metricsVirtualPageview', () => ({
+  metricsVirtualPageview: jest.fn()
+}))
 
 const WrappingComponent = (props) => (
   <>
@@ -27,63 +36,43 @@ const setup = setupTest({
   withRouter: true
 })
 
-describe('mapDispatchToProps', () => {
-  test('onMetricsClick calls metricsClick', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsClick, 'metricsClick')
-
-    mapDispatchToProps(dispatch).onMetricsClick({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-})
-
 describe('MetricsContainer component', () => {
   test('calls virtualPageView', async () => {
-    const spy = jest.spyOn(metricsEvents, 'virtualPageview')
-
     setup()
 
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('POP')
+    expect(metricsVirtualPageview).toHaveBeenCalledTimes(1)
+    expect(metricsVirtualPageview).toHaveBeenCalledWith('POP')
   })
 
-  describe('metricsClick fires onMetricsClick correctly', () => {
+  describe('clicking fires metricsDefaultClick correctly', () => {
     test('when no title is provided', async () => {
-      const { props, user } = setup()
+      const { user } = setup()
 
       const button = screen.getByText('Test Link')
       await user.click(button)
 
-      expect(props.onMetricsClick).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsClick).toHaveBeenCalledWith({
-        elementLabel: 'Test Link'
-      })
+      expect(metricsDefaultClick).toHaveBeenCalledTimes(1)
+      expect(metricsDefaultClick).toHaveBeenCalledWith('Test Link')
     })
 
     test('when a title is provided', async () => {
-      const { props, user } = setup()
+      const { user } = setup()
 
       const button = screen.getByText('Test Link with Title')
       await user.click(button)
 
-      expect(props.onMetricsClick).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsClick).toHaveBeenCalledWith({
-        elementLabel: 'Link With Title'
-      })
+      expect(metricsDefaultClick).toHaveBeenCalledTimes(1)
+      expect(metricsDefaultClick).toHaveBeenCalledWith('Link With Title')
     })
 
     test('when a title prop is not but, can be derived from other element props', async () => {
-      const { props, user } = setup()
+      const { user } = setup()
 
       const button = screen.getByText('Test Button')
       await user.click(button)
 
-      expect(props.onMetricsClick).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsClick).toHaveBeenCalledWith({
-        elementLabel: 'Test Button'
-      })
+      expect(metricsDefaultClick).toHaveBeenCalledTimes(1)
+      expect(metricsDefaultClick).toHaveBeenCalledWith('Test Button')
     })
   })
 })

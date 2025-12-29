@@ -2,19 +2,14 @@ import React from 'react'
 
 import { screen } from '@testing-library/react'
 
-import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
-
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
-import { mapDispatchToProps, SearchPanelsContainer } from '../SearchPanelsContainer'
+import SearchPanelsContainer from '../SearchPanelsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
 const setup = setupTest({
   Component: SearchPanelsContainer,
-  defaultProps: {
-    onMetricsCollectionSortChange: jest.fn()
-  },
   defaultZustandState: {
     preferences: {
       preferences: {
@@ -38,30 +33,16 @@ const setup = setupTest({
   withRouter: true
 })
 
-describe('mapDispatchToProps', () => {
-  test('onMetricsCollectionSortChange calls metricsCollectionSortChange', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsCollectionSortChange, 'metricsCollectionSortChange')
-
-    mapDispatchToProps(dispatch).onMetricsCollectionSortChange({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-})
-
 describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', async () => {
-    const { props } = setup()
+    setup()
 
     const panels = await screen.findByText('Search Panels')
 
     expect(panels).toBeInTheDocument()
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
-      {
-        onMetricsCollectionSortChange: props.onMetricsCollectionSortChange
-      },
+      {},
       {}
     )
   })

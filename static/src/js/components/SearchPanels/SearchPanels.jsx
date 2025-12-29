@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import { useLocation, useParams } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
@@ -19,23 +18,22 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { granuleSortKeys } from '../../constants/granuleSortKeys'
 import { pluralize } from '../../util/pluralize'
+import { metricsCollectionSortChange } from '../../util/metrics/metricsCollectionSortChange'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
-import CollectionDetailsBodyContainer from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
-import CollectionResultsBodyContainer
-  from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
-import GranuleResultsFocusedMetaContainer
-  from '../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import Button from '../Button/Button'
+import CollectionDetailsBody from '../CollectionDetails/CollectionDetailsBody'
+import CollectionResultsBody from '../CollectionResults/CollectionResultsBody'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import GranuleDetailsBody from '../GranuleDetails/GranuleDetailsBody'
+import GranuleResultsFocusedMeta from '../GranuleResults/GranuleResultsFocusedMeta'
 import Panels from '../Panels/Panels'
 import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
@@ -77,9 +75,7 @@ const defaultPanelStateFromProps = (value) => {
   return 'list'
 }
 
-const SearchPanels = ({
-  onMetricsCollectionSortChange
-}) => {
+const SearchPanels = () => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
   const edlToken = useEdscStore(getEdlToken)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
@@ -257,7 +253,7 @@ const SearchPanels = ({
       }
     })
 
-    onMetricsCollectionSortChange({ value })
+    metricsCollectionSortChange({ value })
   }
 
   const collectionsSortsArray = [
@@ -394,7 +390,7 @@ const SearchPanels = ({
       moreActionsDropdownItems={exportsArray}
     >
       <PanelItem scrollable={false}>
-        <CollectionResultsBodyContainer panelView={collectionPanelView} />
+        <CollectionResultsBody panelView={collectionPanelView} />
       </PanelItem>
     </PanelGroup>
   )
@@ -550,7 +546,7 @@ const SearchPanels = ({
       }
     >
       <PanelItem scrollable={false}>
-        <CollectionDetailsBodyContainer />
+        <CollectionDetailsBody />
       </PanelItem>
     </PanelGroup>
   )
@@ -796,7 +792,7 @@ const SearchPanels = ({
         focusedMeta={
           focusedGranuleId && (
             <div className="search-panels__focused-meta">
-              <GranuleResultsFocusedMetaContainer />
+              <GranuleResultsFocusedMeta />
             </div>
           )
         }
@@ -807,10 +803,6 @@ const SearchPanels = ({
       </Panels>
     </>
   )
-}
-
-SearchPanels.propTypes = {
-  onMetricsCollectionSortChange: PropTypes.func.isRequired
 }
 
 export default SearchPanels

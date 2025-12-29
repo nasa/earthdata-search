@@ -14,6 +14,7 @@ import { getColorByIndex } from '../../util/colors'
 import { timelineIntervalZooms, calculateTimelineParams } from '../../util/timeline'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
+import { metricsTimeline } from '../../util/metrics/metricsTimeline'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
@@ -28,7 +29,6 @@ const earliestStart = '1960-01-01'
 export const Timeline = ({
   collectionMetadata,
   isOpen,
-  onMetricsTimeline,
   onToggleTimeline,
   pathname,
   projectCollectionsIds,
@@ -173,13 +173,13 @@ export const Timeline = ({
   }, [])
 
   // Metrics methods
-  const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
-  const handleButtonPan = () => onMetricsTimeline('Button Pan')
-  const handleButtonZoom = () => onMetricsTimeline('Button Zoom')
-  const handleDragPan = () => onMetricsTimeline('Dragging Pan')
-  const handleFocusedClick = () => onMetricsTimeline('Click Label')
-  const handleScrollPan = () => onMetricsTimeline('Scroll Pan')
-  const handleScrollZoom = () => onMetricsTimeline('Scroll Zoom')
+  const handleArrowKeyPan = () => metricsTimeline('Left/Right Arrow Pan')
+  const handleButtonPan = () => metricsTimeline('Button Pan')
+  const handleButtonZoom = () => metricsTimeline('Button Zoom')
+  const handleDragPan = () => metricsTimeline('Dragging Pan')
+  const handleFocusedClick = () => metricsTimeline('Click Label')
+  const handleScrollPan = () => metricsTimeline('Scroll Pan')
+  const handleScrollZoom = () => metricsTimeline('Scroll Zoom')
 
   /**
    * Callback for the timeline moving, updates the timeline query in redux
@@ -210,7 +210,7 @@ export const Timeline = ({
    * Handles temporal being created by the timeline, updates the query in redux
    */
   const handleTemporalSet = ({ temporalEnd, temporalStart }) => {
-    onMetricsTimeline('Created Temporal')
+    metricsTimeline('Created Temporal')
 
     if (temporalStart && temporalEnd) {
       // If focused exists and we are on the project page, show the modal
@@ -451,7 +451,6 @@ export const Timeline = ({
 Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onMetricsTimeline: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -7,13 +7,11 @@ import Button from '../Button/Button'
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
 import FilterStack from '../FilterStack/FilterStack'
 import TemporalDisplay from '../TemporalDisplay/TemporalDisplay'
+import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
 
 import AdvancedSearchDisplay from '../AdvancedSearchDisplay/AdvancedSearchDisplay'
 import SpatialDisplay from '../SpatialDisplay/SpatialDisplay'
-import SpatialSelectionDropdownContainer
-  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
-import TemporalSelectionDropdownContainer
-  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
+import SpatialSelectionDropdown from '../SpatialDisplay/SpatialSelectionDropdown'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -41,8 +39,8 @@ const SearchForm = () => {
       <div className="search-form__secondary">
         <div className="search-form__secondary-actions d-flex justify-content-between flex-row">
           <div className="d-flex gap-1">
-            <TemporalSelectionDropdownContainer />
-            <SpatialSelectionDropdownContainer />
+            <TemporalSelectionDropdown />
+            <SpatialSelectionDropdown />
             <PortalFeatureContainer advancedSearch>
               <Button
                 bootstrapVariant="light"

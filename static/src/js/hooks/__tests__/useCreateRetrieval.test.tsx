@@ -4,12 +4,10 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../jestConfigs/setupTest'
 import { useCreateRetrieval } from '../useCreateRetrieval'
 import CREATE_RETRIEVAL from '../../operations/mutations/createRetrieval'
+import { metricsDataAccess } from '../../util/metrics/metricsDataAccess'
 
-// @ts-expect-error This file does not have types
-import { metricsDataAccess } from '../../middleware/metrics/actions'
-
-jest.mock('../../middleware/metrics/actions', () => ({
-  metricsDataAccess: jest.fn().mockImplementation(() => jest.requireActual('../../middleware/metrics/actions').metricsDataAccess)
+jest.mock('../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: jest.fn()
 }))
 
 const mockUseNavigate = jest.fn()

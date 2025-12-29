@@ -15,6 +15,7 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { pluralize } from '../../util/pluralize'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import renderTooltip from '../../util/renderTooltip'
+import { metricsGranuleFilter } from '../../util/metrics/metricsGranuleFilter'
 
 import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
@@ -37,7 +38,6 @@ import './GranuleFiltersForm.scss'
  * @param {Function} props.handleSubmit - Callback function passed from the container.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
- * @param {Object} props.onMetricsGranuleFilter - Callback function passed from actions.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
@@ -47,7 +47,6 @@ export const GranuleFiltersForm = (props) => {
     handleBlur,
     handleChange,
     handleSubmit,
-    onMetricsGranuleFilter,
     setFieldTouched,
     setFieldValue,
     touched,
@@ -202,7 +201,7 @@ export const GranuleFiltersForm = (props) => {
     if (checkboxForms.includes(eventType)) {
       const eventChecked = event.target.checked
       // Event checked is the current state of the checkbox which we want to take the metric for
-      onMetricsGranuleFilter({
+      metricsGranuleFilter({
         type: eventType,
         value: eventChecked
       })
@@ -210,7 +209,7 @@ export const GranuleFiltersForm = (props) => {
       return
     }
 
-    onMetricsGranuleFilter({
+    metricsGranuleFilter({
       type: eventType,
       value: eventValue
     })
@@ -498,7 +497,7 @@ export const GranuleFiltersForm = (props) => {
                     }
 
                     // Take metric when the isRecurring toggle is turned on
-                    onMetricsGranuleFilter({
+                    metricsGranuleFilter({
                       type: 'Set Recurring',
                       value: isChecked
                     })
@@ -530,7 +529,7 @@ export const GranuleFiltersForm = (props) => {
                     handleSubmit()
 
                     // Add metrics for recurring temporal filter updates
-                    onMetricsGranuleFilter({
+                    metricsGranuleFilter({
                       type: 'Set Recurring',
                       value
                     })
@@ -571,7 +570,7 @@ export const GranuleFiltersForm = (props) => {
                       handleSubmit()
 
                       // Submit usage metric for setting Start Date granule filter
-                      onMetricsGranuleFilter({
+                      metricsGranuleFilter({
                         type: 'Set Start Date',
                         value
                       })
@@ -612,7 +611,7 @@ export const GranuleFiltersForm = (props) => {
                       handleSubmit()
 
                       // Submit usage metric for setting End Date granule filter
-                      onMetricsGranuleFilter({
+                      metricsGranuleFilter({
                         type: 'Set End Date',
                         value
                       })
@@ -934,7 +933,7 @@ export const GranuleFiltersForm = (props) => {
 
                                 if (shouldSubmit && (startDate.isValid() || !input)) {
                                   handleSubmit()
-                                  onMetricsGranuleFilter({
+                                  metricsGranuleFilter({
                                     type: 'Equatorial Crossing Set Start Date',
                                     value
                                   })
@@ -951,7 +950,7 @@ export const GranuleFiltersForm = (props) => {
 
                                 if (shouldSubmit && (endDate.isValid() || !input)) {
                                   handleSubmit()
-                                  onMetricsGranuleFilter({
+                                  metricsGranuleFilter({
                                     type: 'Equatorial Crossing Set End Date',
                                     value
                                   })
@@ -1000,7 +999,6 @@ GranuleFiltersForm.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  onMetricsGranuleFilter: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({

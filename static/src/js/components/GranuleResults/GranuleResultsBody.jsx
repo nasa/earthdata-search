@@ -24,8 +24,6 @@ import './GranuleResultsBody.scss'
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
- * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.
  */
 const GranuleResultsBody = ({
@@ -33,8 +31,6 @@ const GranuleResultsBody = ({
   directDistributionInformation,
   isOpenSearch,
   loadNextPage,
-  onMetricsAddGranuleProject,
-  onMetricsDataAccess,
   panelView
 }) => {
   const focusedGranuleId = useEdscStore(getGranuleId)
@@ -202,8 +198,6 @@ const GranuleResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
-          onMetricsDataAccess={onMetricsDataAccess}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
         />
@@ -223,8 +217,6 @@ const GranuleResultsBody = ({
           itemCount={itemCount}
           isItemLoaded={isItemLoaded}
           loadMoreItems={loadMoreItems}
-          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
-          onMetricsDataAccess={onMetricsDataAccess}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           isGranuleInProject={isGranuleInProject}
@@ -265,8 +257,6 @@ GranuleResultsBody.propTypes = {
   directDistributionInformation: PropTypes.shape({}).isRequired,
   isOpenSearch: PropTypes.bool.isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  onMetricsAddGranuleProject: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired
 }
 

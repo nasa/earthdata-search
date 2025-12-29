@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { uniq } from 'lodash-es'
 
 import Badge from 'react-bootstrap/Badge'
@@ -131,14 +130,8 @@ const buildForDeveloperLink = (linkData, token) => {
 
 /**
  * Renders CollectionDetailsBody.
- * @param {Object} props - The props passed into the component.
- * @param {Boolean} props.isActive - Flag to determine if the collection is active.
- * @param {Function} props.onMetricsRelatedCollection - Function to handle the metrics related collection.
  */
-export const CollectionDetailsBody = ({
-  isActive,
-  onMetricsRelatedCollection
-}) => {
+export const CollectionDetailsBody = () => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const {
@@ -459,11 +452,7 @@ export const CollectionDetailsBody = ({
           </div>
           <div className="row collection-details-body__row">
             <div className="col col-12 collection-details-body__minimap">
-              {
-                isActive && (
-                  <CollectionDetailsMinimap metadata={collectionMetadata} />
-                )
-              }
+              <CollectionDetailsMinimap metadata={collectionMetadata} />
               {
                 spatial && (
                   <div className="collection-details-body__spatial-bounding">
@@ -557,7 +546,6 @@ export const CollectionDetailsBody = ({
                               <RelatedCollection
                                 key={`related-collection-${id}`}
                                 className="collection-details-body__related-collection-link"
-                                onMetricsRelatedCollection={onMetricsRelatedCollection}
                                 relatedCollection={relatedCollection}
                               />
                             </li>
@@ -599,11 +587,6 @@ export const CollectionDetailsBody = ({
       </CollapsePanel>
     </div>
   )
-}
-
-CollectionDetailsBody.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  onMetricsRelatedCollection: PropTypes.func.isRequired
 }
 
 export default CollectionDetailsBody

@@ -10,6 +10,7 @@ import CopyableText from '../CopyableText/CopyableText'
 import EDSCTabs from '../EDSCTabs/EDSCTabs'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
+import { metricsDataAccess } from '../../util/metrics/metricsDataAccess'
 import addToast from '../../util/addToast'
 import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
@@ -61,7 +62,6 @@ CustomDataLinksToggle.displayName = 'CustomDataLinksToggle'
  * @param {Array} props.dataLinks - An array of data links.
  * @param {String} props.id - The granule id.
  * @param {Array} props.s3Links - An array of AWS S3 links.
- * @param {Function} props.onMetricsDataAccess - The metrics callback.
  */
 export const GranuleResultsDataLinksButton = ({
   collectionId,
@@ -69,8 +69,7 @@ export const GranuleResultsDataLinksButton = ({
   dataLinks,
   directDistributionInformation,
   id,
-  s3Links,
-  onMetricsDataAccess
+  s3Links
 }) => {
   const dropdownMenuRef = useRef(null)
 
@@ -91,7 +90,8 @@ export const GranuleResultsDataLinksButton = ({
           onClick={
             (event) => {
               event.stopPropagation()
-              onMetricsDataAccess({
+
+              metricsDataAccess({
                 type: 'single_granule_download',
                 collections: [{
                   collectionId
@@ -189,7 +189,7 @@ export const GranuleResultsDataLinksButton = ({
                   failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
                   onClick={
                     () => {
-                      onMetricsDataAccess({
+                      metricsDataAccess({
                         type: 'single_granule_s3_access',
                         collections: [{
                           collectionId
@@ -294,7 +294,7 @@ export const GranuleResultsDataLinksButton = ({
         href={dataLinks[0].href}
         onClick={
           (event) => {
-            onMetricsDataAccess({
+            metricsDataAccess({
               type: 'single_granule_download',
               collections: [{
                 collectionId
@@ -341,8 +341,7 @@ GranuleResultsDataLinksButton.propTypes = {
   dataLinks: PropTypes.arrayOf(PropTypes.shape({
     href: PropTypes.string
   })).isRequired,
-  s3Links: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired
+  s3Links: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 
 export default GranuleResultsDataLinksButton

@@ -148,10 +148,10 @@ const browserRouter = createBrowserRouter([
           {
             path: `${routes.DOWNLOADS}/:id`,
             async lazy() {
-              const OrderStatusContainer = await import('./containers/OrderStatusContainer/OrderStatusContainer')
+              const OrderStatus = await import('./components/OrderStatus/OrderStatus')
 
               return {
-                Component: OrderStatusContainer.default
+                Component: OrderStatus.default
               }
             }
           }
