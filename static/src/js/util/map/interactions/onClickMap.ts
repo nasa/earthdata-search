@@ -2,6 +2,7 @@ import { Map } from 'ol'
 import VectorSource from 'ol/source/Vector'
 
 import drawFocusedGranule from '../drawFocusedGranule'
+import { metricsMap } from '../../metrics/metricsMap'
 
 // Focused granules are shown when a user clicks on a granule in the results list, or
 // when a user clicks on a granule outline on the map
@@ -15,7 +16,6 @@ const onClickMap = ({
   isProjectPage,
   map,
   onExcludeGranule,
-  onMetricsMap,
   setGranuleId,
   timesIconSvg
 }: {
@@ -38,8 +38,6 @@ const onClickMap = ({
   map: Map
   /** Function to exclude the granule */
   onExcludeGranule: (params: { collectionId: string; granuleId: string }) => void
-  /** Function to clear the focused granule source */
-  onMetricsMap: (eventName: string) => void
   /** Function to change the focused granule */
   setGranuleId: (granuleId: string | null) => void
   /** The times icon SVG */
@@ -78,7 +76,7 @@ const onClickMap = ({
   }
 
   // Track the event
-  onMetricsMap('Selected Granule')
+  metricsMap('Selected Granule')
 
   // Focus the new granule
   setGranuleId(newFocusedGranuleId)

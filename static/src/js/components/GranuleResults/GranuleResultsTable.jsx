@@ -25,8 +25,6 @@ import './GranuleResultsTable.scss'
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
- * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
- * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
@@ -39,8 +37,6 @@ export const GranuleResultsTable = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  onMetricsAddGranuleProject,
-  onMetricsDataAccess,
   setVisibleMiddleIndex = null,
   visibleMiddleIndex = null
 }) => {
@@ -76,8 +72,6 @@ export const GranuleResultsTable = ({
         isGranuleInProject,
         location,
         onExcludeGranule: excludeGranule,
-        onMetricsAddGranuleProject,
-        onMetricsDataAccess,
         removeGranuleFromProjectCollection
       }
     },
@@ -222,8 +216,6 @@ GranuleResultsTable.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  onMetricsAddGranuleProject: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

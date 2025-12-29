@@ -14,10 +14,7 @@ import { ACCESS_METHOD_TYPES } from '../../../../sharedConstants/accessMethodTyp
 import { prepareRetrievalParams } from '../util/retrievals'
 // @ts-expect-error This file does not have types
 import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
-// @ts-expect-error This file does not have types
-import { metricsDataAccess } from '../middleware/metrics/actions'
-// @ts-expect-error This file does not have types
-import configureStore from '../store/configureStore'
+import { metricsDataAccess } from '../util/metrics/metricsDataAccess'
 
 import type {
   EchoOrderAccessMethod,
@@ -56,10 +53,6 @@ export const useCreateRetrieval = () => {
   })
 
   const createRetrieval = () => {
-    const {
-      dispatch: reduxDispatch
-    } = configureStore()
-
     // Aggregate metrics for retrievals by service
     const metricsCollections = projectCollectionsIds.map((id) => {
       const { [id]: projectCollection } = projectCollectionsById
@@ -105,15 +98,16 @@ export const useCreateRetrieval = () => {
 
       return {
         collectionId: id,
-        type: selectedType,
-        service: selectedService
+        service: selectedService,
+        type: selectedType
       }
     })
+      .filter((collection) => collection !== null)
 
-    reduxDispatch(metricsDataAccess({
+    metricsDataAccess({
       type: 'data_access_completion',
       collections: metricsCollections
-    }))
+    })
 
     const orderParams = prepareRetrievalParams()
 

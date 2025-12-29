@@ -5,29 +5,17 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import actions from '../../../actions'
 import { mapDispatchToProps, OrderStatusContainer } from '../OrderStatusContainer'
 import OrderStatus from '../../../components/OrderStatus/OrderStatus'
-import * as metricsActions from '../../../middleware/metrics/actions'
 
 jest.mock('../../../components/OrderStatus/OrderStatus', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: OrderStatusContainer,
   defaultProps: {
-    onChangePath: jest.fn(),
-    onMetricsRelatedCollection: jest.fn()
+    onChangePath: jest.fn()
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onMetricsRelatedCollection calls metricsRelatedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsActions, 'metricsRelatedCollection')
-
-    mapDispatchToProps(dispatch).onMetricsRelatedCollection({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
@@ -47,8 +35,7 @@ describe('OrderStatusContainer component', () => {
       expect(OrderStatus).toHaveBeenCalledTimes(1)
       expect(OrderStatus).toHaveBeenCalledWith(
         {
-          onChangePath: expect.any(Function),
-          onMetricsRelatedCollection: expect.any(Function)
+          onChangePath: expect.any(Function)
         },
         {}
       )

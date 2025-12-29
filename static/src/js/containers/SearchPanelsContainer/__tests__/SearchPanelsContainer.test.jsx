@@ -3,7 +3,6 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import actions from '../../../actions'
-import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
 
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import { mapDispatchToProps, SearchPanelsContainer } from '../SearchPanelsContainer'
@@ -14,8 +13,7 @@ jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <
 const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
-    onChangePath: jest.fn(),
-    onMetricsCollectionSortChange: jest.fn()
+    onChangePath: jest.fn()
   },
   defaultZustandState: {
     preferences: {
@@ -50,16 +48,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('/search')
   })
-
-  test('onMetricsCollectionSortChange calls metricsCollectionSortChange', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsCollectionSortChange, 'metricsCollectionSortChange')
-
-    mapDispatchToProps(dispatch).onMetricsCollectionSortChange({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('SearchPanelsContainer component', () => {
@@ -72,8 +60,7 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
       {
-        onChangePath: props.onChangePath,
-        onMetricsCollectionSortChange: props.onMetricsCollectionSortChange
+        onChangePath: props.onChangePath
       },
       {}
     )

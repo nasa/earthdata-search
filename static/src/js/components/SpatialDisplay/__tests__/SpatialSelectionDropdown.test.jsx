@@ -10,6 +10,11 @@ import * as EventEmitter from '../../../events/events'
 import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes } from '../../../constants/eventTypes'
 import { MODAL_NAMES } from '../../../constants/modalNames'
+import { metricsSpatialSelection } from '../../../util/metrics/metricsSpatialSelection'
+
+jest.mock('../../../util/metrics/metricsSpatialSelection', () => ({
+  metricsSpatialSelection: jest.fn()
+}))
 
 // Mock react react-router-dom so that the tests do not think we are on the homepage
 jest.mock('react-router-dom', () => ({
@@ -37,7 +42,6 @@ const setup = setupTest({
     searchParams: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn(),
-    onMetricsSpatialSelection: jest.fn(),
     location: '/search'
   },
   defaultZustandState: {
@@ -66,7 +70,7 @@ describe('SpatialSelectionDropdown component', () => {
   test('clicking the polygon dropdown emits an event and tracks metric', async () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    const { props, user } = setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
     await user.click(dropdownSelectionButton)
@@ -76,14 +80,14 @@ describe('SpatialSelectionDropdown component', () => {
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWSTART, spatialTypes.POLYGON)
 
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'polygon' })
+    expect(metricsSpatialSelection).toHaveBeenCalledTimes(1)
+    expect(metricsSpatialSelection).toHaveBeenCalledWith('polygon')
   })
 
   test('clicking the rectangle dropdown emits an event and tracks metric', async () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    const { props, user } = setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
     await user.click(dropdownSelectionButton)
@@ -96,14 +100,14 @@ describe('SpatialSelectionDropdown component', () => {
       spatialTypes.BOUNDING_BOX
     )
 
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'rectangle' })
+    expect(metricsSpatialSelection).toHaveBeenCalledTimes(1)
+    expect(metricsSpatialSelection).toHaveBeenCalledWith('rectangle')
   })
 
   test('clicking the point dropdown emits an event and tracks metric', async () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    const { props, user } = setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
     await user.click(dropdownSelectionButton)
@@ -113,14 +117,14 @@ describe('SpatialSelectionDropdown component', () => {
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWSTART, spatialTypes.POINT)
 
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'point' })
+    expect(metricsSpatialSelection).toHaveBeenCalledTimes(1)
+    expect(metricsSpatialSelection).toHaveBeenCalledWith('point')
   })
 
   test('clicking the circle dropdown emits an event and tracks metric', async () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    const { props, user } = setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
     await user.click(dropdownSelectionButton)
@@ -130,12 +134,12 @@ describe('SpatialSelectionDropdown component', () => {
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWSTART, spatialTypes.CIRCLE)
 
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'circle' })
+    expect(metricsSpatialSelection).toHaveBeenCalledTimes(1)
+    expect(metricsSpatialSelection).toHaveBeenCalledWith('circle')
   })
 
   test('clicking the shapefile dropdown calls setOpenModal', async () => {
-    const { props, user, zustandState } = setup()
+    const { user, zustandState } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
     await user.click(dropdownSelectionButton)
@@ -145,8 +149,8 @@ describe('SpatialSelectionDropdown component', () => {
     expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
     expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.SHAPEFILE_UPLOAD)
 
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
-    expect(props.onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'file' })
+    expect(metricsSpatialSelection).toHaveBeenCalledTimes(1)
+    expect(metricsSpatialSelection).toHaveBeenCalledWith('file')
   })
 
   describe('if the database is disabled', () => {
@@ -155,7 +159,7 @@ describe('SpatialSelectionDropdown component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      const { props, user, zustandState } = setup()
+      const { user, zustandState } = setup()
 
       const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
       await user.click(dropdownSelectionButton)
@@ -165,7 +169,7 @@ describe('SpatialSelectionDropdown component', () => {
 
       expect(shapeFileSelectionButton).toHaveClass('disabled')
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
-      expect(props.onMetricsSpatialSelection).toHaveBeenCalledTimes(0)
+      expect(metricsSpatialSelection).toHaveBeenCalledTimes(0)
     })
 
     test('hovering over the shapefile reveals tool-tip', async () => {

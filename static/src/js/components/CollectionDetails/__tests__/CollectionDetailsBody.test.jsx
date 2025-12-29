@@ -61,8 +61,7 @@ const setup = setupTest({
     isActive: true,
     location: {
       pathname: '/search'
-    },
-    onMetricsRelatedCollection: jest.fn()
+    }
   },
   defaultZustandState: {
     collection: {
@@ -1155,7 +1154,6 @@ describe('CollectionDetailsBody component', () => {
         expect(RelatedCollection).toHaveBeenCalledTimes(3)
         expect(RelatedCollection).toHaveBeenNthCalledWith(1, {
           className: 'collection-details-body__related-collection-link',
-          onMetricsRelatedCollection: expect.any(Function),
           relatedCollection: {
             doi: '1.TEST.DOI',
             id: 'TEST_COLLECTION_1',
@@ -1166,7 +1164,6 @@ describe('CollectionDetailsBody component', () => {
 
         expect(RelatedCollection).toHaveBeenNthCalledWith(2, {
           className: 'collection-details-body__related-collection-link',
-          onMetricsRelatedCollection: expect.any(Function),
           relatedCollection: {
             doi: '2.TEST.DOI',
             id: 'TEST_COLLECTION_2',
@@ -1177,7 +1174,6 @@ describe('CollectionDetailsBody component', () => {
 
         expect(RelatedCollection).toHaveBeenNthCalledWith(3, {
           className: 'collection-details-body__related-collection-link',
-          onMetricsRelatedCollection: expect.any(Function),
           relatedCollection: {
             doi: '3.TEST.DOI',
             id: 'TEST_COLLECTION_3',

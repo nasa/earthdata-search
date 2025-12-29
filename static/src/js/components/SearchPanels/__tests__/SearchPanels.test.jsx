@@ -13,25 +13,30 @@ import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import { granuleSortKeys } from '../../../constants/granuleSortKeys'
 
 import SearchPanels from '../SearchPanels'
-import CollectionResultsBodyContainer from '../../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
+import CollectionResultsBody from '../../CollectionResults/CollectionResultsBody'
 import GranuleResultsBodyContainer from '../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
-import CollectionDetailsBodyContainer from '../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import SubscriptionsBody from '../../Subscriptions/SubscriptionsBody'
-import GranuleResultsFocusedMetaContainer from '../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 import GranuleDetailsBody from '../../GranuleDetails/GranuleDetailsBody'
+import CollectionDetailsBody from '../../CollectionDetails/CollectionDetailsBody'
+import GranuleResultsFocusedMeta from '../../GranuleResults/GranuleResultsFocusedMeta'
 
 import { MODAL_NAMES } from '../../../constants/modalNames'
+import { metricsCollectionSortChange } from '../../../util/metrics/metricsCollectionSortChange'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn().mockReturnValue('')
 }))
 
-jest.mock('../../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../../util/metrics/metricsCollectionSortChange', () => ({
+  metricsCollectionSortChange: jest.fn()
+}))
+
+jest.mock('../../CollectionResults/CollectionResultsBody', () => jest.fn(() => <div />))
 jest.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer', () => jest.fn(() => <div />))
-jest.mock('../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../CollectionDetails/CollectionDetailsBody', () => jest.fn(() => <div />))
 jest.mock('../../GranuleDetails/GranuleDetailsBody', () => jest.fn(() => <div />))
 jest.mock('../../Subscriptions/SubscriptionsBody', () => jest.fn(() => <div />))
-jest.mock('../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer', () => jest.fn(() => <div />))
+jest.mock('../../GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div />))
 
 jest.mock('../../../../../../sharedUtils/config', () => ({
   getEnvironmentConfig: jest.fn().mockReturnValue({
@@ -71,7 +76,6 @@ const setup = setupTest({
     [PAGE_ROUTE]: {
       collectionSubscriptions: [],
       setCollectionId: jest.fn(),
-      onMetricsCollectionSortChange: jest.fn(),
       onTogglePanels: jest.fn(),
       panels: {
         activePanel: '0.0.0',
@@ -137,11 +141,11 @@ window.location = { assign: jest.fn() }
 
 describe('SearchPanels component', () => {
   describe('when on the /search route', () => {
-    test('renders the CollectionResultsBodyContainer', async () => {
+    test('renders the CollectionResultsBody', async () => {
       setup()
 
-      expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+      expect(CollectionResultsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionResultsBody).toHaveBeenLastCalledWith({
         isActive: true,
         panelScrollableNodeRef: { current: null },
         panelView: 'list'
@@ -154,8 +158,8 @@ describe('SearchPanels component', () => {
         panelView: 'list'
       }, {})
 
-      expect(CollectionDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(CollectionDetailsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -169,8 +173,8 @@ describe('SearchPanels component', () => {
 
     describe('when changing the collection sort', () => {
       describe('when selecting Relevance', () => {
-        test('calls onChangeQuery and onMetricsCollectionSortChange', async () => {
-          const { props, user, zustandState } = setup({
+        test('calls onChangeQuery and metricsCollectionSortChange', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               query: {
                 collection: {
@@ -195,16 +199,16 @@ describe('SearchPanels component', () => {
             }
           })
 
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledWith({
+          expect(metricsCollectionSortChange).toHaveBeenCalledTimes(1)
+          expect(metricsCollectionSortChange).toHaveBeenCalledWith({
             value: collectionSortKeys.scoreDescending
           })
         })
       })
 
       describe('when selecting Usage', () => {
-        test('calls onChangeQuery and onMetricsCollectionSortChange', async () => {
-          const { props, user, zustandState } = setup({
+        test('calls onChangeQuery and metricsCollectionSortChange', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               query: {
                 collection: {
@@ -229,16 +233,16 @@ describe('SearchPanels component', () => {
             }
           })
 
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledWith({
+          expect(metricsCollectionSortChange).toHaveBeenCalledTimes(1)
+          expect(metricsCollectionSortChange).toHaveBeenCalledWith({
             value: collectionSortKeys.usageDescending
           })
         })
       })
 
       describe('when selecting Recent Version', () => {
-        test('calls onChangeQuery and onMetricsCollectionSortChange', async () => {
-          const { props, user, zustandState } = setup({
+        test('calls onChangeQuery and metricsCollectionSortChange', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               query: {
                 collection: {
@@ -263,16 +267,16 @@ describe('SearchPanels component', () => {
             }
           })
 
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledWith({
+          expect(metricsCollectionSortChange).toHaveBeenCalledTimes(1)
+          expect(metricsCollectionSortChange).toHaveBeenCalledWith({
             value: collectionSortKeys.recentVersion
           })
         })
       })
 
       describe('when selecting Start Date', () => {
-        test('calls onChangeQuery and onMetricsCollectionSortChange', async () => {
-          const { props, user, zustandState } = setup({
+        test('calls onChangeQuery and metricsCollectionSortChange', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               query: {
                 collection: {
@@ -297,16 +301,16 @@ describe('SearchPanels component', () => {
             }
           })
 
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledWith({
+          expect(metricsCollectionSortChange).toHaveBeenCalledTimes(1)
+          expect(metricsCollectionSortChange).toHaveBeenCalledWith({
             value: collectionSortKeys.startDateAscending
           })
         })
       })
 
       describe('when selecting End Date', () => {
-        test('calls onChangeQuery and onMetricsCollectionSortChange', async () => {
-          const { props, user, zustandState } = setup({
+        test('calls onChangeQuery and metricsCollectionSortChange', async () => {
+          const { user, zustandState } = setup({
             overrideZustandState: {
               query: {
                 collection: {
@@ -331,8 +335,8 @@ describe('SearchPanels component', () => {
             }
           })
 
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsCollectionSortChange).toHaveBeenCalledWith({
+          expect(metricsCollectionSortChange).toHaveBeenCalledTimes(1)
+          expect(metricsCollectionSortChange).toHaveBeenCalledWith({
             value: collectionSortKeys.endDateDescending
           })
         })
@@ -341,7 +345,7 @@ describe('SearchPanels component', () => {
 
     describe('when changing the collection view', () => {
       describe('when selecting Table', () => {
-        test('updates CollectionResultsBodyContainer', async () => {
+        test('updates CollectionResultsBody', async () => {
           const { user } = setup({
             overrideRouterEntries: ['/search']
           })
@@ -350,13 +354,13 @@ describe('SearchPanels component', () => {
           const sortSelect = within(openPanel).getByRole('button', { name: 'View: List' })
           await user.click(sortSelect)
 
-          CollectionResultsBodyContainer.mockClear()
+          CollectionResultsBody.mockClear()
 
           const option = await screen.findByText('Table')
           await user.click(option)
 
-          expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(1)
-          expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+          expect(CollectionResultsBody).toHaveBeenCalledTimes(1)
+          expect(CollectionResultsBody).toHaveBeenLastCalledWith({
             isActive: true,
             panelScrollableNodeRef: { current: null },
             panelView: 'table'
@@ -365,7 +369,7 @@ describe('SearchPanels component', () => {
       })
 
       describe('when selecting List', () => {
-        test('updates CollectionResultsBodyContainer', async () => {
+        test('updates CollectionResultsBody', async () => {
           const { user } = setup({
             overrideZustandState: {
               user: {
@@ -381,13 +385,13 @@ describe('SearchPanels component', () => {
           const sortSelect = within(openPanel).getByRole('button', { name: 'View: Table' })
           await user.click(sortSelect)
 
-          CollectionResultsBodyContainer.mockClear()
+          CollectionResultsBody.mockClear()
 
           const option = await screen.findByText('List')
           await user.click(option)
 
-          expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(1)
-          expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+          expect(CollectionResultsBody).toHaveBeenCalledTimes(1)
+          expect(CollectionResultsBody).toHaveBeenLastCalledWith({
             isActive: true,
             panelScrollableNodeRef: { current: null },
             panelView: 'list'
@@ -475,8 +479,8 @@ describe('SearchPanels component', () => {
 
       expect(screen.getByText('Search Results (1 Collections)')).toBeInTheDocument()
 
-      expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+      expect(CollectionResultsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionResultsBody).toHaveBeenLastCalledWith({
         isActive: false,
         panelScrollableNodeRef: { current: null },
         panelView: 'list'
@@ -489,8 +493,8 @@ describe('SearchPanels component', () => {
         panelView: 'list'
       }, {})
 
-      expect(CollectionDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(CollectionDetailsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -838,7 +842,7 @@ describe('SearchPanels component', () => {
     })
 
     describe('when there is a focused granule', () => {
-      test('renders the GranuleResultsFocusedMetaContainer component', () => {
+      test('renders the GranuleResultsFocusedMeta component', () => {
         useLocation.mockReturnValue({
           pathname: '/search/granules',
           search: '?p=C1000-EDSC'
@@ -857,13 +861,13 @@ describe('SearchPanels component', () => {
         })
 
         // This is being rendered 2 times due to it being rendered through Panels
-        expect(GranuleResultsFocusedMetaContainer).toHaveBeenCalledTimes(2)
-        expect(GranuleResultsFocusedMetaContainer).toHaveBeenCalledWith({}, {})
+        expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(2)
+        expect(GranuleResultsFocusedMeta).toHaveBeenCalledWith({}, {})
       })
     })
 
     describe('when there is not a focused granule', () => {
-      test('renders the GranuleResultsFocusedMetaContainer component', () => {
+      test('renders the GranuleResultsFocusedMeta component', () => {
         useLocation.mockReturnValue({
           pathname: '/search/granules',
           search: '?p=C1000-EDSC'
@@ -873,13 +877,13 @@ describe('SearchPanels component', () => {
           overrideRouterEntries: ['/search/granules']
         })
 
-        expect(GranuleResultsFocusedMetaContainer).toHaveBeenCalledTimes(0)
+        expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(0)
       })
     })
   })
 
   describe('when on the /search/granules/collection-details route', () => {
-    test('renders the CollectionDetailsBodyContainer', () => {
+    test('renders the CollectionDetailsBody', () => {
       useLocation.mockReturnValue({
         pathname: '/search/granules/collection-details',
         search: '?p=C1000-EDSC'
@@ -922,8 +926,8 @@ describe('SearchPanels component', () => {
         href: 'https://search.earthdata.nasa.gov/search/granules/collection-details?p=C1000-EDSC'
       })
 
-      expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+      expect(CollectionResultsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionResultsBody).toHaveBeenLastCalledWith({
         isActive: false,
         panelScrollableNodeRef: { current: null },
         panelView: 'list'
@@ -936,8 +940,8 @@ describe('SearchPanels component', () => {
         panelView: 'list'
       }, {})
 
-      expect(CollectionDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(CollectionDetailsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: true
       }), {})
 
@@ -1020,8 +1024,8 @@ describe('SearchPanels component', () => {
         href: 'https://search.earthdata.nasa.gov/search/granules/granule-details?p=C1000-EDSC&g=G1000-EDSC'
       })
 
-      expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+      expect(CollectionResultsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionResultsBody).toHaveBeenLastCalledWith({
         isActive: false,
         panelScrollableNodeRef: { current: null },
         panelView: 'list'
@@ -1034,8 +1038,8 @@ describe('SearchPanels component', () => {
         panelView: 'list'
       }, {})
 
-      expect(CollectionDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(CollectionDetailsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -1109,8 +1113,8 @@ describe('SearchPanels component', () => {
         href: 'https://search.earthdata.nasa.gov/search/granules/subscriptions?p=C1000-EDSC'
       })
 
-      expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+      expect(CollectionResultsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionResultsBody).toHaveBeenLastCalledWith({
         isActive: false,
         panelScrollableNodeRef: { current: null },
         panelView: 'list'
@@ -1123,8 +1127,8 @@ describe('SearchPanels component', () => {
         panelView: 'list'
       }, {})
 
-      expect(CollectionDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(CollectionDetailsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 
@@ -1206,8 +1210,8 @@ describe('SearchPanels component', () => {
         href: 'https://search.earthdata.nasa.gov/search/subscriptions'
       })
 
-      expect(CollectionResultsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionResultsBodyContainer).toHaveBeenLastCalledWith({
+      expect(CollectionResultsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionResultsBody).toHaveBeenLastCalledWith({
         isActive: false,
         panelScrollableNodeRef: { current: null },
         panelView: 'list'
@@ -1220,8 +1224,8 @@ describe('SearchPanels component', () => {
         panelView: 'list'
       }, {})
 
-      expect(CollectionDetailsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(CollectionDetailsBodyContainer).toHaveBeenLastCalledWith(expect.objectContaining({
+      expect(CollectionDetailsBody).toHaveBeenCalledTimes(2)
+      expect(CollectionDetailsBody).toHaveBeenLastCalledWith(expect.objectContaining({
         isActive: false
       }), {})
 

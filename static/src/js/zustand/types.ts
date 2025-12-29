@@ -233,7 +233,7 @@ export type FacetKeys = 'science_keywords_h'
   | 'latency'
 
 /** The Platform Facet */
-type PlatformFacet = {
+export type PlatformFacet = {
   basis?: string
   category?: string
   short_name?: string

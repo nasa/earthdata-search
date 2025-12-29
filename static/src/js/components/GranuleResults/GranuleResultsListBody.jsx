@@ -73,8 +73,6 @@ innerElementType.propTypes = {
  * @param {Number} props.itemCount - Number of total granule list items.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
- * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
- * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param { Array } props.readableGranuleName - The readableGranuleName filter value.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
@@ -93,8 +91,6 @@ export const GranuleResultsListBody = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  onMetricsAddGranuleProject,
-  onMetricsDataAccess,
   readableGranuleName,
   setVisibleMiddleIndex = null,
   visibleMiddleIndex = null,
@@ -243,8 +239,6 @@ export const GranuleResultsListBody = ({
                 location,
                 numColumns,
                 onExcludeGranule: excludeGranule,
-                onMetricsAddGranuleProject,
-                onMetricsDataAccess,
                 readableGranuleName,
                 setRowHeight,
                 windowHeight: height,
@@ -292,8 +286,6 @@ GranuleResultsListBody.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  onMetricsAddGranuleProject: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number,

@@ -27,7 +27,6 @@ export const collectionListItemProps = {
     versionId: '2'
   },
   onAddProjectCollection: jest.fn(),
-  onMetricsAddCollectionProject: jest.fn(),
   onRemoveCollectionFromProject: jest.fn()
 }
 

@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions'
 
-import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
-
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
 
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
@@ -26,14 +24,11 @@ import {
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
-    (path) => dispatch(actions.changePath(path)),
-  onMetricsAddCollectionProject:
-    (data) => dispatch(metricsAddCollectionProject(data))
+    (path) => dispatch(actions.changePath(path))
 })
 
 export const GranuleResultsActionsContainer = ({
-  onChangePath,
-  onMetricsAddCollectionProject
+  onChangePath
 }) => {
   const { mapView } = useEdscStore((state) => ({
     mapView: state.map.mapView
@@ -87,7 +82,6 @@ export const GranuleResultsActionsContainer = ({
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
       onChangePath={onChangePath}
-      onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       projectCollectionIds={projectCollectionIds}
       projectGranuleCount={projectGranuleCount}
       removedGranuleIds={removedGranuleIds}
@@ -97,8 +91,7 @@ export const GranuleResultsActionsContainer = ({
 }
 
 GranuleResultsActionsContainer.propTypes = {
-  onChangePath: PropTypes.func.isRequired,
-  onMetricsAddCollectionProject: PropTypes.func.isRequired
+  onChangePath: PropTypes.func.isRequired
 }
 
 export default connect(null, mapDispatchToProps)(GranuleResultsActionsContainer)

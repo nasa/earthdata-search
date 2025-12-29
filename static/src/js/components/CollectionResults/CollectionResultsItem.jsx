@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import PropTypes from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
@@ -20,6 +19,7 @@ import {
   FaMap
 } from 'react-icons/fa'
 
+import { metricsAddCollectionToProject } from '../../util/metrics/metricsAddCollectionToProject'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -43,11 +43,9 @@ import './CollectionResultsItem.scss'
  * Renders CollectionResultsItem.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collection - The collection metadata.
- * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  */
 export const CollectionResultsItem = forwardRef(({
-  collectionMetadata,
-  onMetricsAddCollectionProject
+  collectionMetadata
 }, ref) => {
   const {
     addProjectCollection,
@@ -144,7 +142,8 @@ export const CollectionResultsItem = forwardRef(({
       onClick={
         (event) => {
           addProjectCollection(collectionId)
-          onMetricsAddCollectionProject({
+
+          metricsAddCollectionToProject({
             collectionConceptId: collectionId,
             view: 'list',
             page: 'collections'
@@ -499,8 +498,7 @@ export const CollectionResultsItem = forwardRef(({
 CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
-  collectionMetadata: collectionMetadataPropType.isRequired,
-  onMetricsAddCollectionProject: PropTypes.func.isRequired
+  collectionMetadata: collectionMetadataPropType.isRequired
 }
 
 export default CollectionResultsItem

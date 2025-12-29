@@ -31,6 +31,8 @@ import {
 import { ShapefileSlice } from '../../zustand/types'
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
+import { metricsMap } from '../metrics/metricsMap'
+
 // Simplify the shape if it has too many points
 const simplifyShape = ({
   geometry,
@@ -65,7 +67,6 @@ const simplifyShape = ({
  * @param {Object} params.shapefile - The shapefile to draw
  * @param {Function} params.onChangeQuery - Callback to update the query
  * @param {Function} params.onChangeProjection - Callback to update the map projection
- * @param {Function} params.onMetricsMap - Callback to send metrics events
  * @param {Function} params.onToggleTooManyPointsModal - Callback to toggle the too many points modal
  * @param {Function} params.onUpdateShapefile - Callback to update the shapefile
  * @param {String} params.projectionCode - The current map projection
@@ -80,7 +81,6 @@ const drawShapefile = ({
   shapefile,
   onChangeQuery,
   onChangeProjection,
-  onMetricsMap,
   onToggleTooManyPointsModal,
   onUpdateShapefile,
   projectionCode,
@@ -100,8 +100,6 @@ const drawShapefile = ({
   /** Callback to update the map projection */
   // eslint-disable-next-line no-shadow
   onChangeProjection?: (projectionCode: ProjectionCode) => void
-  /** Callback to send metrics events */
-  onMetricsMap: (eventName: string) => void
   /** Callback to toggle the too many points modal */
   onToggleTooManyPointsModal: () => void
   /** Callback to update the shapefile */
@@ -271,7 +269,7 @@ const drawShapefile = ({
   // If the shapefile was just added, move the map to the shapefile
   if (shapefileAdded) {
     // Create the metrics event
-    onMetricsMap('Added Shapefile')
+    metricsMap('Added Shapefile')
 
     // SetTimeout is needed here because the map needs to be rendered before the map can be moved
     setTimeout(() => {
