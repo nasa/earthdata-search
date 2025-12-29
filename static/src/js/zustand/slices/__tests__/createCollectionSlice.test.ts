@@ -2,33 +2,12 @@ import nock from 'nock'
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
-import actions from '../../../actions'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 import routerHelper from '../../../router/router'
 import { collectionRelevancyMetrics } from '../../../util/relevancy/collectionRelevancyMetrics'
-
-jest.mock('../../../util/relevancy/collectionRelevancyMetrics', () => ({
-  collectionRelevancyMetrics: jest.fn()
-}))
-
-jest.mock('../../../actions', () => ({
-  changeUrl: jest.fn()
-}))
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
-const mockDispatch = jest.fn()
-configureStore.mockReturnValue({
-  dispatch: mockDispatch
-})
 
 describe('createCollectionSlice', () => {
   test('sets the default state', () => {
@@ -145,8 +124,8 @@ describe('createCollectionSlice', () => {
 
         expect(updatedCollection.collectionMetadata).toEqual({})
 
-        expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-        expect(actions.changeUrl).toHaveBeenCalledWith({
+        expect(changeUrl).toHaveBeenCalledTimes(1)
+        expect(changeUrl).toHaveBeenCalledWith({
           pathname: '/search',
           search: '?zoom=4'
         })
@@ -597,8 +576,8 @@ describe('createCollectionSlice', () => {
 
           expect(updatedCollection.collectionId).toEqual(null)
 
-          expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-          expect(actions.changeUrl).toHaveBeenCalledWith({
+          expect(changeUrl).toHaveBeenCalledTimes(1)
+          expect(changeUrl).toHaveBeenCalledWith({
             pathname: '/search',
             search: '?p=C10000000000-EDSC'
           })
@@ -940,8 +919,8 @@ describe('createCollectionSlice', () => {
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(1)
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledWith(false)
 
-        expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-        expect(actions.changeUrl).toHaveBeenCalledWith({
+        expect(changeUrl).toHaveBeenCalledTimes(1)
+        expect(changeUrl).toHaveBeenCalledWith({
           pathname: '/search',
           search: '?keyword=modis'
         })
@@ -1039,7 +1018,7 @@ describe('createCollectionSlice', () => {
 
         expect(granule.setGranuleId).toHaveBeenCalledTimes(0)
         expect(ui.map.setDisplaySpatialMbrWarning).toHaveBeenCalledTimes(0)
-        expect(actions.changeUrl).toHaveBeenCalledTimes(0)
+        expect(changeUrl).toHaveBeenCalledTimes(0)
         expect(getCollectionMetadata).toHaveBeenCalledTimes(0)
         expect(query.changeGranuleQuery).toHaveBeenCalledTimes(0)
         expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
@@ -1121,8 +1100,8 @@ describe('createCollectionSlice', () => {
       expect(setCollectionId).toHaveBeenCalledTimes(1)
       expect(setCollectionId).toHaveBeenCalledWith('collection-1')
 
-      expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-      expect(actions.changeUrl).toHaveBeenCalledWith({
+      expect(changeUrl).toHaveBeenCalledTimes(1)
+      expect(changeUrl).toHaveBeenCalledWith({
         pathname: '/search/granules/collection-details',
         search: '?keyword=modis'
       })
@@ -1155,8 +1134,8 @@ describe('createCollectionSlice', () => {
       expect(setCollectionId).toHaveBeenCalledTimes(1)
       expect(setCollectionId).toHaveBeenCalledWith('collection-1')
 
-      expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-      expect(actions.changeUrl).toHaveBeenCalledWith({
+      expect(changeUrl).toHaveBeenCalledTimes(1)
+      expect(changeUrl).toHaveBeenCalledWith({
         pathname: '/search/granules',
         search: '?keyword=modis'
       })

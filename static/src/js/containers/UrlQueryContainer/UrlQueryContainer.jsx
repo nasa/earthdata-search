@@ -1,11 +1,10 @@
 import { useEffect, useMemo } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 
-import actions from '../../actions/index'
-
+import { changePath } from '../../util/url/changePath'
+import { changeUrl } from '../../util/url/changeUrl'
 import { encodeUrlQuery, urlPathsWithoutUrlParams } from '../../util/url/url'
 import isPath from '../../util/isPath'
 
@@ -21,20 +20,9 @@ import UPDATE_PROJECT from '../../operations/mutations/updateProject'
 
 import { routes } from '../../constants/routes'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onChangePath:
-    (path) => dispatch(actions.changePath(path)),
-  onChangeUrl:
-    (query) => dispatch(actions.changeUrl(query))
-})
-
-export const UrlQueryContainer = (props) => {
-  const {
-    children,
-    onChangePath,
-    onChangeUrl
-  } = props
-
+const UrlQueryContainer = ({
+  children
+}) => {
   const location = useLocation()
   const {
     pathname,
@@ -105,13 +93,13 @@ export const UrlQueryContainer = (props) => {
       return
     }
 
-    onChangePath([pathname, search].filter(Boolean).join(''))
+    changePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
   const [createProjectMutation] = useMutation(CREATE_PROJECT)
   const [updateProjectMutation] = useMutation(UPDATE_PROJECT)
 
-  // When the Zustand state changes, encode the values and call onChangeUrl to update the URL
+  // When the Zustand state changes, encode the values and call changeUrl to update the URL
   useEffect(() => {
     if (encodedUrl !== '') {
       const {
@@ -188,8 +176,8 @@ export const UrlQueryContainer = (props) => {
           }
         })
       } else {
-        // Else call onChangeUrl to update the URL values
-        onChangeUrl(encodedUrl)
+        // Else call changeUrl to update the URL values
+        changeUrl(encodedUrl)
       }
     }
   }, [encodedUrl])
@@ -198,9 +186,7 @@ export const UrlQueryContainer = (props) => {
 }
 
 UrlQueryContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  onChangePath: PropTypes.func.isRequired,
-  onChangeUrl: PropTypes.func.isRequired
+  children: PropTypes.node.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(UrlQueryContainer)
+export default UrlQueryContainer
