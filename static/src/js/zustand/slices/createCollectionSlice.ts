@@ -42,6 +42,7 @@ import {
 import GET_COLLECTION from '../../operations/queries/getCollection'
 
 import { routes } from '../../constants/routes'
+import { collectionRelevancyMetrics } from '../../util/relevancy/collectionRelevancyMetrics'
 
 const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
   collection: {
@@ -75,7 +76,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       }
 
       // Send the relevancy metric event
-      reduxDispatch(actions.collectionRelevancyMetrics())
+      collectionRelevancyMetrics()
 
       // Use the `hasAllMetadata` flag to determine if we've requested previously
       // requested the focused collections metadata from graphql

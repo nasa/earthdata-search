@@ -1,20 +1,21 @@
-import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
+// @ts-expect-error This file does not have types
+import { prepareCollectionParams, buildCollectionSearchParams } from '../collections'
 
-import { exactMatch } from '../util/relevancy'
+// @ts-expect-error This file does not have types
+import { exactMatch } from './relevancy'
 
-import LoggerRequest from '../util/request/loggerRequest'
+// @ts-expect-error This file does not have types
+import LoggerRequest from '../request/loggerRequest'
 
-import useEdscStore from '../zustand/useEdscStore'
-import { getCollectionId, getFocusedCollectionMetadata } from '../zustand/selectors/collection'
-import { getCollectionsQuery } from '../zustand/selectors/query'
-import { getCollections } from '../zustand/selectors/collections'
+import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+import { getCollections } from '../../zustand/selectors/collections'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import useEdscStore from '../../zustand/useEdscStore'
 
 /**
  * Send collection relevancy information to lambda to be logged
  */
-export const collectionRelevancyMetrics = () => (dispatch, getState) => {
-  const state = getState()
-
+export const collectionRelevancyMetrics = () => {
   const zustandState = useEdscStore.getState()
   const focusedCollectionId = getCollectionId(zustandState)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(zustandState)
@@ -26,7 +27,7 @@ export const collectionRelevancyMetrics = () => (dispatch, getState) => {
 
   const { keyword } = collectionsQuery
 
-  const collectionParams = buildCollectionSearchParams(prepareCollectionParams(state))
+  const collectionParams = buildCollectionSearchParams(prepareCollectionParams({}))
 
   const data = {
     query: collectionParams,
@@ -40,5 +41,3 @@ export const collectionRelevancyMetrics = () => (dispatch, getState) => {
 
   requestObject.logRelevancy({ data }).then(() => {})
 }
-
-export default collectionRelevancyMetrics
