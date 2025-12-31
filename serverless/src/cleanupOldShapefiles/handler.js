@@ -23,9 +23,24 @@ const cleanupOldShapefiles = async (event, context) => {
 
     console.log(`Cleaning up shapefiles older than ${oneYearAgo.toISOString()}`)
 
-    // Delete shapefiles older than one year
+    // Delete shapefiles older than one year, but only if:
+    // - The shapefile is not a parent (no children), OR
+    // - The shapefile is a parent and ALL its children are also older than one year
     const deletedCount = await dbConnection('shapefiles')
       .where('created_at', '<', oneYearAgo)
+      // https://knexjs.org/guide/query-builder.html#whereexists
+      // eslint-disable-next-line func-names
+      .whereNotExists(function () {
+        // Only delete parent if ALL children are also older than one year
+        // This checks: there should NOT exist any children created within the last year
+        // If no children exist (not a parent), subquery returns empty -> parent can be deleted
+        // If children exist but all are old, subquery returns empty -> parent can be deleted
+        // If any child is new, subquery returns a row -> parent is NOT deleted
+        this.select(1)
+          .from('shapefiles as children')
+          .whereRaw('children.parent_shapefile_id = shapefiles.id')
+          .where('children.created_at', '>=', oneYearAgo)
+      })
       .delete()
 
     console.log(`Successfully deleted ${deletedCount} shapefile(s) older than one year`)
