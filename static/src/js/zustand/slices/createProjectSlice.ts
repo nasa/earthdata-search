@@ -8,9 +8,6 @@ import { mbr } from '@edsc/geo-utils'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 // @ts-expect-error This file does not have types
-import configureStore from '../../store/configureStore'
-
-// @ts-expect-error This file does not have types
 import { buildAccessMethods } from '../../util/accessMethods/buildAccessMethods'
 // @ts-expect-error This file does not have types
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
