@@ -26,12 +26,6 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 // @ts-expect-error There are no types for this file
 import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
 
-// @ts-expect-error There are no types for this file
-import configureStore from '../../store/configureStore'
-
-// @ts-expect-error There are no types for this file
-import actions from '../../actions'
-
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
@@ -52,10 +46,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
     collectionMetadata: {},
 
     getCollectionMetadata: async () => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 

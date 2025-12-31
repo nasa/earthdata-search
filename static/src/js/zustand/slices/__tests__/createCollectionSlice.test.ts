@@ -8,6 +8,15 @@ import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 import routerHelper from '../../../router/router'
 import { collectionRelevancyMetrics } from '../../../util/relevancy/collectionRelevancyMetrics'
+import { changeUrl } from '../../../util/url/changeUrl'
+
+jest.mock('../../../util/url/changeUrl', () => ({
+  changeUrl: jest.fn()
+}))
+
+jest.mock('../../../util/relevancy/collectionRelevancyMetrics', () => ({
+  collectionRelevancyMetrics: jest.fn()
+}))
 
 describe('createCollectionSlice', () => {
   test('sets the default state', () => {
