@@ -38,14 +38,9 @@ const cleanupOldShapefiles = async (event, context) => {
       })
     }
   } catch (error) {
-    console.error('Error cleaning up old shapefiles:', error)
+    console.log('Error cleaning up old shapefiles:', error)
 
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        error: parseError(error)
-      })
-    }
+    return parseError(error)
   }
 }
 
