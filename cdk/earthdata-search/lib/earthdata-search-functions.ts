@@ -307,7 +307,7 @@ export class Functions extends Construct {
           hour: '12',
           minute: '0',
           month: '*',
-          weekDay: 'MON-FRI',
+          weekDay: 'MON',
           year: '*'
         })
       }, {
@@ -651,7 +651,7 @@ export class Functions extends Construct {
     })
 
     /**
-     * Cleanup Old Shapefiles
+     * Cleanup Old Shapefiles Run once a month on the first day of the month at 8:00 AM
      */
     const cleanupOldShapefilesNestedStack = new cdk.NestedStack(scope, 'CleanupOldShapefilesNestedStack')
     // eslint-disable-next-line no-new
@@ -665,10 +665,9 @@ export class Functions extends Construct {
         enabled: true,
         schedule: events.Schedule.cron({
           day: '1',
-          hour: '2',
+          hour: '8',
           minute: '0',
           month: '*',
-          weekDay: '*',
           year: '*'
         })
       }],
