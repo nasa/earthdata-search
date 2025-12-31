@@ -3,7 +3,6 @@ import {
   changePath,
   updateStore
 } from './urlQuery'
-import { handleAlert } from './alerts'
 import {
   createSubscription,
   deleteCollectionSubscription,
@@ -23,7 +22,6 @@ const actions = {
   deleteSubscription,
   getGranuleSubscriptions,
   getSubscriptions,
-  handleAlert,
   removeSubscriptionDisabledFields,
   updateStore,
   updateSubscription,
