@@ -105,7 +105,14 @@ export const SubscriptionsBody = ({
     refetchQueries: [SUBSCRIPTIONS]
   })
 
-  const handleCreateSubscription = (placeholderName) => {
+  const parsedQueryWithRemovedFields = removeDisabledFieldsFromQuery(query, disabledFields)
+
+  const placeholderName = formatDefaultSubscriptionName(
+    parsedQueryWithRemovedFields,
+    subscriptionType
+  )
+
+  const handleCreateSubscription = () => {
     // If the user hasn't provided a name, use the default name from the placeholder
     let subscriptionName = name
 
@@ -131,22 +138,28 @@ export const SubscriptionsBody = ({
     })
   }
 
+  // The variables for the subscriptions query
+  // `collectionConceptId` is required for granule subscriptions but not for collection subscriptions
   const variables = {
     params: {
       subscriberId: username,
       type: subscriptionType
     }
   }
-  let skip = false
 
+  // If this component is being rendered for granule subscriptions, we're going to skip the query
+  // unless we have a valid collectionId to query against
+  let skip = false
   if (subscriptionType === 'granule') {
-    if (collectionId && collectionId !== '') {
+    if (collectionId) {
+      // If we have a collectionId, add it to the query variables
       variables.params.collectionConceptId = collectionId
     } else {
       skip = true
     }
   }
 
+  // Fetch the user's subscriptions
   const { data } = useQuery(SUBSCRIPTIONS, {
     skip,
     variables,
@@ -169,13 +182,6 @@ export const SubscriptionsBody = ({
 
     setName(value)
   }
-
-  const parsedQueryWithRemovedFields = removeDisabledFieldsFromQuery(query, disabledFields)
-
-  const placeholderName = formatDefaultSubscriptionName(
-    parsedQueryWithRemovedFields,
-    subscriptionType
-  )
 
   // Compare the subscriptions returned for the user to the current query to prevent submission
   // of duplicate subscriptions
@@ -294,7 +300,7 @@ export const SubscriptionsBody = ({
                   </div>
                   <Button
                     className="subscriptions-body__create-button"
-                    disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
+                    disabled={displayWarning}
                     bootstrapVariant="primary"
                     label="Create Subscription"
                     spinner={submittingNewSubscription}
@@ -303,7 +309,7 @@ export const SubscriptionsBody = ({
                       async () => {
                         setSubmittingNewSubscription(true)
 
-                        handleCreateSubscription(placeholderName)
+                        handleCreateSubscription()
                       }
                     }
                   >
@@ -340,11 +346,11 @@ export const SubscriptionsBody = ({
                   {'No subscriptions exist for this collection. Use filters to define your query and '}
                   <Button
                     className="subscriptions-body__empty-list-item"
-                    disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
+                    disabled={displayWarning}
                     bootstrapVariant="link"
                     label="Create New Subscription"
                     variant="link"
-                    onClick={() => handleCreateSubscription(placeholderName)}
+                    onClick={() => handleCreateSubscription()}
                   >
                     create a new subscription
                   </Button>

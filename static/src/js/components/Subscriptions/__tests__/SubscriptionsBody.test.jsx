@@ -646,6 +646,8 @@ describe('SubscriptionsBody component', () => {
 
       const element = getByTextWithMarkup('The subscription Subscription 1 matches the current search query. Choose a different search query to create a new subscription.')
       expect(element).toBeInTheDocument()
+
+      expect(screen.getByRole('button', { name: 'Create Subscription' })).toBeDisabled()
     })
   })
 
@@ -680,6 +682,8 @@ describe('SubscriptionsBody component', () => {
       })
 
       expect(screen.getByText('The current query is not currently supported. Add additional filters to create a new subscription.')).toBeInTheDocument()
+
+      expect(screen.getByRole('button', { name: 'Create Subscription' })).toBeDisabled()
     })
   })
 
@@ -691,6 +695,8 @@ describe('SubscriptionsBody component', () => {
       await user.type(input, 'This is a very long subscription name that is definitely going to be more than eighty characters long which is the limit.')
 
       expect(screen.getByText('The subscription name must be less than 80 characters long.')).toBeInTheDocument()
+
+      expect(screen.getByRole('button', { name: 'Create Subscription' })).toBeDisabled()
     })
   })
 

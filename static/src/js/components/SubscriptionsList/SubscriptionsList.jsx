@@ -33,6 +33,8 @@ const SubscriptionsList = () => {
 
   const { subscriptions } = data || {}
   const { items = [] } = subscriptions || {}
+
+  // Split subscription list into collections and granules for displaying in separate tables
   const [collectionSubsciptions, granuleSubscriptions] = partition(items, (metadata) => metadata.type === 'collection')
 
   return (
