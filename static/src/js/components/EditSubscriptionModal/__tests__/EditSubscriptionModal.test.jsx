@@ -26,8 +26,18 @@ const setup = setupTest({
       modals: {
         openModal: MODAL_NAMES.EDIT_SUBSCRIPTION,
         modalData: {
-          subscriptionConceptId: '',
-          subscriptionType: 'collection'
+          newQuery: 'has_granules_or_cwic=true&point[]=-75.99033,38.63975',
+          subscription: {
+            collection: null,
+            collectionConceptId: null,
+            conceptId: 'SUB12345-EDSC',
+            creationDate: '2026-01-01T01:56:16.184Z',
+            name: 'Test Subscription',
+            nativeId: 'native-id',
+            query: 'has_granules_or_cwic=true&point[]=-75.99033,38.63975',
+            revisionDate: '2026-01-01T02:06:25.385Z',
+            type: 'collection'
+          }
         },
         setOpenModal: jest.fn()
       }
@@ -65,37 +75,13 @@ describe('EditSubscriptionModal component', () => {
 
   describe('when a collection subscription is defined', () => {
     test('sets the value of the name input', () => {
-      setup({
-        overrideZustandState: {
-          ui: {
-            modals: {
-              modalData: {
-                subscription: {
-                  name: 'Original Name'
-                }
-              }
-            }
-          }
-        }
-      })
+      setup()
 
-      expect(screen.getByRole('textbox')).toHaveValue('Original Name')
+      expect(screen.getByRole('textbox')).toHaveValue('Test Subscription')
     })
 
     test('defaults the checkbox to unchecked', () => {
-      setup({
-        overrideZustandState: {
-          ui: {
-            modals: {
-              modalData: {
-                subscription: {
-                  name: 'Original Name'
-                }
-              }
-            }
-          }
-        }
-      })
+      setup()
 
       expect(screen.getByRole('checkbox')).not.toBeChecked()
     })
@@ -108,8 +94,20 @@ describe('EditSubscriptionModal component', () => {
           ui: {
             modals: {
               modalData: {
+                newQuery: 'has_granules_or_cwic=true&point[]=-75.99033,38.63975',
                 subscription: {
-                  name: 'Original Name (Granule)'
+                  collection: {
+                    conceptId: 'C12345-EDSC',
+                    title: 'Test Collection'
+                  },
+                  collectionConceptId: 'C12345-EDSC',
+                  conceptId: 'SUB12345-EDSC',
+                  creationDate: '2026-01-01T01:56:16.184Z',
+                  name: 'Test Granule Subscription',
+                  nativeId: 'native-id',
+                  query: 'has_granules_or_cwic=true&point[]=-75.99033,38.63975',
+                  revisionDate: '2026-01-01T02:06:25.385Z',
+                  type: 'collection'
                 }
               }
             }
@@ -117,7 +115,7 @@ describe('EditSubscriptionModal component', () => {
         }
       })
 
-      expect(screen.getByRole('textbox')).toHaveValue('Original Name (Granule)')
+      expect(screen.getByRole('textbox')).toHaveValue('Test Granule Subscription')
     })
 
     test('defaults the checkbox to unchecked', () => {
@@ -126,8 +124,20 @@ describe('EditSubscriptionModal component', () => {
           ui: {
             modals: {
               modalData: {
+                newQuery: 'has_granules_or_cwic=true&point[]=-75.99033,38.63975',
                 subscription: {
-                  name: 'Original Name (Granule)'
+                  collection: {
+                    conceptId: 'C12345-EDSC',
+                    title: 'Test Collection'
+                  },
+                  collectionConceptId: 'C12345-EDSC',
+                  conceptId: 'SUB12345-EDSC',
+                  creationDate: '2026-01-01T01:56:16.184Z',
+                  name: 'Test Granule Subscription',
+                  nativeId: 'native-id',
+                  query: 'has_granules_or_cwic=true&point[]=-75.99033,38.63975',
+                  revisionDate: '2026-01-01T02:06:25.385Z',
+                  type: 'collection'
                 }
               }
             }
@@ -191,13 +201,30 @@ describe('EditSubscriptionModal component', () => {
   })
 
   describe('when submitting the form', () => {
-    test('calls addToast and setOpenModal', async () => {
-      const { user, zustandState } = setup({
-        overrideZustandState: {
-          ui: {
-            modals: {
-              modalData: {
-                subscription: {
+    describe('when submitting a collection subscription', () => {
+      test('calls addToast and setOpenModal', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            ui: {
+              modals: {
+                modalData: {
+                  subscription: {
+                    name: 'Original Name',
+                    nativeId: 'mock-guid',
+                    query: 'mock=query',
+                    subscriberId: 'subscriber-id',
+                    type: 'collection'
+                  }
+                }
+              }
+            }
+          },
+          overrideApolloClientMocks: [{
+            request: {
+              query: UPDATE_SUBSCRIPTION,
+              variables: {
+                params: {
+                  collectionConceptId: undefined,
                   name: 'Original Name',
                   nativeId: 'mock-guid',
                   query: 'mock=query',
@@ -205,46 +232,152 @@ describe('EditSubscriptionModal component', () => {
                   type: 'collection'
                 }
               }
+            },
+            result: {
+              data: {
+                updateSubscription: {
+                  conceptId: 'SUB1',
+                  name: 'Original Name',
+                  nativeId: 'mock-guid'
+                }
+              }
             }
-          }
-        },
-        overrideApolloClientMocks: [{
-          request: {
-            query: UPDATE_SUBSCRIPTION,
-            variables: {
-              params: {
-                collectionConceptId: undefined,
-                name: 'Original Name',
-                nativeId: 'mock-guid',
-                query: 'mock=query',
-                subscriberId: 'subscriber-id',
-                type: 'collection'
+          }]
+        })
+
+        const submitButton = screen.getByRole('button', { name: 'Save' })
+        await user.click(submitButton)
+
+        expect(addToast).toHaveBeenCalledTimes(1)
+        expect(addToast).toHaveBeenCalledWith('Subscription updated', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
+      })
+    })
+
+    describe('when submitting a granule subscription', () => {
+      test('calls addToast and setOpenModal', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            ui: {
+              modals: {
+                modalData: {
+                  subscription: {
+                    collectionConceptId: 'C12345-EDSC',
+                    name: 'Original Name',
+                    nativeId: 'mock-guid',
+                    query: 'mock=query',
+                    subscriberId: 'subscriber-id',
+                    type: 'granule'
+                  }
+                }
               }
             }
           },
-          result: {
-            data: {
-              updateSubscription: {
-                conceptId: 'SUB1',
-                name: 'Original Name',
-                nativeId: 'mock-guid'
+          overrideApolloClientMocks: [{
+            request: {
+              query: UPDATE_SUBSCRIPTION,
+              variables: {
+                params: {
+                  collectionConceptId: 'C12345-EDSC',
+                  name: 'Original Name',
+                  nativeId: 'mock-guid',
+                  query: 'mock=query',
+                  subscriberId: 'subscriber-id',
+                  type: 'granule'
+                }
+              }
+            },
+            result: {
+              data: {
+                updateSubscription: {
+                  conceptId: 'SUB1',
+                  name: 'Original Name',
+                  nativeId: 'mock-guid'
+                }
               }
             }
-          }
-        }]
+          }]
+        })
+
+        const submitButton = screen.getByRole('button', { name: 'Save' })
+        await user.click(submitButton)
+
+        expect(addToast).toHaveBeenCalledTimes(1)
+        expect(addToast).toHaveBeenCalledWith('Subscription updated', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
+    })
 
-      const submitButton = screen.getByRole('button', { name: 'Save' })
-      await user.click(submitButton)
+    describe('when updating the subscription query', () => {
+      test('calls addToast and setOpenModal', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            ui: {
+              modals: {
+                modalData: {
+                  newQuery: 'updated=query',
+                  subscription: {
+                    name: 'Original Name',
+                    nativeId: 'mock-guid',
+                    query: 'mock=query',
+                    subscriberId: 'subscriber-id',
+                    type: 'collection'
+                  }
+                }
+              }
+            }
+          },
+          overrideApolloClientMocks: [{
+            request: {
+              query: UPDATE_SUBSCRIPTION,
+              variables: {
+                params: {
+                  collectionConceptId: undefined,
+                  name: 'Original Name',
+                  nativeId: 'mock-guid',
+                  query: 'updated=query',
+                  subscriberId: 'subscriber-id',
+                  type: 'collection'
+                }
+              }
+            },
+            result: {
+              data: {
+                updateSubscription: {
+                  conceptId: 'SUB1',
+                  name: 'Original Name',
+                  nativeId: 'mock-guid'
+                }
+              }
+            }
+          }]
+        })
 
-      expect(addToast).toHaveBeenCalledTimes(1)
-      expect(addToast).toHaveBeenCalledWith('Subscription updated', {
-        appearance: 'success',
-        autoDismiss: true
+        const updateQueryCheckbox = screen.getByRole('checkbox')
+        await user.click(updateQueryCheckbox)
+
+        const submitButton = screen.getByRole('button', { name: 'Save' })
+        await user.click(submitButton)
+
+        expect(addToast).toHaveBeenCalledTimes(1)
+        expect(addToast).toHaveBeenCalledWith('Subscription updated', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
       })
-
-      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
-      expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(null)
     })
 
     describe('when the mutation errors', () => {

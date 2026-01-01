@@ -101,13 +101,16 @@ const EditSubscriptionModal = () => {
 
     const variables = {
       params: {
-        collectionConceptId,
         name,
         nativeId,
         query,
         subscriberId,
         type
       }
+    }
+
+    if (type === 'granule') {
+      variables.params.collectionConceptId = collectionConceptId
     }
 
     updateSubscription({
