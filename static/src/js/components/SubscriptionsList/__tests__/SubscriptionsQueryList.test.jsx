@@ -41,7 +41,7 @@ describe('SubscriptionsQueryList component', () => {
         }
       })
 
-      expect(screen.queryByText('Collections without granules')).not.toBeInTheDocument()
+      expect(screen.queryByText('Include datasets without granules')).not.toBeInTheDocument()
     })
   })
 
