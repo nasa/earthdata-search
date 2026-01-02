@@ -16,10 +16,6 @@ jest.mock('../../../util/url/changeUrl', () => ({
   changeUrl: jest.fn()
 }))
 
-jest.mock('../../../actions', () => ({
-  handleError: jest.fn()
-}))
-
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 const mockDispatch = jest.fn()
