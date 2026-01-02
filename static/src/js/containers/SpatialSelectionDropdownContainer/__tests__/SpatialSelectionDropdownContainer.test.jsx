@@ -2,33 +2,15 @@ import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import * as metricsSpatialSelection from '../../../middleware/metrics/actions'
-
-import {
-  mapDispatchToProps,
-  SpatialSelectionDropdownContainer
-} from '../SpatialSelectionDropdownContainer'
+import { SpatialSelectionDropdownContainer } from '../SpatialSelectionDropdownContainer'
 
 const setup = setupTest({
   Component: SpatialSelectionDropdownContainer,
   defaultProps: {
     onChangeUrl: jest.fn(),
-    onChangePath: jest.fn(),
-    onMetricsSpatialSelection: jest.fn()
+    onChangePath: jest.fn()
   },
   withRouter: true
-})
-
-describe('mapDispatchToProps', () => {
-  test('onMetricsSpatialSelection calls metricsSpatialSelection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsSpatialSelection, 'metricsSpatialSelection')
-
-    mapDispatchToProps(dispatch).onMetricsSpatialSelection({ item: 'value' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ item: 'value' })
-  })
 })
 
 describe('SpatialSelectionDropdownContainer component', () => {

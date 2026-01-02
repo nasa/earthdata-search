@@ -31,11 +31,9 @@ import './OrderStatus.scss'
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.onChangePath - Selects an access method.
- * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
  */
 const OrderStatus = ({
-  onChangePath,
-  onMetricsRelatedCollection
+  onChangePath
 }) => {
   const params = useParams()
   const { id: retrievalId } = params
@@ -251,7 +249,6 @@ const OrderStatus = ({
                                 <RelatedCollection
                                   key={`related-collection-${collectionId}`}
                                   className="collection-body__related-collection-link"
-                                  onMetricsRelatedCollection={onMetricsRelatedCollection}
                                   relatedCollection={relatedCollection}
                                 />
                               </li>
@@ -321,8 +318,7 @@ const OrderStatus = ({
 }
 
 OrderStatus.propTypes = {
-  onChangePath: PropTypes.func.isRequired,
-  onMetricsRelatedCollection: PropTypes.func.isRequired
+  onChangePath: PropTypes.func.isRequired
 }
 
 export default OrderStatus

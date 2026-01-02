@@ -14,6 +14,11 @@ import {
 } from '../GranuleResultsDataLinksButton'
 
 import addToast from '../../../util/addToast'
+import { metricsDataAccess } from '../../../util/metrics/metricsDataAccess'
+
+jest.mock('../../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: jest.fn()
+}))
 
 jest.mock('../../../util/addToast', () => ({
   __esModule: true,
@@ -33,8 +38,7 @@ const setup = setupTest({
       }
     ],
     id: 'G123456789-TEST',
-    s3Links: [],
-    onMetricsDataAccess: jest.fn()
+    s3Links: []
   }
 })
 
@@ -77,13 +81,13 @@ describe('GranuleResultsDataLinksButton component', () => {
 
   describe('with a single granule link', () => {
     test('calls callback with the correct data on click', async () => {
-      const { props, user } = setup()
+      const { user } = setup()
 
       const button = screen.getByRole('button')
       await user.click(button)
 
-      expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
+      expect(metricsDataAccess).toHaveBeenCalledTimes(1)
+      expect(metricsDataAccess).toHaveBeenCalledWith({
         collections: [
           { collectionId: 'TEST_ID' }
         ],
@@ -173,7 +177,7 @@ describe('GranuleResultsDataLinksButton component', () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
         ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
-        const { props, user } = setup({
+        const { user } = setup({
           overrideProps: {
             dataLinks: [
               {
@@ -195,8 +199,8 @@ describe('GranuleResultsDataLinksButton component', () => {
         const link = screen.getByRole('link', { name: 'linkhref' })
         await user.click(link)
 
-        expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
+        expect(metricsDataAccess).toHaveBeenCalledTimes(1)
+        expect(metricsDataAccess).toHaveBeenCalledWith({
           collections: [{
             collectionId: 'TEST_ID'
           }],
@@ -249,7 +253,7 @@ describe('GranuleResultsDataLinksButton component', () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
         ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
-        const { props, user } = setup({
+        const { user } = setup({
           overrideProps: {
             dataLinks: [],
             directDistributionInformation: {
@@ -275,8 +279,8 @@ describe('GranuleResultsDataLinksButton component', () => {
         const link = screen.getAllByRole('button', { name: 'Copy AWS S3 path to clipboard' }).at(0)
         await user.click(link)
 
-        expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
+        expect(metricsDataAccess).toHaveBeenCalledTimes(1)
+        expect(metricsDataAccess).toHaveBeenCalledWith({
           collections: [{
             collectionId: 'TEST_ID'
           }],

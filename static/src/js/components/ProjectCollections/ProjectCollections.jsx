@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { PropTypes } from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { isProjectValid } from '../../util/isProjectValid'
+import { metricsDataAccess } from '../../util/metrics/metricsDataAccess'
 
 import Button from '../Button/Button'
 import ProjectHeader from './ProjectHeader'
@@ -16,11 +16,8 @@ import './ProjectCollections.scss'
 
 /**
  * Renders ProjectCollections.
- * @param {Function} onMetricsDataAccess - Callback to log metrics events.
  */
-const ProjectCollections = ({
-  onMetricsDataAccess
-}) => {
+const ProjectCollections = () => {
   const {
     panels: panelsData,
     setActivePanel,
@@ -42,7 +39,7 @@ const ProjectCollections = ({
 
   useEffect(() => {
     projectCollectionsIds.forEach((id) => {
-      onMetricsDataAccess({
+      metricsDataAccess({
         type: 'data_access_init',
         collections: [{
           collectionId: id
@@ -75,7 +72,6 @@ const ProjectCollections = ({
       <ProjectHeader />
       <ProjectCollectionsList
         collectionsMetadata={projectCollectionsMetadata}
-        onMetricsDataAccess={onMetricsDataAccess}
         onSetActivePanel={setActivePanel}
         onSetActivePanelSection={setPanelSection}
         onTogglePanels={togglePanels}
@@ -130,10 +126,6 @@ const ProjectCollections = ({
       </div>
     </section>
   )
-}
-
-ProjectCollections.propTypes = {
-  onMetricsDataAccess: PropTypes.func.isRequired
 }
 
 export default ProjectCollections

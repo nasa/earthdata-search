@@ -2,8 +2,6 @@ import React from 'react'
 
 import actions from '../../../actions'
 
-import * as metricsActions from '../../../middleware/metrics/actions'
-
 import {
   mapDispatchToProps,
   GranuleResultsActionsContainer
@@ -19,8 +17,7 @@ jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest
 const setup = setupTest({
   Component: GranuleResultsActionsContainer,
   defaultProps: {
-    onChangePath: jest.fn(),
-    onMetricsAddCollectionProject: jest.fn()
+    onChangePath: jest.fn()
   },
   defaultZustandState: {
     collection: {
@@ -70,16 +67,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('path')
   })
-
-  test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
-
-    mapDispatchToProps(dispatch).onMetricsAddCollectionProject({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('GranuleResultsActionsContainer component', () => {
@@ -109,7 +96,6 @@ describe('GranuleResultsActionsContainer component', () => {
       initialLoading: false,
       isCollectionInProject: true,
       onChangePath: expect.any(Function),
-      onMetricsAddCollectionProject: expect.any(Function),
       projectCollectionIds: ['collectionId'],
       projectGranuleCount: 100,
       removedGranuleIds: [],

@@ -22,7 +22,6 @@ const TemporalSelectionDropdownMenu = ({
   isHomePage,
   onApplyClick,
   onClearClick,
-  onChangeQuery,
   onChangeRecurring,
   onInvalid,
   onRecurringToggle,
@@ -112,7 +111,6 @@ const TemporalSelectionDropdownMenu = ({
         filterType="collection"
         onRecurringToggle={onRecurringToggle}
         onChangeRecurring={onChangeRecurring}
-        onChangeQuery={onChangeQuery}
         onSubmitStart={setStartDate}
         onSubmitEnd={setEndDate}
         onSliderChange={onSliderChange}
@@ -132,7 +130,6 @@ TemporalSelectionDropdownMenu.propTypes = {
   displayStartDate: PropTypes.string,
   filterType: PropTypes.string,
   onApplyClick: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
   onChangeRecurring: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onInvalid: PropTypes.func.isRequired,

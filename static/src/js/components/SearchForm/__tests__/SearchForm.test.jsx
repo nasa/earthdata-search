@@ -5,7 +5,7 @@ import SearchForm from '../SearchForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => (
+jest.mock('../../TemporalDisplay/TemporalSelectionDropdown', () => jest.fn(() => (
   <div>Temporal Selection</div>
 )))
 

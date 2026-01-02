@@ -16,6 +16,7 @@ import { eventEmitter } from '../../events/events'
 
 // @ts-expect-error: This file does not have types
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { metricsSpatialSelection } from '../../util/metrics/metricsSpatialSelection'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -36,15 +37,13 @@ type SpatialSelectionDropdownProps = {
   }
   onChangeUrl: (url: string) => void
   onChangePath: (path: string) => void
-  onMetricsSpatialSelection: (data: { item: string }) => void
 }
 
 const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
   const {
     searchParams,
     onChangeUrl,
-    onChangePath,
-    onMetricsSpatialSelection
+    onChangePath
   } = props
 
   const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
@@ -56,9 +55,7 @@ const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
 
   const onItemClick = (spatialType: string) => {
     // Sends metrics for spatial selection usage
-    onMetricsSpatialSelection({
-      item: spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase()
-    })
+    metricsSpatialSelection(spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase())
 
     // If the user is on the home page, redirect to the search page with the spatial type as a query parameter
     if (isHomePage) {

@@ -3,15 +3,15 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import CollectionResultsTableHeaderCell from '../CollectionResultsTableHeaderCell'
+import { metricsAddCollectionToProject } from '../../../util/metrics/metricsAddCollectionToProject'
+
+jest.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
+  metricsAddCollectionToProject: jest.fn()
+}))
 
 const setup = setupTest({
   Component: CollectionResultsTableHeaderCell,
   defaultProps: {
-    column: {
-      customProps: {
-        onMetricsAddCollectionProject: jest.fn()
-      }
-    },
     cell: {
       value: 'test value'
     },
@@ -60,8 +60,8 @@ describe('CollectionResultsTableHeaderCell component', () => {
     expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledWith('collectionId')
   })
 
-  test('clicking the add to project button calls addProjectCollection and onMetricsAddCollectionProject', async () => {
-    const { props, user, zustandState } = setup()
+  test('clicking the add to project button calls addProjectCollection and metricsAddCollectionToProject', async () => {
+    const { user, zustandState } = setup()
 
     const addButton = screen.getByRole('button', { name: 'Add collection to the current project' })
     await user.click(addButton)
@@ -69,8 +69,8 @@ describe('CollectionResultsTableHeaderCell component', () => {
     expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(1)
     expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
-    expect(props.column.customProps.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
-    expect(props.column.customProps.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+    expect(metricsAddCollectionToProject).toHaveBeenCalledTimes(1)
+    expect(metricsAddCollectionToProject).toHaveBeenCalledWith({
       collectionConceptId: 'collectionId',
       page: 'collections',
       view: 'table'

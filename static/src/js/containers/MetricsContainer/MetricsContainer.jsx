@@ -1,27 +1,19 @@
 import { useEffect } from 'react'
-import { connect } from 'react-redux'
 import { useLocation, useNavigationType } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
-import { virtualPageview } from '../../middleware/metrics/events'
-
-import { metricsClick } from '../../middleware/metrics/actions'
-
-export const mapDispatchToProps = (dispatch) => ({
-  onMetricsClick: (data) => dispatch(metricsClick(data))
-})
+import { metricsDefaultClick } from '../../util/metrics/metricsDefaultClick'
+import { metricsVirtualPageview } from '../../util/metrics/metricsVirtualPageview'
 
 /**
  * This component handles metrics tracking for user interactions. It handles click events and
  * virtual pageviews.
- * @param {Function} params.onMetricsClick Function to handle metrics click events
  */
-export const MetricsContainer = ({ onMetricsClick }) => {
+const MetricsContainer = () => {
   const location = useLocation()
   const navigationType = useNavigationType()
 
   // Handle click events
-  const handleMetricsClick = (event) => {
+  const handleDefaultClick = (event) => {
     const { target } = event
 
     const clickableParent = target.closest('a, button')
@@ -30,31 +22,25 @@ export const MetricsContainer = ({ onMetricsClick }) => {
 
     const title = target.title || target.text || target.name || target.textContent
 
-    onMetricsClick({
-      elementLabel: title
-    })
+    metricsDefaultClick(title)
   }
 
   // Set up click event listener
   useEffect(() => {
-    document.body.addEventListener('click', handleMetricsClick)
+    document.body.addEventListener('click', handleDefaultClick)
 
     return () => {
-      document.body.removeEventListener('click', handleMetricsClick)
+      document.body.removeEventListener('click', handleDefaultClick)
     }
   }, [])
 
   // Handle virtual pageviews when the location changes. This uses navigationType to determine
   // if the pageview was a `push` type.
   useEffect(() => {
-    virtualPageview(navigationType)
+    metricsVirtualPageview(navigationType)
   }, [location, navigationType])
 
   return null
 }
 
-MetricsContainer.propTypes = {
-  onMetricsClick: PropTypes.func.isRequired
-}
-
-export default connect(null, mapDispatchToProps)(MetricsContainer)
+export default MetricsContainer

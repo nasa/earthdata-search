@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
 import { useLocation } from 'react-router-dom'
-
-// @ts-expect-error The file does not have types
-import { metricsTimeline } from '../../middleware/metrics/actions'
 
 import { isPath } from '../../util/isPath'
 
@@ -18,17 +13,7 @@ import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import { routes } from '../../constants/routes'
 
-export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onMetricsTimeline:
-    (type: string) => dispatch(metricsTimeline(type))
-})
-
-interface TimelineContainerProps {
-  /** Function to handle metrics timeline */
-  onMetricsTimeline: (type: string) => void
-}
-
-export const TimelineContainer: React.FC<TimelineContainerProps> = ({ onMetricsTimeline }) => {
+const TimelineContainer = () => {
   const location = useLocation()
   const {
     pathname = ''
@@ -67,7 +52,6 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = ({ onMetricsT
     <Timeline
       collectionMetadata={collectionMetadata}
       isOpen={isOpen}
-      onMetricsTimeline={onMetricsTimeline}
       onToggleTimeline={setIsOpen}
       pathname={pathname}
       projectCollectionsIds={projectCollectionsIds}
@@ -76,4 +60,4 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = ({ onMetricsT
   )
 }
 
-export default connect(null, mapDispatchToProps)(TimelineContainer)
+export default TimelineContainer

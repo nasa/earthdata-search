@@ -311,8 +311,6 @@ interface MapProps {
   onExcludeGranule: (data: { collectionId: string, granuleId: string }) => void
   /** Function to call when the map is ready */
   onMapReady: (isReady: boolean) => void
-  /** Function to call when a map metric is triggered */
-  onMetricsMap: (type: string) => void
   /** Function to call when a new drawing layer is toggled */
   onToggleDrawingNewLayer: (state: string | boolean) => void
   /** Function to call when the shapefile upload modal is toggled */
@@ -360,7 +358,6 @@ interface MapProps {
  * @param {Function} params.onClearShapefile Function to call when the shapefile is cleared
  * @param {Function} params.onExcludeGranule Function to call when a granule is excluded
  * @param {Function} params.onMapReady Function to call when the map is ready
- * @param {Function} params.onMetricsMap Function to call when a map metric is triggered
  * @param {Function} params.onToggleDrawingNewLayer Function to call when a new drawing layer is toggled
  * @param {Function} params.onToggleShapefileUploadModal Function to call when the shapefile upload modal is toggled
  * @param {Function} params.onToggleTooManyPointsModal Function to call when the too many points modal is toggled
@@ -390,7 +387,6 @@ const Map: React.FC<MapProps> = ({
   onDrawEnd,
   onExcludeGranule,
   onMapReady,
-  onMetricsMap,
   onToggleDrawingNewLayer,
   onToggleShapefileUploadModal,
   onToggleTooManyPointsModal,
@@ -652,7 +648,6 @@ const Map: React.FC<MapProps> = ({
         drawingNewLayer,
         onChangeProjection,
         onChangeQuery,
-        onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
@@ -854,7 +849,6 @@ const Map: React.FC<MapProps> = ({
       isProjectPage,
       map,
       onExcludeGranule,
-      onMetricsMap,
       setGranuleId,
       timesIconSvg
     })
@@ -1055,7 +1049,6 @@ const Map: React.FC<MapProps> = ({
         selectedFeatures,
         onChangeQuery,
         onChangeProjection,
-        onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,

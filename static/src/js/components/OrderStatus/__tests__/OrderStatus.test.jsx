@@ -37,7 +37,6 @@ const setup = setupTest({
     }
   }],
   defaultProps: {
-    onMetricsRelatedCollection: jest.fn(),
     onChangePath: jest.fn()
   },
   defaultZustandState: {
