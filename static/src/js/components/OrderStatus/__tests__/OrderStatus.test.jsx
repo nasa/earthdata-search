@@ -12,6 +12,7 @@ import Skeleton from '../../Skeleton/Skeleton'
 import OrderStatusList from '../OrderStatusList'
 
 import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
+import { changePath } from '../../../util/url/changePath'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'), // Preserve other exports
@@ -22,6 +23,10 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../OrderStatusList', () => jest.fn(() => <div />))
 jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
+jest.mock('../../../util/url/changePath', () => ({
+  changePath: jest.fn()
+}))
 
 const setup = setupTest({
   Component: OrderStatus,
@@ -37,8 +42,7 @@ const setup = setupTest({
     }
   }],
   defaultProps: {
-    onMetricsRelatedCollection: jest.fn(),
-    onChangePath: jest.fn()
+    onMetricsRelatedCollection: jest.fn()
   },
   defaultZustandState: {
     user: {
@@ -290,24 +294,24 @@ describe('OrderStatus component', () => {
   })
 
   describe('footer links', () => {
-    test('calls onChangePath when the Back to Earthdata Search Results link is clicked', async () => {
-      const { props, user } = setup()
+    test('calls changePath when the Back to Earthdata Search Results link is clicked', async () => {
+      const { user } = setup()
 
       const backToSearchLink = screen.getByRole('link', { name: 'Back to Earthdata Search Results' })
       await user.click(backToSearchLink)
 
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/search?test=source_link')
+      expect(changePath).toHaveBeenCalledTimes(1)
+      expect(changePath).toHaveBeenCalledWith('/search?test=source_link')
     })
 
-    test('calls onChangePath when the Start a New Earthdata Search Session link is clicked', async () => {
-      const { props, user } = setup()
+    test('calls changePath when the Start a New Earthdata Search Session link is clicked', async () => {
+      const { user } = setup()
 
       const backToSearchLink = screen.getByRole('link', { name: 'Start a New Earthdata Search Session' })
       await user.click(backToSearchLink)
 
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/search')
+      expect(changePath).toHaveBeenCalledTimes(1)
+      expect(changePath).toHaveBeenCalledWith('/search')
     })
   })
 })

@@ -11,7 +11,7 @@ import ProjectCollectionsContainer
   // @ts-expect-error This file does not have types
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
 // @ts-expect-error This file does not have types
-import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
+import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 import OverrideTemporalModal from '../../components/OverrideTemporalModal/OverrideTemporalModal'
 
 import Spinner from '../../components/Spinner/Spinner'
@@ -64,7 +64,7 @@ const Project = () => {
         name="project form"
         className="route-wrapper route-wrapper--dark"
       >
-        <SidebarContainer panels={<ProjectPanelsContainer />}>
+        <SidebarContainer panels={<ProjectPanels />}>
           <ProjectCollectionsContainer />
         </SidebarContainer>
         <OverrideTemporalModal />

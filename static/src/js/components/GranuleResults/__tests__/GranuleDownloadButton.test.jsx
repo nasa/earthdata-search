@@ -5,6 +5,11 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleDownloadButton from '../GranuleDownloadButton'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import { changePath } from '../../../util/url/changePath'
+
+jest.mock('../../../util/url/changePath', () => ({
+  changePath: jest.fn()
+}))
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -28,8 +33,7 @@ const setup = setupTest({
     initialLoading: false,
     isCollectionInProject: false,
     projectCollection: {},
-    tooManyGranules: false,
-    onChangePath: jest.fn()
+    tooManyGranules: false
   },
   defaultZustandState: {
     project: {
@@ -61,13 +65,13 @@ describe('GranuleDownloadButton component', () => {
   })
 
   describe('when the collection is already in the project', () => {
-    test('clicking the button calls addProjectCollection and onChangePath', async () => {
+    test('clicking the button calls addProjectCollection and changePath', async () => {
       useLocation.mockReturnValueOnce({
         pathname: '/search/granules',
         search: '?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery'
       })
 
-      const { props, user, zustandState } = setup({
+      const { user, zustandState } = setup({
         overrideProps: {
           isCollectionInProject: true
         }
@@ -79,8 +83,8 @@ describe('GranuleDownloadButton component', () => {
       expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(1)
       expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery')
+      expect(changePath).toHaveBeenCalledTimes(1)
+      expect(changePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery')
     })
   })
 
@@ -112,8 +116,8 @@ describe('GranuleDownloadButton component', () => {
         })
       })
 
-      test('clicking the button calls addProjectCollection and onChangePath', async () => {
-        const { props, user, zustandState } = setup()
+      test('clicking the button calls addProjectCollection and changePath', async () => {
+        const { user, zustandState } = setup()
 
         const button = screen.getByRole('button', { name: 'Download All' })
         await user.click(button)
@@ -121,8 +125,8 @@ describe('GranuleDownloadButton component', () => {
         expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(1)
         expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
-        expect(props.onChangePath).toHaveBeenCalledTimes(1)
-        expect(props.onChangePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&ff=Map%20Imagery&pg[1][v]=t')
+        expect(changePath).toHaveBeenCalledTimes(1)
+        expect(changePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&ff=Map%20Imagery&pg[1][v]=t')
       })
     })
 
@@ -158,13 +162,13 @@ describe('GranuleDownloadButton component', () => {
         })
       })
 
-      test('clicking the button calls addProjectCollection and onChangePath', async () => {
+      test('clicking the button calls addProjectCollection and changePath', async () => {
         useLocation.mockReturnValueOnce({
           pathname: '/search/granules',
           search: '?p=collectionId&pg[0][gsk]=start_date&ff=Map%20Imagery'
         })
 
-        const { props, user, zustandState } = setup()
+        const { user, zustandState } = setup()
 
         const button = screen.getByRole('button', { name: 'Download All' })
         await user.click(button)
@@ -172,8 +176,8 @@ describe('GranuleDownloadButton component', () => {
         expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(1)
         expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
-        expect(props.onChangePath).toHaveBeenCalledTimes(1)
-        expect(props.onChangePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&pg[1][gsk]=start_date&pg[1][v]=t&ff=Map%20Imagery')
+        expect(changePath).toHaveBeenCalledTimes(1)
+        expect(changePath).toHaveBeenCalledWith('/project?p=collectionId!collectionId&pg[1][gsk]=start_date&pg[1][v]=t&ff=Map%20Imagery')
       })
     })
   })

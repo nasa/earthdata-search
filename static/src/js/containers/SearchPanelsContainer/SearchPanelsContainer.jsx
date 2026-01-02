@@ -4,13 +4,10 @@ import PropTypes from 'prop-types'
 import { Route, Routes } from 'react-router-dom'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
-import actions from '../../actions/index'
 
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onChangePath:
-    (path) => dispatch(actions.changePath(path)),
   onMetricsCollectionSortChange:
     (data) => dispatch(metricsCollectionSortChange(data))
 })
@@ -23,7 +20,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.match - Router match state
  */
 export const SearchPanelsContainer = ({
-  onChangePath,
   onMetricsCollectionSortChange
 }) => (
   <Routes>
@@ -32,7 +28,6 @@ export const SearchPanelsContainer = ({
       element={
         (
           <SearchPanels
-            onChangePath={onChangePath}
             onMetricsCollectionSortChange={onMetricsCollectionSortChange}
           />
         )
@@ -43,7 +38,6 @@ export const SearchPanelsContainer = ({
 )
 
 SearchPanelsContainer.propTypes = {
-  onChangePath: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired
 }
 

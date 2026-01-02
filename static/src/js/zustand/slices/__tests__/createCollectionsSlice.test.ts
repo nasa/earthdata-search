@@ -10,14 +10,6 @@ import addShapefile from '../../../util/addShapefile'
 
 jest.mock('../../../util/addShapefile', () => jest.fn())
 
-jest.mock('../../../actions', () => ({
-  handleError: jest.fn(),
-  onFacetsErrored: jest.fn(),
-  onFacetsLoaded: jest.fn(),
-  onFacetsLoading: jest.fn(),
-  updateFacets: jest.fn()
-}))
-
 describe('createCollectionsSlice', () => {
   test('sets the default state', () => {
     const zustandState = useEdscStore.getState()

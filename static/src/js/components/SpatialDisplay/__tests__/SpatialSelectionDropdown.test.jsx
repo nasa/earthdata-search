@@ -34,11 +34,7 @@ useLocation.mockReturnValue({
 const setup = setupTest({
   Component: SpatialSelectionDropdown,
   defaultProps: {
-    searchParams: {},
-    onChangePath: jest.fn(),
-    onChangeUrl: jest.fn(),
-    onMetricsSpatialSelection: jest.fn(),
-    location: '/search'
+    onMetricsSpatialSelection: jest.fn()
   },
   defaultZustandState: {
     ui: {

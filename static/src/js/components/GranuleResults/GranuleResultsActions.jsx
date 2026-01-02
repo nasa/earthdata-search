@@ -40,7 +40,6 @@ import './GranuleResultsActions.scss'
  * @param {Boolean} props.initialLoading - Flag designating the initial loading state.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
- * @param {Function} props.onChangePath - Callback to change the path.
  */
 const GranuleResultsActions = ({
   addedGranuleIds,
@@ -51,7 +50,6 @@ const GranuleResultsActions = ({
   initialLoading,
   isCollectionInProject,
   onMetricsAddCollectionProject,
-  onChangePath,
   projectGranuleCount = 0,
   removedGranuleIds,
   searchGranuleCount = 0
@@ -145,7 +143,6 @@ const GranuleResultsActions = ({
       granuleLimit={granuleLimit}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
-      onChangePath={onChangePath}
       projectCollection={focusedProjectCollection}
       tooManyGranules={tooManyGranules}
     />
@@ -246,7 +243,6 @@ GranuleResultsActions.propTypes = {
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,

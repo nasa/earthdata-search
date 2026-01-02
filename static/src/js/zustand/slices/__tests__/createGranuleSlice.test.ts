@@ -6,17 +6,14 @@ import useEdscStore from '../../useEdscStore'
 import configureStore from '../../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import actions from '../../../actions'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 import routerHelper from '../../../router/router'
+import { changeUrl } from '../../../util/url/changeUrl'
 
-jest.mock('../../../actions', () => ({
-  changeUrl: jest.fn(),
-  handleError: jest.fn()
+jest.mock('../../../util/url/changeUrl', () => ({
+  changeUrl: jest.fn()
 }))
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -113,7 +110,7 @@ describe('createGranuleSlice', () => {
 
         await getGranuleMetadata()
 
-        expect(actions.changeUrl).toHaveBeenCalledTimes(0)
+        expect(changeUrl).toHaveBeenCalledTimes(0)
         expect(errors.handleError).toHaveBeenCalledTimes(0)
       })
     })
@@ -187,7 +184,7 @@ describe('createGranuleSlice', () => {
             }
           })
 
-          expect(actions.changeUrl).toHaveBeenCalledTimes(0)
+          expect(changeUrl).toHaveBeenCalledTimes(0)
           expect(errors.handleError).toHaveBeenCalledTimes(0)
         })
 
@@ -208,7 +205,7 @@ describe('createGranuleSlice', () => {
 
             await getGranuleMetadata()
 
-            expect(actions.changeUrl).toHaveBeenCalledTimes(0)
+            expect(changeUrl).toHaveBeenCalledTimes(0)
             expect(errors.handleError).toHaveBeenCalledTimes(0)
           })
         })
@@ -249,8 +246,8 @@ describe('createGranuleSlice', () => {
 
           expect(errors.handleError).toHaveBeenCalledTimes(0)
 
-          expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-          expect(actions.changeUrl).toHaveBeenCalledWith({
+          expect(changeUrl).toHaveBeenCalledTimes(1)
+          expect(changeUrl).toHaveBeenCalledWith({
             pathname: '/search',
             search: '?some=testparams'
           })
@@ -280,7 +277,7 @@ describe('createGranuleSlice', () => {
         const { granule: updatedGranule, errors } = useEdscStore.getState()
         expect(updatedGranule.granuleId).toEqual(null)
 
-        expect(actions.changeUrl).toHaveBeenCalledTimes(0)
+        expect(changeUrl).toHaveBeenCalledTimes(0)
 
         expect(errors.handleError).toHaveBeenCalledTimes(1)
         expect(errors.handleError).toHaveBeenCalledWith(expect.objectContaining({

@@ -7,6 +7,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
+import { changePath } from '../../util/url/changePath'
 import { commafy } from '../../util/commafy'
 import { stringify } from '../../util/url/url'
 import renderTooltip from '../../util/renderTooltip'
@@ -28,7 +29,6 @@ export const GranuleDownloadButton = ({
   granuleLimit = undefined,
   initialLoading,
   isCollectionInProject,
-  onChangePath,
   tooManyGranules
 }) => {
   const location = useLocation()
@@ -146,7 +146,7 @@ export const GranuleDownloadButton = ({
       onClick={
         () => {
           addProjectCollection(focusedCollectionId)
-          onChangePath(`${routes.PROJECT}${stringifiedProjectParams}`)
+          changePath(`${routes.PROJECT}${stringifiedProjectParams}`)
         }
       }
       to={
@@ -172,7 +172,6 @@ GranuleDownloadButton.propTypes = {
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,
   tooManyGranules: PropTypes.bool.isRequired
 }

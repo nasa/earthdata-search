@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import actions from '../../actions'
-
 import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
 
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
@@ -25,14 +23,11 @@ import {
 } from '../../zustand/selectors/query'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onChangePath:
-    (path) => dispatch(actions.changePath(path)),
   onMetricsAddCollectionProject:
     (data) => dispatch(metricsAddCollectionProject(data))
 })
 
 export const GranuleResultsActionsContainer = ({
-  onChangePath,
   onMetricsAddCollectionProject
 }) => {
   const { mapView } = useEdscStore((state) => ({
@@ -86,7 +81,6 @@ export const GranuleResultsActionsContainer = ({
       handoffLinks={handoffLinks}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
-      onChangePath={onChangePath}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       projectCollectionIds={projectCollectionIds}
       projectGranuleCount={projectGranuleCount}
@@ -97,7 +91,6 @@ export const GranuleResultsActionsContainer = ({
 }
 
 GranuleResultsActionsContainer.propTypes = {
-  onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired
 }
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link, useNavigate } from 'react-router-dom'
 import { parse, stringify } from 'qs'
@@ -7,22 +6,16 @@ import { isObject } from 'lodash-es'
 
 import Button from '../../components/Button/Button'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import actions from '../../actions'
 import { isDefaultPortal } from '../../util/portals'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { changePath } from '../../util/url/changePath'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onChangePath:
-    (path) => dispatch(actions.changePath(path))
-})
-
-export const PortalLinkContainer = ({
+const PortalLinkContainer = ({
   children = null,
   className = '',
   dataTestId = null,
   newPortal = null,
-  onChangePath,
   onClick = null,
   target = '',
   to = '',
@@ -96,7 +89,7 @@ export const PortalLinkContainer = ({
         search: newSearch
       } = newTo
 
-      onChangePath(`${pathname}${newSearch}`)
+      changePath(`${pathname}${newSearch}`)
     }
   }
 
@@ -108,7 +101,6 @@ export const PortalLinkContainer = ({
         className={className}
         dataTestId={dataTestId}
         newPortal={newPortal}
-        onChangePath={onChangePath}
         target={target}
         to={to}
         updatePath={updatePath}
@@ -154,8 +146,7 @@ PortalLinkContainer.propTypes = {
     PropTypes.shape({})
   ]),
   type: PropTypes.string,
-  updatePath: PropTypes.bool,
-  onChangePath: PropTypes.func.isRequired
+  updatePath: PropTypes.bool
 }
 
-export default connect(null, mapDispatchToProps)(PortalLinkContainer)
+export default PortalLinkContainer

@@ -1,6 +1,6 @@
 export type Router = {
   /** Function to navigate to a new path */
-  navigate: (path: string, options: Record<string, unknown>) => void
+  navigate: (path: string | Record<string, unknown>, options: Record<string, unknown>) => void
   /** Current state of the router */
   state: {
     /** Current page location */
