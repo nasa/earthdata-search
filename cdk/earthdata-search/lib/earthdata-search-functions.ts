@@ -307,7 +307,7 @@ export class Functions extends Construct {
           hour: '12',
           minute: '0',
           month: '*',
-          weekDay: 'MON',
+          weekDay: 'MON-FRI',
           year: '*'
         })
       }, {
