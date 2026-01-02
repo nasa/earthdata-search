@@ -130,8 +130,11 @@ test.describe('Temporal Dropdown Behavior', () => {
         // Check that the end date was defaulted to current day
         await expect(page.getByText(mockCurrentDate)).toBeVisible()
 
+        const currentYear = moment().utc().year()
+        const mockYearRange = `1960 - ${currentYear}`
+
         // Check that range was applied
-        await expect(page.getByText('1960 - 2025')).toBeVisible()
+        await expect(page.getByText(mockYearRange)).toBeVisible()
       })
 
       test('applies values for start and end when they have been selected', async ({ page }) => {

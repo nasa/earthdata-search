@@ -16,9 +16,10 @@ import SearchPanels from '../SearchPanels'
 import CollectionResultsBodyContainer from '../../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import GranuleResultsBodyContainer from '../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
 import CollectionDetailsBodyContainer from '../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
-import SubscriptionsBodyContainer from '../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
+import SubscriptionsBody from '../../Subscriptions/SubscriptionsBody'
 import GranuleResultsFocusedMetaContainer from '../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 import GranuleDetailsBody from '../../GranuleDetails/GranuleDetailsBody'
+
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
 jest.mock('tiny-cookie', () => ({
@@ -29,7 +30,7 @@ jest.mock('../../../containers/CollectionResultsBodyContainer/CollectionResultsB
 jest.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../GranuleDetails/GranuleDetailsBody', () => jest.fn(() => <div />))
-jest.mock('../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../Subscriptions/SubscriptionsBody', () => jest.fn(() => <div />))
 jest.mock('../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer', () => jest.fn(() => <div />))
 
 jest.mock('../../../../../../sharedUtils/config', () => ({
@@ -163,7 +164,7 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenCalledTimes(0)
+      expect(SubscriptionsBody).toHaveBeenCalledTimes(0)
     })
 
     describe('when changing the collection sort', () => {
@@ -498,7 +499,7 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenCalledTimes(0)
+      expect(SubscriptionsBody).toHaveBeenCalledTimes(0)
     })
 
     describe('when changing the granule sort', () => {
@@ -945,7 +946,7 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenCalledTimes(0)
+      expect(SubscriptionsBody).toHaveBeenCalledTimes(0)
     })
 
     describe('when clicking the Search Results breadcrumb', () => {
@@ -1043,7 +1044,7 @@ describe('SearchPanels component', () => {
         isActive: true
       }), {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenCalledTimes(0)
+      expect(SubscriptionsBody).toHaveBeenCalledTimes(0)
     })
 
     describe('when clicking the Search Results breadcrumb', () => {
@@ -1063,7 +1064,7 @@ describe('SearchPanels component', () => {
   })
 
   describe('when on the /search/granules/subscriptions route', () => {
-    test('renders the SubscriptionsBodyContainer', () => {
+    test('renders the SubscriptionsBody', () => {
       jest.spyOn(tinyCookie, 'get').mockReturnValue('mock-token')
 
       setup({
@@ -1132,12 +1133,13 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(SubscriptionsBodyContainer).toHaveBeenNthCalledWith(1, {
+      expect(SubscriptionsBody).toHaveBeenCalledTimes(2)
+      expect(SubscriptionsBody).toHaveBeenNthCalledWith(1, {
         subscriptionType: 'granule'
       }, {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenNthCalledWith(2, {
+      expect(SubscriptionsBody).toHaveBeenNthCalledWith(2, {
+        setSubscriptionCount: expect.any(Function),
         subscriptionType: 'collection'
       }, {})
     })
@@ -1159,7 +1161,7 @@ describe('SearchPanels component', () => {
   })
 
   describe('when on the /search/subscriptions route', () => {
-    test('renders the SubscriptionsBodyContainer', () => {
+    test('renders the SubscriptionsBody', () => {
       jest.spyOn(tinyCookie, 'get').mockReturnValue('mock-token')
 
       setup({
@@ -1228,12 +1230,13 @@ describe('SearchPanels component', () => {
         isActive: false
       }), {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenCalledTimes(2)
-      expect(SubscriptionsBodyContainer).toHaveBeenNthCalledWith(1, {
+      expect(SubscriptionsBody).toHaveBeenCalledTimes(2)
+      expect(SubscriptionsBody).toHaveBeenNthCalledWith(1, {
         subscriptionType: 'granule'
       }, {})
 
-      expect(SubscriptionsBodyContainer).toHaveBeenNthCalledWith(2, {
+      expect(SubscriptionsBody).toHaveBeenNthCalledWith(2, {
+        setSubscriptionCount: expect.any(Function),
         subscriptionType: 'collection'
       }, {})
     })

@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEmpty, isEqual } from 'lodash-es'
 import { Plus, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import Form from 'react-bootstrap/Form'
 import snakecaseKeys from 'snakecase-keys'
+import { useMutation, useQuery } from '@apollo/client'
 
+import { apolloClientNames } from '../../constants/apolloClientNames'
 import {
   collectionRequestNonIndexedCmrKeys,
   granuleRequestNonIndexedCmrKeys
 } from '../../../../../sharedConstants/nonIndexedCmrKeys'
+import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationType'
 import { routes } from '../../constants/routes'
 
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
@@ -25,36 +28,82 @@ import EmptyListItem from '../EmptyListItem/EmptyListItem'
 import SubscriptionsQueryList from '../SubscriptionsList/SubscriptionsQueryList'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionId } from '../../zustand/selectors/collection'
+import { getUsername } from '../../zustand/selectors/user'
+import {
+  getCollectionSubscriptionQueryObj,
+  getCollectionSubscriptionQueryString,
+  getGranuleSubscriptionQueryObj,
+  getGranuleSubscriptionQueryString
+} from '../../zustand/selectors/query'
+
+import SUBSCRIPTIONS from '../../operations/queries/subscriptions'
+import CREATE_SUBSCRIPTION from '../../operations/mutations/createSubscription'
+
+import addToast from '../../util/addToast'
+
 import './SubscriptionsBody.scss'
 
 /**
  * Renders SubscriptionsBody.
- * @param {Node} queryString - String representing the current query string.
- * @param {String} onCreateSubscription - Callback to create a subscription.
- * @param {String} onDeleteSubscription - Callback to delete a subscription.
- * @param {String} onUpdateSubscription - Callback to update a subscription.
- * @param {Array} subscriptions - An array of subscriptions.
+ * @param {Function} setSubscriptionCount - Optional setter to set the subscription count in the parent component.
  * @param {String} subscriptionType - The type of subscriptions to display, collection or granule.
  */
 export const SubscriptionsBody = ({
-  disabledFields,
-  query,
-  subscriptions,
-  subscriptionType,
-  onCreateSubscription,
-  onDeleteSubscription,
-  onUpdateSubscription,
-  onUpdateSubscriptionDisabledFields
+  setSubscriptionCount = null,
+  subscriptionType
 }) => {
+  const [disabledFields, setDisabledFields] = useState({})
   const [submittingNewSubscription, setSubmittingNewSubscription] = useState(false)
-  const [name, setName] = useState()
+  const [name, setName] = useState('')
 
-  const onChangeName = (event) => {
-    const { target } = event
-    const { value = '' } = target
+  const collectionId = useEdscStore(getCollectionId)
+  const collectionQueryObj = useEdscStore(getCollectionSubscriptionQueryObj)
+  const granuleQueryObj = useEdscStore(getGranuleSubscriptionQueryObj)
+  const collectionQueryString = useEdscStore(
+    () => getCollectionSubscriptionQueryString(disabledFields)
+  )
+  const granuleQueryString = useEdscStore(
+    (state) => getGranuleSubscriptionQueryString(state, disabledFields)
+  )
+  const handleError = useEdscStore((state) => state.errors.handleError)
+  const username = useEdscStore(getUsername)
 
-    setName(value)
-  }
+  const query = subscriptionType === 'collection' ? collectionQueryObj : granuleQueryObj
+  const queryString = subscriptionType === 'collection' ? collectionQueryString : granuleQueryString
+
+  // Reset disabled fields when the query changes
+  useEffect(() => {
+    setDisabledFields({})
+  }, [query])
+
+  const [createSubscription] = useMutation(CREATE_SUBSCRIPTION, {
+    context: {
+      clientName: apolloClientNames.CMR_GRAPHQL
+    },
+    onCompleted: () => {
+      setSubmittingNewSubscription(false)
+
+      addToast('Subscription created', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    },
+    onError: (error) => {
+      setSubmittingNewSubscription(false)
+
+      handleError({
+        error,
+        action: 'createSubscription',
+        resource: 'subscription',
+        notificationType: DISPLAY_NOTIFICATION_TYPE.TOAST,
+        showAlertButton: true,
+        title: 'Something went wrong creating your subscription'
+      })
+    },
+    refetchQueries: [SUBSCRIPTIONS]
+  })
 
   const parsedQueryWithRemovedFields = removeDisabledFieldsFromQuery(query, disabledFields)
 
@@ -63,9 +112,80 @@ export const SubscriptionsBody = ({
     subscriptionType
   )
 
+  const handleCreateSubscription = () => {
+    // If the user hasn't provided a name, use the default name from the placeholder
+    let subscriptionName = name
+
+    if (!subscriptionName) {
+      subscriptionName = placeholderName
+    }
+
+    const variables = {
+      params: {
+        subscriberId: username,
+        name: subscriptionName,
+        type: subscriptionType,
+        query: queryString
+      }
+    }
+
+    if (subscriptionType === 'granule') {
+      variables.params.collectionConceptId = collectionId
+    }
+
+    createSubscription({
+      variables
+    })
+  }
+
+  // The variables for the subscriptions query
+  // `collectionConceptId` is required for granule subscriptions but not for collection subscriptions
+  const variables = {
+    params: {
+      subscriberId: username,
+      type: subscriptionType
+    }
+  }
+
+  // If this component is being rendered for granule subscriptions, we're going to skip the query
+  // unless we have a valid collectionId to query against
+  let skip = false
+  if (subscriptionType === 'granule') {
+    if (collectionId) {
+      // If we have a collectionId, add it to the query variables
+      variables.params.collectionConceptId = collectionId
+    } else {
+      skip = true
+    }
+  }
+
+  // Fetch the user's subscriptions
+  const { data } = useQuery(SUBSCRIPTIONS, {
+    skip,
+    variables,
+    context: {
+      clientName: apolloClientNames.CMR_GRAPHQL
+    }
+  })
+
+  const { subscriptions } = data || {}
+  const { items: subscriptionItems = [] } = subscriptions || {}
+
+  // Set the subscription count in the parent component if the setter is provided
+  useEffect(() => {
+    if (setSubscriptionCount) setSubscriptionCount(subscriptionItems.length)
+  }, [subscriptionItems.length])
+
+  const onChangeName = (event) => {
+    const { target } = event
+    const { value = '' } = target
+
+    setName(value)
+  }
+
   // Compare the subscriptions returned for the user to the current query to prevent submission
   // of duplicate subscriptions
-  const exactlyMatchingSubscriptions = subscriptions.filter((subscription) => {
+  const exactlyMatchingSubscriptions = subscriptionItems.filter((subscription) => {
     let nonIndexedKeys
     const { query: subscriptionQuery } = subscription
     // The query returned for each subscription is returned as a string. To make a reliable comparison,
@@ -128,7 +248,7 @@ export const SubscriptionsBody = ({
                     disabledFields={disabledFields}
                     query={query}
                     subscriptionType={subscriptionType}
-                    onUpdateSubscriptionDisabledFields={onUpdateSubscriptionDisabledFields}
+                    setDisabledFields={setDisabledFields}
                   />
                   <div className="subscriptions-body__query-secondary">
                     {
@@ -180,7 +300,7 @@ export const SubscriptionsBody = ({
                   </div>
                   <Button
                     className="subscriptions-body__create-button"
-                    disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
+                    disabled={displayWarning}
                     bootstrapVariant="primary"
                     label="Create Subscription"
                     spinner={submittingNewSubscription}
@@ -189,15 +309,7 @@ export const SubscriptionsBody = ({
                       async () => {
                         setSubmittingNewSubscription(true)
 
-                        // If the user hasn't provided a name, use the default name from the placeholder
-                        let subscriptionName = name
-
-                        if (!subscriptionName) {
-                          subscriptionName = placeholderName
-                        }
-
-                        await onCreateSubscription(subscriptionName, subscriptionType)
-                        setSubmittingNewSubscription(false)
+                        handleCreateSubscription()
                       }
                     }
                   >
@@ -211,7 +323,7 @@ export const SubscriptionsBody = ({
         <div className="subscriptions-body__row  subscriptions-body__row--list">
           <ul className="subscriptions-body__list">
             {
-              subscriptions.map((subscription) => {
+              subscriptionItems.map((subscription) => {
                 const {
                   conceptId
                 } = subscription
@@ -219,27 +331,26 @@ export const SubscriptionsBody = ({
                 return (
                   <SubscriptionsListItem
                     key={conceptId}
-                    subscription={subscription}
-                    subscriptionType={subscriptionType}
-                    onUpdateSubscription={onUpdateSubscription}
-                    onDeleteSubscription={onDeleteSubscription}
                     exactlyMatchingSubscriptions={exactlyMatchingSubscriptions}
                     hasNullCmrQuery={hasNullCmrQuery}
+                    newQuery={queryString}
+                    subscription={subscription}
+                    subscriptionType={subscriptionType}
                   />
                 )
               })
             }
             {
-              subscriptions.length === 0 && (
+              subscriptionItems.length === 0 && (
                 <EmptyListItem>
                   {'No subscriptions exist for this collection. Use filters to define your query and '}
                   <Button
                     className="subscriptions-body__empty-list-item"
-                    disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
+                    disabled={displayWarning}
                     bootstrapVariant="link"
                     label="Create New Subscription"
                     variant="link"
-                    onClick={() => onCreateSubscription(name, subscriptionType)}
+                    onClick={() => handleCreateSubscription()}
                   >
                     create a new subscription
                   </Button>
@@ -249,7 +360,7 @@ export const SubscriptionsBody = ({
             }
           </ul>
           {
-            subscriptions.length > 0 && (
+            subscriptionItems.length > 0 && (
               <div className="subscriptions-body__list-footer">
                 <PortalLinkContainer
                   className="subscriptions-body__view-all-subscriptions"
@@ -270,16 +381,8 @@ export const SubscriptionsBody = ({
 }
 
 SubscriptionsBody.propTypes = {
-  query: PropTypes.shape({
-    hasGranulesOrCwic: PropTypes.bool
-  }).isRequired,
-  disabledFields: PropTypes.shape({}).isRequired,
-  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  subscriptionType: PropTypes.string.isRequired,
-  onCreateSubscription: PropTypes.func.isRequired,
-  onDeleteSubscription: PropTypes.func.isRequired,
-  onUpdateSubscription: PropTypes.func.isRequired,
-  onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
+  setSubscriptionCount: PropTypes.func,
+  subscriptionType: PropTypes.string.isRequired
 }
 
 export default SubscriptionsBody

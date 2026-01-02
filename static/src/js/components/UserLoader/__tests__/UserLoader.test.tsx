@@ -54,7 +54,7 @@ describe('UserLoader', () => {
     expect(localStorageGetItemSpy).toHaveBeenCalledTimes(0)
   })
 
-  describe('when an edlToken and user data are provided', () => {
+  describe('when an edlToken and no user data are provided', () => {
     test('renders a spinner', () => {
       const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
 
@@ -122,6 +122,9 @@ describe('UserLoader', () => {
           }
         }]
       })
+
+      // Renders the child component without waiting for the query
+      expect(screen.getByText('Child Component')).toBeInTheDocument()
 
       expect(localStorageGetItemSpy).toHaveBeenCalledTimes(1)
       expect(localStorageGetItemSpy).toHaveBeenCalledWith(localStorageKeys.user)

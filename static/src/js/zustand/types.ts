@@ -14,7 +14,8 @@ import type {
   Temporal,
   TimelineIntervals,
   VariableMetadata,
-  UrsProfile
+  UrsProfile,
+  Subscription
 } from '../types/sharedTypes'
 import { ModalName } from '../constants/modalNames'
 
@@ -1128,10 +1129,10 @@ type DeprecateParametersModalData = {
 
 /** The modal data for the edit subscription modal */
 type EditSubscriptionModalData = {
-  /** The subscription concept ID */
-  subscriptionConceptId: string
-  /** The subscription type */
-  subscriptionType: string
+  /** The subscription */
+  subscription: Subscription
+  /** The new query */
+  newQuery: string
 }
 
 /** The data associated with the currently open modal */

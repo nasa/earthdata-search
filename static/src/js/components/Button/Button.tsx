@@ -112,6 +112,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   onClick,
   overlayClass,
   spinner,
+  spinnerColor = 'white',
   style,
   target,
   title,
@@ -220,7 +221,12 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
           ? (
             <span className="button__contents">
               <span className="d-inline-flex">
-                <Spinner type="dots" color="white" size="tiny" inline />
+                <Spinner
+                  type="dots"
+                  color={spinnerColor}
+                  size="tiny"
+                  inline
+                />
               </span>
             </span>
           )

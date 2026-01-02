@@ -1,6 +1,5 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
-import { type Dispatch } from 'redux'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -35,19 +34,6 @@ jest.mock('../HomePortalCard', () => {
 
   return MockHomePortalCard
 })
-
-jest.mock('../../../actions', () => ({
-  ...jest.requireActual('../../../actions'),
-  changePath: jest.fn(() => (dispatch: Dispatch) => {
-    dispatch({ type: 'CHANGE_PATH' })
-  }),
-  getCollections: jest.fn(() => (dispatch: Dispatch) => {
-    dispatch({ type: 'GET_COLLECTIONS' })
-  }),
-  removeSubscriptionDisabledFields: jest.fn(() => (dispatch: Dispatch) => {
-    dispatch({ type: 'REMOVE_SUBSCRIPTION_DISABLED_FIELDS' })
-  })
-}))
 
 jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
 

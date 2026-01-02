@@ -248,11 +248,6 @@ describe('createProjectSlice', () => {
   describe('getProjectCollections', () => {
     describe('when the user is not logged in', () => {
       test('returns null', async () => {
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         const zustandState = useEdscStore.getState()
         const { project } = zustandState
 
@@ -295,11 +290,6 @@ describe('createProjectSlice', () => {
         nock(/localhost/)
           .post(/error_logger/)
           .reply(200)
-
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
 
         useEdscStore.setState((state) => {
           state.earthdataEnvironment.currentEnvironment = 'prod'
@@ -382,11 +372,6 @@ describe('createProjectSlice', () => {
           }, {
             'jwt-token': 'token'
           })
-
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
 
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1', 'collectionId2']
@@ -583,11 +568,6 @@ describe('createProjectSlice', () => {
 
     describe('when the user has a saved access config', () => {
       test('adds access methods with the saved access config', async () => {
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {
@@ -736,11 +716,6 @@ describe('createProjectSlice', () => {
 
     describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
       test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
           maxCmrPageSize: '1',
           defaultCmrSearchTags: [
@@ -840,11 +815,6 @@ describe('createProjectSlice', () => {
 
     describe('when requesting a CSDA collection', () => {
       test('adds access methods and updates collection metadata', async () => {
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
@@ -927,11 +897,6 @@ describe('createProjectSlice', () => {
 
     describe('when no project collections exist', () => {
       test('does not fetch access methods or metadata', async () => {
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         useEdscStore.setState((state) => {
           state.project.collections.allIds = []
           state.user.edlToken = 'mockEdlToken'
@@ -1007,11 +972,6 @@ describe('createProjectSlice', () => {
             'jwt-token': 'token'
           })
 
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
           state.user.edlToken = 'mockEdlToken'
@@ -1079,11 +1039,6 @@ describe('createProjectSlice', () => {
           .post(/error_logger/)
           .reply(200)
 
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId1']
           state.user.edlToken = 'mockEdlToken'
@@ -1111,11 +1066,6 @@ describe('createProjectSlice', () => {
 
     describe('when data quality summaries are returned', () => {
       test('sets the data quality summaries for the collection', async () => {
-        configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
-        })
-
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
@@ -1209,8 +1159,7 @@ describe('createProjectSlice', () => {
         })
 
       configureStore.mockReturnValue({
-        dispatch: jest.fn(),
-        getState: jest.fn().mockReturnValue({})
+        dispatch: jest.fn()
       })
 
       useEdscStore.setState((state) => {
@@ -1271,8 +1220,7 @@ describe('createProjectSlice', () => {
           .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><id>granuleId</id><title>CWIC Granule</title></entry></feed>')
 
         configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
+          dispatch: jest.fn()
         })
 
         useEdscStore.setState((state) => {
@@ -1335,8 +1283,7 @@ describe('createProjectSlice', () => {
           .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><id>granuleId</id><title>CWIC Granule</title></entry></feed>')
 
         configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
+          dispatch: jest.fn()
         })
 
         useEdscStore.setState((state) => {
@@ -1397,8 +1344,7 @@ describe('createProjectSlice', () => {
           })
 
         configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
+          dispatch: jest.fn()
         })
 
         useEdscStore.setState((state) => {
@@ -1467,8 +1413,7 @@ describe('createProjectSlice', () => {
           })
 
         configureStore.mockReturnValue({
-          dispatch: jest.fn(),
-          getState: jest.fn().mockReturnValue({})
+          dispatch: jest.fn()
         })
 
         useEdscStore.setState((state) => {

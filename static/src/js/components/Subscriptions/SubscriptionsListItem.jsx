@@ -17,21 +17,24 @@ import { MODAL_NAMES } from '../../constants/modalNames'
 import useEdscStore from '../../zustand/useEdscStore'
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
+import { useDeleteSubscription } from '../../hooks/useDeleteSubscription'
+
 import './SubscriptionsListItem.scss'
 
 const dateFormat = getApplicationConfig().temporalDateFormatFull
 
-export const SubscriptionsListItem = ({
+const SubscriptionsListItem = ({
   exactlyMatchingSubscriptions,
   hasNullCmrQuery,
+  newQuery,
   subscription,
-  subscriptionType,
-  onDeleteSubscription
+  subscriptionType
 }) => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
 
+  const { deleteSubscription, loading } = useDeleteSubscription()
+
   const {
-    collectionConceptId,
     creationDate,
     name,
     nativeId,
@@ -51,7 +54,14 @@ export const SubscriptionsListItem = ({
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
 
     if (confirmDeletion) {
-      onDeleteSubscription(conceptId, nativeId, collectionConceptId)
+      deleteSubscription({
+        variables: {
+          params: {
+            conceptId,
+            nativeId
+          }
+        }
+      })
     }
   }
 
@@ -106,8 +116,8 @@ export const SubscriptionsListItem = ({
               setOpenModal(
                 MODAL_NAMES.EDIT_SUBSCRIPTION,
                 {
-                  subscriptionConceptId: conceptId,
-                  subscriptionType
+                  subscription,
+                  newQuery
                 }
               )
             }
@@ -122,6 +132,7 @@ export const SubscriptionsListItem = ({
           bootstrapSize="sm"
           label="Delete Subscription"
           onClick={() => onHandleRemove()}
+          spinner={loading}
         >
           Delete
         </Button>
@@ -132,12 +143,12 @@ export const SubscriptionsListItem = ({
 
 SubscriptionsListItem.propTypes = {
   hasNullCmrQuery: PropTypes.bool.isRequired,
-  onDeleteSubscription: PropTypes.func.isRequired,
   exactlyMatchingSubscriptions: PropTypes.arrayOf(
     PropTypes.shape({
       conceptId: PropTypes.string
     })
   ).isRequired,
+  newQuery: PropTypes.string.isRequired,
   subscription: PropTypes.shape({
     collectionConceptId: PropTypes.string,
     creationDate: PropTypes.string,

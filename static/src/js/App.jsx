@@ -55,7 +55,7 @@ const ChunkedOrderModal = lazy(() => import('./components/ChunkedOrderModal/Chun
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const DeprecatedParameterModal = lazy(() => import('./components/DeprecatedParameterModal/DeprecatedParameterModal'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
-const EditSubscriptionModalContainer = lazy(() => import('./containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'))
+const EditSubscriptionModal = lazy(() => import('./components/EditSubscriptionModal/EditSubscriptionModal'))
 const KeyboardShortcutsModal = lazy(() => import('./components/KeyboardShortcutsModal/KeyboardShortcutsModal'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
@@ -94,7 +94,7 @@ const browserRouter = createBrowserRouter([
             <Search />
             <AboutCSDAModal />
             <AboutCwicModal />
-            <EditSubscriptionModalContainer />
+            <EditSubscriptionModal />
             <DeprecatedParameterModal />
             <KeyboardShortcutsModal />
             <ShapefileDropzoneContainer />
