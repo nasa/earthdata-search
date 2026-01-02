@@ -1,6 +1,6 @@
 import { getApplicationConfig } from '../../../sharedUtils/config'
 /**
- * Logs an error reported by a client
+ * Logs a collection relevancy event
  * @param {Object} event Details about the HTTP request that it received
  */
 const relevancyLogger = async (event) => {
