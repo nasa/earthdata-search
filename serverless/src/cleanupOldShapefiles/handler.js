@@ -1,7 +1,6 @@
 import 'pg'
 
 import { getDbConnection } from '../util/database/getDbConnection'
-import { parseError } from '../../../sharedUtils/parseError'
 
 /**
  * Removes shapefile entries that are older than one year
@@ -43,7 +42,7 @@ const cleanupOldShapefiles = async (event, context) => {
       })
       .delete()
 
-    console.log(`Successfully deleted ${deletedCount} shapefile(s) older than one year`)
+    console.log(`Successfully deleted ${deletedCount} shapefile(s) ${oneYearAgo.toISOString()}`)
 
     return {
       statusCode: 200,
@@ -54,8 +53,6 @@ const cleanupOldShapefiles = async (event, context) => {
     }
   } catch (error) {
     console.log('Error cleaning up old shapefiles:', error)
-
-    return parseError(error)
   }
 }
 

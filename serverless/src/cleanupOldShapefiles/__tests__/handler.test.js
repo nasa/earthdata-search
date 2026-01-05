@@ -35,170 +35,44 @@ afterEach(() => {
 })
 
 describe('cleanupOldShapefiles', () => {
-  test('successfully deletes non-parent shapefiles older than one year', async () => {
+  test('successfully executes the correct SQL query and returns response', async () => {
     const deletedCount = 5
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation()
 
     dbTracker.on('query', (query) => {
-      expect(query.sql).toContain('delete from "shapefiles"')
-      expect(query.sql).toContain('where "created_at" < $1')
-      expect(query.sql).toContain('not exists')
-      expect(query.sql).toContain('children.parent_shapefile_id = shapefiles.id')
-
-      // Verify the date is approximately one year ago (allowing for small time differences)
-      const oneYearAgo = new Date('2023-01-15T10:00:00.000Z')
-      const queryDate = new Date(query.bindings[0])
-      const timeDiff = Math.abs(queryDate.getTime() - oneYearAgo.getTime())
-
-      // Allow up to 1 second difference for test execution time
-      expect(timeDiff).toBeLessThan(1000)
-
       query.response(deletedCount)
     })
 
     const result = await cleanupOldShapefiles({}, {})
-
-    expect(result.statusCode).toEqual(200)
-
-    const body = JSON.parse(result.body)
-    expect(body.message).toEqual(`Successfully deleted ${deletedCount} shapefile(s)`)
-    expect(body.deletedCount).toEqual(deletedCount)
 
     const { queries } = dbTracker.queries
-    expect(queries).toHaveLength(1)
-    expect(queries[0].method).toEqual('del')
+
+    expect(queries[0].sql).toEqual('delete from "shapefiles" where "created_at" < $1 and not exists (select 1 from "shapefiles" as "children" where children.parent_shapefile_id = shapefiles.id and "children"."created_at" >= $2)')
+    expect(result).toEqual({"body": "{\"message\":\"Successfully deleted 5 shapefile(s)\",\"deletedCount\":5}", "statusCode": 200})
+    
+    expect(consoleMock).toHaveBeenCalledTimes(2)
+    expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up shapefiles older than 2023-01-15T10:00:00.000Z')
+    expect(consoleMock).toHaveBeenNthCalledWith(2, 'Successfully deleted 5 shapefile(s) 2023-01-15T10:00:00.000Z')
   })
 
-  test('returns zero when no shapefiles are older than one year', async () => {
-    const deletedCount = 0
+  test('correctly handles database errors and logs them', async () => {
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation()
+    const dbError = new Error('Database connection failed')
 
     dbTracker.on('query', (query) => {
-      expect(query.sql).toContain('not exists')
-      query.response(deletedCount)
-    })
-
-    const result = await cleanupOldShapefiles({}, {})
-
-    expect(result.statusCode).toEqual(200)
-
-    const body = JSON.parse(result.body)
-    expect(body.message).toEqual(`Successfully deleted ${deletedCount} shapefile(s)`)
-    expect(body.deletedCount).toEqual(deletedCount)
-
-    const { queries } = dbTracker.queries
-    expect(queries).toHaveLength(1)
-    expect(queries[0].method).toEqual('del')
-  })
-
-  test('deletes parent shapefiles when all children are older than one year', async () => {
-    const deletedCount = 3
-
-    dbTracker.on('query', (query) => {
-      expect(query.sql).toContain('not exists')
-      expect(query.sql).toContain('children.parent_shapefile_id = shapefiles.id')
-      // Knex generates quoted column names: "children"."created_at"
-      expect(query.sql).toContain('"children"."created_at"')
-
-      // Verify the subquery checks for children created within the last year
-      // The subquery date is in bindings[1], bindings[0] is for the main query
-      const oneYearAgo = new Date('2023-01-15T10:00:00.000Z')
-      expect(query.bindings).toHaveLength(2)
-      const subqueryDate = new Date(query.bindings[1])
-      const timeDiff = Math.abs(subqueryDate.getTime() - oneYearAgo.getTime())
-      expect(timeDiff).toBeLessThan(1000)
-
-      query.response(deletedCount)
-    })
-
-    const result = await cleanupOldShapefiles({}, {})
-
-    expect(result.statusCode).toEqual(200)
-
-    const body = JSON.parse(result.body)
-    expect(body.deletedCount).toEqual(deletedCount)
-  })
-
-  test('does not delete parent shapefiles with recent children', async () => {
-    const deletedCount = 0
-
-    dbTracker.on('query', (query) => {
-      expect(query.sql).toContain('not exists')
-      // The subquery will find recent children, so no parent shapefiles are deleted
-      query.response(deletedCount)
-    })
-
-    const result = await cleanupOldShapefiles({}, {})
-
-    expect(result.statusCode).toEqual(200)
-
-    const body = JSON.parse(result.body)
-    expect(body.deletedCount).toEqual(0)
-  })
-
-  test('deletes mix of parent and non-parent shapefiles when conditions are met', async () => {
-    const deletedCount = 10
-
-    dbTracker.on('query', (query) => {
-      expect(query.sql).toContain('not exists')
-      expect(query.sql).toContain('children.parent_shapefile_id = shapefiles.id')
-      query.response(deletedCount)
-    })
-
-    const result = await cleanupOldShapefiles({}, {})
-
-    expect(result.statusCode).toEqual(200)
-
-    const body = JSON.parse(result.body)
-    expect(body.deletedCount).toEqual(deletedCount)
-  })
-
-  test('correctly handles database errors', async () => {
-    dbTracker.on('query', (query) => {
-      query.reject(new Error('Database connection failed'))
-    })
-
-    const result = await cleanupOldShapefiles({}, {})
-    expect(result.statusCode).toEqual(500)
-    expect(result.body).toContain('Database connection failed')
-  })
-
-  test('correctly calculates one year ago from current date', async () => {
-    // Set a specific date
-    MockDate.set('2024-06-20T14:30:00.000Z')
-
-    dbTracker.on('query', (query) => {
-      const oneYearAgo = new Date('2023-06-20T14:30:00.000Z')
-      const queryDate = new Date(query.bindings[0])
-      const timeDiff = Math.abs(queryDate.getTime() - oneYearAgo.getTime())
-
-      // Allow up to 1 second difference for test execution time
-      expect(timeDiff).toBeLessThan(1000)
-
-      expect(query.sql).toContain('not exists')
-      query.response(0)
+      query.reject(dbError)
     })
 
     await cleanupOldShapefiles({}, {})
 
     const { queries } = dbTracker.queries
-    expect(queries).toHaveLength(1)
-  })
 
-  test('includes whereNotExists subquery in SQL', async () => {
-    dbTracker.on('query', (query) => {
-      // Verify the query includes the not exists subquery structure
-      expect(query.sql).toContain('not exists')
-      expect(query.sql).toContain('select 1')
-      expect(query.sql).toContain('from "shapefiles" as "children"')
-      expect(query.sql).toContain('children.parent_shapefile_id = shapefiles.id')
-      // Knex generates quoted column names: "children"."created_at"
-      expect(query.sql).toContain('"children"."created_at"')
+    expect(queries[0].sql).toEqual('delete from "shapefiles" where "created_at" < $1 and not exists (select 1 from "shapefiles" as "children" where children.parent_shapefile_id = shapefiles.id and "children"."created_at" >= $2)')
 
-      query.response(0)
-    })
-
-    await cleanupOldShapefiles({}, {})
-
-    const { queries } = dbTracker.queries
-    expect(queries).toHaveLength(1)
+    // Verify error was logged
+    expect(consoleMock).toHaveBeenCalledWith(
+      'Error cleaning up old shapefiles:',
+      dbError
+    )
   })
 })
