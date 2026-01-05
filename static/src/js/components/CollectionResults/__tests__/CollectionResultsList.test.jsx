@@ -26,7 +26,7 @@ jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
   width: 600
 }))
 
-// Mock PortalFeatureContainer to return its children so we don't have to mock Redux
+// Mock PortalFeatureContainer to return its children so we don't have to mock the store
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 
 const setup = setupTest({

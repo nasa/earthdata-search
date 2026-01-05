@@ -530,7 +530,7 @@ const Map: React.FC<MapProps> = ({
     eventEmitter.on(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
 
     const handleMoveEnd = (event: MapEvent) => {
-      // When the map is moved we need to call onChangeMap to update Redux
+      // When the map is moved we need to call onChangeMap to update the store
       // with the new values
       const eventMap = event.map
       const view = eventMap.getView()
@@ -547,7 +547,7 @@ const Map: React.FC<MapProps> = ({
         const projectionConfig = projectionConfigs[projectionCode];
         [newLongitude, newLatitude] = projectionConfig.center
       } else {
-        // Reproject the center to EPSG:4326 so we can store lat/lon in Redux
+        // Reproject the center to EPSG:4326 so we can store lat/lon in the store
         const newReprojectedCenter = transform(
           newCenter,
           view.getProjection(),
@@ -561,7 +561,7 @@ const Map: React.FC<MapProps> = ({
       const newRotationInRad = view.getRotation()
       newRotationInDeg = (((newRotationInRad * 180) / Math.PI - 180) % 360) + 180
 
-      // Update Redux with the new values
+      // Update the store with the new values
       onChangeMap({
         latitude: newLatitude,
         longitude: newLongitude,

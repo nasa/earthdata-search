@@ -38,11 +38,11 @@ import './GranuleResultsItem.scss'
 /**
  * Renders GranuleResultsItem.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.collectionId - Granule passed from redux store.
+ * @param {String} props.collectionId - Granule passed from the store.
  * @param {Object} props.collectionQuerySpatial - The spatial for the collection query
  * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
- * @param {Object} props.granule - Granule passed from redux store.
+ * @param {Object} props.granule - Granule passed from the store.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.isGranuleInProject - Function designating if the granule is in the project.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.

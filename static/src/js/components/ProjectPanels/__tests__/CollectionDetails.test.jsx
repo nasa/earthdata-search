@@ -48,8 +48,7 @@ const setup = setupTest({
       updateProjectGranuleParams: jest.fn()
     }
   },
-  withRouter: true,
-  withRedux: true
+  withRouter: true
 })
 
 describe('CollectionDetails component', () => {

@@ -5,9 +5,6 @@ import useEdscStore from '../../useEdscStore'
 import { initialGranuleState, initialState } from '../createProjectSlice'
 
 // @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
 import GranuleRequest from '../../../util/request/granuleRequest'
 
 // @ts-expect-error This file does not have types
@@ -24,8 +21,6 @@ jest.mock('../../../../../../sharedUtils/getClientId', () => ({
     client: 'mock-client-id'
   })
 }))
-
-jest.mock('../../../store/configureStore', () => jest.fn())
 
 jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
   cmrHost: 'https://cmr.example.com',
@@ -1158,10 +1153,6 @@ describe('createProjectSlice', () => {
           'cmr-hits': '1'
         })
 
-      configureStore.mockReturnValue({
-        dispatch: jest.fn()
-      })
-
       useEdscStore.setState((state) => {
         state.collection.collectionMetadata.collection1 = {
           conceptId: 'collection1'
@@ -1218,10 +1209,6 @@ describe('createProjectSlice', () => {
         nock(/localhost/)
           .post(/opensearch\/granules/)
           .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><id>granuleId</id><title>CWIC Granule</title></entry></feed>')
-
-        configureStore.mockReturnValue({
-          dispatch: jest.fn()
-        })
 
         useEdscStore.setState((state) => {
           state.collection.collectionMetadata.collection1 = {
@@ -1282,10 +1269,6 @@ describe('createProjectSlice', () => {
           }))
           .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><id>granuleId</id><title>CWIC Granule</title></entry></feed>')
 
-        configureStore.mockReturnValue({
-          dispatch: jest.fn()
-        })
-
         useEdscStore.setState((state) => {
           state.collection.collectionMetadata.collection1 = {
             conceptId: 'collection1',
@@ -1342,10 +1325,6 @@ describe('createProjectSlice', () => {
               message: 'Internal Server Error'
             }]
           })
-
-        configureStore.mockReturnValue({
-          dispatch: jest.fn()
-        })
 
         useEdscStore.setState((state) => {
           state.collection.collectionMetadata.collection1 = {
@@ -1411,10 +1390,6 @@ describe('createProjectSlice', () => {
           }, {
             'cmr-hits': '1'
           })
-
-        configureStore.mockReturnValue({
-          dispatch: jest.fn()
-        })
 
         useEdscStore.setState((state) => {
           state.collection.collectionMetadata.collection1 = {

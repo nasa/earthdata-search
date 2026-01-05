@@ -47,12 +47,7 @@ export const AuthCallbackContainer = () => {
         setRedirectUrl(eddRedirectUrl)
 
         // Redirect to the edd callback
-        setTimeout(() => {
-          // There is a bug in this redirect because UrlQueryContainer is triggering updates from both Redux and Zustand (for now). For some reason that is causing the URL to stay on /auth_callback instead of redirecting to /earthdata-download-callback.
-
-          // This setTimeout should only be temporary, it should be removed once UrlQueryContainer is removed.
-          navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
-        }, 0)
+        navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
 
         return
       }

@@ -59,7 +59,7 @@ const RegionSearch = ({
       initialValues[subfield.name] = subfield.value
     }
 
-    // Overrite with the values from Redux
+    // Overrite with the values from the store
     if (regionSearchValues && regionSearchValues[subfield.name]) {
       initialValues[subfield.name] = regionSearchValues[subfield.name]
     }

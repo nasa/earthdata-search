@@ -43,8 +43,8 @@ export const zoomLevelDifference = (startDate, endDate) => {
 }
 
 /**
- * Prepare parameters used in getTimeline() based on current Redux State
- * @param {Object} state Current Redux State
+ * Prepare parameters used in getTimeline() based on current store state
+ * @param {Object} state Current store state values
  * @returns Parameters used in Timeline request
  */
 export const prepareTimelineParams = (state) => {

@@ -8,8 +8,6 @@ import ShapefileRequest from '../../../util/request/shapefileRequest'
 
 import { ShapefileFile } from '../../../types/sharedTypes'
 
-jest.mock('../../../store/configureStore', () => jest.fn())
-
 const mockshapefile: ShapefileFile = {
   name: 'point.geojson',
   type: 'FeatureCollection',

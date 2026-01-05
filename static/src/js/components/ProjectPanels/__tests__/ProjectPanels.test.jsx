@@ -159,7 +159,6 @@ const setup = setupTest({
       }
     }
   },
-  withRedux: true,
   withRouter: true
 })
 

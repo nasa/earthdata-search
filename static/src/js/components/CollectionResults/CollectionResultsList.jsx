@@ -43,7 +43,7 @@ innerElementType.propTypes = {
 /**
  * Renders CollectionResultsList.
  * @param {Object} props - The props passed into the component.
- * @param {Array} props.collectionsMetadata - Collections passed from redux store.
+ * @param {Array} props.collectionsMetadata - Collections passed from the store.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.

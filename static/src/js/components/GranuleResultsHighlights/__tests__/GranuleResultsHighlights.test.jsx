@@ -41,7 +41,6 @@ const setup = setupTest({
       }
     }
   },
-  withRedux: true,
   withRoute: true
 })
 

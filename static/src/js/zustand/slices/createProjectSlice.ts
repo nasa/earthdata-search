@@ -471,7 +471,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const projectCollectionIds = getProjectCollectionsIds(zustandState)
 
       await Promise.all(projectCollectionIds.map((collectionId) => {
-        // Extract granule search parameters from redux specific to this project collection
+        // Extract granule search parameters from the store specific to this project collection
         const extractedGranuleParams = extractProjectCollectionGranuleParams(collectionId)
 
         // Fetch the collection metadata for this project collection

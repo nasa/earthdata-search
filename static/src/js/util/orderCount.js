@@ -20,7 +20,7 @@ export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) =
 
 /**
  * Calculate the number of orders that will be created based on granule count
- * @param {Object} projectCollection Project collection metadata from redux store
+ * @param {Object} projectCollection Project collection metadata from the store
  */
 export const calculateOrderCount = (projectCollection) => {
   const {

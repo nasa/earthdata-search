@@ -152,10 +152,10 @@ export const extractProjectCollectionGranuleParams = (collectionId) => {
 }
 
 /**
- * Prepare parameters used in retrieving granules based on current Redux State,
+ * Prepare parameters used in retrieving granules based on current store state,
  * or provided project collection
- * @param {Object} state Current Redux State
- * @param {String} projectCollectionId Optional: CollectionId of a Project collection
+ * @param {Object} collectionMetadata The collection metadata object
+ * @param {Object} granuleParams The granule params to use instead of extracting from store
  * @returns {Object} Parameters used in Granules request
  */
 export const prepareGranuleParams = (collectionMetadata, granuleParams) => {

@@ -126,7 +126,6 @@ const setup = setupTest({
     }
   },
   defaultRouterEntries: ['/search'],
-  withRedux: true,
   withRouter: true
 })
 

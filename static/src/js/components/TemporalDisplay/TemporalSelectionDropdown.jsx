@@ -72,7 +72,7 @@ const TemporalSelectionDropdown = ({
   }
 
   /**
-   * Sets the current start and end dates values in the Redux store
+   * Sets the current start and end dates values in the store
    */
   const onApplyClick = () => {
     metricsTemporalFilter({
@@ -98,7 +98,7 @@ const TemporalSelectionDropdown = ({
   }
 
   /**
-   * Clears the current temporal values internally and within the Redux store
+   * Clears the current temporal values internally and within the store
    */
   const onClearClick = () => {
     setDatesSelected({

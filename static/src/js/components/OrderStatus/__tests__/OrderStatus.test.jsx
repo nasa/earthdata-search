@@ -47,7 +47,6 @@ const setup = setupTest({
     }
   },
   withApolloClient: true,
-  withRedux: true,
   withRouter: true
 })
 

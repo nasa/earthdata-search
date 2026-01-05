@@ -83,7 +83,6 @@ const setup = setupTest({
       match: { path: '/search' }
     }
   },
-  withRedux: true,
   defaultZustandState: {
     portal: {
       features: {

@@ -17,8 +17,6 @@ import { initialState } from '../../slices/createQuerySlice'
 // @ts-expect-error: This file does not have types
 import { initialGranuleQuery } from '../../../util/url/collectionsEncoders'
 
-jest.mock('../../../store/configureStore', () => jest.fn())
-
 describe('query selectors', () => {
   describe('getCollectionsQuery', () => {
     test('returns the collection query', () => {

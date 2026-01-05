@@ -20,7 +20,7 @@ const { apiHost } = getEnvironmentConfig()
  * Returns an ApolloClient instance with the given auth token. Caches the client instance
  * and only creates a new one if the auth token changes.
  * This is useful for using the ApolloClient outside a React component, such as in
- * Redux actions.
+ * Zustand functions.
  * @param {Object} params
  * @param {String} params.earthdataEnvironment The Earthdata environment (e.g., "prod", "uat", "sit")
  * @param {String} params.edlToken User's EDL token

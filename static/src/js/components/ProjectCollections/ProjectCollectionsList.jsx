@@ -15,8 +15,6 @@ import './ProjectCollectionsList.scss'
 
 /**
  * Renders ProjectCollectionsList.
- * @param {object} props - The props passed into the component.
- * @param {object} props.collections - List of collections passed from redux store.
  */
 export const ProjectCollectionsList = (props) => {
   const {

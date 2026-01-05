@@ -4,8 +4,8 @@ import generateHandoffs from '@edsc/smart-handoffs'
  * Generate an array of objects that will be used to render smart handoff links
  * @param {Object} params
  * @param {Object} params.collectionMetadata Collection metadata from CMR
- * @param {Object} params.collectionQuery Collection Search data from Redux
- * @param {Object} params.map Current map configuration from Redux
+ * @param {Object} params.collectionQuery Collection Search data from the store
+ * @param {Object} params.map Current map configuration from the store
  */
 export const getHandoffLinks = ({
   collectionMetadata,

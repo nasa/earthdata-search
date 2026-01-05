@@ -563,7 +563,7 @@ export const decodeCollections = (params) => {
       // Determine if the collection is a CWIC collection
       isOpenSearch = excludedIsOpenSearch || addedIsOpenSearch || removedIsOpenSearch
 
-      // Populate the collection object for the redux store
+      // Populate the collection object for the store
       collectionMetadata[collectionId] = {
         id: collectionId,
         isOpenSearch

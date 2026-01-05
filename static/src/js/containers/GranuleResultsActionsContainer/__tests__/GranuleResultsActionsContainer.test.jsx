@@ -5,8 +5,6 @@ import GranuleResultsActions from '../../../components/GranuleResults/GranuleRes
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-jest.mock('../../../store/configureStore', () => jest.fn())
-
 jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest.fn(() => <div />))
 
 const setup = setupTest({

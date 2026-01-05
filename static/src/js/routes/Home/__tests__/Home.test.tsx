@@ -56,7 +56,6 @@ const setup = setupTest({
       getNlpCollections: jest.fn().mockResolvedValue(undefined)
     }
   },
-  withRedux: true,
   withRouter: true
 })
 

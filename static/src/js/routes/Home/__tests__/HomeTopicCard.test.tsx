@@ -25,7 +25,6 @@ const setup = setupTest({
       setOpenFacetGroup: jest.fn()
     }
   },
-  withRedux: true,
   withRouter: true
 })
 

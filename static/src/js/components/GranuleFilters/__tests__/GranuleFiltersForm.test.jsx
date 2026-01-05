@@ -47,8 +47,7 @@ const setup = setupTest({
         collectionId: {}
       }
     }
-  },
-  withRedux: true
+  }
 })
 
 describe('GranuleFiltersForm component', () => {

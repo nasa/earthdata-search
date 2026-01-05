@@ -11,7 +11,7 @@ import { createDataLinks } from './granules'
 /**
  * Formats granule results
  * @param {String} focusedGranuleId - The focused granule.
- * @param {Object} granules - The granules from the redux store.
+ * @param {Object} granules - The granules from the store.
  * @param {Function} isGranuleInProject - Returns a boolean to designate if a granule is in the project.
  * @param {Boolean} isCollectionInProject - Boolean to designate if a collection is in the project.
  * @returns {GranuleListInfo} - The return object

@@ -3,13 +3,11 @@ import React, {
   Suspense,
   useEffect
 } from 'react'
-import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ToastProvider } from 'react-toast-notifications'
 import { Helmet } from 'react-helmet'
 
 import ogImage from '../assets/images/earthdata-search-og-image.jpg?format=webp'
-import configureStore from './store/configureStore'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
 import routerHelper from './router/router'
@@ -69,8 +67,6 @@ const TooManyPointsModal = lazy(() => import('./components/TooManyPointsModal/To
 
 const AdminLayout = lazy(() => import('./layouts/AdminLayout/AdminLayout'))
 const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
-
-const store = configureStore()
 
 const browserRouter = createBrowserRouter([
   {
@@ -312,26 +308,24 @@ const App = () => {
   return (
     <ErrorBoundary>
       <EmergencyNotification />
-      <Provider store={store}>
-        <GraphQlProvider>
-          <ToastProvider ref={window.reactToastProvider}>
-            <Helmet
-              defaultTitle="Earthdata Search"
-              titleTemplate={`${titleEnv} %s - Earthdata Search`}
-            >
-              <meta name="description" content={description} />
-              <meta property="og:type" content="website" />
-              <meta property="og:title" content={title} />
-              <meta property="og:description" content={description} />
-              <meta property="og:url" content={url} />
-              <meta property="og:image" content={ogImage} />
-              <meta name="theme-color" content="#191a1b" />
-              <link rel="canonical" href={url} />
-            </Helmet>
-            <RouterProvider router={browserRouter} />
-          </ToastProvider>
-        </GraphQlProvider>
-      </Provider>
+      <GraphQlProvider>
+        <ToastProvider ref={window.reactToastProvider}>
+          <Helmet
+            defaultTitle="Earthdata Search"
+            titleTemplate={`${titleEnv} %s - Earthdata Search`}
+          >
+            <meta name="description" content={description} />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content={title} />
+            <meta property="og:description" content={description} />
+            <meta property="og:url" content={url} />
+            <meta property="og:image" content={ogImage} />
+            <meta name="theme-color" content="#191a1b" />
+            <link rel="canonical" href={url} />
+          </Helmet>
+          <RouterProvider router={browserRouter} />
+        </ToastProvider>
+      </GraphQlProvider>
     </ErrorBoundary>
   )
 }

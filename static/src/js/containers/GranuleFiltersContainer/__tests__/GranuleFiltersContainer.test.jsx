@@ -32,7 +32,6 @@ const setup = setupTest({
       changeGranuleQuery: jest.fn()
     }
   },
-  withRedux: true,
   withRouter: true
 })
 

@@ -182,7 +182,7 @@ export const Timeline = ({
   const handleScrollZoom = () => metricsTimeline('Scroll Zoom')
 
   /**
-   * Callback for the timeline moving, updates the timeline query in redux
+   * Callback for the timeline moving, updates the timeline query in the store
    */
   const handleTimelineMoveEnd = ({
     center: newCenter,
@@ -207,7 +207,7 @@ export const Timeline = ({
   }
 
   /**
-   * Handles temporal being created by the timeline, updates the query in redux
+   * Handles temporal being created by the timeline, updates the query in the store
    */
   const handleTemporalSet = ({ temporalEnd, temporalStart }) => {
     metricsTimeline('Created Temporal')
@@ -243,7 +243,7 @@ export const Timeline = ({
   }
 
   /**
-   * Handles a focused interval being set by the timeline, updates the query and timeline query in redux
+   * Handles a focused interval being set by the timeline, updates the query and timeline query in the store
    */
   const handleFocusedSet = ({ focusedEnd, focusedStart }) => {
     const newTimelineQuery = {
@@ -293,7 +293,7 @@ export const Timeline = ({
   }
 
   /**
-   * Converts redux timeline data (from CMR) into data usable by the timeline
+   * Converts the store timeline data (from CMR) into data usable by the timeline
    */
   const setupData = (intervals) => {
     const data = []

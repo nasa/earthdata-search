@@ -3,9 +3,6 @@ import nock from 'nock'
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
@@ -15,13 +12,6 @@ import { changeUrl } from '../../../util/url/changeUrl'
 jest.mock('../../../util/url/changeUrl', () => ({
   changeUrl: jest.fn()
 }))
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
-const mockDispatch = jest.fn()
-configureStore.mockReturnValue({
-  dispatch: mockDispatch
-})
 
 describe('createGranuleSlice', () => {
   test('sets the default state', () => {

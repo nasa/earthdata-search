@@ -101,7 +101,7 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
         shape = shape.simplify(0.001)
       }
 
-      // Get the coordinates of the shape to save to the redux state
+      // Get the coordinates of the shape to save to the store
       coordinates = shape.getFlatCoordinates().join(',')
     } else {
       const polygonCoordinates = points.map((point) => {
@@ -112,7 +112,7 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
 
       shape = new Polygon([polygonCoordinates])
 
-      // Get the coordinates of the shape to save to the redux state
+      // Get the coordinates of the shape to save to the store
       coordinates = shape.getFlatCoordinates().join(',')
     }
 

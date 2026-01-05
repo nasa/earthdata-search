@@ -76,8 +76,7 @@ const setup = setupTest({
         pageNum: 1
       }
     }
-  },
-  withRedux: true
+  }
 })
 
 describe('ProjectCollectionsList component', () => {

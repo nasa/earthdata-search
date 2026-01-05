@@ -1,6 +1,6 @@
 /**
  * Encodes hasGranulesOrCwic
- * @param {object} hasGranulesOrCwic hasGranulesOrCwic value from redux store
+ * @param {object} hasGranulesOrCwic hasGranulesOrCwic value from the store
  * @return {string} Encoded value for hasGranulesOrCwic
  */
 export const encodeHasGranulesOrCwic = (hasGranulesOrCwic) => {
