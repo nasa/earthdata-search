@@ -32,7 +32,6 @@ import './OrderStatus.scss'
 /**
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
- * @param {Function} props.onChangePath - Selects an access method.
  * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
  */
 const OrderStatus = ({

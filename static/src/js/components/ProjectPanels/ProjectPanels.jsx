@@ -42,7 +42,6 @@ import './ProjectPanels.scss'
 
 /**
  * Renders ProjectPanels.
- * @param {Function} onChangePath - Callback to change the path.
  */
 const ProjectPanels = () => {
   const location = useLocation()

@@ -196,18 +196,26 @@ describe('changePath', () => {
           /* eslint-disable no-param-reassign */
           state.collection.getCollectionMetadata = jest.fn()
           state.collections.getCollections = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
           /* eslint-enable no-param-reassign */
         })
 
         await changePath(newPath)
 
-        const { collection, collections } = useEdscStore.getState()
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
         expect(collections.getCollections).toHaveBeenCalledTimes(1)
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
 
@@ -219,18 +227,26 @@ describe('changePath', () => {
           /* eslint-disable no-param-reassign */
           state.collection.getCollectionMetadata = jest.fn()
           state.collections.getCollections = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
           /* eslint-enable no-param-reassign */
         })
 
         await changePath(newPath)
 
-        const { collection, collections } = useEdscStore.getState()
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
         expect(collections.getCollections).toHaveBeenCalledTimes(1)
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
 
@@ -242,18 +258,25 @@ describe('changePath', () => {
           /* eslint-disable no-param-reassign */
           state.collection.getCollectionMetadata = jest.fn()
           state.collections.getCollections = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
           /* eslint-enable no-param-reassign */
         })
 
         await changePath(newPath)
 
-        const { collection, collections } = useEdscStore.getState()
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
         expect(collections.getCollections).toHaveBeenCalledTimes(1)
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -298,18 +321,26 @@ describe('changePath', () => {
           /* eslint-disable no-param-reassign */
           state.collection.getCollectionMetadata = jest.fn()
           state.collections.getCollections = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
           /* eslint-enable no-param-reassign */
         })
 
         await changePath(newPath)
 
-        const { collection, collections } = useEdscStore.getState()
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
         expect(collections.getCollections).toHaveBeenCalledTimes(1)
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
 
@@ -321,18 +352,26 @@ describe('changePath', () => {
           /* eslint-disable no-param-reassign */
           state.collection.getCollectionMetadata = jest.fn()
           state.collections.getCollections = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
           /* eslint-enable no-param-reassign */
         })
 
         await changePath(newPath)
 
-        const { collection, collections } = useEdscStore.getState()
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
         expect(collections.getCollections).toHaveBeenCalledTimes(1)
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
 
@@ -344,18 +383,25 @@ describe('changePath', () => {
           /* eslint-disable no-param-reassign */
           state.collection.getCollectionMetadata = jest.fn()
           state.collections.getCollections = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
           /* eslint-enable no-param-reassign */
         })
 
         await changePath(newPath)
 
-        const { collection, collections } = useEdscStore.getState()
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
         expect(collections.getCollections).toHaveBeenCalledTimes(1)
         expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(0)
       })
     })
 

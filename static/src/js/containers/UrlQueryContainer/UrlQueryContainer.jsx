@@ -81,7 +81,7 @@ const UrlQueryContainer = ({
     JSON.stringify(zustandValues)
   ])
 
-  // When the page loads, call onChangePath to load the values from the URL
+  // When the page loads, call changePath to load the values from the URL
   useEffect(() => {
     // If the user is on the /projects path and there is a search string, redirect to /project
     if (pathname === routes.PROJECTS && search !== '') {

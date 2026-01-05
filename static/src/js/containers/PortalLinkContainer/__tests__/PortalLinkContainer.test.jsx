@@ -164,7 +164,7 @@ describe('PortalLinkContainer component', () => {
   })
 
   describe('when updatePath is true', () => {
-    test('should call onChangePath', async () => {
+    test('should call changePath', async () => {
       const { user } = setup({
         overrideProps: {
           updatePath: true,
@@ -184,7 +184,7 @@ describe('PortalLinkContainer component', () => {
       expect(changePath).toHaveBeenCalledWith('/search?portal=example')
     })
 
-    test('should call the provided onClick and onChangePath', async () => {
+    test('should call the provided onClick and changePath', async () => {
       const { props, user } = setup({
         overrideProps: {
           updatePath: true

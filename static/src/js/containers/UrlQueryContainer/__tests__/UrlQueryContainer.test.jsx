@@ -76,7 +76,7 @@ describe('UrlQueryContainer', () => {
   })
 
   describe('when the component mounts', () => {
-    test('calls onChangePath', async () => {
+    test('calls changePath', async () => {
       jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementationOnce(() => '?p=C00001-EDSC')
 
       setup()
@@ -143,7 +143,7 @@ describe('UrlQueryContainer', () => {
           }]
         })
 
-        // Wait for onChangePath to be called on initial render
+        // Wait for changePath to be called on initial render
         await waitFor(async () => {
           expect(changePath).toHaveBeenCalledTimes(1)
         })
