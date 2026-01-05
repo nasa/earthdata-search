@@ -11,6 +11,8 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 // @ts-expect-error There are no types for this file
 import GraphQlRequest from '../../util/request/graphQlRequest'
+
+import { changeUrl } from '../../util/url/changeUrl'
 import { type DataWithSpatial, pruneSpatial } from '../../util/pruneSpatial'
 // @ts-expect-error There are no types for this file
 import { retrieveVariablesRequest } from '../../util/retrieveVariablesRequest'
@@ -23,12 +25,6 @@ import { isCSDACollection } from '../../util/isCSDACollection'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 // @ts-expect-error There are no types for this file
 import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
-
-// @ts-expect-error There are no types for this file
-import configureStore from '../../store/configureStore'
-
-// @ts-expect-error There are no types for this file
-import actions from '../../actions'
 
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -50,10 +46,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
     collectionMetadata: {},
 
     getCollectionMetadata: async () => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
@@ -67,10 +59,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const username = getUsername(zustandState)
 
       if (!focusedCollectionId) {
-        reduxDispatch(actions.changeUrl({
+        changeUrl({
           pathname: routes.SEARCH,
           search
-        }))
+        })
 
         return
       }
@@ -252,10 +244,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             state.collection.collectionId = null
           })
 
-          reduxDispatch(actions.changeUrl({
+          changeUrl({
             pathname: routes.SEARCH,
             search
-          }))
+          })
         }
       } catch (error) {
         zustandState.errors.handleError({
@@ -270,10 +262,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
     },
 
     setCollectionId: async (collectionId) => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       set((state) => {
         state.collection.collectionId = collectionId
       })
@@ -294,10 +282,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         zustandState.ui.map.setDisplaySpatialMbrWarning(false)
 
         // If clearing the focused collection, redirect the user back to the search page
-        reduxDispatch(actions.changeUrl({
+        changeUrl({
           pathname: routes.SEARCH,
           search
-        }))
+        })
       } else {
         // Initialize a nested query element for the new focused collection
         const {
@@ -337,33 +325,25 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
     viewCollectionDetails: async (collectionId) => {
       get().collection.setCollectionId(collectionId)
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
-      reduxDispatch(actions.changeUrl({
+      changeUrl({
         pathname: routes.COLLECTION_DETAILS,
         search
-      }))
+      })
     },
 
     viewCollectionGranules: async (collectionId) => {
       get().collection.setCollectionId(collectionId)
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
-      reduxDispatch(actions.changeUrl({
+      changeUrl({
         pathname: routes.GRANULES,
         search
-      }))
+      })
     }
   }
 })

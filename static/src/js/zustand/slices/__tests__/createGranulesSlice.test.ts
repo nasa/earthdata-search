@@ -13,10 +13,6 @@ import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 // @ts-expect-error This file does not have types
 import OpenSearchGranuleRequest from '../../../util/request/openSearchGranuleRequest'
 
-jest.mock('../../../actions', () => ({
-  handleError: jest.fn()
-}))
-
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 const mockDispatch = jest.fn()

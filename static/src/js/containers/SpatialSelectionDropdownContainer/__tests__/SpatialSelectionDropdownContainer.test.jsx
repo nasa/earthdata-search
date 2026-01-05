@@ -12,8 +12,6 @@ import {
 const setup = setupTest({
   Component: SpatialSelectionDropdownContainer,
   defaultProps: {
-    onChangeUrl: jest.fn(),
-    onChangePath: jest.fn(),
     onMetricsSpatialSelection: jest.fn()
   },
   withRouter: true

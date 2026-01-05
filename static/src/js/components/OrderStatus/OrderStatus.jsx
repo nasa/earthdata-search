@@ -13,9 +13,11 @@ import RelatedCollection from '../RelatedCollection/RelatedCollection'
 import Skeleton from '../Skeleton/Skeleton'
 import Well from '../Well/Well'
 
+import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
+
+import { changePath } from '../../util/url/changePath'
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { stringify } from '../../util/url/url'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -30,11 +32,9 @@ import './OrderStatus.scss'
 /**
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
- * @param {Function} props.onChangePath - Selects an access method.
  * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
  */
 const OrderStatus = ({
-  onChangePath,
   onMetricsRelatedCollection
 }) => {
   const params = useParams()
@@ -278,7 +278,7 @@ const OrderStatus = ({
                       search: source
                     }
                   }
-                  onClick={() => { onChangePath(`/search${source}`) }}
+                  onClick={() => { changePath(`/search${source}`) }}
                 >
                   Back to Earthdata Search Results
                 </PortalLinkContainer>
@@ -293,7 +293,7 @@ const OrderStatus = ({
                       search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
                     }
                   }
-                  onClick={() => { onChangePath('/search') }}
+                  onClick={() => { changePath('/search') }}
                 >
                   Start a New Earthdata Search Session
                 </PortalLinkContainer>
@@ -321,7 +321,6 @@ const OrderStatus = ({
 }
 
 OrderStatus.propTypes = {
-  onChangePath: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired
 }
 

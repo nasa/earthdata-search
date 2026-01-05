@@ -3,14 +3,9 @@ import type { GranuleSlice, ImmerStateCreator } from '../types'
 // @ts-expect-error There are no types for this file
 import GraphQlRequest from '../../util/request/graphQlRequest'
 
+import { changeUrl } from '../../util/url/changeUrl'
 // @ts-expect-error There are no types for this file
 import { createEcho10MetadataUrls } from '../../util/granules'
-
-// @ts-expect-error There are no types for this file
-import configureStore from '../../store/configureStore'
-
-// @ts-expect-error There are no types for this file
-import actions from '../../actions'
 
 import GET_GRANULE from '../../operations/queries/getGranule'
 
@@ -27,10 +22,6 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
     granuleMetadata: {},
 
     getGranuleMetadata: async () => {
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-
       const zustandState = get()
       const edlToken = getEdlToken(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
@@ -122,10 +113,10 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
           const { location } = routerHelper.router?.state || {} as Router['state']
           const { search } = location
 
-          reduxDispatch(actions.changeUrl({
+          changeUrl({
             pathname: '/search',
             search
-          }))
+          })
         }
       } catch (error) {
         set((state) => {

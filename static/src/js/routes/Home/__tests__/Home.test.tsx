@@ -53,9 +53,6 @@ jest.mock('react-router-dom', () => ({
 
 const setup = setupTest({
   Component: Home,
-  defaultProps: {
-    onChangePath: jest.fn()
-  },
   defaultZustandState: {
     collections: {
       getCollections: jest.fn().mockResolvedValue(undefined),

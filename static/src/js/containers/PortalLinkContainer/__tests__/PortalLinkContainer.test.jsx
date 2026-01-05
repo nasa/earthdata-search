@@ -2,10 +2,14 @@ import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { mapDispatchToProps, PortalLinkContainer } from '../PortalLinkContainer'
+import PortalLinkContainer from '../PortalLinkContainer'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
-import actions from '../../../actions'
+import { changePath } from '../../../util/url/changePath'
+
+jest.mock('../../../util/url/changePath', () => ({
+  changePath: jest.fn()
+}))
 
 const mockUseNavigate = jest.fn()
 
@@ -25,8 +29,7 @@ const setup = setupTest({
     to: {
       pathname: '/search'
     },
-    type: 'link',
-    onChangePath: jest.fn()
+    type: 'link'
   },
   defaultZustandState: {
     portal: {
@@ -34,18 +37,6 @@ const setup = setupTest({
     }
   },
   withRouter: true
-})
-
-describe('mapDispatchToProps', () => {
-  test('onChangePath calls actions.changePath', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changePath')
-
-    mapDispatchToProps(dispatch).onChangePath(false)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(false)
-  })
 })
 
 describe('PortalLinkContainer component', () => {
@@ -173,8 +164,8 @@ describe('PortalLinkContainer component', () => {
   })
 
   describe('when updatePath is true', () => {
-    test('should call onChangePath', async () => {
-      const { props, user } = setup({
+    test('should call changePath', async () => {
+      const { user } = setup({
         overrideProps: {
           updatePath: true,
           onClick: null
@@ -189,11 +180,11 @@ describe('PortalLinkContainer component', () => {
       const link = screen.getByRole('link', { name: 'Click Here' })
       await user.click(link)
 
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/search?portal=example')
+      expect(changePath).toHaveBeenCalledTimes(1)
+      expect(changePath).toHaveBeenCalledWith('/search?portal=example')
     })
 
-    test('should call the provided onClick and onChangePath', async () => {
+    test('should call the provided onClick and changePath', async () => {
       const { props, user } = setup({
         overrideProps: {
           updatePath: true
@@ -213,8 +204,8 @@ describe('PortalLinkContainer component', () => {
         type: 'click'
       }))
 
-      expect(props.onChangePath).toHaveBeenCalledTimes(1)
-      expect(props.onChangePath).toHaveBeenCalledWith('/search?portal=example')
+      expect(changePath).toHaveBeenCalledTimes(1)
+      expect(changePath).toHaveBeenCalledWith('/search?portal=example')
     })
   })
 })

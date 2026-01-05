@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { startCase } from 'lodash-es'
 import { parse, stringify } from 'qs'
 import { useLocation, useParams } from 'react-router-dom'
 
-import actions from '../../actions/index'
+import { changePath } from '../../util/url/changePath'
+import { changeUrl } from '../../util/url/changeUrl'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isDefaultPortal, buildConfig } from '../../util/portals'
 
@@ -14,17 +13,7 @@ import { isDefaultPortal, buildConfig } from '../../util/portals'
 import availablePortals from '../../../../../portals/availablePortals.json'
 import useEdscStore from '../../zustand/useEdscStore'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onChangePath:
-    (portalId) => dispatch(actions.changePath(portalId)),
-  onChangeUrl:
-    (data) => dispatch(actions.changeUrl(data))
-})
-
-export const PortalContainer = ({
-  onChangePath,
-  onChangeUrl
-}) => {
+const PortalContainer = () => {
   const defaultPortalId = getApplicationConfig().defaultPortal
   const portal = useEdscStore((state) => state.portal)
   const location = useLocation()
@@ -61,13 +50,13 @@ export const PortalContainer = ({
     if (newPathname !== pathname || newSearch !== search) {
       setTimeout(() => {
         // Update the URL with the new value
-        onChangeUrl({
+        changeUrl({
           pathname: newPathname,
           search: newSearch
         })
 
         // Reset the store based on the new URL
-        onChangePath(`${newPathname}${newSearch}`)
+        changePath(`${newPathname}${newSearch}`)
       }, 0)
     }
   }, [])
@@ -98,9 +87,4 @@ export const PortalContainer = ({
   )
 }
 
-PortalContainer.propTypes = {
-  onChangePath: PropTypes.func.isRequired,
-  onChangeUrl: PropTypes.func.isRequired
-}
-
-export default connect(null, mapDispatchToProps)(PortalContainer)
+export default PortalContainer

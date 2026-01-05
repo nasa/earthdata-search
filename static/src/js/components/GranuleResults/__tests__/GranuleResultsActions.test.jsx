@@ -34,7 +34,6 @@ const setup = setupTest({
     handoffLinks: [],
     initialLoading: false,
     isCollectionInProject: false,
-    onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     removedGranuleIds: [],

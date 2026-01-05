@@ -1,7 +1,5 @@
 import React from 'react'
 
-import actions from '../../../actions'
-
 import * as metricsActions from '../../../middleware/metrics/actions'
 
 import {
@@ -19,7 +17,6 @@ jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest
 const setup = setupTest({
   Component: GranuleResultsActionsContainer,
   defaultProps: {
-    onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn()
   },
   defaultZustandState: {
@@ -61,16 +58,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onChangePath calls actions.changePath', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changePath')
-
-    mapDispatchToProps(dispatch).onChangePath('path')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('path')
-  })
-
   test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
@@ -108,7 +95,6 @@ describe('GranuleResultsActionsContainer component', () => {
       handoffLinks: [],
       initialLoading: false,
       isCollectionInProject: true,
-      onChangePath: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
       projectCollectionIds: ['collectionId'],
       projectGranuleCount: 100,

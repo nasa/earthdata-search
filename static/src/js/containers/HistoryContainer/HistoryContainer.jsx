@@ -1,16 +1,9 @@
 import { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
-import actions from '../../actions'
 import routerHelper from '../../router/router'
+import { changePath } from '../../util/url/changePath'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onChangePath:
-    (portalId) => dispatch(actions.changePath(portalId))
-})
-
-export const HistoryContainer = ({ onChangePath }) => {
+const HistoryContainer = () => {
   const { router } = routerHelper
 
   useEffect(() => {
@@ -26,7 +19,7 @@ export const HistoryContainer = ({ onChangePath }) => {
       } = location
 
       if (historyAction === 'POP') {
-        onChangePath(`${pathname}${search}`)
+        changePath(`${pathname}${search}`)
       }
     })
 
@@ -38,8 +31,4 @@ export const HistoryContainer = ({ onChangePath }) => {
   return null
 }
 
-HistoryContainer.propTypes = {
-  onChangePath: PropTypes.func.isRequired
-}
-
-export default connect(null, mapDispatchToProps)(HistoryContainer)
+export default HistoryContainer

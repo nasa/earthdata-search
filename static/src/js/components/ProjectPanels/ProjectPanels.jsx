@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import { parse } from 'qs'
 import { isEmpty } from 'lodash-es'
@@ -24,6 +23,8 @@ import VariableTreePanel from './VariableTreePanel'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
+import { changePath } from '../../util/url/changePath'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
@@ -41,11 +42,8 @@ import './ProjectPanels.scss'
 
 /**
  * Renders ProjectPanels.
- * @param {Function} onChangePath - Callback to change the path.
  */
-const ProjectPanels = ({
-  onChangePath
-}) => {
+const ProjectPanels = () => {
   const location = useLocation()
   const { search } = location
 
@@ -247,7 +245,7 @@ const ProjectPanels = ({
       })
 
       const navigateToDuplicateCollection = () => {
-        onChangePath(`${routes.GRANULES}${newSearch}`)
+        changePath(`${routes.GRANULES}${newSearch}`)
       }
 
       collectionDataQualitySummaries = [...collectionDataQualitySummaries, {
@@ -549,10 +547,6 @@ const ProjectPanels = ({
       </PanelSection>
     </Panels>
   )
-}
-
-ProjectPanels.propTypes = {
-  onChangePath: PropTypes.func.isRequired
 }
 
 export default ProjectPanels

@@ -16,6 +16,11 @@ import { MODAL_NAMES } from '../../../constants/modalNames'
 
 import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
 import { breadcrumbSkeleton, titleSkeleton } from '../../Panels/skeleton'
+import { changePath } from '../../../util/url/changePath'
+
+jest.mock('../../../util/url/changePath', () => ({
+  changePath: jest.fn()
+}))
 
 // Mock components, but use the actual component
 jest.mock('../../Panels/PanelGroup', () => ({
@@ -83,9 +88,6 @@ jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: ProjectPanels,
-  defaultProps: {
-    onChangePath: jest.fn()
-  },
   defaultZustandState: {
     dataQualitySummaries: {
       byCollectionId: {},
@@ -838,7 +840,7 @@ describe('ProjectPanels component', () => {
 
           describe('when clicking the duplicate collection link', () => {
             test('should navigate to the duplicate collection', async () => {
-              const { props, user } = setup({
+              const { user } = setup({
                 overrideZustandState: {
                   collection: {
                     collectionMetadata: {
@@ -859,8 +861,8 @@ describe('ProjectPanels component', () => {
               const link = screen.getByRole('link', { name: 'hosted in the Earthdata Cloud' })
               await user.click(link)
 
-              expect(props.onChangePath).toHaveBeenCalledTimes(1)
-              expect(props.onChangePath).toHaveBeenCalledWith('/search/granules?p=duplicateCollectionId!collectionId&pg[1][v]=t')
+              expect(changePath).toHaveBeenCalledTimes(1)
+              expect(changePath).toHaveBeenCalledWith('/search/granules?p=duplicateCollectionId!collectionId&pg[1][v]=t')
             })
           })
         })
@@ -891,7 +893,7 @@ describe('ProjectPanels component', () => {
 
           describe('when clicking the duplicate collection link', () => {
             test('should navigate to the duplicate collection', async () => {
-              const { props, user } = setup({
+              const { user } = setup({
                 overrideZustandState: {
                   collection: {
                     collectionMetadata: {
@@ -912,8 +914,8 @@ describe('ProjectPanels component', () => {
               const link = screen.getByRole('link', { name: 'hosted in a NASA datacenter' })
               await user.click(link)
 
-              expect(props.onChangePath).toHaveBeenCalledTimes(1)
-              expect(props.onChangePath).toHaveBeenCalledWith('/search/granules?p=duplicateCollectionId!collectionId&pg[1][v]=t')
+              expect(changePath).toHaveBeenCalledTimes(1)
+              expect(changePath).toHaveBeenCalledWith('/search/granules?p=duplicateCollectionId!collectionId&pg[1][v]=t')
             })
           })
         })
