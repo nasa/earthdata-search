@@ -54,6 +54,8 @@ const cleanupOldShapefiles = async (event, context) => {
   } catch (error) {
     console.log('Error cleaning up old shapefiles:', error)
 
+    // Event Bridge will retry the function if an uncaught error is thrown
+    // so we are catching an error and returning a 500 status code
     return {
       statusCode: 500,
       body: JSON.stringify({

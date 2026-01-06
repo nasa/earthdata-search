@@ -651,7 +651,7 @@ export class Functions extends Construct {
     })
 
     /**
-     * Cleanup Old Shapefiles Run once a month on the first day of the month at 8:00 AM
+     * Cleanup Old Shapefiles Run once a month on the first day of the month at 2:00 AM
      */
     const cleanupOldShapefilesNestedStack = new cdk.NestedStack(scope, 'CleanupOldShapefilesNestedStack')
     // eslint-disable-next-line no-new
@@ -665,7 +665,7 @@ export class Functions extends Construct {
         enabled: true,
         schedule: events.Schedule.cron({
           day: '1',
-          hour: '8',
+          hour: '2',
           minute: '0',
           month: '*',
           year: '*'

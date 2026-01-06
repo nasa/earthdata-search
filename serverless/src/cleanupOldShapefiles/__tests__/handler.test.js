@@ -48,6 +48,16 @@ describe('cleanupOldShapefiles', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].sql).toEqual('delete from "shapefiles" where "created_at" < $1 and not exists (select 1 from "shapefiles" as "children" where children.parent_shapefile_id = shapefiles.id and "children"."created_at" >= $2)')
+
+    // Verify bindings are Date objects with the correct date (one year ago)
+    const expectedDate = new Date('2023-01-15T10:00:00.000Z')
+
+    // Even though both use the same date, Knex creates separate parameterized bindings:
+    // one for the main query and one for the subquery
+    expect(queries[0].bindings).toHaveLength(2)
+    expect(queries[0].bindings[0].getTime()).toBe(expectedDate.getTime())
+    expect(queries[0].bindings[1].getTime()).toBe(expectedDate.getTime())
+
     expect(result).toEqual({
       body: '{"message":"Successfully deleted 5 shapefile(s)","deletedCount":5}',
       statusCode: 200
@@ -74,6 +84,15 @@ describe('cleanupOldShapefiles', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].sql).toEqual('delete from "shapefiles" where "created_at" < $1 and not exists (select 1 from "shapefiles" as "children" where children.parent_shapefile_id = shapefiles.id and "children"."created_at" >= $2)')
+
+    // Verify bindings are Date objects with the correct date (one year ago)
+    const expectedDate = new Date('2023-01-15T10:00:00.000Z')
+
+    // Even though both use the same date, Knex creates separate parameterized bindings:
+    // one for the main query and one for the subquery
+    expect(queries[0].bindings).toHaveLength(2)
+    expect(queries[0].bindings[0].getTime()).toBe(expectedDate.getTime())
+    expect(queries[0].bindings[1].getTime()).toBe(expectedDate.getTime())
 
     // Verify error was logged
     expect(consoleMock).toHaveBeenCalledWith(
