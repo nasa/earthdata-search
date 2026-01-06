@@ -48,8 +48,11 @@ describe('cleanupOldShapefiles', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].sql).toEqual('delete from "shapefiles" where "created_at" < $1 and not exists (select 1 from "shapefiles" as "children" where children.parent_shapefile_id = shapefiles.id and "children"."created_at" >= $2)')
-    expect(result).toEqual({"body": "{\"message\":\"Successfully deleted 5 shapefile(s)\",\"deletedCount\":5}", "statusCode": 200})
-    
+    expect(result).toEqual({
+      body: '{"message":"Successfully deleted 5 shapefile(s)","deletedCount":5}',
+      statusCode: 200
+    })
+
     expect(consoleMock).toHaveBeenCalledTimes(2)
     expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up shapefiles older than 2023-01-15T10:00:00.000Z')
     expect(consoleMock).toHaveBeenNthCalledWith(2, 'Successfully deleted 5 shapefile(s) 2023-01-15T10:00:00.000Z')
@@ -63,7 +66,10 @@ describe('cleanupOldShapefiles', () => {
       query.reject(dbError)
     })
 
-    await cleanupOldShapefiles({}, {})
+    const result = await cleanupOldShapefiles({}, {})
+
+    expect(result.body).toContain('Database connection failed')
+    expect(result.statusCode).toEqual(500)
 
     const { queries } = dbTracker.queries
 
