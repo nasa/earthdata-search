@@ -54,9 +54,7 @@ describe('cleanupOldShapefiles', () => {
 
     // Even though both use the same date, Knex creates separate parameterized bindings:
     // one for the main query and one for the subquery
-    expect(queries[0].bindings).toHaveLength(2)
-    expect(queries[0].bindings[0].getTime()).toBe(expectedDate.getTime())
-    expect(queries[0].bindings[1].getTime()).toBe(expectedDate.getTime())
+    expect(queries[0].bindings).toEqual([expectedDate, expectedDate])
 
     expect(result).toEqual({
       body: '{"message":"Successfully deleted 5 shapefile(s)","deletedCount":5}',
@@ -66,6 +64,37 @@ describe('cleanupOldShapefiles', () => {
     expect(consoleMock).toHaveBeenCalledTimes(2)
     expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up shapefiles older than 2023-01-15T10:00:00.000Z')
     expect(consoleMock).toHaveBeenNthCalledWith(2, 'Successfully deleted 5 shapefile(s) 2023-01-15T10:00:00.000Z')
+  })
+
+  test('correctly handles no shapefiles found and logs a message', async () => {
+    const deletedCount = 0
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation()
+
+    dbTracker.on('query', (query) => {
+      query.response(deletedCount)
+    })
+
+    const result = await cleanupOldShapefiles({}, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].sql).toEqual('delete from "shapefiles" where "created_at" < $1 and not exists (select 1 from "shapefiles" as "children" where children.parent_shapefile_id = shapefiles.id and "children"."created_at" >= $2)')
+
+    // Verify bindings are Date objects with the correct date (one year ago)
+    const expectedDate = new Date('2023-01-15T10:00:00.000Z')
+
+    // Even though both use the same date, Knex creates separate parameterized bindings:
+    // one for the main query and one for the subquery
+    expect(queries[0].bindings).toEqual([expectedDate, expectedDate])
+
+    expect(result).toEqual({
+      body: '{"message":"Successfully deleted 0 shapefile(s)","deletedCount":0}',
+      statusCode: 200
+    })
+
+    expect(consoleMock).toHaveBeenCalledTimes(2)
+    expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up shapefiles older than 2023-01-15T10:00:00.000Z')
+    expect(consoleMock).toHaveBeenNthCalledWith(2, 'No shapefiles older than 2023-01-15T10:00:00.000Z found exiting cleanup process')
   })
 
   test('correctly handles database errors and logs them', async () => {
@@ -90,9 +119,7 @@ describe('cleanupOldShapefiles', () => {
 
     // Even though both use the same date, Knex creates separate parameterized bindings:
     // one for the main query and one for the subquery
-    expect(queries[0].bindings).toHaveLength(2)
-    expect(queries[0].bindings[0].getTime()).toBe(expectedDate.getTime())
-    expect(queries[0].bindings[1].getTime()).toBe(expectedDate.getTime())
+    expect(queries[0].bindings).toEqual([expectedDate, expectedDate])
 
     // Verify error was logged
     expect(consoleMock).toHaveBeenCalledWith(

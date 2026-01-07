@@ -42,7 +42,9 @@ const cleanupOldShapefiles = async (event, context) => {
       })
       .delete()
 
-    console.log(`Successfully deleted ${deletedCount} shapefile(s) ${oneYearAgo.toISOString()}`)
+    console.log(deletedCount > 0
+      ? `Successfully deleted ${deletedCount} shapefile(s) ${oneYearAgo.toISOString()}`
+      : `No shapefiles older than ${oneYearAgo.toISOString()} found exiting cleanup process`)
 
     return {
       statusCode: 200,
