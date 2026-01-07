@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from 'lodash-es'
 import classNames from 'classnames'
@@ -7,6 +7,9 @@ import { buildOrganizedFacets } from '../../util/facets'
 
 import FacetsItem from './FacetsItem'
 import FacetsSectionHeading from './FacetsSectionHeading'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 
 import './FacetsList.scss'
 
@@ -19,18 +22,34 @@ const FacetsList = ({
   sortBy = null,
   variation = ''
 }) => {
+  // Holds the facet title that is currently being applied
+  const [applyingFacet, setApplyingFacet] = useState(null)
+  const { isLoading } = useEdscStore(getCollectionsPageInfo)
+
+  // When the collections finish loading, reset the applyingFacet state
+  useEffect(() => {
+    if (!isLoading) setApplyingFacet(null)
+  }, [isLoading])
+
   // Return a list of facet components to be displayed
   const buildFacetList = (facetsArray, limit = null) => facetsArray.map((child, index) => {
     if (index < limit || limit === null) {
       const uid = uniqueId('facet-item_')
       const startingLevel = 0
 
+      // Add `applyingFacet` and `setApplyingFacet` to the facet to ensure loading state works
+      const facet = {
+        ...child,
+        applyingFacet,
+        setApplyingFacet
+      }
+
       return (
         <FacetsItem
           autocompleteType={autocompleteType}
           key={uid}
           uid={uid}
-          facet={child}
+          facet={facet}
           level={startingLevel}
           facetCategory={facetCategory}
           changeHandler={changeHandler}

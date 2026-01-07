@@ -9,8 +9,13 @@
     flex: none;
     transform: scale(1);
 
-    &:checked {
+    &:checked:not(&--disabled) {
       opacity: 1;
+    }
+
+    &--disabled {
+      cursor: wait;
+      opacity: 0.5;
     }
   }
 
@@ -52,6 +57,11 @@
     align-items: center;
     flex: 1;
     overflow: hidden;
+
+    &--disabled {
+      cursor: wait;
+      opacity: 0.5;
+    }
   }
 
   &__title {
@@ -73,6 +83,11 @@
     padding-left: 0.125rem;
     color: utils.$color__carbon--90;
     font-size: 0.825rem;
+
+    &--disabled {
+      cursor: wait;
+      opacity: 0.5;
+    }
   }
 }
 

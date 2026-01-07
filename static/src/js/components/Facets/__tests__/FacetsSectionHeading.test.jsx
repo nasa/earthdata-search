@@ -1,24 +1,22 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import FacetsSectionHeading from '../FacetsSectionHeading'
 
-Enzyme.configure({ adapter: new Adapter() })
+const setup = setupTest({
+  Component: FacetsSectionHeading,
+  defaultProps: {
+    id: 'facets-modal__A',
+    letter: 'A'
+  }
+})
 
 describe('FacetsSectionHeading component', () => {
-  describe('renders correctly', () => {
-    test('when rendering a number', () => {
-      const enzymeWrapper = shallow(<FacetsSectionHeading id="facets-modal__number" letter="#" />)
-      expect(enzymeWrapper).toBeDefined()
-      expect(enzymeWrapper.find('#facets-modal__number').length).toEqual(1)
-      expect(enzymeWrapper.text()).toEqual('#')
-    })
+  test('renders the letter', () => {
+    setup()
 
-    test('when rendering a letter', () => {
-      const enzymeWrapper = shallow(<FacetsSectionHeading id="facets-modal__D" letter="D" />)
-      expect(enzymeWrapper).toBeDefined()
-      expect(enzymeWrapper.find('#facets-modal__D').length).toEqual(1)
-      expect(enzymeWrapper.text()).toEqual('D')
-    })
+    const heading = screen.getByRole('heading', { name: 'A' })
+    expect(heading).toBeInTheDocument()
+    expect(heading).toHaveAttribute('id', 'facets-modal__A')
   })
 })

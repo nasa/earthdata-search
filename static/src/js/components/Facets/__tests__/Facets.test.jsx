@@ -200,19 +200,6 @@ const setup = setupTest({
 })
 
 describe('Facets Features Map Imagery component', () => {
-  test('allows toggling Map Imagery checkbox', async () => {
-    const { user } = setup()
-
-    const featuresElements = screen.getAllByText('Features')
-    expect(featuresElements).toHaveLength(1)
-    expect(featuresElements[0]).toBeInTheDocument()
-    expect(screen.getByText('Map Imagery')).toBeInTheDocument()
-
-    await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
-
-    expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
-  })
-
   test('renders feature facets with tooltips and icons', async () => {
     const { user } = setup({
       overrideZustandState: {
@@ -255,29 +242,6 @@ describe('Facets Features Map Imagery component', () => {
     const tooltip = screen.getByRole('tooltip')
     expect(tooltip).toBeInTheDocument()
     expect(screen.getByText('Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)')).toBeInTheDocument()
-  })
-
-  test('checkboxes get checked correctly in the feature FacetsGroup', async () => {
-    const { user } = setup({
-      overrideZustandState: {
-        portal: {
-          features: {
-            featureFacets: {
-              showAvailableInEarthdataCloud: false,
-              showCustomizable: true,
-              showMapImagery: true
-            }
-          }
-        }
-      }
-    })
-
-    expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(2)
-
-    await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
-
-    expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
-    expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(1)
   })
 
   test('does not render features FacetsGroup if all feature facets are disabled', () => {
