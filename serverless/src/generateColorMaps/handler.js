@@ -3,6 +3,8 @@ import { getProjectionCapabilities } from './getProjectionCapabilities'
 
 /**
  * Handler to process colormap records from GIBS
+ * @param {Object} event EventBridge event (scheduled event)
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const generateColorMaps = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
