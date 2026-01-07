@@ -18,7 +18,6 @@ const defaultCustomProps = {
   isGranuleInProject: jest.fn().mockReturnValue(false),
   location: {},
   onExcludeGranule: jest.fn(),
-  onMetricsDataAccess: jest.fn(),
   removeGranuleFromProjectCollection: jest.fn()
 }
 

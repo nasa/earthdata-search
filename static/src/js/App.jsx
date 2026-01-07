@@ -184,14 +184,6 @@ const browserRouter = createBrowserRouter([
         )
       },
       {
-        path: routes.EARTHDATA_DOWNLOAD_CALLBACK,
-        element: (
-          <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-            <EarthdataDownloadRedirect />
-          </Suspense>
-        )
-      },
-      {
         path: routes.ADMIN,
         element: (
           <AuthRequiredContainer>
@@ -280,6 +272,14 @@ const browserRouter = createBrowserRouter([
     element: (
       <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
         <AuthCallbackContainer />
+      </Suspense>
+    )
+  },
+  {
+    path: routes.EARTHDATA_DOWNLOAD_CALLBACK,
+    element: (
+      <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+        <EarthdataDownloadRedirect />
       </Suspense>
     )
   },

@@ -30,9 +30,6 @@ const WrappingComponent = (props) => (
 
 const setup = setupTest({
   Component: WrappingComponent,
-  defaultProps: {
-    onMetricsClick: jest.fn()
-  },
   withRouter: true
 })
 

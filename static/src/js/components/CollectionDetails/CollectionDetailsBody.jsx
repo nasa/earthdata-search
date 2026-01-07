@@ -131,7 +131,7 @@ const buildForDeveloperLink = (linkData, token) => {
 /**
  * Renders CollectionDetailsBody.
  */
-export const CollectionDetailsBody = () => {
+const CollectionDetailsBody = () => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const {
