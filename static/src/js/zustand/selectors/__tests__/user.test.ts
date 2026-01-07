@@ -15,8 +15,6 @@ import useEdscStore from '../../useEdscStore'
 import { PreferencesData } from '../../types'
 import { initialSitePreferences } from '../../slices/createUserSlice'
 
-jest.mock('../../../store/configureStore')
-
 describe('getUser', () => {
   test('returns user slice from the zustand state', () => {
     expect(getUser(useEdscStore.getState())).toEqual({

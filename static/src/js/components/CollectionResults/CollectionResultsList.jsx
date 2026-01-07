@@ -43,11 +43,10 @@ innerElementType.propTypes = {
 /**
  * Renders CollectionResultsList.
  * @param {Object} props - The props passed into the component.
- * @param {Array} props.collectionsMetadata - Collections passed from redux store.
+ * @param {Array} props.collectionsMetadata - Collections passed from the store.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
- * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
 */
@@ -56,7 +55,6 @@ export const CollectionResultsList = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  onMetricsAddCollectionProject,
   setVisibleMiddleIndex = null,
   visibleMiddleIndex = null
 }) => {
@@ -131,7 +129,6 @@ export const CollectionResultsList = ({
                         windowHeight: height,
                         windowWidth: width,
                         collectionsMetadata,
-                        onMetricsAddCollectionProject,
                         isItemLoaded,
                         setSize
                       }
@@ -169,7 +166,6 @@ CollectionResultsList.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

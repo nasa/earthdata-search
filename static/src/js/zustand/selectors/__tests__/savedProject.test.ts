@@ -2,8 +2,6 @@ import useEdscStore from '../../useEdscStore'
 
 import { getSavedProject, getSavedProjectName } from '../savedProject'
 
-jest.mock('../../../store/configureStore', () => jest.fn())
-
 const mockProject = {
   id: '123',
   name: 'Test Project',

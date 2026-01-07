@@ -55,8 +55,7 @@ const permittedAccessMethodFields = [
 ]
 
 /**
- * Prepare parameters used in submitRetrieval() based on current Redux State
- * @param {Object} state Current Redux State
+ * Prepare parameters used in submitRetrieval() based on current store state
  * @returns Parameters used in submitRetrieval()
  */
 export const prepareRetrievalParams = () => {

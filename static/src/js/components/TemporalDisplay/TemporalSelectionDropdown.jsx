@@ -15,6 +15,8 @@ import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
 
 import { routes } from '../../constants/routes'
 
+import { metricsTemporalFilter } from '../../util/metrics/metricsTemporalFilter'
+
 import './TemporalSelectionDropdown.scss'
 
 /**
@@ -27,10 +29,9 @@ import './TemporalSelectionDropdown.scss'
  */
 const TemporalSelectionDropdown = ({
   allowRecurring = true,
-  onChangeQuery,
-  onMetricsTemporalFilter = null,
   searchParams = {}
 }) => {
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const temporalSearch = useEdscStore(getCollectionsQueryTemporal)
   const {
     startDate = '',
@@ -71,15 +72,13 @@ const TemporalSelectionDropdown = ({
   }
 
   /**
-   * Sets the current start and end dates values in the Redux store
+   * Sets the current start and end dates values in the store
    */
   const onApplyClick = () => {
-    if (onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
-        type: 'Apply Temporal Filter',
-        value: JSON.stringify(temporal)
-      })
-    }
+    metricsTemporalFilter({
+      type: 'Apply Temporal Filter',
+      value: JSON.stringify(temporal)
+    })
 
     const newParams = {
       collection: {
@@ -93,13 +92,13 @@ const TemporalSelectionDropdown = ({
       }
     }
 
-    onChangeQuery(newParams)
+    changeQuery(newParams)
 
     setOpen(false)
   }
 
   /**
-   * Clears the current temporal values internally and within the Redux store
+   * Clears the current temporal values internally and within the store
    */
   const onClearClick = () => {
     setDatesSelected({
@@ -114,14 +113,13 @@ const TemporalSelectionDropdown = ({
     })
 
     setOpen(false)
-    if (onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
-        type: 'Clear Temporal Filter',
-        value: {}
-      })
-    }
 
-    onChangeQuery({
+    metricsTemporalFilter({
+      type: 'Clear Temporal Filter',
+      value: {}
+    })
+
+    changeQuery({
       collection: {
         temporal: {}
       }
@@ -134,12 +132,11 @@ const TemporalSelectionDropdown = ({
   const onRecurringToggle = (e) => {
     const { target } = e
     const { checked: isChecked } = target
-    if (onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
-        type: 'Set Recurring',
-        value: isChecked
-      })
-    }
+
+    metricsTemporalFilter({
+      type: 'Set Recurring',
+      value: isChecked
+    })
 
     try {
       if (isChecked) {
@@ -263,8 +260,8 @@ const TemporalSelectionDropdown = ({
       start: true
     }))
 
-    if (shouldCallMetrics && onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
+    if (shouldCallMetrics) {
+      metricsTemporalFilter({
         type: `Set Start Date - ${metricType}`,
         value: newStartDate.toISOString()
       })
@@ -303,8 +300,8 @@ const TemporalSelectionDropdown = ({
       end: true
     }))
 
-    if (shouldCallMetrics && onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
+    if (shouldCallMetrics) {
+      metricsTemporalFilter({
         type: `Set End Date - ${metricType}`,
         value: newEndDate.toISOString()
       })
@@ -335,7 +332,6 @@ const TemporalSelectionDropdown = ({
             allowRecurring={allowRecurring}
             disabled={disabled}
             onApplyClick={onApplyClick}
-            onChangeQuery={onChangeQuery}
             onChangeRecurring={onChangeRecurring}
             onClearClick={onClearClick}
             onInvalid={onInvalid}
@@ -366,8 +362,6 @@ const TemporalSelectionDropdown = ({
 
 TemporalSelectionDropdown.propTypes = {
   allowRecurring: PropTypes.bool,
-  onChangeQuery: PropTypes.func.isRequired,
-  onMetricsTemporalFilter: PropTypes.func,
   searchParams: PropTypes.shape({
     q: PropTypes.string
   })

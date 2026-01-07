@@ -9,15 +9,17 @@ import ProjectHeader from '../ProjectHeader'
 
 import * as isProjectValid from '../../../util/isProjectValid'
 import { validAccessMethod } from '../../../util/accessMethods'
+import { metricsDataAccess } from '../../../util/metrics/metricsDataAccess'
+
+jest.mock('../../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: jest.fn()
+}))
 
 jest.mock('../ProjectCollectionsList', () => jest.fn(() => <div />))
 jest.mock('../ProjectHeader', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: ProjectCollections,
-  defaultProps: {
-    onMetricsDataAccess: jest.fn()
-  },
   defaultZustandState: {
     collection: {
       collectionMetadata: {
@@ -74,8 +76,7 @@ const setup = setupTest({
         pageNum: 1
       }
     }
-  },
-  withRedux: true
+  }
 })
 
 describe('ProjectCollectionsList component', () => {
@@ -91,7 +92,6 @@ describe('ProjectCollectionsList component', () => {
         collectionId1: { mock: 'data 1' },
         collectionId2: { mock: 'data 2' }
       },
-      onMetricsDataAccess: expect.any(Function),
       onSetActivePanel: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),
       onTogglePanels: expect.any(Function),
@@ -215,8 +215,8 @@ describe('ProjectCollectionsList component', () => {
   })
 
   describe('componentDidUpdate', () => {
-    test('calls onMetricsDataAccess and sets this.sentDataAccessMetrics', () => {
-      const { props } = setup({
+    test('calls metricsDataAccess', () => {
+      setup({
         overrideZustandState: {
           project: {
             collections: {
@@ -240,13 +240,13 @@ describe('ProjectCollectionsList component', () => {
         }
       })
 
-      expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(2) // 2 collections
-      expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
+      expect(metricsDataAccess).toHaveBeenCalledTimes(2) // 2 collections
+      expect(metricsDataAccess).toHaveBeenCalledWith({
         collections: [{ collectionId: 'collectionId1' }],
         type: 'data_access_init'
       })
 
-      expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
+      expect(metricsDataAccess).toHaveBeenCalledWith({
         collections: [{ collectionId: 'collectionId2' }],
         type: 'data_access_init'
       })

@@ -14,21 +14,31 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import { getCollections } from '../../zustand/selectors/collections'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 import './CollectionResultsBody.scss'
 
 /**
  * Renders CollectionResultsBody.
  * @param {Object} props - The props passed into the component.
- * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {String} props.panelView - The current active view.
  */
 const CollectionResultsBody = ({
-  loadNextPage,
-  onMetricsAddCollectionProject,
   panelView
 }) => {
+  const collectionQuery = useEdscStore(getCollectionsQuery)
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
+
+  const loadNextPage = () => {
+    const { pageNum } = collectionQuery
+
+    changeQuery({
+      collection: {
+        pageNum: pageNum + 1
+      }
+    })
+  }
+
   const collectionsMetadata = useEdscStore(getCollections)
   const {
     count: collectionHits,
@@ -102,7 +112,6 @@ const CollectionResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           isItemLoaded={isItemLoaded}
-          onMetricsAddCollectionProject={onMetricsAddCollectionProject}
         />
       </CSSTransition>
       <CSSTransition
@@ -116,7 +125,6 @@ const CollectionResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          onMetricsAddCollectionProject={onMetricsAddCollectionProject}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
         />
@@ -152,8 +160,6 @@ const CollectionResultsBody = ({
 }
 
 CollectionResultsBody.propTypes = {
-  loadNextPage: PropTypes.func.isRequired,
-  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired
 }
 

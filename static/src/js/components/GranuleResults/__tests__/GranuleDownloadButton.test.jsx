@@ -43,8 +43,7 @@ const setup = setupTest({
       edlToken: 'testToken'
     }
   },
-  withRouter: true,
-  withRedux: true
+  withRouter: true
 })
 
 describe('GranuleDownloadButton component', () => {

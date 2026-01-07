@@ -45,7 +45,7 @@ export const stringify = (params) => qs.stringify(
 )
 
 /**
- * Mapping of URL Shortened Keys to their redux store keys
+ * Mapping of URL Shortened Keys to their store keys
  */
 const urlDefs = {
   earthdataEnvironment: {
@@ -187,9 +187,9 @@ const decodeHelp = (params, paramName) => {
 }
 
 /**
- * Given a URL param string, returns an object that matches the redux store
+ * Given a URL param string, returns an object that matches the store
  * @param {String} paramString a URL encoded parameter string
- * @return {Object} An object of values that match the redux store
+ * @return {Object} An object of values that match the store
  */
 export const decodeUrlParams = (paramString) => {
   // Decode the paramString
@@ -210,7 +210,7 @@ export const decodeUrlParams = (paramString) => {
     query = {}
   } = decodeCollections(params)
 
-  // Build the param object based on the structure in the redux store
+  // Build the param object based on the structure in the store
   // e.g. map is store separately from query
   const focusedGranule = decodeHelp(params, 'focusedGranule')
 

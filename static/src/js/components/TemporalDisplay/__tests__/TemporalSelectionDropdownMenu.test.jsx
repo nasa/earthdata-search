@@ -34,7 +34,6 @@ const setup = setupTest({
     displayEndDate: '',
     isHomePage: true,
     onApplyClick: jest.fn(),
-    onChangeQuery: jest.fn(),
     onChangeRecurring: jest.fn(),
     onClearClick: jest.fn(),
     onInvalid: jest.fn(),

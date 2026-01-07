@@ -3,22 +3,12 @@ import nock from 'nock'
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error This file does not have types
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error This file does not have types
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 // @ts-expect-error This file does not have types
 import OpenSearchGranuleRequest from '../../../util/request/openSearchGranuleRequest'
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
-const mockDispatch = jest.fn()
-configureStore.mockReturnValue({
-  dispatch: mockDispatch
-})
 
 describe('createGranulesSlice', () => {
   test('sets the default state', () => {

@@ -47,10 +47,10 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
       const collections = getCollectionsById(zustandState)
       const collectionById = collections[collectionId]
 
-      // Extract granule search parameters from redux specific to the focused collection
+      // Extract granule search parameters from the store specific to the focused collection
       const extractedGranuleParams = extractGranuleSearchParams(collectionId)
 
-      // Format and structure data from Redux to be sent to CMR
+      // Format and structure data from the store to be sent to CMR
       const granuleParams = prepareGranuleParams(
         // Use focusedCollection and collection search results together to build the granule
         // search parameters. This will ensure isOpenSearch can be properly determined before

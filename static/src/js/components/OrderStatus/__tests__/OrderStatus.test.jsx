@@ -41,16 +41,12 @@ const setup = setupTest({
       data: retrievalStatus
     }
   }],
-  defaultProps: {
-    onMetricsRelatedCollection: jest.fn()
-  },
   defaultZustandState: {
     user: {
       edlToken: 'testToken'
     }
   },
   withApolloClient: true,
-  withRedux: true,
   withRouter: true
 })
 

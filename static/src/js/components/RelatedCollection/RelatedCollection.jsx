@@ -6,13 +6,13 @@ import { parse } from 'qs'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { stringify } from '../../util/url/url'
+import { metricsRelatedCollection } from '../../util/metrics/metricsRelatedCollection'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { routes } from '../../constants/routes'
 
 export const RelatedCollection = ({
   className = '',
-  onMetricsRelatedCollection,
   relatedCollection
 }) => {
   const location = useLocation()
@@ -38,7 +38,7 @@ export const RelatedCollection = ({
       type="link"
       onClick={
         () => {
-          onMetricsRelatedCollection({
+          metricsRelatedCollection({
             collectionId: id,
             type: 'view'
           })
@@ -63,7 +63,6 @@ export const RelatedCollection = ({
 
 RelatedCollection.propTypes = {
   className: PropTypes.string,
-  onMetricsRelatedCollection: PropTypes.func.isRequired,
   relatedCollection: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string

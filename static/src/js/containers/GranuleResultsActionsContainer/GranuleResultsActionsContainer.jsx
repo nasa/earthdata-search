@@ -1,8 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-
-import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
 
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
 
@@ -22,14 +18,7 @@ import {
   getFocusedCollectionGranuleQuery
 } from '../../zustand/selectors/query'
 
-export const mapDispatchToProps = (dispatch) => ({
-  onMetricsAddCollectionProject:
-    (data) => dispatch(metricsAddCollectionProject(data))
-})
-
-export const GranuleResultsActionsContainer = ({
-  onMetricsAddCollectionProject
-}) => {
+const GranuleResultsActionsContainer = () => {
   const { mapView } = useEdscStore((state) => ({
     mapView: state.map.mapView
   }))
@@ -81,7 +70,6 @@ export const GranuleResultsActionsContainer = ({
       handoffLinks={handoffLinks}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
-      onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       projectCollectionIds={projectCollectionIds}
       projectGranuleCount={projectGranuleCount}
       removedGranuleIds={removedGranuleIds}
@@ -90,8 +78,4 @@ export const GranuleResultsActionsContainer = ({
   )
 }
 
-GranuleResultsActionsContainer.propTypes = {
-  onMetricsAddCollectionProject: PropTypes.func.isRequired
-}
-
-export default connect(null, mapDispatchToProps)(GranuleResultsActionsContainer)
+export default GranuleResultsActionsContainer

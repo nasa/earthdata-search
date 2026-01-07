@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 
@@ -31,12 +30,8 @@ import './OrderStatus.scss'
 
 /**
  * Renders a RelatedCollection.
- * @param {Object} props - The props passed into the component.
- * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
  */
-const OrderStatus = ({
-  onMetricsRelatedCollection
-}) => {
+const OrderStatus = () => {
   const params = useParams()
   const { id: retrievalId } = params
 
@@ -251,7 +246,6 @@ const OrderStatus = ({
                                 <RelatedCollection
                                   key={`related-collection-${collectionId}`}
                                   className="collection-body__related-collection-link"
-                                  onMetricsRelatedCollection={onMetricsRelatedCollection}
                                   relatedCollection={relatedCollection}
                                 />
                               </li>
@@ -318,10 +312,6 @@ const OrderStatus = ({
       </div>
     </>
   )
-}
-
-OrderStatus.propTypes = {
-  onMetricsRelatedCollection: PropTypes.func.isRequired
 }
 
 export default OrderStatus

@@ -5,6 +5,11 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { RelatedCollection } from '../RelatedCollection'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+import { metricsRelatedCollection } from '../../../util/metrics/metricsRelatedCollection'
+
+jest.mock('../../../util/metrics/metricsRelatedCollection', () => ({
+  metricsRelatedCollection: jest.fn()
+}))
 
 // eslint-disable-next-line react/jsx-props-no-spreading
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => <div {...props} />))
@@ -23,7 +28,6 @@ jest.mock('react-router-dom', () => ({
 const setup = setupTest({
   Component: RelatedCollection,
   defaultProps: {
-    onMetricsRelatedCollection: jest.fn(),
     relatedCollection: {
       doi: '1.TEST.DOI',
       id: 'TEST_COLLECTION_1',
@@ -60,14 +64,14 @@ describe('Related Collections', () => {
   })
 
   describe('when clicking a related collection', () => {
-    test('calls onMetricsRelatedCollection and setCollectionId', async () => {
-      const { props, user, zustandState } = setup()
+    test('calls metricsRelatedCollection and setCollectionId', async () => {
+      const { user, zustandState } = setup()
 
       const button = screen.getByText('Test Title 1')
       await user.click(button)
 
-      expect(props.onMetricsRelatedCollection).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsRelatedCollection).toHaveBeenCalledWith({
+      expect(metricsRelatedCollection).toHaveBeenCalledTimes(1)
+      expect(metricsRelatedCollection).toHaveBeenCalledWith({
         type: 'view',
         collectionId: 'TEST_COLLECTION_1'
       })

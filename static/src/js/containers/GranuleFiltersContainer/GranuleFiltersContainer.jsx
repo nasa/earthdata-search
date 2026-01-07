@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { withFormik } from 'formik'
 
 import validationSchema from './validationSchema'
@@ -8,15 +7,9 @@ import mapPropsToValues from './mapPropsToValues'
 import handleFormSubmit from './handleFormSubmit'
 
 import GranuleFiltersForm from '../../components/GranuleFilters/GranuleFiltersForm'
-import { metricsGranuleFilter } from '../../middleware/metrics/actions'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
-
-export const mapDispatchToProps = (dispatch) => ({
-  onMetricsGranuleFilter:
-    (data) => dispatch(metricsGranuleFilter(data))
-})
 
 /**
  * Renders GranuleFiltersContainer.
@@ -27,7 +20,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleReset - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function provided by Formik.
- * @param {Function} props.onMetricsGranuleFilter - Callback function to send metrics for the granule filters.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Function} props.setGranuleFiltersNeedReset - Callback to reset the granuleFiltersNeedsReset flag.
@@ -42,7 +34,6 @@ export const GranuleFiltersContainer = (props) => {
     handleChange,
     handleReset,
     handleSubmit,
-    onMetricsGranuleFilter,
     setFieldTouched,
     setFieldValue,
     setGranuleFiltersNeedReset,
@@ -88,7 +79,6 @@ export const GranuleFiltersContainer = (props) => {
       handleSubmit={onHandleSubmit}
       setFieldValue={setFieldValue}
       setFieldTouched={setFieldTouched}
-      onMetricsGranuleFilter={onMetricsGranuleFilter}
     />
   )
 }
@@ -122,7 +112,6 @@ GranuleFiltersContainer.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  onMetricsGranuleFilter: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setGranuleFiltersNeedReset: PropTypes.func.isRequired,
@@ -130,4 +119,4 @@ GranuleFiltersContainer.propTypes = {
   values: PropTypes.shape({}).isRequired
 }
 
-export default connect(null, mapDispatchToProps)(GranuleFiltersContainerWrapper)
+export default GranuleFiltersContainerWrapper

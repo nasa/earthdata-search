@@ -9,8 +9,7 @@ import useEdscStore from '../zustand/useEdscStore'
 import { getCollectionsQuery, getSelectedRegionQuery } from '../zustand/selectors/query'
 
 /**
- * Prepare parameters used in getCollections() based on current Redux State
- * @returns {Object} Parameters used in buildCollectionSearchParams
+ * Prepare parameters used in getCollections() based on current store state
  */
 export const prepareCollectionParams = () => {
   const zustandState = useEdscStore.getState()

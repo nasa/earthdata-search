@@ -4,14 +4,7 @@ import { waitFor } from '@testing-library/react'
 import { TimelineInterval } from '../../types'
 import useEdscStore from '../../useEdscStore'
 
-// @ts-expect-error Types are not defined for this module
-import configureStore from '../../../store/configureStore'
-
 import routerHelper from '../../../router/router'
-
-jest.mock('../../../store/configureStore', () => jest.fn().mockReturnValue({
-  dispatch: jest.fn()
-}))
 
 describe('createTimelineSlice', () => {
   test('sets the default state', () => {
@@ -260,12 +253,6 @@ describe('createTimelineSlice', () => {
           }
 
           state.errors.handleError = jest.fn()
-        })
-
-        const mockDispatch = jest.fn()
-
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch
         })
 
         nock(/cmr/)

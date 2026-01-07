@@ -13,6 +13,7 @@ import {
   XCircled
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import { metricsAddGranuleToProject } from '../../util/metrics/metricsAddGranuleToProject'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { getSearchWords } from '../../util/getSearchWords'
@@ -37,17 +38,15 @@ import './GranuleResultsItem.scss'
 /**
  * Renders GranuleResultsItem.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.collectionId - Granule passed from redux store.
+ * @param {String} props.collectionId - Granule passed from the store.
  * @param {Object} props.collectionQuerySpatial - The spatial for the collection query
  * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
- * @param {Object} props.granule - Granule passed from redux store.
+ * @param {Object} props.granule - Granule passed from the store.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.isGranuleInProject - Function designating if the granule is in the project.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
- * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
- * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param {Array} props.readableGranuleName - Array of Readable Granule Name strings.
  */
@@ -60,8 +59,6 @@ const GranuleResultsItem = forwardRef(({
   isCollectionInProject,
   isGranuleInProject,
   onExcludeGranule,
-  onMetricsDataAccess,
-  onMetricsAddGranuleProject,
   readableGranuleName
 }, ref) => {
   const location = useLocation()
@@ -271,7 +268,7 @@ const GranuleResultsItem = forwardRef(({
                               granuleId: id
                             })
 
-                            onMetricsAddGranuleProject({
+                            metricsAddGranuleToProject({
                               collectionConceptId: collectionId,
                               granuleConceptId: id,
                               page: 'granules',
@@ -317,7 +314,6 @@ const GranuleResultsItem = forwardRef(({
                     dataLinks={dataLinks}
                     directDistributionInformation={directDistributionInformation}
                     s3Links={s3Links}
-                    onMetricsDataAccess={onMetricsDataAccess}
                   />
                 )
               }
@@ -370,8 +366,6 @@ GranuleResultsItem.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onMetricsAddGranuleProject: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 

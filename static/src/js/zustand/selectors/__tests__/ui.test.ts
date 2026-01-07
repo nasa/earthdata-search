@@ -7,8 +7,6 @@ import {
   setOpenModalFunction
 } from '../ui'
 
-jest.mock('../../../store/configureStore', () => jest.fn())
-
 describe('ui selectors', () => {
   describe('setOpenModalFunction', () => {
     test('returns the setOpenModal function', () => {

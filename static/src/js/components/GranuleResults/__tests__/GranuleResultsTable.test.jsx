@@ -31,8 +31,6 @@ const setup = setupTest({
     itemCount: 1,
     focusedGranule: 'one',
     loadMoreItems: jest.fn(),
-    onMetricsDataAccess: jest.fn(),
-    onMetricsAddGranuleProject: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1
   },
@@ -76,8 +74,6 @@ describe('GranuleResultsTable component', () => {
             key: 'testKey'
           },
           onExcludeGranule: expect.any(Function),
-          onMetricsAddGranuleProject: expect.any(Function),
-          onMetricsDataAccess: expect.any(Function),
           removeGranuleFromProjectCollection: expect.any(Function)
         },
         sticky: 'left',

@@ -15,6 +15,7 @@ import { eventEmitter } from '../../events/events'
 
 // @ts-expect-error: This file does not have types
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { metricsSpatialSelection } from '../../util/metrics/metricsSpatialSelection'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -28,22 +29,12 @@ import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import './SpatialSelectionDropdown.scss'
 
-type SpatialSelectionDropdownProps = {
-  onMetricsSpatialSelection: (data: { item: string }) => void
-}
-
-const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
-  const {
-    onMetricsSpatialSelection
-  } = props
-
+const SpatialSelectionDropdown = () => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
 
   const onItemClick = (spatialType: string) => {
     // Sends metrics for spatial selection usage
-    onMetricsSpatialSelection({
-      item: spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase()
-    })
+    metricsSpatialSelection(spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase())
 
     if (spatialType === 'file') {
       setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)

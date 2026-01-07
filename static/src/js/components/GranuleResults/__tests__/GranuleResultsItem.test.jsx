@@ -10,6 +10,16 @@ import GranuleResultsItem from '../GranuleResultsItem'
 import * as getSearchWords from '../../../util/getSearchWords'
 
 import EDSCImage from '../../EDSCImage/EDSCImage'
+import { metricsDataAccess } from '../../../util/metrics/metricsDataAccess'
+import { metricsAddGranuleToProject } from '../../../util/metrics/metricsAddGranuleToProject'
+
+jest.mock('../../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: jest.fn()
+}))
+
+jest.mock('../../../util/metrics/metricsAddGranuleToProject', () => ({
+  metricsAddGranuleToProject: jest.fn()
+}))
 
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
   const mockPortalFeatureContainer = jest.fn(({ children }) => (
@@ -44,8 +54,6 @@ const defaultProps = {
   location: { search: 'location' },
   onAddGranuleToProjectCollection: jest.fn(),
   onExcludeGranule: jest.fn(),
-  onMetricsDataAccess: jest.fn(),
-  onMetricsAddGranuleProject: jest.fn(),
   onRemoveGranuleFromProjectCollection: jest.fn(),
   readableGranuleName: ['']
 }
@@ -621,7 +629,7 @@ describe('GranuleResultsItem component', () => {
     })
 
     test('is passed the metrics callback', async () => {
-      const { props, user } = setup({
+      const { user } = setup({
         overrideProps: cmrProps
       })
 
@@ -629,13 +637,13 @@ describe('GranuleResultsItem component', () => {
 
       await user.click(screen.getByLabelText('Add granule to project'))
 
-      expect(props.onMetricsAddGranuleProject.mock.calls.length).toBe(1)
-      expect(props.onMetricsAddGranuleProject.mock.calls[0]).toEqual([{
+      expect(metricsAddGranuleToProject).toHaveBeenCalledTimes(1)
+      expect(metricsAddGranuleToProject).toHaveBeenCalledWith({
         collectionConceptId: 'collectionId',
         granuleConceptId: 'granuleId',
         page: 'granules',
         view: 'list'
-      }])
+      })
     })
   })
 
@@ -666,7 +674,7 @@ describe('GranuleResultsItem component', () => {
         overrideProps: cmrProps
       })
 
-      const { granule, onMetricsDataAccess, collectionId } = props
+      const { granule, collectionId } = props
       const { dataLinks } = granule
       const dataLink = dataLinks[0]
       const { href } = dataLink
@@ -677,8 +685,8 @@ describe('GranuleResultsItem component', () => {
 
       await user.click(dataLinksButton)
 
-      expect(onMetricsDataAccess).toHaveBeenCalledTimes(1)
-      expect(onMetricsDataAccess).toHaveBeenCalledWith(
+      expect(metricsDataAccess).toHaveBeenCalledTimes(1)
+      expect(metricsDataAccess).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'single_granule_download',
           collections: [{

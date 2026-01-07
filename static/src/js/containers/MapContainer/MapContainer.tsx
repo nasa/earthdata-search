@@ -5,16 +5,11 @@ import React, {
   useMemo,
   useLayoutEffect
 } from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
 import { useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import GET_COLORMAPS from '../../operations/queries/getColorMaps'
-
-// @ts-expect-error The file does not have types
-import { metricsMap } from '../../middleware/metrics/actions'
 
 import { eventEmitter } from '../../events/events'
 
@@ -25,6 +20,7 @@ import { projectionConfigs } from '../../util/map/crs'
 // @ts-expect-error The file does not have types
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
+import { metricsMap } from '../../util/metrics/metricsMap'
 
 import {
   backgroundGranulePointStyle,
@@ -70,21 +66,7 @@ import type { ProjectCollection, ProjectGranules } from '../../zustand/types'
 
 import './MapContainer.scss'
 
-export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onMetricsMap:
-    (type: string) => dispatch(metricsMap(type))
-})
-
-interface MapContainerProps {
-  /** Function to call the metrics map */
-  onMetricsMap: (type: string) => void
-}
-
-export const MapContainer: React.FC<MapContainerProps> = (props) => {
-  const {
-    onMetricsMap
-  } = props
-
+export const MapContainer = () => {
   const location = useLocation()
   const { pathname } = location
   const isProjectPage = isPath(pathname, [routes.PROJECT])
@@ -327,10 +309,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }
 
   const handleProjectionSwitching = useCallback((newProjectionCode: ProjectionCode) => {
-    const {
-      onMetricsMap: callbackOnMetricsMap
-    } = props
-
     const Projection = Object.keys(projectionCodes).find(((key) => (
       projectionCodes[key as keyof typeof projectionCodes] === newProjectionCode
     )))
@@ -354,7 +332,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setZoom(newZoom)
     setProjection(newProjectionCode)
 
-    callbackOnMetricsMap(`Set Projection: ${Projection}`)
+    metricsMap(`Set Projection: ${Projection}`)
     onChangeMap({ ...newMap })
   }, [projection])
 
@@ -538,7 +516,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       onDrawEnd={handleDrawEnd}
       onExcludeGranule={onExcludeGranule}
       onMapReady={setMapReady}
-      onMetricsMap={onMetricsMap}
       onToggleDrawingNewLayer={setDrawingNewLayer}
       onToggleShapefileUploadModal={() => setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)}
       onToggleTooManyPointsModal={() => setOpenModal(MODAL_NAMES.TOO_MANY_POINTS)}
@@ -554,4 +531,4 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   )
 }
 
-export default connect(null, mapDispatchToProps)(MapContainer)
+export default MapContainer

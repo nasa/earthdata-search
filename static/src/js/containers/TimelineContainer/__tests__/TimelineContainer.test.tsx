@@ -1,13 +1,11 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { mapDispatchToProps, TimelineContainer } from '../TimelineContainer'
+import TimelineContainer from '../TimelineContainer'
 
 // @ts-expect-error The file does not have types
 import Timeline from '../../../components/Timeline/Timeline'
 
-// @ts-expect-error The file does not have types
-import * as metricsTimeline from '../../../middleware/metrics/actions'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import { routes } from '../../../constants/routes'
 
@@ -27,8 +25,7 @@ jest.mock('react-router-dom', () => ({
 const setup = setupTest({
   Component: TimelineContainer,
   defaultProps: {
-    isOpen: true,
-    onMetricsTimeline: jest.fn()
+    isOpen: true
   },
   defaultZustandState: {
     collection: {
@@ -49,18 +46,6 @@ const setup = setupTest({
     }
   },
   withRouter: true
-})
-
-describe('mapDispatchToProps', () => {
-  test('onMetricsTimeline calls metricsTimeline', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsTimeline, 'metricsTimeline')
-
-    mapDispatchToProps(dispatch).onMetricsTimeline('mock-type')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('mock-type')
-  })
 })
 
 describe('TimelineContainer component', () => {
@@ -86,7 +71,6 @@ describe('TimelineContainer component', () => {
           }
         },
         isOpen: true,
-        onMetricsTimeline: expect.any(Function),
         onToggleTimeline: expect.any(Function),
         pathname: routes.GRANULES,
         projectCollectionsIds: ['projectCollectionId'],
@@ -113,7 +97,6 @@ describe('TimelineContainer component', () => {
           }
         },
         isOpen: true,
-        onMetricsTimeline: expect.any(Function),
         onToggleTimeline: expect.any(Function),
         pathname: routes.PROJECT,
         projectCollectionsIds: ['projectCollectionId'],

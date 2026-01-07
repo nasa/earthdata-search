@@ -21,12 +21,12 @@ import { Query } from '../../../types/sharedTypes'
 
 /**
  * Handles the Draw interaction `drawend` event. Takes the coordinates of the drawn geometry,
- * transforms them to geographic coordinates, and updates the redux state with the new spatial query.
+ * transforms them to geographic coordinates, and updates the store state with the new spatial query.
  *
  * @param {Object} params
  * @param {Object} params.drawingInteraction OpenLayers drawing interaction
  * @param {Object} params.map OpenLayers map object
- * @param {Function} params.onChangeQuery Callback to update the redux state with the new query
+ * @param {Function} params.onChangeQuery Callback to update the store state with the new query
  * @param {Function} params.onToggleDrawingNewLayer Callback to toggle the drawing new layer
  * @param {String} params.projectionCode The current projection code
  * @param {String} params.spatialType The current spatial type
@@ -38,7 +38,7 @@ const handleDrawEnd = (
     drawingInteraction: Interaction
     /** The OpenLayers map object */
     map: Map
-    /** Callback to update the redux state with the new query */
+    /** Callback to update the store state with the new query */
     onChangeQuery: (query: Query) => void
     /** Callback to clear the shapefile */
     onClearShapefile: () => void
@@ -189,10 +189,10 @@ const handleDrawEnd = (
     (coordinate) => Math.round(coordinate * pow) / pow
   )
 
-  // Determine the query type (for Redux) based on the spatial type
+  // Determine the query type (for the store) based on the spatial type
   const queryType = spatialType === spatialTypes.BOUNDING_BOX ? 'boundingBox' : spatialType.toLowerCase()
 
-  // Update the redux state with the new spatial query
+  // Update the store state with the new spatial query
   onChangeQuery({
     collection: {
       spatial: {

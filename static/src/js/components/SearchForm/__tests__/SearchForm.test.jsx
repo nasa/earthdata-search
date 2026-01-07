@@ -5,11 +5,11 @@ import SearchForm from '../SearchForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => (
+jest.mock('../../TemporalDisplay/TemporalSelectionDropdown', () => jest.fn(() => (
   <div>Temporal Selection</div>
 )))
 
-jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => jest.fn(() => (
+jest.mock('../../../components/SpatialDisplay/SpatialSelectionDropdown', () => jest.fn(() => (
   <div>Spatial Selection</div>
 )))
 

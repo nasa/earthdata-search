@@ -9,6 +9,7 @@ import {
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
+import { metricsAddGranuleToProject } from '../../util/metrics/metricsAddGranuleToProject'
 import murmurhash3 from '../../util/murmurhash3'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
@@ -45,8 +46,6 @@ const GranuleResultsTableHeaderCell = (props) => {
     isGranuleInProject,
     location,
     onExcludeGranule,
-    onMetricsAddGranuleProject,
-    onMetricsDataAccess,
     removeGranuleFromProjectCollection
   } = customProps
 
@@ -95,7 +94,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                         granuleId: id
                       })
 
-                      onMetricsAddGranuleProject({
+                      metricsAddGranuleToProject({
                         collectionConceptId: collectionId,
                         granuleConceptId: id,
                         page: 'granules',
@@ -141,7 +140,6 @@ const GranuleResultsTableHeaderCell = (props) => {
               dataLinks={dataLinks}
               id={id}
               s3Links={s3Links}
-              onMetricsDataAccess={onMetricsDataAccess}
             />
           )
         }
@@ -207,8 +205,6 @@ GranuleResultsTableHeaderCell.propTypes = {
         search: PropTypes.string
       }),
       onExcludeGranule: PropTypes.func,
-      onMetricsAddGranuleProject: PropTypes.func,
-      onMetricsDataAccess: PropTypes.func,
       removeGranuleFromProjectCollection: PropTypes.func
     })
   }).isRequired,

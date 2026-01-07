@@ -131,6 +131,8 @@ export interface Temporal {
   endDate?: DateTimeString | ''
   /** The start date timestamp, if applied */
   startDate?: DateTimeString | ''
+  /** The recurring temporal flag, if applied */
+  recurring?: boolean
 }
 
 /** The URS profile for the user */

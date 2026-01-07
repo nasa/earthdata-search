@@ -46,7 +46,6 @@ const defaultProps = {
     }],
     isItemLoaded: jest.fn(() => true),
     loadMoreItems: jest.fn(),
-    onMetricsAddCollectionProject: jest.fn(),
     setSize: jest.fn(),
     windowWidth: 800
   },
@@ -91,8 +90,7 @@ describe('CollectionResultsList component', () => {
             thumbnail: 'http://some.test.com/thumbnail/url.jpg',
             temporalRange: '2010-10-10 to 2011-10-10',
             versionId: '2'
-          },
-          onMetricsAddCollectionProject: expect.any(Function)
+          }
         },
         {
           current: expect.any(Object)

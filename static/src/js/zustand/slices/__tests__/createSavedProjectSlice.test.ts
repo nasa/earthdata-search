@@ -1,9 +1,6 @@
 import useEdscStore from '../../useEdscStore'
 
 // @ts-expect-error Types are not defined for this module
-import configureStore from '../../../store/configureStore'
-
-// @ts-expect-error Types are not defined for this module
 import getApolloClient from '../../../providers/getApolloClient'
 import CREATE_PROJECT from '../../../operations/mutations/createProject'
 import UPDATE_PROJECT from '../../../operations/mutations/updateProject'
@@ -18,8 +15,6 @@ jest.mock('../../../providers/getApolloClient', () => ({
     query: jest.fn()
   })
 }))
-
-jest.mock('../../../store/configureStore', () => jest.fn())
 
 describe('createSavedProjectSlice', () => {
   test('sets the default state', () => {
@@ -76,14 +71,6 @@ describe('createSavedProjectSlice', () => {
           mutate: mockMutate
         })
 
-        const mockDispatch = jest.fn()
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({
-            edlToken: 'mock-token'
-          })
-        })
-
         if (routerHelper.router) {
           routerHelper.router.state = {
             location: {
@@ -136,14 +123,6 @@ describe('createSavedProjectSlice', () => {
           mutate: mockMutate
         })
 
-        const mockDispatch = jest.fn()
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({
-            edlToken: 'mock-token'
-          })
-        })
-
         if (routerHelper.router) {
           routerHelper.router.state = {
             location: {
@@ -193,14 +172,6 @@ describe('createSavedProjectSlice', () => {
 
         getApolloClient.mockReturnValue({
           mutate: mockMutate
-        })
-
-        const mockDispatch = jest.fn()
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({
-            edlToken: 'mock-token'
-          })
         })
 
         if (routerHelper.router) {
@@ -290,14 +261,6 @@ describe('createSavedProjectSlice', () => {
           query: mockQuery
         })
 
-        const mockDispatch = jest.fn()
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({
-            edlToken: 'mock-token'
-          })
-        })
-
         useEdscStore.setState((state) => {
           state.errors.handleError = jest.fn()
         })
@@ -341,14 +304,6 @@ describe('createSavedProjectSlice', () => {
 
         getApolloClient.mockReturnValue({
           query: mockQuery
-        })
-
-        const mockDispatch = jest.fn()
-        configureStore.mockReturnValue({
-          dispatch: mockDispatch,
-          getState: () => ({
-            edlToken: 'mock-token'
-          })
         })
 
         if (routerHelper.router) {

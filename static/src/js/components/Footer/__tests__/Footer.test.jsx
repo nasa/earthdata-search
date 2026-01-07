@@ -41,8 +41,7 @@ const setup = setupTest({
         }]
       }
     }
-  },
-  withRedux: true
+  }
 })
 
 describe('Footer component', () => {

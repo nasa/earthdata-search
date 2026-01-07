@@ -9,9 +9,6 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import Spinner from '../../../components/Spinner/Spinner'
 
 jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
-jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => jest.fn(() => <div />))
-
-jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => <div />))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   const mockPortalLinkContainer = jest.fn(({ children }) => (
@@ -59,7 +56,6 @@ const setup = setupTest({
       getNlpCollections: jest.fn().mockResolvedValue(undefined)
     }
   },
-  withRedux: true,
   withRouter: true
 })
 

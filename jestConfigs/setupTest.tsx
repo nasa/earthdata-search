@@ -6,7 +6,6 @@ import {
   Route,
   Routes
 } from 'react-router-dom'
-import { Provider } from 'react-redux'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import {
   cloneDeep,
@@ -15,8 +14,6 @@ import {
 } from 'lodash-es'
 
 import useEdscStore from '../static/src/js/zustand/useEdscStore'
-// @ts-expect-error: This file does not have types
-import configureStore from '../static/src/js/store/configureStore'
 import { EdscStore } from '../static/src/js/zustand/types'
 
 /** Common props shared between types */
@@ -29,8 +26,6 @@ type SetupTestCommonProps = {
   defaultZustandState?: Record<string, unknown>
   /** Whether to include ApolloClient in the test setup */
   withApolloClient?: boolean
-  /** Whether to include Redux in the test setup */
-  withRedux?: boolean
   /** Whether to include React Router in the test setup */
   withRouter?: boolean
 }
@@ -96,7 +91,6 @@ const setupTest = ({
   defaultPropsByRoute = {},
   defaultRouterEntries,
   defaultZustandState,
-  withRedux = false,
   withRouter = false,
   withApolloClient = false
 }: SetupTestPropsSingleComponent | SetupTestPropsComponentsByRoute) => ({
@@ -181,18 +175,6 @@ const setupTest = ({
         </MemoryRouter>
       )
     }
-  }
-
-  // If withRedux is true, create a Redux store and wrap the component with the Provider
-  if (withRedux) {
-    const store = configureStore()
-
-    // eslint-disable-next-line react/display-name
-    RenderedComponent = (
-      <Provider store={store}>
-        {RenderedComponent}
-      </Provider>
-    )
   }
 
   if (withApolloClient) {
