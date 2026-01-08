@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from './ProjectPanelSection'
-import { Tree } from '../Tree/Tree'
+import Tree from '../Tree/Tree'
 
 import './VariableTreePanel.scss'
 

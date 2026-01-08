@@ -1,27 +1,28 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { VariableTreePanel } from '../VariableTreePanel'
-import { Tree } from '../../Tree/Tree'
-import Button from '../../Button/Button'
+import Tree from '../../Tree/Tree'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../Tree/Tree', () => jest.fn(() => null))
 
-function setup(overrideProps = {}) {
-  const props = {
+const setup = setupTest({
+  Component: VariableTreePanel,
+  defaultProps: {
     accessMethods: {
       opendap: {
-        keywordMappings: [
-          {
-            children: [{ id: 'V123456-EDSC' }],
-            label: 'Keyword1'
-          },
-          {
-            children: [{ id: 'V987654-EDSC' }],
-            label: 'Keyword2'
-          }
-        ],
+        keywordMappings: [{
+          children: [{
+            id: 'V123456-EDSC'
+          }],
+          label: 'Keyword1'
+        }, {
+          children: [{
+            id: 'V987654-EDSC'
+          }],
+          label: 'Keyword2'
+        }],
         selectedVariables: [],
         variables: {
           'V123456-EDSC': {
@@ -37,291 +38,409 @@ function setup(overrideProps = {}) {
     },
     collectionId: 'collectionId',
     index: 0,
-    panelHeader: '',
-    selectedAccessMethod: 'opendap',
     onUpdateSelectedVariables: jest.fn(),
     onViewDetails: jest.fn(),
-    ...overrideProps
+    panelHeader: '',
+    selectedAccessMethod: 'opendap'
   }
-
-  const enzymeWrapper = shallow(<VariableTreePanel {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('VariableTreePanel', () => {
-  test('returns null if accessMethods are not loaded', () => {
-    const { enzymeWrapper } = setup({
-      accessMethods: undefined
+  test('displays a message if accessMethods are not loaded', () => {
+    setup({
+      overrideProps: {
+        accessMethods: null,
+        selectedAccessMethod: null
+      }
     })
 
-    expect(enzymeWrapper.exists()).toBeTruthy()
+    expect(screen.getByText('No variables available for selected access method')).toBeInTheDocument()
   })
 
-  test('returns null if variables are not loaded', () => {
-    const { enzymeWrapper } = setup({
-      accessMethods: {
-        opendap: {}
-      },
-      selectedAccessMethod: 'opendap'
+  test('displays a message if variables are not loaded', () => {
+    setup({
+      overrideProps: {
+        accessMethods: {
+          opendap: {}
+        },
+        selectedAccessMethod: 'opendap'
+      }
     })
 
-    expect(enzymeWrapper.exists()).toBeTruthy()
+    expect(screen.getByText('No variables available for selected access method')).toBeInTheDocument()
   })
 
   test('displays a Tree keyword mappings', () => {
-    const { enzymeWrapper } = setup()
+    const { props } = setup()
 
-    const tree = enzymeWrapper.find(Tree)
-
-    expect(tree.props().items).toEqual([
-      {
+    expect(Tree).toHaveBeenCalledTimes(1)
+    expect(Tree).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      index: 0,
+      items: [{
         children: [{ id: 'V123456-EDSC' }],
         label: 'Keyword1'
-      },
-      {
+      }, {
         children: [{ id: 'V987654-EDSC' }],
         label: 'Keyword2'
+      }],
+      onUpdateSelectedVariables: props.onUpdateSelectedVariables,
+      onViewDetails: props.onViewDetails,
+      selectedVariables: [],
+      variables: {
+        'V123456-EDSC': {
+          meta: {},
+          umm: {}
+        },
+        'V987654-EDSC': {
+          meta: {},
+          umm: {}
+        }
       }
-    ])
+    }, {})
   })
 
   test('displays a message when there are no items to display', () => {
-    const { enzymeWrapper } = setup({
-      accessMethods: {
-        opendap: {
-          hierarchyMappings: [],
-          keywordMappings: [],
-          selectedVariables: [],
-          variables: {
-            'V123456-EDSC': {
-              meta: {},
-              umm: {}
-            },
-            'V987654-EDSC': {
-              meta: {},
-              umm: {}
+    setup({
+      overrideProps: {
+        accessMethods: {
+          opendap: {
+            hierarchyMappings: [],
+            keywordMappings: [],
+            selectedVariables: [],
+            variables: {
+              'V123456-EDSC': {
+                meta: {},
+                umm: {}
+              },
+              'V987654-EDSC': {
+                meta: {},
+                umm: {}
+              }
             }
           }
         }
       }
     })
 
-    expect(enzymeWrapper.find('.variable-tree-panel__no-variables').exists()).toBeTruthy()
-    expect(enzymeWrapper.find('.variable-tree-panel__no-variables').text()).toBe('No variables available for selected access method')
+    expect(screen.getByText('No variables available for selected access method')).toBeInTheDocument()
   })
 
   test('displays a Tree hierarchical mappings', () => {
-    const { enzymeWrapper } = setup({
-      accessMethods: {
-        opendap: {
-          hierarchyMappings: [
-            {
-              children: [{
-                children: [{ id: 'V123456-EDSC' }],
-                label: 'level2'
-              }],
-              label: 'level1'
-            },
-            {
-              children: [{ id: 'V987654-EDSC' }],
-              label: 'level3'
-            }
-          ],
-          selectedVariables: [],
-          variables: {
-            'V123456-EDSC': {
-              meta: {},
-              umm: {}
-            },
-            'V987654-EDSC': {
-              meta: {},
-              umm: {}
+    const { props } = setup({
+      overrideProps: {
+        accessMethods: {
+          opendap: {
+            hierarchyMappings: [
+              {
+                children: [{
+                  children: [{ id: 'V123456-EDSC' }],
+                  label: 'level2'
+                }],
+                label: 'level1'
+              },
+              {
+                children: [{ id: 'V987654-EDSC' }],
+                label: 'level3'
+              }
+            ],
+            selectedVariables: [],
+            variables: {
+              'V123456-EDSC': {
+                meta: {},
+                umm: {}
+              },
+              'V987654-EDSC': {
+                meta: {},
+                umm: {}
+              }
             }
           }
         }
       }
     })
 
-    const tree = enzymeWrapper.find(Tree)
-
-    expect(tree.props().items).toEqual([
-      {
+    expect(Tree).toHaveBeenCalledTimes(1)
+    expect(Tree).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      index: 0,
+      items: [{
         children: [{
           children: [{ id: 'V123456-EDSC' }],
           label: 'level2'
         }],
         label: 'level1'
-      },
-      {
+      }, {
         children: [{ id: 'V987654-EDSC' }],
         label: 'level3'
+      }],
+      onUpdateSelectedVariables: props.onUpdateSelectedVariables,
+      onViewDetails: props.onViewDetails,
+      selectedVariables: [],
+      variables: {
+        'V123456-EDSC': {
+          meta: {},
+          umm: {}
+        },
+        'V987654-EDSC': {
+          meta: {},
+          umm: {}
+        }
       }
-    ])
+    }, {})
   })
 
   describe('when both keyword and hierarchical mappings exist', () => {
     test('displays a Tree for both keyword and hierarchical mappings', () => {
-      const { enzymeWrapper } = setup({
-        accessMethods: {
-          opendap: {
-            hierarchyMappings: [
-              {
-                children: [{
+      const { props } = setup({
+        overrideProps: {
+          accessMethods: {
+            opendap: {
+              hierarchyMappings: [
+                {
+                  children: [{
+                    children: [{ id: 'V123456-EDSC' }],
+                    label: 'level2'
+                  }],
+                  label: 'level1'
+                },
+                {
+                  children: [{ id: 'V987654-EDSC' }],
+                  label: 'level3'
+                }
+              ],
+              keywordMappings: [
+                {
                   children: [{ id: 'V123456-EDSC' }],
-                  label: 'level2'
-                }],
-                label: 'level1'
-              },
-              {
-                children: [{ id: 'V987654-EDSC' }],
-                label: 'level3'
-              }
-            ],
-            keywordMappings: [
-              {
-                children: [{ id: 'V123456-EDSC' }],
-                label: 'Keyword1'
-              },
-              {
-                children: [{ id: 'V987654-EDSC' }],
-                label: 'Keyword2'
-              }
-            ],
-            selectedVariables: [],
-            variables: {
-              'V123456-EDSC': {
-                meta: {},
-                umm: {}
-              },
-              'V987654-EDSC': {
-                meta: {},
-                umm: {}
+                  label: 'Keyword1'
+                },
+                {
+                  children: [{ id: 'V987654-EDSC' }],
+                  label: 'Keyword2'
+                }
+              ],
+              selectedVariables: [],
+              variables: {
+                'V123456-EDSC': {
+                  meta: {},
+                  umm: {}
+                },
+                'V987654-EDSC': {
+                  meta: {},
+                  umm: {}
+                }
               }
             }
           }
         }
       })
 
-      const switcher = enzymeWrapper.find('.variable-tree-panel__tree-switcher')
+      const hierarchyButton = screen.getByRole('button', { name: 'Hierarchy' })
+      const scienceKeywordButton = screen.getByRole('button', { name: 'Science Keyword' })
 
-      // Switcher is visible with Hierarchy disabled and Science Keyword enabled
-      expect(switcher.find(Button).at(0).props().className).toContain('is-active')
-      expect(switcher.find(Button).at(1).props().className).not.toContain('is-active')
+      expect(hierarchyButton).toBeInTheDocument()
+      expect(scienceKeywordButton).toBeInTheDocument()
 
-      const tree = enzymeWrapper.find(Tree)
+      expect(hierarchyButton.className).toContain('is-active')
+      expect(scienceKeywordButton.className).not.toContain('is-active')
 
-      // Tree defaults to hierarchy
-      expect(tree.props().items).toEqual([
-        {
+      expect(Tree).toHaveBeenCalledTimes(1)
+      expect(Tree).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        index: 0,
+        items: [{
           children: [{
             children: [{ id: 'V123456-EDSC' }],
             label: 'level2'
           }],
           label: 'level1'
-        },
-        {
+        }, {
           children: [{ id: 'V987654-EDSC' }],
           label: 'level3'
+        }],
+        onUpdateSelectedVariables: props.onUpdateSelectedVariables,
+        onViewDetails: props.onViewDetails,
+        selectedVariables: [],
+        variables: {
+          'V123456-EDSC': {
+            meta: {},
+            umm: {}
+          },
+          'V987654-EDSC': {
+            meta: {},
+            umm: {}
+          }
         }
-      ])
+      }, {})
     })
 
-    test('when switching between mappings it switches the Tree', () => {
-      const { enzymeWrapper } = setup({
-        accessMethods: {
-          opendap: {
-            hierarchyMappings: [
-              {
-                children: [{
-                  children: [{ id: 'V123456-EDSC' }],
-                  label: 'level2'
-                }],
-                label: 'level1'
-              },
-              {
-                children: [{ id: 'V987654-EDSC' }],
-                label: 'level3'
-              }
-            ],
-            keywordMappings: [
-              {
-                children: [{ id: 'V123456-EDSC' }],
-                label: 'Keyword1'
-              },
-              {
-                children: [{ id: 'V987654-EDSC' }],
-                label: 'Keyword2'
-              }
-            ],
-            selectedVariables: [],
-            variables: {
-              'V123456-EDSC': {
-                meta: {},
-                umm: {}
-              },
-              'V987654-EDSC': {
-                meta: {},
-                umm: {}
+    describe('when switching between mappings', () => {
+      test('switches to Science Keyword', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            accessMethods: {
+              opendap: {
+                hierarchyMappings: [
+                  {
+                    children: [{
+                      children: [{ id: 'V123456-EDSC' }],
+                      label: 'level2'
+                    }],
+                    label: 'level1'
+                  },
+                  {
+                    children: [{ id: 'V987654-EDSC' }],
+                    label: 'level3'
+                  }
+                ],
+                keywordMappings: [
+                  {
+                    children: [{ id: 'V123456-EDSC' }],
+                    label: 'Keyword1'
+                  },
+                  {
+                    children: [{ id: 'V987654-EDSC' }],
+                    label: 'Keyword2'
+                  }
+                ],
+                selectedVariables: [],
+                variables: {
+                  'V123456-EDSC': {
+                    meta: {},
+                    umm: {}
+                  },
+                  'V987654-EDSC': {
+                    meta: {},
+                    umm: {}
+                  }
+                }
               }
             }
           }
-        }
+        })
+
+        const hierarchyButton = screen.getByRole('button', { name: 'Hierarchy' })
+        const scienceKeywordButton = screen.getByRole('button', { name: 'Science Keyword' })
+
+        jest.clearAllMocks()
+
+        await user.click(scienceKeywordButton)
+
+        expect(hierarchyButton.className).not.toContain('is-active')
+        expect(scienceKeywordButton.className).toContain('is-active')
+
+        expect(Tree).toHaveBeenCalledTimes(1)
+        expect(Tree).toHaveBeenCalledWith({
+          collectionId: 'collectionId',
+          index: 0,
+          items: [{
+            children: [{ id: 'V123456-EDSC' }],
+            label: 'Keyword1'
+          }, {
+            children: [{ id: 'V987654-EDSC' }],
+            label: 'Keyword2'
+          }],
+          onUpdateSelectedVariables: props.onUpdateSelectedVariables,
+          onViewDetails: props.onViewDetails,
+          selectedVariables: [],
+          variables: {
+            'V123456-EDSC': {
+              meta: {},
+              umm: {}
+            },
+            'V987654-EDSC': {
+              meta: {},
+              umm: {}
+            }
+          }
+        }, {})
       })
 
-      // Click Science Keyword button
-      enzymeWrapper.find('.variable-tree-panel__tree-switcher').find(Button).at(1).simulate('click')
-      enzymeWrapper.update()
+      test('switches to Hierarchy', async () => {
+        const { props, user } = setup({
+          overrideProps: {
+            accessMethods: {
+              opendap: {
+                hierarchyMappings: [
+                  {
+                    children: [{
+                      children: [{ id: 'V123456-EDSC' }],
+                      label: 'level2'
+                    }],
+                    label: 'level1'
+                  },
+                  {
+                    children: [{ id: 'V987654-EDSC' }],
+                    label: 'level3'
+                  }
+                ],
+                keywordMappings: [
+                  {
+                    children: [{ id: 'V123456-EDSC' }],
+                    label: 'Keyword1'
+                  },
+                  {
+                    children: [{ id: 'V987654-EDSC' }],
+                    label: 'Keyword2'
+                  }
+                ],
+                selectedVariables: [],
+                variables: {
+                  'V123456-EDSC': {
+                    meta: {},
+                    umm: {}
+                  },
+                  'V987654-EDSC': {
+                    meta: {},
+                    umm: {}
+                  }
+                }
+              }
+            }
+          }
+        })
 
-      let switcher = enzymeWrapper.find('.variable-tree-panel__tree-switcher')
+        const hierarchyButton = screen.getByRole('button', { name: 'Hierarchy' })
+        const scienceKeywordButton = screen.getByRole('button', { name: 'Science Keyword' })
 
-      // Switcher is visible with Hierarchy enabled and Science Keyword disabled
-      expect(switcher.find(Button).at(0).props().className).not.toContain('is-active')
-      expect(switcher.find(Button).at(1).props().className).toContain('is-active')
+        await user.click(scienceKeywordButton)
 
-      let tree = enzymeWrapper.find(Tree)
+        jest.clearAllMocks()
 
-      // Tree is displaying keywordMappings
-      expect(tree.props().items).toEqual([
-        {
-          children: [{ id: 'V123456-EDSC' }],
-          label: 'Keyword1'
-        },
-        {
-          children: [{ id: 'V987654-EDSC' }],
-          label: 'Keyword2'
-        }
-      ])
+        await user.click(hierarchyButton)
 
-      // Click Hierarchy button
-      enzymeWrapper.find('.variable-tree-panel__tree-switcher').find(Button).at(0).simulate('click')
-      enzymeWrapper.update()
+        expect(hierarchyButton.className).toContain('is-active')
+        expect(scienceKeywordButton.className).not.toContain('is-active')
 
-      switcher = enzymeWrapper.find('.variable-tree-panel__tree-switcher')
-
-      // Switcher is visible with Hierarchy disabled and Science Keyword enabled
-      expect(switcher.find(Button).at(0).props().className).toContain('is-active')
-      expect(switcher.find(Button).at(1).props().className).not.toContain('is-active')
-
-      tree = enzymeWrapper.find(Tree)
-
-      // Tree is displaying hierarchyMappings
-      expect(tree.props().items).toEqual([
-        {
-          children: [{
-            children: [{ id: 'V123456-EDSC' }],
-            label: 'level2'
+        expect(Tree).toHaveBeenCalledTimes(1)
+        expect(Tree).toHaveBeenCalledWith({
+          collectionId: 'collectionId',
+          index: 0,
+          items: [{
+            children: [{
+              children: [{ id: 'V123456-EDSC' }],
+              label: 'level2'
+            }],
+            label: 'level1'
+          }, {
+            children: [{ id: 'V987654-EDSC' }],
+            label: 'level3'
           }],
-          label: 'level1'
-        },
-        {
-          children: [{ id: 'V987654-EDSC' }],
-          label: 'level3'
-        }
-      ])
+          onUpdateSelectedVariables: props.onUpdateSelectedVariables,
+          onViewDetails: props.onViewDetails,
+          selectedVariables: [],
+          variables: {
+            'V123456-EDSC': {
+              meta: {},
+              umm: {}
+            },
+            'V987654-EDSC': {
+              meta: {},
+              umm: {}
+            }
+          }
+        }, {})
+      })
     })
   })
 })

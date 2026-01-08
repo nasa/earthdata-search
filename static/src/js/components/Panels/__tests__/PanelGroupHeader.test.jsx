@@ -1,259 +1,437 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import {
+  FaFileExport,
+  FaSortAmountDown,
+  FaSortAmountDownAlt,
+  FaTable
+} from 'react-icons/fa'
+import { List } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+
 import PanelGroupHeader from '../PanelGroupHeader'
+import Skeleton from '../../Skeleton/Skeleton'
+import RadioSettingDropdown from '../../RadioSettingDropdown/RadioSettingDropdown'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => null))
+jest.mock('../../RadioSettingDropdown/RadioSettingDropdown', () => jest.fn(() => null))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: PanelGroupHeader,
+  defaultProps: {
     activeSort: 'active-sort',
     activeView: 'active-view',
     breadcrumbs: [],
+    exportsArray: [],
     handoffLinks: [],
+    headerLoading: false,
     headerMessage: '',
     headerMetaPrimaryLoading: false,
     headerMetaPrimaryText: 'Header Meta Primary Text',
+    moreActionsDropdownItems: [],
     panelGroupId: '0',
     primaryHeading: 'Primary Heading',
-    headerLoading: false,
-    moreActionsDropdownItems: [],
-    exportsArray: [],
     sortsArray: [],
-    viewsArray: [],
-    ...overrideProps
-  }
-  const enzymeWrapper = shallow(<PanelGroupHeader {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+    viewsArray: []
+  },
+  withRouter: true
+})
 
 describe('PanelGroupHeader component', () => {
   describe('when breadcrumbs are loading', () => {
-    const { enzymeWrapper } = setup({
-      breadcrumbs: [
-        {
-          title: 'Loading Breadcrumb',
-          isLoading: true
-        }
-      ]
-    })
-
     test('should render the breadcrumb skeleton', () => {
-      expect(enzymeWrapper.find('.panel-group-header__breadcrumbs-skeleton').length).toEqual(1)
-      expect(enzymeWrapper.find('Skeleton').props().containerStyle).toEqual({
-        height: '1.5rem',
-        width: '100%'
+      setup({
+        overrideProps: {
+          breadcrumbs: [
+            {
+              title: 'Loading Breadcrumb',
+              isLoading: true
+            }
+          ]
+        }
       })
+
+      expect(Skeleton).toHaveBeenCalledTimes(1)
+      expect(Skeleton).toHaveBeenCalledWith({
+        className: 'panel-group-header__breadcrumbs-skeleton',
+        containerStyle: {
+          height: '1.5rem',
+          width: '100%'
+        },
+        shapes: [{
+          height: 18,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 3,
+          width: 280
+        }]
+      }, {})
     })
   })
 
   describe('when content is loading', () => {
-    const { enzymeWrapper } = setup({
-      headerMetaPrimaryLoading: true,
-      headerLoading: true
-    })
+    test('should render the loading state', () => {
+      setup({
+        overrideProps: {
+          headerMetaPrimaryLoading: true,
+          headerLoading: true
+        }
+      })
 
-    test('should not render the primary text', () => {
-      expect(enzymeWrapper.find('.panel-group-header__heading-primary').length).toEqual(0)
-    })
+      expect(screen.queryByText('Primary Heading')).not.toBeInTheDocument()
+      expect(screen.queryByText('Header Meta Primary Text')).not.toBeInTheDocument()
 
-    test('should not render the meta text', () => {
-      expect(enzymeWrapper.find('.panel-group-header__heading-meta-text').length).toEqual(0)
-    })
+      expect(Skeleton).toHaveBeenCalledTimes(2)
+      expect(Skeleton).toHaveBeenNthCalledWith(1, {
+        className: 'panel-group-header__heading panel-group-header__heading--skeleton',
+        containerStyle: {
+          display: 'inline-block',
+          height: '1.25rem',
+          width: '100%'
+        },
+        shapes: [{
+          height: 22,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 0,
+          width: 280
+        }]
+      }, {})
 
-    test('should render the primary skeleton', () => {
-      expect(enzymeWrapper.find('.panel-group-header__heading--skeleton').length).toEqual(1)
-    })
-
-    test('should render the meta skeleton', () => {
-      expect(enzymeWrapper.find('.panel-group-header__heading-meta-skeleton').length).toEqual(1)
+      expect(Skeleton).toHaveBeenNthCalledWith(2, {
+        className: 'panel-group-header__heading-meta-skeleton',
+        containerStyle: {
+          height: '18px',
+          width: '213px'
+        },
+        shapes: [{
+          height: 12,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 3,
+          width: 213
+        }]
+      }, {})
     })
   })
 
   describe('when content is loaded', () => {
-    const { enzymeWrapper } = setup()
+    test('should render the text', () => {
+      setup()
 
-    test('should render the primary text', () => {
-      expect(enzymeWrapper.find('.panel-group-header__heading-primary').text()).toEqual('Primary Heading')
-    })
+      expect(screen.getByText('Primary Heading')).toBeInTheDocument()
+      expect(screen.getByText('Header Meta Primary Text')).toBeInTheDocument()
 
-    test('should render the meta text', () => {
-      expect(enzymeWrapper.find('.panel-group-header__heading-meta-text').text()).toEqual('Header Meta Primary Text')
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when breadcrumbs are provided', () => {
-    const firstBreadcrumbOnClickMock = jest.fn()
-    const secondBreadcrumbOnClickMock = jest.fn()
-
-    const { enzymeWrapper } = setup({
-      breadcrumbs: [
-        {
-          title: 'Breadcrumb 1',
-          link: {
-            pathname: 'pathname',
-            search: 'search'
-          },
-          onClick: firstBreadcrumbOnClickMock
-        },
-        {
-          title: 'Breadcrumb 2',
-          onClick: secondBreadcrumbOnClickMock,
-          options: {
-            shrink: true
-          }
-        }
-      ]
-    })
-
     test('should render the breadcrumbs', () => {
-      expect(enzymeWrapper.find('.panel-group-header__breadcrumbs').children().length).toEqual(3)
-    })
+      setup({
+        overrideProps: {
+          breadcrumbs: [{
+            link: {
+              pathname: 'pathname',
+              search: 'search'
+            },
+            onClick: jest.fn(),
+            title: 'Breadcrumb 1'
+          }, {
+            onClick: jest.fn(),
+            options: {
+              shrink: true
+            },
+            title: 'Breadcrumb 2'
+          }]
+        }
+      })
 
-    test('should render the breadcrumb divider', () => {
-      expect(enzymeWrapper.find('.panel-group-header__breadcrumb-divider').length).toEqual(1)
+      const element = getByTextWithMarkup('Breadcrumb 1/Breadcrumb 2')
+      expect(element).toBeInTheDocument()
     })
   })
 
   describe('when a secondary header is provided', () => {
     test('should render the secondary header', () => {
-      const { enzymeWrapper } = setup({
-        secondaryHeading: <span>Secondary Heading</span>
+      setup({
+        overrideProps: {
+          secondaryHeading: <span>Secondary Heading</span>
+        }
       })
 
-      expect(enzymeWrapper.find('.panel-group-header__heading').children().length).toEqual(2)
-      expect(enzymeWrapper.find('.panel-group-header__heading').childAt(1).text()).toEqual('Secondary Heading')
+      expect(screen.getByText('Secondary Heading')).toBeInTheDocument()
     })
   })
 
   describe('when more action dropdown items are provided', () => {
-    const firstMoreActionOnClickMock = jest.fn()
-    const secondMoreActionOnClickMock = jest.fn()
-
-    const { enzymeWrapper } = setup({
-      moreActionsDropdownItems: [
-        {
-          title: 'More Action Dropdown Item 1',
-          link: {
-            pathname: 'pathname',
-            search: 'search'
-          },
-          onClick: firstMoreActionOnClickMock
-        },
-        {
-          title: 'More Action Dropdown Item 2',
-          onClick: secondMoreActionOnClickMock,
-          options: {
-            shrink: true
-          }
+    test('should render the items', async () => {
+      const { user } = setup({
+        overrideProps: {
+          moreActionsDropdownItems: [{
+            link: {
+              pathname: 'pathname',
+              search: 'search'
+            },
+            onClick: jest.fn(),
+            title: 'More Action Dropdown Item 1'
+          }, {
+            onClick: jest.fn(),
+            options: {
+              shrink: true
+            },
+            title: 'More Action Dropdown Item 2'
+          }]
         }
-      ]
-    })
+      })
 
-    test('should render the items', () => {
-      expect(enzymeWrapper.find('.panel-group-header__more-actions').children().length).toEqual(2)
+      const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
+      await user.click(moreActionsButton)
+
+      const firstItem = screen.getByRole('button', { name: 'More Action Dropdown Item 1' })
+      const secondItem = screen.getByRole('button', { name: 'More Action Dropdown Item 2' })
+
+      expect(firstItem).toBeInTheDocument()
+      expect(secondItem).toBeInTheDocument()
     })
   })
 
   describe('when a header message is provided', () => {
-    const { enzymeWrapper } = setup({
-      headerMessage: 'Header Message'
-    })
-
     test('should render the message', () => {
-      expect(enzymeWrapper.find('.panel-group-header__message').text()).toEqual('Header Message')
+      setup({
+        overrideProps: {
+          headerMessage: 'Header Message'
+        }
+      })
+
+      expect(screen.getByText('Header Message')).toBeInTheDocument()
     })
   })
 
   describe('when sorts are provided', () => {
-    const firstSortItemOnClickMock = jest.fn()
-    const secondSortItemOnClickMock = jest.fn()
+    describe('when the active sort is ascending', () => {
+      test('should render the sort list', () => {
+        setup({
+          overrideProps: {
+            activeSort: 'Sort Item 1',
+            sortsArray: [
+              {
+                title: 'Sort Item 1',
+                isActive: false,
+                onClick: jest.fn()
+              },
+              {
+                title: '-Sort Item 2',
+                isActive: false,
+                onClick: jest.fn()
+              }
+            ]
+          }
+        })
 
-    const { enzymeWrapper, props } = setup({
-      sortsArray: [
-        {
-          title: 'Sort Item 1',
-          icon: 'test-icon',
-          isActive: false,
-          onClick: firstSortItemOnClickMock
-        },
-        {
-          title: 'Sort Item 2',
-          icon: 'test-icon',
-          isActive: false,
-          onClick: secondSortItemOnClickMock
-        }
-      ]
+        expect(RadioSettingDropdown).toHaveBeenCalledTimes(1)
+        expect(RadioSettingDropdown).toHaveBeenCalledWith({
+          activeIcon: FaSortAmountDownAlt,
+          className: 'panel-group-header__setting-dropdown',
+          id: 'panel-group-header-dropdown__sort__0',
+          label: 'Sort: Sort Item 1',
+          settings: [{
+            isActive: false,
+            onClick: expect.any(Function),
+            title: 'Sort Item 1'
+          }, {
+            isActive: false,
+            onClick: expect.any(Function),
+            title: '-Sort Item 2'
+          }]
+        }, {})
+      })
     })
 
-    test('should render the sort list', () => {
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.sortsArray)
+    describe('when the active sort is descending', () => {
+      test('should render the sort list', () => {
+        setup({
+          overrideProps: {
+            activeSort: '-Sort Item 2',
+            sortsArray: [
+              {
+                title: 'Sort Item 1',
+                isActive: false,
+                onClick: jest.fn()
+              },
+              {
+                title: '-Sort Item 2',
+                isActive: false,
+                onClick: jest.fn()
+              }
+            ]
+          }
+        })
+
+        expect(RadioSettingDropdown).toHaveBeenCalledTimes(1)
+        expect(RadioSettingDropdown).toHaveBeenCalledWith({
+          activeIcon: FaSortAmountDown,
+          className: 'panel-group-header__setting-dropdown',
+          id: 'panel-group-header-dropdown__sort__0',
+          label: 'Sort: -Sort Item 2',
+          settings: [{
+            isActive: false,
+            onClick: expect.any(Function),
+            title: 'Sort Item 1'
+          }, {
+            isActive: false,
+            onClick: expect.any(Function),
+            title: '-Sort Item 2'
+          }]
+        }, {})
+      })
     })
   })
 
   describe('when views are provided', () => {
-    const firstViewItemOnClickMock = jest.fn()
-    const secondViewItemOnClickMock = jest.fn()
+    describe('when the current view is List', () => {
+      test('should render the views list', () => {
+        setup({
+          overrideProps: {
+            activeView: 'list',
+            viewsArray: [
+              {
+                title: 'View Item 1',
+                icon: 'test-icon',
+                isActive: false,
+                onClick: jest.fn()
+              },
+              {
+                title: 'View Item 2',
+                icon: 'test-icon',
+                isActive: false,
+                onClick: jest.fn()
+              }
+            ]
+          }
+        })
 
-    const { enzymeWrapper, props } = setup({
-      viewsArray: [
-        {
-          title: 'View Item 1',
-          icon: 'test-icon',
-          isActive: false,
-          onClick: firstViewItemOnClickMock
-        },
-        {
-          title: 'View Item 2',
-          icon: 'test-icon',
-          isActive: false,
-          onClick: secondViewItemOnClickMock
-        }
-      ]
+        expect(RadioSettingDropdown).toHaveBeenCalledTimes(1)
+        expect(RadioSettingDropdown).toHaveBeenCalledWith({
+          activeIcon: List,
+          className: 'panel-group-header__setting-dropdown',
+          id: 'panel-group-header-dropdown__view__0',
+          label: 'View: List',
+          settings: [{
+            icon: 'test-icon',
+            isActive: false,
+            onClick: expect.any(Function),
+            title: 'View Item 1'
+          }, {
+            icon: 'test-icon',
+            isActive: false,
+            onClick: expect.any(Function),
+            title: 'View Item 2'
+          }]
+        }, {})
+      })
     })
 
-    test('should render the views list', () => {
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.viewsArray)
+    describe('when the current view is Table', () => {
+      test('should render the views list', () => {
+        setup({
+          overrideProps: {
+            activeView: 'table',
+            viewsArray: [
+              {
+                title: 'View Item 1',
+                icon: 'test-icon',
+                isActive: false,
+                onClick: jest.fn()
+              },
+              {
+                title: 'View Item 2',
+                icon: 'test-icon',
+                isActive: false,
+                onClick: jest.fn()
+              }
+            ]
+          }
+        })
+
+        expect(RadioSettingDropdown).toHaveBeenCalledTimes(1)
+        expect(RadioSettingDropdown).toHaveBeenCalledWith({
+          activeIcon: FaTable,
+          className: 'panel-group-header__setting-dropdown',
+          id: 'panel-group-header-dropdown__view__0',
+          label: 'View: Table',
+          settings: [{
+            icon: 'test-icon',
+            isActive: false,
+            onClick: expect.any(Function),
+            title: 'View Item 1'
+          }, {
+            icon: 'test-icon',
+            isActive: false,
+            onClick: expect.any(Function),
+            title: 'View Item 2'
+          }]
+        }, {})
+      })
     })
   })
 
   describe('when exports are provided', () => {
     test('should render the exports list', () => {
-      const exportsClickMock = jest.fn()
-
-      const { enzymeWrapper, props } = setup({
-        exportsArray: [
-          {
-            label: 'JSON',
-            onClick: () => exportsClickMock('json')
-          }
-        ]
+      setup({
+        overrideProps: {
+          exportsArray: [
+            {
+              label: 'JSON',
+              onClick: jest.fn()
+            }
+          ]
+        }
       })
 
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').length).toEqual(1)
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings).toEqual(props.exportsArray)
+      expect(RadioSettingDropdown).toHaveBeenCalledTimes(1)
+      expect(RadioSettingDropdown).toHaveBeenCalledWith({
+        activeIcon: FaFileExport,
+        className: 'panel-group-header__setting-dropdown',
+        id: 'panel-group-header-dropdown__export__0',
+        label: 'Export',
+        settings: [{
+          label: 'JSON',
+          onClick: expect.any(Function)
+        }]
+      }, {})
     })
 
     test('when an export is in progress', () => {
-      const exportsClickMock = jest.fn()
-
-      const { enzymeWrapper } = setup({
-        exportsArray: [
-          {
-            label: 'JSON',
-            inProgress: true,
-            onClick: () => exportsClickMock('json')
-          }
-        ]
+      setup({
+        overrideProps: {
+          exportsArray: [
+            {
+              label: 'JSON',
+              inProgress: true,
+              onClick: jest.fn()
+            }
+          ]
+        }
       })
 
-      expect(enzymeWrapper.find('.panel-group-header__setting-dropdown').props().settings[0].inProgress).toEqual(true)
+      expect(RadioSettingDropdown).toHaveBeenCalledTimes(1)
+      expect(RadioSettingDropdown).toHaveBeenCalledWith({
+        activeIcon: FaFileExport,
+        className: 'panel-group-header__setting-dropdown',
+        id: 'panel-group-header-dropdown__export__0',
+        label: 'Export',
+        settings: [{
+          label: 'JSON',
+          inProgress: true,
+          onClick: expect.any(Function)
+        }]
+      }, {})
     })
   })
 })
