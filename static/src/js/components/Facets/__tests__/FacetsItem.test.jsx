@@ -24,90 +24,218 @@ const setup = setupTest({
       collections: {
         isLoading: true
       }
+    },
+    facets: {
+      viewAllFacets: {
+        isLoading: false
+      }
     }
   }
 })
 
 describe('FacetsItem', () => {
-  describe('when the collections are loading', () => {
-    describe('when the facet is not being applied', () => {
-      test('renders a disabled checkbox', () => {
-        setup()
+  describe('when viewing the facets list', () => {
+    describe('when the collections are loading', () => {
+      describe('when the facet is not being applied', () => {
+        test('renders a disabled checkbox', () => {
+          setup()
 
-        const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
-        expect(checkbox).toBeDisabled()
+          const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
+          expect(checkbox).toBeDisabled()
+          expect(checkbox).not.toBeChecked()
+        })
+      })
+
+      describe('when the facet is being applied', () => {
+        test('renders a checked disabled checkbox', () => {
+          setup({
+            overrideProps: {
+              facet: {
+                applied: false,
+                applyingFacet: 'Test Facet',
+                children: [],
+                count: 10,
+                setApplyingFacet: jest.fn(),
+                title: 'Test Facet'
+              }
+            }
+          })
+
+          const checkbox = screen.queryByRole('checkbox', { name: 'Test Facet' })
+          expect(checkbox).toBeDisabled()
+          expect(checkbox).toBeChecked()
+        })
       })
     })
 
-    describe('when the facet is being applied', () => {
-      test('renders a checked disabled checkbox', () => {
+    describe('when the collections are not loading', () => {
+      test('renders an enabled checkbox', () => {
         setup({
-          overrideProps: {
-            facet: {
-              applied: false,
-              applyingFacet: 'Test Facet',
-              children: [],
-              count: 10,
-              setApplyingFacet: jest.fn(),
-              title: 'Test Facet'
+          overrideZustandState: {
+            collections: {
+              collections: {
+                isLoading: false
+              }
             }
           }
         })
 
-        const checkbox = screen.queryByRole('checkbox', { name: 'Test Facet' })
-        expect(checkbox).toBeDisabled()
-        expect(checkbox).toBeChecked()
+        const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
+        expect(checkbox).toBeEnabled()
+      })
+    })
+
+    describe('when clicking on the checkbox', () => {
+      test('calls the change handler and setApplyingFacet', async () => {
+        const { props, user } = setup({
+          overrideZustandState: {
+            collections: {
+              collections: {
+                isLoading: false
+              }
+            }
+          }
+        })
+
+        const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
+        await user.click(checkbox)
+
+        expect(props.changeHandler).toHaveBeenCalledTimes(1)
+        expect(props.changeHandler).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'change'
+        }), {
+          destination: null,
+          title: 'Test Facet',
+          value: undefined
+        }, {
+          level: 0,
+          type: null,
+          value: 'Test Facet'
+        }, true)
+
+        expect(props.facet.setApplyingFacet).toHaveBeenCalledTimes(1)
+        expect(props.facet.setApplyingFacet).toHaveBeenCalledWith('Test Facet')
       })
     })
   })
 
-  describe('when the collections are not loading', () => {
-    test('renders an enabled checkbox', () => {
-      setup({
-        overrideZustandState: {
-          collections: {
-            collections: {
-              isLoading: false
+  describe('when viewing the view all facets list', () => {
+    describe('when the facets are loading', () => {
+      describe('when the facet is not being applied', () => {
+        test('renders a disabled checkbox', () => {
+          setup({
+            overrideZustandState: {
+              collections: {
+                collections: {
+                  isLoading: false
+                }
+              },
+              facets: {
+                viewAllFacets: {
+                  isLoading: true
+                }
+              }
             }
-          }
-        }
+          })
+
+          const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
+          expect(checkbox).toBeDisabled()
+          expect(checkbox).not.toBeChecked()
+        })
       })
 
-      const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
-      expect(checkbox).toBeEnabled()
+      describe('when the facet is being applied', () => {
+        test('renders a checked disabled checkbox', () => {
+          setup({
+            overrideProps: {
+              facet: {
+                applied: false,
+                applyingFacet: 'Test Facet',
+                children: [],
+                count: 10,
+                setApplyingFacet: jest.fn(),
+                title: 'Test Facet'
+              }
+            },
+            overrideZustandState: {
+              collections: {
+                collections: {
+                  isLoading: false
+                }
+              },
+              facets: {
+                viewAllFacets: {
+                  isLoading: true
+                }
+              }
+            }
+          })
+
+          const checkbox = screen.queryByRole('checkbox', { name: 'Test Facet' })
+          expect(checkbox).toBeDisabled()
+          expect(checkbox).toBeChecked()
+        })
+      })
     })
-  })
 
-  describe('when clicking on the checkbox', () => {
-    test('calls the change handler and setApplyingFacet', async () => {
-      const { props, user } = setup({
-        overrideZustandState: {
-          collections: {
+    describe('when the collections are not loading', () => {
+      test('renders an enabled checkbox', () => {
+        setup({
+          overrideZustandState: {
             collections: {
-              isLoading: false
+              collections: {
+                isLoading: false
+              }
+            },
+            facets: {
+              viewAllFacets: {
+                isLoading: false
+              }
             }
           }
-        }
+        })
+
+        const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
+        expect(checkbox).toBeEnabled()
       })
+    })
 
-      const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
-      await user.click(checkbox)
+    describe('when clicking on the checkbox', () => {
+      test('calls the change handler and setApplyingFacet', async () => {
+        const { props, user } = setup({
+          overrideZustandState: {
+            collections: {
+              collections: {
+                isLoading: false
+              }
+            },
+            facets: {
+              viewAllFacets: {
+                isLoading: false
+              }
+            }
+          }
+        })
 
-      expect(props.changeHandler).toHaveBeenCalledTimes(1)
-      expect(props.changeHandler).toHaveBeenCalledWith(expect.objectContaining({
-        type: 'change'
-      }), {
-        destination: null,
-        title: 'Test Facet',
-        value: undefined
-      }, {
-        level: 0,
-        type: null,
-        value: 'Test Facet'
-      }, true)
+        const checkbox = screen.getByRole('checkbox', { name: 'Test Facet' })
+        await user.click(checkbox)
 
-      expect(props.facet.setApplyingFacet).toHaveBeenCalledTimes(1)
-      expect(props.facet.setApplyingFacet).toHaveBeenCalledWith('Test Facet')
+        expect(props.changeHandler).toHaveBeenCalledTimes(1)
+        expect(props.changeHandler).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'change'
+        }), {
+          destination: null,
+          title: 'Test Facet',
+          value: undefined
+        }, {
+          level: 0,
+          type: null,
+          value: 'Test Facet'
+        }, true)
+
+        expect(props.facet.setApplyingFacet).toHaveBeenCalledTimes(1)
+        expect(props.facet.setApplyingFacet).toHaveBeenCalledWith('Test Facet')
+      })
     })
   })
 })

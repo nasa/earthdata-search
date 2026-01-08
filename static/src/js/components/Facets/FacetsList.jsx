@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from 'lodash-es'
 import classNames from 'classnames'
@@ -10,6 +14,7 @@ import FacetsSectionHeading from './FacetsSectionHeading'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
+import { getViewAllFacetsPageInfo } from '../../zustand/selectors/facets'
 
 import './FacetsList.scss'
 
@@ -24,7 +29,13 @@ const FacetsList = ({
 }) => {
   // Holds the facet title that is currently being applied
   const [applyingFacet, setApplyingFacet] = useState(null)
-  const { isLoading } = useEdscStore(getCollectionsPageInfo)
+  const { isLoading: collectionsLoading } = useEdscStore(getCollectionsPageInfo)
+  const { isLoading: facetsLoading } = useEdscStore(getViewAllFacetsPageInfo)
+
+  const isLoading = useMemo(
+    () => (collectionsLoading || facetsLoading),
+    [collectionsLoading, facetsLoading]
+  )
 
   // When the collections finish loading, reset the applyingFacet state
   useEffect(() => {

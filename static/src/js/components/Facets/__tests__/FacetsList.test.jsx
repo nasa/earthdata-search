@@ -32,6 +32,11 @@ const setup = setupTest({
       collections: {
         isLoading: false
       }
+    },
+    facets: {
+      viewAllFacets: {
+        isLoading: false
+      }
     }
   }
 })
@@ -74,64 +79,10 @@ describe('FacetsList', () => {
     }, {})
   })
 
-  describe('when a facet is being applied', () => {
-    test('passes the applyingFacet state to the FacetsItem components', async () => {
-      const { props } = setup({
-        overrideZustandState: {
-          collections: {
-            collections: {
-              isLoading: true
-            }
-          }
-        }
-      })
-
-      const firstFacet = FacetsItem.mock.calls[0][0].facet
-
-      jest.clearAllMocks()
-
-      // Simulate applying the first facet
-      await act(() => {
-        firstFacet.setApplyingFacet('Facet 1')
-      })
-
-      expect(FacetsItem).toHaveBeenCalledTimes(2)
-      expect(FacetsItem).toHaveBeenNthCalledWith(1, {
-        autocompleteType: null,
-        changeHandler: props.changeHandler,
-        facet: {
-          applied: false,
-          applyingFacet: 'Facet 1',
-          children: [],
-          count: 5,
-          setApplyingFacet: expect.any(Function),
-          title: 'Facet 1'
-        },
-        facetCategory: 'test_category',
-        level: 0,
-        uid: expect.stringContaining('facet-item_')
-      }, {})
-
-      expect(FacetsItem).toHaveBeenNthCalledWith(2, {
-        autocompleteType: null,
-        changeHandler: props.changeHandler,
-        facet: {
-          applied: true,
-          applyingFacet: 'Facet 1',
-          children: [],
-          count: 10,
-          setApplyingFacet: expect.any(Function),
-          title: 'Facet 2'
-        },
-        facetCategory: 'test_category',
-        level: 0,
-        uid: expect.stringContaining('facet-item_')
-      }, {})
-    })
-
-    describe('when the collections finish loading', () => {
-      test('resets the applyingFacet state', async () => {
-        setup({
+  describe('when viewing the facets list', () => {
+    describe('when a facet is being applied', () => {
+      test('passes the applyingFacet state to the FacetsItem components', async () => {
+        const { props } = setup({
           overrideZustandState: {
             collections: {
               collections: {
@@ -143,34 +94,20 @@ describe('FacetsList', () => {
 
         const firstFacet = FacetsItem.mock.calls[0][0].facet
 
+        jest.clearAllMocks()
+
         // Simulate applying the first facet
         await act(() => {
           firstFacet.setApplyingFacet('Facet 1')
         })
 
-        jest.clearAllMocks()
-
-        // Update the store to set isLoading to false
-        await act(() => {
-          useEdscStore.setState({
-            collections: {
-              collections: {
-                isLoading: false
-              }
-            }
-          })
-        })
-
-        await waitFor(() => {
-          expect(FacetsItem).toHaveBeenCalledTimes(4)
-        })
-
-        expect(FacetsItem).toHaveBeenNthCalledWith(3, {
+        expect(FacetsItem).toHaveBeenCalledTimes(2)
+        expect(FacetsItem).toHaveBeenNthCalledWith(1, {
           autocompleteType: null,
-          changeHandler: expect.any(Function),
+          changeHandler: props.changeHandler,
           facet: {
             applied: false,
-            applyingFacet: null,
+            applyingFacet: 'Facet 1',
             children: [],
             count: 5,
             setApplyingFacet: expect.any(Function),
@@ -181,12 +118,12 @@ describe('FacetsList', () => {
           uid: expect.stringContaining('facet-item_')
         }, {})
 
-        expect(FacetsItem).toHaveBeenNthCalledWith(4, {
+        expect(FacetsItem).toHaveBeenNthCalledWith(2, {
           autocompleteType: null,
-          changeHandler: expect.any(Function),
+          changeHandler: props.changeHandler,
           facet: {
             applied: true,
-            applyingFacet: null,
+            applyingFacet: 'Facet 1',
             children: [],
             count: 10,
             setApplyingFacet: expect.any(Function),
@@ -196,6 +133,204 @@ describe('FacetsList', () => {
           level: 0,
           uid: expect.stringContaining('facet-item_')
         }, {})
+      })
+
+      describe('when the collections finish loading', () => {
+        test('resets the applyingFacet state', async () => {
+          setup({
+            overrideZustandState: {
+              collections: {
+                collections: {
+                  isLoading: true
+                }
+              }
+            }
+          })
+
+          const firstFacet = FacetsItem.mock.calls[0][0].facet
+
+          // Simulate applying the first facet
+          await act(() => {
+            firstFacet.setApplyingFacet('Facet 1')
+          })
+
+          jest.clearAllMocks()
+
+          // Update the store to set isLoading to false
+          await act(() => {
+            useEdscStore.setState({
+              collections: {
+                collections: {
+                  isLoading: false
+                }
+              }
+            })
+          })
+
+          await waitFor(() => {
+            expect(FacetsItem).toHaveBeenCalledTimes(4)
+          })
+
+          expect(FacetsItem).toHaveBeenNthCalledWith(3, {
+            autocompleteType: null,
+            changeHandler: expect.any(Function),
+            facet: {
+              applied: false,
+              applyingFacet: null,
+              children: [],
+              count: 5,
+              setApplyingFacet: expect.any(Function),
+              title: 'Facet 1'
+            },
+            facetCategory: 'test_category',
+            level: 0,
+            uid: expect.stringContaining('facet-item_')
+          }, {})
+
+          expect(FacetsItem).toHaveBeenNthCalledWith(4, {
+            autocompleteType: null,
+            changeHandler: expect.any(Function),
+            facet: {
+              applied: true,
+              applyingFacet: null,
+              children: [],
+              count: 10,
+              setApplyingFacet: expect.any(Function),
+              title: 'Facet 2'
+            },
+            facetCategory: 'test_category',
+            level: 0,
+            uid: expect.stringContaining('facet-item_')
+          }, {})
+        })
+      })
+    })
+  })
+
+  describe('when viewing the view all facets list', () => {
+    describe('when a facet is being applied', () => {
+      test('passes the applyingFacet state to the FacetsItem components', async () => {
+        const { props } = setup({
+          overrideZustandState: {
+            facets: {
+              viewAllFacets: {
+                isLoading: true
+              }
+            }
+          }
+        })
+
+        const firstFacet = FacetsItem.mock.calls[0][0].facet
+
+        jest.clearAllMocks()
+
+        // Simulate applying the first facet
+        await act(() => {
+          firstFacet.setApplyingFacet('Facet 1')
+        })
+
+        expect(FacetsItem).toHaveBeenCalledTimes(2)
+        expect(FacetsItem).toHaveBeenNthCalledWith(1, {
+          autocompleteType: null,
+          changeHandler: props.changeHandler,
+          facet: {
+            applied: false,
+            applyingFacet: 'Facet 1',
+            children: [],
+            count: 5,
+            setApplyingFacet: expect.any(Function),
+            title: 'Facet 1'
+          },
+          facetCategory: 'test_category',
+          level: 0,
+          uid: expect.stringContaining('facet-item_')
+        }, {})
+
+        expect(FacetsItem).toHaveBeenNthCalledWith(2, {
+          autocompleteType: null,
+          changeHandler: props.changeHandler,
+          facet: {
+            applied: true,
+            applyingFacet: 'Facet 1',
+            children: [],
+            count: 10,
+            setApplyingFacet: expect.any(Function),
+            title: 'Facet 2'
+          },
+          facetCategory: 'test_category',
+          level: 0,
+          uid: expect.stringContaining('facet-item_')
+        }, {})
+      })
+
+      describe('when the collections finish loading', () => {
+        test('resets the applyingFacet state', async () => {
+          setup({
+            overrideZustandState: {
+              facets: {
+                viewAllFacets: {
+                  isLoading: true
+                }
+              }
+            }
+          })
+
+          const firstFacet = FacetsItem.mock.calls[0][0].facet
+
+          // Simulate applying the first facet
+          await act(() => {
+            firstFacet.setApplyingFacet('Facet 1')
+          })
+
+          jest.clearAllMocks()
+
+          // Update the store to set isLoading to false
+          await act(() => {
+            useEdscStore.setState({
+              facets: {
+                viewAllFacets: {
+                  isLoading: false
+                }
+              }
+            })
+          })
+
+          await waitFor(() => {
+            expect(FacetsItem).toHaveBeenCalledTimes(4)
+          })
+
+          expect(FacetsItem).toHaveBeenNthCalledWith(3, {
+            autocompleteType: null,
+            changeHandler: expect.any(Function),
+            facet: {
+              applied: false,
+              applyingFacet: null,
+              children: [],
+              count: 5,
+              setApplyingFacet: expect.any(Function),
+              title: 'Facet 1'
+            },
+            facetCategory: 'test_category',
+            level: 0,
+            uid: expect.stringContaining('facet-item_')
+          }, {})
+
+          expect(FacetsItem).toHaveBeenNthCalledWith(4, {
+            autocompleteType: null,
+            changeHandler: expect.any(Function),
+            facet: {
+              applied: true,
+              applyingFacet: null,
+              children: [],
+              count: 10,
+              setApplyingFacet: expect.any(Function),
+              title: 'Facet 2'
+            },
+            facetCategory: 'test_category',
+            level: 0,
+            uid: expect.stringContaining('facet-item_')
+          }, {})
+        })
       })
     })
   })

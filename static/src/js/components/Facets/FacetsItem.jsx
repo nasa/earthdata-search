@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { kebabCase, uniqueId } from 'lodash-es'
 import classNames from 'classnames'
@@ -13,6 +13,7 @@ import renderTooltip from '../../util/renderTooltip'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
+import { getViewAllFacetsPageInfo } from '../../zustand/selectors/facets'
 
 import './FacetsItem.scss'
 
@@ -34,7 +35,13 @@ const FacetsItem = ({
     title
   } = facet
 
-  const { isLoading } = useEdscStore(getCollectionsPageInfo)
+  const { isLoading: collectionsLoading } = useEdscStore(getCollectionsPageInfo)
+  const { isLoading: facetsLoading } = useEdscStore(getViewAllFacetsPageInfo)
+
+  const isLoading = useMemo(
+    () => (collectionsLoading || facetsLoading),
+    [collectionsLoading, facetsLoading]
+  )
 
   const onFacetChange = (changeHandlerArgs, event) => {
     // Set the applyingFacet state to show loading state
@@ -79,7 +86,10 @@ const FacetsItem = ({
 
   const className = classNames(
     'facets-item',
-    `facets-item--level-${level}`
+    `facets-item--level-${level}`,
+    {
+      'facets-item--disabled': isLoading
+    }
   )
 
   const { iconProps } = facet
@@ -87,29 +97,6 @@ const FacetsItem = ({
   // If the collections are loading, and this facet is the one being applied,
   // show the checkbox as the next value
   const isFacetBeingApplied = applyingFacet === title && isLoading
-
-  const checkboxClassNames = classNames(
-    'facets-item__checkbox',
-    'form-check-input',
-    'mt-0',
-    {
-      'facets-item__checkbox--disabled': isLoading
-    }
-  )
-
-  const titleContainerClassNames = classNames(
-    'facets-item__title-container',
-    {
-      'facets-item__title-container--disabled': isLoading
-    }
-  )
-
-  const facetTotalClassNames = classNames(
-    'facets-item__total',
-    {
-      'facets-item__total--disabled': isLoading
-    }
-  )
 
   return (
     <li className={className}>
@@ -120,7 +107,7 @@ const FacetsItem = ({
       >
         <input
           id={uid}
-          className={checkboxClassNames}
+          className="facets-item__checkbox form-check-input mt-0"
           data-testid={`facet_item-${kebabCase(title)}`}
           type="checkbox"
           name={title}
@@ -131,7 +118,7 @@ const FacetsItem = ({
           disabled={isLoading}
           onChange={(event) => onFacetChange(changeHandlerArgs, event)}
         />
-        <div className={titleContainerClassNames}>
+        <div className="facets-item__title-container">
           {
             iconProps?.icon && (
               <EDSCIcon
@@ -171,7 +158,7 @@ const FacetsItem = ({
         </div>
         {
           (!applied || !children) && (count != null) && (
-            <span className={facetTotalClassNames}>{commafy(count)}</span>
+            <span className="facets-item__total">{commafy(count)}</span>
           )
         }
       </label>

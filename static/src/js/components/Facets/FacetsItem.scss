@@ -1,6 +1,15 @@
 @use '../../../css/utils';
 
 .facets-item {
+  &--disabled {
+    .facets-item__checkbox,
+    .facets-item__title-container,
+    .facets-item__total {
+      cursor: wait;
+      opacity: 0.5;
+    }
+  }
+
   &__checkbox {
     margin-right: 0.7rem;
     border-radius: 4px;
@@ -11,11 +20,6 @@
 
     &:checked:not(&--disabled) {
       opacity: 1;
-    }
-
-    &--disabled {
-      cursor: wait;
-      opacity: 0.5;
     }
   }
 
@@ -57,11 +61,6 @@
     align-items: center;
     flex: 1;
     overflow: hidden;
-
-    &--disabled {
-      cursor: wait;
-      opacity: 0.5;
-    }
   }
 
   &__title {
@@ -83,11 +82,6 @@
     padding-left: 0.125rem;
     color: utils.$color__carbon--90;
     font-size: 0.825rem;
-
-    &--disabled {
-      cursor: wait;
-      opacity: 0.5;
-    }
   }
 }
 
