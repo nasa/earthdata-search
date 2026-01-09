@@ -338,7 +338,7 @@ describe('PanelGroupHeader component', () => {
     })
 
     describe('when the current view is Table', () => {
-      test('should render the views list', () => {
+      test('should render the views table', () => {
         setup({
           overrideProps: {
             activeView: 'table',
