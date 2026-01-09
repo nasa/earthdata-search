@@ -9,6 +9,8 @@ import { generateRetrievalPayloads } from '../../util/generateRetrievalPayloads'
 import { getQueueUrl, QUEUE_NAMES } from '../../util/getQueueUrl'
 import { ACCESS_METHOD_TYPES } from '../../../../sharedConstants/accessMethodTypes'
 
+import buildPaginatedResult from '../utils/buildPaginatedResult'
+
 export default {
   Query: {
     retrieval: async (parent, args, context) => {
@@ -42,6 +44,39 @@ export default {
         retrievalCollection,
         { deep: true }
       )
+    },
+
+    historyRetrievals: async (parent, args, context) => {
+      const { databaseClient, user } = context
+      const { id: userId } = user
+      const { limit = 20, offset = 0 } = args
+
+      const data = await databaseClient.getHistoryRetrievals({
+        ...args,
+        userId,
+        limit,
+        offset
+      })
+
+      const result = buildPaginatedResult({
+        data,
+        limit,
+        offset
+      })
+
+      const processedData = result.data.map((record) => ({
+        createdAt: record.created_at,
+        id: record.id,
+        obfuscatedId: obfuscateId(record.id),
+        portalId: record.portal_id,
+        titles: record.titles_array
+      }))
+
+      return {
+        historyRetrievals: processedData,
+        pageInfo: result.pageInfo,
+        count: result.data[0].total
+      }
     },
 
     retrieveGranuleLinks: async (parent, args, context) => {
@@ -267,6 +302,19 @@ export default {
 
         throw new Error(errorMessage)
       }
+    },
+
+    deleteRetrieval: async (parent, args, context) => {
+      const { databaseClient, user } = context
+      const { id: userId } = user
+      const { obfuscatedId } = args
+
+      const numRowsDeleted = await databaseClient.deleteRetrieval({
+        obfuscatedId,
+        userId
+      })
+
+      return numRowsDeleted === 1
     }
   },
   Retrieval: {

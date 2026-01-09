@@ -59,7 +59,7 @@ export default {
       const { databaseClient } = context
       const { limit = 20, offset = 0 } = args
 
-      const data = await databaseClient.getRetrievals(args)
+      const data = await databaseClient.getAdminRetrievals(args)
       const result = buildPaginatedResult({
         data,
         limit,

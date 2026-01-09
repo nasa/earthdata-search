@@ -24,6 +24,35 @@ type Retrieval {
   user: User
 }
 
+# Information needed for historical retrieval reference
+type HistoryRetrieval {
+  "The date the retrieval was created"
+  createdAt: DateTime
+
+  "The ID of the retrieval"
+  id: Int
+
+  "Obfuscated ID of the retrieval"
+  obfuscatedId: String
+
+  "ID of the portal associated with the history retrieval"
+  portalId: String
+
+  "The title of the retrieval"
+  titles: [String]
+}
+
+type HistoryRetrievals {
+  "A list of history retrievals"
+  historyRetrievals: [HistoryRetrieval]
+
+  "Pagination information"
+  pageInfo: PageInfo
+
+  "The total number of retrievals"
+  count: Int
+}
+
 type RetrievalCollection {
   "The ID of the retrieval collection"
   id: Int
@@ -122,6 +151,14 @@ type Query {
     obfuscatedId: String!
   ): RetrievalCollection
 
+  historyRetrievals(
+    "Sets the number of projects to return"
+    limit: Int
+
+    "Offset for pagination"
+    offset: Int
+  ): HistoryRetrievals
+
   retrieveGranuleLinks(
     "The obfuscated ID of the retrieval collection"
     obfuscatedRetrievalCollectionId: String
@@ -164,6 +201,7 @@ input RetrievalCollectionInput {
 }
 
 type Mutation {
+  "Creates a retrieval"
   createRetrieval(
     "The collections to include in the retrieval"
     collections: [RetrievalCollectionInput]
@@ -174,4 +212,10 @@ type Mutation {
     "The JSON data for the retrieval"
     jsondata: JSON
   ): Retrieval
+
+  "Deletes a retrieval"
+  deleteRetrieval(
+    "Obfuscated ID of the retrieval to delete"
+    obfuscatedId: String!
+  ): Boolean
 }

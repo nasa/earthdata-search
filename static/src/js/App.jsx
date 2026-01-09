@@ -52,9 +52,11 @@ const AboutCwicModal = lazy(() => import('./components/AboutCwicModal/AboutCwicM
 const ChunkedOrderModal = lazy(() => import('./components/ChunkedOrderModal/ChunkedOrderModal'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const DeprecatedParameterModal = lazy(() => import('./components/DeprecatedParameterModal/DeprecatedParameterModal'))
+const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
 const EditSubscriptionModal = lazy(() => import('./components/EditSubscriptionModal/EditSubscriptionModal'))
 const KeyboardShortcutsModal = lazy(() => import('./components/KeyboardShortcutsModal/KeyboardShortcutsModal'))
+const OrderStatus = lazy(() => import('./routes/OrderStatus/OrderStatus'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
 const Projects = lazy(() => import('./routes/Projects/Projects'))
@@ -66,7 +68,8 @@ const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 const TooManyPointsModal = lazy(() => import('./components/TooManyPointsModal/TooManyPointsModal'))
 
 const AdminLayout = lazy(() => import('./layouts/AdminLayout/AdminLayout'))
-const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
+
+const store = configureStore()
 
 const browserRouter = createBrowserRouter([
   {
@@ -126,32 +129,20 @@ const browserRouter = createBrowserRouter([
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-              <DownloadsLayout />
+              <Downloads />
             </Suspense>
           </AuthRequiredContainer>
-        ),
-        children: [
-          {
-            index: true,
-            async lazy() {
-              const DownloadHistoryContainer = await import('./containers/DownloadHistoryContainer/DownloadHistoryContainer')
-
-              return {
-                Component: DownloadHistoryContainer.default
-              }
-            }
-          },
-          {
-            path: `${routes.DOWNLOADS}/:id`,
-            async lazy() {
-              const OrderStatus = await import('./components/OrderStatus/OrderStatus')
-
-              return {
-                Component: OrderStatus.default
-              }
-            }
-          }
-        ]
+        )
+      },
+      {
+        path: `${routes.DOWNLOADS}/:id`,
+        element: (
+          <AuthRequiredContainer>
+            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+              <OrderStatus />
+            </Suspense>
+          </AuthRequiredContainer>
+        )
       },
       {
         path: routes.CONTACT_INFO,

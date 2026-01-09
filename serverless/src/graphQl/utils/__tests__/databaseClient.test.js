@@ -788,7 +788,7 @@ describe('DatabaseClient', () => {
     })
   })
 
-  describe('getRetrievals', () => {
+  describe('getAdminRetrievals', () => {
     test('retrieves the retrievals', async () => {
       dbTracker.on('query', (query) => {
         query.response([
@@ -821,7 +821,7 @@ describe('DatabaseClient', () => {
         ])
       })
 
-      const retrievals = await databaseClient.getRetrievals({})
+      const retrievals = await databaseClient.getAdminRetrievals({})
 
       expect(retrievals).toBeDefined()
       expect(retrievals).toEqual([
@@ -866,7 +866,7 @@ describe('DatabaseClient', () => {
         query.reject('Unknown Error')
       })
 
-      await expect(databaseClient.getRetrievals({})).rejects.toThrow('Failed to retrieve user retrievals')
+      await expect(databaseClient.getAdminRetrievals({})).rejects.toThrow('Failed to retrieve user retrievals')
 
       const { queries } = dbTracker.queries
 
@@ -910,7 +910,7 @@ describe('DatabaseClient', () => {
           ])
         })
 
-        const retrievals = await databaseClient.getRetrievals({
+        const retrievals = await databaseClient.getAdminRetrievals({
           sortKey: 'created_at'
         })
 
@@ -984,7 +984,7 @@ describe('DatabaseClient', () => {
           ])
         })
 
-        const retrievals = await databaseClient.getRetrievals({
+        const retrievals = await databaseClient.getAdminRetrievals({
           ursId: 'testuser'
         })
 
@@ -1058,7 +1058,7 @@ describe('DatabaseClient', () => {
           ])
         })
 
-        const retrievals = await databaseClient.getRetrievals({
+        const retrievals = await databaseClient.getAdminRetrievals({
           retrievalCollectionId: 1
         })
 
@@ -1119,7 +1119,7 @@ describe('DatabaseClient', () => {
           ])
         })
 
-        const retrievals = await databaseClient.getRetrievals({
+        const retrievals = await databaseClient.getAdminRetrievals({
           obfuscatedId: '4517239960'
         })
 
@@ -1180,7 +1180,7 @@ describe('DatabaseClient', () => {
           ])
         })
 
-        const retrievals = await databaseClient.getRetrievals({
+        const retrievals = await databaseClient.getAdminRetrievals({
           limit: 2,
           offset: 2
         })

@@ -765,7 +765,7 @@ describe('Admin Resolver', () => {
     describe('adminRetrievals', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getRetrievals: jest.fn().mockResolvedValue([
+          getAdminRetrievals: jest.fn().mockResolvedValue([
             {
               id: 1,
               user_id: 1,
@@ -811,12 +811,12 @@ describe('Admin Resolver', () => {
 
         const { data } = response.body.singleResult
 
-        expect(databaseClient.getRetrievals).toHaveBeenCalledWith({
+        expect(databaseClient.getAdminRetrievals).toHaveBeenCalledWith({
           limit: 2,
           offset: 0
         })
 
-        expect(databaseClient.getRetrievals).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getAdminRetrievals).toHaveBeenCalledTimes(1)
         expect(databaseClient.getUsersById).toHaveBeenCalledWith([1])
         expect(databaseClient.getUsersById).toHaveBeenCalledTimes(1)
 
@@ -853,7 +853,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getRetrievals: jest.fn().mockImplementation(() => {
+          getAdminRetrievals: jest.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
 
@@ -882,7 +882,7 @@ describe('Admin Resolver', () => {
       describe('when requesting retrievals from multiple users', () => {
         test('batches requests for users and returns the expected results', async () => {
           const databaseClient = {
-            getRetrievals: jest.fn().mockResolvedValue([
+            getAdminRetrievals: jest.fn().mockResolvedValue([
               {
                 id: 1,
                 user_id: 1,
@@ -953,12 +953,12 @@ describe('Admin Resolver', () => {
 
           const { data } = response.body.singleResult
 
-          expect(databaseClient.getRetrievals).toHaveBeenCalledWith({
+          expect(databaseClient.getAdminRetrievals).toHaveBeenCalledWith({
             limit: 2,
             offset: 0
           })
 
-          expect(databaseClient.getRetrievals).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getAdminRetrievals).toHaveBeenCalledTimes(1)
           expect(databaseClient.getUsersById).toHaveBeenCalledWith([1, 2])
           expect(databaseClient.getUsersById).toHaveBeenCalledTimes(1)
 
@@ -1013,7 +1013,7 @@ describe('Admin Resolver', () => {
       describe('when requesting multiple pages of results', () => {
         test('returns paginated results', async () => {
           const databaseClient = {
-            getRetrievals: jest.fn().mockResolvedValue([
+            getAdminRetrievals: jest.fn().mockResolvedValue([
               {
                 id: 3,
                 user_id: 2,
@@ -1070,12 +1070,12 @@ describe('Admin Resolver', () => {
 
           const { data } = response.body.singleResult
 
-          expect(databaseClient.getRetrievals).toHaveBeenCalledWith({
+          expect(databaseClient.getAdminRetrievals).toHaveBeenCalledWith({
             limit: 2,
             offset: 2
           })
 
-          expect(databaseClient.getRetrievals).toHaveBeenCalledTimes(1)
+          expect(databaseClient.getAdminRetrievals).toHaveBeenCalledTimes(1)
           expect(databaseClient.getUsersById).toHaveBeenCalledWith([2])
           expect(databaseClient.getUsersById).toHaveBeenCalledTimes(1)
 

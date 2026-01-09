@@ -63,7 +63,7 @@ const SavedProjects: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const handleError = useEdscStore((state) => state.errors.handleError)
 
-  const pageSize = 20
+  const pageSize = 5
 
   const {
     data,
