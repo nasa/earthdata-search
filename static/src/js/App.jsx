@@ -69,8 +69,6 @@ const TooManyPointsModal = lazy(() => import('./components/TooManyPointsModal/To
 
 const AdminLayout = lazy(() => import('./layouts/AdminLayout/AdminLayout'))
 
-const store = configureStore()
-
 const browserRouter = createBrowserRouter([
   {
     path: routes.HOME,
