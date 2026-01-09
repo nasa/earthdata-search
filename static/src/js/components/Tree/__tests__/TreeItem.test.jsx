@@ -1,10 +1,8 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 
-import { TreeItem } from '../TreeItem'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+import TreeItem from '../TreeItem'
 
 const defaultItem = {
   children: [{
@@ -18,7 +16,7 @@ const defaultItem = {
     value: 'Child1',
     variable: { mock: 'variable' },
     getKey: jest.fn(),
-    getName: jest.fn(),
+    getName: jest.fn().mockReturnValue('Child 1'),
     setChecked: jest.fn(),
     setExpanded: jest.fn()
   }],
@@ -30,15 +28,14 @@ const defaultItem = {
   level: 1,
   value: 'Parent1',
   getKey: jest.fn(),
-  getName: jest.fn(),
+  getName: jest.fn().mockReturnValue('Parent 1'),
   setChecked: jest.fn(),
   setExpanded: jest.fn()
 }
 
-function setup(overrideProps) {
-  defaultItem.getName.mockReturnValue('Parent 1')
-
-  const props = {
+const setup = setupTest({
+  Component: TreeItem,
+  defaultProps: {
     collectionId: 'collectionId',
     item: {
       ...defaultItem
@@ -48,156 +45,172 @@ function setup(overrideProps) {
     isLast: true,
     onChange: jest.fn(),
     onUpdateSelectedVariables: jest.fn(),
-    onViewDetails: jest.fn(),
-    ...overrideProps
+    onViewDetails: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<TreeItem {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('TreeItem component', () => {
   test('renders a checkbox element', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('input').length).toEqual(1)
-    expect(enzymeWrapper.find('input').props().checked).toEqual(true)
-    expect(enzymeWrapper.find('input').props().id).toEqual('Parent1')
-    expect(enzymeWrapper.find('input').props().value).toEqual('Parent1')
+    const checkbox = screen.getByRole('checkbox', { name: 'Parent 1' })
+    expect(checkbox).toBeChecked()
+    expect(checkbox).toHaveAttribute('id', 'Parent1')
+    expect(checkbox).toHaveAttribute('value', 'Parent1')
 
-    expect(enzymeWrapper.find('label').props().htmlFor).toEqual('Parent1')
-    expect(enzymeWrapper.find('label').text()).toEqual('Parent 1')
+    expect(screen.getByText('Parent 1')).toBeInTheDocument()
   })
 
   test('renders a child TreeItem', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    const treeItem = enzymeWrapper.find(TreeItem)
+    const checkbox = screen.getByRole('checkbox', { name: 'Child 1' })
+    expect(checkbox).toBeChecked()
+    expect(checkbox).toHaveAttribute('id', 'Parent1/Child1')
+    expect(checkbox).toHaveAttribute('value', 'Child1')
 
-    expect(treeItem.length).toEqual(1)
-    expect(treeItem.props().item).toEqual(expect.objectContaining({
-      children: [],
-      checked: true,
-      expanded: true,
-      fullValue: 'Parent1/Child1',
-      label: 'Child 1',
-      level: 2,
-      value: 'Child1'
-    }))
+    expect(screen.getByText('Child 1')).toBeInTheDocument()
   })
 
-  test('checking a checkbox calls setChecked and onChange', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.find('input').first().simulate('change', { target: { checked: true } })
-
-    const { item, onChange } = props
-    const { setChecked } = item
-
-    expect(onChange).toHaveBeenCalledTimes(1)
-    expect(setChecked).toHaveBeenCalledTimes(1)
-    expect(setChecked).toHaveBeenCalledWith(true)
-  })
-
-  test('unchecking a checkbox calls onUpdateSelectedVariables', () => {
-    const { enzymeWrapper, props } = setup({
-      item: {
-        ...defaultItem,
-        selectedVariables: ['Parent1']
+  test('checking a checkbox calls setChecked and onChange', async () => {
+    const { props, user } = setup({
+      overrideProps: {
+        item: {
+          ...defaultItem,
+          checked: false
+        }
       }
     })
 
-    enzymeWrapper.find('input').first().simulate('change', { target: { checked: false } })
+    const checkbox = screen.getByRole('checkbox', { name: 'Parent 1' })
+    await user.click(checkbox)
 
-    const { onUpdateSelectedVariables } = props
+    expect(props.onChange).toHaveBeenCalledTimes(1)
+    expect(props.onChange).toHaveBeenCalledWith()
 
-    expect(onUpdateSelectedVariables).toHaveBeenCalledTimes(1)
-    expect(onUpdateSelectedVariables).toHaveBeenCalledWith([], 'collectionId')
+    expect(props.item.setChecked).toHaveBeenCalledTimes(1)
+    expect(props.item.setChecked).toHaveBeenCalledWith(true)
+
+    expect(props.onUpdateSelectedVariables).toHaveBeenCalledTimes(0)
   })
 
-  test('clicking expand/collapse button calls setExpanded', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.find('button').simulate('click')
-
-    const { item } = props
-    const { setExpanded } = item
-    expect(setExpanded).toHaveBeenCalledTimes(1)
-    expect(setExpanded).toHaveBeenCalledWith(false)
-
-    // Click the button again
-    enzymeWrapper.find('button').simulate('click')
-
-    expect(setExpanded).toHaveBeenCalledTimes(2)
-    expect(setExpanded).toHaveBeenLastCalledWith(true)
-  })
-
-  test('clicking the info icon calls onViewDetails', () => {
-    const { enzymeWrapper, props } = setup({
-      item: { ...defaultItem.children[0] }
+  test('unchecking a checkbox calls onUpdateSelectedVariables', async () => {
+    const { props, user } = setup({
+      overrideProps: {
+        item: {
+          ...defaultItem,
+          selectedVariables: ['Parent1']
+        }
+      }
     })
 
-    enzymeWrapper.find('.tree-item__info-button').simulate('click')
+    const checkbox = screen.getByRole('checkbox', { name: 'Parent 1' })
+    await user.click(checkbox)
+
+    expect(props.onChange).toHaveBeenCalledTimes(0)
+    expect(props.item.setChecked).toHaveBeenCalledTimes(0)
+
+    expect(props.onUpdateSelectedVariables).toHaveBeenCalledTimes(1)
+    expect(props.onUpdateSelectedVariables).toHaveBeenCalledWith([], 'collectionId')
+  })
+
+  test('clicking expand/collapse button calls setExpanded', async () => {
+    const { props, user } = setup()
+
+    const collapseButton = screen.getByRole('button', { name: 'Collapse Parent 1' })
+    await user.click(collapseButton)
+
+    expect(props.item.setExpanded).toHaveBeenCalledTimes(1)
+    expect(props.item.setExpanded).toHaveBeenCalledWith(false)
+
+    jest.clearAllMocks()
+
+    const expandButton = screen.getByRole('button', { name: 'Expand Parent 1' })
+    await user.click(expandButton)
+
+    expect(props.item.setExpanded).toHaveBeenCalledTimes(1)
+    expect(props.item.setExpanded).toHaveBeenCalledWith(true)
+  })
+
+  test('clicking the info icon calls onViewDetails', async () => {
+    const { props, user } = setup()
+
+    const button = screen.getByRole('button', { name: 'View details' })
+    await user.click(button)
 
     expect(props.onViewDetails).toHaveBeenCalledTimes(1)
     expect(props.onViewDetails).toHaveBeenCalledWith({ mock: 'variable' }, 0)
   })
 
   test('adds the level modifier classname', () => {
-    const { enzymeWrapper } = setup({
-      item: {
-        ...defaultItem,
-        level: 2
+    const { container } = setup({
+      overrideProps: {
+        item: {
+          ...defaultItem,
+          level: 2
+        }
       }
     })
-    expect(enzymeWrapper.props().className).toEqual(expect.stringContaining('tree-item--child-2'))
+
+    expect(container.childNodes[0].className).toContain('tree-item--child-2')
   })
 
   describe('when the item is a parent', () => {
     test('adds the modifier classname', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.props().className).toEqual(expect.stringContaining('tree-item--is-parent'))
+      const { container } = setup()
+
+      expect(container.childNodes[0].className).toContain('tree-item--is-parent')
     })
   })
 
   describe('when the item is first in the list', () => {
     test('adds the modifier classname', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.props().className).toEqual(expect.stringContaining('tree-item--is-first'))
+      const { container } = setup({
+        overrideProps: {
+          isFirst: true,
+          isLast: false
+        }
+      })
+
+      expect(container.childNodes[0].className).toContain('tree-item--is-first')
+      expect(container.childNodes[0].className).not.toContain('tree-item--is-last')
     })
   })
 
   describe('when the item is last in the list', () => {
     test('adds the modifier classname', () => {
-      const { enzymeWrapper } = setup({
-        isFirst: false,
-        isLast: true
+      const { container } = setup({
+        overrideProps: {
+          isFirst: false,
+          isLast: true
+        }
       })
-      expect(enzymeWrapper.props().className).toEqual(expect.stringContaining('tree-item--is-last'))
+
+      expect(container.childNodes[0].className).toContain('tree-item--is-last')
+      expect(container.childNodes[0].className).not.toContain('tree-item--is-first')
     })
   })
 
   describe('when the item is open', () => {
     test('adds the modifier classname', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.props().className).toEqual(expect.stringContaining('tree-item--is-open'))
+      const { container } = setup()
+
+      expect(container.childNodes[0].className).toContain('tree-item--is-open')
     })
   })
 
   describe('when the item is closed', () => {
     test('does not add the modifier classname', () => {
-      const { enzymeWrapper } = setup()
+      const { container } = setup({
+        overrideProps: {
+          item: {
+            ...defaultItem,
+            expanded: false
+          }
+        }
+      })
 
-      enzymeWrapper.find('button').simulate('click')
-      expect(enzymeWrapper.props().className).not.toEqual(expect.stringContaining('tree-item--is-open'))
+      expect(container.childNodes[0].className).not.toContain('tree-item--is-open')
     })
   })
 })

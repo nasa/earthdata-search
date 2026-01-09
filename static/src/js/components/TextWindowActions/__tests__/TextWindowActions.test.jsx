@@ -1,14 +1,13 @@
 import React from 'react'
-import Enzyme, { mount, shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen, within } from '@testing-library/react'
 import { JSDOM } from 'jsdom'
+
+import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import TextWindowActions from '../TextWindowActions'
 import * as DownloadableFile from '../../../util/files/constructDownloadableFile'
-import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 import Button from '../../Button/Button'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 const dom = new JSDOM()
 global.document = dom.window.document
@@ -22,6 +21,16 @@ global.document.queryCommandSupported = queryCommandSupportedMock
 
 const constructDownloadableFileMock = jest.spyOn(DownloadableFile, 'constructDownloadableFile')
 
+// Mock the Button component but keep the actual implementation
+jest.mock('../../Button/Button', () => {
+  const ActualButton = jest.requireActual('../../Button/Button').default
+
+  return {
+    __esModule: true,
+    default: jest.fn((props) => <ActualButton {...props} />)
+  }
+})
+
 jest.mock('../../../util/files/constructDownloadableFile', () => ({
   constructDownloadableFile: jest.fn()
 }))
@@ -30,10 +39,21 @@ jest.mock('../../../util/files/parseUserAgent', () => ({
   getOperatingSystem: jest.fn()
 }))
 
+jest.mock('../../../util/renderTooltip', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
+
+const setup = setupTest({
+  Component: TextWindowActions,
+  defaultProps: {
+    eddLink: 'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token'
+  }
+})
+
 const { assign } = window.location
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 
   delete window.location
@@ -41,119 +61,81 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.clearAllMocks()
   window.location.assign = assign
 })
 
-function setup(overrideProps, shouldMount) {
-  const props = {
-    eddLink: 'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token',
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shouldMount
-    ? mount(<TextWindowActions {...props} />)
-    : shallow(<TextWindowActions {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
 describe('TextWindowActions component', () => {
-  test('should render an svg progress ring', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('.text-window-actions').type()).toEqual('div')
-  })
-
-  test('renders the expand button', () => {
-    const { enzymeWrapper } = setup()
-
-    const expandButton = enzymeWrapper.find('.text-window-actions__action--expand')
-
-    expect(expandButton.length).toEqual(1)
-  })
-
-  test('renders the links modal closed by default', () => {
-    const { enzymeWrapper } = setup()
-
-    const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-
-    expect(linksModal.props().isOpen).toEqual(false)
-  })
-
   describe('when clicking the expand button', () => {
-    const { enzymeWrapper } = setup()
-    const expandButton = enzymeWrapper.find('.text-window-actions__action--expand')
+    test('opens the linksModal', async () => {
+      const { user } = setup()
 
-    test('opens the linksModal', () => {
-      expandButton.simulate('click')
-      const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+      const expandButton = screen.getByRole('button', { name: 'Expand' })
+      await user.click(expandButton)
 
-      expect(linksModal.props().isOpen).toEqual(true)
+      const dialog = screen.getByRole('dialog')
+      expect(dialog).toBeInTheDocument()
+
+      expect(within(dialog).getByText('Copy')).toBeInTheDocument()
     })
   })
 
   describe('when clicking the download with edd button', () => {
-    test('opens the eddModal and opens EDD', () => {
-      const { enzymeWrapper } = setup()
-      const downloadWithEddButton = enzymeWrapper.find('.text-window-actions__action--edd')
+    test('opens the eddModal and opens EDD', async () => {
+      const { user } = setup()
 
-      downloadWithEddButton.simulate('click')
-      const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
+      const downloadWithEddButton = screen.getByRole('button', { name: 'Download Files' })
+      await user.click(downloadWithEddButton)
 
-      expect(eddModal.props().isOpen).toEqual(true)
+      const dialog = screen.getByRole('dialog')
+      expect(dialog).toBeInTheDocument()
+
+      expect(within(dialog).getByText('Opening Earthdata Download to download your files...')).toBeInTheDocument()
 
       expect(window.location.assign).toHaveBeenCalledTimes(1)
       expect(window.location.assign).toHaveBeenCalledWith('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
+
+      const openButton = within(dialog).getByRole('button', { name: 'Open Earthdata Download' })
+      expect(openButton).toHaveAttribute('href', 'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
     })
   })
 
   describe('when the linksModal is open', () => {
     describe('when the browser does supports copy/paste', () => {
-      test('renders the copy button', () => {
-        const { enzymeWrapper } = setup({
-          clipboardContents: 'test clipboard contents'
-        }, true)
-
-        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-        expandButton.simulate('click')
-
-        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-        expect(linksModal.props().isOpen).toEqual(true)
-      })
-
       describe('when clicking the copy button', () => {
-        test('should do run the copy command', () => {
-          const { enzymeWrapper } = setup({
-            clipboardContents: 'test clipboard contents'
-          }, true)
+        test('should do run the copy command', async () => {
+          const { user } = setup({
+            overrideProps: {
+              clipboardContents: 'test clipboard contents'
+            }
+          })
 
-          const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-          expandButton.simulate('click')
+          const expandButton = screen.getByRole('button', { name: 'Expand' })
+          await user.click(expandButton)
 
-          const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+          const dialog = screen.getByRole('dialog')
 
-          const copyButton = linksModal.find('.text-window-actions__modal-action--copy').filter(Button)
-          copyButton.simulate('click')
+          const copyButton = within(dialog).getByRole('button', { name: 'Copy' })
+          await user.click(copyButton)
 
           expect(document.execCommand).toHaveBeenCalledTimes(1)
         })
       })
 
       describe('when the browser does not support copy/paste', () => {
-        test('does not render the copy button', () => {
+        test('does not render the copy button', async () => {
           global.document.queryCommandSupported = queryCommandNotSupportedMock
 
-          const { enzymeWrapper } = setup()
+          const { user } = setup({
+            overrideProps: {
+              clipboardContents: 'test clipboard contents'
+            }
+          })
 
-          const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-          expandButton.simulate('click')
+          const expandButton = screen.getByRole('button', { name: 'Expand' })
+          await user.click(expandButton)
 
-          const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-          expect(linksModal.find('.text-window-actions__modal-action--copy').filter(Button).length).toEqual(0)
+          const dialog = screen.getByRole('dialog')
+          expect(within(dialog).queryByRole('button', { name: 'Copy' })).toBeNull()
           // Reset the queryCommandSupported function
           global.document.queryCommandSupported = queryCommandSupportedMock
         })
@@ -161,226 +143,224 @@ describe('TextWindowActions component', () => {
     })
 
     describe('when file contents are set', () => {
-      test('renders the save button', () => {
-        const { enzymeWrapper } = setup({
-          fileContents: 'test file contents',
-          fileName: 'test file contents'
-        }, true)
-
-        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-        expandButton.simulate('click')
-
-        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-
-        const saveButton = linksModal.find('.text-window-actions__modal-action--save').filter(Button)
-
-        expect(saveButton.length).toEqual(1)
-      })
-
       describe('when clicking the save button', () => {
-        test('saves the file', () => {
-          const stopPropagationMock = jest.fn()
-
-          const { enzymeWrapper } = setup({
-            fileContents: 'test file contents',
-            fileName: 'test file contents'
-          }, true)
-
-          const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-          expandButton.simulate('click')
-
-          const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-
-          const saveButton = linksModal.find('.text-window-actions__modal-action--save').filter(Button)
-
-          saveButton.simulate('click', {
-            stopPropagation: stopPropagationMock
+        test('saves the file', async () => {
+          const { user } = setup({
+            overrideProps: {
+              fileContents: 'test file contents',
+              fileName: 'test file contents'
+            }
           })
 
+          const expandButton = screen.getByRole('button', { name: 'Expand' })
+          await user.click(expandButton)
+
+          const dialog = screen.getByRole('dialog')
+
+          const saveButton = within(dialog).getByRole('button', { name: 'Save' })
+
+          await user.click(saveButton)
+
           expect(constructDownloadableFileMock).toHaveBeenCalledTimes(1)
+          expect(constructDownloadableFileMock).toHaveBeenCalledWith('test file contents', 'test file contents')
         })
-      })
-    })
-  })
-
-  describe('when the eddModal is open', () => {
-    describe('when clicking the Open Earthdata Download button ', () => {
-      test('renders the save button', () => {
-        const { enzymeWrapper } = setup({}, true)
-
-        const eddButton = enzymeWrapper.find('button.text-window-actions__action--edd')
-        eddButton.simulate('click')
-
-        const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
-
-        const openButton = eddModal.find('.text-window-actions__modal-action--open-edd').filter(Button)
-        openButton.simulate('click')
-
-        expect(window.location.assign).toHaveBeenCalledTimes(1)
-        expect(window.location.assign).toHaveBeenCalledWith('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
       })
     })
   })
 
   describe('when closing the linksModal', () => {
-    test('closes the linksModal', () => {
-      const { enzymeWrapper } = setup()
-      const expandButton = enzymeWrapper.find('.text-window-actions__action--expand')
-      expandButton.simulate('click')
-      const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-      expect(linksModal.props().isOpen).toEqual(true)
+    test('closes the linksModal', async () => {
+      const { user } = setup()
 
-      linksModal.props().onClose()
+      const expandButton = screen.getByRole('button', { name: 'Expand' })
+      await user.click(expandButton)
 
-      const linksModalAfter = enzymeWrapper.find(EDSCModalContainer).at(0)
+      const dialog = screen.getByRole('dialog')
+      const closeButton = within(dialog).getByRole('button', { name: 'Close' })
+      await user.click(closeButton)
 
-      expect(linksModalAfter.props().isOpen).toEqual(false)
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     })
   })
 
   describe('when closing the eddModal', () => {
-    test('closes the eddModal', () => {
-      const { enzymeWrapper } = setup()
-      const downloadWithEddButton = enzymeWrapper.find('.text-window-actions__action--edd')
-      downloadWithEddButton.simulate('click')
+    test('closes the eddModal', async () => {
+      const { user } = setup()
 
-      const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
-      expect(eddModal.props().isOpen).toEqual(true)
+      const downloadWithEddButton = screen.getByRole('button', { name: 'Download Files' })
+      await user.click(downloadWithEddButton)
 
-      eddModal.props().onClose()
+      const dialog = screen.getByRole('dialog')
+      const closeButton = within(dialog).getByRole('button', { name: 'Close' })
+      await user.click(closeButton)
 
-      const eddModalAfter = enzymeWrapper.find(EDSCModalContainer).at(1)
-
-      expect(eddModalAfter.props().isOpen).toEqual(false)
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     })
   })
 
   describe('when file contents are set', () => {
-    const { enzymeWrapper } = setup({
-      fileContents: 'test file contents',
-      fileName: 'test file contents'
-    })
-
-    const saveButton = enzymeWrapper.find('.text-window-actions__action--save')
-
-    test('renders the save button', () => {
-      expect(saveButton.length).toEqual(1)
-    })
-
     describe('when clicking the save button', () => {
-      test('saves the file', () => {
-        const stopPropagationMock = jest.fn()
-        saveButton.simulate('click', {
-          stopPropagation: stopPropagationMock
+      test('saves the file', async () => {
+        const { user } = setup({
+          overrideProps: {
+            fileContents: 'test file contents',
+            fileName: 'test file contents'
+          }
         })
 
+        const saveButton = screen.getByRole('button', { name: 'Save' })
+        await user.click(saveButton)
+
         expect(constructDownloadableFileMock).toHaveBeenCalledTimes(1)
+        expect(constructDownloadableFileMock).toHaveBeenCalledWith('test file contents', 'test file contents')
       })
     })
   })
 
-  describe('when the browser does supports copy/paste', () => {
-    test('renders the copy button', () => {
-      const { enzymeWrapper } = setup({
-        clipboardContents: 'test clipboard contents'
-      }, true)
-      expect(enzymeWrapper.find('.text-window-actions__action--copy').filter(Button).length).toEqual(1)
-    })
+  describe('when the modals are closed', () => {
+    describe('when the browser does supports copy/paste', () => {
+      describe('when clicking the copy button', () => {
+        test('should do run the copy command', async () => {
+          const { user } = setup({
+            overrideProps: {
+              clipboardContents: 'test clipboard contents'
+            }
+          })
 
-    describe('when clicking the copy button', () => {
-      test('should do run the copy command', () => {
-        const { enzymeWrapper } = setup({
-          clipboardContents: 'test clipboard contents'
-        }, true)
-        const copyButton = enzymeWrapper.find('.text-window-actions__action--copy').filter(Button)
+          const copyButton = screen.getByRole('button', { name: 'Copy' })
+          await user.click(copyButton)
 
-        copyButton.simulate('click')
-
-        expect(document.execCommand).toHaveBeenCalledTimes(1)
-      })
-    })
-
-    describe('when the browser does not support copy/paste', () => {
-      global.document.queryCommandSupported = queryCommandNotSupportedMock
-
-      const { enzymeWrapper } = setup()
-
-      test('does not render the copy button', () => {
-        expect(enzymeWrapper.find('.text-window-actions__action--copy').length).toEqual(0)
+          expect(document.execCommand).toHaveBeenCalledTimes(1)
+          expect(document.execCommand).toHaveBeenCalledWith('copy')
+        })
       })
 
-      // Reset the queryCommandSupported function
-      global.document.queryCommandSupported = queryCommandSupportedMock
-    })
+      describe('when the browser does not support copy/paste', () => {
+        test('does not render the copy button', () => {
+          global.document.queryCommandSupported = queryCommandNotSupportedMock
 
-    describe('when disabling the copy button', () => {
-      const { enzymeWrapper } = setup({
-        disableCopy: true
+          setup()
+
+          expect(screen.queryByRole('button', { name: 'Copy' })).not.toBeInTheDocument()
+
+          // Reset the queryCommandSupported function
+          global.document.queryCommandSupported = queryCommandSupportedMock
+        })
       })
 
-      test('hides the copy button', () => {
-        expect(enzymeWrapper.find('.text-window-actions__action--copy').length).toEqual(0)
-      })
-
-      describe('when the modal is open', () => {
-        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-        expandButton.simulate('click')
-
-        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-        expect(linksModal.props().isOpen).toEqual(true)
-
+      describe('when disabling the copy button', () => {
         test('hides the copy button', () => {
-          expect(enzymeWrapper.find('.text-window-actions__modal-action--copy').length).toEqual(0)
+          setup({
+            overrideProps: {
+              disableCopy: true
+            }
+          })
+
+          expect(screen.queryByRole('button', { name: 'Copy' })).not.toBeInTheDocument()
+        })
+
+        describe('when the modal is open', () => {
+          test('hides the copy button', async () => {
+            const { user } = setup({
+              overrideProps: {
+                disableCopy: true
+              }
+            })
+
+            const expandButton = screen.getByRole('button', { name: 'Expand' })
+            await user.click(expandButton)
+
+            const dialog = screen.getByRole('dialog')
+            expect(within(dialog).queryByRole('button', { name: 'Copy' })).not.toBeInTheDocument()
+          })
         })
       })
-    })
 
-    describe('when disabling the save button', () => {
-      const { enzymeWrapper } = setup({
-        disableSave: true
-      })
-
-      test('hides the save button', () => {
-        expect(enzymeWrapper.find('.text-window-actions__action--save').length).toEqual(0)
-      })
-
-      describe('when the modal is open', () => {
-        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-        expandButton.simulate('click')
-
-        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-        expect(linksModal.props().isOpen).toEqual(true)
-
+      describe('when disabling the save button', () => {
         test('hides the save button', () => {
-          expect(enzymeWrapper.find('.text-window-actions__modal-action--save').length).toEqual(0)
+          setup({
+            overrideProps: {
+              disableSave: true
+            }
+          })
+
+          expect(screen.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
+        })
+
+        describe('when the modal is open', () => {
+          test('hides the save button', async () => {
+            const { user } = setup({
+              overrideProps: {
+                disableSave: true
+              }
+            })
+
+            const expandButton = screen.getByRole('button', { name: 'Expand' })
+            await user.click(expandButton)
+
+            const dialog = screen.getByRole('dialog')
+            expect(within(dialog).queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
+          })
         })
       })
-    })
 
-    describe('when hiding the edd button', () => {
-      const { enzymeWrapper } = setup({
-        hideEdd: true
+      describe('when hiding the edd button', () => {
+        test('hides the edd button', () => {
+          setup({
+            overrideProps: {
+              hideEdd: true
+            }
+          })
+
+          expect(screen.queryByRole('button', { name: 'Download Files' })).not.toBeInTheDocument()
+        })
       })
 
-      test('hides the edd button', () => {
-        expect(enzymeWrapper.find('.text-window-actions__action--edd').length).toEqual(0)
-      })
-    })
+      describe('when disabling the edd button while a job is in progress', () => {
+        test('disables the button and displays the correct tooltip message', () => {
+          setup({
+            overrideProps: {
+              eddLink: null,
+              disableEddInProgress: true,
+              disableCopy: true,
+              disableSave: true
+            }
+          })
 
-    describe('when disabling the edd button while a job is in progress', () => {
-      const { enzymeWrapper } = setup({
-        eddLink: null,
-        disableEddInProgress: true
-      })
+          const downloadWithEddButton = screen.getByRole('button', { name: 'Download Files' })
 
-      test('disables the button and displays the correct tooltip message', () => {
-        const button = enzymeWrapper.find('.text-window-actions__action--edd')
-        expect(button.length).toEqual(1)
+          expect(downloadWithEddButton).toBeInTheDocument()
+          expect(downloadWithEddButton).toBeDisabled()
 
-        expect(button.props().disabled).toEqual(true)
-        expect(button.props().tooltip).toEqual((
-          <span>Download files with Earthdata Download when the job is complete</span>
-        ))
+          expect(Button).toHaveBeenCalledTimes(2)
+          expect(Button).toHaveBeenNthCalledWith(
+            1,
+            expect.objectContaining({
+              bootstrapSize: 'sm',
+              bootstrapVariant: 'primary',
+              children: 'Download Files',
+              className: 'text-window-actions__action text-window-actions__action--edd',
+              disabled: true,
+              icon: Download,
+              onClick: expect.any(Function),
+              tooltip: expect.objectContaining({
+                props: expect.objectContaining({
+                  children: 'Download files with Earthdata Download when the job is complete'
+                })
+              }),
+              tooltipId: 'text-window-actions__tooltip--null'
+            }),
+            {}
+          )
+
+          expect(Button).toHaveBeenNthCalledWith(
+            2,
+            expect.objectContaining({
+              label: 'Expand'
+            }),
+            {}
+          )
+        })
       })
     })
   })

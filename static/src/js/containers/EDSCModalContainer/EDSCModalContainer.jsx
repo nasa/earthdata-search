@@ -1,4 +1,8 @@
-import React, { Component, cloneElement } from 'react'
+import React, {
+  cloneElement,
+  useRef,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -27,172 +31,125 @@ import EDSCModal from '../../components/EDSCModal/EDSCModal'
  * @param {Function} onPrimaryAction A callback function for the primary action.
  * @param {Function} onSecondaryAction A callback function for the secondary action.
  */
-export class EDSCModalContainer extends Component {
-  constructor(props) {
-    super(props)
+const EDSCModalContainer = ({
+  body,
+  bodyPadding = true,
+  className = '',
+  dataTestId = null,
+  size = 'sm',
+  fixedHeight = false,
+  footer = null,
+  footerMeta = null,
+  id,
+  innerHeader = null,
+  isOpen,
+  title = null,
+  primaryAction = null,
+  primaryActionDisabled = false,
+  primaryActionLoading = false,
+  secondaryAction = null,
+  spinner = false,
+  subtitle = '',
+  onPrimaryAction = null,
+  onSecondaryAction = null,
+  onClose = null,
+  modalOverlays = {}
+}) => {
+  const modalInner = useRef()
+  const [modalOverlay, setModalOverlay] = useState(null)
 
-    this.modalInner = React.createRef()
-
-    this.onSetOverlayModalContent = this.onSetOverlayModalContent.bind(this)
-    this.onModalExit = this.onModalExit.bind(this)
-    this.onModalHide = this.onModalHide.bind(this)
-
-    this.state = {
-      modalOverlay: null
-    }
+  const onSetOverlayModalContent = (overlay) => {
+    setModalOverlay(overlay || null)
   }
 
-  onSetOverlayModalContent(overlay) {
-    this.setState({
-      modalOverlay: overlay || null
-    })
-  }
-
-  onModalHide() {
-    const { onClose } = this.props
+  const onModalHide = () => {
     if (onClose) onClose(false)
   }
 
-  onModalExit() {
-    this.setState({
-      modalOverlay: null
-    })
+  const onModalExit = () => {
+    setModalOverlay(null)
   }
 
-  render() {
-    const {
-      body,
-      bodyPadding,
-      className,
-      dataTestId,
-      size,
-      fixedHeight,
-      footer,
-      footerMeta,
-      id,
-      innerHeader,
-      isOpen,
-      title,
-      primaryAction,
-      primaryActionDisabled,
-      primaryActionLoading,
-      secondaryAction,
-      spinner,
-      subtitle,
-      onPrimaryAction,
-      onSecondaryAction,
-      modalOverlays
-    } = this.props
+  const identifier = `edsc-modal__${id}-modal`
 
-    const {
-      modalOverlay
-    } = this.state
-
-    const identifier = `edsc-modal__${id}-modal`
-
-    const modalClassNames = classNames([
-      'edsc-modal',
-      identifier,
-      {
-        [`${className}`]: className,
-        [`edsc-modal--fixed-height-${fixedHeight}`]: fixedHeight,
-        'edsc-modal--fixed-height': fixedHeight,
-        'edsc-modal--inner-header': innerHeader,
-        'edsc-modal--body-padding': bodyPadding
-      }
-    ])
-
-    let activeModalOverlay = null
-
-    if (modalOverlay && modalOverlays[modalOverlay]) {
-      activeModalOverlay = modalOverlays[modalOverlay]
+  const modalClassNames = classNames([
+    'edsc-modal',
+    identifier,
+    {
+      [`${className}`]: className,
+      [`edsc-modal--fixed-height-${fixedHeight}`]: fixedHeight,
+      'edsc-modal--fixed-height': fixedHeight,
+      'edsc-modal--inner-header': innerHeader,
+      'edsc-modal--body-padding': bodyPadding
     }
+  ])
 
-    const addPropsToChildren = (el) => {
-      if (el) {
-        let returnObj = null
+  let activeModalOverlay = null
 
-        // If the element's type is a function then the element is a custom component, not a dom element
-        // We can't add these props to dom elements
-        // This prevents usage of setModalOverlay and modalInnerRef on dom elements
-        if (typeof el.type === 'function') {
-          returnObj = {
-            setModalOverlay: (overlay) => {
-              this.onSetOverlayModalContent(overlay)
-            },
-            modalInnerRef: this.modalInner
-          }
+  if (modalOverlay && modalOverlays[modalOverlay]) {
+    activeModalOverlay = modalOverlays[modalOverlay]
+  }
+
+  const addPropsToChildren = (el) => {
+    if (el) {
+      let returnObj = null
+
+      // If the element's type is a function then the element is a custom component, not a dom element
+      // We can't add these props to dom elements
+      // This prevents usage of setModalOverlay and modalInnerRef on dom elements
+      if (typeof el.type === 'function') {
+        returnObj = {
+          setModalOverlay: (overlay) => {
+            onSetOverlayModalContent(overlay)
+          },
+          modalInnerRef: modalInner
         }
-
-        return cloneElement(el, returnObj)
       }
 
-      return null
+      return cloneElement(el, returnObj)
     }
 
-    // Loop through the custom elements and attach the extra props we want to pass
-    const [
-      innerHeaderEl,
-      bodyEl,
-      modalOverlayEl
-    ] = [
-      innerHeader,
-      body,
-      activeModalOverlay
-    ].map(addPropsToChildren)
-
-    return (
-      <EDSCModal
-        activeModalOverlay={activeModalOverlay}
-        bodyEl={bodyEl}
-        dataTestId={dataTestId}
-        footer={footer}
-        footerMeta={footerMeta}
-        identifier={identifier}
-        innerHeaderEl={innerHeaderEl}
-        isOpen={isOpen}
-        modalClassNames={modalClassNames}
-        modalInner={this.modalInner}
-        modalOverlayEl={modalOverlayEl}
-        onModalExit={this.onModalExit}
-        onModalHide={this.onModalHide}
-        onPrimaryAction={onPrimaryAction}
-        onSecondaryAction={onSecondaryAction}
-        primaryAction={primaryAction}
-        primaryActionDisabled={primaryActionDisabled}
-        primaryActionLoading={primaryActionLoading}
-        secondaryAction={secondaryAction}
-        size={size}
-        spinner={spinner}
-        subtitle={subtitle}
-        title={title}
-      />
-    )
+    return null
   }
-}
 
-export default EDSCModalContainer
+  // Loop through the custom elements and attach the extra props we want to pass
+  const [
+    innerHeaderEl,
+    bodyEl,
+    modalOverlayEl
+  ] = [
+    innerHeader,
+    body,
+    activeModalOverlay
+  ].map(addPropsToChildren)
 
-EDSCModalContainer.defaultProps = {
-  bodyPadding: true,
-  className: '',
-  dataTestId: null,
-  fixedHeight: false,
-  footer: null,
-  footerMeta: null,
-  innerHeader: null,
-  onClose: null,
-  title: null,
-  size: 'sm',
-  spinner: false,
-  modalOverlays: {},
-  primaryAction: null,
-  primaryActionDisabled: false,
-  primaryActionLoading: false,
-  secondaryAction: null,
-  subtitle: '',
-  onPrimaryAction: null,
-  onSecondaryAction: null
+  return (
+    <EDSCModal
+      activeModalOverlay={activeModalOverlay}
+      bodyEl={bodyEl}
+      dataTestId={dataTestId}
+      footer={footer}
+      footerMeta={footerMeta}
+      identifier={identifier}
+      innerHeaderEl={innerHeaderEl}
+      isOpen={isOpen}
+      modalClassNames={modalClassNames}
+      modalInner={modalInner}
+      modalOverlayEl={modalOverlayEl}
+      onModalExit={onModalExit}
+      onModalHide={onModalHide}
+      onPrimaryAction={onPrimaryAction}
+      onSecondaryAction={onSecondaryAction}
+      primaryAction={primaryAction}
+      primaryActionDisabled={primaryActionDisabled}
+      primaryActionLoading={primaryActionLoading}
+      secondaryAction={secondaryAction}
+      size={size}
+      spinner={spinner}
+      subtitle={subtitle}
+      title={title}
+    />
+  )
 }
 
 EDSCModalContainer.propTypes = {
@@ -222,3 +179,5 @@ EDSCModalContainer.propTypes = {
   onPrimaryAction: PropTypes.func,
   onSecondaryAction: PropTypes.func
 }
+
+export default EDSCModalContainer

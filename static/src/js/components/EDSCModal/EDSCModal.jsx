@@ -35,7 +35,7 @@ import './EDSCModal.scss'
  * @param {Boolean} spinner Shows a loading spinner.
  * @param {String} title The modal title.
  */
-export const EDSCModal = ({
+const EDSCModal = ({
   activeModalOverlay = null,
   bodyEl,
   dataTestId = null,
