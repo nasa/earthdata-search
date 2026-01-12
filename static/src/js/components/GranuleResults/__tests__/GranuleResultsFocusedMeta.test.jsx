@@ -120,9 +120,8 @@ describe('GranuleResultsFocusedMeta component', () => {
         const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
         await user.click(expandButton)
 
-        const modal = await screen.findByTestId('granule-results-focused-meta-modal')
+        expect(await screen.findByRole('dialog')).toBeInTheDocument()
 
-        expect(modal).toBeInTheDocument()
         expect(metricsBrowseGranuleImage).toHaveBeenCalledTimes(1)
         expect(metricsBrowseGranuleImage).toHaveBeenCalledWith({
           modalOpen: false,
@@ -153,7 +152,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
         await user.click(expandButton)
 
-        const modal = await screen.findByTestId('granule-results-focused-meta-modal')
+        const modal = await screen.findByRole('dialog')
         const modalPrev = within(modal).queryByLabelText('Previous browse image')
         const modalNext = within(modal).queryByLabelText('Next browse image')
 
@@ -550,7 +549,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           const expandButton = screen.getByLabelText('Expand browse image')
           await user.click(expandButton)
 
-          const modal = await screen.findByTestId('granule-results-focused-meta-modal')
+          const modal = await screen.findByRole('dialog')
           const modalPrev = within(modal).queryByLabelText('Previous browse image')
           const modalNext = within(modal).queryByLabelText('Next browse image')
           const modalPopoverButton = await within(modal).findByLabelText('View available browse imagery')
@@ -587,7 +586,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           await user.click(expandButton)
 
-          const modal = await screen.findByTestId('granule-results-focused-meta-modal')
+          const modal = await screen.findByRole('dialog')
           const image = within(modal).getByTestId('mock-edsc-image')
 
           expect(image).toBeInTheDocument()
@@ -627,14 +626,12 @@ describe('GranuleResultsFocusedMeta component', () => {
             const expandButton = screen.getByLabelText('Expand browse image')
             await user.click(expandButton)
 
-            const modal = await screen.findByTestId('granule-results-focused-meta-modal')
+            const modal = await screen.findByRole('dialog')
             const modalCloseButton = within(modal).getByRole('button', { name: 'Close' })
             await user.click(modalCloseButton)
 
             // Must use `queryBy` since the element is no longer on the DOM
-            const modalUpdated = screen.queryByTestId('granule-results-focused-meta-modal')
-
-            expect(modalUpdated).not.toBeInTheDocument()
+            expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
           })
         })
 
@@ -669,7 +666,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             const expandButton = screen.getByLabelText('Expand browse image')
             await user.click(expandButton)
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
+            const modal = screen.getByRole('dialog')
             const modalNext = within(modal).queryByLabelText('Next browse image')
 
             await user.click(modalNext)
@@ -728,7 +725,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             const expandButton = screen.getByLabelText('Expand browse image')
             await user.click(expandButton)
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
+            const modal = screen.getByRole('dialog')
             const modalNext = within(modal).queryByLabelText('Next browse image')
             const modalPrev = within(modal).queryByLabelText('Previous browse image')
 
@@ -795,7 +792,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             const expandButton = screen.getByLabelText('Expand browse image')
             await user.click(expandButton)
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
+            const modal = screen.getByRole('dialog')
 
             const popoverListButton = within(modal).queryByLabelText('View available browse imagery')
             await user.click(popoverListButton)
@@ -853,7 +850,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             const expandButton = screen.getByLabelText('Expand browse image')
             await user.click(expandButton)
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
+            const modal = screen.getByRole('dialog')
             const modalNext = within(modal).queryByLabelText('Next browse image')
 
             await user.click(modalNext)
@@ -989,11 +986,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
             await user.click(expandButton)
 
-            const granuleResultsFocusedMeta = await screen.findByTestId('granule-results-focused-meta-modal')
-
-            expect(granuleResultsFocusedMeta).toBeInTheDocument()
-
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
+            const modal = screen.getByRole('dialog')
             const modalPrev = within(modal).getByRole('button', { name: 'Previous browse image' })
             await user.click(modalPrev)
 

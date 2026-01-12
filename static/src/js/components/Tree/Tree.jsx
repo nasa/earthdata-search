@@ -7,7 +7,7 @@ import React, {
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash-es'
 
-import { TreeItem } from './TreeItem'
+import TreeItem from './TreeItem'
 import { TreeNode } from '../../util/tree/TreeNode'
 
 import './Tree.scss'

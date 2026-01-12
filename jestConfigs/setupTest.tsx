@@ -71,6 +71,8 @@ export type SetupTestOverrides = {
 
 /** Type for the return value of the setupTest function */
 export type SetupTestReturnType = {
+  /** The container HTMLElement of the rendered component */
+  container: HTMLElement
   /** Props passed to the component */
   props: Record<string, unknown>
   /** Function to rerender the component */
@@ -189,9 +191,14 @@ const setupTest = ({
     )
   }
 
-  const { rerender, unmount } = render(RenderedComponent as React.ReactElement)
+  const {
+    container,
+    rerender,
+    unmount
+  } = render(RenderedComponent as React.ReactElement)
 
   return {
+    container,
     props,
     rerender,
     unmount,
