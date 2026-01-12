@@ -15,8 +15,8 @@ const { edscHost } = getEnvironmentConfig()
 const Downloads = () => (
   <>
     <Helmet>
-      <title>Downloads Status & History</title>
-      <meta name="title" content="Downloads" />
+      <title>Download Status & History</title>
+      <meta name="title" content="Download Status & History" />
       <meta name="robots" content="noindex, nofollow" />
       <link rel="canonical" href={`${edscHost}`} />
     </Helmet>
