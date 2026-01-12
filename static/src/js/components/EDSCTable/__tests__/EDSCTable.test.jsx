@@ -7,6 +7,7 @@ import EDSCTableCell from '../EDSCTableCell'
 
 import { collectionData, collectionDataTwo } from './__mocks__/mocks'
 import Skeleton from '../../Skeleton/Skeleton'
+import { rowContentLarge } from '../skeleton'
 
 jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => null))
 
@@ -15,6 +16,14 @@ jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
   height: 600,
   width: 600
 }))
+
+const skeletonProps = {
+  containerStyle: {
+    height: '18px',
+    width: '80px'
+  },
+  shapes: rowContentLarge
+}
 
 const setup = setupTest({
   Component: EDSCTable,
@@ -79,35 +88,8 @@ describe('EDSCTable component', () => {
       })
 
       expect(Skeleton).toHaveBeenCalledTimes(2)
-      expect(Skeleton).toHaveBeenNthCalledWith(1, {
-        containerStyle: {
-          height: '18px',
-          width: '80px'
-        },
-        shapes: [{
-          height: 12,
-          left: 0,
-          radius: 2,
-          shape: 'rectangle',
-          top: 3,
-          width: 213
-        }]
-      }, {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(2, {
-        containerStyle: {
-          height: '18px',
-          width: '80px'
-        },
-        shapes: [{
-          height: 12,
-          left: 0,
-          radius: 2,
-          shape: 'rectangle',
-          top: 3,
-          width: 213
-        }]
-      }, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(1, skeletonProps, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(2, skeletonProps, {})
     })
 
     test('shows when additional items are being loaded', () => {
@@ -123,35 +105,8 @@ describe('EDSCTable component', () => {
       })
 
       expect(Skeleton).toHaveBeenCalledTimes(2)
-      expect(Skeleton).toHaveBeenNthCalledWith(1, {
-        containerStyle: {
-          height: '18px',
-          width: '80px'
-        },
-        shapes: [{
-          height: 12,
-          left: 0,
-          radius: 2,
-          shape: 'rectangle',
-          top: 3,
-          width: 213
-        }]
-      }, {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(2, {
-        containerStyle: {
-          height: '18px',
-          width: '80px'
-        },
-        shapes: [{
-          height: 12,
-          left: 0,
-          radius: 2,
-          shape: 'rectangle',
-          top: 3,
-          width: 213
-        }]
-      }, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(1, skeletonProps, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(2, skeletonProps, {})
     })
 
     test('does not show the loading item when items are loaded', () => {

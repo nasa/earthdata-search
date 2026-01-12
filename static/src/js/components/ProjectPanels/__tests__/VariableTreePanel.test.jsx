@@ -244,6 +244,7 @@ describe('VariableTreePanel', () => {
       expect(hierarchyButton.className).toContain('is-active')
       expect(scienceKeywordButton.className).not.toContain('is-active')
 
+      // Tree is displaying hierarchyMappings
       expect(Tree).toHaveBeenCalledTimes(1)
       expect(Tree).toHaveBeenCalledWith({
         collectionId: 'collectionId',
@@ -329,6 +330,7 @@ describe('VariableTreePanel', () => {
         expect(hierarchyButton.className).not.toContain('is-active')
         expect(scienceKeywordButton.className).toContain('is-active')
 
+        // Tree is displaying keywordMappings
         expect(Tree).toHaveBeenCalledTimes(1)
         expect(Tree).toHaveBeenCalledWith({
           collectionId: 'collectionId',
@@ -403,15 +405,18 @@ describe('VariableTreePanel', () => {
         const hierarchyButton = screen.getByRole('button', { name: 'Hierarchy' })
         const scienceKeywordButton = screen.getByRole('button', { name: 'Science Keyword' })
 
+        // Switch to Science Keyword first so we can test switching back to Hierarchy
         await user.click(scienceKeywordButton)
 
         jest.clearAllMocks()
 
+        // Then switch back to Hierarchy
         await user.click(hierarchyButton)
 
         expect(hierarchyButton.className).toContain('is-active')
         expect(scienceKeywordButton.className).not.toContain('is-active')
 
+        // Tree is displaying hierarchyMappings
         expect(Tree).toHaveBeenCalledTimes(1)
         expect(Tree).toHaveBeenCalledWith({
           collectionId: 'collectionId',

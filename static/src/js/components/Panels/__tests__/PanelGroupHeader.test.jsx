@@ -18,6 +18,34 @@ import RadioSettingDropdown from '../../RadioSettingDropdown/RadioSettingDropdow
 jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => null))
 jest.mock('../../RadioSettingDropdown/RadioSettingDropdown', () => jest.fn(() => null))
 
+const sortsArray = [
+  {
+    title: 'Sort Item 1',
+    isActive: false,
+    onClick: jest.fn()
+  },
+  {
+    title: '-Sort Item 2',
+    isActive: false,
+    onClick: jest.fn()
+  }
+]
+
+const viewsArray = [
+  {
+    title: 'View Item 1',
+    icon: 'test-icon',
+    isActive: false,
+    onClick: jest.fn()
+  },
+  {
+    title: 'View Item 2',
+    icon: 'test-icon',
+    isActive: false,
+    onClick: jest.fn()
+  }
+]
+
 const setup = setupTest({
   Component: PanelGroupHeader,
   defaultProps: {
@@ -219,18 +247,7 @@ describe('PanelGroupHeader component', () => {
         setup({
           overrideProps: {
             activeSort: 'Sort Item 1',
-            sortsArray: [
-              {
-                title: 'Sort Item 1',
-                isActive: false,
-                onClick: jest.fn()
-              },
-              {
-                title: '-Sort Item 2',
-                isActive: false,
-                onClick: jest.fn()
-              }
-            ]
+            sortsArray
           }
         })
 
@@ -240,15 +257,7 @@ describe('PanelGroupHeader component', () => {
           className: 'panel-group-header__setting-dropdown',
           id: 'panel-group-header-dropdown__sort__0',
           label: 'Sort: Sort Item 1',
-          settings: [{
-            isActive: false,
-            onClick: expect.any(Function),
-            title: 'Sort Item 1'
-          }, {
-            isActive: false,
-            onClick: expect.any(Function),
-            title: '-Sort Item 2'
-          }]
+          settings: sortsArray
         }, {})
       })
     })
@@ -258,18 +267,7 @@ describe('PanelGroupHeader component', () => {
         setup({
           overrideProps: {
             activeSort: '-Sort Item 2',
-            sortsArray: [
-              {
-                title: 'Sort Item 1',
-                isActive: false,
-                onClick: jest.fn()
-              },
-              {
-                title: '-Sort Item 2',
-                isActive: false,
-                onClick: jest.fn()
-              }
-            ]
+            sortsArray
           }
         })
 
@@ -279,15 +277,7 @@ describe('PanelGroupHeader component', () => {
           className: 'panel-group-header__setting-dropdown',
           id: 'panel-group-header-dropdown__sort__0',
           label: 'Sort: -Sort Item 2',
-          settings: [{
-            isActive: false,
-            onClick: expect.any(Function),
-            title: 'Sort Item 1'
-          }, {
-            isActive: false,
-            onClick: expect.any(Function),
-            title: '-Sort Item 2'
-          }]
+          settings: sortsArray
         }, {})
       })
     })
@@ -299,20 +289,7 @@ describe('PanelGroupHeader component', () => {
         setup({
           overrideProps: {
             activeView: 'list',
-            viewsArray: [
-              {
-                title: 'View Item 1',
-                icon: 'test-icon',
-                isActive: false,
-                onClick: jest.fn()
-              },
-              {
-                title: 'View Item 2',
-                icon: 'test-icon',
-                isActive: false,
-                onClick: jest.fn()
-              }
-            ]
+            viewsArray
           }
         })
 
@@ -322,17 +299,7 @@ describe('PanelGroupHeader component', () => {
           className: 'panel-group-header__setting-dropdown',
           id: 'panel-group-header-dropdown__view__0',
           label: 'View: List',
-          settings: [{
-            icon: 'test-icon',
-            isActive: false,
-            onClick: expect.any(Function),
-            title: 'View Item 1'
-          }, {
-            icon: 'test-icon',
-            isActive: false,
-            onClick: expect.any(Function),
-            title: 'View Item 2'
-          }]
+          settings: viewsArray
         }, {})
       })
     })
@@ -342,20 +309,7 @@ describe('PanelGroupHeader component', () => {
         setup({
           overrideProps: {
             activeView: 'table',
-            viewsArray: [
-              {
-                title: 'View Item 1',
-                icon: 'test-icon',
-                isActive: false,
-                onClick: jest.fn()
-              },
-              {
-                title: 'View Item 2',
-                icon: 'test-icon',
-                isActive: false,
-                onClick: jest.fn()
-              }
-            ]
+            viewsArray
           }
         })
 
@@ -365,17 +319,7 @@ describe('PanelGroupHeader component', () => {
           className: 'panel-group-header__setting-dropdown',
           id: 'panel-group-header-dropdown__view__0',
           label: 'View: Table',
-          settings: [{
-            icon: 'test-icon',
-            isActive: false,
-            onClick: expect.any(Function),
-            title: 'View Item 1'
-          }, {
-            icon: 'test-icon',
-            isActive: false,
-            onClick: expect.any(Function),
-            title: 'View Item 2'
-          }]
+          settings: viewsArray
         }, {})
       })
     })
