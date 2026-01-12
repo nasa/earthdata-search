@@ -6,6 +6,7 @@ import CREATE_RETRIEVAL from '../../../../../static/src/js/operations/mutations/
 import GET_RETRIEVAL from '../../../../../static/src/js/operations/queries/getRetrieval'
 import GET_RETRIEVAL_COLLECTION from '../../../../../static/src/js/operations/queries/getRetrievalCollection'
 import GET_RETRIEVAL_GRANULE_LINKS from '../../../../../static/src/js/operations/queries/getRetrievalGranuleLinks'
+import HISTORY_RETRIEVALS from '../../../../../static/src/js/operations/queries/historyRetrievals'
 
 import { fetchGranuleLinks } from '../../../util/fetchGranuleLinks'
 
@@ -311,6 +312,65 @@ describe('Retrieval resolver', () => {
 
         expect(databaseClient.getRetrievalCollectionsByRetrievalId).toHaveBeenCalledTimes(1)
         expect(databaseClient.getRetrievalCollectionsByRetrievalId).toHaveBeenCalledWith([1])
+      })
+    })
+
+    describe('historyRetrivals', () => {
+      test('returns the history retrievals', async () => {
+        const databaseClient = {
+          getHistoryRetrievals: jest.fn().mockResolvedValue([{
+            created_at: '2023-01-01T00:00:00Z',
+            id: 1,
+            portal_id: 'edsc',
+            titles_array: ['title 1'],
+            total: 1
+          }])
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: HISTORY_RETRIEVALS,
+          variables: {}
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        expect(errors).toBeUndefined()
+
+        expect(data).toEqual({
+          historyRetrievals: {
+            count: 1,
+            historyRetrievals: [
+              {
+                createdAt: '2023-01-01T00:00:00Z',
+                id: 1,
+                obfuscatedId: '4517239960',
+                portalId: 'edsc',
+                titles: ['title 1']
+              }
+            ],
+            pageInfo: {
+              currentPage: 1,
+              hasNextPage: false,
+              hasPreviousPage: false,
+              pageCount: 1
+            }
+          }
+        })
+
+        expect(databaseClient.getHistoryRetrievals).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getHistoryRetrievals).toHaveBeenCalledWith(
+          {
+            limit: 20,
+            offset: 0,
+            userId: 42
+          }
+        )
       })
     })
 

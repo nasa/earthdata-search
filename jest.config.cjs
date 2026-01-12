@@ -14,7 +14,7 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
-    'serverless/src/**/*.js,ts',
+    'serverless/src/**/*.{js,ts}',
     'static/src/**/*.{js,jsx,ts,tsx}',
     'sharedUtils/**/*.js'
   ],
