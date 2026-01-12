@@ -12,7 +12,7 @@ import { TreeNode } from '../../util/tree/TreeNode'
 
 import './Tree.scss'
 
-export const Tree = ({
+const Tree = ({
   collectionId,
   index,
   items,
@@ -121,3 +121,5 @@ Tree.propTypes = {
   onUpdateSelectedVariables: PropTypes.func.isRequired,
   onViewDetails: PropTypes.func.isRequired
 }
+
+export default Tree

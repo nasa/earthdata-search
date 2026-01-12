@@ -97,8 +97,8 @@ export const PanelGroupHeader = ({
             data-testid="panel-group-header__breadcrumbs"
           >
             {
-              breadcrumbs.map((crumb, i) => {
-                const key = `breadcrumb__${i}`
+              breadcrumbs.map((crumb, index) => {
+                const key = `breadcrumb__${index}`
                 const {
                   icon = '',
                   title = '',
@@ -177,7 +177,7 @@ export const PanelGroupHeader = ({
                       {title}
                     </PortalLinkContainer>
                     {
-                      i < breadcrumbs.length - 1 && (
+                      index < breadcrumbs.length - 1 && (
                         <span className="panel-group-header__breadcrumb-divider">/</span>
                       )
                     }
@@ -226,8 +226,8 @@ export const PanelGroupHeader = ({
               handoffLinks={handoffLinks}
             >
               {
-                moreActionsDropdownItems.map((moreActionsDropdownItem, i) => {
-                  const key = JSON.stringify(moreActionsDropdownItem) + i
+                moreActionsDropdownItems.map((moreActionsDropdownItem, index) => {
+                  const key = JSON.stringify(moreActionsDropdownItem) + index
                   const {
                     title = '',
                     icon = '',

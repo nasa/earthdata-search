@@ -118,10 +118,13 @@ export const EDSCModal = ({
       </Modal.Body>
       {
         ((footer || primaryAction || footerMeta) && !activeModalOverlay) && (
-          <Modal.Footer className="edsc-modal__footer">
+          <Modal.Footer
+            className="edsc-modal__footer"
+            data-testid="edsc-modal__footer"
+          >
             {
               footer
-                ? { footer }
+                ? <div>{ footer }</div>
                 : (
                   <>
                     {

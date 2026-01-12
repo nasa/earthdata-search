@@ -1,11 +1,15 @@
-import React from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { fireEvent, screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EDSCTable from '../EDSCTable'
 import EDSCTableCell from '../EDSCTableCell'
 
-import { collectionData, collectionDataTwo } from './mocks'
+import { collectionData, collectionDataTwo } from './__mocks__/mocks'
+import Skeleton from '../../Skeleton/Skeleton'
+import { rowContentLarge } from '../skeleton'
+
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => null))
 
 // Mock AutoSizer to return a fixed height and width (jsdom doesn't have sizes)
 jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
@@ -13,237 +17,270 @@ jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
   width: 600
 }))
 
-Enzyme.configure({ adapter: new Adapter() })
+const skeletonProps = {
+  containerStyle: {
+    height: '18px',
+    width: '80px'
+  },
+  shapes: rowContentLarge
+}
 
-const defaultProps = {
-  columns: [
-    {
-      Header: 'Collection ID',
-      EDSCTableCell,
-      accessor: 'datasetId',
-      width: '100'
-    },
-    {
-      Header: 'Version',
-      EDSCTableCell,
-      accessor: 'versionId',
-      width: '100',
-      customProps: {
-        centerContent: true
+const setup = setupTest({
+  Component: EDSCTable,
+  defaultProps: {
+    columns: [
+      {
+        Header: 'Collection ID',
+        EDSCTableCell,
+        accessor: 'datasetId',
+        width: '100'
+      },
+      {
+        Header: 'Version',
+        EDSCTableCell,
+        accessor: 'versionId',
+        width: '100',
+        customProps: {
+          centerContent: true
+        }
       }
-    }
-  ],
-  data: collectionData,
-  id: 'test-table',
-  itemCount: 1,
-  rowTestId: 'row-test-id',
-  isItemLoaded: jest.fn(),
-  loadMoreItems: jest.fn(),
-  setVisibleMiddleIndex: jest.fn(),
-  visibleMiddleIndex: 0
-}
-
-function setup(mountType, overrideProps) {
-  const props = {
-    ...defaultProps,
-    ...overrideProps
+    ],
+    data: collectionData,
+    id: 'test-table',
+    itemCount: 1,
+    rowTestId: 'row-test-id',
+    isItemLoaded: jest.fn(),
+    loadMoreItems: jest.fn(),
+    setVisibleMiddleIndex: jest.fn(),
+    visibleMiddleIndex: 0
   }
-
-  const enzymeWrapper = mountType(<EDSCTable {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('EDSCTable component', () => {
   test('renders the table header correctly', () => {
-    const { enzymeWrapper } = setup(mount)
-    const header = enzymeWrapper.find('.edsc-table__thead')
+    setup()
 
-    expect(header.text()).toContain('Collection ID')
-    expect(header.text()).toContain('Version')
+    const table = screen.getByRole('table')
+    expect(table).toBeInTheDocument()
+
+    const header = screen.getByRole('row', { name: 'Collection ID Version' })
+    expect(header).toBeInTheDocument()
   })
 
   test('should add the striped class', () => {
-    const { enzymeWrapper } = setup(mount, {
-      striped: true
+    setup({
+      overrideProps: {
+        striped: true
+      }
     })
 
-    expect(enzymeWrapper.find('.edsc-table').prop('className')).toContain('edsc-table__table--striped')
+    expect(screen.getByRole('table').className).toContain('edsc-table__table--striped')
   })
 
   describe('loading list item', () => {
     test('shows on first load', () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValueOnce(false)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: [],
-        itemCount: 1,
-        isItemLoaded: isItemLoadedMock
+      setup({
+        overrideProps: {
+          data: [],
+          itemCount: 1,
+          isItemLoaded: jest.fn().mockReturnValueOnce(false)
+        }
       })
 
-      expect(enzymeWrapper.find('.edsc-table__tbody').children().length).toEqual(1)
-      expect(enzymeWrapper.find('.edsc-table__tbody').childAt(0).find('.edsc-table__td').length).toEqual(2)
-      expect(enzymeWrapper.find('.edsc-table__tbody').childAt(0).find('.skeleton').length).toEqual(2)
+      expect(Skeleton).toHaveBeenCalledTimes(2)
+      expect(Skeleton).toHaveBeenNthCalledWith(1, skeletonProps, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(2, skeletonProps, {})
     })
 
     test('shows when additional items are being loaded', () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValue(false)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 3,
-        isItemLoaded: isItemLoadedMock
+      setup({
+        overrideProps: {
+          data: [{}, {}],
+          itemCount: 3,
+          isItemLoaded: jest.fn()
+            .mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false)
+        }
       })
 
-      expect(enzymeWrapper.find('.edsc-table__tbody').children().length).toEqual(3)
-      expect(enzymeWrapper.find('.edsc-table__tbody').text()).toContain('3')
-      expect(enzymeWrapper.find('.edsc-table__tbody').text()).toContain('2')
-      expect(enzymeWrapper.find('.edsc-table__tbody').childAt(2).find('.skeleton').length).toEqual(2)
+      expect(Skeleton).toHaveBeenCalledTimes(2)
+      expect(Skeleton).toHaveBeenNthCalledWith(1, skeletonProps, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(2, skeletonProps, {})
     })
 
     test('does not show the loading item when items are loaded', () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        isItemLoaded: isItemLoadedMock
+      setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true)
+        }
       })
 
-      expect(enzymeWrapper.find('.edsc-table__tbody').children().length).toEqual(2)
-      expect(enzymeWrapper.find('.edsc-table__tbody').text()).toContain('3')
-      expect(enzymeWrapper.find('.edsc-table__tbody').text()).toContain('2')
-      expect(enzymeWrapper.find('.edsc-table__tbody').find('.skeleton').length).toEqual(0)
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('adds the correct classes to rows', () => {
     test('adds even and odd classes', () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        isItemLoaded: isItemLoadedMock
+      setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true)
+        }
       })
 
-      const rows = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr')
+      const rows = screen.getAllByRole('row')
 
-      expect(rows.at(0).prop('className')).toEqual('edsc-table__tr edsc-table__tr--odd')
-      expect(rows.at(1).prop('className')).toEqual('edsc-table__tr edsc-table__tr--even')
+      expect(rows.length).toBe(3) // Including header row
+
+      expect(rows[1].className).toContain('edsc-table__tr--odd')
+      expect(rows[2].className).toContain('edsc-table__tr--even')
     })
   })
 
   describe('row classnames', () => {
     test('are applied when the row state is set', () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
+      setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          initialRowStateAccessor: jest.fn()
+            .mockImplementation(() => ({
+              active: true
+            })),
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true),
+          rowClassNamesFromRowState: ({ active }) => {
+            if (active) return ['table-test-class--active']
 
-      const initialRowStateAccessorMock = jest.fn()
-        .mockImplementation(() => ({
-          active: true
-        }))
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        initialRowStateAccessor: initialRowStateAccessorMock,
-        isItemLoaded: isItemLoadedMock,
-        rowClassNamesFromRowState: ({ active }) => {
-          if (active) return ['table-test-class--active']
-
-          return []
+            return []
+          }
         }
       })
 
-      expect(enzymeWrapper.find('.table-test-class--active').length).toEqual(2)
+      const rows = screen.getAllByRole('row')
+
+      expect(rows[1].className).toContain('table-test-class--active')
+      expect(rows[2].className).toContain('table-test-class--active')
     })
   })
 
   describe('row callbacks', () => {
-    test('onRowMouseEnterMock', () => {
-      const onRowMouseEnterMock = jest.fn()
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        isItemLoaded: isItemLoadedMock,
-        onRowMouseEnter: onRowMouseEnterMock
+    test('onRowMouseEnterMock', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true),
+          onRowMouseEnter: jest.fn()
+        }
       })
 
-      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+      const row = screen.getAllByRole('row').at(1)
+      await user.hover(row)
 
-      row.simulate('mouseenter')
-
-      expect(onRowMouseEnterMock).toHaveBeenCalledTimes(1)
+      expect(props.onRowMouseEnter).toHaveBeenCalledTimes(1)
+      expect(props.onRowMouseEnter).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'mouseenter'
+        }),
+        expect.objectContaining({
+          values: {
+            datasetId: 'Test Collection 1',
+            versionId: '3'
+          }
+        })
+      )
     })
 
     test('onRowMouseLeave', () => {
-      const onRowMouseLeaveMock = jest.fn()
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        isItemLoaded: isItemLoadedMock,
-        onRowMouseLeave: onRowMouseLeaveMock
+      const { props } = setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true),
+          onRowMouseLeave: jest.fn()
+        }
       })
 
-      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+      const row = screen.getAllByRole('row').at(1)
+      fireEvent.mouseLeave(row)
 
-      row.simulate('mouseleave')
-
-      expect(onRowMouseLeaveMock).toHaveBeenCalledTimes(1)
+      expect(props.onRowMouseLeave).toHaveBeenCalledTimes(1)
+      expect(props.onRowMouseLeave).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'mouseleave'
+        }),
+        expect.objectContaining({
+          values: {
+            datasetId: 'Test Collection 1',
+            versionId: '3'
+          }
+        })
+      )
     })
 
-    test('onRowFocus', () => {
-      const onRowFocusMock = jest.fn()
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        isItemLoaded: isItemLoadedMock,
-        onRowFocus: onRowFocusMock
+    test('onRowFocus', async () => {
+      const { props } = setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true),
+          onRowFocus: jest.fn()
+        }
       })
 
-      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+      const row = screen.getAllByRole('row').at(1)
+      fireEvent.focus(row)
 
-      row.simulate('focus')
-
-      expect(onRowFocusMock).toHaveBeenCalledTimes(1)
+      expect(props.onRowFocus).toHaveBeenCalledTimes(1)
+      expect(props.onRowFocus).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'focus'
+        }),
+        expect.objectContaining({
+          values: {
+            datasetId: 'Test Collection 1',
+            versionId: '3'
+          }
+        })
+      )
     })
 
-    test('onRowMouseBlur', () => {
-      const onRowMouseBlurMock = jest.fn()
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      const { enzymeWrapper } = setup(mount, {
-        data: collectionDataTwo,
-        itemCount: 2,
-        isItemLoaded: isItemLoadedMock,
-        onRowBlur: onRowMouseBlurMock
+    test('onRowMouseBlur', async () => {
+      const { props } = setup({
+        overrideProps: {
+          data: collectionDataTwo,
+          itemCount: 2,
+          isItemLoaded: jest.fn()
+            .mockReturnValue(true),
+          onRowBlur: jest.fn()
+        }
       })
 
-      const row = enzymeWrapper.find('.edsc-table__tbody').find('.edsc-table__tr').at(0)
+      const row = screen.getAllByRole('row').at(1)
+      fireEvent.blur(row)
 
-      row.simulate('blur')
-
-      expect(onRowMouseBlurMock).toHaveBeenCalledTimes(1)
+      expect(props.onRowBlur).toHaveBeenCalledTimes(1)
+      expect(props.onRowBlur).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'blur'
+        }),
+        expect.objectContaining({
+          values: {
+            datasetId: 'Test Collection 1',
+            versionId: '3'
+          }
+        })
+      )
     })
   })
 })
