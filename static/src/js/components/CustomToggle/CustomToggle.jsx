@@ -53,8 +53,8 @@ export const CustomToggle = React.forwardRef(({
     && typeof handleClose === 'function'
   ) {
     buttonEventHandlers = {
-      onMouseIn: (event) => handleOpen(event),
-      onMouseOut: (event) => handleClose(event)
+      onMouseEnter: (event) => handleOpen(event),
+      onMouseLeave: (event) => handleClose(event)
     }
   }
 

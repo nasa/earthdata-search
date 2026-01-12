@@ -4,7 +4,7 @@ import { castArray } from 'lodash-es'
 
 import './ArrowTags.scss'
 
-export const ArrowTags = ({
+const ArrowTags = ({
   className = '',
   tags
 }) => {
@@ -13,8 +13,9 @@ export const ArrowTags = ({
   const tagsList = (
     <ul className={`arrow-tags ${className}`}>
       {
-        castArray(tags).map((tag, i) => {
-          const key = `arrow-tags_${i}`
+        castArray(tags).map((tag, index) => {
+          const key = `arrow-tags_${index}`
+
           if (tag) {
             return (
               <li

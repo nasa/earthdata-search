@@ -1,42 +1,48 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 
-import { ArrowTags } from '../ArrowTags'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+import ArrowTags from '../ArrowTags'
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: ArrowTags,
+  defaultProps: {
     className: 'test-class',
     tags: ['Item 1', 'Item 2', 'Item 3']
   }
-
-  const enzymeWrapper = shallow(<ArrowTags {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('ArrowTags component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+  test('renders the tags correctly', () => {
+    setup()
 
-    expect(enzymeWrapper.type()).toBe('ul')
-    expect(enzymeWrapper.prop('className')).toBe('arrow-tags test-class')
+    expect(screen.getByText('Item 1')).toBeInTheDocument()
+    expect(screen.getByText('Item 2')).toBeInTheDocument()
+    expect(screen.getByText('Item 3')).toBeInTheDocument()
   })
 
-  test('renders its link correctly', () => {
-    const { enzymeWrapper } = setup()
+  describe('when no tags are provided', () => {
+    test('renders nothing', () => {
+      const { container } = setup({
+        overrideProps: {
+          tags: []
+        }
+      })
 
-    expect(enzymeWrapper.find('li').length).toEqual(3)
-    expect(enzymeWrapper.find('li').at(0).text()).toEqual('Item 1')
-    expect(enzymeWrapper.find('li').at(0).prop('className')).toEqual('arrow-tags__list-item')
-    expect(enzymeWrapper.find('li').at(1).text()).toEqual('Item 2')
-    expect(enzymeWrapper.find('li').at(1).prop('className')).toEqual('arrow-tags__list-item')
-    expect(enzymeWrapper.find('li').at(2).text()).toEqual('Item 3')
-    expect(enzymeWrapper.find('li').at(2).prop('className')).toEqual('arrow-tags__list-item')
+      expect(container.innerHTML).toBe('')
+    })
+  })
+
+  describe('when a tag in the array does not exist', () => {
+    test('renders the tags correctly', () => {
+      setup({
+        overrideProps: {
+          tags: ['Item 1', null, 'Item 3']
+        }
+      })
+
+      expect(screen.getByText('Item 1')).toBeInTheDocument()
+      expect(screen.getByText('Item 3')).toBeInTheDocument()
+    })
   })
 })

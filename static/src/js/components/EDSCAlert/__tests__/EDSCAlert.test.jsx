@@ -1,72 +1,76 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import Alert from 'react-bootstrap/Alert'
+import { screen } from '@testing-library/react'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCAlert from '../EDSCAlert'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
 
-function setup(overrideProps) {
-  const props = {
-    bootstrapVariant: 'primary',
-    ...overrideProps
+const setup = setupTest({
+  Component: EDSCAlert,
+  defaultProps: {
+    bootstrapVariant: 'primary'
   }
-
-  const enzymeWrapper = shallow(<EDSCAlert {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('EDSCAlert component', () => {
   test('should render the alert', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.type()).toEqual(Alert)
-    expect(enzymeWrapper.prop('className')).toContain('edsc-alert')
+    expect(screen.getByRole('alert')).toBeInTheDocument()
   })
 
   describe('when an class name is provided', () => {
-    const { enzymeWrapper } = setup({
-      className: 'test-class-name'
-    })
-
     test('should add the class name', () => {
-      expect(enzymeWrapper.props().className).toContain('test-class-name')
+      setup({
+        overrideProps: {
+          className: 'test-class-name'
+        }
+      })
+
+      expect(screen.getByRole('alert')).toHaveClass('test-class-name')
     })
   })
 
   describe('when a variant is declared', () => {
-    const { enzymeWrapper } = setup({
-      variant: 'test-variant'
-    })
-
     test('should add the variant class name', () => {
-      expect(enzymeWrapper.prop('className')).toContain('edsc-alert--test-variant')
+      setup({
+        overrideProps: {
+          variant: 'test-variant'
+        }
+      })
+
+      expect(screen.getByRole('alert')).toHaveClass('edsc-alert--test-variant')
     })
   })
 
   describe('when children are provided', () => {
-    const { enzymeWrapper } = setup({
-      children: <div className="test-child">Test</div>
-    })
-
     test('should render the children', () => {
-      expect(enzymeWrapper.find('.test-child').length).toEqual(1)
+      setup({
+        overrideProps: {
+          children: <div className="test-child">Test</div>
+        }
+      })
+
+      expect(screen.getByText('Test')).toBeInTheDocument()
     })
   })
 
   describe('when an icon is provided', () => {
-    const { enzymeWrapper } = setup({
-      icon: FaQuestionCircle
-    })
-
     test('should render the icon', () => {
-      expect(enzymeWrapper.find('.edsc-alert__icon').length).toEqual(1)
+      setup({
+        overrideProps: {
+          icon: FaQuestionCircle
+        }
+      })
+
+      expect(EDSCIcon).toHaveBeenCalledTimes(1)
+      expect(EDSCIcon).toHaveBeenCalledWith({
+        icon: FaQuestionCircle,
+        className: 'edsc-alert__icon'
+      }, {})
     })
   })
 })
