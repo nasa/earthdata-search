@@ -35,7 +35,6 @@ describe('EDSCModalContainer', () => {
     expect(EDSCModal).toHaveBeenCalledWith({
       activeModalOverlay: null,
       bodyEl: <div className="test-body">Test body content</div>,
-      dataTestId: null,
       footer: null,
       footerMeta: null,
       identifier: 'edsc-modal__test-identifier-modal',

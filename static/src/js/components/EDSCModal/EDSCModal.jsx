@@ -14,7 +14,6 @@ import './EDSCModal.scss'
  * Renders EDSCModal
  * @param {Element} activeModalOverlay
  * @param {Element} bodyEl Body element
- * @param {String} dataTestId Test ID to be added to the element.
  * @param {Element} footer The footer content.
  * @param {Element} footerMeta The footer meta content.
  * @param {String} identifier A unique id for the modal.
@@ -38,7 +37,6 @@ import './EDSCModal.scss'
 const EDSCModal = ({
   activeModalOverlay = null,
   bodyEl,
-  dataTestId = null,
   footer = null,
   footerMeta = null,
   identifier,
@@ -77,7 +75,6 @@ const EDSCModal = ({
       centered
       size={size}
       aria-labelledby={identifier}
-      data-testid={dataTestId}
     >
       <Modal.Header
         className={headerClassNames}
@@ -180,7 +177,6 @@ const EDSCModal = ({
 EDSCModal.propTypes = {
   activeModalOverlay: PropTypes.node,
   bodyEl: PropTypes.node.isRequired,
-  dataTestId: PropTypes.string,
   footer: PropTypes.node,
   footerMeta: PropTypes.node,
   identifier: PropTypes.string.isRequired,

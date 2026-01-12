@@ -218,7 +218,7 @@ describe('TextWindowActions component', () => {
   })
 
   describe('when the modals are closed', () => {
-    describe('when the browser does supports copy/paste', () => {
+    describe('when the browser supports copy/paste', () => {
       describe('when clicking the copy button', () => {
         test('should do run the copy command', async () => {
           const { user } = setup({
