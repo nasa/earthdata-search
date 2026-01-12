@@ -1,6 +1,15 @@
 @use '../../../css/utils';
 
 .facets-item {
+  &--disabled {
+    .facets-item__checkbox,
+    .facets-item__title-container,
+    .facets-item__total {
+      cursor: wait;
+      opacity: 0.5;
+    }
+  }
+
   &__checkbox {
     margin-right: 0.7rem;
     border-radius: 4px;
@@ -9,7 +18,7 @@
     flex: none;
     transform: scale(1);
 
-    &:checked {
+    &:checked:not(&--disabled) {
       opacity: 1;
     }
   }
