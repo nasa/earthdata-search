@@ -65,7 +65,7 @@ describe('Downloads component', () => {
       } = helmet || {}
 
       expect(title).toBe('Downloads')
-      expect(metaTags?.find((tag) => tag.name === 'title')?.content).toBe('Downloads')
+      expect(metaTags?.find((tag) => tag.name === 'title')?.content).toBe('Downloads Status & History')
       expect(metaTags?.find((tag) => tag.name === 'robots')?.content).toBe('noindex, nofollow')
       expect(linkTags?.find((tag) => tag.rel === 'canonical')?.href).toContain('https://search.earthdata.nasa.gov')
     })
