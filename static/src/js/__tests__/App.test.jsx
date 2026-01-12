@@ -96,17 +96,10 @@ describe('App component', () => {
                 path: routes.PROJECTS
               }),
               expect.objectContaining({
-                path: routes.DOWNLOADS,
-                children: [
-                  expect.objectContaining({
-                    index: true,
-                    lazy: expect.any(Function)
-                  }),
-                  expect.objectContaining({
-                    path: `${routes.DOWNLOADS}/:id`,
-                    lazy: expect.any(Function)
-                  })
-                ]
+                path: routes.DOWNLOADS
+              }),
+              expect.objectContaining({
+                path: `${routes.DOWNLOADS}/:id`
               }),
               expect.objectContaining({
                 path: routes.CONTACT_INFO

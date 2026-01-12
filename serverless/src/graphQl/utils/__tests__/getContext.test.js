@@ -21,6 +21,9 @@ describe('getContext', () => {
     })
 
     const event = {
+      body: JSON.stringify({
+        operationName: 'GetUser'
+      }),
       headers: {
         authorization: 'Bearer token'
       }
@@ -51,6 +54,9 @@ describe('getContext', () => {
       getUserWhereMock.mockResolvedValue(undefined)
 
       const event = {
+        body: JSON.stringify({
+          operationName: 'GetUser'
+        }),
         headers: {
           authorization: 'Bearer token'
         }
@@ -74,6 +80,7 @@ describe('getContext', () => {
   describe('when there is no authorization header', () => {
     test('should return the correct context with an undefined user', async () => {
       const event = {
+        body: JSON.stringify({}),
         headers: {}
       }
 

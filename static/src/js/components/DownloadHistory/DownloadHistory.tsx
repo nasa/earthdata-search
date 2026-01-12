@@ -52,7 +52,7 @@ export const DownloadHistory = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const handleError = useEdscStore((state) => state.errors.handleError)
 
-  const pageSize = 5
+  const pageSize = 20
 
   const {
     data,
@@ -91,7 +91,7 @@ export const DownloadHistory = () => {
           obfuscatedId
         },
         onCompleted: () => {
-          addToast('Project removed', {
+          addToast('Downloads removed', {
             appearance: 'success',
             autoDismiss: true
           })
