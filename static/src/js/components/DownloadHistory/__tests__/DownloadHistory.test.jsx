@@ -161,6 +161,44 @@ describe('DownloadHistorys component', () => {
     })
   })
 
+  describe('When fetching hisotry retrievals fail', () => {
+    test('calls handleError', async () => {
+      const { zustandState } = setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: HISTORY_RETRIEVALS,
+            variables: {
+              limit: 20,
+              offset: 0
+            }
+          },
+          error: new Error('Failed to fetch history retrievals')
+        }],
+        overrideZustandState: {
+          errors: {
+            handleError: jest.fn()
+          }
+        }
+      })
+
+      expect(await screen.findByText('No download history to display.')).toBeInTheDocument()
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledWith({
+        error: new Error('Failed to fetch history retrievals'),
+        action: 'fetchHistoryRetrievals',
+        resource: 'history retrievals',
+        verb: 'fetching',
+        notificationType: 'banner'
+      })
+
+      expect(screen.queryByRole('status')).not.toBeInTheDocument()
+
+      expect(screen.queryByText('Failed to fetch history retrievals')).not.toBeInTheDocument()
+    })
+  })
+
   describe('When deleting a history retrieval', () => {
     const historyRetrieval = {
       createdAt: '2019-08-25T11:58:14.390Z',

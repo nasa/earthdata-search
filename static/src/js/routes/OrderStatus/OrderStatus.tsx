@@ -13,7 +13,7 @@ const { edscHost } = getEnvironmentConfig()
 /**
  * The OrderStatus route component
 */
-const OrderStatusContainer = () => (
+const OrderStatus = () => (
   <>
     <Helmet>
       <title>OrderStatus</title>
@@ -32,4 +32,4 @@ const OrderStatusContainer = () => (
   </>
 )
 
-export default OrderStatusContainer
+export default OrderStatus

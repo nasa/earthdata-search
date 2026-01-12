@@ -112,7 +112,6 @@ export const DownloadHistory = () => {
   }
 
   const formatTitleDisplay = (titleList: string[]): string => {
-    if (titleList.length === 0) return 'Untitled'
     if (titleList.length === 1) return titleList[0]
 
     return `${titleList[0]} and ${titleList.length - 1} more`
