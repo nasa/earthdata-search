@@ -1,14 +1,12 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import FormControl from 'react-bootstrap/FormControl'
+import { fireEvent, screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import PreferencesNumberField from '../PreferencesNumberField'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: PreferencesNumberField,
+  defaultProps: {
     schema: {
       description: 'Test Field Description'
     },
@@ -16,70 +14,74 @@ function setup() {
     formData: 42,
     onChange: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<PreferencesNumberField {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('PreferencesNumberField component', () => {
   test('renders a input form field', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    const input = enzymeWrapper.find(FormControl).first()
+    const input = screen.getByRole('spinbutton')
 
-    expect(input.props().value).toEqual(42)
-    expect(input.props().name).toEqual('testField')
+    expect(input.value).toEqual('42')
+    expect(input.name).toEqual('testField')
   })
 
   describe('onChange', () => {
-    test('onChange calls props onChange', () => {
-      const { enzymeWrapper, props } = setup()
+    test('onChange calls props onChange', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          formData: ''
+        }
+      })
 
-      const input = enzymeWrapper.find(FormControl).last()
-
-      input.invoke('onChange')({ target: { value: '42' } })
-
-      enzymeWrapper.update()
+      const input = screen.getByRole('spinbutton')
+      await user.type(input, '1')
 
       expect(props.onChange).toHaveBeenCalledTimes(1)
-      expect(props.onChange).toHaveBeenCalledWith(42)
+      expect(props.onChange).toHaveBeenCalledWith(1)
     })
 
-    test('returns an integer 0 when the input is "0"', () => {
-      const { enzymeWrapper, props } = setup()
+    test('returns an integer 0 when the input is "0"', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          formData: ''
+        }
+      })
 
-      const input = enzymeWrapper.find(FormControl).last()
-
-      input.props().onChange({ target: { value: '0' } })
+      const input = screen.getByRole('spinbutton')
+      await user.type(input, '0')
 
       expect(props.onChange).toHaveBeenCalledTimes(1)
       expect(props.onChange).toHaveBeenCalledWith(0)
     })
 
     test('returns a number 0.1 when the input is ".1"', () => {
-      const { enzymeWrapper, props } = setup()
+      const { props } = setup({
+        overrideProps: {
+          formData: ''
+        }
+      })
 
-      const input = enzymeWrapper.find(FormControl).last()
-
-      input.props().onChange({ target: { value: '.1' } })
+      const input = screen.getByRole('spinbutton')
+      // Use fireEvent instead of userEvent to simulate typing the '.' first
+      fireEvent.change(input, { target: { value: '.1' } })
 
       expect(props.onChange).toHaveBeenCalledTimes(1)
       expect(props.onChange).toHaveBeenCalledWith(0.1)
     })
 
-    test('returns a number -42 when the input is "-42"', () => {
-      const { enzymeWrapper, props } = setup()
+    test('returns a number -42 when the input is "-42"', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          formData: ''
+        }
+      })
 
-      const input = enzymeWrapper.find(FormControl).last()
-
-      input.props().onChange({ target: { value: '-42' } })
+      const input = screen.getByRole('spinbutton')
+      await user.type(input, '-4')
 
       expect(props.onChange).toHaveBeenCalledTimes(1)
-      expect(props.onChange).toHaveBeenCalledWith(-42)
+      expect(props.onChange).toHaveBeenCalledWith(-4)
     })
   })
 })

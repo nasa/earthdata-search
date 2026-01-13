@@ -1,41 +1,33 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 
 import { FooterLink } from '../FooterLink'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps = {}) {
-  const props = {
+const setup = setupTest({
+  Component: FooterLink,
+  defaultProps: {
     href: 'http://example.com',
-    title: 'Example Link',
-    ...overrideProps
+    title: 'Example Link'
   }
-
-  const enzymeWrapper = shallow(<FooterLink {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('FooterLink component', () => {
   test('it renders the link', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('a').props().href).toEqual('http://example.com')
-    expect(enzymeWrapper.find('a').props().children).toEqual('Example Link')
+    expect(screen.getByRole('link').href).toEqual('http://example.com/')
+    expect(screen.getByRole('link').textContent).toEqual('Example Link')
   })
 
   test('it renders the link with secondary classNames', () => {
-    const { enzymeWrapper } = setup({ secondary: true })
+    setup({
+      overrideProps: {
+        secondary: true
+      }
+    })
 
-    expect(enzymeWrapper.find('span').props().className).toContain('footer-link__info-bit--clean footer-link__info-bit--emph')
-
-    expect(enzymeWrapper.find('a').props().href).toEqual('http://example.com')
-    expect(enzymeWrapper.find('a').props().children).toEqual('Example Link')
-    expect(enzymeWrapper.find('a').props().className).toContain('footer-link__info-link--underline')
+    expect(screen.getByRole('link').href).toEqual('http://example.com/')
+    expect(screen.getByRole('link').textContent).toEqual('Example Link')
+    expect(screen.getByRole('link').className).toContain('link footer-link__info-link footer-link__info-link--underline')
   })
 })

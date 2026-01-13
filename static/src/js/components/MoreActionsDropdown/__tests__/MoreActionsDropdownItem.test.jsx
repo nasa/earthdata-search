@@ -1,59 +1,72 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import Dropdown from 'react-bootstrap/Dropdown'
+import { screen } from '@testing-library/react'
 
-import { MoreActionsDropdownItem } from '../MoreActionsDropdownItem'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+import MoreActionsDropdownItem from '../MoreActionsDropdownItem'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
+import Spinner from '../../Spinner/Spinner'
 
-function setup(overrideProps) {
-  const props = {
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+jest.mock('../../Spinner/Spinner', () => jest.fn(() => null))
+
+const setup = setupTest({
+  Component: MoreActionsDropdownItem,
+  defaultProps: {
     className: 'test-class',
     icon: 'FaGlobal',
     onClick: jest.fn(),
-    title: 'Test Title',
-    ...overrideProps
+    title: 'Test Title'
   }
-
-  const enzymeWrapper = shallow(<MoreActionsDropdownItem {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('MoreActionsDropdownItem component', () => {
-  test('renders a dropdown item', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBe(Dropdown.Item)
-  })
-
   test('adds the className', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.props().className).toBe('test-class more-actions-dropdown-item')
+    expect(screen.getByRole('button').className).toContain('test-class more-actions-dropdown-item')
   })
 
   test('adds an icon', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.more-actions-dropdown-item__icon').props().icon).toBe('FaGlobal')
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'more-actions-dropdown-item__icon',
+      icon: 'FaGlobal',
+      size: '12'
+    }, {})
   })
 
   test('displays the text', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.text()).toContain('Test Title')
+    expect(screen.getByText('Test Title')).toBeInTheDocument()
   })
 
-  test('calls the onClick callback', () => {
-    const { enzymeWrapper, props } = setup()
+  test('calls the onClick callback', async () => {
+    const { props, user } = setup()
 
-    enzymeWrapper.simulate('click')
+    await user.click(screen.getByRole('button'))
 
     expect(props.onClick).toHaveBeenCalledTimes(1)
+    expect(props.onClick).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'click'
+    }))
+  })
+
+  test('renders a spinner when inProgress is true', () => {
+    setup({
+      overrideProps: {
+        inProgress: true
+      }
+    })
+
+    expect(Spinner).toHaveBeenCalledTimes(1)
+    expect(Spinner).toHaveBeenCalledWith({
+      className: 'radio-setting-dropdown-item__spinner',
+      inline: true,
+      size: 'x-tiny',
+      type: 'dots'
+    }, {})
   })
 })

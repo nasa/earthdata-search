@@ -1,166 +1,110 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen, within } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import ProjectPanelSection from '../ProjectPanelSection'
-import EDSCAlert from '../../EDSCAlert/EDSCAlert'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-const setup = (overrideProps) => {
-  const props = {
-    ...overrideProps
+const setup = setupTest({
+  Component: ProjectPanelSection,
+  defaultProps: {
+    heading: 'Test Heading',
+    children: <div>Test Children</div>
   }
-
-  return {
-    enzymeWrapper: shallow(<ProjectPanelSection {...props} />),
-    props
-  }
-}
+})
 
 describe('ProjectPanelSelection', () => {
   test('displays a heading and children', () => {
-    const heading = 'heading'
-    const children = (
-      <div className="children-div">
-        children
-      </div>
-    )
+    setup()
 
-    const { enzymeWrapper } = setup({
-      heading,
-      children
-    })
-
-    expect(enzymeWrapper.find('h3.project-panel-section__heading').text()).toEqual('heading')
-    expect(enzymeWrapper.find('div.children-div').text()).toEqual('children')
+    expect(screen.getByRole('heading', { level: 3 }).textContent).toEqual('Test Heading')
+    expect(screen.getByText('Test Children')).toBeInTheDocument()
   })
 
   test('does not display heading if it is not provided', () => {
-    const heading = undefined
-    const children = (
-      <div className="children-div">
-        children
-      </div>
-    )
-
-    const { enzymeWrapper } = setup({
-      heading,
-      children
+    setup({
+      overrideProps: {
+        heading: null
+      }
     })
 
-    expect(enzymeWrapper.find('h3.project-panel-section__heading').exists()).toBeFalsy()
-    expect(enzymeWrapper.find('div.children-div').text()).toEqual('children')
+    expect(screen.queryByRole('heading', { level: 3 })).toBeNull()
+    expect(screen.getByText('Test Children')).toBeInTheDocument()
   })
 
   test('does not display children if it is not provided', () => {
-    const heading = 'heading'
-    const enzymeWrapper = shallow(
-      <ProjectPanelSection heading={heading} />
-    )
+    setup({
+      overrideProps: {
+        children: null
+      }
+    })
 
-    expect(enzymeWrapper.find('h3.project-panel-section__heading').text()).toEqual('heading')
-    expect(enzymeWrapper.find('div.project-panel-section').children().length).toBe(1)
+    expect(screen.getByRole('heading', { level: 3 }).textContent).toEqual('Test Heading')
+    expect(screen.queryByText('Test Children')).not.toBeInTheDocument()
   })
 
   describe('when the project panel is nested', () => {
-    const heading = 'heading'
-    const children = (
-      <div className="children-div">
-        children
-      </div>
-    )
-    const nested = true
-
-    const { enzymeWrapper } = setup({
-      heading,
-      children,
-      nested
-    })
-
     test('adds the modifier class', () => {
-      expect(enzymeWrapper.props().className).toContain('project-panel-section--is-nested')
+      setup({
+        overrideProps: {
+          nested: true
+        }
+      })
+
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(screen.getByRole('heading', { level: 3 }).parentElement.className).toContain('project-panel-section--is-nested')
     })
   })
 
   describe('when the project panel is a step', () => {
-    const heading = 'heading'
-    const children = (
-      <div className="children-div">
-        children
-      </div>
-    )
-    const step = 1
+    test('displays a step indicator and adds the modifier class', () => {
+      setup({
+        overrideProps: {
+          step: 1
+        }
+      })
 
-    const { enzymeWrapper } = setup({
-      heading,
-      children,
-      step
-    })
+      const heading = screen.getByRole('heading', { level: 3 })
 
-    test('displays a step indicator', () => {
-      expect(enzymeWrapper.find('.project-panel-section__step').text()).toEqual('1')
-    })
-
-    test('adds the modifier class', () => {
-      expect(enzymeWrapper.props().className).toContain('project-panel-section--is-step')
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(within(heading).getByText('1')).toBeInTheDocument()
     })
   })
 
   describe('when a custom heading level is used', () => {
-    const heading = 'heading'
-    const children = (
-      <div className="children-div">
-        children
-      </div>
-    )
-    const headingLevel = 'h4'
-
-    const { enzymeWrapper } = setup({
-      heading,
-      children,
-      headingLevel
-    })
-
     test('displays a custom heading level', () => {
-      expect(enzymeWrapper.find('h4').text()).toEqual(heading)
+      setup({
+        overrideProps: {
+          headingLevel: 'h4'
+        }
+      })
+
+      expect(screen.getByRole('heading', { level: 4 }).textContent).toEqual('Test Heading')
     })
   })
 
   describe('when intro text is provided', () => {
     test('displays the intro text', () => {
-      const heading = 'heading'
-      const children = (
-        <div className="children-div">
-          children
-        </div>
-      )
-      const intro = 'some intro text'
-
-      const { enzymeWrapper } = setup({
-        heading,
-        children,
-        intro
+      setup({
+        overrideProps: {
+          intro: 'some intro text'
+        }
       })
 
-      expect(enzymeWrapper.find('.project-panel-section__intro').text()).toEqual(intro)
+      expect(screen.getByText('some intro text')).toBeInTheDocument()
     })
   })
 
   describe('when warning text is provided', () => {
     test('displays an alert', () => {
-      const children = (
-        <div className="children-div">
-          children
-        </div>
-      )
-      const { enzymeWrapper } = setup({
-        warning: 'This is a test warning',
-        children
+      setup({
+        overrideProps: {
+          warning: 'This is a test warning'
+        }
       })
 
-      expect(enzymeWrapper.find(EDSCAlert).props().children).toEqual('This is a test warning')
-      expect(enzymeWrapper.find(EDSCAlert).props().bootstrapVariant).toEqual('warning')
+      expect(screen.getByText('This is a test warning')).toBeInTheDocument()
+      expect(screen.getByRole('alert').className).toContain('alert-warning')
     })
   })
 })

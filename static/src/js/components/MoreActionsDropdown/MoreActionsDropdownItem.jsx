@@ -8,7 +8,7 @@ import Spinner from '../Spinner/Spinner'
 
 import './MoreActionsDropdownItem.scss'
 
-export const MoreActionsDropdownItem = ({
+const MoreActionsDropdownItem = ({
   className = null,
   icon = null,
   onClick = () => {},
