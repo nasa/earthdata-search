@@ -3,6 +3,7 @@ import snakecaseKeys from 'snakecase-keys'
 import setupServer from './__mocks__/setupServer'
 
 import CREATE_RETRIEVAL from '../../../../../static/src/js/operations/mutations/createRetrieval'
+import DELETE_RETRIEVAL from '../../../../../static/src/js/operations/mutations/deleteRetrieval'
 import GET_RETRIEVAL from '../../../../../static/src/js/operations/queries/getRetrieval'
 import GET_RETRIEVAL_COLLECTION from '../../../../../static/src/js/operations/queries/getRetrievalCollection'
 import GET_RETRIEVAL_GRANULE_LINKS from '../../../../../static/src/js/operations/queries/getRetrievalGranuleLinks'
@@ -1772,6 +1773,96 @@ describe('Retrieval resolver', () => {
             },
             retrievalId: 1
           })
+        })
+      })
+    })
+
+    describe('deleteRetrieval', () => {
+      test('deletes a retrieval successfully', async () => {
+        const databaseClient = {
+          deleteRetrieval: jest.fn().mockResolvedValue(1)
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: DELETE_RETRIEVAL,
+          variables: {
+            obfuscatedId: '2057964173'
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.deleteRetrieval).toHaveBeenCalledWith({
+          obfuscatedId: '2057964173',
+          userId: contextValue.user.id
+        })
+
+        expect(data).toEqual({
+          deleteRetrieval: true
+        })
+      })
+
+      test('returns false when the retrieval is not deleted', async () => {
+        const databaseClient = {
+          deleteRetrieval: jest.fn().mockResolvedValue(0)
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: DELETE_RETRIEVAL,
+          variables: {
+            obfuscatedId: '2057964173'
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.deleteRetrieval).toHaveBeenCalledWith({
+          obfuscatedId: '2057964173',
+          userId: contextValue.user.id
+        })
+
+        expect(data).toEqual({
+          deleteRetrieval: false
+        })
+      })
+
+      test('throws an error when the mutation fails', async () => {
+        const databaseClient = {
+          deleteRetrieval: jest.fn().mockImplementation(() => {
+            throw new Error('Failed to delete retrieval')
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: DELETE_RETRIEVAL,
+          variables: {
+            obfuscatedId: '2057964173'
+          }
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+        expect(errors[0].message).toEqual('Failed to delete retrieval')
+
+        expect(data).toEqual({
+          deleteRetrieval: null
         })
       })
     })
