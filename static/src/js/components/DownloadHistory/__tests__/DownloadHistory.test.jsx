@@ -1,5 +1,6 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
+import TimeAgo from 'react-timeago'
 
 import DownloadHistory from '../DownloadHistory'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -12,6 +13,11 @@ import addToast from '../../../util/addToast'
 jest.mock('../../../util/addToast', () => ({
   __esModule: true,
   default: jest.fn()
+}))
+
+jest.mock('react-timeago', () => ({
+  __esModule: true,
+  default: jest.fn(() => null)
 }))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ to, onClick, children }) => {
@@ -112,7 +118,13 @@ describe('DownloadHistorys component', () => {
         expect.stringContaining('downloads/8069076')
       )
 
-      expect(screen.getByText(/ago$/)).toBeInTheDocument()
+      expect(TimeAgo).toHaveBeenCalled()
+      expect(TimeAgo).toHaveBeenCalledWith(
+        expect.objectContaining({
+          date: '2019-08-25T11:58:14.390Z'
+        }),
+        {}
+      )
     })
 
     test('renders a table when a history retrieval exists with more than one collection', async () => {
@@ -157,11 +169,17 @@ describe('DownloadHistorys component', () => {
         expect.stringContaining('downloads/8069076')
       )
 
-      expect(screen.getByText(/ago$/)).toBeInTheDocument()
+      expect(TimeAgo).toHaveBeenCalled()
+      expect(TimeAgo).toHaveBeenCalledWith(
+        expect.objectContaining({
+          date: '2019-08-25T11:58:14.390Z'
+        }),
+        {}
+      )
     })
   })
 
-  describe('When fetching hisotry retrievals fail', () => {
+  describe('When fetching history retrievals fail', () => {
     test('calls handleError', async () => {
       const { zustandState } = setup({
         overrideApolloClientMocks: [{

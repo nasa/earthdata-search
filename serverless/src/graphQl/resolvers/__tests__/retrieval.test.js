@@ -323,7 +323,7 @@ describe('Retrieval resolver', () => {
             created_at: '2023-01-01T00:00:00Z',
             id: 1,
             portal_id: 'edsc',
-            titles_array: ['title 1'],
+            titles: ['title 1'],
             total: 1
           }])
         }

@@ -64,16 +64,11 @@ export default {
         offset
       })
 
-      const processedData = result.data.map((record) => ({
-        createdAt: record.created_at,
-        id: record.id,
-        obfuscatedId: obfuscateId(record.id),
-        portalId: record.portal_id,
-        titles: record.titles_array
-      }))
-
       return {
-        historyRetrievals: processedData,
+        historyRetrievals: camelcaseKeys(
+          result.data,
+          { deep: true }
+        ),
         pageInfo: result.pageInfo,
         count: result.data[0].total
       }
@@ -340,6 +335,13 @@ export default {
 
       return camelcaseKeys(loaderData, { deep: true })
     },
+    obfuscatedId: async (parent) => {
+      const { id } = parent
+
+      return obfuscateId(id)
+    }
+  },
+  HistoryRetrieval: {
     obfuscatedId: async (parent) => {
       const { id } = parent
 

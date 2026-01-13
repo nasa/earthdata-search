@@ -52,11 +52,10 @@ const AboutCwicModal = lazy(() => import('./components/AboutCwicModal/AboutCwicM
 const ChunkedOrderModal = lazy(() => import('./components/ChunkedOrderModal/ChunkedOrderModal'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const DeprecatedParameterModal = lazy(() => import('./components/DeprecatedParameterModal/DeprecatedParameterModal'))
-const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
+const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
 const EditSubscriptionModal = lazy(() => import('./components/EditSubscriptionModal/EditSubscriptionModal'))
 const KeyboardShortcutsModal = lazy(() => import('./components/KeyboardShortcutsModal/KeyboardShortcutsModal'))
-const OrderStatus = lazy(() => import('./routes/OrderStatus/OrderStatus'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
 const Projects = lazy(() => import('./routes/Projects/Projects'))
@@ -127,20 +126,32 @@ const browserRouter = createBrowserRouter([
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-              <Downloads />
+              <DownloadsLayout />
             </Suspense>
           </AuthRequiredContainer>
-        )
-      },
-      {
-        path: `${routes.DOWNLOADS}/:id`,
-        element: (
-          <AuthRequiredContainer>
-            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-              <OrderStatus />
-            </Suspense>
-          </AuthRequiredContainer>
-        )
+        ),
+        children: [
+          {
+            index: true,
+            async lazy() {
+              const DownloadHistory = await import('./components/DownloadHistory/DownloadHistory')
+
+              return {
+                Component: DownloadHistory.default
+              }
+            }
+          },
+          {
+            path: `${routes.DOWNLOADS}/:id`,
+            async lazy() {
+              const OrderStatus = await import('./components/OrderStatus/OrderStatus')
+
+              return {
+                Component: OrderStatus.default
+              }
+            }
+          }
+        ]
       },
       {
         path: routes.CONTACT_INFO,

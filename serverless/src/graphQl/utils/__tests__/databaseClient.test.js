@@ -1323,6 +1323,111 @@ describe('DatabaseClient', () => {
     })
   })
 
+  describe('getHistoryRetrievals', () => {
+    test('retrieves the history retrieval', async () => {
+      const userId = 123
+      const limit = 20
+      const offset = 0
+
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response([{
+            id: 1,
+            created_at: '2023-01-01T00:00:00Z',
+            portal_id: 'edsc',
+            titles: ['title 1'],
+            total: 1
+          }])
+        }
+      })
+
+      const historyRetrievals = await databaseClient.getHistoryRetrievals({
+        userId,
+        limit,
+        offset
+      })
+
+      expect(historyRetrievals).toEqual([{
+        id: 1,
+        created_at: '2023-01-01T00:00:00Z',
+        portal_id: 'edsc',
+        titles: ['title 1'],
+        total: 1
+      }])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."created_at", (jsondata->\'portalId\') as portal_id, array_agg(retrieval_collections.collection_metadata->\'title\') as titles, count(*) OVER() as total from "retrievals" inner join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrievals"."user_id" = $1 group by "retrievals"."id", "retrievals"."created_at", "retrievals"."jsondata" order by "retrievals"."created_at" desc limit $2')
+
+      // When offset is 0, it is not included in variables
+      expect(queries[0].bindings).toEqual([userId, limit])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getHistoryRetrievals({
+        userId: 1,
+        limit: 20,
+        offset: 0
+      })).rejects.toThrow('Failed to retrieve user retrievals')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."created_at", (jsondata->\'portalId\') as portal_id, array_agg(retrieval_collections.collection_metadata->\'title\') as titles, count(*) OVER() as total from "retrievals" inner join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrievals"."user_id" = $1 group by "retrievals"."id", "retrievals"."created_at", "retrievals"."jsondata" order by "retrievals"."created_at" desc limit $2')
+      expect(queries[0].bindings).toEqual([1, 20])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user retrievals', expect.any(Error))
+    })
+  })
+
+  describe('deleteRetrieval', () => {
+    test('deletes the retrieval', async () => {
+      dbTracker.on('query', (query) => {
+        query.response(1)
+      })
+
+      const result = await databaseClient.deleteRetrieval({
+        obfuscatedId: '4517239960',
+        userId: 1
+      })
+
+      expect(result).toBeDefined()
+      expect(result).toEqual(1)
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('delete from "retrievals" where "user_id" = $1 and "id" = $2')
+      expect(queries[0].bindings).toEqual([1, 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.deleteRetrieval({
+        obfuscatedId: '4517239960',
+        userId: 1
+      })).rejects.toThrow('Failed to delete retrieval')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('delete from "retrievals" where "user_id" = $1 and "id" = $2')
+      expect(queries[0].bindings).toEqual([1, 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to delete retrieval', expect.any(Error))
+    })
+  })
+
   describe('getRetrievalCollectionByObfuscatedId', () => {
     test('retrieves the retrieval collection', async () => {
       dbTracker.on('query', (query) => {

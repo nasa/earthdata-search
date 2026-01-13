@@ -6,7 +6,8 @@ import { useMutation, useQuery } from '@apollo/client'
 import TimeAgo from 'react-timeago'
 import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
-import 'rc-pagination/assets/index.css'
+// @ts-expect-error This file does not have types
+import { Helmet } from 'react-helmet'
 
 // @ts-expect-error This file does not have types
 import { XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
@@ -36,6 +37,7 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 
 // Styles
 import './DownloadHistory.scss'
+import 'rc-pagination/assets/index.css'
 
 interface HistoryRetrievalsQueryData {
   historyRetrievals: {
@@ -85,7 +87,7 @@ export const DownloadHistory = () => {
 
   const handleDeleteRetrieval = (obfuscatedId: string) => {
     // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure you want to remove this project? This action cannot be undone.')) {
+    if (window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')) {
       deleteRetrievalMutation({
         variables: {
           obfuscatedId
@@ -119,6 +121,12 @@ export const DownloadHistory = () => {
 
   return (
     <div className="download-history">
+      <Helmet>
+        <title>Download Status &amp; History</title>
+        <meta name="title" content="Download Status &amp; History" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${earthdataEnvironment}${routes.DOWNLOADS}`} />
+      </Helmet>
       <h2 className="route-wrapper__page-heading">
         Download Status & History
       </h2>

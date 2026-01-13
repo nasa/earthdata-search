@@ -553,13 +553,21 @@ export default class DatabaseClient {
         .select(
           'retrievals.id',
           'retrievals.created_at',
+          // Only request portal Id from the jsondata
           db.raw('(jsondata->\'portalId\') as portal_id'),
-          db.raw('array_agg(retrieval_collections.collection_metadata->\'title\') as titles_array')
+          // Aggregate all titles from related collections into an array.
+          db.raw('array_agg(retrieval_collections.collection_metadata->\'title\') as titles')
         )
+        // Add a count of all rows over the entire result set, aliased as 'total'
         .select(db.raw('count(*) OVER() as total'))
+        // Join with the 'retrieval_collections' table, matching retrieval IDs
         .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
+        // Filter results to only include retrievals for the specified user
         .where({ 'retrievals.user_id': userId })
+        // Group results by retrieval ID, creation date, and JSON data
+        // in order to aggregate collection titles
         .groupBy('retrievals.id', 'retrievals.created_at', 'retrievals.jsondata')
+        // Sort by most recent
         .orderBy('retrievals.created_at', 'desc')
 
       return await this.executePaginatedQuery({

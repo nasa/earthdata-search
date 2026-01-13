@@ -94,4 +94,22 @@ describe('getContext', () => {
       expect(validateToken).toHaveBeenCalledWith(undefined, 'testenv')
     })
   })
+
+  describe('when the operation is IntrospectionQuery', () => {
+    test('should return null', async () => {
+      const event = {
+        body: JSON.stringify({
+          operationName: 'IntrospectionQuery'
+        }),
+        headers: {
+          authorization: 'Bearer token'
+        }
+      }
+
+      const result = await getContext({ event })
+
+      expect(result).toBeNull()
+      expect(validateToken).not.toHaveBeenCalled()
+    })
+  })
 })
