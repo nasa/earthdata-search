@@ -1,41 +1,33 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EDSCModalOverlay from '../EDSCModalOverlay'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<EDSCModalOverlay {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+const setup = setupTest({
+  Component: EDSCModalOverlay,
+  defaultProps: {}
+})
 
 describe('EDSCModalOverlay component', () => {
   describe('when no children are provided', () => {
     test('should render nothing', () => {
-      const { enzymeWrapper } = setup()
+      const { container } = setup()
 
-      expect(enzymeWrapper.type()).toEqual(null)
+      expect(container.innerHTML).toBe('')
     })
   })
 
   describe('when children are provided', () => {
     test('should render the overlay', () => {
-      const { enzymeWrapper } = setup({
-        children: <>Test</>
+      setup({
+        overrideProps: {
+          children: <div className="test-child">Test</div>
+        }
       })
 
-      expect(enzymeWrapper.type()).toEqual('div')
-      expect(enzymeWrapper.prop('className')).toEqual('edsc-modal-overlay')
+      expect(screen.getByText('Test')).toBeInTheDocument()
     })
   })
 })

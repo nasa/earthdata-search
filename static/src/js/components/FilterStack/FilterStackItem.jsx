@@ -19,8 +19,6 @@ const FilterStackItem = ({
   title,
   variant = 'icon'
 }) => {
-  if (!children) return null
-
   let iconClass = ''
 
   if (typeof icon === 'string' && icon === 'edsc-globe') {

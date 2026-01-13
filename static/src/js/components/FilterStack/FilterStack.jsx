@@ -16,7 +16,6 @@ const FilterStack = ({
   })
 
   return (
-
     <ul className={className}>
       {children}
     </ul>

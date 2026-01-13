@@ -1,80 +1,55 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import FilterStackContents from '../FilterStackContents'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-const TestChild = (props) => {
-  const { title } = props
-
-  return (
-    <div key={title} className="test-classname">
-      Child
-    </div>
-  )
-}
-
-TestChild.propTypes = {
-  title: PropTypes.string.isRequired
-}
-
-function setup() {
-  const props = {
-    body: null,
-    title: null
+const setup = setupTest({
+  Component: FilterStackContents,
+  defaultProps: {
+    body: <div>Test Body</div>,
+    title: 'Test'
   }
-
-  const enzymeWrapper = shallow(<FilterStackContents {...props} />)
-  const childWrapper = shallow(<TestChild title="Test" />)
-
-  return {
-    childWrapper,
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('FilterStackContents component', () => {
   test('does not render without a body prop', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ title: 'Test' })
+    const { container } = setup({
+      overrideProps: {
+        body: null,
+        title: 'Test'
+      }
+    })
 
-    expect(enzymeWrapper.type()).toBe(null)
+    expect(container.innerHTML).toBe('')
   })
 
   test('does not render without a title prop', () => {
-    const { enzymeWrapper, childWrapper } = setup()
-    enzymeWrapper.setProps({ body: childWrapper.get(0) })
+    const { container } = setup({
+      overrideProps: {
+        body: <div>Test Body</div>,
+        title: null
+      }
+    })
 
-    expect(enzymeWrapper.type()).toBe(null)
+    expect(container.innerHTML).toBe('')
   })
 
   test('renders itself correctly correct props', () => {
-    const { enzymeWrapper, childWrapper } = setup()
-    enzymeWrapper.setProps({
-      body: childWrapper.get(0),
-      title: 'Test'
-    })
+    setup()
 
-    expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.hasClass('filter-stack-contents')).toBe(true)
+    expect(screen.getByText('Test:')).toBeInTheDocument()
+    expect(screen.getByText('Test Body')).toBeInTheDocument()
   })
 
-  test('renders child correctly correct props', () => {
-    const { enzymeWrapper, childWrapper } = setup()
-    enzymeWrapper.setProps({
-      body: childWrapper.get(0),
-      title: 'Test'
+  test('adds the correct css classes when showLabel is true', () => {
+    setup({
+      overrideProps: {
+        showLabel: true
+      }
     })
 
-    expect(
-      enzymeWrapper.containsMatchingElement(
-        <div className="test-classname">
-          Child
-        </div>
-      )
-    ).toBe(true)
+    expect(screen.getByText('Test:').className).toContain('filter-stack-contents__label filter-stack-contents__label--visible')
   })
 })

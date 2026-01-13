@@ -1,73 +1,63 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 import { FaBacon } from 'react-icons/fa'
+import {
+  AlertHighPriorityOutline
+} from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EmptyListItem from '../EmptyListItem'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
 
-function setup(overrideProps) {
-  const props = {
-    ...overrideProps
+const setup = setupTest({
+  Component: EmptyListItem,
+  defaultProps: {
+    children: 'This is the text'
   }
-
-  const enzymeWrapper = shallow(<EmptyListItem {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
 })
 
 describe('EmptyListItem component', () => {
-  test('should render the EmptyListItem', () => {
-    const { enzymeWrapper } = setup({
-      children: 'This is the text'
-    })
-
-    expect(enzymeWrapper.find('.empty-list-item').length).toEqual(1)
-  })
-
   test('should render the text', () => {
-    const { enzymeWrapper } = setup({
-      children: 'This is the text'
-    })
+    setup()
 
-    expect(enzymeWrapper.find('.empty-list-item__body').text())
-      .toEqual('This is the text')
+    expect(screen.getByText('This is the text')).toBeInTheDocument()
   })
 
   test('should render the warning icon by default', () => {
-    const { enzymeWrapper } = setup({
-      children: 'This is the text'
-    })
+    setup()
 
-    expect(enzymeWrapper.find(EDSCIcon).length).toEqual(1)
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'empty-list-item__icon',
+      icon: AlertHighPriorityOutline,
+      size: '20'
+    }, {})
   })
 
   test('should render the custom icon', () => {
-    const { enzymeWrapper } = setup({
-      children: 'This is the text',
-      icon: FaBacon
+    setup({
+      overrideProps: {
+        icon: FaBacon
+      }
     })
 
-    expect(enzymeWrapper.find(EDSCIcon).props().icon).toEqual(FaBacon)
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'empty-list-item__icon',
+      icon: FaBacon,
+      size: '20'
+    }, {})
   })
 
   test('should add a custom class name', () => {
-    const { enzymeWrapper } = setup({
-      className: 'custom-class-name',
-      children: 'This is the text',
-      icon: FaBacon
+    setup({
+      overrideProps: {
+        className: 'custom-class-name'
+      }
     })
 
-    expect(enzymeWrapper.props().className).toContain('custom-class-name')
+    expect(screen.getByRole('listitem')).toHaveClass('custom-class-name')
   })
 })

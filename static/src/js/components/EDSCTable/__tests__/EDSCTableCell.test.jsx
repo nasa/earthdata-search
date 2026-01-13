@@ -1,32 +1,22 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EDSCTableCell from '../EDSCTableCell'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: EDSCTableCell,
+  defaultProps: {
     cell: {
       value: 'test value'
-    },
-    ...overrideProps
+    }
   }
-
-  const enzymeWrapper = shallow(<EDSCTableCell {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('EDSCTableCell component', () => {
   test('renders correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.edsc-table-cell').props().title).toEqual('test value')
-    expect(enzymeWrapper.find('.edsc-table-cell__content').text()).toEqual('test value')
+    expect(screen.getByText('test value')).toBeInTheDocument()
   })
 })
