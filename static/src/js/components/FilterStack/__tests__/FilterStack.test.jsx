@@ -1,51 +1,44 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import FilterStack from '../FilterStack'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: FilterStack,
+  defaultProps: {
     children: undefined,
     isOpen: false
   }
-
-  const enzymeWrapper = shallow(<FilterStack {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('FilterStack component', () => {
   test('does not render without children', () => {
-    const { enzymeWrapper } = setup()
+    const { container } = setup()
 
-    expect(enzymeWrapper.type()).toBe(null)
+    expect(container.innerHTML).toBe('')
   })
 
   test('renders its children', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ children: 'Hello!' })
-
-    expect(enzymeWrapper.children().contains('Hello!'))
-  })
-
-  test('renders with the correct css when not visible', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.hasClass('filter-stack--visible')).toBe(false)
-  })
-
-  test('renders with the correct css when not visible', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      isOpen: true,
-      children: 'Hello!'
+    setup({
+      overrideProps: {
+        children: 'Hello!'
+      }
     })
 
-    expect(enzymeWrapper.hasClass('filter-stack--is-open')).toBe(true)
+    expect(screen.getByText('Hello!')).toBeInTheDocument()
+
+    expect(screen.getByRole('list')).not.toHaveClass('filter-stack--is-open')
+  })
+
+  test('renders with the correct css when not visible', () => {
+    setup({
+      overrideProps: {
+        isOpen: true,
+        children: 'Hello!'
+      }
+    })
+
+    expect(screen.getByRole('list')).toHaveClass('filter-stack--is-open')
   })
 })

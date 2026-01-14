@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './EDSCModalOverlay.scss'
 
-export const EDSCModalOverlay = ({
+const EDSCModalOverlay = ({
   children = null
 }) => {
   if (!children) return null

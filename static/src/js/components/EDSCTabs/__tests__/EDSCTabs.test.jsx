@@ -1,111 +1,81 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import Tabs from 'react-bootstrap/Tabs'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EDSCTabs from '../EDSCTabs'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    children: [],
-    ...overrideProps
+const setup = setupTest({
+  Component: EDSCTabs,
+  defaultProps: {
+    children: []
   }
-  const enzymeWrapper = shallow(<EDSCTabs {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
 })
 
 describe('EDSCTabs component', () => {
-  test('should have the correct classname', () => {
-    const { enzymeWrapper } = setup({
-      children: [
-        'Test children'
-      ]
-    })
-
-    expect(enzymeWrapper.find('.edsc-tabs').length).toEqual(1)
-  })
-
   test('should render the tabs', () => {
-    const { enzymeWrapper } = setup({
-      children: [
-        'Test children'
-      ]
+    setup({
+      overrideProps: {
+        children: [
+          'Test children'
+        ]
+      }
     })
 
-    const tabs = enzymeWrapper.find(Tabs)
-
-    expect(tabs.length).toEqual(1)
-  })
-
-  test('should render its children', () => {
-    const { enzymeWrapper } = setup({
-      children: [
-        'Test children'
-      ]
-    })
-
-    expect(enzymeWrapper.find('.edsc-tabs').type()).toEqual('div')
+    expect(screen.getByRole('tablist')).toHaveTextContent('Test children')
   })
 
   describe('when a classname is provided', () => {
-    const { enzymeWrapper } = setup({
-      children: [
-        'Test children'
-      ],
-      className: 'test-classname'
-    })
-
     test('should add the classname', () => {
-      expect(enzymeWrapper.find('.edsc-tabs').props().className).toContain('test-classname')
+      const { container } = setup({
+        overrideProps: {
+          children: [
+            'Test children'
+          ],
+          className: 'test-classname'
+        }
+      })
+
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(container.querySelector('.edsc-tabs').className).toContain('test-classname')
     })
   })
 
   describe('when no children are provided', () => {
-    const { enzymeWrapper } = setup({
-      children: []
-    })
-
     test('should do nothing', () => {
-      expect(enzymeWrapper.find('.edsc-tabs').length).toEqual(0)
+      setup()
+
+      expect(screen.queryByRole('tablist')).not.toBeInTheDocument()
     })
   })
 
   describe('when falsy are provided', () => {
-    const { enzymeWrapper } = setup({
-      children: [
-        'Test children',
-        false
-      ]
-    })
-
-    const tabs = enzymeWrapper.find(Tabs)
-
     test('should filter falsy children', () => {
-      expect(tabs.length).toEqual(1)
+      setup({
+        overrideProps: {
+          children: [
+            'Test children',
+            false
+          ]
+        }
+      })
+
+      expect(screen.getAllByRole('tablist')).toHaveLength(1)
     })
   })
 
   describe('when padding is set to false', () => {
-    const { enzymeWrapper } = setup({
-      padding: false,
-      children: [
-        'Test children'
-      ]
-    })
-
     test('should add the class', () => {
-      expect(enzymeWrapper.find('.edsc-tabs').props().className).toContain('edsc-tabs--no-padding')
+      const { container } = setup({
+        overrideProps: {
+          padding: false,
+          children: [
+            'Test children'
+          ]
+        }
+      })
+
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(container.querySelector('.edsc-tabs').className).toContain('edsc-tabs--no-padding')
     })
   })
 })

@@ -1,57 +1,110 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+import { FaCrop } from 'react-icons/fa'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import FilterStackItem from '../FilterStackItem'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: FilterStackItem,
+  defaultProps: {
     children: 'Hello!',
-    icon: 'test',
-    title: 'Test',
-    ...overrideProps
+    icon: FaCrop,
+    title: 'Test'
   }
-
-  const enzymeWrapper = shallow(<FilterStackItem {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('FilterStackItem component', () => {
   test('renders itself as a list item', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.type()).toBe('li')
-    expect(enzymeWrapper.hasClass('filter-stack-item')).toBe(true)
-  })
-
-  test('renders an icon', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('.filter-stack-item__icon').length).toBe(1)
-  })
-
-  test('renders a title', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('h3').hasClass('filter-stack-item__title')).toBe(true)
-  })
-
-  test('renders a secondary title', () => {
-    const { enzymeWrapper } = setup({
-      secondaryTitle: 'Secondary Title'
-    })
-
-    expect(enzymeWrapper.find('.filter-stack-item__secondary-title').length).toBe(1)
+    expect(screen.getByRole('listitem')).toBeInTheDocument()
   })
 
   test('renders its body contents correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.filter-stack-item__body-contents').at(0).text()).toBe('Hello!')
+    expect(screen.getByText('Hello!')).toBeInTheDocument()
+  })
+
+  test('renders an icon', () => {
+    setup()
+
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'filter-stack-item__icon',
+      icon: FaCrop,
+      title: 'Test'
+    }, {})
+  })
+
+  test('renders a title', () => {
+    setup()
+
+    expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  test('renders a secondary title', () => {
+    setup({
+      overrideProps: {
+        secondaryTitle: 'Secondary Title'
+      }
+    })
+
+    expect(screen.getByText('Secondary Title')).toBeInTheDocument()
+  })
+
+  test('renders a hint when provided', () => {
+    setup({
+      overrideProps: {
+        hint: 'This is a hint'
+      }
+    })
+
+    expect(screen.getByText('This is a hint')).toBeInTheDocument()
+  })
+
+  test('renders an error when provided', () => {
+    setup({
+      overrideProps: {
+        error: 'This is an error'
+      }
+    })
+
+    expect(screen.getByText('This is an error')).toBeInTheDocument()
+  })
+
+  test('adds the correct class when the icon is `edsc-globe`', () => {
+    setup({
+      overrideProps: {
+        icon: 'edsc-globe'
+      }
+    })
+
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'edsc-icon-globe-grid filter-stack-item__icon filter-stack-item__icon--small',
+      icon: 'edsc-globe',
+      title: 'Test'
+    }, {})
+  })
+
+  describe('when clicking the remove button', () => {
+    test('calls the onRemove callback', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          onRemove: jest.fn()
+        }
+      })
+
+      const button = screen.getByRole('button', { name: /remove test filter/i })
+
+      await user.click(button)
+
+      expect(props.onRemove).toHaveBeenCalledTimes(1)
+      expect(props.onRemove).toHaveBeenCalledWith()
+    })
   })
 })
