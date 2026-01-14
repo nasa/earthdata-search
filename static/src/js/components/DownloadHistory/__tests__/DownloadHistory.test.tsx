@@ -296,7 +296,7 @@ describe('DownloadHistorys component', () => {
         await user.click(deleteButton)
 
         expect(addToast).toHaveBeenCalledTimes(1)
-        expect(addToast).toHaveBeenCalledWith('Downloads removed', {
+        expect(addToast).toHaveBeenCalledWith('Download removed', {
           appearance: 'success',
           autoDismiss: true
         })
