@@ -70,7 +70,7 @@ export default {
           { deep: true }
         ),
         pageInfo: result.pageInfo,
-        count: result.data[0].total
+        count: result.count
       }
     },
 
