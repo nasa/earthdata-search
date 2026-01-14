@@ -37,6 +37,7 @@ export const RadioSettingDropdownItem = ({
 
   const handleClick = () => {
     if (isActive) return
+
     onClick()
   }
 

@@ -25,12 +25,11 @@ const normalizeSizeValues = (obj) => mapValues(obj, (value) => {
  */
 export const Skeleton = ({
   className = '',
-  dataTestId = undefined,
   containerStyle,
   shapes,
   variant = null
 }) => {
-  const shapeElements = shapes.map((shape, i) => {
+  const shapeElements = shapes.map((shape, index) => {
     let item = null
     const key = uniqueId('skeleton_key_')
     const styles = normalizeSizeValues(shape)
@@ -39,8 +38,8 @@ export const Skeleton = ({
       item = (
         <div
           key={key}
-          className={`skeleton__item skeleton__item-${i}`}
-          data-testid={styles['data-testid']}
+          className={`skeleton__item skeleton__item-${index}`}
+          data-testid={`${styles['data-testid']}-${index}`}
           style={
             {
               top: styles.top,
@@ -61,8 +60,8 @@ export const Skeleton = ({
       item = (
         <div
           key={key}
-          className={`skeleton__item skeleton__item-${i}`}
-          data-testid={styles['data-testid']}
+          className={`skeleton__item skeleton__item-${index}`}
+          data-testid={`${styles['data-testid']}-${index}`}
           style={
             {
               top: styles.top,
@@ -95,7 +94,7 @@ export const Skeleton = ({
   return (
     <div
       className={classes}
-      data-testid={dataTestId}
+      data-testid="skeleton"
       style={{ ...normalizedStyles }}
     >
       <div
@@ -109,7 +108,6 @@ export const Skeleton = ({
 
 Skeleton.propTypes = {
   className: PropTypes.string,
-  dataTestId: PropTypes.string,
   containerStyle: PropTypes.shape({}).isRequired,
   shapes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   variant: PropTypes.string
