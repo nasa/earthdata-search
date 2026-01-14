@@ -1,31 +1,32 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import SpatialDisplayEntry from '../SpatialDisplayEntry'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    type: 'start'
-  }
-
-  const enzymeWrapper = shallow(
-    <SpatialDisplayEntry {...props}>
-      38.79165, -77.11976
-    </SpatialDisplayEntry>
-  )
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+const setup = setupTest({
+  Component: SpatialDisplayEntry
+})
 
 describe('SpatialDisplayEntry component', () => {
-  test('with valid type and children should render correctly', () => {
-    const { enzymeWrapper } = setup()
+  describe('without children', () => {
+    test('should render nothing', () => {
+      const { container } = setup()
 
-    expect(enzymeWrapper.text()).toEqual('38.79165, -77.11976')
+      expect(container.innerHTML).toBe('')
+    })
+  })
+
+  describe('with children', () => {
+    test('should render its children', () => {
+      setup({
+        overrideProps: {
+          children: <div className="test-child">Test</div>
+        }
+      })
+
+      expect(screen.getByText('Test')).toBeInTheDocument()
+    })
   })
 })

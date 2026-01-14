@@ -1,97 +1,94 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import Dropdown from 'react-bootstrap/Dropdown'
 import { FaBacon } from 'react-icons/fa'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
-import { RadioSettingDropdownItem } from '../RadioSettingDropdownItem'
+import RadioSettingDropdownItem from '../RadioSettingDropdownItem'
 import Spinner from '../../Spinner/Spinner'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+jest.mock('../../Spinner/Spinner', () => jest.fn(() => null))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: RadioSettingDropdownItem,
+  defaultProps: {
     className: 'test-class',
     icon: FaBacon,
     onClick: jest.fn(),
-    title: 'Test Title',
-    ...overrideProps
+    title: 'Test Title'
   }
-
-  const enzymeWrapper = shallow(<RadioSettingDropdownItem {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('RadioSettingDropdownItem component', () => {
   test('renders a dropdown item', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.type()).toBe(Dropdown.Item)
+    const button = screen.getByRole('button', { name: 'Test Title' })
+
+    expect(button.className).toContain('test-class radio-setting-dropdown-item dropdown-item')
+
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'radio-setting-dropdown-item__icon',
+      icon: FaBacon,
+      size: '12'
+    }, {})
   })
 
-  test('adds the className', () => {
-    const { enzymeWrapper } = setup()
+  test('calls the onClick callback', async () => {
+    const { props, user } = setup()
 
-    expect(enzymeWrapper.props().className).toBe('test-class radio-setting-dropdown-item')
-  })
-
-  test('adds an icon', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(EDSCIcon).props().icon).toEqual(FaBacon)
-  })
-
-  test('displays the text', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.text()).toContain('Test Title')
-  })
-
-  test('calls the onClick callback', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.simulate('click')
+    const button = screen.getByRole('button', { name: 'Test Title' })
+    await user.click(button)
 
     expect(props.onClick).toHaveBeenCalledTimes(1)
+    expect(props.onClick).toHaveBeenCalledWith()
   })
 
-  test('will not call the onClick callback, if item is active', () => {
-    const { enzymeWrapper, props } = setup({ isActive: true })
+  test('will not call the onClick callback, if item is active', async () => {
+    const { props, user } = setup({
+      overrideProps: {
+        isActive: true
+      }
+    })
 
-    enzymeWrapper.update()
-    enzymeWrapper.simulate('click')
+    const button = screen.getByRole('button', { name: 'Test Title' })
+    await user.click(button)
 
     expect(props.onClick).toHaveBeenCalledTimes(0)
   })
 
   describe('when in progress', () => {
     test('disables the dropdown item', () => {
-      const { enzymeWrapper } = setup({
-        inProgress: true
+      setup({
+        overrideProps: {
+          inProgress: true
+        }
       })
 
-      expect(enzymeWrapper.find(Dropdown.Item).props().className).toContain('radio-setting-dropdown-item--in-progress')
+      const button = screen.getByRole('button', { name: 'Test Title' })
+      expect(button.className).toContain('radio-setting-dropdown-item--in-progress')
+
+      // The button is disabled
+      expect(button.className).toContain('disabled')
+      expect(button).toHaveAttribute('aria-disabled', 'true')
     })
 
     test('displays a spinner', () => {
-      const { enzymeWrapper } = setup({
-        inProgress: true
+      setup({
+        overrideProps: {
+          inProgress: true
+        }
       })
 
-      expect(enzymeWrapper.find(Spinner).length).toEqual(1)
-    })
-
-    test('disables the dropdown item', () => {
-      const { enzymeWrapper } = setup({
-        inProgress: true
-      })
-
-      expect(enzymeWrapper.find(Dropdown.Item).props().disabled).toEqual(true)
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        className: 'radio-setting-dropdown-item__spinner',
+        inline: true,
+        size: 'x-tiny',
+        type: 'dots'
+      }, {})
     })
   })
 })

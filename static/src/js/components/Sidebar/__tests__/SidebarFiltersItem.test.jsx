@@ -1,59 +1,52 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 
 import SidebarFiltersItem from '../SidebarFiltersItem'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    children: <div className="test-child" />,
+const setup = setupTest({
+  Component: SidebarFiltersItem,
+  defaultProps: {
+    children: <div>Test Child</div>,
     description: 'Test description',
-    heading: <div className="test-heading" />,
-    ...overrideProps
+    heading: 'Test heading'
   }
-
-  const enzymeWrapper = shallow(<SidebarFiltersItem {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('SidebarFiltersItem component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+  test('renders a list item', () => {
+    setup()
 
-    expect(enzymeWrapper.type()).toBe('li')
+    expect(screen.getByRole('listitem')).toBeInTheDocument()
   })
 
   test('renders its children correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.sidebar-filters-item__body').children(0).prop('className')).toBe('test-child')
+    expect(screen.getByText('Test Child')).toBeInTheDocument()
   })
 
   test('renders its heading correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.sidebar-filters-item__heading').children(0).prop('className')).toBe('test-heading')
+    expect(screen.getByText('Test heading')).toBeInTheDocument()
   })
 
   describe('Description', () => {
     test('does not render when null', () => {
-      const { enzymeWrapper } = setup({
-        description: null
+      setup({
+        overrideProps: {
+          description: null
+        }
       })
 
-      expect(enzymeWrapper.find('.sidebar-filters-item__description').length).toEqual(0)
+      expect(screen.queryByText('Test description')).not.toBeInTheDocument()
     })
 
     test('renders correctly when defined', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.find('.sidebar-filters-item__description').text()).toEqual('Test description')
+      expect(screen.getByText('Test description')).toBeInTheDocument()
     })
   })
 })

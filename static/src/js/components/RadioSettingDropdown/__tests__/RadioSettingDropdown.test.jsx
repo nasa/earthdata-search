@@ -1,90 +1,73 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import Dropdown from 'react-bootstrap/Dropdown'
+import ReactDOM from 'react-dom'
+import { screen } from '@testing-library/react'
 import { FaBacon } from 'react-icons/fa'
 
 import { RadioSettingDropdown } from '../RadioSettingDropdown'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import RadioSettingDropdownItem from '../RadioSettingDropdownItem'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../RadioSettingDropdownItem', () => jest.fn(() => null))
 
 const itemOnClickCallbackMock = jest.fn()
 
-let windowEventMap = {}
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  const rootNode = document.createElement('div')
-  rootNode.id = 'root'
-  document.body.appendChild(rootNode)
-
-  windowEventMap = {}
-  window.addEventListener = jest.fn((event, cb) => {
-    windowEventMap[event] = cb
-  })
-})
-
-afterEach(() => {
-  const rootNode = document.getElementById('root')
-  document.body.removeChild(rootNode)
-})
-
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: RadioSettingDropdown,
+  defaultProps: {
     id: 'radio-setting-dropdown',
     children: null,
     className: null,
     handoffLinks: [],
     activeIcon: FaBacon,
-    label: 'Label',
-    ...overrideProps
+    label: 'Label'
   }
+})
 
-  const enzymeWrapper = shallow(<RadioSettingDropdown {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+beforeEach(() => {
+  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+})
 
 describe('RadioSettingDropdown component', () => {
   test('renders nothing when no settings are provided', () => {
-    const { enzymeWrapper } = setup()
+    const { container } = setup()
 
-    expect(enzymeWrapper.type()).toBeNull()
-    expect(enzymeWrapper.type()).toBeNull()
+    expect(container.innerHTML).toBe('')
   })
 
-  test('renders correctly when items links are provided', () => {
-    const { enzymeWrapper } = setup({
-      id: 'test-id',
-      label: 'menu label',
-      settings: [
-        {
-          label: 'setting label',
-          isActive: false,
-          onClick: itemOnClickCallbackMock
-        }
-      ]
+  test('renders correctly when settings are provided', async () => {
+    const { user } = setup({
+      overrideProps: {
+        id: 'test-id',
+        label: 'menu label',
+        settings: [
+          {
+            label: 'setting label',
+            isActive: false,
+            onClick: itemOnClickCallbackMock
+          }
+        ]
+      }
     })
 
-    expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
-  })
+    // Open the dropdown menu
+    const button = screen.getByRole('button')
+    await user.click(button)
 
-  test('adds a key to the Dropdown component to force rerenders', () => {
-    const { enzymeWrapper } = setup({
-      id: 'test-id',
-      label: 'menu label',
-      settings: [
-        {
-          label: 'setting label',
-          isActive: false,
-          onClick: itemOnClickCallbackMock
-        }
-      ]
-    })
+    // The `useEffect` updating `menuOffsetX` is causing the component to render twice.
+    expect(RadioSettingDropdownItem).toHaveBeenCalledTimes(2)
+    expect(RadioSettingDropdownItem).toHaveBeenNthCalledWith(1, {
+      icon: undefined,
+      inProgress: undefined,
+      isActive: false,
+      onClick: expect.any(Function),
+      title: 'setting label'
+    }, {})
 
-    expect(enzymeWrapper.find(Dropdown).key()).toEqual('0_menu_label')
+    expect(RadioSettingDropdownItem).toHaveBeenNthCalledWith(2, {
+      icon: undefined,
+      inProgress: undefined,
+      isActive: false,
+      onClick: expect.any(Function),
+      title: 'setting label'
+    }, {})
   })
 })

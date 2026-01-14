@@ -8,7 +8,7 @@ import './SidebarFiltersList.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Node} props.children - The granule filter items.
  */
-export const SidebarFiltersList = ({
+const SidebarFiltersList = ({
   children
 }) => (
   <ul className="sidebar-filters-list">

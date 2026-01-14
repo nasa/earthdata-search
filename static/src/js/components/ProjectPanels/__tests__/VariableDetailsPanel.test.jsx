@@ -1,13 +1,11 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 
-import { VariableDetailsPanel } from '../VariableDetailsPanel'
+import VariableDetailsPanel from '../VariableDetailsPanel'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: VariableDetailsPanel,
+  defaultProps: {
     panelHeader: '',
     variable: {
       definition: 'Variable Definition',
@@ -15,21 +13,53 @@ function setup() {
       longName: 'Variable Long Name'
     }
   }
-
-  const enzymeWrapper = shallow(<VariableDetailsPanel {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('VariableDetailsPanel', () => {
-  test('displays the variable details', () => {
-    const { enzymeWrapper } = setup()
+  test('renders null when no variable is provided', () => {
+    const { container } = setup({
+      overrideProps: {
+        variable: undefined
+      }
+    })
 
-    expect(enzymeWrapper.find('.variable-details-panel__heading').text()).toEqual('Variable Name')
-    expect(enzymeWrapper.find('.variable-details-panel__longname').text()).toEqual('Variable Long Name')
-    expect(enzymeWrapper.find('.variable-details-panel__description').text()).toEqual('Variable Definition')
+    expect(container.innerHTML).toBe('')
+  })
+
+  test('displays the variable details', () => {
+    setup()
+
+    expect(screen.getByText('Variable Name')).toBeInTheDocument()
+    expect(screen.getByText('Variable Long Name')).toBeInTheDocument()
+    expect(screen.getByText('Variable Definition')).toBeInTheDocument()
+  })
+
+  test('displays a default message when no definition is provided', () => {
+    setup({
+      overrideProps: {
+        variable: {
+          name: 'Variable Name',
+          longName: 'Variable Long Name'
+        }
+      }
+    })
+
+    expect(screen.getByText('No definition available for this variable.')).toBeInTheDocument()
+  })
+
+  describe('when the name contains slashes', () => {
+    test('should only display the text after the last slash', () => {
+      setup({
+        overrideProps: {
+          variable: {
+            name: 'path/to/VariableName',
+            longName: 'Variable Long Name',
+            definition: 'Variable Definition'
+          }
+        }
+      })
+
+      expect(screen.getByText('VariableName')).toBeInTheDocument()
+    })
   })
 })

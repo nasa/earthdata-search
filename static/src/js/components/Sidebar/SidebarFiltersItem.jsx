@@ -11,7 +11,7 @@ import './SidebarFiltersItem.scss'
  * @param {String} props.heading - The heading for the granule filter.
  * @param {Node} props.children - The granule filter form element.
  */
-export const SidebarFiltersItem = ({
+const SidebarFiltersItem = ({
   children,
   description = null,
   heading = '',
@@ -48,7 +48,7 @@ export const SidebarFiltersItem = ({
 SidebarFiltersItem.propTypes = {
   children: PropTypes.node.isRequired,
   description: PropTypes.string,
-  heading: PropTypes.node,
+  heading: PropTypes.string,
   hasPadding: PropTypes.bool
 }
 

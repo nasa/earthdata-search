@@ -1,34 +1,27 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import SidebarFiltersList from '../SidebarFiltersList'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    children: <div className="test" />
+const setup = setupTest({
+  Component: SidebarFiltersList,
+  defaultProps: {
+    children: <div>Test Child</div>
   }
-
-  const enzymeWrapper = shallow(<SidebarFiltersList {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('SidebarFiltersList component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.type()).toBe('ul')
+    expect(screen.getByRole('list')).toBeInTheDocument()
   })
 
   test('is passed a child', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('div.test').length).toEqual(1)
+    expect(screen.getByText('Test Child')).toBeInTheDocument()
   })
 })
