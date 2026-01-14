@@ -50,15 +50,17 @@ const checkTemporal = (temporal) => {
  * @param {Object} props - The props passed into the component.
  * @param {Boolean} props.allowRecurring - Flag to designate the whether recurring dates are supported
  * @param {String} props.controlId - A unique id
+ * @param {String} props.displayEndDate - A string representing the end date to display
+ * @param {String} props.displayStartDate - A string representing the start date to display
  * @param {String} props.filterType - A string indicating if the filter is for collections or granules
  * @param {String} props.format - A string temporal format
  * @param {Function} props.onChangeRecurring - Callback function to call when recurring range is changed
  * @param {Function} props.onInvalid - Callback function to call when entry is invalid
  * @param {Function} props.onRecurringToggle - Callback function to call when recurring is toggled
+ * @param {Function} props.onSliderChange - Callback function when year range slider is moved
  * @param {Function} props.onSubmitEnd - Callback function to call when a submission ends
  * @param {Function} props.onSubmitStart - Callback function to call when a submission starts
  * @param {Function} props.onValid - Callback function to call when the entry is valid
- * @param {Function} props.onSliderChange - Callback function when year range slider is moved
  * @param {String} props.size - String representing the bootstrap size
  * @param {Object} props.temporal - Object configuring the temporal information
  * @param {Boolean} props.validate - Flag to designate the whether or not entry should be validated
@@ -254,14 +256,16 @@ const TemporalSelection = ({
 TemporalSelection.propTypes = {
   allowRecurring: PropTypes.bool,
   controlId: PropTypes.string.isRequired,
+  displayEndDate: PropTypes.string,
+  displayStartDate: PropTypes.string,
   filterType: PropTypes.string,
   format: PropTypes.string,
   onChangeRecurring: PropTypes.func,
   onInvalid: PropTypes.func,
   onRecurringToggle: PropTypes.func,
+  onSliderChange: PropTypes.func,
   onSubmitEnd: PropTypes.func.isRequired,
   onSubmitStart: PropTypes.func.isRequired,
-  onSliderChange: PropTypes.func,
   onValid: PropTypes.func,
   size: PropTypes.string,
   temporal: PropTypes.shape({
@@ -269,9 +273,7 @@ TemporalSelection.propTypes = {
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
   }).isRequired,
-  validate: PropTypes.bool,
-  displayEndDate: PropTypes.string,
-  displayStartDate: PropTypes.string
+  validate: PropTypes.bool
 }
 
 export default TemporalSelection
