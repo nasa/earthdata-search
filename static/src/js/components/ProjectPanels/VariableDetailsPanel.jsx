@@ -5,7 +5,7 @@ import ProjectPanelSection from './ProjectPanelSection'
 
 import './VariableDetailsPanel.scss'
 
-export const VariableDetailsPanel = ({
+const VariableDetailsPanel = ({
   variable = undefined
 }) => {
   if (!variable) return null

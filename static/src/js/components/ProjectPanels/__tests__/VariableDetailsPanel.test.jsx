@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import { VariableDetailsPanel } from '../VariableDetailsPanel'
+import VariableDetailsPanel from '../VariableDetailsPanel'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const setup = setupTest({
@@ -47,17 +47,19 @@ describe('VariableDetailsPanel', () => {
     expect(screen.getByText('No definition available for this variable.')).toBeInTheDocument()
   })
 
-  test('formats the variable name correctly', () => {
-    setup({
-      overrideProps: {
-        variable: {
-          name: 'path/to/VariableName',
-          longName: 'Variable Long Name',
-          definition: 'Variable Definition'
+  describe('when the name contains slashes', () => {
+    test('should only display the text after the last slash', () => {
+      setup({
+        overrideProps: {
+          variable: {
+            name: 'path/to/VariableName',
+            longName: 'Variable Long Name',
+            definition: 'Variable Definition'
+          }
         }
-      }
-    })
+      })
 
-    expect(screen.getByText('VariableName')).toBeInTheDocument()
+      expect(screen.getByText('VariableName')).toBeInTheDocument()
+    })
   })
 })
