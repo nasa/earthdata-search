@@ -84,7 +84,7 @@ describe('ProgressRing component', () => {
   })
 
   describe('when a custom stroke width is provided', () => {
-    test('should render an svg at 16px wide', () => {
+    test('should render an svg at the provided width', () => {
       setup({
         overrideProps: {
           strokeWidth: 2,
@@ -96,7 +96,7 @@ describe('ProgressRing component', () => {
       expect(screen.getByRole('graphics-symbol')).toHaveAttribute('height', '20')
     })
 
-    test('should render the inner circle at the correct size', () => {
+    test('should render the inner circle radius correctly', () => {
       setup({
         overrideProps: {
           strokeWidth: 2,

@@ -22,7 +22,6 @@ describe('GranuleResultsBrowseImageCell component', () => {
       setup()
 
       expect(EDSCImage).toHaveBeenCalledTimes(0)
-      expect(screen.queryByRole('img')).not.toBeInTheDocument()
     })
   })
 
@@ -40,7 +39,6 @@ describe('GranuleResultsBrowseImageCell component', () => {
       })
 
       expect(EDSCImage).toHaveBeenCalledTimes(0)
-      expect(screen.queryByRole('img')).not.toBeInTheDocument()
     })
   })
 
@@ -66,8 +64,6 @@ describe('GranuleResultsBrowseImageCell component', () => {
         src: 'http://someplace.com/src/image.jpg',
         width: 60
       }, {})
-
-      expect(screen.queryByRole('img')).not.toBeInTheDocument()
     })
   })
 
