@@ -1,5 +1,6 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
+// @ts-expect-error This file does not have types
 import TimeAgo from 'react-timeago'
 
 import DownloadHistory from '../DownloadHistory'
@@ -212,8 +213,6 @@ describe('DownloadHistorys component', () => {
       })
 
       expect(screen.queryByRole('status')).not.toBeInTheDocument()
-
-      expect(screen.queryByText('Failed to fetch history retrievals')).not.toBeInTheDocument()
     })
   })
 

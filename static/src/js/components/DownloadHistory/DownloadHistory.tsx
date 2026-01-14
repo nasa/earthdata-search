@@ -28,17 +28,24 @@ import { stringify } from '../../util/url/url'
 // @ts-expect-error This file does not have types
 import addToast from '../../util/addToast'
 
-// Types
-import { type HistoryRetrieval } from '../../types/sharedTypes'
-
-// Hooks and store
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
-// Styles
 import './DownloadHistory.scss'
 import 'rc-pagination/assets/index.css'
 
+export interface HistoryRetrieval {
+  /** The date the retrieval was created */
+  createdAt: string
+  /** The ID of the retrieval */
+  id: number
+  /** Obfuscated ID of the retrieval */
+  obfuscatedId: string
+  /** ID of the portal associated with the history retrieval */
+  portalId: string
+  /** The title of the retrieval */
+  titles: string[]
+}
 interface HistoryRetrievalsQueryData {
   historyRetrievals: {
     /** Array of projects returned from the API */
@@ -93,7 +100,7 @@ export const DownloadHistory = () => {
           obfuscatedId
         },
         onCompleted: () => {
-          addToast('Downloads removed', {
+          addToast('Download removed', {
             appearance: 'success',
             autoDismiss: true
           })

@@ -39,7 +39,7 @@ describe('userOwnsRetrieval', () => {
     expect(databaseClient.getRetrievalByObfuscatedId).toHaveBeenCalledWith('test-obfuscated-id')
   })
 
-  test('returns true if the user is an admin', async () => {
+  test('returns true if the user owns the retrieval', async () => {
     const databaseClient = {
       getRetrievalByObfuscatedId: jest.fn().mockResolvedValue({
         user_id: 1

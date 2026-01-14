@@ -618,20 +618,6 @@ export interface Project {
   createdAt: string
 }
 
-/** A History Retrieval */
-export interface HistoryRetrieval {
-  /** The date the retrieval was created */
-  createdAt: string
-  /** The ID of the retrieval */
-  id: number
-  /** Obfuscated ID of the retrieval */
-  obfuscatedId: string
-  /** ID of the portal associated with the history retrieval */
-  portalId: string
-  /** The title of the retrieval */
-  titles: string[]
-}
-
 /** Order information for Harmony orders */
 export type HarmonyOrderInformation = {
   /** The progress of the order */
