@@ -20,7 +20,8 @@ const PreferencesNumberField = ({
     setFormData(value)
 
     // Borrowed this code from react-jsonschema-form. Its the code they use in their version of NumberField
-    // https://github.com/rjsf-team/react-jsonschema-form/blob/master/packages/core/src/components/fields/NumberField.js#L44
+    // https://github.com/rjsf-team/react-jsonschema-form/blob/main/packages/core/src/components/fields/NumberField.tsx#L54
+    // Removed the handling of strings with trailing zeros since that is not relevant to our use case
 
     // Normalize decimals that don't start with a zero character in advance so
     // that the rest of the normalization logic is simpler
@@ -28,18 +29,7 @@ const PreferencesNumberField = ({
       value = `0${value}`
     }
 
-    // Check that the value is a string (this can happen if the widget used is a
-    // <select>, due to an enum declaration etc) then, if the value ends in a
-    // trailing decimal point or multiple zeroes, strip the trailing values
-    const trailingCharMatcherWithPrefix = /\.([0-9]*0)*$/
-    const trailingCharMatcher = /[0.]0*$/
-    const processed = typeof value === 'string' && value.match(trailingCharMatcherWithPrefix)
-      ? asNumber(value.replace(trailingCharMatcher, ''))
-      : asNumber(value)
-
-    const finalValue = processed || processed === 0 ? processed : value
-
-    onChange(finalValue)
+    onChange(asNumber(value))
   }
 
   const { description } = schema
