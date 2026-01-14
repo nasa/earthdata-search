@@ -1,70 +1,86 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 import { FaGlobe } from 'react-icons/fa'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import CustomToggle from '../CustomToggle'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
 
-function setup(type) {
-  const props = {
+const setup = setupTest({
+  Component: CustomToggle,
+  defaultProps: {
     className: 'test-class',
     onClick: jest.fn(),
     title: 'test-title'
   }
-
-  if (type === 'icon') {
-    props.icon = FaGlobe
-  }
-
-  const enzymeWrapper = shallow(<CustomToggle {...props}>Test</CustomToggle>)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('CustomToggle component', () => {
   test('should render self', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('button').length).toEqual(1)
+    const button = screen.getByRole('button')
+
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveAttribute('title', 'test-title')
+    expect(button).toHaveClass('custom-toggle')
+
+    expect(EDSCIcon).toHaveBeenCalledTimes(0)
   })
 
-  test('should render children', () => {
-    const { enzymeWrapper } = setup()
+  test('should call onClick if the button is clicked', async () => {
+    const { props, user } = setup()
 
-    expect(enzymeWrapper.find('button').text()).toEqual('Test')
-  })
+    const button = screen.getByRole('button')
+    await user.click(button)
 
-  test('should render self with a className', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('.test-class').length).toEqual(1)
-  })
-
-  test('should call onClick if the button is clicked', () => {
-    const { enzymeWrapper, props } = setup()
-    const button = enzymeWrapper.find('button')
-
-    button.simulate('click', {
-      preventDefault: () => { }
-    })
-
-    expect(props.onClick.mock.calls.length).toBe(1)
+    expect(props.onClick).toHaveBeenCalledTimes(1)
+    expect(props.onClick).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'click'
+    }))
   })
 
   test('should render self with an icon', () => {
-    const { enzymeWrapper } = setup('icon')
+    setup({
+      overrideProps: {
+        icon: FaGlobe
+      }
+    })
 
-    expect(enzymeWrapper.find('.custom-toggle__icon').props().icon).toEqual(FaGlobe)
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'custom-toggle__icon',
+      icon: FaGlobe,
+      size: '16'
+    }, {})
   })
 
-  test('should render self without an icon', () => {
-    const { enzymeWrapper } = setup('no-icon')
+  describe('when openOnHover is provided', () => {
+    test('should call handleOpen on mouse in and handleClose on mouse out', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          openOnHover: true,
+          handleOpen: jest.fn(),
+          handleClose: jest.fn()
+        }
+      })
 
-    expect(enzymeWrapper.find('.custom-toggle__icon').length).toEqual(0)
+      const button = screen.getByRole('button')
+      await user.hover(button)
+
+      expect(props.handleOpen).toHaveBeenCalledTimes(1)
+      expect(props.handleOpen).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'mouseenter'
+      }))
+
+      await user.unhover(button)
+
+      expect(props.handleClose).toHaveBeenCalledTimes(1)
+      expect(props.handleClose).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'mouseleave'
+      }))
+    })
   })
 })

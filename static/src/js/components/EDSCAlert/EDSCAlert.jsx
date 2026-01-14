@@ -7,7 +7,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './EDSCAlert.scss'
 
-export const EDSCAlert = ({
+const EDSCAlert = ({
   bootstrapVariant,
   children = null,
   className = '',

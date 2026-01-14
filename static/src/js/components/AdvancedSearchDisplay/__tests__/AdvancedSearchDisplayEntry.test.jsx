@@ -1,43 +1,35 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import AdvancedSearchDisplayEntry from '../AdvancedSearchDisplayEntry'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    children: null,
-    ...overrideProps
+const setup = setupTest({
+  Component: AdvancedSearchDisplayEntry,
+  defaultProps: {
+    children: null
   }
-
-  const enzymeWrapper = shallow(
-    <AdvancedSearchDisplayEntry {...props} />
-  )
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('AdvancedSearchDisplayEntry component', () => {
-  describe('with children', () => {
-    test('should render its children', () => {
-      const { enzymeWrapper } = setup()
+  describe('without children', () => {
+    test('should render nothing', () => {
+      const { container } = setup()
 
-      expect(enzymeWrapper.children().length).toBe(0)
+      expect(container.innerHTML).toBe('')
     })
   })
 
   describe('with children', () => {
     test('should render its children', () => {
-      const { enzymeWrapper } = setup({
-        children: <div className="test-child">Test</div>
+      setup({
+        overrideProps: {
+          children: <div className="test-child">Test</div>
+        }
       })
 
-      expect(enzymeWrapper.children().length).toBe(1)
-      expect(enzymeWrapper.find('.test-child').length).toEqual(1)
+      expect(screen.getByText('Test')).toBeInTheDocument()
     })
   })
 })

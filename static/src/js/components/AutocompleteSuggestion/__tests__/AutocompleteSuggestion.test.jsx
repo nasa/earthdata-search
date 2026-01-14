@@ -1,58 +1,47 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
 import AutocompleteSuggestion from '../AutocompleteSuggestion'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    suggestion: {},
-    ...overrideProps
+const setup = setupTest({
+  Component: AutocompleteSuggestion,
+  defaultProps: {
+    suggestion: {}
   }
-
-  const enzymeWrapper = shallow(<AutocompleteSuggestion {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('AutocompleteSuggestion component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+  test('renders nothing when no suggestion is provided', () => {
+    const { container } = setup()
 
-    expect(enzymeWrapper.type()).toBe(null)
+    expect(container.innerHTML).toBe('')
   })
 
   test('renders a standard result correctly', () => {
-    const { enzymeWrapper } = setup({
-      suggestion: {
-        type: 'instrument',
-        value: 'MODIS'
+    setup({
+      overrideProps: {
+        suggestion: {
+          type: 'instrument',
+          value: 'MODIS'
+        }
       }
     })
 
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-type').text()).toEqual('Instrument:')
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-value').text()).toEqual('MODIS')
+    const element = getByTextWithMarkup('Instrument:MODIS')
+    expect(element).toBeInTheDocument()
   })
 
   test('renders a science keyword result correctly', () => {
-    const { enzymeWrapper } = setup({
-      suggestion: {
-        type: 'science_keywords',
-        value: 'Modis Total Pigment Concentration',
-        fields: 'Biosphere:Microbiota:Pigments:Modis Total Pigment Concentration'
+    setup({
+      overrideProps: {
+        suggestion: {
+          type: 'science_keywords',
+          value: 'Modis Total Pigment Concentration',
+          fields: 'Biosphere:Microbiota:Pigments:Modis Total Pigment Concentration'
+        }
       }
     })
 
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-type').text()).toEqual('Science Keywords:')
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-value').text()).toEqual('Modis Total Pigment Concentration')
-
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-hierarchy span').props().children[0].props.children[0]).toEqual('Biosphere')
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-hierarchy span').props().children[1].props.children[0]).toEqual('Microbiota')
-    expect(enzymeWrapper.find('.autocomplete-suggestion__suggestions-hierarchy span').props().children[2].props.children[0]).toEqual('Pigments')
+    const element = getByTextWithMarkup('Science Keywords:Biosphere Microbiota Pigments Modis Total Pigment Concentration')
+    expect(element).toBeInTheDocument()
   })
 })

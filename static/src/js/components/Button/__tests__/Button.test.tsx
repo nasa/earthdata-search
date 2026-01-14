@@ -1,145 +1,205 @@
-import React from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
 import { FaGlobe } from 'react-icons/fa'
+// @ts-expect-error: This file does not have types
+import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import Button from '../Button'
 
 import Spinner from '../../Spinner/Spinner'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+jest.mock('../../Spinner/Spinner', () => jest.fn(() => null))
+jest.mock('../../../util/renderTooltip', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
-interface ComponentProps {
-  onClick?: jest.Mock
-  label?: string | undefined
-  ariaLabel?: string
-  icon?: React.FC | string
-  badge?: string
-  spinner?: boolean
-  iconPosition?: 'right'
-}
-
-function setup(type?: string) {
-  const props: ComponentProps = {
+const setup = setupTest({
+  Component: Button,
+  defaultProps: {
     onClick: jest.fn(),
     label: 'Test Label',
     ariaLabel: 'Test aria Label'
   }
-
-  if (type === 'icon') {
-    props.icon = FaGlobe
-  }
-
-  if (type === 'edsc-icon') {
-    props.icon = 'edsc-icon'
-  }
-
-  if (type === 'badge') {
-    props.badge = 'badge test'
-  }
-
-  if (type === 'spinner') {
-    props.spinner = true
-  }
-
-  if (type === 'icon-right') {
-    props.iconPosition = 'right'
-    props.icon = FaGlobe
-  }
-
-  if (type === 'icon-right-spinner') {
-    props.iconPosition = 'right'
-    props.icon = FaGlobe
-    props.spinner = true
-  }
-
-  const enzymeWrapper = mount(<Button {...props}>Button Text</Button>)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('Button component', () => {
   test('should render self', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
+    const button = screen.getByRole('button')
+
+    expect(button).toHaveAttribute('label', 'Test Label')
+    expect(button).toHaveAttribute('aria-label', 'Test aria Label')
   })
 
-  test('should call onClick if the button is clicked', () => {
-    const { enzymeWrapper, props } = setup()
-    const button = enzymeWrapper.find('button')
+  test('should call onClick if the button is clicked', async () => {
+    const { props, user } = setup()
 
-    button.simulate('click')
+    const button = screen.getByRole('button')
+    await user.click(button)
 
-    expect(props.onClick?.mock.calls.length).toBe(1)
+    expect(props.onClick).toHaveBeenCalledTimes(1)
+    expect(props.onClick).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'click'
+    }))
   })
 
   test('should not render self with an icon when missing an iconClass prop', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('i').length).toEqual(0)
-    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
+    setup()
+
+    expect(EDSCIcon).toHaveBeenCalledTimes(0)
   })
 
   test('should render self with an icon', () => {
-    const { enzymeWrapper } = setup('icon')
+    setup({
+      overrideProps: {
+        icon: FaGlobe
+      }
+    })
 
-    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
-    expect(enzymeWrapper.find('FaGlobe').length).toBe(1)
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'button__icon',
+      icon: FaGlobe,
+      size: undefined
+    }, {})
   })
 
   test('should render self with an edsc-icon', () => {
-    const { enzymeWrapper } = setup('edsc-icon')
+    setup({
+      overrideProps: {
+        icon: 'edsc-icon'
+      }
+    })
 
-    expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
-    expect(enzymeWrapper.find('i').hasClass('edsc-icon')).toEqual(true)
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'button__icon edsc-icon',
+      icon: 'edsc-icon',
+      size: undefined
+    }, {})
   })
 
   test('should render self with a badge', () => {
-    const { enzymeWrapper } = setup('badge')
-    expect(enzymeWrapper.find('button').find('.badge').text()).toEqual('badge test')
+    setup({
+      overrideProps: {
+        badge: 'badge test'
+      }
+    })
+
+    expect(screen.getByText('badge test')).toBeInTheDocument()
   })
 
-  test('should render self with an aria-label', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('button').prop('aria-label')).toEqual('Test aria Label')
+  test('should render self as a link when an href is provided', () => {
+    setup({
+      overrideProps: {
+        href: 'https://example.com'
+      }
+    })
+
+    const button = screen.getByRole('button')
+
+    expect(button).toHaveAttribute('href', 'https://example.com')
   })
 
-  test('should render self with an label', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
+  test('should render a rel with the target is _blank', () => {
+    setup({
+      overrideProps: {
+        href: 'https://example.com',
+        target: '_blank'
+      }
+    })
+
+    const button = screen.getByRole('button')
+
+    expect(button).toHaveAttribute('rel', 'noopener nofollow')
+  })
+
+  test('should render the naked variant when hds-primary variant is provided', () => {
+    setup({
+      overrideProps: {
+        variant: 'hds-primary'
+      }
+    })
+
+    const button = screen.getByRole('button')
+
+    expect(button.className).toContain('btn-naked')
+  })
+
+  test('should render the correct icon size for bootstrapSize of lg', () => {
+    setup({
+      overrideProps: {
+        variant: 'hds-primary',
+        bootstrapSize: 'lg'
+      }
+    })
+
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'button__hds-primary-icon',
+      icon: ArrowLineRight,
+      size: '12'
+    }, {})
+  })
+
+  test('should render the correct icon size for bootstrapSize of sm', () => {
+    setup({
+      overrideProps: {
+        variant: 'hds-primary',
+        bootstrapSize: 'sm'
+      }
+    })
+
+    expect(EDSCIcon).toHaveBeenCalledTimes(1)
+    expect(EDSCIcon).toHaveBeenCalledWith({
+      className: 'button__hds-primary-icon',
+      icon: ArrowLineRight,
+      size: '8'
+    }, {})
   })
 
   describe('when spinner is true', () => {
-    test('should render disabled', () => {
-      const { enzymeWrapper } = setup('spinner')
-      expect(enzymeWrapper.find('button').prop('label')).toEqual('Test Label')
-    })
+    test('should render disabled with a Spinner', () => {
+      setup({
+        overrideProps: {
+          spinner: true
+        }
+      })
 
-    test('should render Spinner correctly', () => {
-      const { enzymeWrapper } = setup('spinner')
-      expect(enzymeWrapper.find(Spinner).prop('size')).toEqual('tiny')
-      expect(enzymeWrapper.find(Spinner).prop('inline')).toEqual(true)
-      expect(enzymeWrapper.find(Spinner).prop('color')).toEqual('white')
+      expect(screen.getByRole('button')).toBeDisabled()
+
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        color: 'white',
+        inline: true,
+        size: 'tiny',
+        type: 'dots'
+      }, {})
     })
   })
 
   describe('when positioning the icon to the right', () => {
     test('should render the icon after the text', () => {
-      const { enzymeWrapper } = setup('icon-right')
-      expect(enzymeWrapper.find('button').childAt(0).type()).toBe('span')
-      expect(enzymeWrapper.find('button').childAt(0).text()).toBe('Button Text')
-      expect(enzymeWrapper.find('button').childAt(1).type()).toBe(EDSCIcon)
-    })
-
-    describe('when the spinner is active', () => {
-      test('should not render the icon', () => {
-        const { enzymeWrapper } = setup('icon-right-spinner')
-        expect(enzymeWrapper.find('button').find(EDSCIcon).length).toBe(0)
+      setup({
+        overrideProps: {
+          icon: FaGlobe,
+          iconPosition: 'right'
+        }
       })
+
+      expect(screen.getByRole('button').className).toContain('button--icon-right')
+
+      expect(EDSCIcon).toHaveBeenCalledTimes(1)
+      expect(EDSCIcon).toHaveBeenCalledWith({
+        className: 'button__icon',
+        icon: FaGlobe,
+        size: undefined
+      }, {})
     })
   })
 })
