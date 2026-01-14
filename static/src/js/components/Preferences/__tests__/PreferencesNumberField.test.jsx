@@ -70,7 +70,7 @@ describe('PreferencesNumberField component', () => {
       expect(props.onChange).toHaveBeenCalledWith(0.1)
     })
 
-    test('returns a number -42 when the input is "-42"', async () => {
+    test('returns a number -42 when the input is "-4"', async () => {
       const { props, user } = setup({
         overrideProps: {
           formData: ''
