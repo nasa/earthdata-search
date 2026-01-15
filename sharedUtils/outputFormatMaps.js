@@ -15,6 +15,7 @@ export const ousFormatMapping = {
  */
 export const harmonyFormatMapping = {
   'NETCDF-4': 'application/x-netcdf4',
+  'NETCDF-4 (OPeNDAP URL)': 'application/x-netcdf4;profile=opendap_url',
   GEOTIFF: 'image/tiff',
   GIF: 'image/gif',
   PNG: 'image/png',
