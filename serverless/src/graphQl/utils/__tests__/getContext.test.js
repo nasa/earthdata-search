@@ -21,6 +21,9 @@ describe('getContext', () => {
     })
 
     const event = {
+      body: JSON.stringify({
+        operationName: 'GetUser'
+      }),
       headers: {
         authorization: 'Bearer token'
       }
@@ -51,6 +54,9 @@ describe('getContext', () => {
       getUserWhereMock.mockResolvedValue(undefined)
 
       const event = {
+        body: JSON.stringify({
+          operationName: 'GetUser'
+        }),
         headers: {
           authorization: 'Bearer token'
         }
@@ -74,6 +80,7 @@ describe('getContext', () => {
   describe('when there is no authorization header', () => {
     test('should return the correct context with an undefined user', async () => {
       const event = {
+        body: JSON.stringify({}),
         headers: {}
       }
 
@@ -85,6 +92,24 @@ describe('getContext', () => {
 
       expect(validateToken).toHaveBeenCalledTimes(1)
       expect(validateToken).toHaveBeenCalledWith(undefined, 'testenv')
+    })
+  })
+
+  describe('when the operation is IntrospectionQuery', () => {
+    test('should return null', async () => {
+      const event = {
+        body: JSON.stringify({
+          operationName: 'IntrospectionQuery'
+        }),
+        headers: {
+          authorization: 'Bearer token'
+        }
+      }
+
+      const result = await getContext({ event })
+
+      expect(result).toBeNull()
+      expect(validateToken).not.toHaveBeenCalled()
     })
   })
 })

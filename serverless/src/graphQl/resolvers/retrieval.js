@@ -9,6 +9,8 @@ import { generateRetrievalPayloads } from '../../util/generateRetrievalPayloads'
 import { getQueueUrl, QUEUE_NAMES } from '../../util/getQueueUrl'
 import { ACCESS_METHOD_TYPES } from '../../../../sharedConstants/accessMethodTypes'
 
+import buildPaginatedResult from '../utils/buildPaginatedResult'
+
 export default {
   Query: {
     retrieval: async (parent, args, context) => {
@@ -42,6 +44,34 @@ export default {
         retrievalCollection,
         { deep: true }
       )
+    },
+
+    historyRetrievals: async (parent, args, context) => {
+      const { databaseClient, user } = context
+      const { id: userId } = user
+      const { limit = 20, offset = 0 } = args
+
+      const data = await databaseClient.getHistoryRetrievals({
+        ...args,
+        userId,
+        limit,
+        offset
+      })
+
+      const result = buildPaginatedResult({
+        data,
+        limit,
+        offset
+      })
+
+      return {
+        historyRetrievals: camelcaseKeys(
+          result.data,
+          { deep: true }
+        ),
+        pageInfo: result.pageInfo,
+        count: result.count
+      }
     },
 
     retrieveGranuleLinks: async (parent, args, context) => {
@@ -267,6 +297,19 @@ export default {
 
         throw new Error(errorMessage)
       }
+    },
+
+    deleteRetrieval: async (parent, args, context) => {
+      const { databaseClient, user } = context
+      const { id: userId } = user
+      const { obfuscatedId } = args
+
+      const numRowsDeleted = await databaseClient.deleteRetrieval({
+        obfuscatedId,
+        userId
+      })
+
+      return numRowsDeleted === 1
     }
   },
   Retrieval: {
@@ -292,6 +335,13 @@ export default {
 
       return camelcaseKeys(loaderData, { deep: true })
     },
+    obfuscatedId: async (parent) => {
+      const { id } = parent
+
+      return obfuscateId(id)
+    }
+  },
+  HistoryRetrieval: {
     obfuscatedId: async (parent) => {
       const { id } = parent
 

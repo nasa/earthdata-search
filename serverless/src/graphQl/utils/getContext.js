@@ -22,7 +22,15 @@ let sqs
  * @returns {Object} The context object
  */
 const getContext = async ({ event }) => {
-  const { headers } = event
+  const { body, headers } = event
+
+  const { operationName } = JSON.parse(body)
+
+  // If the query is the IntrospectionQuery, return out of this method
+  // The IntrospectionQuery is used when the playground has schema polling
+  // enabled. Returning out of this method for those calls saves API
+  // requests to URS and database calls
+  if (operationName === 'IntrospectionQuery') return null
 
   const {
     authorization: bearerToken = ''

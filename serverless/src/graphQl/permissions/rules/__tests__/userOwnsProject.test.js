@@ -39,7 +39,7 @@ describe('userOwnsProject', () => {
     expect(databaseClient.getProjectByObfuscatedId).toHaveBeenCalledWith('test-obfuscated-id')
   })
 
-  test('returns true if the user is an admin', async () => {
+  test('returns true if the user owns the project', async () => {
     const databaseClient = {
       getProjectByObfuscatedId: jest.fn().mockResolvedValue({
         user_id: 1

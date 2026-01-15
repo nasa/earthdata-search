@@ -3,9 +3,11 @@ import snakecaseKeys from 'snakecase-keys'
 import setupServer from './__mocks__/setupServer'
 
 import CREATE_RETRIEVAL from '../../../../../static/src/js/operations/mutations/createRetrieval'
+import DELETE_RETRIEVAL from '../../../../../static/src/js/operations/mutations/deleteRetrieval'
 import GET_RETRIEVAL from '../../../../../static/src/js/operations/queries/getRetrieval'
 import GET_RETRIEVAL_COLLECTION from '../../../../../static/src/js/operations/queries/getRetrievalCollection'
 import GET_RETRIEVAL_GRANULE_LINKS from '../../../../../static/src/js/operations/queries/getRetrievalGranuleLinks'
+import HISTORY_RETRIEVALS from '../../../../../static/src/js/operations/queries/historyRetrievals'
 
 import { fetchGranuleLinks } from '../../../util/fetchGranuleLinks'
 
@@ -311,6 +313,65 @@ describe('Retrieval resolver', () => {
 
         expect(databaseClient.getRetrievalCollectionsByRetrievalId).toHaveBeenCalledTimes(1)
         expect(databaseClient.getRetrievalCollectionsByRetrievalId).toHaveBeenCalledWith([1])
+      })
+    })
+
+    describe('historyRetrivals', () => {
+      test('returns the history retrievals', async () => {
+        const databaseClient = {
+          getHistoryRetrievals: jest.fn().mockResolvedValue([{
+            created_at: '2023-01-01T00:00:00Z',
+            id: 1,
+            portal_id: 'edsc',
+            titles: ['title 1'],
+            total: 1
+          }])
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: HISTORY_RETRIEVALS,
+          variables: {}
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        expect(errors).toBeUndefined()
+
+        expect(data).toEqual({
+          historyRetrievals: {
+            count: 1,
+            historyRetrievals: [
+              {
+                createdAt: '2023-01-01T00:00:00Z',
+                id: 1,
+                obfuscatedId: '4517239960',
+                portalId: 'edsc',
+                titles: ['title 1']
+              }
+            ],
+            pageInfo: {
+              currentPage: 1,
+              hasNextPage: false,
+              hasPreviousPage: false,
+              pageCount: 1
+            }
+          }
+        })
+
+        expect(databaseClient.getHistoryRetrievals).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getHistoryRetrievals).toHaveBeenCalledWith(
+          {
+            limit: 20,
+            offset: 0,
+            userId: 42
+          }
+        )
       })
     })
 
@@ -1712,6 +1773,96 @@ describe('Retrieval resolver', () => {
             },
             retrievalId: 1
           })
+        })
+      })
+    })
+
+    describe('deleteRetrieval', () => {
+      test('deletes a retrieval successfully', async () => {
+        const databaseClient = {
+          deleteRetrieval: jest.fn().mockResolvedValue(1)
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: DELETE_RETRIEVAL,
+          variables: {
+            obfuscatedId: '2057964173'
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.deleteRetrieval).toHaveBeenCalledWith({
+          obfuscatedId: '2057964173',
+          userId: contextValue.user.id
+        })
+
+        expect(data).toEqual({
+          deleteRetrieval: true
+        })
+      })
+
+      test('returns false when the retrieval is not deleted', async () => {
+        const databaseClient = {
+          deleteRetrieval: jest.fn().mockResolvedValue(0)
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: DELETE_RETRIEVAL,
+          variables: {
+            obfuscatedId: '2057964173'
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.deleteRetrieval).toHaveBeenCalledWith({
+          obfuscatedId: '2057964173',
+          userId: contextValue.user.id
+        })
+
+        expect(data).toEqual({
+          deleteRetrieval: false
+        })
+      })
+
+      test('throws an error when the mutation fails', async () => {
+        const databaseClient = {
+          deleteRetrieval: jest.fn().mockImplementation(() => {
+            throw new Error('Failed to delete retrieval')
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: DELETE_RETRIEVAL,
+          variables: {
+            obfuscatedId: '2057964173'
+          }
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+        expect(errors[0].message).toEqual('Failed to delete retrieval')
+
+        expect(data).toEqual({
+          deleteRetrieval: null
         })
       })
     })

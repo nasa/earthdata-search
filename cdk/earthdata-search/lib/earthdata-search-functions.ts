@@ -79,8 +79,6 @@ export class Functions extends Construct {
     })
     const {
       opensearchApiGatewayResource,
-      retrievalsApiGatewayResource,
-      retrievalsIdApiGatewayResource,
       scaleApiGatewayResource,
       shapefilesApiGatewayResource
     } = sharedResources
@@ -157,47 +155,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/decodeId/handler.js',
       functionName: 'decodeId',
-      functionNamePrefix
-    })
-
-    /**
-     * Get Retrievals
-     */
-    const getRetrievalsNestedStack = new cdk.NestedStack(scope, 'GetRetrievalsNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(getRetrievalsNestedStack, 'GetRetrievalsLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: retrievalsApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['GET'],
-        path: 'retrievals'
-      },
-      entry: '../../serverless/src/getRetrievals/handler.js',
-      functionName: 'getRetrievals',
-      functionNamePrefix
-    })
-
-    /**
-     * Delete Retrieval
-     */
-    const deleteRetrievalNestedStack = new cdk.NestedStack(scope, 'DeleteRetrievalNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(deleteRetrievalNestedStack, 'DeleteRetrievalLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: retrievalsIdApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAuthorizer,
-        methods: ['DELETE'],
-        parentPath: 'retrievals',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/deleteRetrieval/handler.js',
-      functionName: 'deleteRetrieval',
       functionNamePrefix
     })
 

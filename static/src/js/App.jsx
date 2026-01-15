@@ -52,6 +52,7 @@ const AboutCwicModal = lazy(() => import('./components/AboutCwicModal/AboutCwicM
 const ChunkedOrderModal = lazy(() => import('./components/ChunkedOrderModal/ChunkedOrderModal'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const DeprecatedParameterModal = lazy(() => import('./components/DeprecatedParameterModal/DeprecatedParameterModal'))
+const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
 const EditSubscriptionModal = lazy(() => import('./components/EditSubscriptionModal/EditSubscriptionModal'))
 const KeyboardShortcutsModal = lazy(() => import('./components/KeyboardShortcutsModal/KeyboardShortcutsModal'))
@@ -66,7 +67,6 @@ const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 const TooManyPointsModal = lazy(() => import('./components/TooManyPointsModal/TooManyPointsModal'))
 
 const AdminLayout = lazy(() => import('./layouts/AdminLayout/AdminLayout'))
-const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
 
 const browserRouter = createBrowserRouter([
   {
@@ -134,10 +134,10 @@ const browserRouter = createBrowserRouter([
           {
             index: true,
             async lazy() {
-              const DownloadHistoryContainer = await import('./containers/DownloadHistoryContainer/DownloadHistoryContainer')
+              const DownloadHistory = await import('./components/DownloadHistory/DownloadHistory')
 
               return {
-                Component: DownloadHistoryContainer.default
+                Component: DownloadHistory.default
               }
             }
           },

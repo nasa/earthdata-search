@@ -14,10 +14,6 @@ export interface SharedApiGatewayResourcesProps {
 export class SharedApiGatewayResources extends Construct {
   public readonly opensearchApiGatewayResource: apigateway.CfnResource
 
-  public readonly retrievalsApiGatewayResource: apigateway.CfnResource
-
-  public readonly retrievalsIdApiGatewayResource: apigateway.CfnResource
-
   public readonly scaleApiGatewayResource: apigateway.CfnResource
 
   public readonly shapefilesApiGatewayResource: apigateway.CfnResource
@@ -39,44 +35,6 @@ export class SharedApiGatewayResources extends Construct {
       restApiId: apiGatewayRestApi.ref
     })
     this.opensearchApiGatewayResource = opensearchApiGatewayResource
-
-    /**
-     * Retrievals API Gateway Resource
-     */
-    const retrievalsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceRetrievals', {
-      parentId: apiGatewayRestApi.attrRootResourceId,
-      pathPart: 'retrievals',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'RetrievalsOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: retrievalsApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET', 'POST'],
-      name: 'Retrievals'
-    })
-
-    this.retrievalsApiGatewayResource = retrievalsApiGatewayResource
-
-    /**
-     * Retrievals ID API Gateway Resource
-     */
-    const retrievalsIdApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceRetrievalsIdVar', {
-      parentId: retrievalsApiGatewayResource?.ref,
-      pathPart: '{id}',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'RetrievalsIdVarOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: retrievalsIdApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET', 'DELETE'],
-      name: 'RetrievalsIdVar'
-    })
-
-    this.retrievalsIdApiGatewayResource = retrievalsIdApiGatewayResource
 
     /**
      * Scale API Gateway Resource

@@ -430,11 +430,11 @@ export default class DatabaseClient {
   }
 
   /**
-   * Retrieves retrievals based on the provided filters
+   * Retrieves admin retrievals based on the provided filters
    * @param {Object} params The filters to apply
-   * @returns {Promise<Array>} A promise that resolves to an array of retrieval results
+   * @returns {Promise<Array>} A promise that resolves to an array of admin retrieval results
    */
-  async getRetrievals({
+  async getAdminRetrievals({
     limit,
     obfuscatedId,
     offset,
@@ -528,6 +528,81 @@ export default class DatabaseClient {
         .first()
     } catch (error) {
       const errorMessage = 'Failed to retrieve retrieval by ID'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves the history of retrievals based on the provided filters
+   * @param {Object} params The filters to apply
+   * @param {number} [params.limit=20] - The maximum number of history retrievals to retrieve
+   * @param {number} [params.offset=0] - The number of history retrievals to skip
+   * @param {string} [params.userId] - The user's ID to filter history retrievals by
+   * @returns {Promise<Array>} A promise that resolves to an array of history retrievals results
+   */
+  async getHistoryRetrievals({
+    userId,
+    limit,
+    offset
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const retrievalQuery = db('retrievals')
+        .select(
+          'retrievals.id',
+          'retrievals.created_at',
+          // Only request portal Id from the jsondata
+          db.raw('(jsondata->\'portalId\') as portal_id'),
+          // Aggregate all titles from related collections into an array.
+          db.raw('array_agg(retrieval_collections.collection_metadata->\'title\') as titles')
+        )
+        // Add a count of all rows over the entire result set, aliased as 'total'
+        .select(db.raw('count(*) OVER() as total'))
+        // Join with the 'retrieval_collections' table, matching retrieval IDs
+        .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
+        // Filter results to only include retrievals for the specified user
+        .where({ 'retrievals.user_id': userId })
+        // Group results by retrieval ID, creation date, and JSON data
+        // in order to aggregate collection titles
+        .groupBy('retrievals.id', 'retrievals.created_at', 'retrievals.jsondata')
+        // Sort by most recent
+        .orderBy('retrievals.created_at', 'desc')
+
+      return await this.executePaginatedQuery({
+        query: retrievalQuery,
+        limit,
+        offset
+      })
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve user retrievals'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Deletes a retrieval
+   * @param {Object} params - Parameters object
+   * @param {string} params.obfuscatedId - The obfuscated ID of the retrieval to delete
+   * @param {string} params.userId - The ID of the user who initiated the deletion
+   * @returns {Promise<number>} A promise that resolves to the number of rows deleted
+   */
+  async deleteRetrieval({ obfuscatedId, userId }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const result = await db('retrievals')
+        .where({
+          user_id: userId,
+          id: deobfuscateId(obfuscatedId)
+        })
+        .del()
+
+      return result
+    } catch (error) {
+      const errorMessage = 'Failed to delete retrieval'
       console.log(errorMessage, error)
       throw new Error(errorMessage)
     }

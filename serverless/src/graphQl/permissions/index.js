@@ -9,6 +9,7 @@ import isValidUser from './rules/isValidUser'
 import isAdminUser from './rules/isAdminUser'
 import userOwnsProject from './rules/userOwnsProject'
 import userOwnsProjectIfProjectOwned from './rules/userOwnsProjectIfProjectOwned'
+import userOwnsRetrieval from './rules/userOwnsRetrieval'
 
 const buildPermissions = () => shield(
   {
@@ -49,6 +50,7 @@ const buildPermissions = () => shield(
       projects: isValidUser,
       regions: allow,
       retrieval: isValidUser,
+      historyRetrievals: isValidUser,
       retrievalCollection: isValidUser,
       retrieveGranuleLinks: isValidUser,
       user: isValidUser
@@ -64,6 +66,10 @@ const buildPermissions = () => shield(
       deleteProject: and(
         isValidUser,
         userOwnsProject
+      ),
+      deleteRetrieval: and(
+        isValidUser,
+        userOwnsRetrieval
       ),
       updatePreferences: isValidUser,
       updateProject: userOwnsProjectIfProjectOwned

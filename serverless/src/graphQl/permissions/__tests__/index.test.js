@@ -11,6 +11,7 @@ import userOwnsProject from '../rules/userOwnsProject'
 
 import buildPermissions from '../index'
 import userOwnsProjectIfProjectOwned from '../rules/userOwnsProjectIfProjectOwned'
+import userOwnsRetrieval from '../rules/userOwnsRetrieval'
 
 jest.mock('graphql-shield', () => ({
   ...jest.requireActual('graphql-shield'),
@@ -59,6 +60,7 @@ describe('permissions', () => {
           projects: isValidUser,
           regions: allow,
           retrieval: isValidUser,
+          historyRetrievals: isValidUser,
           retrievalCollection: isValidUser,
           retrieveGranuleLinks: isValidUser,
           user: isValidUser
@@ -74,6 +76,10 @@ describe('permissions', () => {
           deleteProject: and(
             isValidUser,
             userOwnsProject
+          ),
+          deleteRetrieval: and(
+            isValidUser,
+            userOwnsRetrieval
           ),
           updatePreferences: isValidUser,
           updateProject: userOwnsProjectIfProjectOwned
