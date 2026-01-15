@@ -10,7 +10,7 @@ import './GranuleResultsBrowseImageCell.scss'
  * @param {Object} props - The props passed into the component from react-table.
  * @param {Object} props.row - The row info.
  */
-export const GranuleResultsBrowseImageCell = ({ row }) => {
+const GranuleResultsBrowseImageCell = ({ row }) => {
   const { original: rowProps } = row
   const {
     browseFlag,

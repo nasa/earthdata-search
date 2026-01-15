@@ -38,6 +38,7 @@ const ProgressRing = ({
         className="progress-ring__ring"
         height={width}
         width={width}
+        role="graphics-symbol"
       >
         <circle
           className="progress-ring__circle-back"

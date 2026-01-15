@@ -1,95 +1,98 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import EDSCImage from '../../EDSCImage/EDSCImage'
-import { GranuleResultsBrowseImageCell } from '../GranuleResultsBrowseImageCell'
+import GranuleResultsBrowseImageCell from '../GranuleResultsBrowseImageCell'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(() => null))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: GranuleResultsBrowseImageCell,
+  defaultProps: {
     row: {
       original: {}
-    },
-    ...overrideProps
+    }
   }
-
-  const enzymeWrapper = shallow(<GranuleResultsBrowseImageCell {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('GranuleResultsBrowseImageCell component', () => {
   describe('when no image is passed', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.type()).toBe('div')
-      expect(enzymeWrapper.children().length).toEqual(0)
+      expect(EDSCImage).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('browse flag is false', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup({
-        row: {
-          original: {
-            browseFlag: false,
-            granuleThumbnail: 'http://someplace.com/src/image.jpg'
+      setup({
+        overrideProps: {
+          row: {
+            original: {
+              browseFlag: false,
+              granuleThumbnail: 'http://someplace.com/src/image.jpg'
+            }
           }
         }
       })
 
-      expect(enzymeWrapper.type()).toBe('div')
-      expect(enzymeWrapper.children().length).toEqual(0)
+      expect(EDSCImage).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when given a valid image', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup({
-        row: {
-          original: {
-            browseFlag: true,
-            granuleThumbnail: 'http://someplace.com/src/image.jpg'
+      setup({
+        overrideProps: {
+          row: {
+            original: {
+              browseFlag: true,
+              granuleThumbnail: 'http://someplace.com/src/image.jpg'
+            }
           }
         }
       })
-      expect(enzymeWrapper.type()).toBe('div')
-      expect(enzymeWrapper.children().length).toEqual(1)
-      expect(enzymeWrapper.childAt(0).props().className).toEqual('granule-results-browse-image-cell__thumb')
-      expect(enzymeWrapper.childAt(0).type()).toEqual('div')
-      expect(enzymeWrapper.childAt(0).childAt(0).type()).toEqual(EDSCImage)
-      expect(enzymeWrapper.childAt(0).childAt(0).props().src).toEqual('http://someplace.com/src/image.jpg')
+
+      expect(EDSCImage).toHaveBeenCalledTimes(1)
+      expect(EDSCImage).toHaveBeenCalledWith({
+        alt: 'Browse Image for undefined',
+        className: 'granule-results-browse-image-cell__thumb-image',
+        height: 60,
+        isBase64Image: true,
+        src: 'http://someplace.com/src/image.jpg',
+        width: 60
+      }, {})
     })
   })
 
   describe('when given a valid image and browse url', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup({
-        row: {
-          original: {
-            browseFlag: true,
-            browseUrl: 'http://someplace.com/browse/link',
-            granuleThumbnail: 'http://someplace.com/src/image.jpg'
+      setup({
+        overrideProps: {
+          row: {
+            original: {
+              browseFlag: true,
+              browseUrl: 'http://someplace.com/browse/link',
+              granuleThumbnail: 'http://someplace.com/src/image.jpg'
+            }
           }
         }
       })
 
-      expect(enzymeWrapper.type()).toBe('div')
-      expect(enzymeWrapper.children().length).toEqual(1)
-      expect(enzymeWrapper.childAt(0).props().className).toEqual('granule-results-browse-image-cell__thumb')
-      expect(enzymeWrapper.childAt(0).type()).toEqual('a')
-      expect(enzymeWrapper.childAt(0).props().href).toEqual('http://someplace.com/browse/link')
-      expect(enzymeWrapper.childAt(0).childAt(0).type()).toEqual(EDSCImage)
-      expect(enzymeWrapper.childAt(0).childAt(0).props().src).toEqual('http://someplace.com/src/image.jpg')
+      expect(EDSCImage).toHaveBeenCalledTimes(1)
+      expect(EDSCImage).toHaveBeenCalledWith({
+        alt: 'Browse Image for undefined',
+        className: 'granule-results-browse-image-cell__thumb-image',
+        height: 60,
+        isBase64Image: true,
+        src: 'http://someplace.com/src/image.jpg',
+        width: 60
+      }, {})
+
+      const link = screen.getByRole('link', { name: 'View image' })
+      expect(link.href).toEqual('http://someplace.com/browse/link')
     })
   })
 })

@@ -1,99 +1,115 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import ProgressRing from '../ProgressRing'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    ...overrideProps
-  }
-  const enzymeWrapper = shallow(<ProgressRing {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
+const setup = setupTest({
+  Component: ProgressRing
 })
 
 describe('ProgressRing component', () => {
   test('should render an svg progress ring', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.progress-ring__ring').type()).toEqual('svg')
+    expect(screen.getByRole('graphics-symbol')).toBeInTheDocument()
   })
 
   test('should add the correct classname', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.progress-ring').props().className).toEqual('progress-ring')
+    expect(screen.getByRole('graphics-symbol').classList).toContain('progress-ring__ring')
   })
 
   describe('when no size is provided', () => {
     test('should render an svg at the correct size', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.find('.progress-ring__ring').props().width).toEqual(16)
-      expect(enzymeWrapper.find('.progress-ring__ring').props().height).toEqual(16)
+      expect(screen.getByRole('graphics-symbol')).toHaveAttribute('width', '16')
+      expect(screen.getByRole('graphics-symbol')).toHaveAttribute('height', '16')
     })
 
     test('should render the inner circle at the correct size', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(8)
-      expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(8)
-      expect(enzymeWrapper.find('.progress-ring__progress').props().r).toEqual(5)
+      // We shouldn't be disabling this rule, but we need to access the DOM node to check the attributes
+      /* eslint-disable testing-library/no-node-access */
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('cx')).toEqual('8')
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('cy')).toEqual('8')
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('r')).toEqual('5')
+      /* eslint-enable testing-library/no-node-access */
     })
   })
 
   describe('when a custom classname is provided', () => {
-    const { enzymeWrapper } = setup({
-      className: 'test-classname'
-    })
-
     test('should add the correct classname', () => {
-      expect(enzymeWrapper.find('.progress-ring').props().className).toEqual('progress-ring test-classname')
+      setup({
+        overrideProps: {
+          className: 'test-classname'
+        }
+      })
+
+      // We shouldn't be disabling this rule, but we need to access the DOM node to check the attributes
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(screen.getByRole('graphics-symbol').parentElement.className).toEqual('progress-ring test-classname')
     })
   })
 
   describe('when a custom size is provided', () => {
-    const { enzymeWrapper } = setup({
-      width: 20
-    })
-
     test('should render an svg at the custom size', () => {
-      expect(enzymeWrapper.find('.progress-ring__ring').props().width).toEqual(20)
-      expect(enzymeWrapper.find('.progress-ring__ring').props().height).toEqual(20)
+      setup({
+        overrideProps: {
+          width: 20
+        }
+      })
+
+      expect(screen.getByRole('graphics-symbol')).toHaveAttribute('width', '20')
+      expect(screen.getByRole('graphics-symbol')).toHaveAttribute('height', '20')
     })
 
     test('should render the inner circle at the correct size', () => {
-      expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(10)
-      expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(10)
-      expect(enzymeWrapper.find('.progress-ring__progress').props().r).toEqual(7)
+      setup({
+        overrideProps: {
+          width: 20
+        }
+      })
+
+      // We shouldn't be disabling this rule, but we need to access the DOM node to check the attributes
+      /* eslint-disable testing-library/no-node-access */
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('cx')).toEqual('10')
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('cy')).toEqual('10')
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('r')).toEqual('7')
+      /* eslint-enable testing-library/no-node-access */
     })
   })
 
   describe('when a custom stroke width is provided', () => {
-    const { enzymeWrapper } = setup({
-      strokeWidth: 2,
-      width: 20
+    test('should render an svg at the provided width', () => {
+      setup({
+        overrideProps: {
+          strokeWidth: 2,
+          width: 20
+        }
+      })
+
+      expect(screen.getByRole('graphics-symbol')).toHaveAttribute('width', '20')
+      expect(screen.getByRole('graphics-symbol')).toHaveAttribute('height', '20')
     })
 
-    test('should render an svg at 16px wide', () => {
-      expect(enzymeWrapper.find('.progress-ring__ring').props().width).toEqual(20)
-      expect(enzymeWrapper.find('.progress-ring__ring').props().height).toEqual(20)
-    })
+    test('should render the inner circle radius correctly', () => {
+      setup({
+        overrideProps: {
+          strokeWidth: 2,
+          width: 20
+        }
+      })
 
-    test('should render the inner circle at the correct size', () => {
-      expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(10)
-      expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(10)
-      expect(enzymeWrapper.find('.progress-ring__progress').props().r).toEqual(8)
+      // We shouldn't be disabling this rule, but we need to access the DOM node to check the attributes
+      /* eslint-disable testing-library/no-node-access */
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('cx')).toEqual('10')
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('cy')).toEqual('10')
+      expect(screen.getByRole('graphics-symbol').querySelector('.progress-ring__progress').getAttribute('r')).toEqual('8')
+      /* eslint-enable testing-library/no-node-access */
     })
   })
 })
