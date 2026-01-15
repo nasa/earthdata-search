@@ -68,12 +68,6 @@ jobs:
   playwright:
     needs: [runBuild]
     runs-on: ubuntu-latest
-    container:
-      # Use the Playwright Docker image with necessary browsers pre-installed
-      # This needs to match the version of `@playwright/test` in package.json
-      # https://mcr.microsoft.com/en-us/artifact/mar/playwright/tags
-      image: mcr.microsoft.com/playwright:v1.56.1-noble
-      options: --user 1001
     strategy:
         fail-fast: false
         matrix:
@@ -86,6 +80,9 @@ jobs:
 
     - name: Setup
       uses: ./.github/actions/npm-setup
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
     - name: Download build
       uses: actions/download-artifact@v4
       with:
