@@ -1,17 +1,21 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@cfaester/enzyme-adapter-react-18'
-import moment from 'moment'
+import MockDate from 'mockdate'
 
+import InputRange from 'react-input-range'
 import Alert from 'react-bootstrap/Alert'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import TemporalSelection from '../TemporalSelection'
 import DatepickerContainer from '../../../containers/DatepickerContainer/DatepickerContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/DatepickerContainer/DatepickerContainer', () => jest.fn(() => null))
 
-function setup() {
-  const props = {
+jest.mock('react-bootstrap/Alert', () => jest.fn(() => null))
+jest.mock('react-input-range', () => jest.fn(() => null))
+
+const setup = setupTest({
+  Component: TemporalSelection,
+  defaultProps: {
     controlId: 'test-id',
     temporal: {},
     onRecurringToggle: jest.fn(),
@@ -23,138 +27,290 @@ function setup() {
     onSliderChange: jest.fn(),
     viewMode: 'years'
   }
+})
 
-  const enzymeWrapper = shallow(<TemporalSelection {...props} />)
+beforeEach(() => {
+  // Set a mock date so that maxDate calculations are consistent
+  MockDate.set('2026-01-10T00:00:00.000Z')
+})
 
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+afterEach(() => {
+  MockDate.reset()
+})
 
 describe('TemporalSelection component', () => {
   test('when passed a start date renders DatePickerContainer component correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      displayStartDate: '2019-03-30T00:00:00.000Z',
-      displayEndDate: ''
+    const { props } = setup({
+      overrideProps: {
+        displayStartDate: '2019-03-30T00:00:00.000Z',
+        displayEndDate: ''
+      }
     })
 
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('value')).toBe('2019-03-30T00:00:00.000Z')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('type')).toBe('end')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('value')).toBe('')
+    // Each DatepickerContainer is called twice due to initial render and state update in useEffect
+    expect(DatepickerContainer).toHaveBeenCalledTimes(4)
+    const startDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__start-date',
+      label: 'Start Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitStart,
+      shouldValidate: true,
+      size: '',
+      type: 'start',
+      value: '2019-03-30T00:00:00.000Z',
+      viewMode: 'years'
+    }
+    const endDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__end-date',
+      label: 'End Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitEnd,
+      shouldValidate: true,
+      size: '',
+      type: 'end',
+      value: '',
+      viewMode: 'years'
+    }
+
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(1, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(2, endDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(3, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(4, endDateProps, {})
   })
 
   test('when passed a end date renders DatePickerContainer component correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      displayStartDate: '',
-      displayEndDate: '2019-03-30T00:00:00.000Z'
+    const { props } = setup({
+      overrideProps: {
+        displayStartDate: '',
+        displayEndDate: '2019-03-30T00:00:00.000Z'
+      }
     })
 
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('value')).toBe('')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('type')).toBe('end')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('value')).toBe('2019-03-30T00:00:00.000Z')
+    // Each DatepickerContainer is called twice due to initial render and state update in useEffect
+    expect(DatepickerContainer).toHaveBeenCalledTimes(4)
+    const startDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__start-date',
+      label: 'Start Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitStart,
+      shouldValidate: true,
+      size: '',
+      type: 'start',
+      value: '',
+      viewMode: 'years'
+    }
+    const endDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__end-date',
+      label: 'End Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitEnd,
+      shouldValidate: true,
+      size: '',
+      type: 'end',
+      value: '2019-03-30T00:00:00.000Z',
+      viewMode: 'years'
+    }
+
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(1, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(2, endDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(3, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(4, endDateProps, {})
   })
 
   test('when passed a both start and end dates renders DatePickerContainer components correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      displayEndDate: '2019-03-30T00:00:00.000Z',
-      displayStartDate: '2019-03-29T00:00:00.000Z'
+    const { props } = setup({
+      overrideProps: {
+        displayStartDate: '2019-03-29T00:00:00.000Z',
+        displayEndDate: '2019-03-30T00:00:00.000Z'
+      }
     })
 
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('value')).toBe('2019-03-29T00:00:00.000Z')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('type')).toBe('end')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('value')).toBe('2019-03-30T00:00:00.000Z')
+    // Each DatepickerContainer is called twice due to initial render and state update in useEffect
+    expect(DatepickerContainer).toHaveBeenCalledTimes(4)
+    const startDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__start-date',
+      label: 'Start Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitStart,
+      shouldValidate: true,
+      size: '',
+      type: 'start',
+      value: '2019-03-29T00:00:00.000Z',
+      viewMode: 'years'
+    }
+    const endDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__end-date',
+      label: 'End Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitEnd,
+      shouldValidate: true,
+      size: '',
+      type: 'end',
+      value: '2019-03-30T00:00:00.000Z',
+      viewMode: 'years'
+    }
+
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(1, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(2, endDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(3, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(4, endDateProps, {})
   })
 
   test('when passed a start date after the end date renders DatePickerContainer components correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      displayEndDate: '2019-03-29T00:00:00.000Z',
-      displayStartDate: '2019-03-30T00:00:00.000Z'
-    })
-
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
-    expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('value')).toBe('2019-03-30T00:00:00.000Z')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('type')).toBe('end')
-    expect(enzymeWrapper.find(DatepickerContainer).at(1).prop('value')).toBe('2019-03-29T00:00:00.000Z')
-  })
-
-  test('when passed a start date after the end date fires isInvalid', () => {
-    const { enzymeWrapper, props } = setup()
-    enzymeWrapper.setProps({
-      temporal: {
-        endDate: '2019-03-29T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
+    const { props } = setup({
+      overrideProps: {
+        displayStartDate: '2019-03-30T00:00:00.000Z',
+        displayEndDate: '2019-03-29T00:00:00.000Z'
       }
     })
 
-    expect(props.onInvalid).toBeCalledTimes(1)
+    // Each DatepickerContainer is called twice due to initial render and state update in useEffect
+    expect(DatepickerContainer).toHaveBeenCalledTimes(4)
+    const startDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__start-date',
+      label: 'Start Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitStart,
+      shouldValidate: true,
+      size: '',
+      type: 'start',
+      value: '2019-03-30T00:00:00.000Z',
+      viewMode: 'years'
+    }
+    const endDateProps = {
+      filterType: 'granule',
+      format: 'YYYY-MM-DD HH:mm:ss',
+      id: 'test-id__temporal-form__end-date',
+      label: 'End Date',
+      maxDate: '2026-01-10T00:00:00.000Z',
+      minDate: '1960-01-01 00:00:00',
+      onSubmit: props.onSubmitEnd,
+      shouldValidate: true,
+      size: '',
+      type: 'end',
+      value: '2019-03-29T00:00:00.000Z',
+      viewMode: 'years'
+    }
+
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(1, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(2, endDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(3, startDateProps, {})
+    expect(DatepickerContainer).toHaveBeenNthCalledWith(4, endDateProps, {})
   })
 
-  test('when passed a start date before the end date renders Alert correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
+  test('when passed a start date after the end date calls onInvalid and renders Alert', () => {
+    const { props } = setup({
+      overrideProps: {
+        temporal: {
+          startDate: '2019-03-30T00:00:00.000Z',
+          endDate: '2019-03-29T00:00:00.000Z'
+        }
       }
     })
 
-    expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(false)
-    expect(enzymeWrapper.find(Alert).at(1).prop('show')).toBe(false)
+    expect(props.onValid).toHaveBeenCalledTimes(0)
+
+    expect(props.onInvalid).toHaveBeenCalledTimes(1)
+    expect(props.onInvalid).toHaveBeenCalledWith()
+
+    // Each Alert is called twice due to initial render and state update in useEffect
+    expect(Alert).toHaveBeenCalledTimes(4)
+    // Start Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(1, expect.objectContaining({
+      show: true
+    }), {})
+
+    // End Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(2, expect.objectContaining({
+      show: false
+    }), {})
+
+    // Start Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(3, expect.objectContaining({
+      show: true
+    }), {})
+
+    // End Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(4, expect.objectContaining({
+      show: false
+    }), {})
   })
 
-  test('when passed a start date after the end date renders Alert correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({
-      temporal: {
-        endDate: '2019-03-29T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
+  test('when passed a start date before the end date calls onValid and renders Alert', () => {
+    const { props } = setup({
+      overrideProps: {
+        temporal: {
+          startDate: '2019-03-29T00:00:00.000Z',
+          endDate: '2019-03-30T00:00:00.000Z'
+        }
       }
     })
 
-    expect(enzymeWrapper.find(Alert).at(0).prop('show')).toBe(true)
-    expect(enzymeWrapper.find(Alert).at(1).prop('show')).toBe(false)
-  })
+    expect(props.onValid).toHaveBeenCalledTimes(1)
+    expect(props.onValid).toHaveBeenCalledWith()
 
-  test('sets the start date correctly when an invalid date is passed', () => {
-    const { enzymeWrapper, props } = setup()
-    enzymeWrapper.find(DatepickerContainer).at(0).props().onSubmit('2012-01-efss 12:00:00')
-    expect(props.onSubmitStart).toBeCalledTimes(1)
-    expect(props.onSubmitStart).toHaveBeenCalledWith('2012-01-efss 12:00:00')
-  })
+    expect(props.onInvalid).toHaveBeenCalledTimes(0)
 
-  test('sets the end date correctly when an invalid date is passed', () => {
-    const { enzymeWrapper, props } = setup()
-    const testObj = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
+    // Each Alert is called twice due to initial render and state update in useEffect
+    expect(Alert).toHaveBeenCalledTimes(4)
+    // Start Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(1, expect.objectContaining({
+      show: false
+    }), {})
 
-    enzymeWrapper.find(DatepickerContainer).at(1).props().onSubmit(testObj)
-    expect(props.onSubmitEnd).toBeCalledTimes(1)
+    // End Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(2, expect.objectContaining({
+      show: false
+    }), {})
+
+    // Start Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(3, expect.objectContaining({
+      show: false
+    }), {})
+
+    // End Date Alert
+    expect(Alert).toHaveBeenNthCalledWith(4, expect.objectContaining({
+      show: false
+    }), {})
   })
 
   test('onChangeRecurring is only called when input is complete on InputRange', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.setProps({
-      temporal: {
-        startDate: '2019-01-01T00:00:00.000Z',
-        endDate: '2020-01-01T00:00:00.000Z',
-        isRecurring: true
-      },
-      onSliderChange: props.onSliderChange,
-      allowRecurring: true,
-      onChangeRecurring: props.onChangeRecurring
+    const { props } = setup({
+      overrideProps: {
+        temporal: {
+          startDate: '2019-01-01T00:00:00.000Z',
+          endDate: '2020-01-01T00:00:00.000Z',
+          isRecurring: true
+        },
+        allowRecurring: true
+      }
     })
 
-    const inputRange = enzymeWrapper.find('InputRange')
+    const inputRange = InputRange.mock.calls[0][0]
 
-    inputRange.prop('onChange')({
+    // Simulate onChange event
+    inputRange.onChange({
       min: 2018,
       max: 2021
     })
@@ -169,19 +325,22 @@ describe('TemporalSelection component', () => {
     )
 
     // Verify onChangeRecurring was not called during onChange
-    expect(props.onChangeRecurring).not.toHaveBeenCalled()
+    expect(props.onChangeRecurring).toHaveBeenCalledTimes(0)
 
-    inputRange.prop('onChangeComplete')({
+    jest.clearAllMocks()
+
+    inputRange.onChangeComplete({
       min: 2018,
       max: 2021
     })
 
     // Verify onChangeRecurring was called only once with the new range
     expect(props.onChangeRecurring).toHaveBeenCalledTimes(1)
-    expect(props.onSliderChange).toHaveBeenCalledTimes(1)
     expect(props.onChangeRecurring).toHaveBeenCalledWith({
       min: 2018,
       max: 2021
     })
+
+    expect(props.onSliderChange).toHaveBeenCalledTimes(0)
   })
 })
