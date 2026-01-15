@@ -68,34 +68,31 @@ jobs:
   playwright:
     needs: [runBuild]
     runs-on: ubuntu-latest
+    container:
+      # Use the Playwright Docker image with necessary browsers pre-installed
+      # This needs to match the version of `@playwright/test` in package.json
+      # https://mcr.microsoft.com/en-us/artifact/mar/playwright/tags
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      options: --user 1001
     strategy:
         fail-fast: false
         matrix:
           node-version: ['lts/jod']
-          shard: [
-            1/6,
-            2/6,
-            3/6,
-            4/6,
-            5/6,
-            6/6
-          ]
+          shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+          shardTotal: [9]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Setup
       uses: ./.github/actions/npm-setup
-
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
     - name: Download build
       uses: actions/download-artifact@v4
       with:
         name: static-build
         path: static/dist/
     - name: Run Playwright tests
-      run: bin/start-playwright.sh ${{ matrix.shard }}
+      run: bin/start-playwright.sh ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v4
       env:
