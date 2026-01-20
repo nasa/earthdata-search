@@ -16,15 +16,16 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
-
 // Restricts the drag and drop to the parent element and moving on the vertical axis`
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
-
 import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
-import { triggerKeyboardShortcut } from '../../../util/triggerKeyboardShortcut'
 
 import LayerPickerItem from './LayerPickerItem'
 import Button from '../../Button/Button'
+
+import { triggerKeyboardShortcut } from '../../../util/triggerKeyboardShortcut'
+import { metricsLayerPicker } from '../../../util/metrics/metricsLayerPicker'
+
 import { ImageryLayers } from '../../../types/sharedTypes'
 
 import './LayerPicker.scss'
@@ -74,6 +75,9 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
       shortcutKey: 'l',
       shortcutCallback: toggleLayers
     })
+
+    // Send metrics
+    metricsLayerPicker('keyboardEvent', 'toggle layer picker', { layersHidden: !layersHidden })
   }
 
   // Sets up event listener for keyup event
@@ -90,6 +94,12 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
    */
   const handleToggleLayerVisibility = (productName: string) => {
     toggleLayerVisibility(collectionId, productName)
+
+    // Send metrics
+    metricsLayerPicker('button', 'toggle layer visibility', {
+      collectionId,
+      productName
+    })
   }
 
   /**
@@ -116,6 +126,15 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
 
         // Update the entire state with the new order
         setMapLayersOrder(collectionId, currentLayers)
+
+        // Send metrics
+        metricsLayerPicker('drag', 'reorder', {
+          collectionId,
+          layerOrder: currentLayers.map((layer) => layer.product),
+          movedProduct: active.id,
+          oldIndex,
+          newIndex
+        })
       }
     }
   }
@@ -130,6 +149,13 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   ) => {
     // Updates the Zustand store
     setLayerOpacity(collectionConceptId, productName, opacity)
+
+    // Send metrics
+    metricsLayerPicker('drag', 'adjust opacity', {
+      collectionConceptId,
+      productName,
+      opacity
+    })
   }
 
   // Don't add draggable styling if there is only one layer

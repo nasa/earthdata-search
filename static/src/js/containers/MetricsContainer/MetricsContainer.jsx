@@ -20,7 +20,14 @@ const MetricsContainer = () => {
 
     if (!clickableParent) return
 
-    const title = target.title || target.text || target.name || target.textContent
+    // Maintain previous version of creating this title
+    let title = target.title || target.text || target.name || target.textContent || target.ariaLabel
+
+    // Account for situations where there is not target
+    if (!title) {
+      title = clickableParent.title || clickableParent.text
+      || clickableParent.name || clickableParent.textContent || clickableParent.ariaLabel
+    }
 
     metricsDefaultClick(title)
   }
