@@ -27,6 +27,11 @@ const { footer, ui } = portalConfig
 const { showTophat } = ui
 const { attributionText } = footer
 
+const coverageReporters = ['text', 'lcov', 'clover', 'json', 'html']
+if (process.env.GITHUB_ACTIONS) {
+  coverageReporters.push('github-actions')
+}
+
 export default defineConfig({
   publicDir: 'static/src/public',
   server: {
