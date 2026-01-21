@@ -76,7 +76,8 @@ describe('SecondaryToolbar component', () => {
       const loginButton = screen.getByRole('button', { name: 'Log In' })
       await user.hover(loginButton)
 
-      expect(await screen.findByText('Log In with Earthdata Login')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(within(tooltip).getByText('Log In with Earthdata Login')).toBeVisible()
     })
 
     test('should not render the user dropdown', () => {
@@ -301,7 +302,8 @@ describe('SecondaryToolbar component', () => {
 
       await user.hover(screen.getByRole('button', { name: 'My Project' }))
 
-      expect(await screen.findByText('View your project')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(within(tooltip).getByText('View your project')).toBeVisible()
     })
   })
 
@@ -442,7 +444,8 @@ describe('SecondaryToolbar component', () => {
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
       await user.hover(saveProjectButton)
 
-      expect(await screen.findByText('Create a project with your current search')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(within(tooltip).getByText('Create a project with your current search')).toBeVisible()
     })
 
     test('clicking the save button sets the state and calls setProjectName', async () => {
@@ -545,7 +548,8 @@ describe('SecondaryToolbar component', () => {
       const tourButton = screen.getByRole('button', { name: 'Start tour' })
       await user.hover(tourButton)
 
-      expect(await screen.findByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(within(tooltip).getByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
     })
   })
 })
