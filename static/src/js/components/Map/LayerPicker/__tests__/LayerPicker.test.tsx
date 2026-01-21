@@ -85,7 +85,7 @@ describe('LayerPicker', () => {
       })
 
       expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
-      expect(metricsLayerPicker).toHaveBeenCalledWith('keyboardEvent', 'toggle layer picker', { layersHidden: true })
+      expect(metricsLayerPicker).toHaveBeenCalledWith('keyboardInput', 'layerPicker.toggle', { layersHidden: true })
     })
   })
 
@@ -143,7 +143,7 @@ describe('LayerPicker', () => {
       expect(toggleLayerVisibility).toHaveBeenCalledTimes(1)
       expect(toggleLayerVisibility).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate')
       expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
-      expect(metricsLayerPicker).toHaveBeenCalledWith('button', 'toggle layer visibility', {
+      expect(metricsLayerPicker).toHaveBeenCalledWith('buttonClick', 'layerPicker.toggleLayer', {
         collectionId: 'C123451234-EDSC',
         productName: 'IMERG_Precipitation_Rate'
       })
@@ -166,7 +166,7 @@ describe('LayerPicker', () => {
       expect(setLayerOpacity).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate', 1)
       expect(setLayerOpacity).toHaveBeenCalledTimes(1)
       expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
-      expect(metricsLayerPicker).toHaveBeenCalledWith('drag', 'adjust opacity', {
+      expect(metricsLayerPicker).toHaveBeenCalledWith('drag', 'layerPicker.adjustOpacity', {
         collectionConceptId: 'C123451234-EDSC',
         opacity: 1,
         productName: 'IMERG_Precipitation_Rate'
@@ -219,7 +219,7 @@ describe('LayerPicker', () => {
 
       expect(setMapLayersOrder).toHaveBeenCalledTimes(1)
       expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
-      expect(metricsLayerPicker).toHaveBeenCalledWith('drag', 'reorder', {
+      expect(metricsLayerPicker).toHaveBeenCalledWith('drag', 'layerPicker.reorderLayer', {
         collectionId: 'C123451234-EDSC',
         layerOrder: ['IMERG_Precipitation_Rate_30min', 'IMERG_Precipitation_Rate'],
         movedProduct: 'IMERG_Precipitation_Rate_30min',

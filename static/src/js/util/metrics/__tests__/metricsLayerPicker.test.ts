@@ -1,10 +1,13 @@
 import { metricsLayerPicker } from '../metricsLayerPicker'
 
+import { layerPickerEventActions } from '../../../constants/metricsEventActions'
+import { layerPickerEventTypes } from '../../../constants/metricsEventTypes'
+
 describe('metricsLayerPicker', () => {
   test('pushes the correct event to the dataLayer', () => {
     const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
 
-    metricsLayerPicker('drag', 'reorder', {
+    metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.REORDER_LAYER, {
       initialOrder: ['A', 'B', 'C'],
       finalOrder: ['B', 'A', 'C'],
       movedProduct: 'B',
@@ -16,7 +19,7 @@ describe('metricsLayerPicker', () => {
     expect(dataLayerPushSpy).toHaveBeenCalledWith({
       event: 'LayerPicker',
       LayerPickerReorderingEventType: 'drag',
-      LayerPickerReorderingEventAction: 'reorder',
+      LayerPickerReorderingEventAction: 'layerPicker.reorderLayer',
       LayerPickerReorderingEventData: {
         initialOrder: ['A', 'B', 'C'],
         finalOrder: ['B', 'A', 'C'],

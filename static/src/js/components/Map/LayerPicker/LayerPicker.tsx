@@ -28,6 +28,9 @@ import { metricsLayerPicker } from '../../../util/metrics/metricsLayerPicker'
 
 import { ImageryLayers } from '../../../types/sharedTypes'
 
+import { layerPickerEventActions } from '../../../constants/metricsEventActions'
+import { layerPickerEventTypes } from '../../../constants/metricsEventTypes'
+
 import './LayerPicker.scss'
 
 export interface LayerPickerProps {
@@ -77,7 +80,11 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     })
 
     // Send metrics
-    metricsLayerPicker('keyboardEvent', 'toggle layer picker', { layersHidden: !layersHidden })
+    metricsLayerPicker(
+      layerPickerEventTypes.KEYBOARD_INPUT,
+      layerPickerEventActions.TOGGLE_LAYERPICKER,
+      { layersHidden: !layersHidden }
+    )
   }
 
   // Sets up event listener for keyup event
@@ -96,7 +103,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     toggleLayerVisibility(collectionId, productName)
 
     // Send metrics
-    metricsLayerPicker('button', 'toggle layer visibility', {
+    metricsLayerPicker(layerPickerEventTypes.BUTTON_CLICK, layerPickerEventActions.TOGGLE_LAYER, {
       collectionId,
       productName
     })
@@ -128,7 +135,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         setMapLayersOrder(collectionId, currentLayers)
 
         // Send metrics
-        metricsLayerPicker('drag', 'reorder', {
+        metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.REORDER_LAYER, {
           collectionId,
           layerOrder: currentLayers.map((layer) => layer.product),
           movedProduct: active.id,
@@ -151,7 +158,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     setLayerOpacity(collectionConceptId, productName, opacity)
 
     // Send metrics
-    metricsLayerPicker('drag', 'adjust opacity', {
+    metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.ADJUST_OPACITY, {
       collectionConceptId,
       productName,
       opacity
