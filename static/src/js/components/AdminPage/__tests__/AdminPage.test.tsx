@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AdminPage from '../AdminPage'
 import { routes } from '../../../constants/routes'

@@ -1,22 +1,24 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import ChunkedOrderModal from '../ChunkedOrderModal'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
 // In order to pass out of scope variables into `jest` they must be prefixed with `mock`
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <mock-PortalLinkContainer {...props} />
-)))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn((props) => (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <mock-PortalLinkContainer {...props} />
+  ))
+}))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '?p=C100005-EDSC!C100005-EDSC&pg[1][v]=t',
     hash: '',
@@ -25,8 +27,8 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-const mockCreateRetrieval = jest.fn()
-jest.mock('../../../hooks/useCreateRetrieval', () => ({
+const mockCreateRetrieval = vi.fn()
+vi.mock('../../../hooks/useCreateRetrieval', () => ({
   useCreateRetrieval: () => ({ createRetrieval: mockCreateRetrieval })
 }))
 
@@ -55,7 +57,7 @@ const setup = setupTest({
     ui: {
       modals: {
         openModal: MODAL_NAMES.CHUNKED_ORDER,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   },

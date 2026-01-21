@@ -11,8 +11,8 @@ import HISTORY_RETRIEVALS from '../../../../../static/src/js/operations/queries/
 
 import { fetchGranuleLinks } from '../../../util/fetchGranuleLinks'
 
-jest.mock('../../../util/fetchGranuleLinks', () => ({
-  fetchGranuleLinks: jest.fn()
+vi.mock('../../../util/fetchGranuleLinks', () => ({
+  fetchGranuleLinks: vi.fn()
 }))
 
 const OLD_ENV = process.env
@@ -34,7 +34,7 @@ describe('Retrieval resolver', () => {
     describe('retrieval', () => {
       test('returns the retrieval', async () => {
         const databaseClient = {
-          getRetrievalByObfuscatedId: jest.fn().mockResolvedValue({
+          getRetrievalByObfuscatedId: vi.fn().mockResolvedValue({
             id: 1,
             user_id: 42,
             jsondata: {},
@@ -42,7 +42,7 @@ describe('Retrieval resolver', () => {
             created_at: '2023-01-01T00:00:00Z',
             updated_at: '2023-01-01T00:00:00Z'
           }),
-          getRetrievalCollectionsByRetrievalId: jest.fn().mockResolvedValue([{
+          getRetrievalCollectionsByRetrievalId: vi.fn().mockResolvedValue([{
             id: 1,
             retrieval_id: 1,
             access_method: { mock: 'access method' },
@@ -319,7 +319,7 @@ describe('Retrieval resolver', () => {
     describe('historyRetrivals', () => {
       test('returns the history retrievals', async () => {
         const databaseClient = {
-          getHistoryRetrievals: jest.fn().mockResolvedValue([{
+          getHistoryRetrievals: vi.fn().mockResolvedValue([{
             created_at: '2023-01-01T00:00:00Z',
             id: 1,
             portal_id: 'edsc',
@@ -378,7 +378,7 @@ describe('Retrieval resolver', () => {
     describe('retrievalCollection', () => {
       test('returns the retrieval collection', async () => {
         const databaseClient = {
-          getRetrievalCollectionByObfuscatedId: jest.fn().mockResolvedValue({
+          getRetrievalCollectionByObfuscatedId: vi.fn().mockResolvedValue({
             id: 1,
             retrieval_id: 2,
             access_method: { mock: 'access method' },
@@ -396,7 +396,7 @@ describe('Retrieval resolver', () => {
             error: 'error',
             retrieval_order_updated_at: '2023-01-01T00:00:00Z'
           }),
-          getRetrievalOrdersByRetrievalCollectionId: jest.fn().mockResolvedValue([{
+          getRetrievalOrdersByRetrievalCollectionId: vi.fn().mockResolvedValue([{
             id: 1,
             retrieval_collection_id: 1,
             type: 'type',
@@ -658,9 +658,9 @@ describe('Retrieval resolver', () => {
       describe('when the collection already has a saved access configuration', () => {
         test('creates a new retrieval and updates the saved access configuration', async () => {
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -668,7 +668,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -677,8 +677,8 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            getAccessConfiguration: jest.fn().mockResolvedValue([{ id: 1 }]),
-            updateAccessConfiguration: jest.fn()
+            getAccessConfiguration: vi.fn().mockResolvedValue([{ id: 1 }]),
+            updateAccessConfiguration: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -782,9 +782,9 @@ describe('Retrieval resolver', () => {
       describe('when the access method type is download', () => {
         test('creates a new retrieval and returns the retrieval object', async () => {
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -792,7 +792,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -801,8 +801,8 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            getAccessConfiguration: jest.fn().mockResolvedValue([]),
-            saveAccessConfiguration: jest.fn()
+            getAccessConfiguration: vi.fn().mockResolvedValue([]),
+            saveAccessConfiguration: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -919,9 +919,9 @@ describe('Retrieval resolver', () => {
           }
 
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -929,7 +929,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -938,13 +938,13 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            createRetrievalOrder: jest.fn().mockResolvedValue({ id: 4 }),
-            getAccessConfiguration: jest.fn().mockResolvedValue([]),
-            saveAccessConfiguration: jest.fn()
+            createRetrievalOrder: vi.fn().mockResolvedValue({ id: 4 }),
+            getAccessConfiguration: vi.fn().mockResolvedValue([]),
+            saveAccessConfiguration: vi.fn()
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1077,9 +1077,9 @@ describe('Retrieval resolver', () => {
           }
 
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -1087,7 +1087,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -1096,13 +1096,13 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            createRetrievalOrder: jest.fn().mockResolvedValue({ id: 4 }),
-            getAccessConfiguration: jest.fn().mockResolvedValue([]),
-            saveAccessConfiguration: jest.fn()
+            createRetrievalOrder: vi.fn().mockResolvedValue({ id: 4 }),
+            getAccessConfiguration: vi.fn().mockResolvedValue([]),
+            saveAccessConfiguration: vi.fn()
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1243,9 +1243,9 @@ describe('Retrieval resolver', () => {
           }
 
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -1253,7 +1253,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -1262,13 +1262,13 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            createRetrievalOrder: jest.fn().mockResolvedValue({ id: 4 }),
-            getAccessConfiguration: jest.fn().mockResolvedValue([]),
-            saveAccessConfiguration: jest.fn()
+            createRetrievalOrder: vi.fn().mockResolvedValue({ id: 4 }),
+            getAccessConfiguration: vi.fn().mockResolvedValue([]),
+            saveAccessConfiguration: vi.fn()
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1394,9 +1394,9 @@ describe('Retrieval resolver', () => {
           }
 
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -1404,7 +1404,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -1413,8 +1413,8 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            getAccessConfiguration: jest.fn().mockResolvedValue([]),
-            saveAccessConfiguration: jest.fn()
+            getAccessConfiguration: vi.fn().mockResolvedValue([]),
+            saveAccessConfiguration: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1522,9 +1522,9 @@ describe('Retrieval resolver', () => {
           }
 
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -1532,7 +1532,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockResolvedValue([{
+            createRetrievalCollection: vi.fn().mockResolvedValue([{
               id: 1,
               access_method: { type: 'download' },
               collection_id: 'C2105092163-LAADS',
@@ -1541,13 +1541,13 @@ describe('Retrieval resolver', () => {
               granule_count: 1,
               granule_link_count: 10
             }]),
-            createRetrievalOrder: jest.fn().mockResolvedValue({ id: 4 }),
-            getAccessConfiguration: jest.fn().mockResolvedValue([]),
-            saveAccessConfiguration: jest.fn()
+            createRetrievalOrder: vi.fn().mockResolvedValue({ id: 4 }),
+            getAccessConfiguration: vi.fn().mockResolvedValue([]),
+            saveAccessConfiguration: vi.fn()
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1666,10 +1666,10 @@ describe('Retrieval resolver', () => {
       describe('when a database error occurs', () => {
         test('rolls back the database transaction and returns an error', async () => {
           const databaseClient = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(),
-            rollbackTransaction: jest.fn(),
-            createRetrieval: jest.fn().mockResolvedValue({
+            startTransaction: vi.fn(),
+            commitTransaction: vi.fn(),
+            rollbackTransaction: vi.fn(),
+            createRetrieval: vi.fn().mockResolvedValue({
               id: 1,
               user_id: 42,
               environment: 'prod',
@@ -1677,7 +1677,7 @@ describe('Retrieval resolver', () => {
               updated_at: '2023-01-01T00:00:00Z',
               created_at: '2023-01-01T00:00:00Z'
             }),
-            createRetrievalCollection: jest.fn().mockImplementation(() => {
+            createRetrievalCollection: vi.fn().mockImplementation(() => {
               throw new Error('Database error')
             })
           }
@@ -1780,7 +1780,7 @@ describe('Retrieval resolver', () => {
     describe('deleteRetrieval', () => {
       test('deletes a retrieval successfully', async () => {
         const databaseClient = {
-          deleteRetrieval: jest.fn().mockResolvedValue(1)
+          deleteRetrieval: vi.fn().mockResolvedValue(1)
         }
 
         const { contextValue, server } = setupServer({
@@ -1810,7 +1810,7 @@ describe('Retrieval resolver', () => {
 
       test('returns false when the retrieval is not deleted', async () => {
         const databaseClient = {
-          deleteRetrieval: jest.fn().mockResolvedValue(0)
+          deleteRetrieval: vi.fn().mockResolvedValue(0)
         }
 
         const { contextValue, server } = setupServer({
@@ -1840,7 +1840,7 @@ describe('Retrieval resolver', () => {
 
       test('throws an error when the mutation fails', async () => {
         const databaseClient = {
-          deleteRetrieval: jest.fn().mockImplementation(() => {
+          deleteRetrieval: vi.fn().mockImplementation(() => {
             throw new Error('Failed to delete retrieval')
           })
         }

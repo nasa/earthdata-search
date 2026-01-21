@@ -6,16 +6,12 @@ import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getEdlConfig from '../../util/getEdlConfig'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('getUrsUserData', () => {
   test('correctly requests a users data from urs', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://urs.example.com' }))
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://urs.example.com' }))
+    vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
-    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
       client: {
         id: 'clientId'
       }

@@ -14,16 +14,16 @@ import Datepicker from '../Datepicker'
 const setup = (overrideProps) => {
   const user = userEvent.setup()
 
-  const onInputBlur = jest.fn()
-  const onChange = jest.fn()
-  const onClearClick = jest.fn()
-  const onTodayClick = jest.fn()
+  const onInputBlur = vi.fn()
+  const onChange = vi.fn()
+  const onClearClick = vi.fn()
+  const onTodayClick = vi.fn()
 
   const props = {
     filterType: 'collection',
     id: 'test-id',
     label: 'Date Time',
-    isValidDate: jest.fn(),
+    isValidDate: vi.fn(),
     onChange,
     onClearClick,
     onInputBlur,
@@ -110,8 +110,8 @@ describe('Datepicker component', () => {
       const { props, user } = setup()
       const { picker } = props
 
-      const requestAnimationFrameSpy = jest.spyOn(window, 'requestAnimationFrame')
-      const closeCalendarSpy = jest.spyOn(picker.current, '_closeCalendar')
+      const requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame')
+      const closeCalendarSpy = vi.spyOn(picker.current, '_closeCalendar')
 
       const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
 
@@ -197,7 +197,7 @@ describe('Datepicker component', () => {
 
       const { picker } = props
 
-      const navigateSpy = jest.spyOn(picker.current, 'navigate')
+      const navigateSpy = vi.spyOn(picker.current, 'navigate')
 
       rerender(
         <div>
@@ -269,7 +269,7 @@ describe('Datepicker component', () => {
           value: '06-01 00:00:00',
           format: 'MM-DD HH:mm:ss',
           shouldValidate: false,
-          isValidDate: jest.fn().mockReturnValue(true)
+          isValidDate: vi.fn().mockReturnValue(true)
         })
 
         // Open the calendar

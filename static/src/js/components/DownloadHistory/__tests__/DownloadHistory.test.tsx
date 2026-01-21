@@ -2,33 +2,36 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 // @ts-expect-error This file does not have types
 import TimeAgo from 'react-timeago'
+import { ApolloError } from '@apollo/client'
 
 import DownloadHistory from '../DownloadHistory'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import HISTORY_RETRIEVALS from '../../../operations/queries/historyRetrievals'
 import DELETE_RETRIEVAL from '../../../operations/mutations/deleteRetrieval'
 
 // @ts-expect-error This file does not have types
 import addToast from '../../../util/addToast'
 
-jest.mock('../../../util/addToast', () => ({
+vi.mock('../../../util/addToast', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
-jest.mock('react-timeago', () => ({
+vi.mock('react-timeago', () => ({
   __esModule: true,
-  default: jest.fn(() => null)
+  default: vi.fn(() => null)
 }))
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ to, onClick, children }) => {
-  const href = typeof to === 'string' ? to : `${to.pathname}${to.search ? `?${to.search}` : ''}`
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn(({ to, onClick, children }) => {
+    const href = typeof to === 'string' ? to : `${to.pathname}${to.search ? `?${to.search}` : ''}`
 
-  return (
-    <a href={href} onClick={onClick}>
-      {children}
-    </a>
-  )
+    return (
+      <a href={href} onClick={onClick}>
+        {children}
+      </a>
+    )
+  })
 }))
 
 const setup = setupTest({
@@ -191,11 +194,11 @@ describe('DownloadHistorys component', () => {
               offset: 0
             }
           },
-          error: new Error('Failed to fetch history retrievals')
+          error: new ApolloError({ errorMessage: 'Failed to fetch history retrievals' })
         }],
         overrideZustandState: {
           errors: {
-            handleError: jest.fn()
+            handleError: vi.fn()
           }
         }
       })
@@ -205,7 +208,7 @@ describe('DownloadHistorys component', () => {
       expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
 
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
-        error: new Error('Failed to fetch history retrievals'),
+        error: new ApolloError({ errorMessage: 'Failed to fetch history retrievals' }),
         action: 'fetchHistoryRetrievals',
         resource: 'history retrievals',
         verb: 'fetching',
@@ -287,7 +290,7 @@ describe('DownloadHistorys component', () => {
 
         await screen.findByRole('link', { name: 'title 1' })
 
-        window.confirm = jest.fn(() => true)
+        window.confirm = vi.fn(() => true)
 
         const deleteButton = await screen.findByRole('button', {
           name: /Delete Download/i
@@ -339,18 +342,16 @@ describe('DownloadHistorys component', () => {
                 obfuscatedId: '8069076'
               }
             },
-            result: {
-              errors: [new Error('Failed to remove retrieval')]
-            }
+            error: new ApolloError({ errorMessage: 'Failed to remove retrieval' })
           }],
           overrideZustandState: {
             errors: {
-              handleError: jest.fn()
+              handleError: vi.fn()
             }
           }
         })
 
-        window.confirm = jest.fn(() => true)
+        window.confirm = vi.fn(() => true)
 
         const deleteButton = await screen.findByRole('button', {
           name: /Delete Download/i
@@ -362,7 +363,7 @@ describe('DownloadHistorys component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledWith(
           {
             action: 'handleDeleteRetrieval',
-            error: new Error('Failed to remove retrieval'),
+            error: new ApolloError({ errorMessage: 'Failed to remove retrieval' }),
             notificationType: 'banner',
             resource: 'retrieval',
             verb: 'deleting'

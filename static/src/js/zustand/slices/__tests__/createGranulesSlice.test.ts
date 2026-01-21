@@ -30,9 +30,9 @@ describe('createGranulesSlice', () => {
 
   describe('getGranules', () => {
     beforeEach(() => {
-      jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
+      vi.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
@@ -57,9 +57,9 @@ describe('createGranulesSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'collectionId'
-        state.errors.handleError = jest.fn()
+        state.errors.handleError = vi.fn()
         state.user.edlToken = 'mock-token'
-        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
       })
 
       const { granules, errors } = useEdscStore.getState()
@@ -90,7 +90,7 @@ describe('createGranulesSlice', () => {
     })
 
     test('substitutes MBR for polygon in opensearch granule searches', async () => {
-      const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
+      const cwicRequestMock = vi.spyOn(OpenSearchGranuleRequest.prototype, 'search')
 
       nock(/localhost/)
         .post(/opensearch\/granules/)
@@ -112,9 +112,9 @@ describe('createGranulesSlice', () => {
           polygon: ['-77,38,-77,38,-76,38,-77,38']
         }
 
-        state.errors.handleError = jest.fn()
+        state.errors.handleError = vi.fn()
         state.user.edlToken = 'mock-token'
-        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
       })
 
       const { granules, errors } = useEdscStore.getState()
@@ -172,7 +172,7 @@ describe('createGranulesSlice', () => {
           conceptId: 'collectionId'
         }
 
-        state.errors.handleError = jest.fn()
+        state.errors.handleError = vi.fn()
       })
 
       const { granules } = useEdscStore.getState()

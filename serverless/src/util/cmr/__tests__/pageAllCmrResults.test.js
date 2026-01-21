@@ -2,10 +2,6 @@ import nock from 'nock'
 
 import { pageAllCmrResults } from '../pageAllCmrResults'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('pageAllCmrResults', () => {
   test('does not iterate when uneccessary', async () => {
     nock(/cmr/)
@@ -49,7 +45,7 @@ describe('pageAllCmrResults', () => {
   })
 
   test('responds correctly on http error', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer test-token')
@@ -69,7 +65,7 @@ describe('pageAllCmrResults', () => {
       }
     })
 
-    expect(consoleMock).toBeCalledTimes(1)
+    expect(consoleMock).toHaveBeenCalledTimes(1)
     expect(consoleMock.mock.calls[0]).toEqual(['AxiosError (400): HTTP Error'])
   })
 })

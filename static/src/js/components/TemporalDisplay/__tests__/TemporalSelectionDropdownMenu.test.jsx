@@ -2,26 +2,26 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import TemporalSelectionDropdownMenu from '../TemporalSelectionDropdownMenu'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../../Button/Button'
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   __esModule: true,
-  default: jest.fn(({ children }) => <div>{children}</div>)
+  default: vi.fn(({ children }) => <div>{children}</div>)
 }))
 
-jest.mock('../../Button/Button', () => ({
+vi.mock('../../Button/Button', () => ({
   __esModule: true,
-  default: jest.fn(({ children }) => <div>{children}</div>)
+  default: vi.fn(({ children }) => <div>{children}</div>)
 }))
 
 // Mock react-bootstrap Dropdown
-jest.mock('react-bootstrap/Dropdown', () => ({
+vi.mock('react-bootstrap/Dropdown', () => ({
   __esModule: true,
   default: {
-    Menu: jest.fn(({ children }) => <div className="dropdown-menu">{children}</div>)
+    Menu: vi.fn(({ children }) => <div className="dropdown-menu">{children}</div>)
   }
 }))
 
@@ -33,21 +33,21 @@ const setup = setupTest({
     displayStartDate: '',
     displayEndDate: '',
     isHomePage: true,
-    onApplyClick: jest.fn(),
-    onChangeRecurring: jest.fn(),
-    onClearClick: jest.fn(),
-    onInvalid: jest.fn(),
-    onRecurringToggle: jest.fn(),
-    onSliderChange: jest.fn(),
-    onValid: jest.fn(),
-    setEndDate: jest.fn(),
-    setStartDate: jest.fn(),
+    onApplyClick: vi.fn(),
+    onChangeRecurring: vi.fn(),
+    onClearClick: vi.fn(),
+    onInvalid: vi.fn(),
+    onRecurringToggle: vi.fn(),
+    onSliderChange: vi.fn(),
+    onValid: vi.fn(),
+    setEndDate: vi.fn(),
+    setStartDate: vi.fn(),
     temporal: { isRecurring: false }
   }
 })
 
 beforeEach(() => {
-  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 })
 
 describe('TemporalSelectionDropdownMenu component', () => {

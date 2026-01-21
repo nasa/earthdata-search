@@ -1,19 +1,19 @@
-import React from 'react'
 import { useLocation } from 'react-router-dom'
+import type { Mock } from 'vitest'
 
 import TimelineContainer from '../TimelineContainer'
 
 // @ts-expect-error The file does not have types
 import Timeline from '../../../components/Timeline/Timeline'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import { routes } from '../../../constants/routes'
 
-jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div />))
+vi.mock('../../../components/Timeline/Timeline', () => ({ default: vi.fn(() => null) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '?p=C123456-EDSC',
     hash: '',
@@ -56,7 +56,7 @@ describe('TimelineContainer component', () => {
   })
 
   test('passes its props and renders a single Timeline component on the search page', () => {
-    (useLocation as jest.Mock).mockReturnValue({
+    (useLocation as Mock).mockReturnValue({
       pathname: routes.GRANULES
     })
 
@@ -81,7 +81,7 @@ describe('TimelineContainer component', () => {
   })
 
   test('passes its props and renders a single Timeline component on the project page', () => {
-    (useLocation as jest.Mock).mockReturnValue({
+    (useLocation as Mock).mockReturnValue({
       pathname: routes.PROJECT,
       search: '?p=projectCollectionId'
     })
@@ -107,7 +107,7 @@ describe('TimelineContainer component', () => {
   })
 
   test('Does not show the timeline if it is on the saved projects page', () => {
-    (useLocation as jest.Mock).mockReturnValue({
+    (useLocation as Mock).mockReturnValue({
       pathname: routes.PROJECTS,
       search: ''
     })

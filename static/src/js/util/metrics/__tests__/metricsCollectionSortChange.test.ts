@@ -2,7 +2,7 @@ import { metricsCollectionSortChange } from '../metricsCollectionSortChange'
 
 describe('metricsCollectionSortChange', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsCollectionSortChange('relevance')
 

@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -12,14 +12,14 @@ import { mapEventTypes } from '../../../constants/eventTypes'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsSpatialSelection } from '../../../util/metrics/metricsSpatialSelection'
 
-jest.mock('../../../util/metrics/metricsSpatialSelection', () => ({
-  metricsSpatialSelection: jest.fn()
+vi.mock('../../../util/metrics/metricsSpatialSelection', () => ({
+  metricsSpatialSelection: vi.fn()
 }))
 
 // Mock react react-router-dom so that the tests do not think we are on the homepage
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/',
     search: '',
     hash: '',
@@ -41,7 +41,7 @@ const setup = setupTest({
   defaultZustandState: {
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }
@@ -62,7 +62,7 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the polygon dropdown emits an event and tracks metric', async () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
     const { user } = setup()
 
@@ -79,7 +79,7 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the rectangle dropdown emits an event and tracks metric', async () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
     const { user } = setup()
 
@@ -99,7 +99,7 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the point dropdown emits an event and tracks metric', async () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
     const { user } = setup()
 
@@ -116,7 +116,7 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the circle dropdown emits an event and tracks metric', async () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
     const { user } = setup()
 
@@ -149,7 +149,7 @@ describe('SpatialSelectionDropdown component', () => {
 
   describe('if the database is disabled', () => {
     test('searching with the `shapefileUpload` buttons should also be disabled', async () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 
@@ -167,7 +167,7 @@ describe('SpatialSelectionDropdown component', () => {
     })
 
     test('hovering over the shapefile reveals tool-tip', async () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 

@@ -2,7 +2,7 @@ import { metricsGranuleFilter } from '../metricsGranuleFilter'
 
 describe('metricsGranuleFilter', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsGranuleFilter({
       type: 'temporal',

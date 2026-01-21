@@ -1,9 +1,5 @@
 import { pick } from '../pick'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('util#pick', () => {
   test('correctly returns when null is provided', () => {
     const data = pick(null, ['a'])

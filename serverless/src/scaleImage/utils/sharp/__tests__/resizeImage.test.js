@@ -2,9 +2,22 @@ import sharp from 'sharp'
 
 import { resizeImage } from '../resizeImage'
 
+vi.mock('sharp', () => {
+  const mockSharpInstance = {
+    toFormat: vi.fn().mockReturnThis(),
+    resize: vi.fn().mockReturnThis(),
+    toBuffer: vi.fn().mockResolvedValue(Buffer.from('mocked image buffer'))
+  }
+
+  return {
+    __esModule: true,
+    default: vi.fn(() => mockSharpInstance)
+  }
+})
+
 describe('resizeImage', () => {
   test('does not call resize if no height or width was provided', async () => {
-    const buffer = Buffer.from('')
+    const buffer = Buffer.from('test image data', 'utf-8')
 
     await resizeImage(buffer)
 

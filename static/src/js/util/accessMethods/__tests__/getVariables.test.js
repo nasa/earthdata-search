@@ -5,10 +5,6 @@ import {
   mockVariables
 } from './mocks'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('getVariables', () => {
   describe('when variables exist', () => {
     test('correctly formats variables from graphql', () => {

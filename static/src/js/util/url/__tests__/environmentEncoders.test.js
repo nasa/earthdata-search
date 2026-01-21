@@ -13,7 +13,7 @@ describe('encodeEarthdataEnvironment', () => {
 
   describe('when the provided value matches deployedEnvironment', () => {
     test('returns an empty string', () => {
-      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+      vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
       const response = encodeEarthdataEnvironment('prod')
 
@@ -33,7 +33,7 @@ describe('encodeEarthdataEnvironment', () => {
 describe('decodeEarthdataEnvironment', () => {
   describe('when no value is provided', () => {
     test('returns the deployedEnvironment', () => {
-      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+      vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
       const response = decodeEarthdataEnvironment()
 
@@ -43,7 +43,7 @@ describe('decodeEarthdataEnvironment', () => {
 
   describe('when a value is provided', () => {
     test('returns the provided environment', () => {
-      jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+      vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
       const response = decodeEarthdataEnvironment('uat')
 

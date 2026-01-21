@@ -3,7 +3,7 @@ import GraphQlRequest from '../graphQlRequest'
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ graphQlHost: 'https://graphql.earthdata.nasa.gov' }))
+vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ graphQlHost: 'https://graphql.earthdata.nasa.gov' }))
 
 describe('GraphQlRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
@@ -44,7 +44,7 @@ describe('GraphQlRequest#transformRequest', () => {
   })
 
   test('adds client-id header when not authenticated', () => {
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
+    vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
     const request = new GraphQlRequest(null, 'prod')
 
@@ -86,7 +86,7 @@ describe('GraphQlRequest#transformRequest', () => {
 
 describe('GraphQlRequest#transformResponse', () => {
   beforeEach(() => {
-    jest.spyOn(GraphQlRequest.prototype, 'handleUnauthorized').mockImplementation()
+    vi.spyOn(GraphQlRequest.prototype, 'handleUnauthorized').mockImplementation()
   })
 
   test('returns data if response is not successful', () => {

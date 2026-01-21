@@ -1,18 +1,14 @@
 import { parseError } from '../parseError'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('parseError', () => {
   describe('when standard errors are thrown', () => {
     describe('when shouldLog is set to true', () => {
       test('it logs the errors', () => {
-        const consoleMock = jest.spyOn(console, 'log')
+        const consoleMock = vi.spyOn(console, 'log')
 
         const response = parseError(new Error('Standard Error'))
 
-        expect(consoleMock).toBeCalledTimes(1)
+        expect(consoleMock).toHaveBeenCalledTimes(1)
         expect(consoleMock.mock.calls[0]).toEqual(['Error: Standard Error'])
 
         expect(response).toEqual({
@@ -28,11 +24,11 @@ describe('parseError', () => {
 
       describe('when a logPrefix is provided', () => {
         test('it logs the errors with the prefix', () => {
-          const consoleMock = jest.spyOn(console, 'log')
+          const consoleMock = vi.spyOn(console, 'log')
 
           const response = parseError(new Error('Standard Error'), { logPrefix: '[Log Prefix]:' })
 
-          expect(consoleMock).toBeCalledTimes(1)
+          expect(consoleMock).toHaveBeenCalledTimes(1)
           expect(consoleMock.mock.calls[0]).toEqual(['[Log Prefix]: Error: Standard Error'])
 
           expect(response).toEqual({
@@ -50,11 +46,11 @@ describe('parseError', () => {
 
     describe('when shouldLog is set to false', () => {
       test('nothing is logged', () => {
-        const consoleMock = jest.spyOn(console, 'log')
+        const consoleMock = vi.spyOn(console, 'log')
 
         const response = parseError(new Error('Standard Error'), { shouldLog: false })
 
-        expect(consoleMock).toBeCalledTimes(0)
+        expect(consoleMock).toHaveBeenCalledTimes(0)
 
         expect(response).toEqual({
           statusCode: 500,
@@ -73,7 +69,7 @@ describe('parseError', () => {
     describe('with shouldLog is set to true', () => {
       describe('with no options', () => {
         test('it logs the errors', () => {
-          const consoleMock = jest.spyOn(console, 'log')
+          const consoleMock = vi.spyOn(console, 'log')
 
           const response = parseError({
             response: {
@@ -87,7 +83,7 @@ describe('parseError', () => {
             name: 'HTTP Error'
           })
 
-          expect(consoleMock).toBeCalledTimes(1)
+          expect(consoleMock).toHaveBeenCalledTimes(1)
           expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): 400 Bad Request'])
 
           expect(response).toEqual({
@@ -103,7 +99,7 @@ describe('parseError', () => {
 
         describe('when a logPrefix is provided', () => {
           test('it logs the errors with the prefix', () => {
-            const consoleMock = jest.spyOn(console, 'log')
+            const consoleMock = vi.spyOn(console, 'log')
 
             const response = parseError({
               response: {
@@ -116,7 +112,7 @@ describe('parseError', () => {
               }
             }, { logPrefix: '[Log Prefix]:' })
 
-            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock).toHaveBeenCalledTimes(1)
             expect(consoleMock.mock.calls[0]).toEqual(['[Log Prefix]: Error (400): 400 Bad Request'])
 
             expect(response).toEqual({
@@ -133,7 +129,7 @@ describe('parseError', () => {
 
         describe('with no error name', () => {
           test('defaults the error name to `Error`', () => {
-            const consoleMock = jest.spyOn(console, 'log')
+            const consoleMock = vi.spyOn(console, 'log')
 
             const response = parseError({
               response: {
@@ -146,7 +142,7 @@ describe('parseError', () => {
               }
             })
 
-            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock).toHaveBeenCalledTimes(1)
             expect(consoleMock.mock.calls[0]).toEqual(['Error (400): 400 Bad Request'])
 
             expect(response).toEqual({
@@ -163,7 +159,7 @@ describe('parseError', () => {
 
         describe('with no errors array', () => {
           test('defaults to an array containing `Unknown Error`', () => {
-            const consoleMock = jest.spyOn(console, 'log')
+            const consoleMock = vi.spyOn(console, 'log')
 
             const response = parseError({
               response: {
@@ -175,7 +171,7 @@ describe('parseError', () => {
               name: 'HTTP Error'
             })
 
-            expect(consoleMock).toBeCalledTimes(1)
+            expect(consoleMock).toHaveBeenCalledTimes(1)
             expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): Unknown Error'])
 
             expect(response).toEqual({
@@ -193,7 +189,7 @@ describe('parseError', () => {
 
       describe('with asJSON set to false', () => {
         test('returns the errors array', () => {
-          const consoleMock = jest.spyOn(console, 'log')
+          const consoleMock = vi.spyOn(console, 'log')
 
           const response = parseError({
             response: {
@@ -209,7 +205,7 @@ describe('parseError', () => {
             asJSON: false
           })
 
-          expect(consoleMock).toBeCalledTimes(1)
+          expect(consoleMock).toHaveBeenCalledTimes(1)
           expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): 400 Bad Request'])
 
           expect(response).toEqual([
@@ -220,7 +216,7 @@ describe('parseError', () => {
 
       describe('with reThrowError set to true', () => {
         test('rethrows the error provided', () => {
-          const consoleMock = jest.spyOn(console, 'log')
+          const consoleMock = vi.spyOn(console, 'log')
 
           expect(() => parseError({
             response: {
@@ -236,7 +232,7 @@ describe('parseError', () => {
             reThrowError: true
           })).toThrow()
 
-          expect(consoleMock).toBeCalledTimes(1)
+          expect(consoleMock).toHaveBeenCalledTimes(1)
           expect(consoleMock.mock.calls[0]).toEqual(['HTTP Error (400): 400 Bad Request'])
         })
       })
@@ -245,7 +241,7 @@ describe('parseError', () => {
     describe('with shouldLog set to false', () => {
       describe('with asJSON set to false', () => {
         test('returns the errors array', () => {
-          const consoleMock = jest.spyOn(console, 'log')
+          const consoleMock = vi.spyOn(console, 'log')
 
           const response = parseError({
             response: {
@@ -262,7 +258,7 @@ describe('parseError', () => {
             shouldLog: false
           })
 
-          expect(consoleMock).toBeCalledTimes(0)
+          expect(consoleMock).toHaveBeenCalledTimes(0)
 
           expect(response).toEqual([
             '400 Bad Request'
@@ -272,7 +268,7 @@ describe('parseError', () => {
 
       describe('with reThrowError set to true', () => {
         test('rethrows the error provided', () => {
-          const consoleMock = jest.spyOn(console, 'log')
+          const consoleMock = vi.spyOn(console, 'log')
 
           expect(() => parseError({
             response: {
@@ -289,14 +285,14 @@ describe('parseError', () => {
             shouldLog: false
           })).toThrow()
 
-          expect(consoleMock).toBeCalledTimes(0)
+          expect(consoleMock).toHaveBeenCalledTimes(0)
         })
       })
     })
 
     describe('when the content type is text/html', () => {
       test('returns an error string with the status code and status text', () => {
-        const consoleMock = jest.spyOn(console, 'log')
+        const consoleMock = vi.spyOn(console, 'log')
 
         const response = parseError({
           isAxiosError: true,
@@ -318,7 +314,7 @@ describe('parseError', () => {
           shouldLog: false
         })
 
-        expect(consoleMock).toBeCalledTimes(0)
+        expect(consoleMock).toHaveBeenCalledTimes(0)
 
         expect(response).toEqual([
           'Error (401): Unauthorized'

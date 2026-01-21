@@ -3,14 +3,16 @@ import React from 'react'
 import GranuleResultsList from '../GranuleResultsList'
 import GranuleResultsListBody from '../GranuleResultsListBody'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-jest.mock('../GranuleResultsListBody', () => jest.fn(() => <div />))
+vi.mock('../GranuleResultsListBody', () => ({ default: vi.fn(() => <div />) }))
 
 // Mock AutoSizer to return a fixed height and width (jsdom doesn't have sizes)
-jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
-  height: 600,
-  width: 600
+vi.mock('react-virtualized-auto-sizer', () => ({
+  default: ({ children }) => children({
+    height: 600,
+    width: 600
+  })
 }))
 
 const setup = setupTest({
@@ -29,13 +31,13 @@ const setup = setupTest({
     ],
     isOpenSearch: false,
     isCollectionInProject: true,
-    isGranuleInProject: jest.fn(),
+    isGranuleInProject: vi.fn(),
     isProjectGranulesLoading: false,
     itemCount: 2,
-    isItemLoaded: jest.fn().mockReturnValue(true),
-    loadMoreItems: jest.fn(),
+    isItemLoaded: vi.fn().mockReturnValue(true),
+    loadMoreItems: vi.fn(),
     readableGranuleName: [''],
-    setVisibleMiddleIndex: jest.fn(),
+    setVisibleMiddleIndex: vi.fn(),
     visibleMiddleIndex: 1
   }
 })

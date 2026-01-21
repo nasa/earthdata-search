@@ -4,7 +4,7 @@ import { getUrsSystemCredentials } from '../getUrsSystemCredentials'
 
 describe('getUrsSystemCredentials', () => {
   test('fetches urs credentials from secrets manager', async () => {
-    const secretsManagerData = jest.fn().mockResolvedValue({
+    const secretsManagerData = vi.fn().mockResolvedValue({
       SecretString: '{"username":"test","password":"password"}'
     })
 
@@ -17,7 +17,7 @@ describe('getUrsSystemCredentials', () => {
       password: 'password'
     })
 
-    expect(secretsManagerData).toBeCalledTimes(1)
+    expect(secretsManagerData).toHaveBeenCalledTimes(1)
     expect(secretsManagerData.mock.calls[0][0]).toBeInstanceOf(GetSecretValueCommand)
     expect(secretsManagerData.mock.calls[0][0].input).toEqual({
       SecretId: 'UrsSystemPasswordSecret_prod'

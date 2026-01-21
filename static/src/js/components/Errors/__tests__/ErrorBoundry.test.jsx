@@ -3,13 +3,13 @@ import { screen } from '@testing-library/react'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import LoggerRequest from '../../../util/request/loggerRequest'
 
 import ErrorBoundary from '../ErrorBoundary'
 
-jest.mock('uuid')
+vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
 const ErroredComponent = () => {
@@ -33,7 +33,7 @@ describe('ErrorBoundary component', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
+    const loggerMock = vi.spyOn(LoggerRequest.prototype, 'log')
 
     setup()
 
@@ -43,7 +43,7 @@ describe('ErrorBoundary component', () => {
     expect(loggerMock).toHaveBeenCalledWith({
       error: expect.objectContaining({
         guid: 'mock-request-id',
-        message: 'Error: Uncaught [Error: Test error]'
+        message: new Error('Test error').message
       })
     })
 
@@ -56,7 +56,7 @@ describe('ErrorBoundary component', () => {
         .post(/error_logger/)
         .reply(200)
 
-      const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
+      const loggerMock = vi.spyOn(LoggerRequest.prototype, 'log')
 
       setup()
 
@@ -66,7 +66,7 @@ describe('ErrorBoundary component', () => {
       expect(loggerMock).toHaveBeenCalledWith({
         error: expect.objectContaining({
           guid: 'mock-request-id',
-          message: 'Error: Uncaught [Error: Test error]'
+          message: new Error('Test error').message
         })
       })
     })

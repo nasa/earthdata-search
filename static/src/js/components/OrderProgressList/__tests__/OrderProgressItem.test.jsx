@@ -9,7 +9,7 @@ import {
   retrievalStatusPropsSwodlrOrder,
   retrievalStatusPropsUponRequestOrder
 } from './mocks'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: OrderProgressItem,

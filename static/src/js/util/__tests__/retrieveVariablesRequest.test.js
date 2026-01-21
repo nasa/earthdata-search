@@ -43,7 +43,7 @@ describe('retrieveVariablesRequest', () => {
         }
       })
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com',
       opensearchRoot: 'https://cmr.example.com'
@@ -116,7 +116,7 @@ describe('retrieveVariablesRequest', () => {
         }
       })
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com',
       opensearchRoot: 'https://cmr.example.com'
@@ -195,7 +195,7 @@ describe('retrieveVariablesRequest', () => {
         }
       })
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com',
       opensearchRoot: 'https://cmr.example.com'

@@ -7,7 +7,7 @@ describe('Colormap Resolver', () => {
     describe('colormaps', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getColorMapsByProducts: jest.fn().mockResolvedValue([{
+          getColorMapsByProducts: vi.fn().mockResolvedValue([{
             product: 'test-product',
             jsondata: { scale: { colors: ['#ff0000'] } }
           }])
@@ -38,7 +38,7 @@ describe('Colormap Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getColorMapsByProducts: jest.fn().mockImplementation(() => {
+          getColorMapsByProducts: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AppLayout from '../AppLayout'
 
@@ -25,20 +25,20 @@ import UrlQueryContainer from '../../../containers/UrlQueryContainer/UrlQueryCon
 import WrappingContainer from '../../../containers/WrappingContainer/WrappingContainer'
 import UserLoader from '../../../components/UserLoader/UserLoader'
 
-jest.mock('../../../components/EdlTokenLoader/EdlTokenLoader', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../components/ErrorBanner/ErrorBanner', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../components/Footer/Footer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/HistoryContainer/HistoryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/MetricsContainer/MetricsContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/PortalContainer/PortalContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../containers/WrappingContainer/WrappingContainer', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../components/UserLoader/UserLoader', () => jest.fn(({ children }) => <div>{children}</div>))
+vi.mock('../../../components/EdlTokenLoader/EdlTokenLoader', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../components/ErrorBanner/ErrorBanner', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../components/Footer/Footer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../containers/HistoryContainer/HistoryContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../containers/MetricsContainer/MetricsContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../containers/PortalContainer/PortalContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../containers/WrappingContainer/WrappingContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../components/UserLoader/UserLoader', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Outlet: jest.fn(() => <div>Outlet</div>)
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  Outlet: vi.fn(() => <div>Outlet</div>)
 }))
 
 const setup = setupTest({

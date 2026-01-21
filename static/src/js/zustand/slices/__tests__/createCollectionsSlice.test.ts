@@ -8,7 +8,7 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 import addShapefile from '../../../util/addShapefile'
 
-jest.mock('../../../util/addShapefile', () => jest.fn())
+vi.mock('../../../util/addShapefile', () => ({ default: vi.fn() }))
 
 describe('createCollectionsSlice', () => {
   test('sets the default state', () => {
@@ -30,9 +30,9 @@ describe('createCollectionsSlice', () => {
 
   describe('getCollections', () => {
     beforeEach(() => {
-      jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
+      vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
@@ -63,10 +63,10 @@ describe('createCollectionsSlice', () => {
           hasAllMetadata: true
         }
 
-        state.granules.getGranules = jest.fn()
+        state.granules.getGranules = vi.fn()
         state.user.edlToken = 'mock-token'
 
-        state.facets.facets.updateFacets = jest.fn()
+        state.facets.facets.updateFacets = vi.fn()
       })
 
       const { collections } = useEdscStore.getState()
@@ -106,10 +106,10 @@ describe('createCollectionsSlice', () => {
           hasAllMetadata: true
         }
 
-        state.errors.handleError = jest.fn()
-        state.granules.getGranules = jest.fn()
+        state.errors.handleError = vi.fn()
+        state.granules.getGranules = vi.fn()
 
-        state.facets.facets.updateFacets = jest.fn()
+        state.facets.facets.updateFacets = vi.fn()
       })
 
       const { collections } = useEdscStore.getState()
@@ -391,7 +391,7 @@ describe('createCollectionsSlice', () => {
         .reply(200)
 
       useEdscStore.setState((state) => {
-        state.errors.handleError = jest.fn()
+        state.errors.handleError = vi.fn()
         state.user.edlToken = 'test-token'
       })
 

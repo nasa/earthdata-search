@@ -2,7 +2,7 @@ import { metricsTimeline } from '../metricsTimeline'
 
 describe('metricsTimeline', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsTimeline('Click Label')
 

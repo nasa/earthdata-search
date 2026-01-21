@@ -6,8 +6,6 @@ const OLD_ENV = process.env
 
 describe('getDbConnectionConfig', () => {
   beforeEach(() => {
-    // Manage resetting ENV variables
-    jest.resetModules()
     process.env = { ...OLD_ENV }
     delete process.env.NODE_ENV
   })
@@ -22,7 +20,7 @@ describe('getDbConnectionConfig', () => {
     process.env.DB_NAME = 'test-db'
     process.env.DATABASE_PORT = 1234
 
-    jest.spyOn(getDbCredentials, 'getDbCredentials').mockImplementationOnce(() => ({
+    vi.spyOn(getDbCredentials, 'getDbCredentials').mockImplementationOnce(() => ({
       username: 'username',
       password: 'password'
     }))

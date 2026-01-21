@@ -3,18 +3,18 @@ import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
 import { useRouteError } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import LoggerRequest from '../../../util/request/loggerRequest'
 
 import RouterErrorBoundary from '../RouterErrorBoundary'
 
-jest.mock('uuid')
+vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useRouteError: jest.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useRouteError: vi.fn()
 }))
 
 const setup = setupTest({
@@ -32,7 +32,7 @@ describe('RouterErrorBoundary component', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
+    const loggerMock = vi.spyOn(LoggerRequest.prototype, 'log')
 
     setup()
 

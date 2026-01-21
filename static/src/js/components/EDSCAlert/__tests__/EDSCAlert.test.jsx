@@ -3,10 +3,10 @@ import { screen } from '@testing-library/react'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCAlert from '../EDSCAlert'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: EDSCAlert,

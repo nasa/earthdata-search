@@ -10,7 +10,7 @@ import {
 describe('ui selectors', () => {
   describe('setOpenModalFunction', () => {
     test('returns the setOpenModal function', () => {
-      const mockSetOpenModal = jest.fn()
+      const mockSetOpenModal = vi.fn()
       useEdscStore.setState((state) => {
         state.ui.modals.setOpenModal = mockSetOpenModal
       })

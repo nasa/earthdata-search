@@ -9,10 +9,6 @@ import {
 
 import openSearchGranuleSearch from '../handler'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('handler', () => {
   describe('when retrieving the collection url fails', () => {
     test('returns the error', async () => {

@@ -4,50 +4,54 @@ import { useLocation, useParams } from 'react-router-dom'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
-  const mockPortalFeatureContainer = jest.fn(({ children }) => (
+vi.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
+  const mockPortalFeatureContainer = vi.fn(({ children }) => (
     <mock-mockPortalFeatureContainer data-testid="mockPortalFeatureContainer">
       {children}
     </mock-mockPortalFeatureContainer>
   ))
 
-  return mockPortalFeatureContainer
+  return {
+    default: mockPortalFeatureContainer
+  }
 })
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
-  const mockPortalLinkContainer = jest.fn(({ children }) => (
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
+  const mockPortalLinkContainer = vi.fn(({ children }) => (
     <mock-mockPortalLinkContainer data-testid="mockPortalLinkContainer">
       {children}
     </mock-mockPortalLinkContainer>
   ))
 
-  return mockPortalLinkContainer
+  return {
+    default: mockPortalLinkContainer
+  }
 })
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
     state: null,
     key: 'testKey'
   }),
-  useParams: jest.fn().mockReturnValue({})
+  useParams: vi.fn().mockReturnValue({})
 }))
 
 const setup = setupTest({
   Component: SecondaryToolbar,
   defaultZustandState: {
     savedProject: {
-      setProjectName: jest.fn()
+      setProjectName: vi.fn()
     },
     user: {
-      logout: jest.fn()
+      logout: vi.fn()
     }
   },
   withApolloClient: true,
@@ -55,7 +59,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('SecondaryToolbar component', () => {
@@ -91,7 +95,7 @@ describe('SecondaryToolbar component', () => {
 
   describe('when logged in', () => {
     beforeEach(() => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'prod'
       }))
@@ -217,8 +221,8 @@ describe('SecondaryToolbar component', () => {
 
       await user.type(projectNameField, 'test project name')
 
-      const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
-      const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
+      const preventDefaultSpy = vi.spyOn(Event.prototype, 'preventDefault')
+      const stopPropagationSpy = vi.spyOn(Event.prototype, 'stopPropagation')
 
       await user.type(projectNameField, '{Enter}')
 
@@ -249,8 +253,8 @@ describe('SecondaryToolbar component', () => {
 
       await user.type(projectNameField, 'test project name')
 
-      const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
-      const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
+      const preventDefaultSpy = vi.spyOn(Event.prototype, 'preventDefault')
+      const stopPropagationSpy = vi.spyOn(Event.prototype, 'stopPropagation')
 
       await user.type(projectNameField, '{space}')
 

@@ -2,12 +2,12 @@ import { useLocation } from 'react-router-dom'
 import * as tinyCookie from 'tiny-cookie'
 
 import { AuthCallbackContainer } from '../AuthCallbackContainer'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import useEdscStore from '../../../zustand/useEdscStore'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
@@ -16,8 +16,8 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.mock('tiny-cookie', () => ({
-  set: jest.fn()
+vi.mock('tiny-cookie', () => ({
+  set: vi.fn()
 }))
 
 const setup = setupTest({
@@ -25,7 +25,7 @@ const setup = setupTest({
   defaultZustandState: {
     earthdataDownloadRedirect: {
       redirect: '',
-      setRedirectUrl: jest.fn()
+      setRedirectUrl: vi.fn()
     }
   },
   withRouter: true
@@ -43,9 +43,9 @@ describe('AuthCallbackContainer component', () => {
       search: '?edlToken=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -61,9 +61,9 @@ describe('AuthCallbackContainer component', () => {
       search: '?edlToken=mockjwttoken&redirect=earthdata-download%3A%2F%2FauthCallback'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -83,9 +83,9 @@ describe('AuthCallbackContainer component', () => {
       search: 'eddRedirect=earthdata-download%3A%2F%2FeulaCallback'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -105,9 +105,9 @@ describe('AuthCallbackContainer component', () => {
       search: ''
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -123,9 +123,9 @@ describe('AuthCallbackContainer component', () => {
       search: '?redirect=javascript:alert(document.domain);'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -140,9 +140,9 @@ describe('AuthCallbackContainer component', () => {
       search: '?redirect=https://evil.com'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -157,9 +157,9 @@ describe('AuthCallbackContainer component', () => {
       search: '?eddRedirect=https://evil.com'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -174,9 +174,9 @@ describe('AuthCallbackContainer component', () => {
       search: '?eddRedirect=javascript:alert(document.domain);'
     })
 
-    const setSpy = jest.spyOn(tinyCookie, 'set')
+    const setSpy = vi.spyOn(tinyCookie, 'set')
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 

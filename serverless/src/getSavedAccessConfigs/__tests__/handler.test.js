@@ -9,9 +9,9 @@ let dbConnectionToMock
 let dbTracker
 
 beforeEach(() => {
-  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
+  vi.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
       debug: false
@@ -33,7 +33,7 @@ afterEach(() => {
 
 describe('getSavedAccessConfigs', () => {
   test('does not return configuration if none exist', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -65,7 +65,7 @@ describe('getSavedAccessConfigs', () => {
   })
 
   test('returns the saved access configuration with the old `form_digest`', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -124,7 +124,7 @@ describe('getSavedAccessConfigs', () => {
   })
 
   test('returns the saved access configuration with the new `formDigest`', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {

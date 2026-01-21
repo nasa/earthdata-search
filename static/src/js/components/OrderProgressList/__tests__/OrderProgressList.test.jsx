@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react'
 import { OrderProgressList } from '../OrderProgressList'
 
 import { retrievalStatusPropsEsi } from './mocks'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: OrderProgressList,

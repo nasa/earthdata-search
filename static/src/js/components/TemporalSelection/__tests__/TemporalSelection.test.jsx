@@ -3,28 +3,28 @@ import MockDate from 'mockdate'
 import InputRange from 'react-input-range'
 import Alert from 'react-bootstrap/Alert'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import TemporalSelection from '../TemporalSelection'
 import DatepickerContainer from '../../../containers/DatepickerContainer/DatepickerContainer'
 
-jest.mock('../../../containers/DatepickerContainer/DatepickerContainer', () => jest.fn(() => null))
+vi.mock('../../../containers/DatepickerContainer/DatepickerContainer', () => ({ default: vi.fn(() => null) }))
 
-jest.mock('react-bootstrap/Alert', () => jest.fn(() => null))
-jest.mock('react-input-range', () => jest.fn(() => null))
+vi.mock('react-bootstrap/Alert', () => ({ default: vi.fn(() => null) }))
+vi.mock('react-input-range', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: TemporalSelection,
   defaultProps: {
     controlId: 'test-id',
     temporal: {},
-    onRecurringToggle: jest.fn(),
-    onChangeRecurring: jest.fn(),
-    onSubmitStart: jest.fn(),
-    onSubmitEnd: jest.fn(),
-    onInvalid: jest.fn(),
-    onValid: jest.fn(),
-    onSliderChange: jest.fn(),
+    onRecurringToggle: vi.fn(),
+    onChangeRecurring: vi.fn(),
+    onSubmitStart: vi.fn(),
+    onSubmitEnd: vi.fn(),
+    onInvalid: vi.fn(),
+    onValid: vi.fn(),
+    onSliderChange: vi.fn(),
     viewMode: 'years'
   }
 })
@@ -327,7 +327,7 @@ describe('TemporalSelection component', () => {
     // Verify onChangeRecurring was not called during onChange
     expect(props.onChangeRecurring).toHaveBeenCalledTimes(0)
 
-    jest.clearAllMocks()
+    vi.clearAllMocks()
 
     inputRange.onChangeComplete({
       min: 2018,

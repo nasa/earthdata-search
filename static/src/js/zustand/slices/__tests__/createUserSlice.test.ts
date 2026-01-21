@@ -10,8 +10,8 @@ import { initialSitePreferences } from '../createUserSlice'
 import type { PreferencesData } from '../../types'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
 
-jest.mock('tiny-cookie', () => ({
-  remove: jest.fn()
+vi.mock('tiny-cookie', () => ({
+  remove: vi.fn()
 }))
 
 describe('createUserSlice', () => {
@@ -40,7 +40,7 @@ describe('createUserSlice', () => {
         configurable: true,
         enumerable: true,
         value: {
-          assign: jest.fn()
+          assign: vi.fn()
         }
       })
     })
@@ -54,7 +54,7 @@ describe('createUserSlice', () => {
     })
 
     test('clears the user state and redirects the user', () => {
-      const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
+      const localStorageRemoveItemSpy = vi.spyOn(Storage.prototype, 'removeItem')
       useEdscStore.setState((state) => {
         state.earthdataEnvironment.currentEnvironment = 'prod'
       })
@@ -146,7 +146,7 @@ describe('createUserSlice', () => {
     describe('when mapView preferences have been set', () => {
       test('updates the map slice if the current map view matches the initial state', () => {
         useEdscStore.setState((state) => {
-          state.map.setMapView = jest.fn()
+          state.map.setMapView = vi.fn()
         })
 
         const { setSitePreferences } = useEdscStore.getState().user
@@ -191,7 +191,7 @@ describe('createUserSlice', () => {
 
       test('does not update the map slice if the current map view has been changed', () => {
         useEdscStore.setState((state) => {
-          state.map.setMapView = jest.fn()
+          state.map.setMapView = vi.fn()
           state.map.mapView = {
             zoom: 8,
             latitude: 40,

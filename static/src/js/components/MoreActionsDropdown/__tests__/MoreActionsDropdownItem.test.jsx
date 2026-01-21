@@ -1,20 +1,20 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import MoreActionsDropdownItem from '../MoreActionsDropdownItem'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import Spinner from '../../Spinner/Spinner'
 
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => null))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => null) }))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: MoreActionsDropdownItem,
   defaultProps: {
     className: 'test-class',
     icon: 'FaGlobal',
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     title: 'Test Title'
   }
 })

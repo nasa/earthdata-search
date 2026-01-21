@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { waitFor } from '@testing-library/react'
 
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import setupTest from '../../../../jestConfigs/setupTest'
+import setupTest from '../../../../vitestConfigs/setupTest'
 
 import App from '../App'
 import GraphQlProvider from '../providers/GraphQlProvider'
@@ -13,25 +13,27 @@ import { routes } from '../constants/routes'
 import RouterErrorBoundary from '../components/Errors/RouterErrorBoundary'
 import AppLayout from '../layouts/AppLayout/AppLayout'
 
-jest.mock('../../../../sharedUtils/config', () => ({
-  getEnvironmentConfig: jest.fn().mockReturnValue({
+vi.mock('../../../../sharedUtils/config', () => ({
+  getEnvironmentConfig: vi.fn().mockReturnValue({
     edscHost: 'https://search.earthdata.nasa.gov'
   }),
-  getApplicationConfig: jest.fn().mockReturnValue({
+  getApplicationConfig: vi.fn().mockReturnValue({
     env: 'dev'
   })
 }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  RouterProvider: jest.fn(() => <div />)
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  RouterProvider: vi.fn(() => <div />)
 }))
 
-jest.mock('../routes/Home/Home', () => jest.fn(() => <div />))
+vi.mock('../routes/Home/Home', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../providers/GraphQlProvider', () => jest.fn(({ children }) => (
-  <div>{children}</div>
-)))
+vi.mock('../providers/GraphQlProvider', () => ({
+  default: vi.fn(({ children }) => (
+    <div>{children}</div>
+  ))
+}))
 
 const setup = setupTest({
   Component: App
@@ -50,10 +52,10 @@ const setupWithHelmet = setupTest({
   Component: HelmetWrapper
 })
 
-const removeMock = jest.fn()
+const removeMock = vi.fn()
 
 beforeEach(() => {
-  jest.spyOn(document, 'getElementById').mockImplementation((id) => {
+  vi.spyOn(document, 'getElementById').mockImplementation((id) => {
     if (id === 'root') {
       return {
         classList: {

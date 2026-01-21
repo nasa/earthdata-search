@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom'
 
 import HomeTopicCard from '../HomeTopicCard'
 import useEdscStore from '../../../zustand/useEdscStore'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children, to, onClick }) => (<Link to={to} onClick={onClick}>{ children }</Link>)))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn(
+    ({ children, to, onClick }) => (<Link to={to} onClick={onClick}>{ children }</Link>)
+  )
+}))
 
 const setup = setupTest({
   ComponentsByRoute: {
@@ -22,7 +26,7 @@ const setup = setupTest({
   },
   defaultZustandState: {
     home: {
-      setOpenFacetGroup: jest.fn()
+      setOpenFacetGroup: vi.fn()
     }
   },
   withRouter: true

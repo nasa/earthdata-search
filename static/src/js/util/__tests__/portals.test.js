@@ -4,14 +4,9 @@ import * as getApplicationConfig from '../../../../../sharedUtils/config'
 // References portals/__mocks__/availablePortals.json in test
 import availablePortals from '../../../../../portals/availablePortals.json'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('isDefaultPortal', () => {
   beforeEach(() => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       defaultPortal: 'edsc'
     }))
   })

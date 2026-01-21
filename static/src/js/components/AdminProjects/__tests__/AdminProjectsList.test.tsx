@@ -1,14 +1,14 @@
 import { screen, within } from '@testing-library/react'
 
 import AdminProjectsList from '../AdminProjectsList'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import ADMIN_PROJECTS from '../../../operations/queries/adminProjects'
 import { routes } from '../../../constants/routes'
 import { adminSortKeys } from '../../../constants/adminSortKeys'
 
-const mockUseNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockUseNavigate = vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockUseNavigate
 }))
 

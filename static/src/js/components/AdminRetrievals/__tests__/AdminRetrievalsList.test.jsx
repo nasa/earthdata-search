@@ -5,14 +5,14 @@ import {
 } from '@testing-library/react'
 
 import AdminRetrievalsList from '../AdminRetrievalsList'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import ADMIN_RETRIEVALS from '../../../operations/queries/adminRetrievals'
 import { routes } from '../../../constants/routes'
 import { adminSortKeys } from '../../../constants/adminSortKeys'
 
-const mockUseNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockUseNavigate = vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockUseNavigate
 }))
 

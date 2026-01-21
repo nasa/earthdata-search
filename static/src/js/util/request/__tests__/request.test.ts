@@ -85,7 +85,7 @@ describe('Request#search', () => {
   test('calls Request#post', () => {
     const request = new Request(baseUrl, 'prod')
 
-    const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
+    const postMock = vi.spyOn(Request.prototype, 'post')
 
     const params = {
       conceptId: 'C123456-EDSC'

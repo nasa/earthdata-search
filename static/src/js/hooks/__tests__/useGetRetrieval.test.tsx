@@ -1,20 +1,21 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../vitestConfigs/setupTest'
 import { useGetRetrieval } from '../useGetRetrieval'
 import GET_RETRIEVAL from '../../operations/queries/getRetrieval'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/downloads/123456',
     search: '',
     hash: '',
     state: null,
     key: 'testKey'
   }),
-  useParams: jest.fn().mockReturnValue({
+  useParams: vi.fn().mockReturnValue({
     id: '123456'
   })
 }))
@@ -92,11 +93,11 @@ describe('useGetRetrieval', () => {
               obfuscatedId: '123456'
             }
           },
-          error: new Error('An error occurred')
+          error: new ApolloError({ errorMessage: 'An error occurred' })
         }],
         overrideZustandState: {
           errors: {
-            handleError: jest.fn()
+            handleError: vi.fn()
           }
         }
       })
@@ -108,7 +109,7 @@ describe('useGetRetrieval', () => {
 
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
         action: 'getRetrieval',
-        error: new Error('An error occurred'),
+        error: new ApolloError({ errorMessage: 'An error occurred' }),
         resource: 'retrieval'
       })
     })

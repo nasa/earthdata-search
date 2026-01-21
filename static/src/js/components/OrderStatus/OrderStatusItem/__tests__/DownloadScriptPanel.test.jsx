@@ -1,16 +1,16 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 
 import * as generateDownloadScript from '../../../../util/files/generateDownloadScript'
 
 import DownloadScriptPanel from '../DownloadScriptPanel'
 import TextWindowActions from '../../../TextWindowActions/TextWindowActions'
 
-jest.mock('../../../TextWindowActions/TextWindowActions', () => jest.fn(() => <div />))
+vi.mock('../../../TextWindowActions/TextWindowActions', () => ({ default: vi.fn(() => <div />) }))
 
-jest.useFakeTimers({ legacyFakeTimers: true })
+vi.useFakeTimers()
 
 const setup = setupTest({
   Component: DownloadScriptPanel,
@@ -35,7 +35,7 @@ describe('DownloadScriptPanel', () => {
 
   describe('when panel is provided granule links', () => {
     test('renders a TextWindowActions component', () => {
-      const generateDownloadScriptMock = jest.spyOn(generateDownloadScript, 'generateDownloadScript').mockReturnValue('mock script')
+      const generateDownloadScriptMock = vi.spyOn(generateDownloadScript, 'generateDownloadScript').mockReturnValue('mock script')
 
       setup({
         overrideProps: {

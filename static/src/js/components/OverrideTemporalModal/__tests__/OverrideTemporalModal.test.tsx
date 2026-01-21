@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import OverrideTemporalModal from '../OverrideTemporalModal'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
 const setup = setupTest({
@@ -14,7 +14,7 @@ const setup = setupTest({
           startDate: '2015-07-01T06:14:00.000Z'
         }
       },
-      changeQuery: jest.fn()
+      changeQuery: vi.fn()
     },
     timeline: {
       query: {
@@ -25,7 +25,7 @@ const setup = setupTest({
     ui: {
       modals: {
         openModal: MODAL_NAMES.OVERRIDE_TEMPORAL,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

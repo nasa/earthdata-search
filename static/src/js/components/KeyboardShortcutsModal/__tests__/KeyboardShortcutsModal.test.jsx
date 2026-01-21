@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import KeyboardShortcutsModal, { keyboardShortcutsList } from '../KeyboardShortcutsModal'
 import { MODAL_NAMES } from '../../../constants/modalNames'
@@ -12,7 +12,7 @@ const setup = setupTest({
     ui: {
       modals: {
         openModal: MODAL_NAMES.KEYBOARD_SHORTCUTS,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

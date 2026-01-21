@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import VariableDetailsPanel from '../VariableDetailsPanel'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: VariableDetailsPanel,

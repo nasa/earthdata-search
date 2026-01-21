@@ -2,17 +2,17 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 import MockDate from 'mockdate'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
 import { metricsGranuleFilter } from '../../../util/metrics/metricsGranuleFilter'
 
-jest.mock('../../../util/metrics/metricsGranuleFilter', () => ({
-  metricsGranuleFilter: jest.fn()
+vi.mock('../../../util/metrics/metricsGranuleFilter', () => ({
+  metricsGranuleFilter: vi.fn()
 }))
 
-jest.mock('formik', () => ({
-  Form: jest.fn(({ children }) => (
+vi.mock('formik', () => ({
+  Form: vi.fn(({ children }) => (
     <mock-formik>
       {children}
     </mock-formik>
@@ -26,11 +26,11 @@ const setup = setupTest({
   defaultProps: {
     cmrFacetParams: {},
     errors: {},
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleSubmit: jest.fn(),
-    setFieldValue: jest.fn(),
-    setFieldTouched: jest.fn(),
+    handleBlur: vi.fn(),
+    handleChange: vi.fn(),
+    handleSubmit: vi.fn(),
+    setFieldValue: vi.fn(),
+    setFieldTouched: vi.fn(),
     touched: {},
     values: {
       temporal: {
@@ -169,7 +169,7 @@ describe('GranuleFiltersForm component', () => {
                     }
                   }
                 },
-                undoExcludeGranule: jest.fn()
+                undoExcludeGranule: vi.fn()
               }
             }
           })

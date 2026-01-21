@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CollectionResultsTableHeaderCell from '../CollectionResultsTableHeaderCell'
 import { metricsAddCollectionToProject } from '../../../util/metrics/metricsAddCollectionToProject'
 
-jest.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
-  metricsAddCollectionToProject: jest.fn()
+vi.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
+  metricsAddCollectionToProject: vi.fn()
 }))
 
 const setup = setupTest({
@@ -24,8 +24,8 @@ const setup = setupTest({
   },
   defaultZustandState: {
     collection: {
-      viewCollectionDetails: jest.fn(),
-      viewCollectionGranules: jest.fn()
+      viewCollectionDetails: vi.fn(),
+      viewCollectionGranules: vi.fn()
     },
     portal: {
       features: {
@@ -33,8 +33,8 @@ const setup = setupTest({
       }
     },
     project: {
-      addProjectCollection: jest.fn(),
-      removeProjectCollection: jest.fn()
+      addProjectCollection: vi.fn(),
+      removeProjectCollection: vi.fn()
     }
   }
 })

@@ -1,6 +1,8 @@
-import redis from 'redis-mock'
+import asyncRedis from 'async-redis'
 
 import { getCacheConnection } from '../getCacheConnection'
+
+const createClientMock = vi.spyOn(asyncRedis, 'createClient').mockReturnValue('mocked-redis-client')
 
 describe('getCacheConnection', () => {
   const OLD_ENV = process.env
@@ -23,20 +25,16 @@ describe('getCacheConnection', () => {
       test('uses locally defined values', async () => {
         process.env.NODE_ENV = 'development'
 
-        const client = redis.createClient()
+        const connection = getCacheConnection()
 
-        const createClientMock = jest.spyOn(redis, 'createClient').mockImplementation(() => client)
+        expect(connection).toEqual('mocked-redis-client')
 
-        getCacheConnection()
-
-        expect(createClientMock).toBeCalledTimes(1)
-        expect(createClientMock).toBeCalledWith({
+        expect(createClientMock).toHaveBeenCalledTimes(1)
+        expect(createClientMock).toHaveBeenCalledWith({
           host: 'localhost',
           port: '6379',
           return_buffers: true
         })
-
-        createClientMock.mockReset()
       })
     })
   })

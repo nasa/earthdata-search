@@ -1,15 +1,15 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-import { ProjectCollectionsList } from '../ProjectCollectionsList'
+import ProjectCollectionsList from '../ProjectCollectionsList'
 import ProjectCollectionItem from '../ProjectCollectionItem'
 
-jest.mock('../ProjectCollectionItem', () => jest.fn(() => <div />))
+vi.mock('../ProjectCollectionItem', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/projects',
     search: '?p=!C1205428742-ASF&pg[1][v]=t&pg[1][m]=download&pg[1][cd]=f&tl=1574502188.065!5!!',
     hash: '',
@@ -29,9 +29,9 @@ const setup = setupTest({
         mock: 'data 2'
       }
     },
-    onSetActivePanel: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
-    onTogglePanels: jest.fn(),
+    onSetActivePanel: vi.fn(),
+    onSetActivePanelSection: vi.fn(),
+    onTogglePanels: vi.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: true
@@ -51,7 +51,8 @@ const setup = setupTest({
         }
       }
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('ProjectCollectionsList component', () => {

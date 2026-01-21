@@ -5,15 +5,15 @@ import {
   waitFor
 } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CopyableText from '../CopyableText'
 
 import addToast from '../../../util/addToast'
 
-jest.mock('../../../util/addToast', () => ({
+vi.mock('../../../util/addToast', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
 const setup = setupTest({
@@ -44,7 +44,7 @@ describe('CopyableText', () => {
 
   describe('when clicked', () => {
     test('prevents event propagation', async () => {
-      const stopPropagationMock = jest.fn()
+      const stopPropagationMock = vi.fn()
 
       setup()
 
@@ -63,7 +63,7 @@ describe('CopyableText', () => {
       test('calls the onClick method', async () => {
         const { props, user } = setup({
           overrideProps: {
-            onClick: jest.fn()
+            onClick: vi.fn()
           }
         })
 
@@ -85,7 +85,7 @@ describe('CopyableText', () => {
         test('does not display a toast', async () => {
           const { user } = setup()
 
-          const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
+          const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText')
 
           const button = screen.getByRole('button', { value: 'The text' })
           await user.click(button)
@@ -106,7 +106,7 @@ describe('CopyableText', () => {
               }
             })
 
-            const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
+            const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText')
 
             const button = screen.getByRole('button', { value: 'The text' })
             await user.click(button)
@@ -127,7 +127,7 @@ describe('CopyableText', () => {
 
         describe('when the success message is a function', () => {
           test('passes arguments to the function', async () => {
-            const successMessageMock = jest.fn(() => 'This is the success message')
+            const successMessageMock = vi.fn(() => 'This is the success message')
 
             const { user } = setup({
               overrideProps: {
@@ -135,7 +135,7 @@ describe('CopyableText', () => {
               }
             })
 
-            const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
+            const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText')
 
             const button = screen.getByRole('button', { value: 'The text' })
             await user.click(button)
@@ -171,7 +171,7 @@ describe('CopyableText', () => {
               }
             })
 
-            jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
+            vi.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
               throw new Error('The clipboard API is not supported')
             })
 
@@ -193,11 +193,11 @@ describe('CopyableText', () => {
           test('passes arguments to the function', async () => {
             const { props, user } = setup({
               overrideProps: {
-                failureMessage: jest.fn(() => 'This is the failure message')
+                failureMessage: vi.fn(() => 'This is the failure message')
               }
             })
 
-            jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
+            vi.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
               throw new Error('The clipboard API is not supported')
             })
 
@@ -216,7 +216,7 @@ describe('CopyableText', () => {
             }
           })
 
-          jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
+          vi.spyOn(navigator.clipboard, 'writeText').mockImplementation(() => {
             throw new Error('The clipboard API is not supported')
           })
 
@@ -244,7 +244,7 @@ describe('CopyableText', () => {
             }
           })
 
-          const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
+          const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText')
 
           const button = screen.getByRole('button', { value: 'The text' })
           await user.click(button)
@@ -258,11 +258,11 @@ describe('CopyableText', () => {
         test('calls the function with arguments and copies the text to the clipboard', async () => {
           const { props, user } = setup({
             overrideProps: {
-              textToCopy: jest.fn(() => 'Some other text to copy')
+              textToCopy: vi.fn(() => 'Some other text to copy')
             }
           })
 
-          const writeTextSpy = jest.spyOn(navigator.clipboard, 'writeText')
+          const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText')
 
           const button = screen.getByRole('button', { value: 'The text' })
           await user.click(button)

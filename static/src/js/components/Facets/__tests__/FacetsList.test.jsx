@@ -1,17 +1,17 @@
 import { act, waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import FacetsList from '../FacetsList'
 import FacetsItem from '../FacetsItem'
 import useEdscStore from '../../../zustand/useEdscStore'
 
-jest.mock('../FacetsItem', () => jest.fn(() => null))
+vi.mock('../FacetsItem', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: FacetsList,
   defaultProps: {
     facetCategory: 'test_category',
-    changeHandler: jest.fn(),
+    changeHandler: vi.fn(),
     facets: [
       {
         title: 'Facet 1',
@@ -94,7 +94,7 @@ describe('FacetsList', () => {
 
         const firstFacet = FacetsItem.mock.calls[0][0].facet
 
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         // Simulate applying the first facet
         await act(() => {
@@ -154,7 +154,7 @@ describe('FacetsList', () => {
             firstFacet.setApplyingFacet('Facet 1')
           })
 
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           // Update the store to set isLoading to false
           await act(() => {
@@ -222,7 +222,7 @@ describe('FacetsList', () => {
 
         const firstFacet = FacetsItem.mock.calls[0][0].facet
 
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         // Simulate applying the first facet
         await act(() => {
@@ -282,7 +282,7 @@ describe('FacetsList', () => {
             firstFacet.setApplyingFacet('Facet 1')
           })
 
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           // Update the store to set isLoading to false
           await act(() => {

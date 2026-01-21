@@ -5,18 +5,20 @@ import {
   within
 } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EDSCImage from '../../EDSCImage/EDSCImage'
 
 import GranuleResultsFocusedMeta from '../GranuleResultsFocusedMeta'
 import { metricsBrowseGranuleImage } from '../../../util/metrics/metricsBrowseGranuleImage'
 
-jest.mock('../../../util/metrics/metricsBrowseGranuleImage', () => ({
-  metricsBrowseGranuleImage: jest.fn()
+vi.mock('../../../util/metrics/metricsBrowseGranuleImage', () => ({
+  metricsBrowseGranuleImage: vi.fn()
 }))
 
-jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(({ className }) => <div className={className} data-testid="mock-edsc-image">EDSC Image</div>))
+vi.mock('../../EDSCImage/EDSCImage', () => ({
+  default: vi.fn(({ className }) => <div className={className} data-testid="mock-edsc-image">EDSC Image</div>)
+}))
 
 const setup = setupTest({
   Component: GranuleResultsFocusedMeta,

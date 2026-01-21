@@ -5,7 +5,7 @@ import { decodeDeprecatedMapParam } from '../deprecatedEncoders'
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
 beforeEach(() => {
-  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 })
 
 describe('url#decodeUrlParams', () => {

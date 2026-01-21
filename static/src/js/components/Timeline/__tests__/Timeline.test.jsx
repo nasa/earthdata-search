@@ -10,15 +10,15 @@ import EDSCTimeline from '@edsc/timeline'
 
 import Timeline from '../Timeline'
 import useEdscStore from '../../../zustand/useEdscStore'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsTimeline } from '../../../util/metrics/metricsTimeline'
 
-jest.mock('../../../util/metrics/metricsTimeline', () => ({
-  metricsTimeline: jest.fn()
+vi.mock('../../../util/metrics/metricsTimeline', () => ({
+  metricsTimeline: vi.fn()
 }))
 
-jest.mock('@edsc/timeline', () => jest.fn(() => <div />))
+vi.mock('@edsc/timeline', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: Timeline,
@@ -36,19 +36,19 @@ const setup = setupTest({
     showOverrideModal: false,
     pathname: '/search/granules',
     projectCollectionsIds: ['collectionId'],
-    onToggleTimeline: jest.fn(),
+    onToggleTimeline: vi.fn(),
     isOpen: true
   },
   defaultZustandState: {
     query: {
-      changeQuery: jest.fn()
+      changeQuery: vi.fn()
     },
     timeline: {
-      setQuery: jest.fn()
+      setQuery: vi.fn()
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }
@@ -151,7 +151,7 @@ describe('Timeline component', () => {
       },
       overrideZustandState: {
         timeline: {
-          getTimeline: jest.fn(),
+          getTimeline: vi.fn(),
           intervals: {
             collectionId: [
               [
@@ -195,7 +195,7 @@ describe('Timeline component', () => {
       },
       overrideZustandState: {
         timeline: {
-          getTimeline: jest.fn(),
+          getTimeline: vi.fn(),
           intervals: {
             someCollection: [
               [1525132800, 1618185600]
@@ -245,7 +245,7 @@ describe('Timeline component', () => {
       },
       overrideZustandState: {
         timeline: {
-          getTimeline: jest.fn(),
+          getTimeline: vi.fn(),
           intervals: {
             firstCollection: [
               [
@@ -307,7 +307,7 @@ describe('handleTimelineMoveEnd', () => {
     setup({
       overrideZustandState: {
         timeline: {
-          setQuery: jest.fn(),
+          setQuery: vi.fn(),
           intervals: {},
           query: {}
         }
@@ -488,7 +488,7 @@ describe('handleFocusedSet', () => {
     setup({
       overrideZustandState: {
         timeline: {
-          setQuery: jest.fn()
+          setQuery: vi.fn()
         }
       }
     })
@@ -519,7 +519,7 @@ describe('handleFocusedSet', () => {
     setup({
       overrideZustandState: {
         timeline: {
-          setQuery: jest.fn()
+          setQuery: vi.fn()
         }
       }
     })

@@ -2,7 +2,7 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 import { FaDoorOpen } from 'react-icons/fa'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CollectionResultsBody from '../CollectionResultsBody'
 import CollectionResultsList from '../CollectionResultsList'
@@ -11,13 +11,13 @@ import CollectionResultsTable from '../CollectionResultsTable'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import * as PortalUtils from '../../../util/portals'
 
-jest.mock('../CollectionResultsList', () => jest.fn(() => <div />))
-jest.mock('../CollectionResultsTable', () => jest.fn(() => <div />))
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+vi.mock('../CollectionResultsList', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../CollectionResultsTable', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
@@ -29,7 +29,7 @@ jest.mock('react-router-dom', () => ({
 const setup = setupTest({
   Component: CollectionResultsBody,
   defaultProps: {
-    loadNextPage: jest.fn(),
+    loadNextPage: vi.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
@@ -240,7 +240,7 @@ describe('CollectionResultsBody component', () => {
 
   describe('when in the default portal', () => {
     test('does not show the link to the default portal', () => {
-      jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
+      vi.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
       setup()
 
       expect(PortalLinkContainer).toHaveBeenCalledTimes(0)
@@ -249,7 +249,7 @@ describe('CollectionResultsBody component', () => {
 
   describe('when not in the default portal', () => {
     test('does not show the link to the default portal', () => {
-      jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => false)
+      vi.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => false)
       setup({
         overrideZustandState: {
           portal: {

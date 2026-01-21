@@ -2,7 +2,7 @@ import { metricsSpatialEdit } from '../metricsSpatialEdit'
 
 describe('metricsSpatialEdit', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsSpatialEdit({
       distanceSum: 1234.56,

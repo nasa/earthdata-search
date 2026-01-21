@@ -6,7 +6,7 @@ import { getSingleGranule } from '../getSingleGranule'
 
 describe('getSingleGranule', () => {
   test('returns the first granule from a standard request', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'http://cmr.example.com'
     }))
 

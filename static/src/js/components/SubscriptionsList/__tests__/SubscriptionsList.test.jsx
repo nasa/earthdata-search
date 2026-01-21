@@ -1,7 +1,7 @@
 import React from 'react'
 import { waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
@@ -11,8 +11,8 @@ import SubscriptionsList from '../SubscriptionsList'
 import SubscriptionsListTable from '../SubscriptionsListTable'
 import SUBSCRIPTIONS from '../../../operations/queries/subscriptions'
 
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
-jest.mock('../SubscriptionsListTable', () => jest.fn(() => <div />))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../SubscriptionsListTable', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: SubscriptionsList,
@@ -42,7 +42,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 })
 
 describe('SubscriptionsList component', () => {

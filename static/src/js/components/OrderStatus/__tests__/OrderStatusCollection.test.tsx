@@ -1,7 +1,8 @@
 import React from 'react'
 import { waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import DownloadStatusItem from '../AccessMethodItems/DownloadStatusItem'
 import EchoOrderStatusItem from '../AccessMethodItems/EchoOrderStatusItem'
@@ -15,13 +16,13 @@ import SwodlrStatusItem from '../AccessMethodItems/SwodlrStatusItem'
 
 import GET_RETRIEVAL_COLLECTION from '../../../operations/queries/getRetrievalCollection'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
-jest.mock('../AccessMethodItems/DownloadStatusItem', () => jest.fn(() => <div />))
-jest.mock('../AccessMethodItems/EchoOrderStatusItem', () => jest.fn(() => <div />))
-jest.mock('../AccessMethodItems/EsiStatusItem', () => jest.fn(() => <div />))
-jest.mock('../AccessMethodItems/HarmonyStatusItem', () => jest.fn(() => <div />))
-jest.mock('../AccessMethodItems/OpendapStatusItem', () => jest.fn(() => <div />))
-jest.mock('../AccessMethodItems/SwodlrStatusItem', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../AccessMethodItems/DownloadStatusItem', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../AccessMethodItems/EchoOrderStatusItem', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../AccessMethodItems/EsiStatusItem', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../AccessMethodItems/HarmonyStatusItem', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../AccessMethodItems/OpendapStatusItem', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../AccessMethodItems/SwodlrStatusItem', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: OrderStatusCollection,
@@ -40,7 +41,7 @@ const collectionMetadata = {
 }
 
 afterEach(() => {
-  jest.useRealTimers()
+  vi.useRealTimers()
 })
 
 describe('OrderStatusCollection', () => {
@@ -116,11 +117,11 @@ describe('OrderStatusCollection', () => {
               obfuscatedId: '12345'
             }
           },
-          error: new Error('An error occurred')
+          error: new ApolloError({ errorMessage: 'An error occurred' })
         }],
         overrideZustandState: {
           errors: {
-            handleError: jest.fn()
+            handleError: vi.fn()
           }
         }
       })
@@ -132,7 +133,7 @@ describe('OrderStatusCollection', () => {
 
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
         action: 'getRetrievalCollection',
-        error: new Error('An error occurred'),
+        error: new ApolloError({ errorMessage: 'An error occurred' }),
         resource: 'collection'
       })
     })
@@ -316,7 +317,9 @@ describe('OrderStatusCollection', () => {
 
     describe('when the order isn\'t complete', () => {
       beforeEach(() => {
-        jest.useFakeTimers({ legacyFakeTimers: true })
+        vi.useFakeTimers({
+          shouldAdvanceTime: true
+        })
       })
 
       test('refreshes the order status', async () => {
@@ -401,10 +404,10 @@ describe('OrderStatusCollection', () => {
         }, {})
 
         // Clear existing mocks
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         // Advance the time by the poll interval
-        jest.advanceTimersByTime(5000)
+        vi.advanceTimersByTime(5000)
 
         // Test the second render after the load
         await waitFor(() => {
@@ -504,7 +507,9 @@ describe('OrderStatusCollection', () => {
 
     describe('when the order isn\'t complete', () => {
       beforeEach(() => {
-        jest.useFakeTimers({ legacyFakeTimers: true })
+        vi.useFakeTimers({
+          shouldAdvanceTime: true
+        })
       })
 
       test('refreshes the order status', async () => {
@@ -589,10 +594,10 @@ describe('OrderStatusCollection', () => {
         }, {})
 
         // Clear existing mocks
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         // Advance the time by the poll interval
-        jest.advanceTimersByTime(60000)
+        vi.advanceTimersByTime(60000)
 
         // Test the second render after the load
         await waitFor(() => {
@@ -760,7 +765,9 @@ describe('OrderStatusCollection', () => {
 
     describe('when the order isn\'t complete', () => {
       beforeEach(() => {
-        jest.useFakeTimers({ legacyFakeTimers: true })
+        vi.useFakeTimers({
+          shouldAdvanceTime: true
+        })
       })
 
       test('refreshes the order status', async () => {
@@ -859,10 +866,10 @@ describe('OrderStatusCollection', () => {
         }, {})
 
         // Clear existing mocks
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         // Advance the time by the poll interval
-        jest.advanceTimersByTime(60000)
+        vi.advanceTimersByTime(60000)
 
         // Test the second render after the load
         await waitFor(() => {

@@ -42,7 +42,7 @@ const setup = (overrideProps, renderForTyping = false) => {
     label: 'Test Datepicker',
     minDate: minimumTemporalDateString,
     maxDate: moment.utc().format(temporalDateFormatFull),
-    onSubmit: jest.fn(),
+    onSubmit: vi.fn(),
     ...overrideProps
   }
 

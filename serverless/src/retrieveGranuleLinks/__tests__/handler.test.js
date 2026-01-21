@@ -12,16 +12,16 @@ import retrieveGranuleLinks from '../handler'
 
 let dbTracker
 
-jest.mock('uuid')
+vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
 beforeEach(() => {
-  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({
+  vi.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({
     jwtToken: 'mock-access-token',
     userId: 1
   }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -51,7 +51,7 @@ describe('retrieveGranuleLinks', () => {
         ]
       }
     }
-    const fetchCmrLinksMock = jest.spyOn(fetchCmrLinks, 'fetchCmrLinks').mockImplementation(() => expectedResponse)
+    const fetchCmrLinksMock = vi.spyOn(fetchCmrLinks, 'fetchCmrLinks').mockImplementation(() => expectedResponse)
 
     dbTracker.on('query', (query) => {
       query.response([{
@@ -119,7 +119,7 @@ describe('retrieveGranuleLinks', () => {
         ]
       }
     }
-    const fetchOpenSearchLinksMock = jest.spyOn(fetchOpenSearchLinks, 'fetchOpenSearchLinks').mockImplementation(() => expectedResponse)
+    const fetchOpenSearchLinksMock = vi.spyOn(fetchOpenSearchLinks, 'fetchOpenSearchLinks').mockImplementation(() => expectedResponse)
 
     dbTracker.on('query', (query) => {
       query.response([{
@@ -188,7 +188,7 @@ describe('retrieveGranuleLinks', () => {
         ]
       }
     }
-    const fetchOpendapLinksMock = jest.spyOn(fetchOpendapLinks, 'fetchOpendapLinks').mockImplementation(() => expectedResponse.links)
+    const fetchOpendapLinksMock = vi.spyOn(fetchOpendapLinks, 'fetchOpendapLinks').mockImplementation(() => expectedResponse.links)
 
     dbTracker.on('query', (query) => {
       query.response([{

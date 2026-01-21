@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import ProjectCollections from '../ProjectCollections'
 import ProjectCollectionsList from '../ProjectCollectionsList'
@@ -11,12 +11,12 @@ import * as isProjectValid from '../../../util/isProjectValid'
 import { validAccessMethod } from '../../../util/accessMethods'
 import { metricsDataAccess } from '../../../util/metrics/metricsDataAccess'
 
-jest.mock('../../../util/metrics/metricsDataAccess', () => ({
-  metricsDataAccess: jest.fn()
+vi.mock('../../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: vi.fn()
 }))
 
-jest.mock('../ProjectCollectionsList', () => jest.fn(() => <div />))
-jest.mock('../ProjectHeader', () => jest.fn(() => <div />))
+vi.mock('../ProjectCollectionsList', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../ProjectHeader', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: ProjectCollections,
@@ -50,18 +50,18 @@ const setup = setupTest({
         }
       },
       isSubmitting: false,
-      getProjectGranules: jest.fn(),
-      removeProjectCollection: jest.fn(),
-      toggleCollectionVisibility: jest.fn()
+      getProjectGranules: vi.fn(),
+      removeProjectCollection: vi.fn(),
+      toggleCollectionVisibility: vi.fn()
     },
     projectPanels: {
       panels: {
         activePanel: '0.0.0',
         isOpen: false
       },
-      setActivePanel: jest.fn(),
-      setIsOpen: jest.fn(),
-      setPanelSection: jest.fn()
+      setActivePanel: vi.fn(),
+      setIsOpen: vi.fn(),
+      setPanelSection: vi.fn()
     },
     query: {
       collection: {
@@ -109,7 +109,7 @@ describe('ProjectCollectionsList component', () => {
   describe('help text', () => {
     describe('when all project collections are valid', () => {
       test('displays the correct help text', () => {
-        jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+        vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
           ...validAccessMethod
         }))
 
@@ -123,7 +123,7 @@ describe('ProjectCollectionsList component', () => {
 
     describe('when an access method has not been selected', () => {
       test('displays the correct help text', () => {
-        jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+        vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
           ...validAccessMethod,
           valid: false
         }))
@@ -138,7 +138,7 @@ describe('ProjectCollectionsList component', () => {
 
     describe('when an access method needs customization', () => {
       test('displays the correct help text', () => {
-        jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+        vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
           ...validAccessMethod,
           valid: false,
           needsCustomization: true
@@ -154,7 +154,7 @@ describe('ProjectCollectionsList component', () => {
 
     describe('when a project collection has too many granules', () => {
       test('displays the correct help text', () => {
-        jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+        vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
           ...validAccessMethod,
           valid: false,
           tooManyGranules: true
@@ -170,7 +170,7 @@ describe('ProjectCollectionsList component', () => {
 
     describe('when a project collection has no granules', () => {
       test('displays the correct help text', () => {
-        jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+        vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
           ...validAccessMethod,
           valid: false,
           noGranules: true
@@ -187,7 +187,7 @@ describe('ProjectCollectionsList component', () => {
 
   describe('Download Data button', () => {
     test('is enabled when the project is valid', () => {
-      jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+      vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
         ...validAccessMethod
       }))
 
@@ -200,7 +200,7 @@ describe('ProjectCollectionsList component', () => {
     })
 
     test('is disabled when the project is invalid', () => {
-      jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
+      vi.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
         ...validAccessMethod,
         valid: false
       }))

@@ -2,15 +2,15 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 
 import BrowseLinksPanel from '../BrowseLinksPanel'
 import TextWindowActions from '../../../TextWindowActions/TextWindowActions'
 
-jest.mock('../../../TextWindowActions/TextWindowActions', () => jest.fn(() => <div />))
-jest.mock('react-bootstrap/ProgressBar', () => jest.fn(() => <div />))
+vi.mock('../../../TextWindowActions/TextWindowActions', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('react-bootstrap/ProgressBar', () => ({ default: vi.fn(() => <div />) }))
 
-jest.useFakeTimers({ legacyFakeTimers: true })
+vi.useFakeTimers()
 
 const setup = setupTest({
   Component: BrowseLinksPanel,

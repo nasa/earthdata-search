@@ -1,12 +1,12 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import ProjectHeader from '../ProjectHeader'
 import Skeleton from '../../Skeleton/Skeleton'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: ProjectHeader,
@@ -31,7 +31,7 @@ const setup = setupTest({
       }
     },
     savedProject: {
-      setProjectName: jest.fn()
+      setProjectName: vi.fn()
     }
   }
 })
@@ -562,7 +562,7 @@ describe('ProjectHeader component', () => {
               id: 1,
               name: 'test project'
             },
-            setProjectName: jest.fn()
+            setProjectName: vi.fn()
           }
         }
       })
@@ -582,7 +582,7 @@ describe('ProjectHeader component', () => {
               id: 1,
               name: 'test project'
             },
-            setProjectName: jest.fn()
+            setProjectName: vi.fn()
           }
         }
       })

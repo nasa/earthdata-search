@@ -5,19 +5,19 @@ import { screen } from '@testing-library/react'
 import Legend from '../Legend'
 import LayerPicker from '../../LayerPicker/LayerPicker'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 
 import { ImageryLayers } from '../../../../types/sharedTypes'
 
 // Mock the LayerPicker component
-jest.mock('../../LayerPicker/LayerPicker', () => jest.fn(() => <div />))
+vi.mock('../../LayerPicker/LayerPicker', () => ({ default: vi.fn(() => <div />) }))
 
 const mockCollectionId = 'test-collection'
 
 // Create mock functions
-const mockToggleLayerVisibility = jest.fn()
-const mockSetMapLayersOrder = jest.fn()
-const mockSetLayerOpacity = jest.fn()
+const mockToggleLayerVisibility = vi.fn()
+const mockSetMapLayersOrder = vi.fn()
+const mockSetLayerOpacity = vi.fn()
 
 const mockImageryLayersWithLayers: ImageryLayers = {
   layerData: [

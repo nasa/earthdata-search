@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import PreferencesNumberField from '../PreferencesNumberField'
 
@@ -12,7 +12,7 @@ const setup = setupTest({
     },
     name: 'testField',
     formData: 42,
-    onChange: jest.fn()
+    onChange: vi.fn()
   }
 })
 

@@ -12,13 +12,11 @@ import submitSwodlrOrder from '../handler'
 
 let dbTracker
 
-jest.mock('uuid')
+vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -40,9 +38,9 @@ afterEach(() => {
 
 describe('submitSwodlrOrder', () => {
   test('correctly submits order to swodlr', async () => {
-    const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
-      .mockImplementation(() => (jest.fn()))
-    const consoleMock = jest.spyOn(console, 'log')
+    const startOrderStatusUpdateWorkflowMock = vi.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+      .mockImplementation(() => (vi.fn()))
+    const consoleMock = vi.spyOn(console, 'log')
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
@@ -228,7 +226,7 @@ describe('submitSwodlrOrder', () => {
       updatedAt: '2024-04-22T20:30:05.061178'
     }, 'creating', 12])
 
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'SWODLR')
+    expect(startOrderStatusUpdateWorkflowMock).toHaveBeenCalledWith(12, 'access-token', 'SWODLR')
   })
 
   test('saves an error message if the create fails from an http error', async () => {
@@ -546,9 +544,9 @@ describe('submitSwodlrOrder', () => {
 
   describe('when the order is already in the READY state', () => {
     test('saves the state as GENERATING', async () => {
-      const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
-        .mockImplementation(() => (jest.fn()))
-      const consoleMock = jest.spyOn(console, 'log')
+      const startOrderStatusUpdateWorkflowMock = vi.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+        .mockImplementation(() => (vi.fn()))
+      const consoleMock = vi.spyOn(console, 'log')
 
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
@@ -654,7 +652,7 @@ describe('submitSwodlrOrder', () => {
         updatedAt: '2024-04-22T20:30:05.061178'
       }, 'in_progress', 12])
 
-      expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'SWODLR')
+      expect(startOrderStatusUpdateWorkflowMock).toHaveBeenCalledWith(12, 'access-token', 'SWODLR')
     })
   })
 })

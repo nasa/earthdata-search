@@ -3,13 +3,8 @@ import { v4 as uuidv4 } from 'uuid'
 import RetrievalRequest from '../retrievalRequest'
 import Request from '../request'
 
-jest.mock('uuid')
+vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
-
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
 
 describe('RetrievalRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
@@ -24,7 +19,7 @@ describe('RetrievalRequest#constructor', () => {
 
 describe('RetrievalRequest#transformResponse', () => {
   beforeEach(() => {
-    jest.spyOn(RetrievalRequest.prototype, 'handleUnauthorized').mockImplementation()
+    vi.spyOn(RetrievalRequest.prototype, 'handleUnauthorized').mockImplementation()
   })
 
   test('returns data if response is not successful', () => {
@@ -45,12 +40,12 @@ describe('RetrievalRequest#all', () => {
     const token = '123'
     const request = new RetrievalRequest(token)
 
-    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
+    const getMock = vi.spyOn(Request.prototype, 'get').mockImplementation()
 
     request.all()
 
-    expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('retrievals')
+    expect(getMock).toHaveBeenCalledTimes(1)
+    expect(getMock).toHaveBeenCalledWith('retrievals')
   })
 })
 
@@ -59,12 +54,12 @@ describe('RetrievalRequest#remove', () => {
     const token = '123'
     const request = new RetrievalRequest(token)
 
-    const deleteMock = jest.spyOn(Request.prototype, 'delete').mockImplementation()
+    const deleteMock = vi.spyOn(Request.prototype, 'delete').mockImplementation()
 
     const projectId = '12345'
     request.remove(projectId)
 
-    expect(deleteMock).toBeCalledTimes(1)
-    expect(deleteMock).toBeCalledWith('retrievals/12345')
+    expect(deleteMock).toHaveBeenCalledTimes(1)
+    expect(deleteMock).toHaveBeenCalledWith('retrievals/12345')
   })
 })

@@ -10,15 +10,15 @@ import getApolloClient from '../../../providers/getApolloClient'
 import { changePath } from '../changePath'
 import { updateStore } from '../updateStore'
 
-jest.mock('../updateStore', () => ({
+vi.mock('../updateStore', () => ({
   __esModule: true,
-  updateStore: jest.fn()
+  updateStore: vi.fn()
 }))
 
-jest.mock('../../../providers/getApolloClient', () => ({
+vi.mock('../../../providers/getApolloClient', () => ({
   __esModule: true,
-  default: jest.fn().mockReturnValue({
-    query: jest.fn().mockResolvedValue({
+  default: vi.fn().mockReturnValue({
+    query: vi.fn().mockResolvedValue({
       data: {
         project: {
           obfuscatedId: '1',
@@ -32,7 +32,7 @@ jest.mock('../../../providers/getApolloClient', () => ({
 
 describe('changePath', () => {
   test('retrieves path from database if there is a projectId', async () => {
-    const mockQuery = jest.fn().mockResolvedValue({
+    const mockQuery = vi.fn().mockResolvedValue({
       data: {
         project: {
           name: 'Test Project',
@@ -48,13 +48,13 @@ describe('changePath', () => {
 
     useEdscStore.setState((state) => {
       /* eslint-disable no-param-reassign */
-      state.collections.getCollections = jest.fn()
+      state.collections.getCollections = vi.fn()
 
       state.project.collections.allIds = ['C00001-EDSC']
-      state.project.getProjectCollections = jest.fn()
-      state.project.getProjectGranules = jest.fn()
+      state.project.getProjectCollections = vi.fn()
+      state.project.getProjectGranules = vi.fn()
 
-      state.timeline.getTimeline = jest.fn()
+      state.timeline.getTimeline = vi.fn()
       /* eslint-enable no-param-reassign */
     })
 
@@ -134,9 +134,9 @@ describe('changePath', () => {
   test('updates the store if there is not a projectId', async () => {
     useEdscStore.setState((state) => {
       /* eslint-disable no-param-reassign */
-      state.collections.getCollections = jest.fn()
-      state.savedProject.setProject = jest.fn()
-      state.timeline.getTimeline = jest.fn()
+      state.collections.getCollections = vi.fn()
+      state.savedProject.setProject = vi.fn()
+      state.timeline.getTimeline = vi.fn()
       /* eslint-enable no-param-reassign */
     })
 
@@ -194,9 +194,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -225,9 +225,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -256,9 +256,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -286,9 +286,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -319,9 +319,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -350,9 +350,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -381,9 +381,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 
@@ -411,9 +411,9 @@ describe('changePath', () => {
 
         useEdscStore.setState((state) => {
           /* eslint-disable no-param-reassign */
-          state.collection.getCollectionMetadata = jest.fn()
-          state.collections.getCollections = jest.fn()
-          state.granule.getGranuleMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.collections.getCollections = vi.fn()
+          state.granule.getGranuleMetadata = vi.fn()
           /* eslint-enable no-param-reassign */
         })
 

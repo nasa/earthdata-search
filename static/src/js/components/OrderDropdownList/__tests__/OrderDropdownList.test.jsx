@@ -1,11 +1,11 @@
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import OrderDropdownList from '../OrderDropdownList'
 import OrderDropdownItem from '../OrderDropdownItem'
 
 import { retrievalStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
 
-jest.mock('../OrderDropdownItem', () => jest.fn(() => null))
+vi.mock('../OrderDropdownItem', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: OrderDropdownList,

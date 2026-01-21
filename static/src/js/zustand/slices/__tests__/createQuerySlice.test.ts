@@ -28,8 +28,8 @@ describe('createQuerySlice', () => {
     describe('when there is no focused collection', () => {
       test('updates the collection query and calls getCollections', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.project.getProjectGranules = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -65,10 +65,10 @@ describe('createQuerySlice', () => {
       test('updates the collection query and calls getCollections and getSearchGranules', async () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'collectionId'
-          state.collections.getCollections = jest.fn()
+          state.collections.getCollections = vi.fn()
           state.granules.granules.collectionConceptId = 'collectionId'
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectGranules = vi.fn()
           state.query.collection.byId.collectionId = {
             granules: {
               ...initialGranuleQuery,
@@ -112,10 +112,10 @@ describe('createQuerySlice', () => {
     describe('when there is a project collection', () => {
       test('updates the collection query and calls getCollections and getProjectGranules', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.granules.getGranules = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.granules.getGranules = vi.fn()
           state.project.collections.allIds = ['collectionId']
-          state.project.getProjectGranules = jest.fn()
+          state.project.getProjectGranules = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -153,8 +153,8 @@ describe('createQuerySlice', () => {
     describe('when there are spatial values', () => {
       test('updates the store', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.project.getProjectGranules = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -184,7 +184,7 @@ describe('createQuerySlice', () => {
 
       test('it changes the spatial values to a new value', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
+          state.collections.getCollections = vi.fn()
           state.query.collection.spatial = {
             point: ['1,1']
           }
@@ -217,7 +217,7 @@ describe('createQuerySlice', () => {
 
       test('it removes spatial values', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
+          state.collections.getCollections = vi.fn()
           state.query.collection.spatial = {
             point: ['1,1']
           }
@@ -248,8 +248,8 @@ describe('createQuerySlice', () => {
     describe('when there is a selectedRegion value', () => {
       test('updates the store', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.project.getProjectGranules = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -287,8 +287,8 @@ describe('createQuerySlice', () => {
     describe('when the collection does not have a query yet', () => {
       test('updates the granule query and calls actions', async () => {
         useEdscStore.setState((state) => {
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectGranules = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -323,8 +323,8 @@ describe('createQuerySlice', () => {
     describe('when the query is empty', () => {
       test('updates the granule query and calls actions', async () => {
         useEdscStore.setState((state) => {
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectGranules = vi.fn()
           state.query.collection.byId.collectionId = {
             granules: {
               ...initialGranuleQuery,
@@ -363,8 +363,8 @@ describe('createQuerySlice', () => {
       test('updates the granule query and calls actions', async () => {
         useEdscStore.setState((state) => {
           state.granules.granules.collectionConceptId = 'collectionId'
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectGranules = vi.fn()
           state.query.collection.byId.collectionId = {
             granules: {
               ...initialGranuleQuery,
@@ -407,8 +407,8 @@ describe('createQuerySlice', () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'collectionId'
           state.granules.granules.collectionConceptId = 'collectionId'
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectGranules = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectGranules = vi.fn()
           state.project.collections.allIds = ['collectionId']
           state.query.collection.byId.collectionId = {
             granules: {
@@ -453,11 +453,11 @@ describe('createQuerySlice', () => {
     describe('when not on the granules page', () => {
       test('updates the query and calls get functions', async () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectCollections = jest.fn()
-          state.shapefile.clearShapefile = jest.fn()
-          state.timeline.getTimeline = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectCollections = vi.fn()
+          state.shapefile.clearShapefile = vi.fn()
+          state.timeline.getTimeline = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -494,21 +494,21 @@ describe('createQuerySlice', () => {
     describe('when on the granules page', () => {
       test('updates the query and calls get functions', async () => {
         routerHelper.router = {
-          navigate: jest.fn(),
+          navigate: vi.fn(),
           state: {
             location: {
               pathname: '/search/granules',
               search: ''
             }
           },
-          subscribe: jest.fn()
+          subscribe: vi.fn()
         }
 
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.granules.getGranules = jest.fn()
-          state.project.getProjectCollections = jest.fn()
-          state.timeline.getTimeline = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.granules.getGranules = vi.fn()
+          state.project.getProjectCollections = vi.fn()
+          state.timeline.getTimeline = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -544,10 +544,10 @@ describe('createQuerySlice', () => {
 
   describe('excludeGranule', () => {
     test('excludes a granule from the collection', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
       useEdscStore.setState((state) => {
-        state.granules.getGranules = jest.fn()
+        state.granules.getGranules = vi.fn()
         state.query.collection.byId.collectionId = {
           granules: initialGranuleQuery
         }
@@ -613,13 +613,13 @@ describe('createQuerySlice', () => {
   describe('removeSpatialFilter', () => {
     test('removes the spatial filter', async () => {
       useEdscStore.setState((state) => {
-        state.collections.getCollections = jest.fn()
+        state.collections.getCollections = vi.fn()
         state.query.collection.byId.collectionId = {
           granules: initialGranuleQuery
         }
 
-        state.shapefile.clearShapefile = jest.fn()
-        state.ui.map.setDrawingNewLayer = jest.fn()
+        state.shapefile.clearShapefile = vi.fn()
+        state.ui.map.setDrawingNewLayer = vi.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -647,7 +647,7 @@ describe('createQuerySlice', () => {
   describe('undoExcludeGranule', () => {
     test('removes a granule from the excluded list', async () => {
       useEdscStore.setState((state) => {
-        state.granules.getGranules = jest.fn()
+        state.granules.getGranules = vi.fn()
         state.query.collection.byId.collectionId = {
           granules: {
             ...initialGranuleQuery,

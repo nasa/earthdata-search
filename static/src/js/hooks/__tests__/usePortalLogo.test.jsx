@@ -8,8 +8,8 @@ import {
 import usePortalLogo from '../usePortalLogo'
 
 // Use virtual mocks of modules that don't exist anywhere in the system
-jest.mock('../../../../../portals/abcPortal/images/logo.png?h=56&format=webp', () => ('abcPortal_logo_path'), { virtual: true })
-jest.mock('../../../../../portals/xyzPortal/images/logo.png?h=56&format=webp', () => ('xyzPortal_logo_path'), { virtual: true })
+vi.mock('../../../../../portals/above/images/logo.png?h=56&format=webp', () => ({ default: 'above_logo_path' }))
+vi.mock('../../../../../portals/amd/images/logo.png?h=56&format=webp', () => ({ default: 'amd_logo_path' }))
 
 // eslint-disable-next-line react/prop-types
 const TestComponent = ({ portalId }) => {
@@ -17,10 +17,6 @@ const TestComponent = ({ portalId }) => {
 
   return <div data-testid="test-component">{result}</div>
 }
-
-afterEach(() => {
-  jest.resetAllMocks()
-})
 
 describe('usePortalLogo', () => {
   describe('when a portal is not provided', () => {
@@ -46,32 +42,32 @@ describe('usePortalLogo', () => {
 
     describe('when the portal exists', () => {
       test('adds the correct src', async () => {
-        render(<TestComponent portalId="abcPortal" />)
+        render(<TestComponent portalId="above" />)
 
         await waitFor(() => {
-          expect(screen.getByTestId('test-component').textContent).toEqual('abcPortal_logo_path')
+          expect(screen.getByTestId('test-component').textContent).toEqual('above_logo_path')
         })
       })
     })
 
     describe('when the portal exists and has already been cached', () => {
       test('adds the correct src', async () => {
-        const { rerender } = render(<TestComponent portalId="abcPortal" />)
+        const { rerender } = render(<TestComponent portalId="above" />)
 
         await waitFor(() => {
-          expect(screen.getByTestId('test-component').textContent).toEqual('abcPortal_logo_path')
+          expect(screen.getByTestId('test-component').textContent).toEqual('above_logo_path')
         })
 
-        rerender(<TestComponent portalId="xyzPortal" />)
+        rerender(<TestComponent portalId="amd" />)
 
         await waitFor(() => {
-          expect(screen.getByTestId('test-component').textContent).toEqual('xyzPortal_logo_path')
+          expect(screen.getByTestId('test-component').textContent).toEqual('amd_logo_path')
         })
 
-        rerender(<TestComponent portalId="abcPortal" />)
+        rerender(<TestComponent portalId="above" />)
 
         await waitFor(() => {
-          expect(screen.getByTestId('test-component').textContent).toEqual('abcPortal_logo_path')
+          expect(screen.getByTestId('test-component').textContent).toEqual('above_logo_path')
         })
       })
     })

@@ -6,24 +6,24 @@ import { PanelSection } from '../PanelSection'
 import { PanelGroup } from '../PanelGroup'
 import { PanelItem } from '../PanelItem'
 
-jest.mock('../PanelSection', () => ({
-  PanelSection: jest.fn(({ children }) => (
+vi.mock('../PanelSection', () => ({
+  PanelSection: vi.fn(({ children }) => (
     <mock-PanelSection data-testid="PanelSection">
       {children}
     </mock-PanelSection>
   ))
 }))
 
-jest.mock('../PanelGroup', () => ({
-  PanelGroup: jest.fn(({ children }) => (
+vi.mock('../PanelGroup', () => ({
+  PanelGroup: vi.fn(({ children }) => (
     <mock-PanelGroup data-testid="PanelGroup">
       {children}
     </mock-PanelGroup>
   ))
 }))
 
-jest.mock('../PanelItem', () => ({
-  PanelItem: jest.fn(({ children }) => (
+vi.mock('../PanelItem', () => ({
+  PanelItem: vi.fn(({ children }) => (
     <mock-PanelItem data-testid="PanelItem">
       {children}
     </mock-PanelItem>
@@ -35,9 +35,9 @@ const setup = (renderMethod, overrideProps = {}) => {
     show: true,
     activePanel: '0.0.0',
     draggable: true,
-    onPanelClose: jest.fn(),
-    onPanelOpen: jest.fn(),
-    onChangePanel: jest.fn(),
+    onPanelClose: vi.fn(),
+    onPanelOpen: vi.fn(),
+    onChangePanel: vi.fn(),
     ...overrideProps
   }
 

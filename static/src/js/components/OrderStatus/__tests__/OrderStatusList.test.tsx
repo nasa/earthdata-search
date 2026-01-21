@@ -1,6 +1,6 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 // @ts-expect-error The file does not have types
 import { retrievalStatusPropsEchoOrder } from './mocks'
@@ -8,7 +8,7 @@ import { retrievalStatusPropsEchoOrder } from './mocks'
 import OrderStatusList from '../OrderStatusList'
 import OrderStatusCollection from '../OrderStatusCollection'
 
-jest.mock('../OrderStatusCollection', () => jest.fn(() => <div />))
+vi.mock('../OrderStatusCollection', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: OrderStatusList,

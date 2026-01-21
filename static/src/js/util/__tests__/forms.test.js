@@ -2,8 +2,8 @@ import * as Yup from 'yup'
 
 import { getValidationSchema } from '../forms'
 
-jest.mock('yup', () => {
-  const shapeMock = jest.fn()
+vi.mock('yup', () => {
+  const shapeMock = vi.fn()
 
   return {
     object: () => ({
@@ -12,14 +12,10 @@ jest.mock('yup', () => {
   }
 })
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('getValidationSchema', () => {
   describe('when passed a single field', () => {
     test('should pass the right data to the validation function', () => {
-      const validationMock = jest.fn()
+      const validationMock = vi.fn()
 
       getValidationSchema([{
         name: 'testField',
@@ -36,8 +32,8 @@ describe('getValidationSchema', () => {
 
   describe('when passed a nested field', () => {
     test('should pass the right data to the validation function', () => {
-      const validationMock1 = jest.fn()
-      const validationMock2 = jest.fn()
+      const validationMock1 = vi.fn()
+      const validationMock2 = vi.fn()
 
       getValidationSchema([{
         name: 'testField',

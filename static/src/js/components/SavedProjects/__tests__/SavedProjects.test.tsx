@@ -1,24 +1,27 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
 import SavedProjects from '../SavedProjects'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import GET_PROJECTS from '../../../operations/queries/getProjects'
 import DELETE_PROJECT from '../../../operations/mutations/deleteProject'
 
 // @ts-expect-error This file does not have types
 import addToast from '../../../util/addToast'
 
-jest.mock('../../../util/addToast', () => ({
+vi.mock('../../../util/addToast', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ to, onClick, children }) => (
-  <a href={to} onClick={onClick}>
-    {children}
-  </a>
-)))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn(({ to, onClick, children }) => (
+    <a href={to} onClick={onClick}>
+      {children}
+    </a>
+  ))
+}))
 
 const setup = setupTest({
   Component: SavedProjects,
@@ -182,7 +185,7 @@ describe('SavedProjects component', () => {
           }]
         })
 
-        window.confirm = jest.fn(() => true)
+        window.confirm = vi.fn(() => true)
 
         const deleteButton = await screen.findByRole('button', {
           name: /remove project/i
@@ -234,18 +237,16 @@ describe('SavedProjects component', () => {
                 obfuscatedId: '8069076'
               }
             },
-            result: {
-              errors: [new Error('Failed to remove project')]
-            }
+            error: new ApolloError({ errorMessage: 'Failed to remove project' })
           }],
           overrideZustandState: {
             errors: {
-              handleError: jest.fn()
+              handleError: vi.fn()
             }
           }
         })
 
-        window.confirm = jest.fn(() => true)
+        window.confirm = vi.fn(() => true)
 
         const deleteButton = await screen.findByRole('button', {
           name: /remove project/i
@@ -257,7 +258,7 @@ describe('SavedProjects component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledWith(
           {
             action: 'handleDeleteSavedProject',
-            error: new Error('Failed to remove project'),
+            error: new ApolloError({ errorMessage: 'Failed to remove project' }),
             notificationType: 'banner',
             resource: 'project',
             verb: 'deleting'

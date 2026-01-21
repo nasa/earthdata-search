@@ -1,19 +1,20 @@
 import React from 'react'
+import type { Mock } from 'vitest'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 
 import OrderStatusItem from '../../OrderStatusItem'
 import OpendapStatusItem from '../OpendapStatusItem'
 import { STATUS_MESSAGES } from '../../../../constants/orderStatusMessages'
 
-jest.mock('../../OrderStatusItem', () => jest.fn(() => <div />))
+vi.mock('../../OrderStatusItem', () => ({ default: vi.fn(() => <div />) }))
 
-const mockUseGetRetrievalGranuleLinks = jest.fn()
-jest.mock('../../../../hooks/useGetRetrievalGranuleLinks', () => ({
+const mockUseGetRetrievalGranuleLinks = vi.fn()
+vi.mock('../../../../hooks/useGetRetrievalGranuleLinks', () => ({
   useGetRetrievalGranuleLinks: () => mockUseGetRetrievalGranuleLinks()
 }))
 
-jest.mock('../../buildEddLink', () => jest.fn().mockReturnValue('mock-eddlink'))
+vi.mock('../../buildEddLink', () => ({ default: vi.fn().mockReturnValue('mock-eddlink') }))
 
 const setup = setupTest({
   Component: OpendapStatusItem,
@@ -69,7 +70,7 @@ describe('OpendapStatusItem', () => {
       updatedAt: '2024-01-01T00:00:00Z'
     }, {})
 
-    const orderStatusItemCall = (OrderStatusItem as jest.Mock).mock.calls[0][0]
+    const orderStatusItemCall = (OrderStatusItem as Mock).mock.calls[0][0]
     const { tabs } = orderStatusItemCall
 
     expect(tabs).toHaveLength(4)
@@ -164,7 +165,7 @@ describe('OpendapStatusItem', () => {
 
       setup()
 
-      const orderStatusItemCall = (OrderStatusItem as jest.Mock).mock.calls[0][0]
+      const orderStatusItemCall = (OrderStatusItem as Mock).mock.calls[0][0]
       const { tabs } = orderStatusItemCall
 
       expect(tabs).toHaveLength(2)

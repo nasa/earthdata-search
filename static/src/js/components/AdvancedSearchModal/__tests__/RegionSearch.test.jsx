@@ -2,12 +2,12 @@ import React from 'react'
 import { withFormik } from 'formik'
 import { act, waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import RegionSearchForm from '../RegionSearchForm'
 import RegionSearch from '../RegionSearch'
 
-jest.mock('../RegionSearchForm', () => jest.fn(() => <div />))
+vi.mock('../RegionSearchForm', () => ({ default: vi.fn(() => <div />) }))
 
 const Wrapper = withFormik({
   enableReinitialize: true,
@@ -25,7 +25,7 @@ const setup = setupTest({
       name: 'regionSearch',
       type: 'regionSearch',
       label: 'Search by Feature',
-      resolve: jest.fn(),
+      resolve: vi.fn(),
       fields: [
         {
           name: 'endpoint',
@@ -43,9 +43,9 @@ const setup = setupTest({
         }
       ]
     },
-    handleSearch: jest.fn(),
-    setFieldValue: jest.fn(),
-    setModalOverlay: jest.fn(),
+    handleSearch: vi.fn(),
+    setFieldValue: vi.fn(),
+    setModalOverlay: vi.fn(),
     values: {}
   }
 })

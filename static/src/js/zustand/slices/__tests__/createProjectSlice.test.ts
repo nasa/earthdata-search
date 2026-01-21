@@ -12,32 +12,32 @@ import * as applicationConfig from '../../../../../../sharedUtils/config'
 import { EchoOrderAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
 
-jest.mock('uuid', () => ({
-  v4: jest.fn(() => 'mock-request-id')
+vi.mock('uuid', () => ({
+  v4: vi.fn(() => 'mock-request-id')
 }))
 
-jest.mock('../../../../../../sharedUtils/getClientId', () => ({
-  getClientId: jest.fn().mockReturnValue({
+vi.mock('../../../../../../sharedUtils/getClientId', () => ({
+  getClientId: vi.fn().mockReturnValue({
     client: 'mock-client-id'
   })
 }))
 
-jest.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
+vi.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
   cmrHost: 'https://cmr.example.com',
   graphQlHost: 'https://graphql.example.com',
   opensearchRoot: 'https://cmr.example.com/opensearch'
 }))
 
-jest.mock('../../../util/handleAlert', () => ({
-  handleAlert: jest.fn()
+vi.mock('../../../util/handleAlert', () => ({
+  handleAlert: vi.fn()
 }))
 
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
 
   useEdscStore.setState((state) => {
-    state.dataQualitySummaries.setDataQualitySummaries = jest.fn()
-    state.errors.handleError = jest.fn()
+    state.dataQualitySummaries.setDataQualitySummaries = vi.fn()
+    state.errors.handleError = vi.fn()
   })
 })
 
@@ -77,7 +77,7 @@ describe('createProjectSlice', () => {
         const collectionId = 'collectionId'
         const granuleId = 'granuleId'
         useEdscStore.setState((state) => {
-          state.project.updateProjectGranuleParams = jest.fn()
+          state.project.updateProjectGranuleParams = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -126,7 +126,7 @@ describe('createProjectSlice', () => {
             isVisible: true
           }
 
-          state.project.updateProjectGranuleParams = jest.fn()
+          state.project.updateProjectGranuleParams = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -164,7 +164,7 @@ describe('createProjectSlice', () => {
   describe('addProjectCollection', () => {
     test('adds a collection to the project', () => {
       useEdscStore.setState((state) => {
-        state.project.getProjectGranules = jest.fn()
+        state.project.getProjectGranules = vi.fn()
       })
 
       const collectionId = 'C123456789-EDSC'
@@ -188,7 +188,7 @@ describe('createProjectSlice', () => {
 
     test('does not add a collection if it already exists', () => {
       useEdscStore.setState((state) => {
-        state.project.getProjectGranules = jest.fn()
+        state.project.getProjectGranules = vi.fn()
       })
 
       const collectionId = 'C123456789-EDSC'
@@ -309,7 +309,7 @@ describe('createProjectSlice', () => {
           resource: 'saved access configurations'
         })
 
-        expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%2F')
+        expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%3A3000%2F')
       })
     })
 
@@ -711,7 +711,7 @@ describe('createProjectSlice', () => {
 
     describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
       test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
-        jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+        vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
           maxCmrPageSize: '1',
           defaultCmrSearchTags: [
             'edsc.*',
@@ -1174,7 +1174,7 @@ describe('createProjectSlice', () => {
           isVisible: true
         }
 
-        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -1227,7 +1227,7 @@ describe('createProjectSlice', () => {
             isVisible: true
           }
 
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1290,7 +1290,7 @@ describe('createProjectSlice', () => {
             polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
 
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1363,7 +1363,7 @@ describe('createProjectSlice', () => {
 
     describe('when the user adds more granules than the maxCmrPageSize', () => {
       test('logs an alert', async () => {
-        jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
           maxCmrPageSize: '1',
           defaultCmrPageSize: '1',
           thumbnailSize: {
@@ -1449,7 +1449,7 @@ describe('createProjectSlice', () => {
             isVisible: true
           }
 
-          state.project.updateProjectGranuleParams = jest.fn()
+          state.project.updateProjectGranuleParams = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1498,7 +1498,7 @@ describe('createProjectSlice', () => {
             isVisible: true
           }
 
-          state.project.updateProjectGranuleParams = jest.fn()
+          state.project.updateProjectGranuleParams = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1535,7 +1535,7 @@ describe('createProjectSlice', () => {
             isVisible: true
           }
 
-          state.project.updateProjectGranuleParams = jest.fn()
+          state.project.updateProjectGranuleParams = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1885,7 +1885,7 @@ describe('createProjectSlice', () => {
           isVisible: true
         }
 
-        state.project.getProjectGranules = jest.fn()
+        state.project.getProjectGranules = vi.fn()
       })
 
       const zustandState = useEdscStore.getState()

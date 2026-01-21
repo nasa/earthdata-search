@@ -7,7 +7,7 @@ import { retrieveCMRGranules } from '../retrieveCMRGranules'
 
 describe('retrieveCMRGranules', () => {
   beforeAll(() => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
   })

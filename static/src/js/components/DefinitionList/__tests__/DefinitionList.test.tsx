@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import DefinitionList from '../DefinitionList'
 
 const setup = setupTest({

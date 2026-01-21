@@ -4,11 +4,6 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 
 const baseUrl = 'http://example.com'
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
-
 describe('CmrRequest#constructor', () => {
   test('sets the default values', () => {
     const request = new CmrRequest(baseUrl, 'prod')
@@ -78,7 +73,7 @@ describe('CmrRequest#transformRequest', () => {
   })
 
   test('adds client-id header when not authenticated', () => {
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
+    vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
     const request = new CmrRequest(baseUrl, 'prod')
 
@@ -99,7 +94,7 @@ describe('CmrRequest#transformRequest', () => {
 
     const data = { ParamName: 123 }
 
-    jest.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
+    vi.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
 
     const transformedData = request.transformRequest(data, {})
 
@@ -113,7 +108,7 @@ describe('CmrRequest#transformRequest', () => {
 
     const data = { paramName: 123 }
 
-    jest.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
+    vi.spyOn(CmrRequest.prototype, 'permittedCmrKeys').mockImplementation(() => ['param_name'])
 
     const transformedData = request.transformRequest(data, {})
 
@@ -142,7 +137,7 @@ describe('CmrRequest#search', () => {
   test('calls CmrRequest#post', () => {
     const request = new CmrRequest(baseUrl, 'prod')
 
-    const postMock = jest.spyOn(CmrRequest.prototype, 'post').mockImplementation()
+    const postMock = vi.spyOn(CmrRequest.prototype, 'post').mockImplementation()
 
     const params = {
       param1: 12,

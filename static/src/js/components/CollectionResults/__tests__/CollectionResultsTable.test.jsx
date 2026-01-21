@@ -1,21 +1,21 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CollectionResultsTable from '../CollectionResultsTable'
 import EDSCTable from '../../EDSCTable/EDSCTable'
 import { collectionData } from './mocks'
 
-jest.mock('../../EDSCTable/EDSCTable', () => jest.fn(() => <div />))
+vi.mock('../../EDSCTable/EDSCTable', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: CollectionResultsTable,
   defaultProps: {
     collectionsMetadata: collectionData,
-    isItemLoaded: jest.fn(),
+    isItemLoaded: vi.fn(),
     itemCount: 1,
-    loadMoreItems: jest.fn(),
-    setVisibleMiddleIndex: jest.fn(),
+    loadMoreItems: vi.fn(),
+    setVisibleMiddleIndex: vi.fn(),
     visibleMiddleIndex: 1
   }
 })

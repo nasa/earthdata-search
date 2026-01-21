@@ -55,14 +55,11 @@
         "import/prefer-default-export": 0
       }
     },
-    // These rules are an attempt to prevent testing library linting on non testing library test files and source files.
-    // It works by assuming any test file we actually want to lint with these rules will be named with extention jsx.
+    // Don't run testing-library rules in non-testing library test files
     {
       "files": [
-        "tests/**/*.js",
-        "serverless/**/*",
-        "static/src/js/components/**/[^_]*/*.jsx",
-        "static/src/js/**/*.js"
+        "tests/**/*", // Playwright tests
+        "serverless/**/*" // Serverless tests
       ],
       "rules": {
         "testing-library/await-async-events": "off",
@@ -132,5 +129,10 @@
       "pragma": "React",
       "version": "16.12.0"
     }
+  },
+
+  // Define any global variables to avoid no-undef errors
+  "globals": {
+    "vi": "readonly"
   }
 }

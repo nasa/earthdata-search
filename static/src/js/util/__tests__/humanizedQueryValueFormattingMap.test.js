@@ -1,23 +1,19 @@
 import * as formatters from '../humanizedQueryValueFormatters'
 import { humanizedQueryValueFormattingMap } from '../humanizedQueryValueFormattingMap'
 
-jest.mock('../humanizedQueryValueFormatters', () => ({
-  formatBoolean: jest.fn(),
-  formatCircle: jest.fn(),
-  formatFacetHierarchy: jest.fn(),
-  formatPoints: jest.fn(),
-  formatTemporal: jest.fn()
+vi.mock('../humanizedQueryValueFormatters', () => ({
+  formatBoolean: vi.fn(),
+  formatCircle: vi.fn(),
+  formatFacetHierarchy: vi.fn(),
+  formatPoints: vi.fn(),
+  formatTemporal: vi.fn()
 }))
 
-const formatBooleanMock = jest.spyOn(formatters, 'formatBoolean')
-const formatCircleMock = jest.spyOn(formatters, 'formatCircle')
-const formatFacetHierarchyMock = jest.spyOn(formatters, 'formatFacetHierarchy')
-const formatPointsMock = jest.spyOn(formatters, 'formatPoints')
-const formatTemporalMock = jest.spyOn(formatters, 'formatTemporal')
-
-beforeEach(() => {
-  jest.clearAllMocks()
-})
+const formatBooleanMock = vi.spyOn(formatters, 'formatBoolean')
+const formatCircleMock = vi.spyOn(formatters, 'formatCircle')
+const formatFacetHierarchyMock = vi.spyOn(formatters, 'formatFacetHierarchy')
+const formatPointsMock = vi.spyOn(formatters, 'formatPoints')
+const formatTemporalMock = vi.spyOn(formatters, 'formatTemporal')
 
 describe('humanizedQueryValueFormattingMap', () => {
   describe('when formatting boundingBox', () => {

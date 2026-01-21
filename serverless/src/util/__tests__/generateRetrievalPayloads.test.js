@@ -1,8 +1,8 @@
 import { generateRetrievalPayloads } from '../generateRetrievalPayloads'
 
 // Mock the Swodlr max value so the mock objects don't get so large in the tests
-jest.mock('../../../../static/src/js/constants/swodlrConstants', () => ({
-  ...jest.requireActual('../../../../static/src/js/constants/swodlrConstants'),
+vi.mock('../../../../static/src/js/constants/swodlrConstants', async () => ({
+  ...(await vi.importActual('../../../../static/src/js/constants/swodlrConstants')),
   maxSwodlrGranuleCount: 4
 }))
 

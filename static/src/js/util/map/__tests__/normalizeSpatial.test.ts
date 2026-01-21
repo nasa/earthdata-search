@@ -536,7 +536,7 @@ describe('normalizeSpatial', () => {
       test('returns a geojson multi polygon of the original points and logs the error', () => {
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
         const granule = {

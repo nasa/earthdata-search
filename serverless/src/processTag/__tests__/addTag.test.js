@@ -5,9 +5,7 @@ import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import { addTag } from '../addTag'
 
 beforeEach(() => {
-  jest.restoreAllMocks()
-
-  jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+  vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 })
 
 describe('addTag', () => {

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import SubscriptionsQueryList from '../SubscriptionsQueryList'
 
@@ -10,7 +10,7 @@ const setup = setupTest({
     disabledFields: {},
     displayEmptyMessage: false,
     query: {},
-    setDisabledFields: jest.fn(),
+    setDisabledFields: vi.fn(),
     showCheckboxes: false,
     subscriptionType: 'granule'
   }

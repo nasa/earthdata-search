@@ -1,16 +1,16 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EarthdataDownloadRedirect from '../EarthdataDownloadRedirect'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import EarthdataDownloadRedirectComponent from '../../../components/EarthdataDownloadRedirectContainer/EarthdataDownloadRedirect'
 
-jest.mock('../../../components/EarthdataDownloadRedirectContainer/EarthdataDownloadRedirect', () => jest.fn(() => <div />))
+vi.mock('../../../components/EarthdataDownloadRedirectContainer/EarthdataDownloadRedirect', () => ({ default: vi.fn(() => <div />) }))
 
 beforeEach(() => {
-  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  vi.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 const setup = setupTest({

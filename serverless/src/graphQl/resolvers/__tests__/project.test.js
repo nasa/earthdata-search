@@ -11,7 +11,7 @@ describe('Project Resolver', () => {
     describe('project', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+          getProjectByObfuscatedId: vi.fn().mockResolvedValue({
             id: 1,
             name: 'Test Project',
             path: '/search?ff=Test%20Project',
@@ -49,7 +49,7 @@ describe('Project Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getProjectByObfuscatedId: jest.fn().mockImplementation(() => {
+          getProjectByObfuscatedId: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }
@@ -78,7 +78,7 @@ describe('Project Resolver', () => {
       describe('when the project does not belong to the user', () => {
         test('returns a new project with the same name and path for the current user', async () => {
           const databaseClient = {
-            getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+            getProjectByObfuscatedId: vi.fn().mockResolvedValue({
               id: 1,
               name: 'Test Project',
               path: '/search?ff=Test%20Project',
@@ -86,7 +86,7 @@ describe('Project Resolver', () => {
               updated_at: '2023-06-27T20:22:47.400Z',
               created_at: '2023-06-27T20:22:47.400Z'
             }),
-            createProject: jest.fn().mockResolvedValue({
+            createProject: vi.fn().mockResolvedValue({
               id: 2,
               name: 'Test Project',
               path: '/search?ff=Test%20Project',
@@ -127,7 +127,7 @@ describe('Project Resolver', () => {
       describe('when the user is not authenticated', () => {
         test('creates a new project when the project has no user_id', async () => {
           const databaseClient = {
-            getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+            getProjectByObfuscatedId: vi.fn().mockResolvedValue({
               id: 1,
               name: 'Test Project',
               path: '/search?ff=Test%20Project',
@@ -135,7 +135,7 @@ describe('Project Resolver', () => {
               updated_at: '2023-06-27T20:22:47.400Z',
               created_at: '2023-06-27T20:22:47.400Z'
             }),
-            createProject: jest.fn().mockResolvedValue({
+            createProject: vi.fn().mockResolvedValue({
               id: 2,
               name: 'Test Project',
               path: '/search?ff=Test%20Project',
@@ -183,7 +183,7 @@ describe('Project Resolver', () => {
     describe('projects', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getProjects: jest.fn().mockResolvedValue([
+          getProjects: vi.fn().mockResolvedValue([
             {
               id: 1,
               name: 'Project 1',
@@ -254,7 +254,7 @@ describe('Project Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getProjects: jest.fn().mockImplementation(() => {
+          getProjects: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }
@@ -283,7 +283,7 @@ describe('Project Resolver', () => {
       describe('when requesting multiple pages of results', () => {
         test('returns paginated results', async () => {
           const databaseClient = {
-            getProjects: jest.fn().mockResolvedValue([
+            getProjects: vi.fn().mockResolvedValue([
               {
                 id: 3,
                 user_id: 42,
@@ -346,7 +346,7 @@ describe('Project Resolver', () => {
     describe('createProject', () => {
       test('creates a project successfully', async () => {
         const databaseClient = {
-          createProject: jest.fn().mockResolvedValue({
+          createProject: vi.fn().mockResolvedValue({
             id: 1,
             name: 'Test Project',
             path: '/test/project',
@@ -395,7 +395,7 @@ describe('Project Resolver', () => {
       describe('when the project creation fails', () => {
         test('returns an error', async () => {
           const databaseClient = {
-            createProject: jest.fn().mockImplementation(() => {
+            createProject: vi.fn().mockImplementation(() => {
               throw new Error('Something failed')
             })
           }
@@ -429,7 +429,7 @@ describe('Project Resolver', () => {
     describe('deleteProject', () => {
       test('deletes a project successfully', async () => {
         const databaseClient = {
-          deleteProject: jest.fn().mockResolvedValue(1)
+          deleteProject: vi.fn().mockResolvedValue(1)
         }
 
         const { contextValue, server } = setupServer({
@@ -459,7 +459,7 @@ describe('Project Resolver', () => {
 
       test('returns false when the project is not deleted', async () => {
         const databaseClient = {
-          deleteProject: jest.fn().mockResolvedValue(0)
+          deleteProject: vi.fn().mockResolvedValue(0)
         }
 
         const { contextValue, server } = setupServer({
@@ -489,7 +489,7 @@ describe('Project Resolver', () => {
 
       test('throws an error when the mutation fails', async () => {
         const databaseClient = {
-          deleteProject: jest.fn().mockImplementation(() => {
+          deleteProject: vi.fn().mockImplementation(() => {
             throw new Error('Failed to delete project')
           })
         }
@@ -519,7 +519,7 @@ describe('Project Resolver', () => {
     describe('updateProject', () => {
       test('updates a project successfully', async () => {
         const databaseClient = {
-          updateProject: jest.fn().mockResolvedValue({
+          updateProject: vi.fn().mockResolvedValue({
             id: 1,
             name: 'Updated Project',
             path: '/updated/project',
@@ -561,7 +561,7 @@ describe('Project Resolver', () => {
       describe('when the project update fails', () => {
         test('returns an error message', async () => {
           const databaseClient = {
-            updateProject: jest.fn().mockImplementation(() => {
+            updateProject: vi.fn().mockImplementation(() => {
               throw new Error('Something failed')
             })
           }
@@ -595,7 +595,7 @@ describe('Project Resolver', () => {
       describe('when a user is not authenticated', () => {
         test('can update the project', async () => {
           const databaseClient = {
-            updateProject: jest.fn().mockResolvedValue({
+            updateProject: vi.fn().mockResolvedValue({
               id: 1,
               name: 'Updated Project',
               path: '/updated/project',

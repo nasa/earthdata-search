@@ -1,6 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import AdminRetrievalsMetrics from '../AdminRetrievalsMetrics'
 import ADMIN_RETRIEVALS_METRICS from '../../../operations/queries/adminRetrievalsMetrics'
 
@@ -8,7 +9,7 @@ const setup = setupTest({
   Component: AdminRetrievalsMetrics,
   defaultZustandState: {
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     }
   },
   withRouter: true,
@@ -161,9 +162,7 @@ describe('AdminRetrievalsMetrics component', () => {
               endDate: '2025-11-14 23:59:59'
             }
           },
-          result: {
-            errors: [new Error('Failed to retrieve metrics')]
-          }
+          error: new ApolloError({ errorMessage: 'Failed to retrieve metrics' })
         }
       ]
 
@@ -185,7 +184,7 @@ describe('AdminRetrievalsMetrics component', () => {
       expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
         action: 'getAdminRetrievalsMetrics',
-        error: new Error('Failed to retrieve metrics'),
+        error: new ApolloError({ errorMessage: 'Failed to retrieve metrics' }),
         resource: 'adminRetrievalMetrics',
         verb: 'retrieving'
       })

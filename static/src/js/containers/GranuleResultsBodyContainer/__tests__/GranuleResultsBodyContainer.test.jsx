@@ -1,11 +1,9 @@
-import React from 'react'
-
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleResultsBodyContainer from '../GranuleResultsBodyContainer'
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
 
-jest.mock('../../../components/GranuleResults/GranuleResultsBody', () => jest.fn(() => <div />))
+vi.mock('../../../components/GranuleResults/GranuleResultsBody', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: GranuleResultsBodyContainer,
@@ -22,8 +20,8 @@ const setup = setupTest({
           collectionId: {}
         }
       },
-      changeGranuleQuery: jest.fn(),
-      excludeGranule: jest.fn()
+      changeGranuleQuery: vi.fn(),
+      excludeGranule: vi.fn()
     }
   }
 })

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import TemporalDisplay from '../TemporalDisplay'
 
@@ -8,7 +8,7 @@ const setup = setupTest({
   Component: TemporalDisplay,
   defaultZustandState: {
     query: {
-      changeQuery: jest.fn()
+      changeQuery: vi.fn()
     }
   }
 })

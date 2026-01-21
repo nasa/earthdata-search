@@ -9,11 +9,11 @@ import { radioListItemSkeleton } from '../skeleton'
 
 import AccessMethodRadio from '../AccessMethodRadio'
 
-jest.mock('../../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = (overrideProps) => {
-  const onChange = jest.fn()
-  const onClick = jest.fn()
+  const onChange = vi.fn()
+  const onClick = vi.fn()
   const props = {
     checked: false,
     description: 'test description',

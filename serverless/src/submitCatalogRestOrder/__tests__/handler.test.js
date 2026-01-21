@@ -19,17 +19,15 @@ import submitCatalogRestOrder from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
-  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
-
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+  vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
     client: {
       id: 'clientId'
     }
   }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -51,13 +49,13 @@ afterEach(() => {
 
 describe('submitCatalogRestOrder', () => {
   test('correctly discovers the correct fields from the provided xml', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
-      .mockImplementation(() => (jest.fn()))
+    const startOrderStatusUpdateWorkflowMock = vi.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+      .mockImplementation(() => (vi.fn()))
 
     nock(/graphql/)
       .matchHeader('Authorization', 'Bearer access-token')
@@ -128,16 +126,16 @@ describe('submitCatalogRestOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('first')
     expect(queries[2].method).toEqual('update')
-    expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'ESI')
+    expect(startOrderStatusUpdateWorkflowMock).toHaveBeenCalledWith(12, 'access-token', 'ESI')
   })
 
   test('prepares granule access params', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
+    vi.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
     nock(/graphql/)
       .matchHeader('Authorization', 'Bearer access-token')
@@ -207,12 +205,12 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('correctly sets limit and offset parameters', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
+    vi.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
     nock(/graphql/)
       .matchHeader('Authorization', 'Bearer access-token')
@@ -284,12 +282,12 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('adds the ee param to the CLIENT_STRING when the environment doesn\'t match the deployed environment', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
+    vi.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
     nock(/graphql/)
       .matchHeader('Authorization', 'Bearer access-token')
@@ -358,14 +356,14 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('creates a limited shapefile if the shapefile was limited by the user', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
+    vi.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
-    const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
+    const createLimitedShapefileMock = vi.spyOn(createLimitedShapefile, 'createLimitedShapefile')
       .mockImplementation(() => ('limited mock shapefile'))
 
     nock(/graphql/)
@@ -457,7 +455,7 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('saves an error message if the granule request fails', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
@@ -500,7 +498,7 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('saves an error message if the create fails', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
@@ -577,7 +575,7 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('does not save an error message if the create fails because of a time out on the first try', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
@@ -651,12 +649,12 @@ describe('submitCatalogRestOrder', () => {
   })
 
   test('does not process orders that have already been submitted successfully', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       graphQlHost: 'https://graphql.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    jest.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
+    vi.spyOn(prepareGranuleAccessParams, 'prepareGranuleAccessParams')
 
     nock(/graphql/)
       .matchHeader('Authorization', 'Bearer access-token')

@@ -2,7 +2,7 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import SidebarFiltersItem from '../SidebarFiltersItem'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: SidebarFiltersItem,

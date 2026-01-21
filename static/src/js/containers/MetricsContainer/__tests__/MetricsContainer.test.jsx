@@ -2,17 +2,17 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import MetricsContainer from '../MetricsContainer'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { metricsDefaultClick } from '../../../util/metrics/metricsDefaultClick'
 import { metricsVirtualPageview } from '../../../util/metrics/metricsVirtualPageview'
 
-jest.mock('../../../util/metrics/metricsDefaultClick', () => ({
-  metricsDefaultClick: jest.fn()
+vi.mock('../../../util/metrics/metricsDefaultClick', () => ({
+  metricsDefaultClick: vi.fn()
 }))
 
-jest.mock('../../../util/metrics/metricsVirtualPageview', () => ({
-  metricsVirtualPageview: jest.fn()
+vi.mock('../../../util/metrics/metricsVirtualPageview', () => ({
+  metricsVirtualPageview: vi.fn()
 }))
 
 const WrappingComponent = (props) => (

@@ -2,12 +2,12 @@ import { screen } from '@testing-library/react'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import LoggerRequest from '../../../util/request/loggerRequest'
 import NotFound from '../NotFound'
 
-jest.mock('uuid')
+vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
 const setup = setupTest({
@@ -25,7 +25,7 @@ describe('NotFound component', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
+    const loggerMock = vi.spyOn(LoggerRequest.prototype, 'log')
 
     setup()
 
@@ -55,7 +55,7 @@ describe('NotFound component', () => {
         .post(/error_logger/)
         .reply(200)
 
-      const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
+      const loggerMock = vi.spyOn(LoggerRequest.prototype, 'log')
 
       setup()
 

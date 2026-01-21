@@ -26,7 +26,7 @@ describe('PreferencesRadioField component', () => {
       },
       name: 'testField',
       formData: 'option1',
-      onChange: jest.fn()
+      onChange: vi.fn()
     }
     setup(props)
     const inputFields = screen.getAllByRole('radio')
@@ -41,7 +41,7 @@ describe('PreferencesRadioField component', () => {
   })
 
   test('onChange sets the state', async () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     const props = {
       schema: {
         enum: ['option1', 'option2'],

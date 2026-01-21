@@ -3,12 +3,12 @@ import { screen } from '@testing-library/react'
 import { FaBacon } from 'react-icons/fa'
 
 import { RadioSettingDropdown } from '../RadioSettingDropdown'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import RadioSettingDropdownItem from '../RadioSettingDropdownItem'
 
-jest.mock('../RadioSettingDropdownItem', () => jest.fn(() => null))
+vi.mock('../RadioSettingDropdownItem', () => ({ default: vi.fn(() => null) }))
 
-const itemOnClickCallbackMock = jest.fn()
+const itemOnClickCallbackMock = vi.fn()
 
 const setup = setupTest({
   Component: RadioSettingDropdown,
@@ -23,7 +23,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 })
 
 describe('RadioSettingDropdown component', () => {

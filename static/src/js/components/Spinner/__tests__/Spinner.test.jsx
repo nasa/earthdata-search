@@ -1,9 +1,9 @@
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Spinner from '../Spinner'
 import Dots from '../Dots'
 
-jest.mock('../Dots', () => jest.fn(() => null))
+vi.mock('../Dots', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: Spinner

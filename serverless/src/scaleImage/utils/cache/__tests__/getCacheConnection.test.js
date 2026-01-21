@@ -1,6 +1,8 @@
-import redis from 'redis-mock'
+import asyncRedis from 'async-redis'
 
 import { getCacheConnection } from '../getCacheConnection'
+
+const createClientMock = vi.spyOn(asyncRedis, 'createClient').mockReturnValue('mocked-redis-client')
 
 describe('getCacheConnection', () => {
   const OLD_ENV = process.env
@@ -22,14 +24,12 @@ describe('getCacheConnection', () => {
   describe('when cache client is already set', () => {
     describe('when running in a live environment', () => {
       test('returns the existing connection', async () => {
-        const client = redis.createClient()
+        const connection = getCacheConnection()
 
-        const createClientMock = jest.spyOn(redis, 'createClient').mockImplementation(() => client)
+        expect(connection).toEqual('mocked-redis-client')
 
-        getCacheConnection()
-
-        expect(createClientMock).toBeCalledTimes(1)
-        expect(createClientMock).toBeCalledWith({
+        expect(createClientMock).toHaveBeenCalledTimes(1)
+        expect(createClientMock).toHaveBeenCalledWith({
           host: 'example.com',
           port: '1234',
           return_buffers: true
@@ -38,9 +38,11 @@ describe('getCacheConnection', () => {
         // Reset the mock so that we can determine whether or not the mock was called
         createClientMock.mockReset()
 
-        getCacheConnection()
+        const connection2 = getCacheConnection()
 
-        expect(createClientMock).toBeCalledTimes(0)
+        expect(connection2).toEqual('mocked-redis-client')
+
+        expect(createClientMock).toHaveBeenCalledTimes(0)
       })
     })
   })

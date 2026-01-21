@@ -46,7 +46,7 @@ describe('Admin Resolver', () => {
     describe('adminPreferencesMetrics', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getSitePreferences: jest.fn().mockResolvedValue([
+          getSitePreferences: vi.fn().mockResolvedValue([
             {
               site_preferences: {
                 mapView: {
@@ -174,7 +174,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getSitePreferences: jest.fn().mockImplementation(() => {
+          getSitePreferences: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }
@@ -205,7 +205,7 @@ describe('Admin Resolver', () => {
     describe('adminProject', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+          getProjectByObfuscatedId: vi.fn().mockResolvedValue({
             id: 1,
             name: 'Test Project',
             path: '/search?ff=Test%20Project',
@@ -213,7 +213,7 @@ describe('Admin Resolver', () => {
             updated_at: '2023-06-27T20:22:47.400Z',
             created_at: '2023-06-27T20:22:47.400Z'
           }),
-          getUsersById: jest.fn().mockResolvedValue([
+          getUsersById: vi.fn().mockResolvedValue([
             {
               id: 1,
               site_preferences: {},
@@ -263,7 +263,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getProjectByObfuscatedId: jest.fn().mockImplementation(() => {
+          getProjectByObfuscatedId: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }
@@ -296,7 +296,7 @@ describe('Admin Resolver', () => {
     describe('adminProjects', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getProjects: jest.fn().mockResolvedValue([
+          getProjects: vi.fn().mockResolvedValue([
             {
               id: 1,
               user_id: 1,
@@ -307,7 +307,7 @@ describe('Admin Resolver', () => {
               created_at: '2023-06-27T20:22:47.400Z'
             }
           ]),
-          getUsersById: jest.fn().mockResolvedValue([
+          getUsersById: vi.fn().mockResolvedValue([
             {
               id: 1,
               site_preferences: {},
@@ -373,7 +373,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getProjects: jest.fn().mockImplementation(() => {
+          getProjects: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }
@@ -401,7 +401,7 @@ describe('Admin Resolver', () => {
       describe('when requesting retrievals from multiple users', () => {
         test('batches requests for users and returns the expected results', async () => {
           const databaseClient = {
-            getProjects: jest.fn().mockResolvedValue([
+            getProjects: vi.fn().mockResolvedValue([
               {
                 id: 1,
                 user_id: 1,
@@ -421,7 +421,7 @@ describe('Admin Resolver', () => {
                 created_at: '2023-06-27T20:22:47.400Z'
               }
             ]),
-            getUsersById: jest.fn().mockResolvedValue([
+            getUsersById: vi.fn().mockResolvedValue([
               {
                 id: 1,
                 site_preferences: {},
@@ -511,7 +511,7 @@ describe('Admin Resolver', () => {
       describe('when requesting multiple pages of results', () => {
         test('returns paginated results', async () => {
           const databaseClient = {
-            getProjects: jest.fn().mockResolvedValue([
+            getProjects: vi.fn().mockResolvedValue([
               {
                 id: 3,
                 user_id: 2,
@@ -522,7 +522,7 @@ describe('Admin Resolver', () => {
                 created_at: '2023-06-27T20:22:47.400Z'
               }
             ]),
-            getUsersById: jest.fn().mockResolvedValue([
+            getUsersById: vi.fn().mockResolvedValue([
               {
                 id: 1,
                 site_preferences: {},
@@ -602,7 +602,7 @@ describe('Admin Resolver', () => {
     describe('adminRetrieval', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getRetrievalByObfuscatedId: jest.fn().mockResolvedValue({
+          getRetrievalByObfuscatedId: vi.fn().mockResolvedValue({
             id: 1,
             user_id: 1,
             jsondata: {
@@ -615,7 +615,7 @@ describe('Admin Resolver', () => {
             updated_at: '2023-06-27T20:22:47.400Z',
             created_at: '2023-06-27T20:22:47.400Z'
           }),
-          getUsersById: jest.fn().mockResolvedValue([
+          getUsersById: vi.fn().mockResolvedValue([
             {
               id: 1,
               site_preferences: {},
@@ -628,7 +628,7 @@ describe('Admin Resolver', () => {
               environment: 'prod'
             }
           ]),
-          getRetrievalCollectionsByRetrievalId: jest.fn().mockResolvedValue([
+          getRetrievalCollectionsByRetrievalId: vi.fn().mockResolvedValue([
             {
               id: 1,
               retrieval_id: 1,
@@ -647,7 +647,7 @@ describe('Admin Resolver', () => {
               created_at: '2023-06-27T20:22:47.400Z'
             }
           ]),
-          getRetrievalOrdersByRetrievalCollectionId: jest.fn().mockResolvedValue([
+          getRetrievalOrdersByRetrievalCollectionId: vi.fn().mockResolvedValue([
             {
               id: 1,
               retrieval_collection_id: 1,
@@ -732,7 +732,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getRetrievalByObfuscatedId: jest.fn().mockImplementation(() => {
+          getRetrievalByObfuscatedId: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
         }
@@ -765,7 +765,7 @@ describe('Admin Resolver', () => {
     describe('adminRetrievals', () => {
       test('returns results with all fields', async () => {
         const databaseClient = {
-          getAdminRetrievals: jest.fn().mockResolvedValue([
+          getAdminRetrievals: vi.fn().mockResolvedValue([
             {
               id: 1,
               user_id: 1,
@@ -781,7 +781,7 @@ describe('Admin Resolver', () => {
               created_at: '2023-06-27T20:22:47.400Z'
             }
           ]),
-          getUsersById: jest.fn().mockResolvedValue([
+          getUsersById: vi.fn().mockResolvedValue([
             {
               id: 1,
               site_preferences: {},
@@ -853,7 +853,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getAdminRetrievals: jest.fn().mockImplementation(() => {
+          getAdminRetrievals: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
 
@@ -882,7 +882,7 @@ describe('Admin Resolver', () => {
       describe('when requesting retrievals from multiple users', () => {
         test('batches requests for users and returns the expected results', async () => {
           const databaseClient = {
-            getAdminRetrievals: jest.fn().mockResolvedValue([
+            getAdminRetrievals: vi.fn().mockResolvedValue([
               {
                 id: 1,
                 user_id: 1,
@@ -912,7 +912,7 @@ describe('Admin Resolver', () => {
                 created_at: '2023-06-27T20:22:47.400Z'
               }
             ]),
-            getUsersById: jest.fn().mockResolvedValue([
+            getUsersById: vi.fn().mockResolvedValue([
               {
                 id: 1,
                 site_preferences: {},
@@ -1013,7 +1013,7 @@ describe('Admin Resolver', () => {
       describe('when requesting multiple pages of results', () => {
         test('returns paginated results', async () => {
           const databaseClient = {
-            getAdminRetrievals: jest.fn().mockResolvedValue([
+            getAdminRetrievals: vi.fn().mockResolvedValue([
               {
                 id: 3,
                 user_id: 2,
@@ -1029,7 +1029,7 @@ describe('Admin Resolver', () => {
                 created_at: '2023-06-27T20:22:47.400Z'
               }
             ]),
-            getUsersById: jest.fn().mockResolvedValue([
+            getUsersById: vi.fn().mockResolvedValue([
               {
                 id: 1,
                 site_preferences: {},
@@ -1145,9 +1145,9 @@ describe('Admin Resolver', () => {
           ]
         }
         const databaseClient = {
-          getRetrievalsMetricsByAccessType: jest.fn()
+          getRetrievalsMetricsByAccessType: vi.fn()
             .mockResolvedValue(mockRetrievalMetricsByAccessTypeResult),
-          getMultiCollectionMetrics: jest.fn()
+          getMultiCollectionMetrics: vi.fn()
             .mockResolvedValue(mockMultiCollectionRetrievalMetricsResult)
         }
 
@@ -1214,7 +1214,7 @@ describe('Admin Resolver', () => {
 
       test('throws an error when the query fails', async () => {
         const databaseClient = {
-          getRetrievalsMetricsByAccessType: jest.fn().mockImplementation(() => {
+          getRetrievalsMetricsByAccessType: vi.fn().mockImplementation(() => {
             throw new Error('Something failed')
           })
 
@@ -1251,7 +1251,7 @@ describe('Admin Resolver', () => {
       describe('when the access method type is ESI', () => {
         test('sends a message to SQS', async () => {
           const databaseClient = {
-            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+            getRetrievalOrdersByOrderId: vi.fn().mockResolvedValue({
               retrieval_collection_id: 1234,
               token: 'fake-access-token',
               type: ACCESS_METHOD_TYPES.ESI
@@ -1259,7 +1259,7 @@ describe('Admin Resolver', () => {
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1314,7 +1314,7 @@ describe('Admin Resolver', () => {
       describe('when the access method type is ECHO ORDERS', () => {
         test('sends a message to SQS', async () => {
           const databaseClient = {
-            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+            getRetrievalOrdersByOrderId: vi.fn().mockResolvedValue({
               retrieval_collection_id: 1234,
               token: 'fake-access-token',
               type: ACCESS_METHOD_TYPES.ECHO_ORDERS
@@ -1322,7 +1322,7 @@ describe('Admin Resolver', () => {
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1377,7 +1377,7 @@ describe('Admin Resolver', () => {
       describe('when the access method type is Harmony', () => {
         test('sends a message to SQS', async () => {
           const databaseClient = {
-            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+            getRetrievalOrdersByOrderId: vi.fn().mockResolvedValue({
               retrieval_collection_id: 1234,
               token: 'fake-access-token',
               type: ACCESS_METHOD_TYPES.HARMONY
@@ -1385,7 +1385,7 @@ describe('Admin Resolver', () => {
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({
@@ -1444,7 +1444,7 @@ describe('Admin Resolver', () => {
 
         test('does not send a message to SQS', async () => {
           const databaseClient = {
-            getRetrievalOrdersByOrderId: jest.fn().mockResolvedValue({
+            getRetrievalOrdersByOrderId: vi.fn().mockResolvedValue({
               retrieval_collection_id: 1234,
               token: 'fake-access-token',
               type: ACCESS_METHOD_TYPES.HARMONY
@@ -1452,7 +1452,7 @@ describe('Admin Resolver', () => {
           }
 
           const sqs = {
-            send: jest.fn()
+            send: vi.fn()
           }
 
           const { contextValue, server } = setupServer({

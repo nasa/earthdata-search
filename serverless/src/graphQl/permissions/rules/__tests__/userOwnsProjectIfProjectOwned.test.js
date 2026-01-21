@@ -3,7 +3,7 @@ import userOwnsProjectIfProjectOwned from '../userOwnsProjectIfProjectOwned'
 describe('userOwnsProjectIfProjectOwned', () => {
   test('returns false if the project does not exist', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue(null)
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue(null)
     }
 
     const result = await userOwnsProjectIfProjectOwned.resolve(
@@ -25,7 +25,7 @@ describe('userOwnsProjectIfProjectOwned', () => {
 
   test('returns false if the user does not own the project', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 2
       })
     }
@@ -51,7 +51,7 @@ describe('userOwnsProjectIfProjectOwned', () => {
 
   test('returns false if the user is anonymous and the project has a user_id', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 1
       })
     }
@@ -75,7 +75,7 @@ describe('userOwnsProjectIfProjectOwned', () => {
 
   test('returns true if the project has no user_id and the user is anonymous', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: null
       })
     }
@@ -99,7 +99,7 @@ describe('userOwnsProjectIfProjectOwned', () => {
 
   test('returns true if the user owns the project', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 1
       })
     }

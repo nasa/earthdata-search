@@ -52,7 +52,7 @@ describe('PanelItem component', () => {
   describe('when provided a React element as children', () => {
     describe('when the panel is not active', () => {
       test('renders the children with the isActive prop set to false', () => {
-        const CustomChild = jest.fn(() => (<div>I am a custom child</div>))
+        const CustomChild = vi.fn(() => (<div>I am a custom child</div>))
 
         render(
           <PanelItem>
@@ -68,7 +68,7 @@ describe('PanelItem component', () => {
 
     describe('when the panel is active', () => {
       test('renders the children with the isActive prop set to true', () => {
-        const CustomChild = jest.fn(() => (<div>I am a custom child</div>))
+        const CustomChild = vi.fn(() => (<div>I am a custom child</div>))
 
         render(
           <PanelItem isActive>
@@ -85,7 +85,7 @@ describe('PanelItem component', () => {
 
   describe('when scrolling the inner wrapper past the threshold', () => {
     test('sets the hasScrolled class', async () => {
-      const CustomChild = jest.fn(() => (
+      const CustomChild = vi.fn(() => (
         <div style={{ height: '1000px' }}>I am a custom child</div>
       ))
 
@@ -105,7 +105,7 @@ describe('PanelItem component', () => {
 
     describe('when scrolling the inner wrapper past the threshold and returning', () => {
       test('sets and removes the hasScrolled class', async () => {
-        const CustomChild = jest.fn(() => (
+        const CustomChild = vi.fn(() => (
           <div style={{ height: '1000px' }}>I am a custom child</div>
         ))
 
@@ -171,8 +171,8 @@ describe('PanelItem component', () => {
       describe('when the callback is a function', () => {
         test('fires the callback', async () => {
           const user = userEvent.setup()
-          const onChangePanelMock = jest.fn()
-          const backButtonCallbackMock = jest.fn()
+          const onChangePanelMock = vi.fn()
+          const backButtonCallbackMock = vi.fn()
 
           render(
             <PanelItem
@@ -197,8 +197,8 @@ describe('PanelItem component', () => {
 
       test('fires the onChangePanel function', async () => {
         const user = userEvent.setup()
-        const onChangePanelMock = jest.fn()
-        const backButtonCallbackMock = jest.fn()
+        const onChangePanelMock = vi.fn()
+        const backButtonCallbackMock = vi.fn()
 
         render(
           <PanelItem

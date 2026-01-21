@@ -2,14 +2,14 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 import { FaCocktail } from 'react-icons/fa'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon'
 import NotAvailableIcon from '../../NotAvailableIcon/NotAvailableIcon'
 
-jest.mock('../../NotAvailableIcon/NotAvailableIcon', () => jest.fn(() => <div />))
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => <div />))
+vi.mock('../../NotAvailableIcon/NotAvailableIcon', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: MetaIcon,

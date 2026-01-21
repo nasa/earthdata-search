@@ -1,8 +1,8 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import AccessMethod from '../../AccessMethod/AccessMethod'
 import CollectionDetails from '../CollectionDetails'
@@ -18,64 +18,64 @@ import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skelet
 import { breadcrumbSkeleton, titleSkeleton } from '../../Panels/skeleton'
 import { changePath } from '../../../util/url/changePath'
 
-jest.mock('../../../util/url/changePath', () => ({
-  changePath: jest.fn()
+vi.mock('../../../util/url/changePath', () => ({
+  changePath: vi.fn()
 }))
 
 // Mock components, but use the actual component
-jest.mock('../../Panels/PanelGroup', () => ({
+vi.mock('../../Panels/PanelGroup', async () => ({
   __esModule: true,
-  ...jest.requireActual('../../Panels/PanelGroup')
+  ...(await vi.importActual('../../Panels/PanelGroup'))
 }))
 
-jest.mock('../../AccessMethod/AccessMethod', () => {
-  const ActualAccessMethod = jest.requireActual('../../AccessMethod/AccessMethod').default
+vi.mock('../../AccessMethod/AccessMethod', async () => {
+  const ActualAccessMethod = (await vi.importActual('../../AccessMethod/AccessMethod')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualAccessMethod {...props} />)
+    default: vi.fn((props) => <ActualAccessMethod {...props} />)
   }
 })
 
-jest.mock('../CollectionDetails', () => {
-  const ActualCollectionDetails = jest.requireActual('../CollectionDetails').default
+vi.mock('../CollectionDetails', async () => {
+  const ActualCollectionDetails = (await vi.importActual('../CollectionDetails')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualCollectionDetails {...props} />)
+    default: vi.fn((props) => <ActualCollectionDetails {...props} />)
   }
 })
 
-jest.mock('../../DataQualitySummary/DataQualitySummary', () => {
-  const ActualDataQualitySummary = jest.requireActual('../../DataQualitySummary/DataQualitySummary').default
+vi.mock('../../DataQualitySummary/DataQualitySummary', async () => {
+  const ActualDataQualitySummary = (await vi.importActual('../../DataQualitySummary/DataQualitySummary')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualDataQualitySummary {...props} />)
+    default: vi.fn((props) => <ActualDataQualitySummary {...props} />)
   }
 })
 
-jest.mock('../VariableDetailsPanel', () => {
-  const ActualVariableDetailsPanel = jest.requireActual('../VariableDetailsPanel').default
+vi.mock('../VariableDetailsPanel', async () => {
+  const ActualVariableDetailsPanel = (await vi.importActual('../VariableDetailsPanel')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualVariableDetailsPanel {...props} />)
+    default: vi.fn((props) => <ActualVariableDetailsPanel {...props} />)
   }
 })
 
-jest.mock('../VariableTreePanel', () => {
-  const ActualVariableTreePanel = jest.requireActual('../VariableTreePanel').default
+vi.mock('../VariableTreePanel', async () => {
+  const ActualVariableTreePanel = (await vi.importActual('../VariableTreePanel')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualVariableTreePanel {...props} />)
+    default: vi.fn((props) => <ActualVariableTreePanel {...props} />)
   }
 })
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/project',
     search: '?p=collectionId!collectionId&pg[1][v]=t',
     hash: '',
@@ -84,14 +84,14 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: ProjectPanels,
   defaultZustandState: {
     dataQualitySummaries: {
       byCollectionId: {},
-      setDataQualitySummaries: jest.fn()
+      setDataQualitySummaries: vi.fn()
     },
     collection: {
       collectionId: 'collectionId',
@@ -103,10 +103,10 @@ const setup = setupTest({
           duplicateCollections: []
         }
       },
-      setCollectionId: jest.fn()
+      setCollectionId: vi.fn()
     },
     project: {
-      addGranuleToProjectCollection: jest.fn(),
+      addGranuleToProjectCollection: vi.fn(),
       collections: {
         allIds: ['collectionId'],
         byId: {
@@ -131,7 +131,7 @@ const setup = setupTest({
         },
         isLoading: false
       },
-      updateAccessMethod: jest.fn()
+      updateAccessMethod: vi.fn()
     },
     query: {
       collections: {
@@ -143,7 +143,7 @@ const setup = setupTest({
       },
       dataQualitySummaries: {
         byCollectionId: {},
-        setDataQualitySummaries: jest.fn()
+        setDataQualitySummaries: vi.fn()
       }
     },
     projectPanels: {
@@ -151,11 +151,11 @@ const setup = setupTest({
         activePanel: '0.0.0',
         isOpen: false
       },
-      setIsOpen: jest.fn()
+      setIsOpen: vi.fn()
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   },
@@ -287,7 +287,7 @@ describe('ProjectPanels component', () => {
             }
           })
 
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           const moreActions = screen.getByRole('button', { name: 'More actions' })
           await user.click(moreActions)
@@ -394,7 +394,7 @@ describe('ProjectPanels component', () => {
         test('shows the collection details panel', async () => {
           const { user } = setup()
 
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           const moreActions = screen.getByRole('button', { name: 'More actions' })
           await user.click(moreActions)
@@ -573,7 +573,7 @@ describe('ProjectPanels component', () => {
         test('calls setCollectionId and setIsOpen', async () => {
           const { user, zustandState } = setup()
 
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           const button = screen.getByRole('button', { name: 'Done' })
           await user.click(button)

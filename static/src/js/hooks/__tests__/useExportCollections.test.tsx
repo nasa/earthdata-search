@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { screen, waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../vitestConfigs/setupTest'
 
 import { useExportCollections } from '../useExportCollections'
 import EXPORT_COLLECTIONS from '../../operations/queries/exportCollections'
@@ -9,8 +10,8 @@ import EXPORT_COLLECTIONS from '../../operations/queries/exportCollections'
 // @ts-expect-error There are no types for this file
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 
-jest.mock('../../util/files/constructDownloadableFile', () => ({
-  constructDownloadableFile: jest.fn()
+vi.mock('../../util/files/constructDownloadableFile', () => ({
+  constructDownloadableFile: vi.fn()
 }))
 
 const TestComponent = () => {
@@ -20,18 +21,16 @@ const TestComponent = () => {
     exportLoading
   } = useExportCollections()
 
+  useEffect(() => {
+    console.log('exportLoading:', exportLoading)
+  }, [exportLoading])
+
   return (
     <div>
       <span>
         Export Format:
         {' '}
         {exportFormat}
-      </span>
-
-      <span>
-        Loading:
-        {' '}
-        {exportLoading.toString()}
       </span>
 
       <button
@@ -184,7 +183,7 @@ const setup = setupTest({
       data: {
         collections: {
           cursor: null,
-          count: 621,
+          count: 3,
           items: []
         }
       }
@@ -206,21 +205,26 @@ const setup = setupTest({
       }
     }
   },
-  withApolloClient: true,
-  withRouter: true
+  withApolloClient: true
 })
 
 describe('useExportCollections', () => {
   describe('when exporting CSV', () => {
     test('downloads a CSV file', async () => {
+      const consoleSpy = vi.spyOn(console, 'log')
+
       const { user } = setup()
 
       const button = screen.getByRole('button', { name: 'Export CSV' })
       await user.click(button)
 
       await waitFor(() => {
-        expect(screen.getByText('Loading: true')).toBeInTheDocument()
+        expect(consoleSpy).toHaveBeenNthCalledWith(3, 'exportLoading:', false)
       })
+
+      expect(consoleSpy).toHaveBeenNthCalledWith(1, 'exportLoading:', false)
+      expect(consoleSpy).toHaveBeenNthCalledWith(2, 'exportLoading:', true)
+      expect(consoleSpy).toHaveBeenCalledTimes(3)
 
       expect(screen.getByText('Export Format: csv')).toBeInTheDocument()
 
@@ -230,21 +234,25 @@ describe('useExportCollections', () => {
         'edsc_collection_results_export.csv',
         'text/csv'
       )
-
-      expect(screen.getByText('Loading: false')).toBeInTheDocument()
     })
   })
 
   describe('when exporting JSON', () => {
     test('downloads a JSON file', async () => {
+      const consoleSpy = vi.spyOn(console, 'log')
+
       const { user } = setup()
 
       const button = screen.getByRole('button', { name: 'Export JSON' })
       await user.click(button)
 
       await waitFor(() => {
-        expect(screen.getByText('Loading: true')).toBeInTheDocument()
+        expect(consoleSpy).toHaveBeenNthCalledWith(3, 'exportLoading:', false)
       })
+
+      expect(consoleSpy).toHaveBeenNthCalledWith(1, 'exportLoading:', false)
+      expect(consoleSpy).toHaveBeenNthCalledWith(2, 'exportLoading:', true)
+      expect(consoleSpy).toHaveBeenCalledTimes(3)
 
       expect(screen.getByText('Export Format: json')).toBeInTheDocument()
 
@@ -305,8 +313,6 @@ describe('useExportCollections', () => {
         'edsc_collection_results_export.json',
         'application/json'
       )
-
-      expect(screen.getByText('Loading: false')).toBeInTheDocument()
     })
   })
 
@@ -334,11 +340,11 @@ describe('useExportCollections', () => {
               }
             }
           },
-          error: new Error('An error occurred')
+          error: new ApolloError({ errorMessage: 'An error occurred' })
         }],
         overrideZustandState: {
           errors: {
-            handleError: jest.fn()
+            handleError: vi.fn()
           }
         }
       })
@@ -352,7 +358,7 @@ describe('useExportCollections', () => {
       })
 
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
-        error: new Error('An error occurred'),
+        error: new ApolloError({ errorMessage: 'An error occurred' }),
         action: 'exportSearch',
         resource: 'collections',
         showAlertButton: true,

@@ -4,7 +4,7 @@ import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 describe('generateDownloadScript', () => {
   beforeEach(() => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       edlHost: 'http://edl.example.com',
       csdaHost: 'http://csda.example.com'
     }))

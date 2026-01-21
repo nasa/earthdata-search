@@ -1,8 +1,8 @@
 import isAdminUser from '../isAdminUser'
 import { getAdminUsers } from '../../../../util/getAdminUsers'
 
-jest.mock('../../../../util/getAdminUsers', () => ({
-  getAdminUsers: jest.fn().mockResolvedValue([])
+vi.mock('../../../../util/getAdminUsers', () => ({
+  getAdminUsers: vi.fn().mockResolvedValue([])
 }))
 
 describe('isAdminUser', () => {

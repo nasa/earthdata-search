@@ -4,8 +4,9 @@ import {
   createEvent,
   fireEvent
 } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import {
   GranuleResultsDownloadNotebookButton,
@@ -15,15 +16,15 @@ import GET_NOTEBOOK_GRANULES from '../../../operations/queries/getNotebookGranul
 import { buildNotebook } from '../../../util/notebooks/buildNotebook'
 import { constructDownloadableFile } from '../../../util/files/constructDownloadableFile'
 
-jest.mock('../../../util/notebooks/buildNotebook', () => ({
-  buildNotebook: jest.fn().mockReturnValue({
+vi.mock('../../../util/notebooks/buildNotebook', () => ({
+  buildNotebook: vi.fn().mockReturnValue({
     fileName: 'test_notebook.ipynb',
     notebook: { mock: 'notebook' }
   })
 }))
 
-jest.mock('../../../util/files/constructDownloadableFile', () => ({
-  constructDownloadableFile: jest.fn()
+vi.mock('../../../util/files/constructDownloadableFile', () => ({
+  constructDownloadableFile: vi.fn()
 }))
 
 Object.defineProperty(window, 'location', {
@@ -295,11 +296,11 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
                 variablesParams: { conceptId: undefined }
               }
             },
-            error: new Error('Network error')
+            error: new ApolloError({ errorMessage: 'Network error' })
           }],
           overrideZustandState: {
             errors: {
-              handleError: jest.fn()
+              handleError: vi.fn()
             }
           }
         })
@@ -318,7 +319,7 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
 
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'generateNotebook',
-          error: new Error('Network error')
+          error: new ApolloError({ errorMessage: 'Network error' })
         })
 
         expect(buildNotebook).toHaveBeenCalledTimes(0)
@@ -328,7 +329,7 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
 
   describe('when clicking the dropdown', () => {
     test('calls stopPropagation', async () => {
-      const stopPropagationMock = jest.fn()
+      const stopPropagationMock = vi.fn()
 
       const { user } = setup()
 
@@ -352,14 +353,14 @@ const setupCustomToggle = setupTest({
   Component: CustomDownloadNotebookToggle,
   defaultProps: {
     id: 'G-123456789',
-    onClick: jest.fn()
+    onClick: vi.fn()
   }
 })
 
 describe('CustomDownloadNotebookToggle component', () => {
   test('calls expected event methods on download click', async () => {
-    const stopPropagationMock = jest.fn()
-    const preventDefaultMock = jest.fn()
+    const stopPropagationMock = vi.fn()
+    const preventDefaultMock = vi.fn()
 
     const mockClickEvent = {
       stopPropagation: stopPropagationMock,

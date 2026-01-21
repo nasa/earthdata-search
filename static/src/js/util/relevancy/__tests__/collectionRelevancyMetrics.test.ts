@@ -39,7 +39,7 @@ describe('collectionRelevancyMetrics', () => {
       /* eslint-enable no-param-reassign */
     })
 
-    const loggerSpy = jest.spyOn(LoggerRequest.prototype, 'logRelevancy')
+    const loggerSpy = vi.spyOn(LoggerRequest.prototype, 'logRelevancy')
 
     collectionRelevancyMetrics()
 

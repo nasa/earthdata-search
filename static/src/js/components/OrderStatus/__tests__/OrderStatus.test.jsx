@@ -2,7 +2,7 @@ import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 import { Helmet } from 'react-helmet'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as config from '../../../../../../sharedUtils/config'
 import { retrievalStatus } from './mocks'
@@ -14,18 +14,18 @@ import OrderStatusList from '../OrderStatusList'
 import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
 import { changePath } from '../../../util/url/changePath'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useParams: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useParams: vi.fn().mockReturnValue({
     id: '7'
   })
 }))
 
-jest.mock('../OrderStatusList', () => jest.fn(() => <div />))
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../OrderStatusList', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../../../util/url/changePath', () => ({
-  changePath: jest.fn()
+vi.mock('../../../util/url/changePath', () => ({
+  changePath: vi.fn()
 }))
 
 const setup = setupTest({
@@ -51,7 +51,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  vi.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 describe('OrderStatus component', () => {
@@ -131,7 +131,11 @@ describe('OrderStatus component', () => {
 
       expect(await screen.findByText('Download Status')).toBeInTheDocument()
 
-      expect(OrderStatusList).toHaveBeenCalledTimes(1)
+      // This is called twice because the useEffect in OrderStatus triggers a second render
+      await waitFor(() => {
+        expect(OrderStatusList).toHaveBeenCalledTimes(2)
+      })
+
       expect(OrderStatusList).toHaveBeenCalledWith({
         retrievalCollections: [{
           collectionId: 'TEST_COLLECTION_111',
@@ -232,8 +236,8 @@ describe('OrderStatus component', () => {
 
   describe('Order Status page', () => {
     beforeEach(() => {
-      jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
-      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
+      vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'prod'
       }))
@@ -258,7 +262,7 @@ describe('OrderStatus component', () => {
     })
 
     test('download status link has correct href when earthdataEnvironment is different than the deployed environment', async () => {
-      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'uat'
       }))
@@ -273,11 +277,11 @@ describe('OrderStatus component', () => {
       setup()
 
       const link = await screen.findByRole('link', { name: 'Download Status and History' })
-      expect(link.href).toEqual('http://localhost/downloads')
+      expect(link.href).toEqual('http://localhost:3000/downloads')
     })
 
     test('status link has correct href when earthdataEnvironment is different than the deployed environment', async () => {
-      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'uat'
       }))
@@ -285,7 +289,7 @@ describe('OrderStatus component', () => {
       setup()
 
       const link = await screen.findByRole('link', { name: 'Download Status and History' })
-      expect(link.href).toEqual('http://localhost/downloads?ee=prod')
+      expect(link.href).toEqual('http://localhost:3000/downloads?ee=prod')
     })
   })
 

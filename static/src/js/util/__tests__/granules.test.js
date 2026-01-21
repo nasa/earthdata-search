@@ -10,7 +10,7 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 describe('#createEcho10MetadataUrls', () => {
   describe('when provided a granule id', () => {
     test('returns the an object of metadata urls', () => {
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://cmr.example.com' }))
 
       const data = createEcho10MetadataUrls('G1613627299-LANCEMODIS')
       const expectedData = {

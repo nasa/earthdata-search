@@ -3,7 +3,7 @@ import { buildSwodlr } from '../buildSwodlr'
 import * as getApplicationConfig from '../../../../../../../sharedUtils/config'
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableSwodlr: 'false'
   }))
 })
@@ -74,7 +74,7 @@ describe('buildSwodlr', () => {
 
   describe('when swodlr is disabled', () => {
     beforeEach(() => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableSwodlr: 'true'
       }))
     })

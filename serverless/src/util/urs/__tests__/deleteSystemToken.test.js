@@ -7,12 +7,12 @@ import * as getUrsSystemCredentials from '../getUrsSystemCredentials'
 
 describe('deleteSystemToken', () => {
   test('correctly returns the cmr token when one is already set', async () => {
-    jest.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
+    vi.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
       username: 'edsc',
       password: 'mocked-password'
     }))
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
 
     nock('http://example.com')
       .matchHeader('Authorization', 'Basic ZWRzYzptb2NrZWQtcGFzc3dvcmQ=')

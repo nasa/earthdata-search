@@ -1,4 +1,3 @@
-import React from 'react'
 import { act } from '@testing-library/react'
 
 import * as EventEmitter from '../../../events/events'
@@ -6,23 +5,23 @@ import { ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
 import ShapefileDropzone from '../../../components/Dropzone/ShapefileDropzone'
 
 import { shapefileEventTypes } from '../../../constants/eventTypes'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import addShapefile from '../../../util/addShapefile'
 
-jest.mock('../../../util/addShapefile', () => jest.fn())
+vi.mock('../../../util/addShapefile', () => ({ default: vi.fn() }))
 
-jest.mock('../../../components/Dropzone/ShapefileDropzone', () => jest.fn(() => <div />))
+vi.mock('../../../components/Dropzone/ShapefileDropzone', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: ShapefileDropzoneContainer,
   defaultZustandState: {
     query: {
-      removeSpatialFilter: jest.fn()
+      removeSpatialFilter: vi.fn()
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }
@@ -58,7 +57,7 @@ describe('ShapefileDropzoneContainer component', () => {
   // that upload files and trigger these callbacks through Dropzone.
   describe('when onSending is triggered', () => {
     test('calls removeSpatialFilter and onShapefileLoading', async () => {
-      const onShapefileLoadingMock = jest.fn()
+      const onShapefileLoadingMock = vi.fn()
       const { zustandState } = setup({
         overrideZustandState: {
           shapefile: {
@@ -96,8 +95,8 @@ describe('ShapefileDropzoneContainer component', () => {
 
   describe('when onSuccess is triggered', () => {
     test('calls addShapefile', async () => {
-      const filesizeMock = jest.fn(() => '200KB')
-      const onSaveShapefileMock = jest.fn()
+      const filesizeMock = vi.fn(() => '200KB')
+      const onSaveShapefileMock = vi.fn()
 
       const { zustandState } = setup({
         overrideZustandState: {
@@ -134,7 +133,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       const mockDropzoneEl = {
         filesize: filesizeMock,
-        removeFile: jest.fn()
+        removeFile: vi.fn()
       }
 
       const componentProps = ShapefileDropzone.mock.calls[0][0]
@@ -179,7 +178,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'shx'
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -210,7 +209,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       describe('when zip/shp/dbf/shx is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -246,7 +245,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'kmz'
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -277,7 +276,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       describe('when kml/kmz is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -313,7 +312,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'geojson'
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -344,7 +343,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       describe('when json/geojson is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -381,7 +380,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'xml'
       ])('when given a %s file', (fileType) => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -412,7 +411,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       describe('when rss/georss/xml is in the filename but not the extension', () => {
         test('calls onShapefileErrored with the correct message', async () => {
-          const onShapefileErroredMock = jest.fn()
+          const onShapefileErroredMock = vi.fn()
           const { zustandState } = setup({
             overrideZustandState: {
               shapefile: {
@@ -444,7 +443,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
     describe('when given a unrecognized file type', () => {
       test('calls onShapefileErrored with the correct message', async () => {
-        const onShapefileErroredMock = jest.fn()
+        const onShapefileErroredMock = vi.fn()
         const { zustandState } = setup({
           overrideZustandState: {
             shapefile: {
@@ -476,8 +475,8 @@ describe('ShapefileDropzoneContainer component', () => {
 
   describe('when onRemovedFile is triggered', () => {
     test('calls eventEmitter', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
+      eventEmitterEmitMock.mockImplementation(() => vi.fn())
 
       setup()
 

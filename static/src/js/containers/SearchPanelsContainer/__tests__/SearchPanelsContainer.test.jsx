@@ -1,12 +1,11 @@
 import React from 'react'
-
 import { screen } from '@testing-library/react'
 
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import SearchPanelsContainer from '../SearchPanelsContainer'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
+vi.mock('../../../components/SearchPanels/SearchPanels', () => ({ default: vi.fn(() => <div>Search Panels</div>) }))
 
 const setup = setupTest({
   Component: SearchPanelsContainer,

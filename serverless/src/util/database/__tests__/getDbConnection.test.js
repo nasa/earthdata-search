@@ -7,7 +7,7 @@ import * as getDbConnectionConfig from '../getDbConnectionConfig'
 
 describe('getDbConnection', () => {
   test('returns a connection to the db', async () => {
-    jest.spyOn(getDbConnectionConfig, 'getDbConnectionConfig').mockImplementation(() => ({
+    vi.spyOn(getDbConnectionConfig, 'getDbConnectionConfig').mockImplementation(() => ({
       client: 'pg',
       host: 'http://host.com',
       database: 'test',

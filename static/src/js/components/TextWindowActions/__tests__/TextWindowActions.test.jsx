@@ -1,47 +1,43 @@
 import React from 'react'
 import { screen, within } from '@testing-library/react'
-import { JSDOM } from 'jsdom'
 
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import TextWindowActions from '../TextWindowActions'
 import * as DownloadableFile from '../../../util/files/constructDownloadableFile'
 import Button from '../../Button/Button'
 
-const dom = new JSDOM()
-global.document = dom.window.document
-
-const queryCommandSupportedMock = jest.fn(() => true)
-const queryCommandNotSupportedMock = jest.fn(() => false)
-const execCommandMock = jest.fn()
+const queryCommandSupportedMock = vi.fn(() => true)
+const queryCommandNotSupportedMock = vi.fn(() => false)
+const execCommandMock = vi.fn()
 
 global.document.execCommand = execCommandMock
 global.document.queryCommandSupported = queryCommandSupportedMock
 
-const constructDownloadableFileMock = jest.spyOn(DownloadableFile, 'constructDownloadableFile')
+const constructDownloadableFileMock = vi.spyOn(DownloadableFile, 'constructDownloadableFile')
 
 // Mock the Button component but keep the actual implementation
-jest.mock('../../Button/Button', () => {
-  const ActualButton = jest.requireActual('../../Button/Button').default
+vi.mock('../../Button/Button', async () => {
+  const ActualButton = (await vi.importActual('../../Button/Button')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualButton {...props} />)
+    default: vi.fn((props) => <ActualButton {...props} />)
   }
 })
 
-jest.mock('../../../util/files/constructDownloadableFile', () => ({
-  constructDownloadableFile: jest.fn()
+vi.mock('../../../util/files/constructDownloadableFile', () => ({
+  constructDownloadableFile: vi.fn()
 }))
 
-jest.mock('../../../util/files/parseUserAgent', () => ({
-  getOperatingSystem: jest.fn()
+vi.mock('../../../util/files/parseUserAgent', () => ({
+  getOperatingSystem: vi.fn()
 }))
 
-jest.mock('../../../util/renderTooltip', () => ({
+vi.mock('../../../util/renderTooltip', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
 const setup = setupTest({
@@ -54,10 +50,10 @@ const setup = setupTest({
 const { assign } = window.location
 
 beforeEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 
   delete window.location
-  window.location = { assign: jest.fn() }
+  window.location = { assign: vi.fn() }
 })
 
 afterEach(() => {

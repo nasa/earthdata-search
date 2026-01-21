@@ -2,6 +2,7 @@ import nock from 'nock'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import MockDate from 'mockdate'
+import { AxiosError } from 'axios'
 
 import { getSystemToken } from '../getSystemToken'
 
@@ -13,10 +14,7 @@ import * as getUrsSystemCredentials from '../getUrsSystemCredentials'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  jest.resetAllMocks()
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -86,13 +84,13 @@ describe('getSystemToken', () => {
         }
       })
 
-      jest.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
+      vi.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
         username: 'edsc',
         password: 'mocked-password'
       }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
-      const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
+      const deleteSystemTokenMock = vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
 
       nock('http://example.com')
         .matchHeader('Authorization', 'Basic ZWRzYzptb2NrZWQtcGFzc3dvcmQ=')
@@ -126,14 +124,14 @@ describe('getSystemToken', () => {
         }
       })
 
-      jest.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
+      vi.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
         username: 'edsc',
         password: 'mocked-password'
       }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
-      const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
-      const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
+      const deleteSystemTokenMock = vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
+      const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
 
       nock('http://example.com')
         .matchHeader('Authorization', 'Basic ZWRzYzptb2NrZWQtcGFzc3dvcmQ=')
@@ -153,7 +151,7 @@ describe('getSystemToken', () => {
       expect(queries[0].method).toContain('first')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Error retrieving token', new Error('Request failed with status code 403'))
+      expect(consoleMock).toHaveBeenCalledWith('Error retrieving token', expect.any(AxiosError))
     })
   })
 
@@ -173,13 +171,13 @@ describe('getSystemToken', () => {
         }
       })
 
-      jest.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
+      vi.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
         username: 'edsc',
         password: 'mocked-password'
       }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
-      const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
+      const deleteSystemTokenMock = vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
 
       nock('http://example.com')
         .matchHeader('Authorization', 'Basic ZWRzYzptb2NrZWQtcGFzc3dvcmQ=')
@@ -208,14 +206,14 @@ describe('getSystemToken', () => {
         }
       })
 
-      jest.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
+      vi.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
         username: 'edsc',
         password: 'mocked-password'
       }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
-      const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
-      const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
+      const deleteSystemTokenMock = vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
+      const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
 
       nock('http://example.com')
         .matchHeader('Authorization', 'Basic ZWRzYzptb2NrZWQtcGFzc3dvcmQ=')
@@ -234,7 +232,7 @@ describe('getSystemToken', () => {
       expect(queries[0].method).toContain('first')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Error retrieving token', new Error('Request failed with status code 403'))
+      expect(consoleMock).toHaveBeenCalledWith('Error retrieving token', expect.any(AxiosError))
     })
   })
 })

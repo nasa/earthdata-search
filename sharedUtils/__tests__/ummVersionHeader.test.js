@@ -2,9 +2,7 @@ import * as applicationConfig from '../config'
 import { getUmmGranuleVersionHeader, getUmmServiceVersionHeader } from '../ummVersionHeader'
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     ummCollectionVersion: '5',
     ummGranuleVersion: '6',
     ummServiceVersion: '7',

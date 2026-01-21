@@ -1,7 +1,7 @@
 import useEdscStore from '../../useEdscStore'
 
-jest.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
-  deployedEnvironment: jest.fn().mockReturnValue('prod')
+vi.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
+  deployedEnvironment: vi.fn().mockReturnValue('prod')
 }))
 
 describe('createEarthdataDownloadRedirectSlice', () => {

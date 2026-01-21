@@ -1,20 +1,20 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import PortalLinkContainer from '../PortalLinkContainer'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import { changePath } from '../../../util/url/changePath'
 
-jest.mock('../../../util/url/changePath', () => ({
-  changePath: jest.fn()
+vi.mock('../../../util/url/changePath', () => ({
+  changePath: vi.fn()
 }))
 
-const mockUseNavigate = jest.fn()
+const mockUseNavigate = vi.fn()
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
   useNavigate: () => mockUseNavigate
 }))
 
@@ -24,7 +24,7 @@ const setup = setupTest({
     children: 'Click Here',
     className: 'test-class',
     label: '',
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     newPortal: undefined,
     to: {
       pathname: '/search'
@@ -41,7 +41,7 @@ const setup = setupTest({
 
 describe('PortalLinkContainer component', () => {
   beforeEach(() => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       defaultPortal: 'edsc'
     }))
   })

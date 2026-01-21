@@ -5,14 +5,14 @@ import * as EventEmitter from '../../../events/events'
 import SpatialDisplay from '../SpatialDisplay'
 import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../../constants/eventTypes'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: SpatialDisplay,
   defaultZustandState: {
     query: {
-      changeQuery: jest.fn(),
-      removeSpatialFilter: jest.fn()
+      changeQuery: vi.fn(),
+      removeSpatialFilter: vi.fn()
     }
   }
 })
@@ -395,7 +395,7 @@ describe('SpatialDisplay component', () => {
 
   describe('#onSpatialRemove', () => {
     test('calls onRemoveSpatialFilter', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
       const { user, zustandState } = setup({
         overrideZustandState: {

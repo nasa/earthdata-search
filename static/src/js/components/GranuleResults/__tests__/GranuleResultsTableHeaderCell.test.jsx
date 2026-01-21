@@ -1,24 +1,24 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleResultsTableHeaderCell from '../GranuleResultsTableHeaderCell'
 import { metricsAddGranuleToProject } from '../../../util/metrics/metricsAddGranuleToProject'
 
-jest.mock('../../../util/metrics/metricsAddGranuleToProject', () => ({
-  metricsAddGranuleToProject: jest.fn()
+vi.mock('../../../util/metrics/metricsAddGranuleToProject', () => ({
+  metricsAddGranuleToProject: vi.fn()
 }))
 
 const defaultCustomProps = {
-  addGranuleToProjectCollection: jest.fn(),
+  addGranuleToProjectCollection: vi.fn(),
   collectionId: 'collectionId',
   collectionQuerySpatial: {},
   collectionTags: {},
   directDistributionInformation: {},
-  isGranuleInProject: jest.fn().mockReturnValue(false),
+  isGranuleInProject: vi.fn().mockReturnValue(false),
   location: {},
-  onExcludeGranule: jest.fn(),
-  removeGranuleFromProjectCollection: jest.fn()
+  onExcludeGranule: vi.fn(),
+  removeGranuleFromProjectCollection: vi.fn()
 }
 
 const setup = setupTest({
@@ -37,13 +37,13 @@ const setup = setupTest({
         dataLinks: [],
         s3Links: [],
         onlineAccessFlag: true,
-        handleClick: jest.fn()
+        handleClick: vi.fn()
       }
     }
   },
   defaultZustandState: {
     granule: {
-      setGranuleId: jest.fn()
+      setGranuleId: vi.fn()
     },
     portal: {
       features: {
@@ -114,7 +114,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
             dataLinks: [],
             s3Links: [],
             onlineAccessFlag: true,
-            handleClick: jest.fn()
+            handleClick: vi.fn()
           }
         }
       }
@@ -168,7 +168,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
         column: {
           customProps: {
             ...defaultCustomProps,
-            isGranuleInProject: jest.fn().mockReturnValue(true)
+            isGranuleInProject: vi.fn().mockReturnValue(true)
           }
         }
       }

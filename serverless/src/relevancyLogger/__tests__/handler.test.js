@@ -2,10 +2,6 @@ import MockDate from 'mockdate'
 
 import relevancyLogger from '../handler'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('relevancyLogger', () => {
   beforeEach(() => {
     // Mock the date so the timestamp log is predictable
@@ -17,7 +13,7 @@ describe('relevancyLogger', () => {
   })
 
   test('logs the event body', async () => {
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
 
     const event = {
       body: JSON.stringify({
@@ -32,7 +28,7 @@ describe('relevancyLogger', () => {
     const response = await relevancyLogger(event)
 
     expect(response.statusCode).toBe(200)
-    expect(consoleMock).toBeCalledTimes(1)
-    expect(consoleMock).toBeCalledWith(`[metrics] {"event":"collection_relevancy","mock":"error","timestamp":${Date.now()}}`)
+    expect(consoleMock).toHaveBeenCalledTimes(1)
+    expect(consoleMock).toHaveBeenCalledWith(`[metrics] {"event":"collection_relevancy","mock":"error","timestamp":${Date.now()}}`)
   })
 })

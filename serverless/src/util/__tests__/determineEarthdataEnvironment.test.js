@@ -5,7 +5,7 @@ import { determineEarthdataEnvironment } from '../determineEarthdataEnvironment'
 describe('determineEarthdataEnvironment', () => {
   describe('when no headers are provided', () => {
     test('returns the value from the static config', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         env: 'prod'
       }))
 
@@ -18,7 +18,7 @@ describe('determineEarthdataEnvironment', () => {
   describe('when headers are provided', () => {
     describe('when the headers do not contain the earthdata env header', () => {
       test('returns the value from the static config', () => {
-        jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
           env: 'prod'
         }))
 
@@ -30,7 +30,7 @@ describe('determineEarthdataEnvironment', () => {
 
     describe('when the headers do contain the earthdata env header', () => {
       test('returns the value from the header', () => {
-        jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
           env: 'prod'
         }))
 

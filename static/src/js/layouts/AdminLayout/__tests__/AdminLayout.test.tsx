@@ -1,8 +1,9 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AdminLayout from '../AdminLayout'
 
@@ -11,13 +12,15 @@ import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalL
 
 import ADMIN_IS_AUTHORIZED from '../../../operations/queries/adminIsAuthorized'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Outlet: jest.fn(() => <div>Outlet</div>),
-  Navigate: jest.fn(() => <div>Navigate</div>)
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  Outlet: vi.fn(() => <div>Outlet</div>),
+  Navigate: vi.fn(() => <div>Navigate</div>)
 }))
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn(({ children }) => <div>{children}</div>)
+}))
 
 const setup = setupTest({
   Component: AdminLayout,
@@ -44,7 +47,7 @@ describe('AdminLayout', () => {
         request: {
           query: ADMIN_IS_AUTHORIZED
         },
-        error: new Error('Not authorized')
+        error: new ApolloError({ errorMessage: 'Not authorized' })
       }]
     })
 

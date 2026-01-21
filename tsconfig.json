@@ -10,8 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vite/client", "jest", "node", "@testing-library/jest-dom"]
+    "types": ["vite/client", "vitest/globals", "node", "@testing-library/jest-dom"]
   },
-  "include": ["static/src", "jestConfigs/", "__mocks__/"],
+  "include": ["static/src", "vitestConfigs", "__mocks__/", "__tests__/"],
   "exclude": ["node_modules"]
 }

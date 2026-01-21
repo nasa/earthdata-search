@@ -1,18 +1,18 @@
 import React from 'react'
 import { act, screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EDSCModalContainer from '../EDSCModalContainer'
 import EDSCModal from '../../../components/EDSCModal/EDSCModal'
 
 // Mock the EDSCModal component but keep the actual implementation
-jest.mock('../../../components/EDSCModal/EDSCModal', () => {
-  const ActualEDSCModal = jest.requireActual('../../../components/EDSCModal/EDSCModal').default
+vi.mock('../../../components/EDSCModal/EDSCModal', async () => {
+  const ActualEDSCModal = (await vi.importActual('../../../components/EDSCModal/EDSCModal')).default
 
   return {
     __esModule: true,
-    default: jest.fn((props) => <ActualEDSCModal {...props} />)
+    default: vi.fn((props) => <ActualEDSCModal {...props} />)
   }
 })
 
@@ -77,7 +77,7 @@ describe('EDSCModalContainer', () => {
     test('calls the onClose callback when provided', async () => {
       const { props, user } = setup({
         overrideProps: {
-          onClose: jest.fn()
+          onClose: vi.fn()
         }
       })
 
@@ -90,7 +90,7 @@ describe('EDSCModalContainer', () => {
 
   describe('when a component is passed as the modal body', () => {
     test('passes the setModalOverlay function to the component', () => {
-      const ModalBodyComponent = jest.fn(() => <div>Test</div>)
+      const ModalBodyComponent = vi.fn(() => <div>Test</div>)
 
       setup({
         overrideProps: {
@@ -109,7 +109,7 @@ describe('EDSCModalContainer', () => {
 
     describe('when the setModalOverlay function is called', () => {
       test('sets the activeModalOverlay', async () => {
-        const ModalBodyComponent = jest.fn(() => <div>Test</div>)
+        const ModalBodyComponent = vi.fn(() => <div>Test</div>)
         const ModalOverlay = () => <div className="overlay-content">Overlay Content</div>
 
         setup({
@@ -123,7 +123,7 @@ describe('EDSCModalContainer', () => {
 
         const { setModalOverlay } = ModalBodyComponent.mock.calls[0][0]
 
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         await act(() => {
           setModalOverlay('testOverlay')
@@ -137,7 +137,7 @@ describe('EDSCModalContainer', () => {
 
       describe('when onModalExit is called', () => {
         test('clears the activeModalOverlay', async () => {
-          const ModalBodyComponent = jest.fn(() => <div>Test</div>)
+          const ModalBodyComponent = vi.fn(() => <div>Test</div>)
           const ModalOverlay = () => <div className="overlay-content">Overlay Content</div>
 
           setup({
@@ -159,7 +159,7 @@ describe('EDSCModalContainer', () => {
           // Now call onModalExit to clear it
           const { onModalExit } = EDSCModal.mock.calls[0][0]
 
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           await act(() => {
             onModalExit()

@@ -1,19 +1,24 @@
-import * as pgMigrate from 'node-pg-migrate'
+import pgMigrate from 'node-pg-migrate'
 
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 
 import * as getDbConnectionConfig from '../../util/database/getDbConnectionConfig'
 
-jest.mock('pg', () => {
-  const mClient = {
-    connect: jest.fn(),
-    query: jest.fn(),
-    end: jest.fn()
-  }
+vi.mock('node-pg-migrate', () => ({
+  __esModule: true,
+  default: vi.fn()
+}))
 
-  return { Client: jest.fn(() => mClient) }
-})
+vi.mock('pg', () => ({
+  Client: vi.fn(class {
+    connect = vi.fn()
+
+    query = vi.fn()
+
+    end = vi.fn()
+  })
+}))
 
 import * as getDbConnection from '../../util/database/getDbConnection'
 
@@ -22,13 +27,11 @@ import migrateDatabase from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getDbConnectionConfig, 'getDbConnectionConfig').mockImplementation(() => ({
+  vi.spyOn(getDbConnectionConfig, 'getDbConnectionConfig').mockImplementation(() => ({
     client: 'pg'
   }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -51,7 +54,7 @@ afterEach(() => {
 describe('migrateDatabase', () => {
   describe('when there are migrations to run', () => {
     test('returns the results', async () => {
-      jest.spyOn(pgMigrate, 'default').mockImplementationOnce(() => [{ id: 'asdf' }])
+      pgMigrate.mockResolvedValue([{ id: 'asdf' }])
 
       const response = await migrateDatabase({})
 
@@ -65,7 +68,7 @@ describe('migrateDatabase', () => {
 
   describe('when there are no migrations to run', () => {
     test('returns the results', async () => {
-      jest.spyOn(pgMigrate, 'default').mockImplementationOnce(() => [])
+      pgMigrate.mockResolvedValue([])
 
       const response = await migrateDatabase([])
 
@@ -79,7 +82,7 @@ describe('migrateDatabase', () => {
 
   describe('when an error occurs during the migration', () => {
     test('returns the results', async () => {
-      jest.spyOn(pgMigrate, 'default').mockImplementationOnce(() => {
+      pgMigrate.mockImplementationOnce(() => {
         throw new Error('Migration Error')
       })
 

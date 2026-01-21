@@ -7,7 +7,7 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 describe('util#doSearchRequest', () => {
   test('correctly returns the search response', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
 
@@ -44,7 +44,7 @@ describe('util#doSearchRequest', () => {
         'access-control-allow-origin': '*'
       })
 
-    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+    vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
       client: {
         id: 'clientId'
       }

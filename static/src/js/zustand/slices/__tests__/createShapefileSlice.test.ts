@@ -139,7 +139,7 @@ describe('createShapefileSlice', () => {
           .reply(200)
 
         useEdscStore.setState((state) => {
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -243,7 +243,7 @@ describe('createShapefileSlice', () => {
           .reply(200)
 
         useEdscStore.setState((state) => {
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()

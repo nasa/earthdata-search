@@ -1,7 +1,8 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../vitestConfigs/setupTest'
 
 import { useDeleteSubscription } from '../useDeleteSubscription'
 
@@ -10,7 +11,7 @@ import DELETE_SUBSCRIPTION from '../../operations/mutations/deleteSubscription'
 // @ts-expect-error This file does not have types
 import addToast from '../../util/addToast'
 
-jest.mock('../../util/addToast', () => jest.fn())
+vi.mock('../../util/addToast', () => ({ default: vi.fn() }))
 
 const TestComponent = () => {
   const { deleteSubscription, loading } = useDeleteSubscription()
@@ -43,7 +44,7 @@ const setup = setupTest({
   Component: TestComponent,
   defaultZustandState: {
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     }
   },
   withApolloClient: true
@@ -92,7 +93,7 @@ describe('useDeleteSubscription', () => {
                 conceptId: 'subscriptionId'
               }
             },
-            error: new Error('An error occurred')
+            error: new ApolloError({ errorMessage: 'An error occurred' })
           }]
         })
 
@@ -102,7 +103,7 @@ describe('useDeleteSubscription', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'deleteSubscription',
-          error: new Error('An error occurred'),
+          error: new ApolloError({ errorMessage: 'An error occurred' }),
           resource: 'subscription',
           verb: 'deleting',
           showAlertButton: true,

@@ -2,7 +2,7 @@ import NlpSearchRequest from '../nlpSearchRequest'
 
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
 describe('NlpSearchRequest#constructor', () => {
   test('sets searchPath correctly', () => {
@@ -15,7 +15,7 @@ describe('NlpSearchRequest#constructor', () => {
 describe('NlpSearchRequest#search', () => {
   test('calls post with searchPath and params', () => {
     const request = new NlpSearchRequest('prod')
-    const postSpy = jest.spyOn(request, 'post').mockImplementation()
+    const postSpy = vi.spyOn(request, 'post').mockImplementation()
     const searchParams = {
       q: 'test',
       pageNum: 1

@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CollectionDetailsHighlights, { granuleListTotalStyle } from '../CollectionDetailsHighlights'
 import Skeleton from '../../Skeleton/Skeleton'
@@ -9,12 +9,12 @@ import { collectionDetailsParagraph, collectionDetailsRow } from '../skeleton'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules/granule-details',
     search: '?p=collectionId&g=granuleId',
     hash: '',
@@ -53,7 +53,7 @@ const setup = setupTest({
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

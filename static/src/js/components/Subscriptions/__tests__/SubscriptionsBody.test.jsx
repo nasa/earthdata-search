@@ -1,7 +1,8 @@
 import { screen, waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import SubscriptionsBody from '../SubscriptionsBody'
 import SubscriptionsListItem from '../SubscriptionsListItem'
@@ -9,19 +10,21 @@ import SUBSCRIPTIONS from '../../../operations/queries/subscriptions'
 import addToast from '../../../util/addToast'
 import CREATE_SUBSCRIPTION from '../../../operations/mutations/createSubscription'
 
-jest.mock('../../../util/addToast', () => jest.fn())
+vi.mock('../../../util/addToast', () => ({ default: vi.fn() }))
 
-jest.mock('../SubscriptionsListItem', () => jest.fn(() => null))
+vi.mock('../SubscriptionsListItem', () => ({
+  default: vi.fn(() => null)
+}))
 
 const setup = setupTest({
   Component: SubscriptionsBody,
   defaultProps: {
-    setSubscriptionCount: jest.fn(),
+    setSubscriptionCount: vi.fn(),
     subscriptionType: 'collection'
   },
   defaultZustandState: {
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     },
     user: {
       username: 'testuser'
@@ -180,7 +183,7 @@ describe('SubscriptionsBody component', () => {
                 }
               }
             },
-            error: new Error('Failed to create subscription')
+            error: new ApolloError({ errorMessage: 'Failed to create subscription' })
           }]
         })
 
@@ -190,7 +193,7 @@ describe('SubscriptionsBody component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'createSubscription',
-          error: new Error('Failed to create subscription'),
+          error: new ApolloError({ errorMessage: 'Failed to create subscription' }),
           notificationType: 'toast',
           resource: 'subscription',
           showAlertButton: true,

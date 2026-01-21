@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import DeprecatedParameterModal from '../DeprecatedParameterModal'
 import { MODAL_NAMES } from '../../../constants/modalNames'
@@ -16,7 +16,7 @@ const setup = setupTest({
         modalData: {
           deprecatedUrlParams: ['test']
         },
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

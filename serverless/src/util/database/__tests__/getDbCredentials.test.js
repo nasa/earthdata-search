@@ -6,17 +6,17 @@ import * as deployedEnvironment from '../../../../../sharedUtils/deployedEnviron
 
 const OLD_ENV = process.env
 
-jest.mock('@aws-sdk/client-secrets-manager', () => {
-  const original = jest.requireActual('@aws-sdk/client-secrets-manager')
-  const sendMock = jest.fn().mockReturnValueOnce({
+vi.mock('@aws-sdk/client-secrets-manager', async () => {
+  const original = await vi.importActual('@aws-sdk/client-secrets-manager')
+  const sendMock = vi.fn().mockReturnValueOnce({
     SecretString: '{"username":"fake-username", "password":"fake-pw"}'
   })
 
   return {
     ...original,
-    SecretsManagerClient: jest.fn().mockImplementation(() => ({
-      send: sendMock
-    }))
+    SecretsManagerClient: vi.fn(class {
+      send = sendMock
+    })
   }
 })
 
@@ -24,8 +24,6 @@ const client = new SecretsManagerClient()
 
 describe('getDbCredentials', () => {
   beforeEach(() => {
-    // Manage resetting ENV variables
-    jest.resetModules()
     process.env = { ...OLD_ENV }
     delete process.env.NODE_ENV
   })
@@ -38,7 +36,7 @@ describe('getDbCredentials', () => {
   test('fetches urs credentials from secrets manager', async () => {
     process.env.CONFIG_SECRET_ID = 'test-DbPasswordSecret'
 
-    jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+    vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
     const response = await getDbCredentials()
 
@@ -47,7 +45,7 @@ describe('getDbCredentials', () => {
       password: 'fake-pw'
     })
 
-    expect(client.send).toBeCalledTimes(1)
+    expect(client.send).toHaveBeenCalledTimes(1)
     expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
       input: {
         SecretId: 'test-DbPasswordSecret'

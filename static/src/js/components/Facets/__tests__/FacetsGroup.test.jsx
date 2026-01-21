@@ -1,13 +1,13 @@
 import React from 'react'
 import { act, screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import FacetsGroup from '../FacetsGroup'
 import FacetsList from '../FacetsList'
 import useEdscStore from '../../../zustand/useEdscStore'
 
-jest.mock('../FacetsList', () => jest.fn(() => <div />))
+vi.mock('../FacetsList', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: FacetsGroup,
@@ -18,13 +18,13 @@ const setup = setupTest({
       title: 'Projects',
       children: [{}],
       totalSelected: 0,
-      changeHandler: jest.fn()
+      changeHandler: vi.fn()
     },
     facetCategory: 'projects'
   },
   defaultZustandState: {
     facetParams: {
-      triggerViewAllFacets: jest.fn()
+      triggerViewAllFacets: vi.fn()
     }
   }
 })
@@ -64,7 +64,7 @@ describe('FacetsGroup component', () => {
             applied: true,
             children: new Array(10),
             totalSelected: 9,
-            changeHandler: jest.fn()
+            changeHandler: vi.fn()
           }
         }
       })
@@ -81,7 +81,7 @@ describe('FacetsGroup component', () => {
             applied: true,
             children: new Array(51),
             totalSelected: 0,
-            changeHandler: jest.fn()
+            changeHandler: vi.fn()
           }
         }
       })
@@ -99,7 +99,7 @@ describe('FacetsGroup component', () => {
             applied: true,
             children: new Array(51),
             totalSelected: 0,
-            changeHandler: jest.fn()
+            changeHandler: vi.fn()
           }
         }
       })
@@ -119,7 +119,7 @@ describe('FacetsGroup component', () => {
 
       expect(FacetsList).toHaveBeenCalledTimes(0)
 
-      jest.clearAllMocks()
+      vi.clearAllMocks()
 
       const zustandState = useEdscStore.getState()
       const { home } = zustandState

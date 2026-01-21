@@ -1,14 +1,16 @@
 import React from 'react'
 import { act, screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EmergencyNotification from '../EmergencyNotification'
 import Banner from '../../Banner/Banner'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-jest.mock('../../Banner/Banner', () => jest.fn(({ title }) => <div>{title}</div>))
+vi.mock('../../Banner/Banner', () => ({
+  default: vi.fn(({ title }) => <div>{title}</div>)
+}))
 
 const setup = setupTest({
   Component: EmergencyNotification
@@ -17,7 +19,7 @@ const setup = setupTest({
 describe('EmergencyNotification', () => {
   describe('when no notification exists', () => {
     beforeEach(() => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         emergencyNotification: 'false',
         emergencyNotificationType: 'false'
       }))
@@ -32,7 +34,7 @@ describe('EmergencyNotification', () => {
 
   describe('when a notification exists', () => {
     beforeEach(() => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         emergencyNotification: 'Don\'t Panic',
         emergencyNotificationType: 'info'
       }))

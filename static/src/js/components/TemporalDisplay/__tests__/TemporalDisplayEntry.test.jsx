@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import moment from 'moment'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import TemporalDisplayEntry from '../TemporalDisplayEntry'
 

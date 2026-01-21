@@ -65,9 +65,9 @@ const setup = (overrides) => {
   }]
   const focusedGranuleId = ''
   const hoveredGranuleId = null
-  const isGranuleInProject = jest.fn()
+  const isGranuleInProject = vi.fn()
   const isCollectionInProject = false
-  const setGranuleId = jest.fn()
+  const setGranuleId = vi.fn()
 
   const { granulesList } = formatGranulesList({
     granules,
@@ -88,8 +88,8 @@ const setup = (overrides) => {
 
 describe('granule map events', () => {
   test('hovering over a granule highlights the granule on the map', () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-    eventEmitterEmitMock.mockImplementation(() => jest.fn())
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
+    eventEmitterEmitMock.mockImplementation(() => vi.fn())
 
     const { granulesList, granules } = setup()
     const [granule] = granulesList
@@ -99,7 +99,7 @@ describe('granule map events', () => {
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.hoverGranule', { granule: granules.find((g) => g.id === 'G1924512983-LANCEMODIS') })
 
-    jest.clearAllMocks()
+    vi.clearAllMocks()
 
     granule.handleMouseLeave()
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
@@ -118,8 +118,8 @@ describe('granule map events', () => {
   })
 
   test('clicking on a granule sets that granule as sticky on the map', () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-    eventEmitterEmitMock.mockImplementation(() => jest.fn())
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
+    eventEmitterEmitMock.mockImplementation(() => vi.fn())
 
     const {
       granulesList,
@@ -138,8 +138,8 @@ describe('granule map events', () => {
   })
 
   test('clicking on a focused granule removes that granule as sticky on the map', () => {
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-    eventEmitterEmitMock.mockImplementation(() => jest.fn())
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
+    eventEmitterEmitMock.mockImplementation(() => vi.fn())
 
     const { granulesList, setGranuleId } = setup({ focusedGranuleId: 'G1924512983-LANCEMODIS' })
     const [granule] = granulesList

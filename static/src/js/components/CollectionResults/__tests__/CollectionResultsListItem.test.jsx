@@ -1,15 +1,15 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { CollectionResultsItem } from '../CollectionResultsItem'
 import CollectionResultsListItem from '../CollectionResultsListItem'
 import Skeleton from '../../Skeleton/Skeleton'
 
-jest.mock('../CollectionResultsItem', () => {
-  const { forwardRef } = jest.requireActual('react')
+vi.mock('../CollectionResultsItem', async () => {
+  const { forwardRef } = await vi.importActual('react')
 
-  const Component = jest.fn((_props, ref) => <div ref={ref} />)
+  const Component = vi.fn((_props, ref) => <div ref={ref} />)
 
   return {
     __esModule: true,
@@ -18,7 +18,7 @@ jest.mock('../CollectionResultsItem', () => {
   }
 })
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
 const defaultProps = {
   data: {
@@ -44,9 +44,9 @@ const defaultProps = {
       temporalRange: '2010-10-10 to 2011-10-10',
       versionId: '2'
     }],
-    isItemLoaded: jest.fn(() => true),
-    loadMoreItems: jest.fn(),
-    setSize: jest.fn(),
+    isItemLoaded: vi.fn(() => true),
+    loadMoreItems: vi.fn(),
+    setSize: vi.fn(),
     windowWidth: 800
   },
   index: 0,
@@ -100,7 +100,7 @@ describe('CollectionResultsList component', () => {
 
     test('sets the element size', () => {
       const originalBoundingRect = Element.prototype.getBoundingClientRect
-      Element.prototype.getBoundingClientRect = jest.fn()
+      Element.prototype.getBoundingClientRect = vi.fn()
         .mockReturnValue({ height: 10 })
         .mockReturnValueOnce({ height: 10 })
 
@@ -128,7 +128,7 @@ describe('CollectionResultsList component', () => {
         overrideProps: {
           data: {
             ...defaultProps.data,
-            isItemLoaded: jest.fn(() => false)
+            isItemLoaded: vi.fn(() => false)
           },
           index: 1
         }

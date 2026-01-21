@@ -3,10 +3,8 @@ import decodeId from '../handler'
 const OLD_ENV = process.env
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   // Manage resetting ENV variables
-  jest.resetModules()
+  vi.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 })

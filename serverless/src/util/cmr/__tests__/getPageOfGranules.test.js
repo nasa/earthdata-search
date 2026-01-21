@@ -6,7 +6,7 @@ import { getPageOfGranules } from '../getPageOfGranules'
 
 describe('getPageOfGranules', () => {
   test('requests the 20 granules by default', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'http://cmr.example.com'
     }))
 
@@ -43,7 +43,7 @@ describe('getPageOfGranules', () => {
   })
 
   test('requests the 30 granules when requested', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'http://cmr.example.com'
     }))
 

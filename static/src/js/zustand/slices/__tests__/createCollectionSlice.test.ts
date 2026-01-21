@@ -10,12 +10,12 @@ import routerHelper from '../../../router/router'
 import { collectionRelevancyMetrics } from '../../../util/relevancy/collectionRelevancyMetrics'
 import { changeUrl } from '../../../util/url/changeUrl'
 
-jest.mock('../../../util/url/changeUrl', () => ({
-  changeUrl: jest.fn()
+vi.mock('../../../util/url/changeUrl', () => ({
+  changeUrl: vi.fn()
 }))
 
-jest.mock('../../../util/relevancy/collectionRelevancyMetrics', () => ({
-  collectionRelevancyMetrics: jest.fn()
+vi.mock('../../../util/relevancy/collectionRelevancyMetrics', () => ({
+  collectionRelevancyMetrics: vi.fn()
 }))
 
 describe('createCollectionSlice', () => {
@@ -36,27 +36,27 @@ describe('createCollectionSlice', () => {
 
   describe('getCollectionMetadata', () => {
     beforeEach(() => {
-      jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
+      vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
 
       routerHelper.router = {
-        navigate: jest.fn(),
+        navigate: vi.fn(),
         state: {
           location: {
             pathname: '/search',
             search: ''
           }
         },
-        subscribe: jest.fn()
+        subscribe: vi.fn()
       }
 
       useEdscStore.setState((state) => {
-        state.errors.handleError = jest.fn()
+        state.errors.handleError = vi.fn()
       })
     })
 
@@ -69,8 +69,8 @@ describe('createCollectionSlice', () => {
             hasAllMetadata: true
           }
 
-          state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const { collection } = useEdscStore.getState()
@@ -105,19 +105,19 @@ describe('createCollectionSlice', () => {
     describe('when there is no focused collection id', () => {
       test('redirects the user to /search', async () => {
         routerHelper.router = {
-          navigate: jest.fn(),
+          navigate: vi.fn(),
           state: {
             location: {
               pathname: '/search',
               search: '?zoom=4'
             }
           },
-          subscribe: jest.fn()
+          subscribe: vi.fn()
         }
 
         useEdscStore.setState((state) => {
-          state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const { collection } = useEdscStore.getState()
@@ -167,8 +167,8 @@ describe('createCollectionSlice', () => {
 
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
-            state.granules.getGranules = jest.fn()
-            state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+            state.granules.getGranules = vi.fn()
+            state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
           })
 
           const { collection } = useEdscStore.getState()
@@ -297,12 +297,12 @@ describe('createCollectionSlice', () => {
                 isOpenSearch: true
               }
 
-              state.granules.getGranules = jest.fn()
+              state.granules.getGranules = vi.fn()
               state.query.collection.spatial = {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
 
-              state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+              state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
             })
 
             const { collection } = useEdscStore.getState()
@@ -433,12 +433,12 @@ describe('createCollectionSlice', () => {
                 isOpenSearch: true
               }
 
-              state.granules.getGranules = jest.fn()
+              state.granules.getGranules = vi.fn()
               state.query.collection.spatial = {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
 
-              state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+              state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
             })
 
             const { collection } = useEdscStore.getState()
@@ -546,14 +546,14 @@ describe('createCollectionSlice', () => {
       describe('when graphql returns no metadata for the requested collection', () => {
         test('should clear the collection', async () => {
           routerHelper.router = {
-            navigate: jest.fn(),
+            navigate: vi.fn(),
             state: {
               location: {
                 search: '?p=C10000000000-EDSC',
                 pathname: '/search/granules'
               }
             },
-            subscribe: jest.fn()
+            subscribe: vi.fn()
           }
 
           nock(/graph/)
@@ -566,9 +566,9 @@ describe('createCollectionSlice', () => {
 
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
-            state.collection.setCollectionId = jest.fn()
-            state.granules.getGranules = jest.fn()
-            state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+            state.collection.setCollectionId = vi.fn()
+            state.granules.getGranules = vi.fn()
+            state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
           })
 
           const { collection } = useEdscStore.getState()
@@ -629,8 +629,8 @@ describe('createCollectionSlice', () => {
 
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
-          state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const { collection } = useEdscStore.getState()
@@ -664,7 +664,7 @@ describe('createCollectionSlice', () => {
 
     describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
       test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
-        jest.spyOn(getEarthdataConfig, 'getApplicationConfig').mockImplementation(() => ({
+        vi.spyOn(getEarthdataConfig, 'getApplicationConfig').mockImplementation(() => ({
           maxCmrPageSize: 1,
           env: 'prod',
           defaultCmrSearchTags: [
@@ -736,8 +736,8 @@ describe('createCollectionSlice', () => {
 
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
-          state.granules.getGranules = jest.fn()
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.granules.getGranules = vi.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const expectedItems = [
@@ -789,8 +789,8 @@ describe('createCollectionSlice', () => {
 
       useEdscStore.setState((state) => {
         state.collection.collectionId = 'C10000000000-EDSC'
-        state.granules.getGranules = jest.fn()
-        state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+        state.granules.getGranules = vi.fn()
+        state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
       })
 
       const { collection } = useEdscStore.getState()
@@ -833,20 +833,20 @@ describe('createCollectionSlice', () => {
     describe('when a collection id is provided', () => {
       test('updates the collection and calls getCollectionMetadata', async () => {
         routerHelper.router = {
-          navigate: jest.fn(),
+          navigate: vi.fn(),
           state: {
             location: {
               search: '?keyword=modis',
               pathname: '/search'
             }
           },
-          subscribe: jest.fn()
+          subscribe: vi.fn()
         }
 
         useEdscStore.setState((state) => {
-          state.collection.getCollectionMetadata = jest.fn()
-          state.query.initializeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.query.initializeGranuleQuery = vi.fn()
+          state.timeline.getTimeline = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -884,22 +884,22 @@ describe('createCollectionSlice', () => {
     describe('when a collection id is not provided', () => {
       test('should clear the collection and call changeUrl', async () => {
         routerHelper.router = {
-          navigate: jest.fn(),
+          navigate: vi.fn(),
           state: {
             location: {
               search: '?keyword=modis',
               pathname: '/search'
             }
           },
-          subscribe: jest.fn()
+          subscribe: vi.fn()
         }
 
         useEdscStore.setState((state) => {
-          state.collection.getCollectionMetadata = jest.fn()
-          state.granule.setGranuleId = jest.fn()
-          state.query.changeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.granule.setGranuleId = vi.fn()
+          state.query.changeGranuleQuery = vi.fn()
+          state.timeline.getTimeline = vi.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -943,10 +943,10 @@ describe('createCollectionSlice', () => {
     describe('when the granule sort preference is not the default', () => {
       test('updates the collection and calls getCollectionMetadata', async () => {
         useEdscStore.setState((state) => {
-          state.collection.getCollectionMetadata = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
           state.user.sitePreferences.granuleSort = '-start_date'
-          state.query.initializeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
+          state.query.initializeGranuleQuery = vi.fn()
+          state.timeline.getTimeline = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -986,22 +986,22 @@ describe('createCollectionSlice', () => {
     describe('when clearing the collectionId on the project page', () => {
       test('updates the collectionId and does not redirect or call getCollectionMetadata', async () => {
         routerHelper.router = {
-          navigate: jest.fn(),
+          navigate: vi.fn(),
           state: {
             location: {
               pathname: '/project',
               search: '?p=collectionId!collectionId'
             }
           },
-          subscribe: jest.fn()
+          subscribe: vi.fn()
         }
 
         useEdscStore.setState((state) => {
-          state.collection.getCollectionMetadata = jest.fn()
-          state.granule.setGranuleId = jest.fn()
-          state.query.changeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
-          state.ui.map.setDisplaySpatialMbrWarning = jest.fn()
+          state.collection.getCollectionMetadata = vi.fn()
+          state.granule.setGranuleId = vi.fn()
+          state.query.changeGranuleQuery = vi.fn()
+          state.timeline.getTimeline = vi.fn()
+          state.ui.map.setDisplaySpatialMbrWarning = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -1086,18 +1086,18 @@ describe('createCollectionSlice', () => {
   describe('viewCollectionDetails', () => {
     test('calls setCollectionId and changeUrl', async () => {
       routerHelper.router = {
-        navigate: jest.fn(),
+        navigate: vi.fn(),
         state: {
           location: {
             search: '?keyword=modis',
             pathname: '/search'
           }
         },
-        subscribe: jest.fn()
+        subscribe: vi.fn()
       }
 
       useEdscStore.setState((state) => {
-        state.collection.setCollectionId = jest.fn()
+        state.collection.setCollectionId = vi.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -1120,18 +1120,18 @@ describe('createCollectionSlice', () => {
   describe('viewCollectionGranules', () => {
     test('calls setCollectionId and changeUrl', async () => {
       routerHelper.router = {
-        navigate: jest.fn(),
+        navigate: vi.fn(),
         state: {
           location: {
             search: '?keyword=modis',
             pathname: '/search'
           }
         },
-        subscribe: jest.fn()
+        subscribe: vi.fn()
       }
 
       useEdscStore.setState((state) => {
-        state.collection.setCollectionId = jest.fn()
+        state.collection.setCollectionId = vi.fn()
       })
 
       const zustandState = useEdscStore.getState()

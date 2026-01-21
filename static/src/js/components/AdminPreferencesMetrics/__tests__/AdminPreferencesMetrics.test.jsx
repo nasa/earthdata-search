@@ -1,12 +1,12 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AdminPreferencesMetrics from '../AdminPreferencesMetrics'
 import AdminPreferencesMetricsList from '../AdminPreferencesMetricsList'
 
-jest.mock('../AdminPreferencesMetricsList', () => jest.fn(() => <div />))
+vi.mock('../AdminPreferencesMetricsList', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: AdminPreferencesMetrics,

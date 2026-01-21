@@ -1,15 +1,16 @@
 import { screen } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
 import PreferencesForm from '../PreferencesForm'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import UPDATE_PREFERENCES from '../../../operations/mutations/updatePreferences'
 import addToast from '../../../util/addToast'
 
-jest.mock('../../../util/addToast')
+vi.mock('../../../util/addToast')
 
 const defaultZustandState = {
   errors: {
-    handleError: jest.fn()
+    handleError: vi.fn()
   },
   user: {
     sitePreferences: {
@@ -31,7 +32,7 @@ const defaultZustandState = {
         zoom: 3
       }
     },
-    setSitePreferences: jest.fn()
+    setSitePreferences: vi.fn()
   }
 }
 
@@ -222,7 +223,7 @@ describe('PreferencesForm component', () => {
                   }
                 }
               },
-              error: new Error('GraphQL error')
+              error: new ApolloError({ errorMessage: 'GraphQL error' })
             }
           ]
         })
@@ -234,7 +235,7 @@ describe('PreferencesForm component', () => {
 
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
-          error: expect.any(Error),
+          error: new ApolloError({ errorMessage: 'GraphQL error' }),
           action: 'updatePreferences',
           resource: 'preferences',
           requestObject: null,

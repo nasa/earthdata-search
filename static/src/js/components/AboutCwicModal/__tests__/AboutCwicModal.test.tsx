@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AboutCwicModal from '../AboutCwicModal'
 import { MODAL_NAMES } from '../../../constants/modalNames'
@@ -11,7 +11,7 @@ const setup = setupTest({
     ui: {
       modals: {
         openModal: MODAL_NAMES.ABOUT_CWIC,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

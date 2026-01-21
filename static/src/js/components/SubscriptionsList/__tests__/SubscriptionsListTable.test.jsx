@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen, within } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
@@ -9,16 +9,18 @@ import SubscriptionsListTable from '../SubscriptionsListTable'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 // In order to pass out of scope variables into `jest` they must be prefixed with `mock`
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <mock-PortalLinkContainer {...props} aria-label={props.label} />
-)))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn((props) => (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <mock-PortalLinkContainer {...props} aria-label={props.label} />
+  ))
+}))
 
-const mockUseDeleteSubscription = jest.fn().mockReturnValue({
-  deleteSubscription: jest.fn(),
+const mockUseDeleteSubscription = vi.fn().mockReturnValue({
+  deleteSubscription: vi.fn(),
   loading: false
 })
-jest.mock('../../../hooks/useDeleteSubscription', () => ({
+vi.mock('../../../hooks/useDeleteSubscription', () => ({
   useDeleteSubscription: () => mockUseDeleteSubscription()
 }))
 
@@ -30,13 +32,13 @@ const setup = setupTest({
   },
   defaultZustandState: {
     collection: {
-      setCollectionId: jest.fn()
+      setCollectionId: vi.fn()
     }
   }
 })
 
 beforeEach(() => {
-  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 })
 
 describe('SubscriptionsListTable component', () => {
@@ -104,7 +106,7 @@ describe('SubscriptionsListTable component', () => {
         }
       })
 
-      window.confirm = jest.fn().mockImplementation(() => true)
+      window.confirm = vi.fn().mockImplementation(() => true)
 
       const removeButton = screen.getByRole('button', { name: 'Delete Subscription' })
 
@@ -137,7 +139,7 @@ describe('SubscriptionsListTable component', () => {
             query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
           }],
           subscriptionType: 'granule',
-          onDeleteSubscription: jest.fn()
+          onDeleteSubscription: vi.fn()
         }
       })
 
@@ -170,7 +172,7 @@ describe('SubscriptionsListTable component', () => {
               query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
             }],
             subscriptionType: 'granule',
-            onDeleteSubscription: jest.fn()
+            onDeleteSubscription: vi.fn()
           }
         })
 

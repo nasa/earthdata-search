@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import OrderStatusItem from '../OrderStatusItem'
 
@@ -9,9 +9,9 @@ import OrderStatusItem from '../OrderStatusItem'
 import ProgressRing from '../../ProgressRing/ProgressRing'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../ProgressRing/ProgressRing', () => jest.fn(() => <div />))
+vi.mock('../../ProgressRing/ProgressRing', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../../OrderProgressList/OrderProgressList', () => jest.fn(() => <div />))
+vi.mock('../../OrderProgressList/OrderProgressList', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: OrderStatusItem,
@@ -27,7 +27,7 @@ const setup = setupTest({
     orderInfo: '',
     orderStatus: 'complete',
     progressPercentage: 100,
-    setOpened: jest.fn(),
+    setOpened: vi.fn(),
     tabs: [<div key="mock-tab">Mock Tab</div>],
     title: 'Mock Title',
     totalCompleteOrders: 0,
@@ -37,7 +37,7 @@ const setup = setupTest({
   defaultZustandState: {
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

@@ -1,8 +1,9 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 import * as tinyCookie from 'tiny-cookie'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import UserLoader from '../UserLoader'
 import GET_USER from '../../../operations/queries/getUser'
@@ -11,15 +12,17 @@ import Spinner from '../../Spinner/Spinner'
 
 import { localStorageKeys } from '../../../constants/localStorageKeys'
 
-jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
-
-jest.mock('tiny-cookie', () => ({
-  remove: jest.fn().mockReturnValue('')
+vi.mock('../../../components/Spinner/Spinner', () => ({
+  default: vi.fn(() => <div />)
 }))
 
-const mockUseNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('tiny-cookie', () => ({
+  remove: vi.fn().mockReturnValue('')
+}))
+
+const mockUseNavigate = vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockUseNavigate
 }))
 
@@ -30,13 +33,13 @@ const setup = setupTest({
   },
   defaultZustandState: {
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     },
     user: {
-      setEdlToken: jest.fn(),
-      setSitePreferences: jest.fn(),
-      setUrsProfile: jest.fn(),
-      setUsername: jest.fn()
+      setEdlToken: vi.fn(),
+      setSitePreferences: vi.fn(),
+      setUrsProfile: vi.fn(),
+      setUsername: vi.fn()
     }
   },
   withApolloClient: true,
@@ -45,7 +48,7 @@ const setup = setupTest({
 
 describe('UserLoader', () => {
   test('renders child components when no edlToken is provided', () => {
-    const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem')
+    const localStorageGetItemSpy = vi.spyOn(Storage.prototype, 'getItem')
 
     setup()
 
@@ -56,7 +59,7 @@ describe('UserLoader', () => {
 
   describe('when an edlToken and no user data are provided', () => {
     test('renders a spinner', () => {
-      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+      const localStorageGetItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
 
       setup({
         overrideZustandState: {
@@ -91,7 +94,7 @@ describe('UserLoader', () => {
 
   describe('when localstorage has user data', () => {
     test('restores user data from localstorage', () => {
-      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify({
+      const localStorageGetItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify({
         sitePreferences: {
           mock: 'preferences'
         },
@@ -116,7 +119,17 @@ describe('UserLoader', () => {
                 id: '123',
                 sitePreferences: {},
                 ursId: 'test-user',
-                ursProfile: {}
+                ursProfile: {
+                  affiliation: 'Test University',
+                  country: 'Test Country',
+                  emailAddress: 'test@example.com',
+                  firstName: 'Test',
+                  lastName: 'User',
+                  organization: 'Test Organization',
+                  studyArea: 'Test Area',
+                  uid: 'test-uid',
+                  userType: 'Test Type'
+                }
               }
             }
           }
@@ -143,7 +156,7 @@ describe('UserLoader', () => {
 
   describe('when an edlToken and user data are provided', () => {
     test('updates store and renders child components', async () => {
-      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+      const localStorageGetItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
 
       const { zustandState } = setup({
         overrideZustandState: {
@@ -186,9 +199,9 @@ describe('UserLoader', () => {
 
   describe('when the getUser query returns an error', () => {
     test('handles the error, removes the edlToken, and redirects to /search', async () => {
-      const removeSpy = jest.spyOn(tinyCookie, 'remove')
-      const localStorageGetItemSpy = jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
-      const localStorageRemoveItemSpy = jest.spyOn(Storage.prototype, 'removeItem')
+      const removeSpy = vi.spyOn(tinyCookie, 'remove')
+      const localStorageGetItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null)
+      const localStorageRemoveItemSpy = vi.spyOn(Storage.prototype, 'removeItem')
 
       const { zustandState } = setup({
         overrideZustandState: {
@@ -200,7 +213,7 @@ describe('UserLoader', () => {
           request: {
             query: GET_USER
           },
-          error: new Error('Test error')
+          error: new ApolloError({ errorMessage: 'Test error' })
         }]
       })
 
@@ -221,7 +234,7 @@ describe('UserLoader', () => {
 
       expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
-        error: expect.any(Error),
+        error: new ApolloError({ errorMessage: 'Test error' }),
         action: 'getUser query',
         title: 'Something went wrong while logging in'
       })

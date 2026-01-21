@@ -3,9 +3,9 @@ import getLoaders from '../getLoaders'
 
 const mockContext = {
   databaseClient: {
-    getRetrievalCollectionsByRetrievalId: jest.fn(),
-    getRetrievalOrdersByRetrievalCollectionId: jest.fn(),
-    getUsersById: jest.fn()
+    getRetrievalCollectionsByRetrievalId: vi.fn(),
+    getRetrievalOrdersByRetrievalCollectionId: vi.fn(),
+    getUsersById: vi.fn()
   }
 }
 
