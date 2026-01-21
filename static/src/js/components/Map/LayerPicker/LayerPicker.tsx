@@ -138,7 +138,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.REORDER_LAYER, {
           collectionId,
           layerOrder: currentLayers.map((layer) => layer.product),
-          movedProduct: active.id,
+          movedProduct: active.id as string,
           oldIndex,
           newIndex
         })

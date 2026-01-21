@@ -5,6 +5,34 @@ const { dataLayer = [] } = window
 
 type LayerPickerEventType = typeof layerPickerEventTypes[keyof typeof layerPickerEventTypes]
 type LayerPickerEventAction = typeof layerPickerEventActions[keyof typeof layerPickerEventActions]
+type LayerPickerAdjustOpacityData = {
+  collectionConceptId: string
+  productName: string
+  opacity: number
+}
+
+type LayerPickerReorderLayerData = {
+  collectionId: string
+  layerOrder: string[]
+  movedProduct: string
+  oldIndex: number
+  newIndex: number
+}
+
+type LayerPickerToggleLayerData = {
+  collectionId: string
+  productName: string
+}
+
+type LayerPickerToggleLayerPickerData = {
+  layersHidden: boolean
+}
+
+type LayerPickerEventData =
+  | LayerPickerAdjustOpacityData
+  | LayerPickerReorderLayerData
+  | LayerPickerToggleLayerData
+  | LayerPickerToggleLayerPickerData
 
 /**
  * Pushes a LayerPicker event on the dataLayer.
@@ -16,7 +44,7 @@ type LayerPickerEventAction = typeof layerPickerEventActions[keyof typeof layerP
 export const metricsLayerPicker = (
   eventType: LayerPickerEventType,
   eventAction: LayerPickerEventAction,
-  eventData: object
+  eventData: LayerPickerEventData
 ) => {
   dataLayer.push({
     event: 'LayerPicker',
