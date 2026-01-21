@@ -1,22 +1,27 @@
+import { layerPickerEventActions } from '../../constants/metricsEventActions'
+import { layerPickerEventTypes } from '../../constants/metricsEventTypes'
+
 const { dataLayer = [] } = window
 
+type LayerPickerEventType = typeof layerPickerEventTypes[keyof typeof layerPickerEventTypes]
+type LayerPickerEventAction = typeof layerPickerEventActions[keyof typeof layerPickerEventActions]
+
 /**
-* Pushes a LayerPickerReordering event on the dataLayer.
-* This event is fired when a user drags and drops layers in the LayerPicker
+ * Pushes a LayerPicker event on the dataLayer.
+ * This event is fired when a user drags and drops layers in the LayerPicker
  * @param {string} eventType - The type of event (e.g., 'drag', 'click')
  * @param {string} eventAction - The specific action taken (e.g., 'reorder', 'toggle')
  * @param {object} eventData - Additional data related to the event.
 */
-
 export const metricsLayerPicker = (
-  eventType: string,
-  eventAction: string,
+  eventType: LayerPickerEventType,
+  eventAction: LayerPickerEventAction,
   eventData: object
 ) => {
   dataLayer.push({
     event: 'LayerPicker',
-    LayerPickerReorderingEventType: eventType,
-    LayerPickerReorderingEventAction: eventAction,
-    LayerPickerReorderingEventData: eventData
+    LayerPickerEventType: eventType,
+    LayerPickerEventAction: eventAction,
+    LayerPickerEventData: eventData
   })
 }

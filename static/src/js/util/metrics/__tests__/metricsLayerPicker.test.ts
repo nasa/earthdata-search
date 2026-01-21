@@ -18,9 +18,9 @@ describe('metricsLayerPicker', () => {
     expect(dataLayerPushSpy).toHaveBeenCalledTimes(1)
     expect(dataLayerPushSpy).toHaveBeenCalledWith({
       event: 'LayerPicker',
-      LayerPickerReorderingEventType: 'drag',
-      LayerPickerReorderingEventAction: 'layerPicker.reorderLayer',
-      LayerPickerReorderingEventData: {
+      LayerPickerEventType: 'drag',
+      LayerPickerEventAction: 'layerPicker.reorderLayer',
+      LayerPickerEventData: {
         initialOrder: ['A', 'B', 'C'],
         finalOrder: ['B', 'A', 'C'],
         movedProduct: 'B',
