@@ -8,11 +8,11 @@ describe('metricsLayerPicker', () => {
     const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
 
     metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.REORDER_LAYER, {
-      initialOrder: ['A', 'B', 'C'],
-      finalOrder: ['B', 'A', 'C'],
+      collectionId: 'Collection-Id',
+      layerOrder: ['B', 'A', 'C'],
       movedProduct: 'B',
-      fromIndex: 1,
-      toIndex: 0
+      oldIndex: 1,
+      newIndex: 0
     })
 
     expect(dataLayerPushSpy).toHaveBeenCalledTimes(1)
@@ -21,11 +21,11 @@ describe('metricsLayerPicker', () => {
       LayerPickerEventType: 'drag',
       LayerPickerEventAction: 'layerPicker.reorderLayer',
       LayerPickerEventData: {
-        initialOrder: ['A', 'B', 'C'],
-        finalOrder: ['B', 'A', 'C'],
+        collectionId: 'Collection-Id',
+        layerOrder: ['B', 'A', 'C'],
         movedProduct: 'B',
-        fromIndex: 1,
-        toIndex: 0
+        oldIndex: 1,
+        newIndex: 0
       }
     })
   })
