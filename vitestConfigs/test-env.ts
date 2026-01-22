@@ -7,8 +7,6 @@ import * as matchers from '@testing-library/jest-dom/matchers'
 
 import nock from 'nock'
 
-import '@testing-library/jest-dom'
-
 import '@testing-library/jest-dom/vitest'
 
 // Loads the zustand mock from __mocks__/zustand.ts

@@ -27,11 +27,6 @@ const { footer, ui } = portalConfig
 const { showTophat } = ui
 const { attributionText } = footer
 
-const coverageReporters = ['text', 'lcov', 'clover', 'json', 'html']
-if (process.env.GITHUB_ACTIONS) {
-  coverageReporters.push('github-actions')
-}
-
 export default defineConfig({
   publicDir: 'static/src/public',
   server: {
@@ -121,6 +116,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: 'vitestConfigs/test-env.ts',
     clearMocks: true,
+    reporters: process.env.GITHUB_ACTIONS ? ['default', 'github-actions'] : ['default'],
     include: [
       'serverless/src/**/*.test.{js,ts}',
       'static/src/**/*.test.{js,jsx,ts,tsx}',
@@ -137,7 +133,7 @@ export default defineConfig({
         '**/vitestConfigs/**',
         '**/*.d.ts'
       ],
-      reporter: coverageReporters,
+      reporter: ['text', 'lcov', 'clover', 'json', 'html'],
       reportOnFailure: true
     }
   }
