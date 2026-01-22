@@ -182,7 +182,7 @@ describe('Home', () => {
         primary: 'test',
         secondary: 'test secondary title'
       },
-      moreInfoUrl: 'https://test.gov'
+      moreInfoUrl: 'https://test-above.gov'
     }), {})
   })
 

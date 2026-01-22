@@ -75,7 +75,7 @@
     }
   },
   "above": {
-    "moreInfoUrl": "https://test.gov",
+    "moreInfoUrl": "https://test-above.gov",
     "pageTitle": "TEST",
     "parentConfig": "edsc",
     "portalBrowser": true,

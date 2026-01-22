@@ -139,7 +139,7 @@ describe('SearchSidebarHeader component', () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://test.gov/')
+        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://test-above.gov/')
       })
     })
   })

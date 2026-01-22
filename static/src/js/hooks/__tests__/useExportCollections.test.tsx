@@ -21,6 +21,11 @@ const TestComponent = () => {
     exportLoading
   } = useExportCollections()
 
+  // When trying to test that exportLoading changes we were running into very flaky tests.
+  // After clicking an export button the loading text would fail the assertion because it
+  // would switch from false to true and back to false too quickly. Instead of testing
+  // `getByText` for the loading state, by logging out the loading state we can accurately
+  // assert that it changed as expected.
   useEffect(() => {
     console.log('exportLoading:', exportLoading)
   }, [exportLoading])

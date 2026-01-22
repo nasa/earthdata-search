@@ -51,8 +51,7 @@ const setup = setupTest({
         }
       }
     }
-  },
-  withRouter: true
+  }
 })
 
 describe('ProjectCollectionsList component', () => {
