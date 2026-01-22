@@ -16,16 +16,20 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
-
 // Restricts the drag and drop to the parent element and moving on the vertical axis`
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
-
 import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
-import { triggerKeyboardShortcut } from '../../../util/triggerKeyboardShortcut'
 
 import LayerPickerItem from './LayerPickerItem'
 import Button from '../../Button/Button'
+
+import { triggerKeyboardShortcut } from '../../../util/triggerKeyboardShortcut'
+import { metricsLayerPicker } from '../../../util/metrics/metricsLayerPicker'
+
 import { ImageryLayers } from '../../../types/sharedTypes'
+
+import { layerPickerEventActions } from '../../../constants/metricsEventActions'
+import { layerPickerEventTypes } from '../../../constants/metricsEventTypes'
 
 import './LayerPicker.scss'
 
@@ -74,6 +78,13 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
       shortcutKey: 'l',
       shortcutCallback: toggleLayers
     })
+
+    // Send metrics
+    metricsLayerPicker(
+      layerPickerEventTypes.KEYBOARD_INPUT,
+      layerPickerEventActions.TOGGLE_LAYERPICKER,
+      { layersHidden: !layersHidden }
+    )
   }
 
   // Sets up event listener for keyup event
@@ -90,6 +101,12 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
    */
   const handleToggleLayerVisibility = (productName: string) => {
     toggleLayerVisibility(collectionId, productName)
+
+    // Send metrics
+    metricsLayerPicker(layerPickerEventTypes.BUTTON_CLICK, layerPickerEventActions.TOGGLE_LAYER, {
+      collectionId,
+      productName
+    })
   }
 
   /**
@@ -116,6 +133,15 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
 
         // Update the entire state with the new order
         setMapLayersOrder(collectionId, currentLayers)
+
+        // Send metrics
+        metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.REORDER_LAYER, {
+          collectionId,
+          layerOrder: currentLayers.map((layer) => layer.product),
+          movedProduct: active.id as string,
+          oldIndex,
+          newIndex
+        })
       }
     }
   }
@@ -130,6 +156,13 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   ) => {
     // Updates the Zustand store
     setLayerOpacity(collectionConceptId, productName, opacity)
+
+    // Send metrics
+    metricsLayerPicker(layerPickerEventTypes.DRAG, layerPickerEventActions.ADJUST_OPACITY, {
+      collectionConceptId,
+      productName,
+      opacity
+    })
   }
 
   // Don't add draggable styling if there is only one layer

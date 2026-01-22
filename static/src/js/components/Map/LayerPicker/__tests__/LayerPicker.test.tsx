@@ -3,6 +3,17 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../../jestConfigs/setupTest'
 import LayerPicker, { LayerPickerProps } from '../LayerPicker'
 
+import { triggerKeyboardShortcut } from '../../../../util/triggerKeyboardShortcut'
+import { metricsLayerPicker } from '../../../../util/metrics/metricsLayerPicker'
+
+jest.mock('../../../../util/triggerKeyboardShortcut', () => ({
+  triggerKeyboardShortcut: jest.fn()
+}))
+
+jest.mock('../../../../util/metrics/metricsLayerPicker', () => ({
+  metricsLayerPicker: jest.fn()
+}))
+
 const mockCollectionId = 'C123451234-EDSC'
 
 const setup = setupTest({
@@ -40,6 +51,41 @@ describe('LayerPicker', () => {
 
       await screen.findByText('Precipitation Rate')
       await screen.findByText('Precipitation Rate (30-min)')
+    })
+
+    test('toggles layer picker when icon is clicked', async () => {
+      const { user } = setup()
+      const hideLayerPickerIcon = screen.getByRole('button', { name: 'Hide layers' })
+
+      expect(screen.getByText('Visualization Layers')).toBeInTheDocument()
+
+      await user.click(hideLayerPickerIcon)
+
+      expect(screen.queryByText('Visualization Layers')).not.toBeInTheDocument()
+
+      const showLayerPickerIcon = screen.getByRole('button', { name: 'Show layers' })
+
+      await user.click(showLayerPickerIcon)
+
+      expect(screen.getByText('Visualization Layers')).toBeInTheDocument()
+    })
+
+    test('toggles layer picker with keyboard shortcut', async () => {
+      const { user } = setup()
+
+      expect(screen.getByText('Visualization Layers')).toBeInTheDocument()
+
+      await user.keyboard('{l}')
+
+      expect(triggerKeyboardShortcut).toHaveBeenCalledTimes(1)
+      expect(triggerKeyboardShortcut).toHaveBeenCalledWith({
+        event: expect.any(Object),
+        shortcutKey: 'l',
+        shortcutCallback: expect.any(Function)
+      })
+
+      expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
+      expect(metricsLayerPicker).toHaveBeenCalledWith('keyboardInput', 'layerPicker.toggle', { layersHidden: true })
     })
   })
 
@@ -94,8 +140,13 @@ describe('LayerPicker', () => {
       const { imageryLayers } = props as unknown as LayerPickerProps
       const { toggleLayerVisibility } = imageryLayers
 
-      expect(toggleLayerVisibility).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate')
       expect(toggleLayerVisibility).toHaveBeenCalledTimes(1)
+      expect(toggleLayerVisibility).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate')
+      expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
+      expect(metricsLayerPicker).toHaveBeenCalledWith('buttonClick', 'layerPicker.toggleLayer', {
+        collectionId: 'C123451234-EDSC',
+        productName: 'IMERG_Precipitation_Rate'
+      })
     })
   })
 
@@ -114,6 +165,12 @@ describe('LayerPicker', () => {
 
       expect(setLayerOpacity).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate', 1)
       expect(setLayerOpacity).toHaveBeenCalledTimes(1)
+      expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
+      expect(metricsLayerPicker).toHaveBeenCalledWith('drag', 'layerPicker.adjustOpacity', {
+        collectionConceptId: 'C123451234-EDSC',
+        opacity: 1,
+        productName: 'IMERG_Precipitation_Rate'
+      })
     })
   })
 
@@ -161,6 +218,14 @@ describe('LayerPicker', () => {
       )
 
       expect(setMapLayersOrder).toHaveBeenCalledTimes(1)
+      expect(metricsLayerPicker).toHaveBeenCalledTimes(1)
+      expect(metricsLayerPicker).toHaveBeenCalledWith('drag', 'layerPicker.reorderLayer', {
+        collectionId: 'C123451234-EDSC',
+        layerOrder: ['IMERG_Precipitation_Rate_30min', 'IMERG_Precipitation_Rate'],
+        movedProduct: 'IMERG_Precipitation_Rate_30min',
+        newIndex: 0,
+        oldIndex: 1
+      })
     })
   })
 })

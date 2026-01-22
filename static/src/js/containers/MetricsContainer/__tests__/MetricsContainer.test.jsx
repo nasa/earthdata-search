@@ -25,6 +25,11 @@ const WrappingComponent = (props) => (
         Test Button
       </span>
     </button>
+    <button type="button" title="Parent Button Title">
+      <span>
+        <img src="test.jpg" alt="Test jpg" />
+      </span>
+    </button>
   </>
 )
 
@@ -62,14 +67,16 @@ describe('MetricsContainer component', () => {
       expect(metricsDefaultClick).toHaveBeenCalledWith('Link With Title')
     })
 
-    test('when a title prop is not but, can be derived from other element props', async () => {
-      const { user } = setup()
+    describe('when the target does not contain a title, text, name, textContent, or ariaLabel', () => {
+      test('use the clickableParent instead', async () => {
+        const { user } = setup()
 
-      const button = screen.getByText('Test Button')
-      await user.click(button)
+        const image = screen.getByAltText('Test jpg')
+        await user.click(image)
 
-      expect(metricsDefaultClick).toHaveBeenCalledTimes(1)
-      expect(metricsDefaultClick).toHaveBeenCalledWith('Test Button')
+        expect(metricsDefaultClick).toHaveBeenCalledTimes(1)
+        expect(metricsDefaultClick).toHaveBeenCalledWith('Parent Button Title')
+      })
     })
   })
 })
