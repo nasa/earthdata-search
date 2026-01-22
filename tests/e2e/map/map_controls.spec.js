@@ -18,7 +18,7 @@ const screenshotClip = {
 // When testing map values we don't need to test the exact values coming from the map. The inconsistencies
 // with testing locally and in GitHub Actions make the tests unusable. By testing that the right type of spatial
 // value is present in the URL and SpatialDisplay, with rounded numbers, we are verifying that we are getting the
-// values we expect from the map and we are putting them into the store. The Jest tests verify that exact values
+// values we expect from the map and we are putting them into the store. The vitest tests verify that exact values
 // from the store are being displayed correctly.
 
 test.describe('Map: Control interactions', () => {

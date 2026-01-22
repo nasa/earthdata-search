@@ -8,7 +8,6 @@ import ChunkedOrderModal from '../ChunkedOrderModal'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-// In order to pass out of scope variables into `jest` they must be prefixed with `mock`
 vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   default: vi.fn((props) => (
     // eslint-disable-next-line react/jsx-props-no-spreading

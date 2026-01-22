@@ -179,7 +179,7 @@ with a JSON object of
   "projection": <projection-code>
 }
 
-### Run the Automated [Jest](https://jestjs.io/) tests
+### Run the Automated [Vitest](https://vitest.dev/) tests
 
 Once the project is built, you must ensure that the automated unit tests pass:
 

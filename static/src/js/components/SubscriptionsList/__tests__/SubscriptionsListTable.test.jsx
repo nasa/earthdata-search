@@ -8,7 +8,6 @@ import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvi
 import SubscriptionsListTable from '../SubscriptionsListTable'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-// In order to pass out of scope variables into `jest` they must be prefixed with `mock`
 vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   default: vi.fn((props) => (
     // eslint-disable-next-line react/jsx-props-no-spreading

@@ -414,9 +414,12 @@ describe('AccessMethod component', () => {
         }
       })
 
-      // TODO this gets called once if ran with `.only` jest is not clearing this correctly between
-      // This and the other `echoform` tests
-      await waitFor(() => expect(EchoForm).toHaveBeenCalledTimes(2))
+      // TODO this gets called once if ran with `.only` vitest is not clearing this correctly between
+      // this and the other `echoform` tests
+      await waitFor(() => {
+        expect(EchoForm).toHaveBeenCalledTimes(2)
+      })
+
       expect(EchoForm).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         form: echoForm,
