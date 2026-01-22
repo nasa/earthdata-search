@@ -6,12 +6,12 @@ import LayerPicker, { type LayerPickerProps } from '../LayerPicker'
 import { triggerKeyboardShortcut } from '../../../../util/triggerKeyboardShortcut'
 import { metricsLayerPicker } from '../../../../util/metrics/metricsLayerPicker'
 
-jest.mock('../../../../util/triggerKeyboardShortcut', () => ({
-  triggerKeyboardShortcut: jest.fn()
+vi.mock('../../../../util/triggerKeyboardShortcut', () => ({
+  triggerKeyboardShortcut: vi.fn()
 }))
 
-jest.mock('../../../../util/metrics/metricsLayerPicker', () => ({
-  metricsLayerPicker: jest.fn()
+vi.mock('../../../../util/metrics/metricsLayerPicker', () => ({
+  metricsLayerPicker: vi.fn()
 }))
 
 const mockCollectionId = 'C123451234-EDSC'

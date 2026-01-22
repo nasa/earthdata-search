@@ -73,9 +73,7 @@ describe('SecondaryToolbar component', () => {
     test('hovering over the login button should show a tool-tip', async () => {
       const { user } = setup()
 
-      // Testing a failure in github
-      // const loginButton = screen.getByRole('button', { name: 'Log In' })
-      const loginButton = screen.getByRole('button', { name: 'Fail' })
+      const loginButton = screen.getByRole('button', { name: 'Log In' })
       await user.hover(loginButton)
 
       const tooltip = await screen.findByRole('tooltip')
