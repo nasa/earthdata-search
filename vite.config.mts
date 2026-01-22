@@ -137,7 +137,7 @@ export default defineConfig({
         '**/vitestConfigs/**',
         '**/*.d.ts'
       ],
-      reporter: ['text', 'lcov', 'clover', 'json', 'html'],
+      reporter: coverageReporters,
       reportOnFailure: true
     }
   }

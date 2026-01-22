@@ -64,7 +64,9 @@ vi.mock('../static/src/js/router/router', async () => ({
 const mockedPortals = vi.hoisted(() => require('../portals/__mocks__/availablePortals.json'))
 vi.mock('../portals/availablePortals.json', () => ({ default: mockedPortals }))
 
-// TODO? Loop through assets images and mock them
+// Mock static assets that are imported in various components
+// This could be done in the individual test files, but some of these are used in multiple tests
+// so I'm centralizing them here for convenience
 const fileMock = { default: 'test-file-stub' }
 vi.mock('../static/src/assets/images/earthdata-search-og-image.jpg?format=webp', () => fileMock)
 vi.mock('../static/src/assets/images/image-unavailable.svg', () => fileMock)

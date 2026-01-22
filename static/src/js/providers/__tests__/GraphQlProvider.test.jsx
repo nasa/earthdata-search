@@ -12,7 +12,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 vi.mock('@apollo/client', async () => {
   const actual = await vi.importActual('@apollo/client')
-  console.log('🚀 ~ GraphQlProvider.test.js:15 ~ actual:', actual)
 
   return {
     ...actual,
