@@ -1,5 +1,5 @@
 // Mock Zustand for tests
-// https://zustand.docs.pmnd.rs/guides/testing#jest
+// https://zustand.docs.pmnd.rs/guides/testing#vitest
 
 // `vitest` does not automatically clean up between tests
 // eslint-disable-next-line testing-library/no-manual-cleanup
