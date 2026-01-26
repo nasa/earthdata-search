@@ -32,7 +32,6 @@ export const GranuleDownloadButton = ({
   tooManyGranules
 }) => {
   const location = useLocation()
-  console.log('🚀 ~ GranuleDownloadButton.jsx:35 ~ GranuleDownloadButton ~ location:', location)
 
   const edlToken = useEdscStore(getEdlToken)
   const addProjectCollection = useEdscStore((state) => state.project.addProjectCollection)
@@ -126,7 +125,6 @@ export const GranuleDownloadButton = ({
 
   if (!edlToken) {
     const projectPath = `${window.location.protocol}//${window.location.host}${routes.PROJECTS}${stringifiedProjectParams}`
-    console.log('🚀 ~ GranuleDownloadButton.jsx:129 ~ GranuleDownloadButton ~ window.location:', window.location.host)
 
     return (
       <PortalLinkContainer
