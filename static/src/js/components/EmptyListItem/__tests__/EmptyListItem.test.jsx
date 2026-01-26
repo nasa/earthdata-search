@@ -4,12 +4,12 @@ import {
   AlertHighPriorityOutline
 } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EmptyListItem from '../EmptyListItem'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: EmptyListItem,

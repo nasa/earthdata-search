@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
@@ -9,9 +9,9 @@ import RelatedCollection from '../../RelatedCollection/RelatedCollection'
 import Skeleton from '../../Skeleton/Skeleton'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../CollectionDetailsMinimap', () => jest.fn(() => <div />))
-jest.mock('../../RelatedCollection/RelatedCollection', () => jest.fn(() => <div />))
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../CollectionDetailsMinimap', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../RelatedCollection/RelatedCollection', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
 const defaultCollectionMetadata = {
   hasAllMetadata: true,
@@ -72,7 +72,7 @@ const setup = setupTest({
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

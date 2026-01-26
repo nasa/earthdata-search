@@ -1,16 +1,16 @@
 import ReactDOM from 'react-dom'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import SubscriptionsListItem from '../SubscriptionsListItem'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-const mockUseDeleteSubscription = jest.fn().mockReturnValue({
-  deleteSubscription: jest.fn(),
+const mockUseDeleteSubscription = vi.fn().mockReturnValue({
+  deleteSubscription: vi.fn(),
   loading: false
 })
-jest.mock('../../../hooks/useDeleteSubscription', () => ({
+vi.mock('../../../hooks/useDeleteSubscription', () => ({
   useDeleteSubscription: () => mockUseDeleteSubscription()
 }))
 
@@ -36,14 +36,14 @@ const setup = setupTest({
   defaultZustandState: {
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }
 })
 
 beforeEach(() => {
-  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 })
 
 describe('SubscriptionsBody component', () => {
@@ -145,7 +145,7 @@ describe('SubscriptionsBody component', () => {
   describe('when clicking the delete button', () => {
     describe('if the user denies the action', () => {
       test('should do nothing', async () => {
-        const confirmMock = jest.fn(() => false)
+        const confirmMock = vi.fn(() => false)
         window.confirm = confirmMock
 
         const { user } = setup()
@@ -159,7 +159,7 @@ describe('SubscriptionsBody component', () => {
 
     describe('if the user allows the action', () => {
       test('should call deleteSubscription', async () => {
-        const confirmMock = jest.fn(() => true)
+        const confirmMock = vi.fn(() => true)
         window.confirm = confirmMock
 
         const { user } = setup()

@@ -17,7 +17,7 @@ export const granuleData = [
         href: 'http://linkhref'
       }
     ],
-    handleMouseEnter: jest.fn()
+    handleMouseEnter: vi.fn()
   },
   {
     id: 'two',
@@ -37,6 +37,6 @@ export const granuleData = [
         href: 'http://linkhref'
       }
     ],
-    handleMouseEnter: jest.fn()
+    handleMouseEnter: vi.fn()
   }
 ]

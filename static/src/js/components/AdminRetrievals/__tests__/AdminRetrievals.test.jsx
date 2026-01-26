@@ -1,11 +1,11 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AdminRetrievals from '../AdminRetrievals'
 import AdminRetrievalsList from '../AdminRetrievalsList'
 
-jest.mock('../AdminRetrievalsList', () => jest.fn(() => <div />))
+vi.mock('../AdminRetrievalsList', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: AdminRetrievals,

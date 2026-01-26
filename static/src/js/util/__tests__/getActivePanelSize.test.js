@@ -1,10 +1,6 @@
 import { getActivePanelSize } from '../getActivePanelSize'
 import * as getPanelSizeMapExports from '../getPanelSizeMap'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('getActivePanelSize', () => {
   describe('when width is less than 500', () => {
     test('returns the correct values', () => {
@@ -48,8 +44,8 @@ describe('getActivePanelSize', () => {
 
   describe('when no values match', () => {
     test('returns null', () => {
-      // eslint-disable-next-line no-import-assign
-      getPanelSizeMapExports.getPanelSizeMap = jest.fn(() => ({}))
+      vi.spyOn(getPanelSizeMapExports, 'getPanelSizeMap').mockReturnValue({})
+
       const result = getActivePanelSize(1100)
 
       expect(result).toEqual(null)

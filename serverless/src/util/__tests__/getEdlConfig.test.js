@@ -4,10 +4,10 @@ import { getEdlConfig } from '../getEdlConfig'
 
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
-jest.mock('@aws-sdk/client-secrets-manager', () => {
-  const original = jest.requireActual('@aws-sdk/client-secrets-manager')
+vi.mock('@aws-sdk/client-secrets-manager', async () => {
+  const original = await vi.importActual('@aws-sdk/client-secrets-manager')
 
-  const sendMock = jest.fn()
+  const sendMock = vi.fn()
     .mockReturnValueOnce({
       SecretString: '{"id":"prodTest","secret":"prodSecret"}'
     })
@@ -17,9 +17,9 @@ jest.mock('@aws-sdk/client-secrets-manager', () => {
 
   return {
     ...original,
-    SecretsManagerClient: jest.fn().mockImplementation(() => ({
-      send: sendMock
-    }))
+    SecretsManagerClient: vi.fn(class {
+      send = sendMock
+    })
   }
 })
 
@@ -27,7 +27,7 @@ const client = new SecretsManagerClient()
 
 describe('getEdlConfig', () => {
   test('fetches urs credentials from secrets manager', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       edlHost: 'http://urs.example.com'
     }))
 
@@ -50,7 +50,7 @@ describe('getEdlConfig', () => {
       }
     }))
 
-    jest.clearAllMocks()
+    vi.clearAllMocks()
 
     // Call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
     const uatResponse = await getEdlConfig('uat')

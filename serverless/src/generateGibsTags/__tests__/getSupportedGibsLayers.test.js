@@ -4,8 +4,6 @@ import { gibsResponse, capabilitiesResponse } from './mocks'
 import { getSupportedGibsLayers } from '../getSupportedGibsLayers'
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   nock(/worldview/)
     .get(/wv\.json/)
     .reply(200, gibsResponse)

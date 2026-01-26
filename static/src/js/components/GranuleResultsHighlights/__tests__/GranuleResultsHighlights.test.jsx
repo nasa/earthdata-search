@@ -1,23 +1,25 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleResultsHighlights from '../GranuleResultsHighlights'
 import Skeleton from '../../Skeleton/Skeleton'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <mock-PortalLinkContainer {...props} />
-)))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn((props) => (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <mock-PortalLinkContainer {...props} />
+  ))
+}))
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules/collection-details',
     search: '?p=C100005-EDSC',
     hash: '',

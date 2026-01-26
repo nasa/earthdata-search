@@ -1,20 +1,22 @@
 import React from 'react'
 import { screen, within } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleResultsActions from '../GranuleResultsActions'
 import { metricsAddCollectionToProject } from '../../../util/metrics/metricsAddCollectionToProject'
 
-jest.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
-  metricsAddCollectionToProject: jest.fn()
+vi.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
+  metricsAddCollectionToProject: vi.fn()
 }))
 
-jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+vi.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => ({
+  default: vi.fn(({ children }) => <div>{children}</div>)
+}))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=collectionId',
     hash: '',
@@ -39,7 +41,7 @@ const setup = setupTest({
     handoffLinks: [],
     initialLoading: false,
     isCollectionInProject: false,
-    onSetActivePanelSection: jest.fn(),
+    onSetActivePanelSection: vi.fn(),
     removedGranuleIds: [],
     searchGranuleCount: 5000
   },
@@ -58,8 +60,8 @@ const setup = setupTest({
       }
     },
     project: {
-      addProjectCollection: jest.fn(),
-      removeProjectCollection: jest.fn()
+      addProjectCollection: vi.fn(),
+      removeProjectCollection: vi.fn()
     }
   },
   withRouter: true

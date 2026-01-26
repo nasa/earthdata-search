@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react'
 import { FaCrop } from 'react-icons/fa'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import FilterStackItem from '../FilterStackItem'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: FilterStackItem,
@@ -95,7 +95,7 @@ describe('FilterStackItem component', () => {
     test('calls the onRemove callback', async () => {
       const { props, user } = setup({
         overrideProps: {
-          onRemove: jest.fn()
+          onRemove: vi.fn()
         }
       })
 

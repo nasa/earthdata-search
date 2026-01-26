@@ -9,8 +9,8 @@ let dbTracker
 
 const mockToday = '2025-10-09T12:00:00.000Z'
 
-jest.mock('../../../../../sharedUtils/config', () => ({
-  getApplicationConfig: jest.fn().mockImplementation(() => ({
+vi.mock('../../../../../sharedUtils/config', () => ({
+  getApplicationConfig: vi.fn().mockImplementation(() => ({
     env: 'testenv'
   }))
 }))
@@ -21,7 +21,7 @@ describe('DatabaseClient', () => {
   beforeEach(() => {
     databaseClient = new DatabaseClient()
 
-    jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+    vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
       const dbCon = knex({
         client: 'pg',
         debug: false
@@ -48,11 +48,11 @@ describe('DatabaseClient', () => {
   describe('startTransaction', () => {
     test('starts a new transaction', async () => {
       // Mock the databaseClient's getDbConnection function
-      const mockTransaction = jest.fn().mockReturnValue({
-        commit: jest.fn(),
-        rollback: jest.fn()
+      const mockTransaction = vi.fn().mockReturnValue({
+        commit: vi.fn(),
+        rollback: vi.fn()
       })
-      databaseClient.getDbConnection = jest.fn().mockReturnValueOnce({
+      databaseClient.getDbConnection = vi.fn().mockReturnValueOnce({
         transaction: mockTransaction
       })
 
@@ -66,11 +66,11 @@ describe('DatabaseClient', () => {
   describe('commitTransaction', () => {
     test('commits a transaction', async () => {
       // Mock the databaseClient's getDbConnection function
-      const mockTransaction = jest.fn().mockReturnValue({
-        commit: jest.fn(),
-        rollback: jest.fn()
+      const mockTransaction = vi.fn().mockReturnValue({
+        commit: vi.fn(),
+        rollback: vi.fn()
       })
-      databaseClient.getDbConnection = jest.fn().mockReturnValueOnce({
+      databaseClient.getDbConnection = vi.fn().mockReturnValueOnce({
         transaction: mockTransaction
       })
 
@@ -89,11 +89,11 @@ describe('DatabaseClient', () => {
   describe('rollbackTransaction', () => {
     test('rolls back a transaction', async () => {
       // Mock the databaseClient's getDbConnection function
-      const mockTransaction = jest.fn().mockReturnValue({
-        commit: jest.fn(),
-        rollback: jest.fn()
+      const mockTransaction = vi.fn().mockReturnValue({
+        commit: vi.fn(),
+        rollback: vi.fn()
       })
-      databaseClient.getDbConnection = jest.fn().mockReturnValueOnce({
+      databaseClient.getDbConnection = vi.fn().mockReturnValueOnce({
         transaction: mockTransaction
       })
 
@@ -136,7 +136,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -222,7 +222,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -295,7 +295,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -361,7 +361,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -410,7 +410,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -460,7 +460,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -534,7 +534,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -584,7 +584,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -634,7 +634,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -860,7 +860,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1305,7 +1305,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1364,7 +1364,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1407,7 +1407,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1482,7 +1482,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1550,7 +1550,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1664,7 +1664,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1708,7 +1708,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1798,7 +1798,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1850,7 +1850,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1902,7 +1902,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -1976,7 +1976,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2059,7 +2059,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2103,7 +2103,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2147,7 +2147,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2207,7 +2207,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2251,7 +2251,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2326,7 +2326,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
@@ -2383,7 +2383,7 @@ describe('DatabaseClient', () => {
     })
 
     test('returns an error', async () => {
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')

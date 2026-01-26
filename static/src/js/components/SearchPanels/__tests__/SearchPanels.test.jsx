@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 import Helmet from 'react-helmet'
 import * as tinyCookie from 'tiny-cookie'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as PortalUtils from '../../../util/portals'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
@@ -23,34 +23,34 @@ import GranuleResultsFocusedMeta from '../../GranuleResults/GranuleResultsFocuse
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsCollectionSortChange } from '../../../util/metrics/metricsCollectionSortChange'
 
-jest.mock('tiny-cookie', () => ({
-  get: jest.fn().mockReturnValue('')
+vi.mock('tiny-cookie', () => ({
+  get: vi.fn().mockReturnValue('')
 }))
 
-jest.mock('../../../util/metrics/metricsCollectionSortChange', () => ({
-  metricsCollectionSortChange: jest.fn()
+vi.mock('../../../util/metrics/metricsCollectionSortChange', () => ({
+  metricsCollectionSortChange: vi.fn()
 }))
 
-jest.mock('../../CollectionResults/CollectionResultsBody', () => jest.fn(() => <div />))
-jest.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer', () => jest.fn(() => <div />))
-jest.mock('../../CollectionDetails/CollectionDetailsBody', () => jest.fn(() => <div />))
-jest.mock('../../GranuleDetails/GranuleDetailsBody', () => jest.fn(() => <div />))
-jest.mock('../../Subscriptions/SubscriptionsBody', () => jest.fn(() => <div />))
-jest.mock('../../GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div />))
+vi.mock('../../CollectionResults/CollectionResultsBody', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../CollectionDetails/CollectionDetailsBody', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../GranuleDetails/GranuleDetailsBody', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../Subscriptions/SubscriptionsBody', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../GranuleResults/GranuleResultsFocusedMeta', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../../../../../../sharedUtils/config', () => ({
-  getEnvironmentConfig: jest.fn().mockReturnValue({
+vi.mock('../../../../../../sharedUtils/config', () => ({
+  getEnvironmentConfig: vi.fn().mockReturnValue({
     edscHost: 'https://search.earthdata.nasa.gov'
   }),
-  getApplicationConfig: jest.fn().mockReturnValue({
+  getApplicationConfig: vi.fn().mockReturnValue({
     env: 'prod',
     defaultMaxOrderSize: 1000000
   })
 }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
@@ -59,8 +59,8 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-const mockExportCollections = jest.fn()
-jest.mock('../../../hooks/useExportCollections', () => ({
+const mockExportCollections = vi.fn()
+vi.mock('../../../hooks/useExportCollections', () => ({
   useExportCollections: () => ({
     exportCollections: mockExportCollections
   })
@@ -75,8 +75,8 @@ const setup = setupTest({
   defaultPropsByRoute: {
     [PAGE_ROUTE]: {
       collectionSubscriptions: [],
-      setCollectionId: jest.fn(),
-      onTogglePanels: jest.fn(),
+      setCollectionId: vi.fn(),
+      onTogglePanels: vi.fn(),
       panels: {
         activePanel: '0.0.0',
         isOpen: true
@@ -95,7 +95,7 @@ const setup = setupTest({
           isOpenSearch: false
         }
       },
-      setCollectionId: jest.fn()
+      setCollectionId: vi.fn()
     },
     collections: {
       collections: {
@@ -116,12 +116,12 @@ const setup = setupTest({
       }
     },
     query: {
-      changeGranuleQuery: jest.fn(),
-      changeQuery: jest.fn()
+      changeGranuleQuery: vi.fn(),
+      changeQuery: vi.fn()
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   },
@@ -130,13 +130,13 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
+  vi.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
 
-  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 })
 
 delete window.location
-window.location = { assign: jest.fn() }
+window.location = { assign: vi.fn() }
 
 describe('SearchPanels component', () => {
   describe('when on the /search route', () => {
@@ -1068,7 +1068,7 @@ describe('SearchPanels component', () => {
 
   describe('when on the /search/granules/subscriptions route', () => {
     test('renders the SubscriptionsBody', () => {
-      jest.spyOn(tinyCookie, 'get').mockReturnValue('mock-token')
+      vi.spyOn(tinyCookie, 'get').mockReturnValue('mock-token')
 
       setup({
         overridePropsByRoute: {
@@ -1165,7 +1165,7 @@ describe('SearchPanels component', () => {
 
   describe('when on the /search/subscriptions route', () => {
     test('renders the SubscriptionsBody', () => {
-      jest.spyOn(tinyCookie, 'get').mockReturnValue('mock-token')
+      vi.spyOn(tinyCookie, 'get').mockReturnValue('mock-token')
 
       setup({
         overridePropsByRoute: {

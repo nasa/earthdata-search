@@ -15,7 +15,7 @@ describe('userOwnsProject', () => {
 
   test('returns false if the user does not own the project', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 2
       })
     }
@@ -41,7 +41,7 @@ describe('userOwnsProject', () => {
 
   test('returns true if the user owns the project', async () => {
     const databaseClient = {
-      getProjectByObfuscatedId: jest.fn().mockResolvedValue({
+      getProjectByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 1
       })
     }

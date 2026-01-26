@@ -6,7 +6,7 @@ import {
   waitFor
 } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import {
   GranuleResultsDataLinksButton,
@@ -16,13 +16,13 @@ import {
 import addToast from '../../../util/addToast'
 import { metricsDataAccess } from '../../../util/metrics/metricsDataAccess'
 
-jest.mock('../../../util/metrics/metricsDataAccess', () => ({
-  metricsDataAccess: jest.fn()
+vi.mock('../../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: vi.fn()
 }))
 
-jest.mock('../../../util/addToast', () => ({
+vi.mock('../../../util/addToast', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
 const setup = setupTest({
@@ -46,7 +46,7 @@ const setupCustomDataLinksToggle = setupTest({
   Component: CustomDataLinksToggle,
   defaultProps: {
     id: 'G-123456789',
-    onClick: jest.fn()
+    onClick: vi.fn()
   }
 })
 
@@ -63,7 +63,7 @@ describe('GranuleResultsDataLinksButton component', () => {
     })
 
     test('prevents default when clicked', () => {
-      const stopPropagationMock = jest.fn()
+      const stopPropagationMock = vi.fn()
 
       setup()
 
@@ -96,7 +96,7 @@ describe('GranuleResultsDataLinksButton component', () => {
     })
 
     test('has a tooltip', async () => {
-      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+      ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
       const { user } = setup()
 
@@ -110,7 +110,7 @@ describe('GranuleResultsDataLinksButton component', () => {
   describe('with multiple granule links', () => {
     test('renders the correct element', async () => {
       // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+      ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
       const { user } = setup({
         overrideProps: {
@@ -137,9 +137,9 @@ describe('GranuleResultsDataLinksButton component', () => {
 
     describe('when the dropdown is clicked', () => {
       test('stops event propagation', async () => {
-        const stopPropagationMock = jest.fn()
+        const stopPropagationMock = vi.fn()
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+        ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
         setup({
           overrideProps: {
@@ -175,7 +175,7 @@ describe('GranuleResultsDataLinksButton component', () => {
     describe('when a link is clicked', () => {
       test('calls the metrics event and displays a success toast', async () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+        ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
         const { user } = setup({
           overrideProps: {
@@ -219,7 +219,7 @@ describe('GranuleResultsDataLinksButton component', () => {
   describe('when s3 links are provided', () => {
     test('renders s3 links as buttons', async () => {
       // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+      ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
       const { user } = setup({
         overrideProps: {
@@ -251,7 +251,7 @@ describe('GranuleResultsDataLinksButton component', () => {
     describe('when clicking an s3 link', () => {
       test('calls the metrics event', async () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+        ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
         const { user } = setup({
           overrideProps: {
@@ -291,7 +291,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
     describe('when direct distribution information is provided', () => {
       test('displays the region as a button', async () => {
-        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+        ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
         const { user } = setup({
           overrideProps: {
@@ -320,7 +320,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       })
 
       test('displays the s3 bucket and object prefix as a button', async () => {
-        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+        ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
         const { user } = setup({
           overrideProps: {
@@ -353,7 +353,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
       describe('when multiple bucket object prefixes are provided', () => {
         test('displays the s3 bucket and object prefixes as buttons', async () => {
-          ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+          ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 
           const { user } = setup({
             overrideProps: {

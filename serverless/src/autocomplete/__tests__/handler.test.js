@@ -7,15 +7,13 @@ import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import autocomplete from '../handler'
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
-  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ jwtToken: 'mockJwt' }))
+  vi.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  vi.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ jwtToken: 'mockJwt' }))
 })
 
 describe('autocomplete', () => {
   test('calls doSearchRequest', async () => {
-    const mock = jest.spyOn(doSearchRequest, 'doSearchRequest').mockImplementationOnce(() => jest.fn())
+    const mock = vi.spyOn(doSearchRequest, 'doSearchRequest').mockImplementationOnce(() => vi.fn())
 
     const event = {
       body: JSON.stringify({
@@ -72,7 +70,7 @@ describe('autocomplete', () => {
   })
 
   test('responds correctly when an exception is thrown', async () => {
-    jest.spyOn(doSearchRequest, 'doSearchRequest').mockImplementationOnce(() => { throw new Error('Code Exception Occurred') })
+    vi.spyOn(doSearchRequest, 'doSearchRequest').mockImplementationOnce(() => { throw new Error('Code Exception Occurred') })
 
     const event = {
       body: JSON.stringify({

@@ -2,21 +2,23 @@ import MockDate from 'mockdate'
 
 import { buildNotebook } from '../buildNotebook'
 
-// Getting jest to play nice with the ipynb import is tricky, but we don't need
+// Getting tests to play nice with the ipynb import is tricky, but we don't need
 // the real template here. We just want to prove our values are being given to
 // Handlebars to replace values in a JSON file. So mock the import of the ipynb
 // file with this dummy JSON that has all the fields we want to replace
-jest.mock('../notebookTemplate.ipynb?raw', () => JSON.stringify({
-  baseUrl: '{{baseUrl}}',
-  boundingBox: '{{boundingBox}}',
-  collectionId: '{{collectionId}}',
-  collectionTitle: '{{collectionTitle}}',
-  generatedTime: '{{generatedTime}}',
-  granuleId: '{{granuleId}}',
-  granuleTitle: '{{granuleTitle}}',
-  referrerUrl: '{{referrerUrl}}',
-  variable: '{{variable}}'
-}), { virtual: true })
+vi.mock('../notebookTemplate.ipynb?raw', () => ({
+  default: JSON.stringify({
+    baseUrl: '{{baseUrl}}',
+    boundingBox: '{{boundingBox}}',
+    collectionId: '{{collectionId}}',
+    collectionTitle: '{{collectionTitle}}',
+    generatedTime: '{{generatedTime}}',
+    granuleId: '{{granuleId}}',
+    granuleTitle: '{{granuleTitle}}',
+    referrerUrl: '{{referrerUrl}}',
+    variable: '{{variable}}'
+  })
+}))
 
 beforeEach(() => {
   // Mock the date so the timestamp log is predictable

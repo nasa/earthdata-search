@@ -23,7 +23,7 @@ describe('createTimelineSlice', () => {
     test('updates query and calls getTimeline', () => {
       const initialState = useEdscStore.getInitialState()
 
-      const mockGetTimeline = jest.fn()
+      const mockGetTimeline = vi.fn()
       useEdscStore.setState({
         timeline: {
           ...initialState.timeline,
@@ -58,7 +58,7 @@ describe('createTimelineSlice', () => {
       test('does not overwrite existing values', () => {
         const initialState = useEdscStore.getInitialState()
 
-        const mockGetTimeline = jest.fn()
+        const mockGetTimeline = vi.fn()
         useEdscStore.setState({
           timeline: {
             ...initialState.timeline,
@@ -101,14 +101,14 @@ describe('createTimelineSlice', () => {
   describe('getTimeline', () => {
     beforeEach(() => {
       routerHelper.router = {
-        navigate: jest.fn(),
+        navigate: vi.fn(),
         state: {
           location: {
             pathname: '/search/granules',
             search: ''
           }
         },
-        subscribe: jest.fn()
+        subscribe: vi.fn()
       }
     })
 
@@ -252,7 +252,7 @@ describe('createTimelineSlice', () => {
             startDate: '1979-01-01T00:00:00.000Z'
           }
 
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
         nock(/cmr/)

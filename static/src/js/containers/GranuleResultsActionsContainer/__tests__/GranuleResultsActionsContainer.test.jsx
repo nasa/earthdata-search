@@ -1,11 +1,9 @@
-import React from 'react'
-
 import GranuleResultsActionsContainer from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest.fn(() => <div />))
+vi.mock('../../../components/GranuleResults/GranuleResultsActions', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: GranuleResultsActionsContainer,

@@ -1,14 +1,14 @@
 import useEdscStore from '../../../zustand/useEdscStore'
 import handleFormSubmit from '../handleFormSubmit'
 
-const setSubmittingMock = jest.fn()
+const setSubmittingMock = vi.fn()
 
 describe('handleFormSubmit', () => {
   describe('when passing new values', () => {
     test('calls onApplyGranuleFilters witht the correct values', () => {
       useEdscStore.setState({
         query: {
-          changeGranuleQuery: jest.fn()
+          changeGranuleQuery: vi.fn()
         }
       })
 
@@ -48,7 +48,7 @@ describe('handleFormSubmit', () => {
     test('splits the value on the comma', () => {
       useEdscStore.setState({
         query: {
-          changeGranuleQuery: jest.fn()
+          changeGranuleQuery: vi.fn()
         }
       })
 

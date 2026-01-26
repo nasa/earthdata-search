@@ -16,21 +16,21 @@ import submitHarmonyOrder from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
     env: 'test'
   }))
 
-  jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
+  vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
     background: 'mock-background-clientId'
   }))
 
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+  vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
     client: {
       id: 'clientId'
     }
   }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -52,13 +52,13 @@ afterEach(() => {
 
 describe('submitHarmonyOrder', () => {
   test('correctly discovers the correct fields from the provided json', async () => {
-    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
-      .mockImplementation(() => (jest.fn()))
+    const startOrderStatusUpdateWorkflowMock = vi.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+      .mockImplementation(() => (vi.fn()))
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
@@ -125,15 +125,15 @@ describe('submitHarmonyOrder', () => {
   })
 
   test('creates a limited shapefile if the shapefile was limited by the user', async () => {
-    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
 
-    const startOrderStatusUpdateWorkflowMock = jest.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
-      .mockImplementation(() => (jest.fn()))
+    const startOrderStatusUpdateWorkflowMock = vi.spyOn(startOrderStatusUpdateWorkflow, 'startOrderStatusUpdateWorkflow')
+      .mockImplementation(() => (vi.fn()))
 
-    const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
+    const createLimitedShapefileMock = vi.spyOn(createLimitedShapefile, 'createLimitedShapefile')
       .mockImplementation(() => ('limited mock shapefile'))
 
     nock(/cmr/)
@@ -217,9 +217,9 @@ describe('submitHarmonyOrder', () => {
   })
 
   test('stores returned error message when order creation fails', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
-    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))

@@ -5,46 +5,46 @@ import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import Spinner from '../../../components/Spinner/Spinner'
 
-jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
+vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
-  const mockPortalLinkContainer = jest.fn(({ children }) => (
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
+  const mockPortalLinkContainer = vi.fn(({ children }) => (
     <div>
       {children}
     </div>
   ))
 
-  return mockPortalLinkContainer
+  return { default: mockPortalLinkContainer }
 })
 
-jest.mock('../HomeTopicCard', () => {
-  const MockHomeTopicCard = jest.fn(() => <a href="/" data-testid="mock-topic-card">Home topic card</a>)
+vi.mock('../HomeTopicCard', () => {
+  const MockHomeTopicCard = vi.fn(() => <a href="/" data-testid="mock-topic-card">Home topic card</a>)
 
-  return MockHomeTopicCard
+  return { default: MockHomeTopicCard }
 })
 
-jest.mock('../HomePortalCard', () => {
-  const MockHomePortalCard = jest.fn(() => <a href="/" data-testid="mock-portal-card">Home portal card</a>)
+vi.mock('../HomePortalCard', () => {
+  const MockHomePortalCard = vi.fn(() => <a href="/" data-testid="mock-portal-card">Home portal card</a>)
 
-  return MockHomePortalCard
+  return { default: MockHomePortalCard }
 })
 
-jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
+vi.mock('../../../containers/MapContainer/MapContainer', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../../../../../../sharedUtils/config', () => ({
-  ...jest.requireActual('../../../../../../sharedUtils/config'),
-  getApplicationConfig: jest.fn(() => ({
+vi.mock('../../../../../../sharedUtils/config', async () => ({
+  ...(await vi.importActual('../../../../../../sharedUtils/config')),
+  getApplicationConfig: vi.fn(() => ({
     numberOfGranules: '42'
   }))
 }))
 
-const mockUseNavigate = jest.fn()
+const mockUseNavigate = vi.fn()
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockUseNavigate
 }))
 
@@ -52,8 +52,8 @@ const setup = setupTest({
   Component: Home,
   defaultZustandState: {
     collections: {
-      getCollections: jest.fn().mockResolvedValue(undefined),
-      getNlpCollections: jest.fn().mockResolvedValue(undefined)
+      getCollections: vi.fn().mockResolvedValue(undefined),
+      getNlpCollections: vi.fn().mockResolvedValue(undefined)
     }
   },
   withRouter: true
@@ -177,12 +177,12 @@ describe('Home', () => {
 
     expect(portalCards.length).toBe(10)
     expect(HomePortalCard).toHaveBeenNthCalledWith(1, expect.objectContaining({
-      portalId: 'testPortal',
+      portalId: 'above',
       title: {
         primary: 'test',
         secondary: 'test secondary title'
       },
-      moreInfoUrl: 'https://test.gov'
+      moreInfoUrl: 'https://test-above.gov'
     }), {})
   })
 

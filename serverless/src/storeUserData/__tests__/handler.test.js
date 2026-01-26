@@ -10,7 +10,7 @@ import storeUserData from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -32,7 +32,7 @@ afterEach(() => {
 
 describe('storeUserData', () => {
   test('correctly updates a user that already exists', async () => {
-    jest.spyOn(getUrsUserData, 'getUrsUserData').mockResolvedValue({
+    vi.spyOn(getUrsUserData, 'getUrsUserData').mockResolvedValue({
       user: {
         uid: 'urs_user',
         first_name: 'urs',
@@ -80,8 +80,8 @@ describe('storeUserData', () => {
   })
 
   test('logs error if URS data is not fetched properly', async () => {
-    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => {})
-    jest.spyOn(getUrsUserData, 'getUrsUserData').mockImplementation(() => { throw new Error('mock error') })
+    const parseErrorMock = vi.spyOn(parseError, 'parseError').mockImplementation(() => {})
+    vi.spyOn(getUrsUserData, 'getUrsUserData').mockImplementation(() => { throw new Error('mock error') })
 
     dbTracker.on('query', (query, step) => {
       // Default response from queries
@@ -119,7 +119,7 @@ describe('storeUserData', () => {
   })
 
   test('logs error if user does not have a token', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
     dbTracker.on('query', (query, step) => {
       // Default response from queries

@@ -3,7 +3,7 @@ import { handleAlert } from '../handleAlert'
 
 describe('handleAlert', () => {
   test('calls lambda to log alert', async () => {
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
 
     nock(/localhost/)
       .post(/alert_logger/, (body) => {

@@ -1,13 +1,15 @@
 // Mock Zustand for tests
 // https://zustand.docs.pmnd.rs/guides/testing#jest
 
-import { act } from '@testing-library/react'
+// `vitest` does not automatically clean up between tests
+// eslint-disable-next-line testing-library/no-manual-cleanup
+import { act, cleanup } from '@testing-library/react'
 import { cloneDeep } from 'lodash-es'
 import type * as ZustandExportedTypes from 'zustand'
 
 export * from 'zustand'
 
-const { create: actualCreate, createStore: actualCreateStore } = jest.requireActual<typeof ZustandExportedTypes>('zustand')
+const { create: actualCreate, createStore: actualCreateStore } = await vi.importActual<typeof ZustandExportedTypes>('zustand')
 
 // A variable to hold reset functions for all stores declared in the app
 export const storeResetFns = new Set<() => void>()
@@ -55,6 +57,10 @@ export const createStore = (<T>(
 
 // Reset all stores after each test run
 afterEach(() => {
+  // We need this because vitest does not automatically clean up between tests
+  // https://testing-library.com/docs/react-testing-library/api#cleanup
+  cleanup()
+
   act(() => {
     storeResetFns.forEach((resetFn) => {
       resetFn()

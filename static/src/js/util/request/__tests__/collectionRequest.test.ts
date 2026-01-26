@@ -3,7 +3,7 @@ import CollectionRequest from '../collectionRequest'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 import { CollectionResponseData } from '../../../types/sharedTypes'
 
-jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
 describe('CollectionRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
@@ -116,10 +116,6 @@ describe('CollectionRequest#nonIndexedKeys', () => {
 })
 
 describe('CollectionRequest#transformResponse', () => {
-  beforeEach(() => {
-    jest.spyOn(CollectionRequest.prototype, 'handleUnauthorized').mockImplementation()
-  })
-
   test('returns transformed data', () => {
     const request = new CollectionRequest(null, 'prod')
 
@@ -236,7 +232,7 @@ describe('CollectionRequest#transformResponse', () => {
 
   describe('return data with has_map_imagery flag correctly', () => {
     test('when an image is defined', () => {
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
       const request = new CollectionRequest(null, 'prod')
 

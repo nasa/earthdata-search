@@ -3,24 +3,24 @@ import { FaGlobe } from 'react-icons/fa'
 // @ts-expect-error: This file does not have types
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Button from '../Button'
 
 import Spinner from '../../Spinner/Spinner'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => null))
-jest.mock('../../../util/renderTooltip', () => ({
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => null) }))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
+vi.mock('../../../util/renderTooltip', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
 const setup = setupTest({
   Component: Button,
   defaultProps: {
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     label: 'Test Label',
     ariaLabel: 'Test aria Label'
   }

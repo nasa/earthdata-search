@@ -1,16 +1,16 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 
 import S3LinksPanel from '../S3LinksPanel'
 import TextWindowActions from '../../../TextWindowActions/TextWindowActions'
 import CopyableText from '../../../CopyableText/CopyableText'
 
-jest.mock('../../../TextWindowActions/TextWindowActions', () => jest.fn(({ children }) => <div>{children}</div>))
-jest.mock('../../../CopyableText/CopyableText', () => jest.fn(() => <div />))
+vi.mock('../../../TextWindowActions/TextWindowActions', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../CopyableText/CopyableText', () => ({ default: vi.fn(() => <div />) }))
 
-jest.useFakeTimers({ legacyFakeTimers: true })
+vi.useFakeTimers()
 
 const setup = setupTest({
   Component: S3LinksPanel,

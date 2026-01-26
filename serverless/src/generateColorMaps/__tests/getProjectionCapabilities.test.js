@@ -1,25 +1,31 @@
+// Two classes are mocked in this test
+/* eslint-disable max-classes-per-file */
+
 import nock from 'nock'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
+
 import * as getDbConnection from '../../util/database/getDbConnection'
 import { gibsError, gibsResponse } from './mocks'
 import { getProjectionCapabilities } from '../getProjectionCapabilities'
 
 let dbTracker
 
-const mocksqsColorMap = jest.fn().mockResolvedValue()
+const mocksqsColorMap = vi.fn().mockResolvedValue()
 
-jest.mock('@aws-sdk/client-sqs', () => ({
-  SQSClient: jest.fn().mockImplementation(() => ({
-    send: mocksqsColorMap
-  })),
-  SendMessageCommand: jest.fn().mockImplementation((params) => params)
+vi.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: vi.fn(class {
+    send = mocksqsColorMap
+  }),
+  SendMessageCommand: vi.fn(class {
+    constructor(params) {
+      this.MessageBody = params.MessageBody
+    }
+  })
 }))
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false
@@ -62,8 +68,8 @@ describe('getProjectionCapabilities', () => {
 
       expect(response.statusCode).toEqual(200)
 
-      expect(mocksqsColorMap).toBeCalledTimes(1)
-      expect(mocksqsColorMap.mock.calls[0][0]).toEqual(expect.objectContaining({
+      expect(mocksqsColorMap).toHaveBeenCalledTimes(1)
+      expect(mocksqsColorMap).toHaveBeenCalledWith(expect.objectContaining({
         MessageBody: JSON.stringify({
           id: 1,
           product: 'VIIRS_Angstrom_Exponent_Deep_Blue',
@@ -100,7 +106,7 @@ describe('getProjectionCapabilities', () => {
 
       expect(response.statusCode).toEqual(200)
 
-      expect(mocksqsColorMap).toBeCalledTimes(1)
+      expect(mocksqsColorMap).toHaveBeenCalledTimes(1)
       expect(mocksqsColorMap.mock.calls[0][0]).toEqual(expect.objectContaining({
         MessageBody: JSON.stringify({
           id: 1,
@@ -131,7 +137,7 @@ describe('getProjectionCapabilities', () => {
 
     expect(response.statusCode).toEqual(500)
 
-    expect(mocksqsColorMap).toBeCalledTimes(0)
+    expect(mocksqsColorMap).toHaveBeenCalledTimes(0)
 
     const { body } = response
     const parsedBody = JSON.parse(body)

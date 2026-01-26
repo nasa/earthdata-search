@@ -164,7 +164,7 @@ describe('createUiSlice', () => {
     describe('onSearchLoaded', () => {
       describe('when localstorage dontShowTour is true', () => {
         test('sets runTour to false', () => {
-          jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('true')
+          vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('true')
 
           const zustandState = useEdscStore.getState()
           const { ui } = zustandState
@@ -182,7 +182,7 @@ describe('createUiSlice', () => {
 
       describe('when localstorage dontShowTour is false', () => {
         test('sets runTour to true', () => {
-          jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('false')
+          vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('false')
 
           const zustandState = useEdscStore.getState()
           const { ui } = zustandState

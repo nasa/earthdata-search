@@ -3,7 +3,7 @@ import { triggerKeyboardShortcut } from '../triggerKeyboardShortcut'
 describe('triggerKeyboardShortcut', () => {
   describe('if the event target is not defined', () => {
     test('does not trigger the shortcut', () => {
-      const callbackMock = jest.fn()
+      const callbackMock = vi.fn()
 
       triggerKeyboardShortcut({
         shortcutKey: 'a',
@@ -16,7 +16,7 @@ describe('triggerKeyboardShortcut', () => {
 
   describe('if the event tagName is not defined', () => {
     test('does not trigger the shortcut', () => {
-      const callbackMock = jest.fn()
+      const callbackMock = vi.fn()
 
       triggerKeyboardShortcut({
         event: {
@@ -32,9 +32,9 @@ describe('triggerKeyboardShortcut', () => {
 
   describe('if the keyup event is triggered in an input', () => {
     test('does not trigger the shortcut', () => {
-      const callbackMock = jest.fn()
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
+      const callbackMock = vi.fn()
+      const preventDefaultMock = vi.fn()
+      const stopPropagationMock = vi.fn()
 
       triggerKeyboardShortcut({
         event: {
@@ -58,9 +58,9 @@ describe('triggerKeyboardShortcut', () => {
 
   describe('if the assigned to a keydown event', () => {
     test('does not trigger the shortcut', () => {
-      const callbackMock = jest.fn()
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
+      const callbackMock = vi.fn()
+      const preventDefaultMock = vi.fn()
+      const stopPropagationMock = vi.fn()
 
       triggerKeyboardShortcut({
         event: {
@@ -84,9 +84,9 @@ describe('triggerKeyboardShortcut', () => {
 
   describe('if the assigned to a keydown event', () => {
     test('does not trigger the shortcut', () => {
-      const callbackMock = jest.fn()
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
+      const callbackMock = vi.fn()
+      const preventDefaultMock = vi.fn()
+      const stopPropagationMock = vi.fn()
 
       triggerKeyboardShortcut({
         event: {
@@ -111,9 +111,9 @@ describe('triggerKeyboardShortcut', () => {
   describe('if assigned to a keyup', () => {
     describe('and the key does not match', () => {
       test('does not trigger the shortcut', () => {
-        const callbackMock = jest.fn()
-        const preventDefaultMock = jest.fn()
-        const stopPropagationMock = jest.fn()
+        const callbackMock = vi.fn()
+        const preventDefaultMock = vi.fn()
+        const stopPropagationMock = vi.fn()
 
         triggerKeyboardShortcut({
           event: {
@@ -137,9 +137,9 @@ describe('triggerKeyboardShortcut', () => {
 
     describe('and the key matches', () => {
       test('triggers the shortcut', () => {
-        const callbackMock = jest.fn()
-        const preventDefaultMock = jest.fn()
-        const stopPropagationMock = jest.fn()
+        const callbackMock = vi.fn()
+        const preventDefaultMock = vi.fn()
+        const stopPropagationMock = vi.fn()
 
         triggerKeyboardShortcut({
           event: {

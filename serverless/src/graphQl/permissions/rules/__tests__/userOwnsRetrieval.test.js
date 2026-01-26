@@ -15,7 +15,7 @@ describe('userOwnsRetrieval', () => {
 
   test('returns false if the user does not own the Retrieval', async () => {
     const databaseClient = {
-      getRetrievalByObfuscatedId: jest.fn().mockResolvedValue({
+      getRetrievalByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 2
       })
     }
@@ -41,7 +41,7 @@ describe('userOwnsRetrieval', () => {
 
   test('returns true if the user owns the retrieval', async () => {
     const databaseClient = {
-      getRetrievalByObfuscatedId: jest.fn().mockResolvedValue({
+      getRetrievalByObfuscatedId: vi.fn().mockResolvedValue({
         user_id: 1
       })
     }

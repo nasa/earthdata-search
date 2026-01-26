@@ -2,14 +2,14 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import WrappingContainer from '../WrappingContainer'
 import { routes } from '../../../constants/routes'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',

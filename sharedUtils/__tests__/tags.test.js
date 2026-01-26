@@ -5,10 +5,6 @@ import {
   hasTag
 } from '../tags'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('tagName', () => {
   test('returns the correct tag name with default namespace', () => {
     const name = tagName('tag')
@@ -38,7 +34,7 @@ describe('getValueForTag', () => {
   })
 
   test('returns a string when tag data is a string', () => {
-    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+    vi.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
 
     const tagData = {
       'edsc.test.tag': {
@@ -50,7 +46,7 @@ describe('getValueForTag', () => {
   })
 
   test('returns an object when tag data is an object', () => {
-    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+    vi.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
 
     const tagData = {
       'edsc.test.tag': {
@@ -64,7 +60,7 @@ describe('getValueForTag', () => {
   })
 
   test('returns an array when tag data is an array', () => {
-    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+    vi.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
 
     const tagData = {
       'edsc.test.tag': {
@@ -81,7 +77,7 @@ describe('getValueForTag', () => {
 
 describe('hasTag', () => {
   test('returns true when the tag exists', () => {
-    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+    vi.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
 
     const collection = {
       tags: {
@@ -94,7 +90,7 @@ describe('hasTag', () => {
   })
 
   test('returns false if the tag does not exist', () => {
-    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+    vi.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
 
     const collection = {
       tags: {
@@ -107,7 +103,7 @@ describe('hasTag', () => {
   })
 
   test('returns false if no tags exist', () => {
-    jest.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
+    vi.spyOn(appConfig, 'getApplicationConfig').mockImplementation(() => ({ cmrTagNamespace: 'edsc.test' }))
 
     const collection = {}
 

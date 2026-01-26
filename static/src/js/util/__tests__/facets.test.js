@@ -7,13 +7,9 @@ import {
 
 import { alphabet } from '../alphabetic-list'
 
-beforeEach(() => {
-  jest.resetAllMocks()
-})
-
 describe('changeCmrFacet', () => {
   test('calls the change handler with the correct arguments', () => {
-    const onChangeHandlerMock = jest.fn()
+    const onChangeHandlerMock = vi.fn()
 
     changeCmrFacet(
       {},
@@ -35,7 +31,7 @@ describe('changeCmrFacet', () => {
 
   describe('when the facet has encoded characters', () => {
     test('does not decode the values', () => {
-      const onChangeHandlerMock = jest.fn()
+      const onChangeHandlerMock = vi.fn()
 
       changeCmrFacet(
         {},

@@ -5,13 +5,13 @@ import edlLogin from '../handler'
 
 describe('edlLogin', () => {
   test('successfully redirects a user to earthdata login', async () => {
-    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementationOnce(() => ({
       client: {
         id: 'edlClientId'
       }
     }))
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       edlHost: 'http://edl.example.com',
       redirectUriPath: '/search'
     }))
@@ -32,13 +32,13 @@ describe('edlLogin', () => {
   })
 
   test('successfully redirects a user to earthdata login with an eddRedirect parameter', async () => {
-    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementationOnce(() => ({
       client: {
         id: 'edlClientId'
       }
     }))
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       edlHost: 'http://edl.example.com',
       redirectUriPath: '/search'
     }))
@@ -59,13 +59,13 @@ describe('edlLogin', () => {
   })
 
   test('successfully keeps array values in order during the redirect to earthdata login', async () => {
-    jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementationOnce(() => ({
       client: {
         id: 'edlClientId'
       }
     }))
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       edlHost: 'http://edl.example.com',
       redirectUriPath: '/search'
     }))

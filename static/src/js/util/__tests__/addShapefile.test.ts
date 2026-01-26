@@ -41,7 +41,7 @@ describe('addShapefile', () => {
     const mockFilename = 'testfile.geojson'
     const mockSize = '10.00 KB'
 
-    const saveShapefileSpy = jest.fn().mockImplementation(() => {
+    const saveShapefileSpy = vi.fn().mockImplementation(() => {
       // Update the store to set shapefileId so the useEdscStore.subscribe promise resolves
       setTimeout(() => {
         useEdscStore.setState((state) => {
@@ -51,9 +51,9 @@ describe('addShapefile', () => {
       }, 0)
     })
 
-    jest.spyOn(useEdscStore.getState().shapefile, 'saveShapefile').mockImplementation(saveShapefileSpy)
+    vi.spyOn(useEdscStore.getState().shapefile, 'saveShapefile').mockImplementation(saveShapefileSpy)
 
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emitBuffered')
+    const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emitBuffered')
 
     await addShapefile({
       file: mockFile,

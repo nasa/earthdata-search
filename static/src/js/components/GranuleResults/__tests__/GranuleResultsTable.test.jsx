@@ -1,16 +1,16 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleResultsTable from '../GranuleResultsTable'
 import EDSCTable from '../../EDSCTable/EDSCTable'
 import { granuleData } from './mocks'
 
-jest.mock('../../EDSCTable/EDSCTable', () => jest.fn(() => <div />))
+vi.mock('../../EDSCTable/EDSCTable', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=collectionId',
     hash: '',
@@ -25,13 +25,13 @@ const setup = setupTest({
     collectionId: 'collectionId',
     directDistributionInformation: {},
     granules: granuleData,
-    isItemLoaded: jest.fn(),
-    isGranuleInProject: jest.fn(),
+    isItemLoaded: vi.fn(),
+    isGranuleInProject: vi.fn(),
     isProjectGranulesLoading: false,
     itemCount: 1,
     focusedGranule: 'one',
-    loadMoreItems: jest.fn(),
-    setVisibleMiddleIndex: jest.fn(),
+    loadMoreItems: vi.fn(),
+    setVisibleMiddleIndex: vi.fn(),
     visibleMiddleIndex: 1
   },
   defaultZustandState: {
@@ -153,7 +153,7 @@ describe('GranuleResultsTable component', () => {
 
   describe('onRowClick', () => {
     test('fires the callback with the correct values', () => {
-      const handleClickMock = jest.fn()
+      const handleClickMock = vi.fn()
       setup()
 
       EDSCTable.mock.calls[0][0].onRowClick({ event: 'event' }, {
@@ -178,7 +178,7 @@ describe('GranuleResultsTable component', () => {
 
   describe('onRowMouseEnter', () => {
     test('fires the callback with the correct values', () => {
-      const handleMouseEnterMock = jest.fn()
+      const handleMouseEnterMock = vi.fn()
       setup()
 
       EDSCTable.mock.calls[0][0].onRowMouseEnter({ event: 'event' }, {
@@ -203,7 +203,7 @@ describe('GranuleResultsTable component', () => {
 
   describe('onRowMouseLeave', () => {
     test('fires the callback with the correct values', () => {
-      const handleMouseEnterLeave = jest.fn()
+      const handleMouseEnterLeave = vi.fn()
       setup()
 
       EDSCTable.mock.calls[0][0].onRowMouseLeave({ event: 'event' }, {

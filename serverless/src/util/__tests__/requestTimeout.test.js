@@ -3,8 +3,6 @@ import { requestTimeout } from '../requestTimeout'
 const OLD_ENV = process.env
 
 beforeEach(() => {
-  // Manage resetting ENV variables
-  jest.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 })

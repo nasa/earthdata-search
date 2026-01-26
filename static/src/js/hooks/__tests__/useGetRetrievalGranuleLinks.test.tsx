@@ -1,7 +1,8 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../vitestConfigs/setupTest'
 
 import {
   useGetRetrievalGranuleLinks,
@@ -63,14 +64,10 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     granuleLinksPageSize: '5',
     openSearchGranuleLinksPageSize: '5'
   }))
-})
-
-afterEach(() => {
-  jest.resetAllMocks()
 })
 
 describe('useGetRetrievalGranuleLinks', () => {
@@ -332,11 +329,11 @@ describe('useGetRetrievalGranuleLinks', () => {
               flattenLinks: false
             }
           },
-          error: new Error('An error occurred')
+          error: new ApolloError({ errorMessage: 'An error occurred' })
         }],
         overrideZustandState: {
           errors: {
-            handleError: jest.fn()
+            handleError: vi.fn()
           }
         }
       })
@@ -348,7 +345,7 @@ describe('useGetRetrievalGranuleLinks', () => {
 
       expect(zustandState.errors.handleError).toHaveBeenCalledWith({
         action: 'getRetrievalGranuleLinks',
-        error: new Error('An error occurred'),
+        error: new ApolloError({ errorMessage: 'An error occurred' }),
         resource: 'granule links'
       })
     })

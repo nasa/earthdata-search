@@ -1,19 +1,19 @@
 import { screen } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleDownloadButton from '../GranuleDownloadButton'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import { changePath } from '../../../util/url/changePath'
 
-jest.mock('../../../util/url/changePath', () => ({
-  changePath: jest.fn()
+vi.mock('../../../util/url/changePath', () => ({
+  changePath: vi.fn()
 }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=collectionId&ff=Map%20Imagery',
     hash: '',
@@ -37,7 +37,7 @@ const setup = setupTest({
   },
   defaultZustandState: {
     project: {
-      addProjectCollection: jest.fn()
+      addProjectCollection: vi.fn()
     },
     user: {
       edlToken: 'testToken'
@@ -111,7 +111,7 @@ describe('GranuleDownloadButton component', () => {
 
           expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(0)
 
-          expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%2Fprojects%3Fp%3DcollectionId!collectionId%26ff%3DMap%2520Imagery%26pg%5B1%5D%5Bv%5D%3Dt')
+          expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%3A3000%2Fprojects%3Fp%3DcollectionId!collectionId%26ff%3DMap%2520Imagery%26pg%5B1%5D%5Bv%5D%3Dt')
         })
       })
 
@@ -188,7 +188,7 @@ describe('GranuleDownloadButton component', () => {
         search: '?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery'
       })
 
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 

@@ -2,7 +2,7 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as aggregatedOrderStatus from '../../../../../../sharedUtils/orderStatus'
 import buildEddLink from '../buildEddLink'
 
-jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
+vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
   client: 'eed-edsc-dev-serverless-client'
 }))
 
@@ -26,7 +26,7 @@ describe('buildEddLink', () => {
       const linkType = 'data'
 
       // Mock the order status
-      jest.spyOn(aggregatedOrderStatus, 'aggregatedOrderStatus').mockImplementation(() => 'creating')
+      vi.spyOn(aggregatedOrderStatus, 'aggregatedOrderStatus').mockImplementation(() => 'creating')
 
       // Build the EDD link
       const response = buildEddLink({
@@ -62,7 +62,7 @@ describe('buildEddLink', () => {
       const linkType = 'data'
 
       // Mock the order status
-      jest.spyOn(aggregatedOrderStatus, 'aggregatedOrderStatus').mockImplementation(() => 'complete')
+      vi.spyOn(aggregatedOrderStatus, 'aggregatedOrderStatus').mockImplementation(() => 'complete')
 
       // Build the EDD link
       const response = buildEddLink({
@@ -98,7 +98,7 @@ describe('buildEddLink', () => {
       const linkType = 'data'
 
       // Mock the order status
-      jest.spyOn(aggregatedOrderStatus, 'aggregatedOrderStatus').mockImplementation(() => 'complete')
+      vi.spyOn(aggregatedOrderStatus, 'aggregatedOrderStatus').mockImplementation(() => 'complete')
 
       // Build the EDD link
       const response = buildEddLink({

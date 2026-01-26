@@ -1,7 +1,7 @@
 import { transformCollectionEntries } from '../transformCollectionEntries'
 
 // Mock the config modules
-jest.mock('../../../../../../sharedUtils/config', () => ({
+vi.mock('../../../../../../sharedUtils/config', () => ({
   getApplicationConfig: () => ({
     thumbnailSize: {
       height: 85,
@@ -14,16 +14,16 @@ jest.mock('../../../../../../sharedUtils/config', () => ({
 }))
 
 // Mock the shared utilities
-jest.mock('../../../../../../sharedUtils/tags', () => ({
-  hasTag: jest.fn()
+vi.mock('../../../../../../sharedUtils/tags', () => ({
+  hasTag: vi.fn()
 }))
 
-jest.mock('../../isCSDACollection', () => ({
-  isCSDACollection: jest.fn()
+vi.mock('../../isCSDACollection', () => ({
+  isCSDACollection: vi.fn()
 }))
 
-jest.mock('../../../../../../sharedUtils/getOpenSearchOsddLink', () => ({
-  getOpenSearchOsddLink: jest.fn()
+vi.mock('../../../../../../sharedUtils/getOpenSearchOsddLink', () => ({
+  getOpenSearchOsddLink: vi.fn()
 }))
 
 describe('transformCollectionEntries', () => {

@@ -1,19 +1,12 @@
+import { vi } from 'vitest'
 import { retrieveThumbnail } from '../retrieveThumbnail'
 
 describe('retrieveThumbnail', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   const mockThumbnailEndpoint = 'https://test.com'
   const mockBuffer = Buffer.from('abc')
   const mockArrayBuffer = Buffer.from('cde')
 
-  global.fetch = jest.fn(() => Promise.resolve({
+  global.fetch = vi.fn(() => Promise.resolve({
     arrayBuffer: () => Promise.resolve(mockArrayBuffer),
     data: mockBuffer
   }))
@@ -36,11 +29,11 @@ describe('retrieveThumbnail', () => {
   describe('when the image retrieval errors out', () => {
     test('should return an error ', async () => {
       // Mock the promise with an error
-      global.fetch = jest.fn(() => Promise.resolve({
+      global.fetch = vi.fn(() => Promise.resolve({
         data: 'error'
       }))
 
-      const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+      const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
 
       const thumbnail = await retrieveThumbnail(mockThumbnailEndpoint)
 

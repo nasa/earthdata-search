@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event'
 import SwodlrForm from '../SwodlrForm'
 
 const setup = (overrideProps) => {
-  const setGranuleList = jest.fn()
-  const onUpdateAccessMethod = jest.fn()
+  const setGranuleList = vi.fn()
+  const onUpdateAccessMethod = vi.fn()
   const user = userEvent.setup()
   const props = {
     granuleList: [
@@ -338,7 +338,7 @@ describe('SwodlrForm component', () => {
 
         await user.click(firstGranuleUTMZoneZero)
 
-        expect(setGranuleList).toBeCalledTimes(2)
+        expect(setGranuleList).toHaveBeenCalledTimes(2)
         expect(setGranuleList).toHaveBeenCalledWith([
           {
             boxes: [
@@ -492,7 +492,7 @@ describe('SwodlrForm component', () => {
 
         await user.click(firstGranuleMGRSZero)
 
-        expect(setGranuleList).toBeCalledTimes(2)
+        expect(setGranuleList).toHaveBeenCalledTimes(2)
         expect(setGranuleList).toHaveBeenCalledWith([
           {
             boxes: [

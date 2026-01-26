@@ -2,7 +2,7 @@ import { metricsTemporalFilter } from '../metricsTemporalFilter'
 
 describe('metricsTemporalFilter', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsTemporalFilter({
       type: 'start_date',

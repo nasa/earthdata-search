@@ -1,17 +1,17 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import RegionSearchForm from '../RegionSearchForm'
 
 const regionSearchForm = {
   errors: {},
-  handleBlur: jest.fn(),
-  handleChange: jest.fn(),
-  handleSubmit: jest.fn(),
+  handleBlur: vi.fn(),
+  handleChange: vi.fn(),
+  handleSubmit: vi.fn(),
   isValid: false,
   touched: {},
-  validateForm: jest.fn(),
+  validateForm: vi.fn(),
   values: {
     endpoint: 'huc'
   }
@@ -22,7 +22,7 @@ const setup = setupTest({
   defaultProps: {
     regionSearchForm,
     selectedRegion: {},
-    onRemoveSelected: jest.fn()
+    onRemoveSelected: vi.fn()
   }
 })
 
@@ -135,7 +135,7 @@ describe('RegionSearchForm component', () => {
             values: {
               endpoint: 'huc'
             },
-            validateForm: jest.fn(),
+            validateForm: vi.fn(),
             isValid: false
           }
         }

@@ -1,14 +1,14 @@
 import React from 'react'
 import { screen, within } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { AdminProject } from '../AdminProject'
 
 import AdminProjectDetails from '../../AdminProjectDetails/AdminProjectDetails'
 import { routes } from '../../../constants/routes'
 
-jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div />))
+vi.mock('../../AdminProjectDetails/AdminProjectDetails', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: AdminProject,

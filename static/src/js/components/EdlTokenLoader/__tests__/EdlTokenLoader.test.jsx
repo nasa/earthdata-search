@@ -1,13 +1,13 @@
 import * as tinyCookie from 'tiny-cookie'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EdlTokenLoader from '../EdlTokenLoader'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-jest.mock('tiny-cookie', () => ({
-  get: jest.fn()
+vi.mock('tiny-cookie', () => ({
+  get: vi.fn()
 }))
 
 const setup = setupTest({
@@ -17,20 +17,20 @@ const setup = setupTest({
   },
   defaultZustandState: {
     user: {
-      setEdlToken: jest.fn()
+      setEdlToken: vi.fn()
     }
   }
 })
 
 describe('EdlTokenLoader component', () => {
   test('should call setEdlToken when mounted', () => {
-    jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+    vi.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'edlToken') return 'token'
 
       return ''
     })
 
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
       disableDatabaseComponents: 'false'
     }))
 
@@ -42,13 +42,13 @@ describe('EdlTokenLoader component', () => {
 
   describe('when disableDatabaseComponents is true', () => {
     test('should call setEdlToken with an empty string', () => {
-      jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+      vi.spyOn(tinyCookie, 'get').mockImplementation((param) => {
         if (param === 'edlToken') return 'token'
 
         return ''
       })
 
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 

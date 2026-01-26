@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import { FooterLink } from '../FooterLink'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: FooterLink,

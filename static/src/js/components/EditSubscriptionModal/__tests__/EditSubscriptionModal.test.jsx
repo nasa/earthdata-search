@@ -1,13 +1,16 @@
 import { screen } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EditSubscriptionModal from '../EditSubscriptionModal'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import UPDATE_SUBSCRIPTION from '../../../operations/mutations/updateSubscription'
 import addToast from '../../../util/addToast'
 
-jest.mock('../../../util/addToast', () => jest.fn())
+vi.mock('../../../util/addToast', () => ({
+  default: vi.fn()
+}))
 
 const setup = setupTest({
   Component: EditSubscriptionModal,
@@ -39,7 +42,7 @@ const setup = setupTest({
             type: 'collection'
           }
         },
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   },
@@ -385,7 +388,7 @@ describe('EditSubscriptionModal component', () => {
         const { user, zustandState } = setup({
           overrideZustandState: {
             errors: {
-              handleError: jest.fn()
+              handleError: vi.fn()
             },
             ui: {
               modals: {
@@ -415,7 +418,7 @@ describe('EditSubscriptionModal component', () => {
                 }
               }
             },
-            error: new Error('An error occurred')
+            error: new ApolloError({ errorMessage: 'An error occurred' })
           }]
         })
 
@@ -424,7 +427,7 @@ describe('EditSubscriptionModal component', () => {
 
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
-          error: expect.any(Error),
+          error: new ApolloError({ errorMessage: 'An error occurred' }),
           action: 'updateSubscription',
           resource: 'subscription',
           verb: 'updating',

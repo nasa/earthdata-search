@@ -1,9 +1,5 @@
 import { getSearchWords } from '../getSearchWords'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('getSearchWords', () => {
   // Tests that the regex gets converted when using *s in the front and back of a search term
   test('generates correct search words', () => {

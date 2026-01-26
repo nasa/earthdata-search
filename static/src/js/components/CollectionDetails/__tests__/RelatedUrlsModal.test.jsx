@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import RelatedUrlsModal from '../RelatedUrlsModal'
 import { MODAL_NAMES } from '../../../constants/modalNames'
@@ -127,7 +127,7 @@ const setup = setupTest({
     ui: {
       modals: {
         openModal: MODAL_NAMES.RELATED_URLS,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

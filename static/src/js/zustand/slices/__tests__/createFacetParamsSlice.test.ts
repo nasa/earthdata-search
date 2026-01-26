@@ -83,12 +83,12 @@ describe('createFacetParamsSlice', () => {
 
       // Set initial viewAllFacets
       useEdscStore.setState((state) => {
-        state.facetParams.setCmrFacets = jest.fn()
+        state.facetParams.setCmrFacets = vi.fn()
         state.facetParams.viewAllFacets.instrument_h = ['AIRS']
-        state.query.changeQuery = jest.fn()
+        state.query.changeQuery = vi.fn()
 
-        state.facets.viewAllFacets.resetState = jest.fn()
-        state.ui.modals.setOpenModal = jest.fn()
+        state.facets.viewAllFacets.resetState = vi.fn()
+        state.ui.modals.setOpenModal = vi.fn()
       })
 
       // Apply the viewAllFacets
@@ -120,13 +120,13 @@ describe('createFacetParamsSlice', () => {
 
       // Set initial viewAllFacets
       useEdscStore.setState((state) => {
-        state.facetParams.setCmrFacets = jest.fn()
+        state.facetParams.setCmrFacets = vi.fn()
         state.facetParams.viewAllFacets = {
           instrument_h: ['AIRS'],
           data_center_h: ['NASA']
         }
 
-        state.query.changeQuery = jest.fn()
+        state.query.changeQuery = vi.fn()
       })
 
       // Apply the viewAllFacets
@@ -145,8 +145,8 @@ describe('createFacetParamsSlice', () => {
   describe('setFeatureFacets', () => {
     test('updates featureFacets', () => {
       useEdscStore.setState((state) => {
-        state.collections.getCollections = jest.fn()
-        state.query.changeQuery = jest.fn()
+        state.collections.getCollections = vi.fn()
+        state.query.changeQuery = vi.fn()
       })
 
       const zustandState = useEdscStore.getState()
@@ -180,8 +180,8 @@ describe('createFacetParamsSlice', () => {
       describe('when the facet is being applied', () => {
         test('updates cmrFacets', () => {
           useEdscStore.setState((state) => {
-            state.collections.getCollections = jest.fn()
-            state.query.changeQuery = jest.fn()
+            state.collections.getCollections = vi.fn()
+            state.query.changeQuery = vi.fn()
           })
 
           const zustandState = useEdscStore.getState()
@@ -218,8 +218,8 @@ describe('createFacetParamsSlice', () => {
         describe('when the facet is being removed', () => {
           test('updates cmrFacets', () => {
             useEdscStore.setState((state) => {
-              state.collections.getCollections = jest.fn()
-              state.query.changeQuery = jest.fn()
+              state.collections.getCollections = vi.fn()
+              state.query.changeQuery = vi.fn()
             })
 
             const zustandState = useEdscStore.getState()
@@ -255,8 +255,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting platforms', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -294,8 +294,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting instruments', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -329,8 +329,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting organizations', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -364,8 +364,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting projects', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -399,8 +399,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting processing level id', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -434,8 +434,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting data format', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -469,8 +469,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting tiling system', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -504,8 +504,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting horizontal data resolution', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -539,8 +539,8 @@ describe('createFacetParamsSlice', () => {
     describe('when setting latency', () => {
       test('updates cmrFacets', () => {
         useEdscStore.setState((state) => {
-          state.collections.getCollections = jest.fn()
-          state.query.changeQuery = jest.fn()
+          state.collections.getCollections = vi.fn()
+          state.query.changeQuery = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -576,7 +576,7 @@ describe('createFacetParamsSlice', () => {
     describe('when setting instruments', () => {
       test('updates viewAllFacets', () => {
         useEdscStore.setState((state) => {
-          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+          state.facets.viewAllFacets.getViewAllFacets = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -604,7 +604,7 @@ describe('createFacetParamsSlice', () => {
     describe('when setting organizations', () => {
       test('updates viewAllFacets', () => {
         useEdscStore.setState((state) => {
-          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+          state.facets.viewAllFacets.getViewAllFacets = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -632,7 +632,7 @@ describe('createFacetParamsSlice', () => {
     describe('when setting projects', () => {
       test('updates viewAllFacets', () => {
         useEdscStore.setState((state) => {
-          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+          state.facets.viewAllFacets.getViewAllFacets = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -660,7 +660,7 @@ describe('createFacetParamsSlice', () => {
     describe('when setting data format', () => {
       test('updates viewAllFacets', () => {
         useEdscStore.setState((state) => {
-          state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+          state.facets.viewAllFacets.getViewAllFacets = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -694,7 +694,7 @@ describe('createFacetParamsSlice', () => {
 
       useEdscStore.setState((state) => {
         state.facetParams.cmrFacets.instrument_h = ['AIRS']
-        state.facets.viewAllFacets.getViewAllFacets = jest.fn()
+        state.facets.viewAllFacets.getViewAllFacets = vi.fn()
       })
 
       // Trigger the View All Facets modal for instruments

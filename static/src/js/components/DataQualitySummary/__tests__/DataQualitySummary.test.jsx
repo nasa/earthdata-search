@@ -2,11 +2,11 @@ import React from 'react'
 import SanitizedHTML from 'react-sanitized-html'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import DataQualitySummary from '../DataQualitySummary'
 
-jest.mock('react-sanitized-html', () => jest.fn(() => null))
+vi.mock('react-sanitized-html', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: DataQualitySummary,

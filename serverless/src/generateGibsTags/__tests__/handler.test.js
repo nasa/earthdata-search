@@ -1,3 +1,6 @@
+// Two classes are mocked in this test
+/* eslint-disable max-classes-per-file */
+
 import nock from 'nock'
 
 import MockDate from 'mockdate'
@@ -12,24 +15,27 @@ import generateGibsTags from '../handler'
 
 const OLD_ENV = process.env
 
-const mocksqsSendMessage = jest.fn().mockResolvedValue()
+const mocksqsSendMessage = vi.fn().mockResolvedValue()
 
-jest.mock('@aws-sdk/client-sqs', () => ({
-  SQSClient: jest.fn().mockImplementation(() => ({
-    send: mocksqsSendMessage
-  })),
-  SendMessageCommand: jest.fn().mockImplementation((params) => params)
+vi.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: vi.fn(class {
+    send = mocksqsSendMessage
+  }),
+  SendMessageCommand: vi.fn(class {
+    constructor(params) {
+      this.MessageBody = params.MessageBody
+      this.QueueUrl = params.QueueUrl
+    }
+  })
 }))
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-  jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+  vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+  vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
-  // jest.resetModules()
+  vi.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 
@@ -221,7 +227,7 @@ describe('generateGibsTags', () => {
   test('correctly generates and queues tag data when no collections are to be tagged', async () => {
     process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
-    jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockReturnValue({})
+    vi.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockReturnValue({})
 
     nock(/worldview/)
       .get(/wv\.json/)

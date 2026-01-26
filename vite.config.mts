@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
@@ -6,6 +6,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { resolve } from 'path'
 import istanbul from 'vite-plugin-istanbul'
 import { imagetools } from 'vite-imagetools'
+import graphqlLoader from 'vite-plugin-graphql-loader'
 
 import availablePortals from './portals/availablePortals.json'
 
@@ -72,7 +73,8 @@ export default defineConfig({
       include: '**/*.svg?react'
     }),
     imagetools(),
-    preloadImagePlugin()
+    preloadImagePlugin(),
+    graphqlLoader()
   ],
   css: {
     devSourcemap: true,
@@ -109,22 +111,29 @@ export default defineConfig({
       }
     }
   },
-  // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201
-  // @ts-expect-error: configuring vitest causes overload error
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: 'test-setup.js',
+    setupFiles: 'vitestConfigs/test-env.ts',
     clearMocks: true,
+    reporters: process.env.GITHUB_ACTIONS ? ['default', 'github-actions'] : ['default'],
+    include: [
+      'serverless/src/**/*.test.{js,ts}',
+      'static/src/**/*.test.{js,jsx,ts,tsx}',
+      'sharedUtils/**/*.test.js'
+    ],
     coverage: {
       enabled: true,
       include: [
-        'serverless/src/**/*.js',
-        'static/src/**/*.js',
-        'static/src/**/*.jsx'
+        'serverless/src/**/*.{js,ts}',
+        'static/src/**/*.{js,jsx,ts,tsx}',
+        'sharedUtils/**/*.js'
       ],
-      provider: 'istanbul',
-      reporter: ['text', 'lcov', 'clover', 'json'],
+      exclude: [
+        '**/vitestConfigs/**',
+        '**/*.d.ts'
+      ],
+      reporter: ['text', 'lcov', 'clover', 'json', 'html'],
       reportOnFailure: true
     }
   }

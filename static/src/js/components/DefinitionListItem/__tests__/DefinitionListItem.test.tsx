@@ -2,11 +2,13 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 import Col from 'react-bootstrap/Col'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import DefinitionListItem from '../DefinitionListItem'
 
-jest.mock('react-bootstrap/Col', () => jest.fn(({ children }) => <div>{children}</div>))
+vi.mock('react-bootstrap/Col', () => ({
+  default: vi.fn(({ children }) => <div>{children}</div>)
+}))
 
 const setup = setupTest({
   Component: DefinitionListItem,

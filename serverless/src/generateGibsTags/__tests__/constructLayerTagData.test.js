@@ -4,8 +4,6 @@ import { gibsResponse } from './mocks'
 import { constructLayerTagData } from '../constructLayerTagData'
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
   MockDate.set('1988-09-03T10:00:00.000Z')

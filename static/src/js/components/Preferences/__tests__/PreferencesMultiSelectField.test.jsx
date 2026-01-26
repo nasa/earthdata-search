@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import PreferencesMultiSelectField from '../PreferencesMultiSelectField'
 
 const setup = (overrideProps) => {
-  const onChange = jest.fn()
+  const onChange = vi.fn()
   const user = userEvent.setup()
   const props = {
     schema: {

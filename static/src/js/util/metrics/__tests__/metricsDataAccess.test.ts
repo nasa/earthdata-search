@@ -2,7 +2,7 @@ import { metricsDataAccess } from '../metricsDataAccess'
 
 describe('metricsDataAccess', () => {
   test('pushes data_access_init event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDataAccess({
       type: 'data_access_init',
@@ -37,7 +37,7 @@ describe('metricsDataAccess', () => {
   })
 
   test('pushes data_access_completion event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDataAccess({
       type: 'data_access_completion',
@@ -74,7 +74,7 @@ describe('metricsDataAccess', () => {
   })
 
   test('pushes single_granule_download event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDataAccess({
       type: 'single_granule_download',
@@ -109,7 +109,7 @@ describe('metricsDataAccess', () => {
   })
 
   test('pushes single_granule_s3_access event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDataAccess({
       type: 'single_granule_s3_access',
@@ -144,7 +144,7 @@ describe('metricsDataAccess', () => {
   })
 
   test('handles multiple collections', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDataAccess({
       type: 'data_access_init',
@@ -193,7 +193,7 @@ describe('metricsDataAccess', () => {
   })
 
   test('handles empty collections array', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDataAccess({
       type: 'data_access_init',

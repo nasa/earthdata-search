@@ -9,8 +9,8 @@ import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 import routerHelper from '../../../router/router'
 import { changeUrl } from '../../../util/url/changeUrl'
 
-jest.mock('../../../util/url/changeUrl', () => ({
-  changeUrl: jest.fn()
+vi.mock('../../../util/url/changeUrl', () => ({
+  changeUrl: vi.fn()
 }))
 
 describe('createGranuleSlice', () => {
@@ -30,7 +30,7 @@ describe('createGranuleSlice', () => {
     describe('when a granuleId is provided', () => {
       test('sets the state and calls getGranuleMetadata', () => {
         useEdscStore.setState((state) => {
-          state.granule.getGranuleMetadata = jest.fn()
+          state.granule.getGranuleMetadata = vi.fn()
         })
 
         const granuleId = 'test-granule-id'
@@ -52,7 +52,7 @@ describe('createGranuleSlice', () => {
     describe('when no granuleId is provided', () => {
       test('sets the state and does not call getGranuleMetadata', () => {
         useEdscStore.setState((state) => {
-          state.granule.getGranuleMetadata = jest.fn()
+          state.granule.getGranuleMetadata = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -72,16 +72,16 @@ describe('createGranuleSlice', () => {
 
   describe('getGranuleMetadata', () => {
     beforeEach(() => {
-      jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
+      vi.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
 
       useEdscStore.setState((state) => {
-        state.errors.handleError = jest.fn()
+        state.errors.handleError = vi.fn()
       })
     })
 
@@ -216,14 +216,14 @@ describe('createGranuleSlice', () => {
           })
 
           routerHelper.router = {
-            navigate: jest.fn(),
+            navigate: vi.fn(),
             state: {
               location: {
                 search: '?some=testparams',
                 pathname: '/search/granules'
               }
             },
-            subscribe: jest.fn()
+            subscribe: vi.fn()
           }
 
           const { granule, errors } = useEdscStore.getState()

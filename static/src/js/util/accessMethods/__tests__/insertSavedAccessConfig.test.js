@@ -49,7 +49,7 @@ describe('insertSavedAccessConfig', () => {
   })
 
   test('returns the original methods if no the echoform cannot be parsed', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
     const methods = {
       esi0: {

@@ -8,26 +8,26 @@ import {
   FaTable
 } from 'react-icons/fa'
 import { List } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import PanelGroupHeader from '../PanelGroupHeader'
 import Skeleton from '../../Skeleton/Skeleton'
 import RadioSettingDropdown from '../../RadioSettingDropdown/RadioSettingDropdown'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => null))
-jest.mock('../../RadioSettingDropdown/RadioSettingDropdown', () => jest.fn(() => null))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => null) }))
+vi.mock('../../RadioSettingDropdown/RadioSettingDropdown', () => ({ default: vi.fn(() => null) }))
 
 const sortsArray = [
   {
     title: 'Sort Item 1',
     isActive: false,
-    onClick: jest.fn()
+    onClick: vi.fn()
   },
   {
     title: '-Sort Item 2',
     isActive: false,
-    onClick: jest.fn()
+    onClick: vi.fn()
   }
 ]
 
@@ -36,13 +36,13 @@ const viewsArray = [
     title: 'View Item 1',
     icon: 'test-icon',
     isActive: false,
-    onClick: jest.fn()
+    onClick: vi.fn()
   },
   {
     title: 'View Item 2',
     icon: 'test-icon',
     isActive: false,
-    onClick: jest.fn()
+    onClick: vi.fn()
   }
 ]
 
@@ -168,10 +168,10 @@ describe('PanelGroupHeader component', () => {
               pathname: 'pathname',
               search: 'search'
             },
-            onClick: jest.fn(),
+            onClick: vi.fn(),
             title: 'Breadcrumb 1'
           }, {
-            onClick: jest.fn(),
+            onClick: vi.fn(),
             options: {
               shrink: true
             },
@@ -206,10 +206,10 @@ describe('PanelGroupHeader component', () => {
               pathname: 'pathname',
               search: 'search'
             },
-            onClick: jest.fn(),
+            onClick: vi.fn(),
             title: 'More Action Dropdown Item 1'
           }, {
-            onClick: jest.fn(),
+            onClick: vi.fn(),
             options: {
               shrink: true
             },
@@ -332,7 +332,7 @@ describe('PanelGroupHeader component', () => {
           exportsArray: [
             {
               label: 'JSON',
-              onClick: jest.fn()
+              onClick: vi.fn()
             }
           ]
         }
@@ -358,7 +358,7 @@ describe('PanelGroupHeader component', () => {
             {
               label: 'JSON',
               inProgress: true,
-              onClick: jest.fn()
+              onClick: vi.fn()
             }
           ]
         }

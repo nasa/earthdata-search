@@ -15,7 +15,7 @@
  *
  * Test code:
  * ```jsx
- * import getByTextWithMarkup from 'jestConfigs/getByTextWithMarkup'
+ * import getByTextWithMarkup from 'vitestConfigs/getByTextWithMarkup'
  * const element = getByTextWithMarkup('Some text with markup')
  * expect(element).toBeInTheDocument()
  * ```

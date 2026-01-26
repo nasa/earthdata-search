@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import { EarthdataDownloadRedirectComponent } from '../EarthdataDownloadRedirect'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: EarthdataDownloadRedirectComponent,
@@ -12,16 +12,14 @@ const setup = setupTest({
   }
 })
 
+beforeEach(() => {
+  vi.restoreAllMocks()
+})
+
 describe('EarthdataDownloadRedirectComponent', () => {
-  const { replace } = window.location
-
-  afterEach(() => {
-    window.location.replace = replace
-  })
-
   test('informs the user about the redirect', () => {
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
 
     setup()
 

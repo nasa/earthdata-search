@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 
 import SearchAutocomplete from '../SearchAutocomplete'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: SearchAutocomplete,
@@ -11,10 +11,10 @@ const setup = setupTest({
       currentEnvironment: 'prod'
     },
     collection: {
-      setCollectionId: jest.fn()
+      setCollectionId: vi.fn()
     },
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     }
   }
 })
@@ -111,7 +111,7 @@ describe('SearchAutocomplete', () => {
             collection: {
               keyword: 'Test value'
             },
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -154,7 +154,7 @@ describe('SearchAutocomplete', () => {
             collection: {
               keyword: 'Test value'
             },
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -187,7 +187,7 @@ describe('SearchAutocomplete', () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           query: {
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -228,7 +228,7 @@ describe('SearchAutocomplete', () => {
       const { user } = setup({
         overrideZustandState: {
           query: {
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -259,13 +259,13 @@ describe('SearchAutocomplete', () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           home: {
-            setOpenFacetGroup: jest.fn()
+            setOpenFacetGroup: vi.fn()
           },
           facetParams: {
-            addCmrFacetFromAutocomplete: jest.fn()
+            addCmrFacetFromAutocomplete: vi.fn()
           },
           query: {
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -308,13 +308,13 @@ describe('SearchAutocomplete', () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           home: {
-            setOpenFacetGroup: jest.fn()
+            setOpenFacetGroup: vi.fn()
           },
           facetParams: {
-            addCmrFacetFromAutocomplete: jest.fn()
+            addCmrFacetFromAutocomplete: vi.fn()
           },
           query: {
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -357,13 +357,13 @@ describe('SearchAutocomplete', () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           home: {
-            setOpenFacetGroup: jest.fn()
+            setOpenFacetGroup: vi.fn()
           },
           facetParams: {
-            addCmrFacetFromAutocomplete: jest.fn()
+            addCmrFacetFromAutocomplete: vi.fn()
           },
           query: {
-            changeQuery: jest.fn()
+            changeQuery: vi.fn()
           }
         }
       })
@@ -395,7 +395,7 @@ describe('SearchAutocomplete', () => {
 
   describe('cleanup', () => {
     test('removes event listener on unmount', () => {
-      const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener')
+      const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener')
 
       const { unmount } = setup()
 

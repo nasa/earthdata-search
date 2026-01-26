@@ -16,7 +16,7 @@ const activeLetters = [
   'Z'
 ]
 
-const scrollIntoViewMock = jest.fn()
+const scrollIntoViewMock = vi.fn()
 
 const headingMocks = [
   document.createElement('h2'),
@@ -37,10 +37,6 @@ const modalInnerRefMock = {
 }
 
 describe('FacetsModalNav component', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe('renders correctly', () => {
     test('when rendering an empty list', () => {
       render(<FacetsModalNav activeLetters={[]} modalInnerRef={modalInnerRefMock} />)

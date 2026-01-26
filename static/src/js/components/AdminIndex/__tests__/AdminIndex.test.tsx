@@ -1,17 +1,17 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import AdminIndex from '../AdminIndex'
 import { routes } from '../../../constants/routes'
 
 // Mock the PortalLinkContainer so it renders <a> and children.
 // Expects 'to' prop for href.
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
-  const MockPortalLinkContainer = jest.fn(({ to, children }) => (
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
+  const MockPortalLinkContainer = vi.fn(({ to, children }) => (
     <a href={to}>{children}</a>
   ))
 
-  return MockPortalLinkContainer
+  return { default: MockPortalLinkContainer }
 })
 
 const setup = setupTest({

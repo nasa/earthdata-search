@@ -7,7 +7,7 @@ import {
 import AdminPreferencesMetricsList from '../AdminPreferencesMetricsList'
 import ADMIN_PREFERENCES_METRICS from '../../../operations/queries/adminPreferencesMetrics'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: AdminPreferencesMetricsList,

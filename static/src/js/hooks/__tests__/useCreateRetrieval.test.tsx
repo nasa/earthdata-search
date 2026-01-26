@@ -1,18 +1,19 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../vitestConfigs/setupTest'
 import { useCreateRetrieval } from '../useCreateRetrieval'
 import CREATE_RETRIEVAL from '../../operations/mutations/createRetrieval'
 import { metricsDataAccess } from '../../util/metrics/metricsDataAccess'
 
-jest.mock('../../util/metrics/metricsDataAccess', () => ({
-  metricsDataAccess: jest.fn()
+vi.mock('../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: vi.fn()
 }))
 
-const mockUseNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockUseNavigate = vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockUseNavigate
 }))
 
@@ -48,7 +49,7 @@ const setup = setupTest({
       }
     },
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     },
     project: {
       collections: {
@@ -277,7 +278,7 @@ describe('useCreateRetrieval', () => {
                 }
               }
             },
-            error: new Error('An error occurred')
+            error: new ApolloError({ errorMessage: 'An error occurred' })
           }]
         })
 
@@ -297,7 +298,7 @@ describe('useCreateRetrieval', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'createRetrieval',
-          error: new Error('An error occurred'),
+          error: new ApolloError({ errorMessage: 'An error occurred' }),
           resource: 'retrieval',
           verb: 'creating'
         })

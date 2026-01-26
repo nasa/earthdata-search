@@ -15,7 +15,7 @@ describe('downloadImageFromSource', () => {
   })
 
   test('returns undefined when source responds unsuccessfully', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
 
     nock(/example/)
       .get(/jpg/)

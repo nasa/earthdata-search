@@ -6,29 +6,25 @@ import * as removeTag from '../removeTag'
 import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('processTag', () => {
   test('correctly defaults the Records array', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+    const addTagMock = vi.spyOn(addTag, 'addTag').mockImplementation(() => vi.fn())
 
     const event = {}
 
     await processTag(event, {})
 
-    expect(addTagMock).toBeCalledTimes(0)
+    expect(addTagMock).toHaveBeenCalledTimes(0)
   })
 
   test('correctly calls addTag', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+    const addTagMock = vi.spyOn(addTag, 'addTag').mockImplementation(() => vi.fn())
 
     const searchCriteria = { short_name: 'MIL3MLS' }
     const tagData = { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
@@ -50,8 +46,8 @@ describe('processTag', () => {
 
     await processTag(event, {})
 
-    expect(addTagMock).toBeCalledTimes(1)
-    expect(addTagMock).toBeCalledWith({
+    expect(addTagMock).toHaveBeenCalledTimes(1)
+    expect(addTagMock).toHaveBeenCalledWith({
       tagName: 'edsc.extra.gibs',
       tagData: { product: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
       searchCriteria: { short_name: 'MIL3MLS' },
@@ -62,10 +58,10 @@ describe('processTag', () => {
   })
 
   test('doesnt call addTag when tagData matches current tagData', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+    const addTagMock = vi.spyOn(addTag, 'addTag').mockImplementation(() => vi.fn())
 
     const searchCriteria = {
       collection: {
@@ -105,14 +101,14 @@ describe('processTag', () => {
 
     await processTag(event, {})
 
-    expect(addTagMock).toBeCalledTimes(0)
+    expect(addTagMock).toHaveBeenCalledTimes(0)
   })
 
   test('correctly call addTag when no searchCriteria is provided', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+    const addTagMock = vi.spyOn(addTag, 'addTag').mockImplementation(() => vi.fn())
 
     const tagData = {
       concept_id: 'C10000001-EDSC',
@@ -135,8 +131,8 @@ describe('processTag', () => {
 
     await processTag(event, {})
 
-    expect(addTagMock).toBeCalledTimes(1)
-    expect(addTagMock).toBeCalledWith({
+    expect(addTagMock).toHaveBeenCalledTimes(1)
+    expect(addTagMock).toHaveBeenCalledWith({
       tagName: 'edsc.extra.gibs',
       searchCriteria: {},
       tagData: {
@@ -150,10 +146,10 @@ describe('processTag', () => {
   })
 
   test('doesnt call addTag when tagData matches current tagData when the difference is updated_at', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
+    const addTagMock = vi.spyOn(addTag, 'addTag').mockImplementation(() => vi.fn())
 
     const searchCriteria = {
       collection: {
@@ -199,14 +195,14 @@ describe('processTag', () => {
 
     await processTag(event, {})
 
-    expect(addTagMock).toBeCalledTimes(0)
+    expect(addTagMock).toHaveBeenCalledTimes(0)
   })
 
   test('correctly calls removeTag', async () => {
-    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
-    const removeTagMock = jest.spyOn(removeTag, 'removeTag').mockImplementation(() => jest.fn())
+    const removeTagMock = vi.spyOn(removeTag, 'removeTag').mockImplementation(() => vi.fn())
 
     const searchCriteria = { short_name: 'MIL3MLS' }
 
@@ -224,8 +220,8 @@ describe('processTag', () => {
 
     await processTag(event, {})
 
-    expect(removeTagMock).toBeCalledTimes(1)
-    expect(removeTagMock).toBeCalledWith(
+    expect(removeTagMock).toHaveBeenCalledTimes(1)
+    expect(removeTagMock).toHaveBeenCalledWith(
       'edsc.extra.gibs',
       { short_name: 'MIL3MLS' },
       'mocked-system-token'

@@ -2,7 +2,7 @@ import { metricsAddCollectionToProject } from '../metricsAddCollectionToProject'
 
 describe('metricsAddCollectionToProject', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsAddCollectionToProject({
       collectionConceptId: 'C1234567890-EDSC',

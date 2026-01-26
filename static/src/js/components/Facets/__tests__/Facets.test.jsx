@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react'
 import { kebabCase } from 'lodash-es'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Facets from '../Facets'
 import * as facetUtils from '../../../util/facets'
@@ -17,9 +17,9 @@ const setup = setupTest({
         mapImagery: false,
         nearRealTime: false
       },
-      setCmrFacets: jest.fn(),
-      setFeatureFacets: jest.fn(),
-      triggerViewAllFacets: jest.fn()
+      setCmrFacets: vi.fn(),
+      setFeatureFacets: vi.fn(),
+      triggerViewAllFacets: vi.fn()
     },
     facets: {
       facets: {
@@ -446,7 +446,7 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('featureFacetHandler calls changeFeatureFacet', async () => {
-    const mock = jest.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => jest.fn())
+    const mock = vi.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => vi.fn())
     const { user } = setup()
 
     const { setFeatureFacets } = useEdscStore.getState().facetParams
@@ -466,7 +466,7 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('cmrFacetHandler calls changeCmrFacet', async () => {
-    const mock = jest.spyOn(facetUtils, 'changeCmrFacet').mockImplementationOnce(() => jest.fn())
+    const mock = vi.spyOn(facetUtils, 'changeCmrFacet').mockImplementationOnce(() => vi.fn())
     const { user } = setup()
 
     const { setCmrFacets } = useEdscStore.getState().facetParams

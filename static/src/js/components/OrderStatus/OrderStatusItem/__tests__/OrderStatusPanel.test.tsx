@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 import OrderStatusPanel from '../OrderStatusPanel'
 
 // @ts-expect-error This file does not have types
 import OrderProgressList from '../../../OrderProgressList/OrderProgressList'
 
-jest.mock('../../../OrderProgressList/OrderProgressList', () => jest.fn())
+vi.mock('../../../OrderProgressList/OrderProgressList', () => ({ default: vi.fn() }))
 
 const setup = setupTest({
   Component: OrderStatusPanel,

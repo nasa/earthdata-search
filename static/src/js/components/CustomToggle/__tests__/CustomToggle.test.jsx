@@ -1,18 +1,18 @@
 import { screen } from '@testing-library/react'
 import { FaGlobe } from 'react-icons/fa'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import CustomToggle from '../CustomToggle'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => null))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: CustomToggle,
   defaultProps: {
     className: 'test-class',
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     title: 'test-title'
   }
 })
@@ -62,8 +62,8 @@ describe('CustomToggle component', () => {
       const { props, user } = setup({
         overrideProps: {
           openOnHover: true,
-          handleOpen: jest.fn(),
-          handleClose: jest.fn()
+          handleOpen: vi.fn(),
+          handleClose: vi.fn()
         }
       })
 

@@ -3,9 +3,10 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
 import AdminRetrievalDetails from '../AdminRetrievalDetails'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import ADMIN_RETRIEVAL from '../../../operations/queries/adminRetrieval'
 import { routes } from '../../../constants/routes'
 import ADMIN_REQUEUE_ORDER from '../../../operations/mutations/adminRequeueOrder'
@@ -13,9 +14,9 @@ import ADMIN_REQUEUE_ORDER from '../../../operations/mutations/adminRequeueOrder
 // @ts-expect-error This file does not have types
 import addToast from '../../../util/addToast'
 
-jest.mock('../../../util/addToast', () => ({
+vi.mock('../../../util/addToast', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
 const adminRetrievalMock = {
@@ -191,12 +192,12 @@ describe('AdminRetrievalDetails component', () => {
                   retrievalOrderId: 42
                 }
               },
-              error: new Error('Failed to requeue order')
+              error: new ApolloError({ errorMessage: 'Failed to requeue order' })
             }
           ],
           overrideZustandState: {
             errors: {
-              handleError: jest.fn()
+              handleError: vi.fn()
             }
           }
         })
@@ -212,7 +213,7 @@ describe('AdminRetrievalDetails component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'requeueOrder',
-          error: new Error('Failed to requeue order'),
+          error: new ApolloError({ errorMessage: 'Failed to requeue order' }),
           notificationType: 'toast',
           resource: 'admin retrievals'
         })

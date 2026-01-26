@@ -10,9 +10,9 @@ import fetchCmrOrderingOrder from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+  vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false

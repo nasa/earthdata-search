@@ -13,7 +13,7 @@ beforeEach(() => {
   // Mock the current date to a fixed date for consistent testing
   MockDate.set('2024-01-15T10:00:00.000Z')
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
       debug: false
@@ -37,7 +37,7 @@ afterEach(() => {
 describe('cleanupOldShapefiles', () => {
   test('successfully executes the correct SQL query and returns response', async () => {
     const deletedCount = 5
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation()
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation()
 
     dbTracker.on('query', (query) => {
       query.response(deletedCount)
@@ -68,7 +68,7 @@ describe('cleanupOldShapefiles', () => {
 
   test('correctly handles no shapefiles found and logs a message', async () => {
     const deletedCount = 0
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation()
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation()
 
     dbTracker.on('query', (query) => {
       query.response(deletedCount)
@@ -98,7 +98,7 @@ describe('cleanupOldShapefiles', () => {
   })
 
   test('correctly handles database errors and logs them', async () => {
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation()
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation()
     const dbError = new Error('Database connection failed')
 
     dbTracker.on('query', (query) => {

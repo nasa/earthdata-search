@@ -10,21 +10,19 @@ import { colorMapOne } from './mocks'
 
 let dbTracker
 
-const sqsColorMap = jest.fn().mockResolvedValue({})
+const sqsColorMap = vi.fn().mockResolvedValue({})
 
 const mockSqsClient = {
   send: sqsColorMap
 }
 
-jest.mock('@aws-sdk/client-sqs', () => ({
-  SQSClient: jest.fn(() => mockSqsClient),
-  SendMessageCommand: jest.fn()
+vi.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: vi.fn(() => mockSqsClient),
+  SendMessageCommand: vi.fn()
 }))
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false

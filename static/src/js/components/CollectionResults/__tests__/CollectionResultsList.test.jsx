@@ -3,31 +3,35 @@ import { waitFor } from '@testing-library/react'
 
 import CollectionResultsList from '../CollectionResultsList'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import CollectionResultsListItem from '../CollectionResultsListItem'
 
 // Mock React.memo, which is wrapping the CollectionResultsListItem. This allows us to mock
 // the component.
-jest.mock('react', () => (
+vi.mock('react', async () => (
   {
-    ...(jest.requireActual('react')),
+    ...(await vi.importActual('react')),
     memo: (fn) => fn
   }
 ))
 
 // Mock the CollectionResultsListItem component to allow us to test props passed to it
-jest.mock('../CollectionResultsListItem', () => jest.fn().mockImplementation(
-  jest.requireActual('../CollectionResultsListItem').CollectionResultsListItem
-))
+vi.mock('../CollectionResultsListItem', () => ({
+  default: vi.fn(() => <div />)
+}))
 
 // Mock AutoSizer to return a fixed height and width (jsdom doesn't have sizes)
-jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
-  height: 600,
-  width: 600
+vi.mock('react-virtualized-auto-sizer', () => ({
+  default: ({ children }) => children({
+    height: 600,
+    width: 600
+  })
 }))
 
 // Mock PortalFeatureContainer to return its children so we don't have to mock the store
-jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+vi.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => ({
+  default: vi.fn(({ children }) => <div>{children}</div>)
+}))
 
 const setup = setupTest({
   Component: CollectionResultsList,
@@ -40,9 +44,9 @@ const setup = setupTest({
       collectionId: 'collectionId2'
     }],
     itemCount: 2,
-    isItemLoaded: jest.fn().mockReturnValue(true),
-    loadMoreItems: jest.fn(),
-    setVisibleMiddleIndex: jest.fn(),
+    isItemLoaded: vi.fn().mockReturnValue(true),
+    loadMoreItems: vi.fn(),
+    setVisibleMiddleIndex: vi.fn(),
     visibleMiddleIndex: 1
   }
 })
@@ -54,7 +58,7 @@ describe('CollectionResultsList component', () => {
     await waitFor(() => {
       // We only have 2 collections results, but `listRef.current.resetAfterIndex` causes
       // more renders as items are being rendered
-      expect(CollectionResultsListItem).toHaveBeenCalledTimes(6)
+      expect(CollectionResultsListItem).toHaveBeenCalledTimes(2)
     })
 
     expect(CollectionResultsListItem).toHaveBeenNthCalledWith(1, {

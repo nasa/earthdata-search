@@ -4,18 +4,18 @@ import { startOrderStatusUpdateWorkflow } from '../startOrderStatusUpdateWorkflo
 import { getStepFunctionsConfig } from '../aws/getStepFunctionsConfig'
 import * as mockStepFunction from '../mockStepFunction'
 
-jest.mock('@aws-sdk/client-sfn', () => {
-  const original = jest.requireActual('@aws-sdk/client-sfn')
-  const sendMock = jest.fn().mockResolvedValue({
+vi.mock('@aws-sdk/client-sfn', async () => {
+  const original = await vi.importActual('@aws-sdk/client-sfn')
+  const sendMock = vi.fn().mockResolvedValue({
     executionArn: 'mockArn',
     startDate: 12345
   })
 
   return {
     ...original,
-    SFNClient: jest.fn().mockImplementation(() => ({
-      send: sendMock
-    }))
+    SFNClient: vi.fn(class {
+      send = sendMock
+    })
   }
 })
 
@@ -23,10 +23,8 @@ const client = new SFNClient(getStepFunctionsConfig())
 const OLD_ENV = process.env
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   // Manage resetting ENV variables
-  jest.resetModules()
+  vi.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
   process.env.UPDATE_ORDER_STATUS_STATE_MACHINE_ARN = 'order-status-arn'
@@ -39,7 +37,7 @@ afterEach(() => {
 
 describe('startOrderStatusUpdateWorkflow', () => {
   test('starts the order status workflow', async () => {
-    const consoleMock = jest.spyOn(console, 'log')
+    const consoleMock = vi.spyOn(console, 'log')
 
     await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
 
@@ -66,9 +64,9 @@ describe('startOrderStatusUpdateWorkflow', () => {
     test('mocks the step function', async () => {
       process.env.NODE_ENV = 'development'
       process.env.SKIP_SQS = 'false'
-      const mockStepFunctionMock = jest.spyOn(mockStepFunction, 'mockStepFunction').mockImplementationOnce(() => jest.fn())
+      const mockStepFunctionMock = vi.spyOn(mockStepFunction, 'mockStepFunction').mockImplementationOnce(() => vi.fn())
 
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
 
@@ -90,9 +88,9 @@ describe('startOrderStatusUpdateWorkflow', () => {
     test('does not mock the step function', async () => {
       process.env.NODE_ENV = 'development'
       process.env.SKIP_SQS = 'true'
-      const mockStepFunctionMock = jest.spyOn(mockStepFunction, 'mockStepFunction').mockImplementationOnce(() => jest.fn())
+      const mockStepFunctionMock = vi.spyOn(mockStepFunction, 'mockStepFunction').mockImplementationOnce(() => vi.fn())
 
-      const consoleMock = jest.spyOn(console, 'log')
+      const consoleMock = vi.spyOn(console, 'log')
 
       await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
 

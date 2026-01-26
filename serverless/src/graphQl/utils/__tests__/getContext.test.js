@@ -2,19 +2,19 @@ import getContext from '../getContext'
 import DatabaseClient from '../databaseClient'
 import { validateToken } from '../../../util/authorizer/validateToken'
 
-jest.mock('../../../util/authorizer/validateToken', () => ({
-  validateToken: jest.fn().mockResolvedValue({ username: 'testuser' })
+vi.mock('../../../util/authorizer/validateToken', () => ({
+  validateToken: vi.fn().mockResolvedValue({ username: 'testuser' })
 }))
 
-jest.mock('../../../../../sharedUtils/config', () => ({
-  getApplicationConfig: jest.fn().mockImplementation(() => ({
+vi.mock('../../../../../sharedUtils/config', () => ({
+  getApplicationConfig: vi.fn().mockImplementation(() => ({
     env: 'testenv'
   }))
 }))
 
 describe('getContext', () => {
   test('should return the correct context', async () => {
-    const getUserWhereMock = jest.spyOn(DatabaseClient.prototype, 'getUserWhere')
+    const getUserWhereMock = vi.spyOn(DatabaseClient.prototype, 'getUserWhere')
     getUserWhereMock.mockResolvedValue({
       id: 1,
       name: 'John Doe'
@@ -50,7 +50,7 @@ describe('getContext', () => {
 
   describe('when the user does not exist in the database', () => {
     test('should return the correct context with an undefined user', async () => {
-      const getUserWhereMock = jest.spyOn(DatabaseClient.prototype, 'getUserWhere')
+      const getUserWhereMock = vi.spyOn(DatabaseClient.prototype, 'getUserWhere')
       getUserWhereMock.mockResolvedValue(undefined)
 
       const event = {

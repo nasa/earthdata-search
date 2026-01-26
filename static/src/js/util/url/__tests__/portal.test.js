@@ -2,7 +2,7 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import { decodePortal, encodePortal } from '../portalEncoders'
 
-jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
   defaultPortal: 'edsc'
 }))
 

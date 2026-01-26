@@ -7,9 +7,7 @@ import fetchSwodlrOrder from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementation(() => {
     const dbCon = knex({
       client: 'pg',
       debug: false

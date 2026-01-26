@@ -1,26 +1,27 @@
-import React from 'react'
 import { waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { GranuleFiltersContainer } from '../GranuleFiltersContainer'
 
 import GranuleFiltersForm from '../../../components/GranuleFilters/GranuleFiltersForm'
 
-jest.mock('../../../components/GranuleFilters/GranuleFiltersForm', () => jest.fn(() => <div />))
+vi.mock('../../../components/GranuleFilters/GranuleFiltersForm', () => ({
+  default: vi.fn(() => null)
+}))
 
 const setup = setupTest({
   Component: GranuleFiltersContainer,
   defaultProps: {
     errors: {},
     granuleFiltersNeedsReset: false,
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleReset: jest.fn(),
-    handleSubmit: jest.fn(),
-    setFieldTouched: jest.fn(),
-    setFieldValue: jest.fn(),
-    setGranuleFiltersNeedReset: jest.fn(),
+    handleBlur: vi.fn(),
+    handleChange: vi.fn(),
+    handleReset: vi.fn(),
+    handleSubmit: vi.fn(),
+    setFieldTouched: vi.fn(),
+    setFieldValue: vi.fn(),
+    setGranuleFiltersNeedReset: vi.fn(),
     touched: {},
     values: {}
   },
@@ -29,7 +30,7 @@ const setup = setupTest({
       collectionId: 'collectionId'
     },
     query: {
-      changeGranuleQuery: jest.fn()
+      changeGranuleQuery: vi.fn()
     }
   },
   withRouter: true

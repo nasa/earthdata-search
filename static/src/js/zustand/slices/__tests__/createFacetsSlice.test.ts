@@ -175,7 +175,7 @@ describe('createFacetsSlice', () => {
             }
           )
 
-        const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
+        const prepareCollectionParamsSpy = vi.spyOn(collectionUtils, 'prepareCollectionParams')
 
         const zustandState = useEdscStore.getState()
         const { facets } = zustandState
@@ -228,10 +228,10 @@ describe('createFacetsSlice', () => {
 
         useEdscStore.setState((state) => {
           // eslint-disable-next-line no-param-reassign
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
-        const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
+        const prepareCollectionParamsSpy = vi.spyOn(collectionUtils, 'prepareCollectionParams')
 
         const zustandState = useEdscStore.getState()
         const { facets } = zustandState

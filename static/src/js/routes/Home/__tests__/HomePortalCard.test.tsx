@@ -2,26 +2,26 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import HomePortalCard from '../HomePortalCard'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-const assignMock = jest.fn()
+const assignMock = vi.fn()
 
-jest.spyOn(window, 'location', 'get').mockReturnValue({
+vi.spyOn(window, 'location', 'get').mockReturnValue({
   ...window.location,
   assign: assignMock // Mock assign to prevent navigation errors
 })
 
-jest.mock('../../../hooks/usePortalLogo', () => ({
-  usePortalLogo: jest.fn(() => 'mock-logo-src')
+vi.mock('../../../hooks/usePortalLogo', () => ({
+  usePortalLogo: vi.fn(() => 'mock-logo-src')
 }))
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   const MockPortalLinkContainer = ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
   )
   MockPortalLinkContainer.displayName = 'MockPortalLinkContainer'
 
-  return MockPortalLinkContainer
+  return { default: MockPortalLinkContainer }
 })
 
 const setup = setupTest({
@@ -71,7 +71,7 @@ describe('HomePortalCard', () => {
   })
 
   test('stops propagation when the "More Info" link is clicked', async () => {
-    const stopPropagationMock = jest.fn()
+    const stopPropagationMock = vi.fn()
 
     setup()
 

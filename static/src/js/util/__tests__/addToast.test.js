@@ -1,10 +1,6 @@
 import addToast from '../addToast'
 
 describe('addToast', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('should call the add method provided by the ToastProvider', () => {
     const providerAddMock = window.reactToastProvider.current.add
 
@@ -31,7 +27,7 @@ describe('addToast', () => {
 
     const content = 'addToats test message'
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
 
     const options = {
       appearance: 'error',

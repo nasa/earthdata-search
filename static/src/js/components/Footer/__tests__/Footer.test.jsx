@@ -1,15 +1,15 @@
 import { screen } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as config from '../../../../../../sharedUtils/config'
 
 import Footer from '../Footer'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
@@ -46,7 +46,7 @@ const setup = setupTest({
 
 describe('Footer component', () => {
   test('displays version', () => {
-    jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
       env: 'prod',
       version: '2.0.0'
     }))
@@ -57,7 +57,7 @@ describe('Footer component', () => {
   })
 
   test('does not display version if portal has it disabled', () => {
-    jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
       env: 'prod',
       version: '2.0.0'
     }))
@@ -150,7 +150,7 @@ describe('Footer component', () => {
 
   describe('when in the prod environment', () => {
     test('does not display the environment', () => {
-      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         env: 'prod',
         version: '2.0.0'
       }))
@@ -163,7 +163,7 @@ describe('Footer component', () => {
 
   describe('when in a test environment', () => {
     test('displays the environment', () => {
-      jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
         env: 'UAT',
         version: '2.0.0'
       }))

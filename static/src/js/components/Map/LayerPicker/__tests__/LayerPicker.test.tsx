@@ -1,17 +1,17 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
-import LayerPicker, { LayerPickerProps } from '../LayerPicker'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
+import LayerPicker, { type LayerPickerProps } from '../LayerPicker'
 
 import { triggerKeyboardShortcut } from '../../../../util/triggerKeyboardShortcut'
 import { metricsLayerPicker } from '../../../../util/metrics/metricsLayerPicker'
 
-jest.mock('../../../../util/triggerKeyboardShortcut', () => ({
-  triggerKeyboardShortcut: jest.fn()
+vi.mock('../../../../util/triggerKeyboardShortcut', () => ({
+  triggerKeyboardShortcut: vi.fn()
 }))
 
-jest.mock('../../../../util/metrics/metricsLayerPicker', () => ({
-  metricsLayerPicker: jest.fn()
+vi.mock('../../../../util/metrics/metricsLayerPicker', () => ({
+  metricsLayerPicker: vi.fn()
 }))
 
 const mockCollectionId = 'C123451234-EDSC'
@@ -37,9 +37,9 @@ const setup = setupTest({
           opacity: 0.5
         }
       ],
-      toggleLayerVisibility: jest.fn(),
-      setLayerOpacity: jest.fn(),
-      setMapLayersOrder: jest.fn()
+      toggleLayerVisibility: vi.fn(),
+      setLayerOpacity: vi.fn(),
+      setMapLayersOrder: vi.fn()
     }
   }
 })
@@ -115,9 +115,9 @@ describe('LayerPicker', () => {
                 opacity: 1
               }
             ],
-            toggleLayerVisibility: jest.fn(),
-            setLayerOpacity: jest.fn(),
-            setMapLayersOrder: jest.fn()
+            toggleLayerVisibility: vi.fn(),
+            setLayerOpacity: vi.fn(),
+            setMapLayersOrder: vi.fn()
           }
         }
       })

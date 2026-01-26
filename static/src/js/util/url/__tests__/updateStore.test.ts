@@ -242,9 +242,9 @@ describe('updateStore', () => {
 
   describe('when a portal parameter is provided', () => {
     test('loads the included styles', async () => {
-      jest.mock('../../../../../portals/testPortal/styles.scss', () => ({
-        unuse: jest.fn(),
-        use: jest.fn()
+      vi.mock('../../../../../portals/testPortal/styles.scss', () => ({
+        unuse: vi.fn(),
+        use: vi.fn()
       }))
 
       const params = {

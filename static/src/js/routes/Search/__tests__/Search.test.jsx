@@ -3,13 +3,13 @@ import { screen } from '@testing-library/react'
 
 import { Search } from '../Search'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-const mockClassListAdd = jest.fn()
-const mockClassListRemove = jest.fn()
+const mockClassListAdd = vi.fn()
+const mockClassListRemove = vi.fn()
 
-jest.spyOn(document, 'querySelector').mockImplementation(() => ({
-  getBoundingClientRect: jest.fn(() => ({
+vi.spyOn(document, 'querySelector').mockImplementation(() => ({
+  getBoundingClientRect: vi.fn(() => ({
     height: 100,
     width: 100
   })),
@@ -20,58 +20,58 @@ jest.spyOn(document, 'querySelector').mockImplementation(() => ({
 }))
 
 // Mock router components
-jest.mock('../../../components/CollectionDetails/RelatedUrlsModal', () => {
+vi.mock('../../../components/CollectionDetails/RelatedUrlsModal', () => {
   const RelatedUrlsModal = () => <div data-testid="mocked-RelatedUrlsModal" />
 
-  return RelatedUrlsModal
+  return { default: RelatedUrlsModal }
 })
 
-jest.mock('../../../components/Facets/FacetsModal', () => {
+vi.mock('../../../components/Facets/FacetsModal', () => {
   const FacetsModal = () => <div data-testid="mocked-FacetsModal" />
 
-  return FacetsModal
+  return { default: FacetsModal }
 })
 
-jest.mock('../../../components/Facets/Facets', () => {
+vi.mock('../../../components/Facets/Facets', () => {
   const Facets = () => <div data-testid="mocked-Facets" />
 
-  return Facets
+  return { default: Facets }
 })
 
-jest.mock('../../../containers/MapContainer/MapContainer', () => {
+vi.mock('../../../containers/MapContainer/MapContainer', () => {
   const MapContainer = () => <div data-testid="mock-MapContainer" />
 
-  return MapContainer
+  return { default: MapContainer }
 })
 
-jest.mock('../../../components/CollectionDetailsHighlights/CollectionDetailsHighlights', () => {
+vi.mock('../../../components/CollectionDetailsHighlights/CollectionDetailsHighlights', () => {
   const CollectionDetailsHighlights = () => <div data-testid="mock-CollectionDetailsHighlights" />
 
-  return CollectionDetailsHighlights
+  return { default: CollectionDetailsHighlights }
 })
 
-jest.mock('../../../components/GranuleResultsHighlights/GranuleResultsHighlights', () => {
+vi.mock('../../../components/GranuleResultsHighlights/GranuleResultsHighlights', () => {
   const GranuleResultsHighlights = () => <div data-testid="mock-GranuleResultsHighlights" />
 
-  return GranuleResultsHighlights
+  return { default: GranuleResultsHighlights }
 })
 
-jest.mock('../../../containers/GranuleFiltersContainer/GranuleFiltersContainer', () => {
+vi.mock('../../../containers/GranuleFiltersContainer/GranuleFiltersContainer', () => {
   const GranuleFiltersContainer = () => <div data-testid="mock-GranuleFiltersContainer" />
 
-  return GranuleFiltersContainer
+  return { default: GranuleFiltersContainer }
 })
 
-jest.mock('../../../components/SearchSidebar/SearchSidebarHeader', () => {
+vi.mock('../../../components/SearchSidebar/SearchSidebarHeader', () => {
   const SearchSidebarHeader = () => <div data-testid="mock-SearchSidebarHeader" />
 
-  return SearchSidebarHeader
+  return { default: SearchSidebarHeader }
 })
 
-jest.mock('../../../containers/SearchPanelsContainer/SearchPanelsContainer', () => {
+vi.mock('../../../containers/SearchPanelsContainer/SearchPanelsContainer', () => {
   const SearchPanelsContainer = () => <div data-testid="mock-SearchPanelsContainer" />
 
-  return SearchPanelsContainer
+  return { default: SearchPanelsContainer }
 })
 
 const setup = setupTest({
@@ -95,7 +95,7 @@ const setup = setupTest({
       }
     },
     query: {
-      changeQuery: jest.fn()
+      changeQuery: vi.fn()
     }
   },
   withApolloClient: true,

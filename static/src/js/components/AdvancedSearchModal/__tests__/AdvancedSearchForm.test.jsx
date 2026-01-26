@@ -2,12 +2,12 @@ import React from 'react'
 import { withFormik } from 'formik'
 import { screen, waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AdvancedSearchForm from '../AdvancedSearchForm'
 import RegionSearch from '../RegionSearch'
 
-jest.mock('../RegionSearch', () => jest.fn(() => <div />))
+vi.mock('../RegionSearch', () => ({ default: vi.fn(() => <div />) }))
 
 const Wrapper = withFormik({
   enableReinitialize: true,
@@ -23,13 +23,13 @@ const setup = setupTest({
   defaultProps: {
     errors: {},
     fields: [],
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleSearch: jest.fn(),
-    setFieldValue: jest.fn(),
-    setModalOverlay: jest.fn(),
+    handleBlur: vi.fn(),
+    handleChange: vi.fn(),
+    handleSearch: vi.fn(),
+    setFieldValue: vi.fn(),
+    setModalOverlay: vi.fn(),
     touched: {},
-    validateForm: jest.fn(),
+    validateForm: vi.fn(),
     values: {}
   }
 })

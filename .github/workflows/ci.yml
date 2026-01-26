@@ -20,7 +20,7 @@ jobs:
 
     - name: Run eslint
       run: npm run lint
-  jest:
+  vitest:
     needs: [eslint]
     runs-on: ubuntu-latest
     strategy:
@@ -34,8 +34,8 @@ jobs:
     - name: Setup
       uses: ./.github/actions/npm-setup
 
-    - name: Run Jest tests
-      run: npm run silent-test -- --shard=${{ matrix.shard }}
+    - name: Run Vitest tests
+      run: npm test -- run --shard=${{ matrix.shard }}
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v4
       env:
@@ -106,7 +106,7 @@ jobs:
         retention-days: 30
 
   tests-passed:
-    needs: ['jest', 'playwright']
+    needs: ['vitest', 'playwright']
     runs-on: ubuntu-latest
     steps:
     - name: All Tests Have Passed

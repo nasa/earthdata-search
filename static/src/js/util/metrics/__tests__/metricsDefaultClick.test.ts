@@ -2,7 +2,7 @@ import { metricsDefaultClick } from '../metricsDefaultClick'
 
 describe('metricsDefaultClick', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsDefaultClick('Submit Button')
 

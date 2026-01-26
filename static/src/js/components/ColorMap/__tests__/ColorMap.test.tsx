@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react'
-import 'jest-canvas-mock'
+import 'vi-canvas-mock'
 
 import ColorMap from '../ColorMap'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const quantitativeColorMap = {
   scale: {

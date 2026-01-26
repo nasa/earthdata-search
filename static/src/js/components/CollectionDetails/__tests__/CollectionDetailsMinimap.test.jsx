@@ -1,6 +1,6 @@
 import React from 'react'
-// Mock Canvas element for jest testing
-import 'jest-canvas-mock'
+// Mock Canvas element for testing
+import 'vi-canvas-mock'
 
 import { render, screen } from '@testing-library/react'
 

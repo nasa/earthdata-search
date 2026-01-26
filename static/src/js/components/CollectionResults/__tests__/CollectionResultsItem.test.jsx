@@ -1,7 +1,7 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { collectionListItemProps } from './mocks'
 import { retrieveThumbnail } from '../../../util/retrieveThumbnail'
@@ -9,26 +9,27 @@ import { retrieveThumbnail } from '../../../util/retrieveThumbnail'
 import { CollectionResultsItem } from '../CollectionResultsItem'
 import { metricsAddCollectionToProject } from '../../../util/metrics/metricsAddCollectionToProject'
 
-jest.mock('../../../../assets/images/image-unavailable.svg', () => 'test-file-stub')
-jest.mock('../../../util/retrieveThumbnail')
+vi.mock('../../../util/retrieveThumbnail')
 
-jest.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
-  metricsAddCollectionToProject: jest.fn()
+vi.mock('../../../util/metrics/metricsAddCollectionToProject', () => ({
+  metricsAddCollectionToProject: vi.fn()
 }))
 
 // Return block is because `PortalFeatureContainer` is a named export
 // https://stackoverflow.com/questions/71454705/element-type-is-invalid-expected-a-string-for-built-in-components-or-a-class
-jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => jest.fn(({ children }) => (
-  <div>{children}</div>
-)))
+vi.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => ({
+  default: vi.fn(({ children }) => (
+    <div>{children}</div>
+  ))
+}))
 
 const setup = setupTest({
   Component: CollectionResultsItem,
   defaultProps: collectionListItemProps,
   defaultZustandState: {
     collection: {
-      viewCollectionDetails: jest.fn(),
-      viewCollectionGranules: jest.fn()
+      viewCollectionDetails: vi.fn(),
+      viewCollectionGranules: vi.fn()
     },
     collections: {
       collections: {
@@ -36,8 +37,8 @@ const setup = setupTest({
       }
     },
     project: {
-      addProjectCollection: jest.fn(),
-      removeProjectCollection: jest.fn()
+      addProjectCollection: vi.fn(),
+      removeProjectCollection: vi.fn()
     }
   }
 })

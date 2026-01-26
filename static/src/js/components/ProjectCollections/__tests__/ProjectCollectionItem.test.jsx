@@ -2,15 +2,15 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Skeleton from '../../Skeleton/Skeleton'
 import ProjectCollectionItem from '../ProjectCollectionItem'
 import projectionCodes from '../../../constants/projectionCodes'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
-jest.mock('../../EDSCIcon/EDSCIcon', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../EDSCIcon/EDSCIcon', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: ProjectCollectionItem,
@@ -25,9 +25,9 @@ const setup = setupTest({
     color: 'color',
     index: 0,
     isPanelActive: false,
-    onSetActivePanel: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
-    onTogglePanels: jest.fn(),
+    onSetActivePanel: vi.fn(),
+    onSetActivePanelSection: vi.fn(),
+    onTogglePanels: vi.fn(),
     projectCollection: {
       granules: {
         count: 4,
@@ -44,13 +44,13 @@ const setup = setupTest({
   },
   defaultZustandState: {
     collection: {
-      setCollectionId: jest.fn(),
-      viewCollectionDetails: jest.fn(),
-      viewCollectionGranules: jest.fn()
+      setCollectionId: vi.fn(),
+      viewCollectionDetails: vi.fn(),
+      viewCollectionGranules: vi.fn()
     },
     project: {
-      removeProjectCollection: jest.fn(),
-      toggleCollectionVisibility: jest.fn()
+      removeProjectCollection: vi.fn(),
+      toggleCollectionVisibility: vi.fn()
     },
     query: {
       collection: {

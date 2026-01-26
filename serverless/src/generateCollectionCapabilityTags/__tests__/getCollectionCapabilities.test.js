@@ -6,9 +6,7 @@ import * as getPageOfGranules from '../../util/cmr/getPageOfGranules'
 import { getCollectionCapabilities } from '../getCollectionCapabilities'
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  jest.resetAllMocks()
-
+  vi.resetAllMocks()
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
   MockDate.set('1988-09-03T10:00:00.000Z')
@@ -23,7 +21,7 @@ describe('getCollectionCapabilities', () => {
     describe('cloud_cover', () => {
       describe('when undefined in the metadata', () => {
         test('sets cloud_cover to false', async () => {
-          jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+          vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
             id: 'G100000-EDSC'
           }]))
 
@@ -42,7 +40,7 @@ describe('getCollectionCapabilities', () => {
     describe('day_night_flag', () => {
       describe('when undefined in the metadata', () => {
         test('sets day_night_flag to false', async () => {
-          jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+          vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
             id: 'G100000-EDSC'
           }]))
 
@@ -61,7 +59,7 @@ describe('getCollectionCapabilities', () => {
     describe('online_access_flag', () => {
       describe('when undefined in the metadata', () => {
         test('sets online_access_flag to false', async () => {
-          jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+          vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
             id: 'G100000-EDSC'
           }]))
 
@@ -80,7 +78,7 @@ describe('getCollectionCapabilities', () => {
     describe('orbit_calculated_spatial_domains', () => {
       describe('when undefined in the metadata', () => {
         test('sets orbit_calculated_spatial_domains to false', async () => {
-          jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+          vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
             id: 'G100000-EDSC'
           }]))
 
@@ -172,7 +170,7 @@ describe('getCollectionCapabilities', () => {
       describe('orbit_calculated_spatial_domains', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets orbit_calculated_spatial_domains to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               orbit_calculated_spatial_domains: {
                 orbit_number: 1
@@ -307,7 +305,7 @@ describe('getCollectionCapabilities', () => {
       describe('cloud_cover', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets cloud_cover to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               cloud_cover: 20
             }]))
@@ -327,7 +325,7 @@ describe('getCollectionCapabilities', () => {
       describe('day_night_flag', () => {
         describe('when defined as UNSPECIFIED in the metadata', () => {
           test('sets day_night_flag to false', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               day_night_flag: 'UNSPECIFIED'
             }]))
@@ -345,7 +343,7 @@ describe('getCollectionCapabilities', () => {
 
         describe('when a value is defined in the metadata', () => {
           test('sets day_night_flag to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               day_night_flag: 'DAY'
             }]))
@@ -365,7 +363,7 @@ describe('getCollectionCapabilities', () => {
       describe('online_access_flag', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets online_access_flag to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               online_access_flag: true
             }]))
@@ -385,7 +383,7 @@ describe('getCollectionCapabilities', () => {
       describe('orbit_calculated_spatial_domains', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets orbit_calculated_spatial_domains to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               orbit_calculated_spatial_domains: {
                 orbit_number: 1
@@ -409,7 +407,7 @@ describe('getCollectionCapabilities', () => {
       describe('cloud_cover', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets cloud_cover to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC'
             }, {
               id: 'G100000-EDSC',
@@ -431,7 +429,7 @@ describe('getCollectionCapabilities', () => {
       describe('day_night_flag', () => {
         describe('when defined as UNSPECIFIED in the metadata', () => {
           test('sets day_night_flag to false', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               day_night_flag: 'UNSPECIFIED'
             }, {
@@ -452,7 +450,7 @@ describe('getCollectionCapabilities', () => {
 
         describe('when a value is defined in the metadata', () => {
           test('sets day_night_flag to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC'
             }, {
               id: 'G100000-EDSC',
@@ -474,7 +472,7 @@ describe('getCollectionCapabilities', () => {
       describe('online_access_flag', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets online_access_flag to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               online_access_flag: false
             }, {
@@ -497,7 +495,7 @@ describe('getCollectionCapabilities', () => {
       describe('orbit_calculated_spatial_domains', () => {
         describe('when a value is defined in the metadata', () => {
           test('sets orbit_calculated_spatial_domains to true', async () => {
-            jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+            vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
               id: 'G100000-EDSC',
               orbit_calculated_spatial_domains: {
                 orbit_number: 1

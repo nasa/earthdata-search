@@ -5,17 +5,17 @@ import saveShapefile from '../handler'
 import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
-jest.mock('../../util/authorizer/validateToken', () => ({
-  validateToken: jest.fn().mockReturnValue({ username: 'testuser' })
+vi.mock('../../util/authorizer/validateToken', () => ({
+  validateToken: vi.fn().mockReturnValue({ username: 'testuser' })
 }))
 
 let dbConnectionToMock
 let dbTracker
 
 beforeEach(() => {
-  jest.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
+  vi.spyOn(getAuthorizerContext, 'getAuthorizerContext').mockImplementation(() => ({ userId: 1 }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
       debug: false

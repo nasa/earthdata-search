@@ -2,6 +2,19 @@ import sharp from 'sharp'
 
 import { buildUnavailableImageBuffer } from '../buildUnavailableImageBuffer'
 
+vi.mock('sharp', () => {
+  const mockSharpInstance = {
+    toFormat: vi.fn().mockReturnThis(),
+    resize: vi.fn().mockReturnThis(),
+    toBuffer: vi.fn().mockResolvedValue(Buffer.from('mocked image buffer'))
+  }
+
+  return {
+    __esModule: true,
+    default: vi.fn(() => mockSharpInstance)
+  }
+})
+
 describe('buildUnavailableImageBuffer', () => {
   test('retrieves and formats the unavailable image', async () => {
     await buildUnavailableImageBuffer()

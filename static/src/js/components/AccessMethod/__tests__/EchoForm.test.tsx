@@ -8,9 +8,9 @@ import EchoForm, { EchoFormProps } from '../EchoForm'
 
 import { echoForm } from './mocks'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
-jest.mock('@edsc/echoforms', () => jest.fn(() => <div data-testid="edsc-echoforms" />))
+vi.mock('@edsc/echoforms', () => ({ default: vi.fn(() => <div data-testid="edsc-echoforms" />) }))
 
 const setup = setupTest({
   Component: EchoForm,
@@ -22,7 +22,7 @@ const setup = setupTest({
     shapefileId: null,
     spatial: {},
     temporal: {},
-    onUpdateAccessMethod: jest.fn()
+    onUpdateAccessMethod: vi.fn()
   },
   defaultZustandState: {
     user: {

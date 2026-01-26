@@ -2,42 +2,54 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import SearchForm from '../SearchForm'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../TemporalDisplay/TemporalSelectionDropdown', () => jest.fn(() => (
-  <div>Temporal Selection</div>
-)))
+vi.mock('../../TemporalDisplay/TemporalSelectionDropdown', () => ({
+  default: vi.fn(() => (
+    <div>Temporal Selection</div>
+  ))
+}))
 
-jest.mock('../../../components/SpatialDisplay/SpatialSelectionDropdown', () => jest.fn(() => (
-  <div>Spatial Selection</div>
-)))
+vi.mock('../../../components/SpatialDisplay/SpatialSelectionDropdown', () => ({
+  default: vi.fn(() => (
+    <div>Spatial Selection</div>
+  ))
+}))
 
-jest.mock('../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay', () => jest.fn(() => (
-  <div>Advanced Search Display</div>
-)))
+vi.mock('../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay', () => ({
+  default: vi.fn(() => (
+    <div>Advanced Search Display</div>
+  ))
+}))
 
-jest.mock('../../SpatialDisplay/SpatialDisplay', () => jest.fn(() => (
-  <div>Spatial Display</div>
-)))
+vi.mock('../../SpatialDisplay/SpatialDisplay', () => ({
+  default: vi.fn(() => (
+    <div>Spatial Display</div>
+  ))
+}))
 
-jest.mock('../../TemporalDisplay/TemporalDisplay', () => jest.fn(() => (
-  <div>Temporal Display</div>
-)))
+vi.mock('../../TemporalDisplay/TemporalDisplay', () => ({
+  default: vi.fn(() => (
+    <div>Temporal Display</div>
+  ))
+}))
 
-jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => jest.fn(({ children }) => (
-  <div>{children}</div>
-)))
+vi.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => ({
+  default: vi.fn(({ children }) => (
+    <div>{children}</div>
+  ))
+}))
 
 const setup = setupTest({
   Component: SearchForm,
   defaultZustandState: {
     query: {
-      clearFilters: jest.fn()
+      clearFilters: vi.fn()
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

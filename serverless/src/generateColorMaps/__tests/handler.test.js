@@ -5,7 +5,7 @@ import generateColorMaps from '../handler'
 describe('generateColorMaps', () => {
   describe('on successful retrieval', () => {
     test('responds correctly on http error', async () => {
-      jest.spyOn(getProjectionCapabilities, 'getProjectionCapabilities').mockImplementationOnce(() => ({
+      vi.spyOn(getProjectionCapabilities, 'getProjectionCapabilities').mockImplementationOnce(() => ({
         statusCode: 200,
         body: JSON.stringify({
           statusCode: 200,
@@ -36,7 +36,7 @@ describe('generateColorMaps', () => {
 
   describe('on error', () => {
     test('responds correctly on http error', async () => {
-      jest.spyOn(getProjectionCapabilities, 'getProjectionCapabilities').mockImplementationOnce(() => ({
+      vi.spyOn(getProjectionCapabilities, 'getProjectionCapabilities').mockImplementationOnce(() => ({
         statusCode: 500,
         body: JSON.stringify({
           statusCode: 500,

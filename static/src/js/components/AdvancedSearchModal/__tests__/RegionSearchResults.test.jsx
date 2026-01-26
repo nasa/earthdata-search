@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import RegionSearchResults from '../RegionSearchResults'
 
@@ -18,8 +18,8 @@ const setup = setupTest({
         type: 'huc'
       }]
     },
-    setModalOverlay: jest.fn(),
-    setFieldValue: jest.fn()
+    setModalOverlay: vi.fn(),
+    setFieldValue: vi.fn()
   }
 })
 

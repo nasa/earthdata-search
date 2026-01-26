@@ -2,11 +2,11 @@ import jwt from 'jsonwebtoken'
 
 import { validateToken } from '../validateToken'
 
-jest.mock('jwks-rsa', () => ({
+vi.mock('jwks-rsa', () => ({
   __esModule: true,
-  default: jest.fn().mockReturnValue({
-    getSigningKey: jest.fn().mockResolvedValue({
-      getPublicKey: jest.fn().mockReturnValue('PUBLIC_KEY')
+  default: vi.fn().mockReturnValue({
+    getSigningKey: vi.fn().mockResolvedValue({
+      getPublicKey: vi.fn().mockReturnValue('PUBLIC_KEY')
     })
   })
 }))
@@ -22,7 +22,7 @@ describe('validateToken', () => {
 
   describe('when the provided token is invalid', () => {
     test('returns false', async () => {
-      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+      vi.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
         callback('Mock Error')
       })
 
@@ -33,7 +33,7 @@ describe('validateToken', () => {
   describe('when the provided token is valid', () => {
     describe('when the token is a SIT token', () => {
       test('returns the username associated with the token', async () => {
-        jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+        vi.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
           callback(undefined, { username: 'testuser' })
         })
 
@@ -46,7 +46,7 @@ describe('validateToken', () => {
 
   describe('when the token is a UAT token', () => {
     test('returns the username associated with the token', async () => {
-      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+      vi.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
         callback(undefined, { username: 'testuser' })
       })
 
@@ -58,7 +58,7 @@ describe('validateToken', () => {
 
   describe('when the token is a PROD token', () => {
     test('returns the username associated with the token', async () => {
-      jest.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
+      vi.spyOn(jwt, 'verify').mockImplementation((token, secret, options, callback) => {
         callback(undefined, { username: 'testuser' })
       })
 

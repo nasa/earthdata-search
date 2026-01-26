@@ -1,14 +1,14 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { SidebarContainer } from '../SidebarContainer'
 import Sidebar from '../../../components/Sidebar/Sidebar'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.mock('../../../components/Sidebar/Sidebar', () => jest.fn(() => <div />))
+vi.mock('../../../components/Sidebar/Sidebar', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: SidebarContainer,

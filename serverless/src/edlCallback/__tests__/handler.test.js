@@ -1,3 +1,6 @@
+// Two classes are mocked in this test
+/* eslint-disable max-classes-per-file */
+
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import jwt from 'jsonwebtoken'
@@ -12,9 +15,9 @@ import edlCallback from '../handler'
 let dbConnectionToMock
 let dbTracker
 
-jest.mock('simple-oauth2', () => ({
-  AuthorizationCode: jest.fn().mockImplementation(() => ({
-    getToken: jest.fn().mockImplementation(() => (Promise.resolve({
+vi.mock('simple-oauth2', () => ({
+  AuthorizationCode: vi.fn(class {
+    getToken = vi.fn().mockImplementation(() => (Promise.resolve({
       token: {
         access_token: 'accessToken',
         token_type: 'Bearer',
@@ -24,33 +27,33 @@ jest.mock('simple-oauth2', () => ({
         expires_at: '2019-09-10T20:00:23.313Z'
       }
     })))
-  }))
+  })
 }))
 
-jest.mock('@aws-sdk/client-sqs', () => {
-  const original = jest.requireActual('@aws-sdk/client-sqs')
-  const sendMock = jest.fn().mockResolvedValue()
+vi.mock('@aws-sdk/client-sqs', async () => {
+  const original = await vi.importActual('@aws-sdk/client-sqs')
+  const sendMock = vi.fn().mockResolvedValue()
 
   return {
     ...original,
-    SQSClient: jest.fn().mockImplementation(() => ({
-      send: sendMock
-    }))
+    SQSClient: vi.fn(class {
+      send = sendMock
+    })
   }
 })
 
 const client = new SQSClient()
 
 beforeEach(() => {
-  jest.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
-  jest.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
+  vi.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
+  vi.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')
+  vi.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
     client: {
       id: 'clientId'
     }
   }))
 
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
       debug: false
@@ -178,7 +181,7 @@ describe('edlCallback', () => {
     const code = '2057964173'
     const state = 'http://example.com?ee=prod'
 
-    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
 
     dbTracker.on('query', (query) => {
       query.reject('Unknown Error')

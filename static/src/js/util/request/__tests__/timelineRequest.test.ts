@@ -3,7 +3,7 @@ import TimelineRequest from '../timelineRequest'
 // @ts-expect-error Types are not defined for this module
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
-jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
 describe('TimelineRequest#constructor', () => {
   test('sets the default values when authenticated', () => {

@@ -4,18 +4,18 @@ import { waitFor } from '@testing-library/react'
 // @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Projects from '../Projects'
 
 import SavedProjects from '../../../components/SavedProjects/SavedProjects'
 
-jest.mock('../../../components/SavedProjects/SavedProjects', () => jest.fn(() => <div />))
+vi.mock('../../../components/SavedProjects/SavedProjects', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Navigate: jest.fn(),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  Navigate: vi.fn(),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/projects',
     search: '',
     hash: '',
@@ -24,12 +24,12 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.mock('../../../../../../sharedUtils/config', () => ({
-  getEnvironmentConfig: jest.fn().mockReturnValue({
+vi.mock('../../../../../../sharedUtils/config', () => ({
+  getEnvironmentConfig: vi.fn().mockReturnValue({
     edscHost: 'https://search.earthdata.nasa.gov',
     apiHost: 'http://localhost:3000'
   }),
-  getApplicationConfig: jest.fn().mockReturnValue({
+  getApplicationConfig: vi.fn().mockReturnValue({
     collectionSearchResultsSortKey: ''
   })
 }))

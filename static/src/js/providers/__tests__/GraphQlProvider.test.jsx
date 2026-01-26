@@ -6,23 +6,23 @@ import {
   ApolloProvider,
   InMemoryCache
 } from '@apollo/client'
-import setupTest from '../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../vitestConfigs/setupTest'
 import GraphQlProvider from '../GraphQlProvider'
 import useEdscStore from '../../zustand/useEdscStore'
 
-jest.mock('@apollo/client', () => {
-  const actual = jest.requireActual('@apollo/client')
+vi.mock('@apollo/client', async () => {
+  const actual = await vi.importActual('@apollo/client')
 
   return {
     ...actual,
-    ApolloProvider: jest.fn(({ children }) => <div>{children}</div>),
-    ApolloClient: jest.fn().mockImplementation()
+    ApolloProvider: vi.fn(({ children }) => <div>{children}</div>),
+    ApolloClient: vi.fn().mockImplementation()
   }
 })
 
-jest.mock('../../../../../sharedUtils/config', () => ({
-  ...jest.requireActual('../../../../../sharedUtils/config'),
-  getEnvironmentConfig: jest.fn().mockReturnValue({
+vi.mock('../../../../../sharedUtils/config', async () => ({
+  ...(await vi.importActual('../../../../../sharedUtils/config')),
+  getEnvironmentConfig: vi.fn().mockReturnValue({
     apiHost: 'http://test.com/api',
     cmrHost: 'http://test.com/cmr',
     graphQlHost: 'http://test.com/graphql'
@@ -64,6 +64,9 @@ describe('GraphQlProvider', () => {
 
   describe('when rendering again with the same edlToken', () => {
     test('does not create a new ApolloClient', () => {
+      // Clear the previous calls from the first setup() in beforeEach
+      vi.clearAllMocks()
+
       setup()
 
       expect(ApolloClient).toHaveBeenCalledTimes(0)
@@ -72,7 +75,8 @@ describe('GraphQlProvider', () => {
 
   describe('when rendering again with a different edlToken', () => {
     test('creates a new ApolloClient', async () => {
-      jest.clearAllMocks()
+      // Clear the previous calls from the first setup() in beforeEach
+      vi.clearAllMocks()
 
       // Update the edlToken in the store
       await act(async () => {

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../vitestConfigs/setupTest'
 
 import TextField from '../TextField'
 
@@ -8,8 +8,8 @@ const setup = setupTest({
   Component: TextField,
   defaultProps: {
     name: 'testName',
-    onBlur: jest.fn(),
-    onChange: jest.fn(),
+    onBlur: vi.fn(),
+    onChange: vi.fn(),
     value: 'Test value'
   }
 })

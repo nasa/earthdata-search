@@ -8,9 +8,7 @@ let dbConnectionToMock
 let dbTracker
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
       debug: false

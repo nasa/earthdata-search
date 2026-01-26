@@ -1,7 +1,7 @@
-import React from 'react'
 import { screen } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import ContactInfo from '../ContactInfo'
 import Spinner from '../../Spinner/Spinner'
@@ -9,18 +9,20 @@ import GET_CMR_ORDERING_USER from '../../../operations/queries/getCmrOrderingUse
 import UPDATE_CMR_ORDERING_USER from '../../../operations/mutations/updateCmrOrderingUser'
 import addToast from '../../../util/addToast'
 
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
+vi.mock('../../Spinner/Spinner', () => ({
+  default: vi.fn(() => null)
+}))
 
-jest.mock('../../../util/addToast', () => ({
+vi.mock('../../../util/addToast', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }))
 
 const setup = setupTest({
   Component: ContactInfo,
   defaultZustandState: {
     errors: {
-      handleError: jest.fn()
+      handleError: vi.fn()
     },
     user: {
       ursProfile: {
@@ -170,7 +172,7 @@ describe('ContactInfo component', () => {
                 ursId: 'mock-uid'
               }
             },
-            error: new Error('An error occurred')
+            error: new ApolloError({ errorMessage: 'An error occurred' })
           }]
         })
 
@@ -183,7 +185,7 @@ describe('ContactInfo component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'updateNotificationLevel',
-          error: new Error('An error occurred'),
+          error: new ApolloError({ errorMessage: 'An error occurred' }),
           resource: 'contactInfo',
           verb: 'updating'
         })

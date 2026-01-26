@@ -20,7 +20,7 @@ import './CollectionResultsListItem.scss'
  * @param {Number} props.index - The index of the item.
  * @param {Object} props.style - The style settings for the item from react-window.
  */
-export const CollectionResultsListItem = memo(({
+const CollectionResultsListItem = memo(({
   data,
   index,
   style

@@ -4,50 +4,54 @@ import { useLocation, useParams } from 'react-router-dom'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
-  const mockPortalFeatureContainer = jest.fn(({ children }) => (
+vi.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
+  const mockPortalFeatureContainer = vi.fn(({ children }) => (
     <mock-mockPortalFeatureContainer data-testid="mockPortalFeatureContainer">
       {children}
     </mock-mockPortalFeatureContainer>
   ))
 
-  return mockPortalFeatureContainer
+  return {
+    default: mockPortalFeatureContainer
+  }
 })
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
-  const mockPortalLinkContainer = jest.fn(({ children }) => (
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
+  const mockPortalLinkContainer = vi.fn(({ children }) => (
     <mock-mockPortalLinkContainer data-testid="mockPortalLinkContainer">
       {children}
     </mock-mockPortalLinkContainer>
   ))
 
-  return mockPortalLinkContainer
+  return {
+    default: mockPortalLinkContainer
+  }
 })
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
     state: null,
     key: 'testKey'
   }),
-  useParams: jest.fn().mockReturnValue({})
+  useParams: vi.fn().mockReturnValue({})
 }))
 
 const setup = setupTest({
   Component: SecondaryToolbar,
   defaultZustandState: {
     savedProject: {
-      setProjectName: jest.fn()
+      setProjectName: vi.fn()
     },
     user: {
-      logout: jest.fn()
+      logout: vi.fn()
     }
   },
   withApolloClient: true,
@@ -55,7 +59,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('SecondaryToolbar component', () => {
@@ -72,7 +76,8 @@ describe('SecondaryToolbar component', () => {
       const loginButton = screen.getByRole('button', { name: 'Log In' })
       await user.hover(loginButton)
 
-      expect(await screen.findByText('Log In with Earthdata Login')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(await within(tooltip).findByText('Log In with Earthdata Login')).toBeVisible()
     })
 
     test('should not render the user dropdown', () => {
@@ -91,7 +96,7 @@ describe('SecondaryToolbar component', () => {
 
   describe('when logged in', () => {
     beforeEach(() => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
         env: 'prod'
       }))
@@ -217,8 +222,8 @@ describe('SecondaryToolbar component', () => {
 
       await user.type(projectNameField, 'test project name')
 
-      const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
-      const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
+      const preventDefaultSpy = vi.spyOn(Event.prototype, 'preventDefault')
+      const stopPropagationSpy = vi.spyOn(Event.prototype, 'stopPropagation')
 
       await user.type(projectNameField, '{Enter}')
 
@@ -249,8 +254,8 @@ describe('SecondaryToolbar component', () => {
 
       await user.type(projectNameField, 'test project name')
 
-      const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
-      const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
+      const preventDefaultSpy = vi.spyOn(Event.prototype, 'preventDefault')
+      const stopPropagationSpy = vi.spyOn(Event.prototype, 'stopPropagation')
 
       await user.type(projectNameField, '{space}')
 
@@ -297,7 +302,8 @@ describe('SecondaryToolbar component', () => {
 
       await user.hover(screen.getByRole('button', { name: 'My Project' }))
 
-      expect(await screen.findByText('View your project')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(await within(tooltip).findByText('View your project')).toBeVisible()
     })
   })
 
@@ -438,7 +444,8 @@ describe('SecondaryToolbar component', () => {
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
       await user.hover(saveProjectButton)
 
-      expect(await screen.findByText('Create a project with your current search')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(await within(tooltip).findByText('Create a project with your current search')).toBeVisible()
     })
 
     test('clicking the save button sets the state and calls setProjectName', async () => {
@@ -541,7 +548,8 @@ describe('SecondaryToolbar component', () => {
       const tourButton = screen.getByRole('button', { name: 'Start tour' })
       await user.hover(tourButton)
 
-      expect(await screen.findByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
+      const tooltip = await screen.findByRole('tooltip')
+      expect(await within(tooltip).findByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
     })
   })
 })

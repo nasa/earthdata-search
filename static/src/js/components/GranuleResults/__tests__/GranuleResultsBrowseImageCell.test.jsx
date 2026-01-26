@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EDSCImage from '../../EDSCImage/EDSCImage'
 import GranuleResultsBrowseImageCell from '../GranuleResultsBrowseImageCell'
 
-jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(() => null))
+vi.mock('../../EDSCImage/EDSCImage', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: GranuleResultsBrowseImageCell,

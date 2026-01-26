@@ -16,7 +16,7 @@ import './ProjectCollectionsList.scss'
 /**
  * Renders ProjectCollectionsList.
  */
-export const ProjectCollectionsList = (props) => {
+const ProjectCollectionsList = (props) => {
   const {
     collectionsMetadata,
     onSetActivePanel,

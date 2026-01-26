@@ -1,12 +1,8 @@
 import errorLogger from '../handler'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('errorLogger', () => {
   test('logs the event body', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
 
     const event = {
       body: JSON.stringify({
@@ -21,6 +17,6 @@ describe('errorLogger', () => {
     const response = await errorLogger(event)
 
     expect(response.statusCode).toBe(200)
-    expect(consoleMock).toBeCalledTimes(1)
+    expect(consoleMock).toHaveBeenCalledTimes(1)
   })
 })

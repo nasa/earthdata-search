@@ -4,14 +4,10 @@ import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as removeTag from '../removeTag'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('removeTag', () => {
   test('correctly calls cmr endpoint', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     nock(/example/)
       .matchHeader('Authorization', 'Bearer 1234-abcd-5678-efgh')
@@ -28,8 +24,8 @@ describe('removeTag', () => {
   })
 
   test('reports an error when calls to cmr fail', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     nock(/example/)
       .matchHeader('Authorization', 'Bearer 1234-abcd-5678-efgh')

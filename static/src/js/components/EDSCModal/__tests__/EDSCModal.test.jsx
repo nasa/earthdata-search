@@ -2,12 +2,12 @@ import React from 'react'
 
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EDSCModal from '../EDSCModal'
 import Spinner from '../../Spinner/Spinner'
 
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => null))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: EDSCModal,
@@ -134,7 +134,7 @@ describe('EDSCModal component', () => {
       setup({
         overrideProps: {
           primaryAction: 'Test',
-          onPrimaryAction: jest.fn()
+          onPrimaryAction: vi.fn()
         }
       })
 
@@ -145,7 +145,7 @@ describe('EDSCModal component', () => {
       const { props, user } = setup({
         overrideProps: {
           primaryAction: 'Test',
-          onPrimaryAction: jest.fn()
+          onPrimaryAction: vi.fn()
         }
       })
 
@@ -163,7 +163,7 @@ describe('EDSCModal component', () => {
       setup({
         overrideProps: {
           secondaryAction: 'Test Secondary',
-          onSecondaryAction: jest.fn()
+          onSecondaryAction: vi.fn()
         }
       })
 
@@ -174,9 +174,9 @@ describe('EDSCModal component', () => {
       setup({
         overrideProps: {
           primaryAction: 'Test Primary',
-          onPrimaryAction: jest.fn(),
+          onPrimaryAction: vi.fn(),
           secondaryAction: 'Test Secondary',
-          onSecondaryAction: jest.fn()
+          onSecondaryAction: vi.fn()
         }
       })
 
@@ -187,9 +187,9 @@ describe('EDSCModal component', () => {
       const { props, user } = setup({
         overrideProps: {
           primaryAction: 'Test Primary',
-          onPrimaryAction: jest.fn(),
+          onPrimaryAction: vi.fn(),
           secondaryAction: 'Test Secondary',
-          onSecondaryAction: jest.fn()
+          onSecondaryAction: vi.fn()
         }
       })
 
@@ -206,7 +206,7 @@ describe('EDSCModal component', () => {
     test('should call onModalHide', async () => {
       const { props, user } = setup({
         overrideProps: {
-          onModalHide: jest.fn()
+          onModalHide: vi.fn()
         }
       })
 

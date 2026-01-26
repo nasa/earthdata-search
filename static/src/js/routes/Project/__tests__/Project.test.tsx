@@ -4,7 +4,7 @@ import { screen, waitFor } from '@testing-library/react'
 // @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Project from '../Project'
 
@@ -15,15 +15,15 @@ import SidebarContainer from '../../../containers/SidebarContainer/SidebarContai
 import Spinner from '../../../components/Spinner/Spinner'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
-jest.mock('../../../components/OverrideTemporalModal/OverrideTemporalModal', () => jest.fn(() => <div />))
-jest.mock('../../../components/ProjectCollections/ProjectCollections', () => jest.fn(() => <div />))
-jest.mock('../../../containers/SidebarContainer/SidebarContainer', () => jest.fn(() => <button type="submit">Submit</button>))
-jest.mock('../../../components/Spinner/Spinner', () => jest.fn(() => <div />))
+vi.mock('../../../containers/MapContainer/MapContainer', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../../components/OverrideTemporalModal/OverrideTemporalModal', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../../components/ProjectCollections/ProjectCollections', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../../containers/SidebarContainer/SidebarContainer', () => ({ default: vi.fn(() => <button type="submit">Submit</button>) }))
+vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/project',
     search: '?p=!C123456-EDSC',
     hash: '',
@@ -32,19 +32,19 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.mock('../../../../../../sharedUtils/config', () => ({
-  getEnvironmentConfig: jest.fn().mockReturnValue({
+vi.mock('../../../../../../sharedUtils/config', () => ({
+  getEnvironmentConfig: vi.fn().mockReturnValue({
     edscHost: 'https://search.earthdata.nasa.gov',
     apiHost: 'http://localhost:3000'
   }),
-  getApplicationConfig: jest.fn().mockReturnValue({
+  getApplicationConfig: vi.fn().mockReturnValue({
     collectionSearchResultsSortKey: '',
     defaultGranulesPerOrder: 2000
   })
 }))
 
-const mockCreateRetrieval = jest.fn()
-jest.mock('../../../hooks/useCreateRetrieval', () => ({
+const mockCreateRetrieval = vi.fn()
+vi.mock('../../../hooks/useCreateRetrieval', () => ({
   useCreateRetrieval: () => ({ createRetrieval: mockCreateRetrieval })
 }))
 
@@ -58,7 +58,7 @@ const setup = setupTest({
     },
     ui: {
       modals: {
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

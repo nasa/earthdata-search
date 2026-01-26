@@ -12,25 +12,27 @@ import Skeleton from '../../Skeleton/Skeleton'
 
 import useEdscStore from '../../../zustand/useEdscStore'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 import { echoForm, rawModel } from './mocks'
 
 import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
-jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
-  jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
-))
+vi.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', async () => ({
+  default: vi.fn().mockImplementation(
+    (await vi.importActual('../../FormFields/AccessMethodRadio/AccessMethodRadio')).AccessMethodRadio
+  )
+}))
 
 // Mock the Swodlr max value so the mock objects don't get so large in the tests
-jest.mock('../../../constants/swodlrConstants', () => ({
-  ...jest.requireActual('../../../constants/swodlrConstants'),
+vi.mock('../../../constants/swodlrConstants', async () => ({
+  ...(await vi.importActual('../../../constants/swodlrConstants')),
   maxSwodlrGranuleCount: 2
 }))
 
-jest.mock('../EchoForm', () => jest.fn(() => <div />))
+vi.mock('../EchoForm', () => ({ default: vi.fn(() => <div />) }))
 
 const emptySpatial = {
   boundingBox: [],
@@ -52,8 +54,8 @@ const setup = setupTest({
     temporal: {},
     ursProfile: {},
     overrideTemporal: {},
-    onSelectAccessMethod: jest.fn(),
-    onUpdateAccessMethod: jest.fn(),
+    onSelectAccessMethod: vi.fn(),
+    onUpdateAccessMethod: vi.fn(),
     projectCollection: {
       granules: {}
     },
@@ -62,10 +64,10 @@ const setup = setupTest({
   defaultZustandState: {
     map: {
       showMbr: false,
-      setShowMbr: jest.fn()
+      setShowMbr: vi.fn()
     },
     projectPanels: {
-      setActivePanel: jest.fn()
+      setActivePanel: vi.fn()
     }
   }
 })
@@ -412,9 +414,12 @@ describe('AccessMethod component', () => {
         }
       })
 
-      // TODO this gets called once if ran with `.only` jest is not clearing this correctly between
-      // This and the other `echoform` tests
-      await waitFor(() => expect(EchoForm).toHaveBeenCalledTimes(2))
+      // TODO this gets called once if ran with `.only` vitest is not clearing this correctly between
+      // this and the other `echoform` tests
+      await waitFor(() => {
+        expect(EchoForm).toHaveBeenCalledTimes(2)
+      })
+
       expect(EchoForm).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         form: echoForm,
@@ -526,8 +531,8 @@ describe('AccessMethod component', () => {
           await user.click(harmonyTypeInput)
         })
 
-        window.HTMLElement.prototype.hasPointerCapture = jest.fn()
-        window.HTMLElement.prototype.scrollIntoView = jest.fn()
+        window.HTMLElement.prototype.hasPointerCapture = vi.fn()
+        window.HTMLElement.prototype.scrollIntoView = vi.fn()
 
         const harmonySelector = screen.getByRole('combobox')
         await waitFor(async () => {

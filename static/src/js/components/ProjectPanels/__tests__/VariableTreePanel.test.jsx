@@ -1,11 +1,13 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { VariableTreePanel } from '../VariableTreePanel'
 import Tree from '../../Tree/Tree'
 
-jest.mock('../../Tree/Tree', () => jest.fn(() => null))
+vi.mock('../../Tree/Tree', () => ({
+  default: vi.fn(() => null)
+}))
 
 const setup = setupTest({
   Component: VariableTreePanel,
@@ -38,8 +40,8 @@ const setup = setupTest({
     },
     collectionId: 'collectionId',
     index: 0,
-    onUpdateSelectedVariables: jest.fn(),
-    onViewDetails: jest.fn(),
+    onUpdateSelectedVariables: vi.fn(),
+    onViewDetails: vi.fn(),
     panelHeader: '',
     selectedAccessMethod: 'opendap'
   }
@@ -323,7 +325,7 @@ describe('VariableTreePanel', () => {
         const hierarchyButton = screen.getByRole('button', { name: 'Hierarchy' })
         const scienceKeywordButton = screen.getByRole('button', { name: 'Science Keyword' })
 
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         await user.click(scienceKeywordButton)
 
@@ -408,7 +410,7 @@ describe('VariableTreePanel', () => {
         // Switch to Science Keyword first so we can test switching back to Hierarchy
         await user.click(scienceKeywordButton)
 
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         // Then switch back to Hierarchy
         await user.click(hierarchyButton)

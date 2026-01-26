@@ -3,13 +3,9 @@ import { buildEcho } from '../buildEcho'
 import * as getApplicationConfig from '../../../../../../../sharedUtils/config'
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableOrdering: 'false'
   }))
-})
-
-afterEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('buildEcho', () => {
@@ -79,7 +75,7 @@ describe('buildEcho', () => {
 
   describe('when ordering is disabled', () => {
     test('returns an empty object', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableOrdering: 'true'
       }))
 

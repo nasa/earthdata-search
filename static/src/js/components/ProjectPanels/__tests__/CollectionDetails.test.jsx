@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as EventEmitter from '../../../events/events'
 import CollectionDetails from '../CollectionDetails'
@@ -41,11 +41,11 @@ const setup = setupTest({
   },
   defaultZustandState: {
     granule: {
-      setGranuleId: jest.fn()
+      setGranuleId: vi.fn()
     },
     project: {
-      removeGranuleFromProjectCollection: jest.fn(),
-      updateProjectGranuleParams: jest.fn()
+      removeGranuleFromProjectCollection: vi.fn(),
+      updateProjectGranuleParams: vi.fn()
     }
   },
   withRouter: true
@@ -61,7 +61,7 @@ describe('CollectionDetails component', () => {
 
   describe('onMouseEnter', () => {
     test('focuses the granule', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
       const { user } = setup()
 
@@ -80,14 +80,14 @@ describe('CollectionDetails component', () => {
 
   describe('onMouseLeave', () => {
     test('unfocuses the granule', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
       const { user } = setup()
 
       const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
       await user.hover(item)
 
-      jest.clearAllMocks()
+      vi.clearAllMocks()
       await user.unhover(item)
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
@@ -102,7 +102,7 @@ describe('CollectionDetails component', () => {
 
   describe('onClick', () => {
     test('focuses the granule', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
       const { user } = setup()
 
@@ -130,7 +130,7 @@ describe('CollectionDetails component', () => {
 
   describe('onKeyDown', () => {
     test('focuses the granule', async () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
 
       const { user } = setup()
 

@@ -1,14 +1,14 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import ErrorBanner from '../ErrorBanner'
 import { Banner } from '../../Banner/Banner'
 import { DISPLAY_NOTIFICATION_TYPE } from '../../../constants/displayNotificationType'
 
-jest.mock('../../Banner/Banner', () => ({
-  Banner: jest.fn(() => <div />)
+vi.mock('../../Banner/Banner', () => ({
+  Banner: vi.fn(() => <div />)
 }))
 
 const setup = setupTest({
@@ -21,14 +21,14 @@ const setup = setupTest({
         message: 'message',
         notificationType: DISPLAY_NOTIFICATION_TYPE.BANNER
       }],
-      removeError: jest.fn()
+      removeError: vi.fn()
     }
   }
 })
 
 describe('When the database is disabled', () => {
   test('ensure that error messages for database connections refusals do not render', async () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
       disableDatabaseComponents: 'true'
     }))
 
@@ -80,7 +80,7 @@ describe('ErrorBanner component', () => {
     const { zustandState } = setup({
       overrideZustandState: {
         errors: {
-          removeError: jest.fn()
+          removeError: vi.fn()
         }
       }
     })

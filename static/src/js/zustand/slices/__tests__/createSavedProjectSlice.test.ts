@@ -8,11 +8,11 @@ import UPDATE_PROJECT from '../../../operations/mutations/updateProject'
 import routerHelper from '../../../router/router'
 import GET_PROJECT from '../../../operations/queries/getProject'
 
-jest.mock('../../../providers/getApolloClient', () => ({
+vi.mock('../../../providers/getApolloClient', () => ({
   __esModule: true,
-  default: jest.fn().mockReturnValue({
-    mutate: jest.fn(),
-    query: jest.fn()
+  default: vi.fn().mockReturnValue({
+    mutate: vi.fn(),
+    query: vi.fn()
   })
 }))
 
@@ -57,7 +57,7 @@ describe('createSavedProjectSlice', () => {
   describe('setProjectName', () => {
     describe('when there is no existing project', () => {
       test('creates a new project', async () => {
-        const mockMutate = jest.fn().mockResolvedValue({
+        const mockMutate = vi.fn().mockResolvedValueOnce({
           data: {
             createProject: {
               name: 'Test Project',
@@ -109,7 +109,7 @@ describe('createSavedProjectSlice', () => {
 
     describe('when there is an existing project', () => {
       test('updates the existing project', async () => {
-        const mockMutate = jest.fn().mockResolvedValue({
+        const mockMutate = vi.fn().mockResolvedValueOnce({
           data: {
             updateProject: {
               name: 'Test Project',
@@ -168,7 +168,7 @@ describe('createSavedProjectSlice', () => {
 
     describe('when the mutation fails', () => {
       test('calls handleError', async () => {
-        const mockMutate = jest.fn().mockRejectedValue(new Error('Mock mutation error'))
+        const mockMutate = vi.fn().mockRejectedValue(new Error('Mock mutation error'))
 
         getApolloClient.mockReturnValue({
           mutate: mockMutate
@@ -184,7 +184,7 @@ describe('createSavedProjectSlice', () => {
         }
 
         useEdscStore.setState((state) => {
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -216,7 +216,7 @@ describe('createSavedProjectSlice', () => {
 
   describe('getProject', () => {
     test('fetches the project and sets it in the state', async () => {
-      const mockQuery = jest.fn().mockResolvedValue({
+      const mockQuery = vi.fn().mockResolvedValue({
         data: {
           project: {
             name: 'Test Project',
@@ -255,14 +255,14 @@ describe('createSavedProjectSlice', () => {
 
     describe('when the request fails', () => {
       test('calls handleError', async () => {
-        const mockQuery = jest.fn().mockRejectedValue(new Error('Mock query error'))
+        const mockQuery = vi.fn().mockRejectedValue(new Error('Mock query error'))
 
         getApolloClient.mockReturnValue({
           query: mockQuery
         })
 
         useEdscStore.setState((state) => {
-          state.errors.handleError = jest.fn()
+          state.errors.handleError = vi.fn()
         })
 
         const zustandState = useEdscStore.getState()
@@ -292,7 +292,7 @@ describe('createSavedProjectSlice', () => {
 
     describe('when the project path starts with /projects', () => {
       test('navigates to the /project path with the projectId in the URL', async () => {
-        const mockQuery = jest.fn().mockResolvedValue({
+        const mockQuery = vi.fn().mockResolvedValue({
           data: {
             project: {
               name: 'Test Project',

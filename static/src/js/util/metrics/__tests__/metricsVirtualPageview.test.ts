@@ -2,18 +2,18 @@ import { metricsVirtualPageview } from '../metricsVirtualPageview'
 import * as helpers from '../helpers'
 
 // Mock the helpers module
-jest.mock('../helpers', () => ({
-  computeKeyword: jest.fn(() => 'test keyword'),
-  computeSpatialType: jest.fn(() => 'test spatial'),
-  computeTemporalType: jest.fn(() => 'test temporal'),
-  computeCollectionsViewed: jest.fn(() => 'test collections viewed'),
-  computeCollectionsAdded: jest.fn(() => 'test collections added'),
-  computeFacets: jest.fn(() => 'test facets')
+vi.mock('../helpers', () => ({
+  computeKeyword: vi.fn(() => 'test keyword'),
+  computeSpatialType: vi.fn(() => 'test spatial'),
+  computeTemporalType: vi.fn(() => 'test temporal'),
+  computeCollectionsViewed: vi.fn(() => 'test collections viewed'),
+  computeCollectionsAdded: vi.fn(() => 'test collections added'),
+  computeFacets: vi.fn(() => 'test facets')
 }))
 
 describe('metricsVirtualPageview', () => {
   test('pushes the correct event to the dataLayer on PUSH navigation', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsVirtualPageview('PUSH')
 

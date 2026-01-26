@@ -1,6 +1,6 @@
 import React from 'react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { granuleMetadata } from './mocks'
 
@@ -8,8 +8,8 @@ import GranuleDetailsBody from '../GranuleDetailsBody'
 import GranuleDetailsInfo from '../GranuleDetailsInfo'
 import GranuleDetailsMetadata from '../GranuleDetailsMetadata'
 
-jest.mock('../GranuleDetailsInfo', () => jest.fn(() => <div />))
-jest.mock('../GranuleDetailsMetadata', () => jest.fn(() => <div />))
+vi.mock('../GranuleDetailsInfo', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../GranuleDetailsMetadata', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: GranuleDetailsBody,

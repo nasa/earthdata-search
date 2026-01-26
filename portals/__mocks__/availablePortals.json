@@ -74,6 +74,25 @@
       "showTophat": true
     }
   },
+  "above": {
+    "moreInfoUrl": "https://test-above.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "above",
+    "query": {
+      "hasGranulesOrCwic": null,
+      "project": "testProject"
+    },
+    "title": {
+      "primary": "test",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
   "testPortal": {
     "moreInfoUrl": "https://test.gov",
     "pageTitle": "TEST",
@@ -122,24 +141,6 @@
     },
     "title": {
       "primary": "testPortal11",
-      "secondary": "test secondary title"
-    },
-    "ui": {
-      "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
-    }
-  },
-  "testPortal12": {
-    "moreInfoUrl": "https://test12.gov",
-    "pageTitle": "TEST",
-    "parentConfig": "edsc",
-    "portalBrowser": true,
-    "portalId": "testPortal12",
-    "query": {
-      "hasGranulesOrCwic": null
-    },
-    "title": {
-      "primary": "testPortal12",
       "secondary": "test secondary title"
     },
     "ui": {

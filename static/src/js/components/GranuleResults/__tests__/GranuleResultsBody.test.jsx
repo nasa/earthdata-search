@@ -1,17 +1,17 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import GranuleResultsBody from '../GranuleResultsBody'
 import GranuleResultsList from '../GranuleResultsList'
 import GranuleResultsTable from '../GranuleResultsTable'
 import Spinner from '../../Spinner/Spinner'
 
-jest.mock('../GranuleResultsList', () => jest.fn(() => <div />))
-jest.mock('../GranuleResultsTable', () => jest.fn(() => <div />))
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
+vi.mock('../GranuleResultsList', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../GranuleResultsTable', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: GranuleResultsBody,
@@ -19,7 +19,7 @@ const setup = setupTest({
     collectionId: 'collectionId',
     directDistributionInformation: {},
     isOpenSearch: false,
-    loadNextPage: jest.fn(),
+    loadNextPage: vi.fn(),
     location: { search: 'value' },
     panelView: 'list'
   },

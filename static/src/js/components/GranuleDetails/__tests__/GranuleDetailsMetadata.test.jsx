@@ -1,14 +1,14 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { granuleMetadata } from './mocks'
 
 import Spinner from '../../Spinner/Spinner'
 import GranuleDetailsMetadata from '../GranuleDetailsMetadata'
 
-jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: GranuleDetailsMetadata,

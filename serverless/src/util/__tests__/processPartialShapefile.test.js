@@ -53,7 +53,7 @@ describe('processPartialShapefile', () => {
   describe('with selected features', () => {
     describe('when existing shapefile is found in the database', () => {
       test('returns the existing records instead of inserting another', async () => {
-        const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
+        const createLimitedShapefileMock = vi.spyOn(createLimitedShapefile, 'createLimitedShapefile')
           .mockImplementation(() => ('limited mock shapefile'))
 
         const dbCon = knex({
@@ -97,7 +97,7 @@ describe('processPartialShapefile', () => {
 
     describe('when no existing shapefile found in the database', () => {
       test('stores the limited shapefile in the database', async () => {
-        const createLimitedShapefileMock = jest.spyOn(createLimitedShapefile, 'createLimitedShapefile')
+        const createLimitedShapefileMock = vi.spyOn(createLimitedShapefile, 'createLimitedShapefile')
           .mockImplementation(() => ('limited mock shapefile'))
 
         const dbCon = knex({

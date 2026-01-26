@@ -1,16 +1,16 @@
 import { screen } from '@testing-library/react'
 import * as tinyCookie from 'tiny-cookie'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import { AuthRequiredContainer } from '../AuthRequiredContainer'
 
-jest.mock('tiny-cookie', () => ({
-  get: jest.fn(),
-  set: jest.fn(),
-  remove: jest.fn()
+vi.mock('tiny-cookie', () => ({
+  get: vi.fn(),
+  set: vi.fn(),
+  remove: vi.fn()
 }))
 
 const setup = setupTest({
@@ -21,7 +21,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableDatabaseComponents: false
   }))
 })
@@ -34,7 +34,7 @@ describe('AuthRequiredContainer component', () => {
   })
 
   test('should redirect if there is no auth cookie', () => {
-    jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+    vi.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'edlToken') return null
 
       return null
@@ -51,7 +51,7 @@ describe('AuthRequiredContainer component', () => {
   })
 
   test('should render children if there is an auth cookie', () => {
-    jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+    vi.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'edlToken') return 'token'
 
       return null
@@ -64,7 +64,7 @@ describe('AuthRequiredContainer component', () => {
 
   describe('when redirect is set to false', () => {
     test('should not redirect if there is no auth cookie', () => {
-      jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+      vi.spyOn(tinyCookie, 'get').mockImplementation((param) => {
         if (param === 'edlToken') return null
 
         return null
@@ -85,7 +85,7 @@ describe('AuthRequiredContainer component', () => {
     })
 
     test('should not render the children', () => {
-      jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+      vi.spyOn(tinyCookie, 'get').mockImplementation((param) => {
         if (param === 'edlToken') return null
 
         return null
@@ -103,7 +103,7 @@ describe('AuthRequiredContainer component', () => {
 
   describe('when database components are turned off', () => {
     test('should redirect to the home `search` page', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 
@@ -114,11 +114,11 @@ describe('AuthRequiredContainer component', () => {
     })
 
     test('the token cookie should be cleared', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 
-      jest.spyOn(tinyCookie, 'remove').mockImplementation(() => null)
+      vi.spyOn(tinyCookie, 'remove').mockImplementation(() => null)
 
       setup()
 

@@ -1,22 +1,24 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { RelatedCollection } from '../RelatedCollection'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { metricsRelatedCollection } from '../../../util/metrics/metricsRelatedCollection'
 
-jest.mock('../../../util/metrics/metricsRelatedCollection', () => ({
-  metricsRelatedCollection: jest.fn()
+vi.mock('../../../util/metrics/metricsRelatedCollection', () => ({
+  metricsRelatedCollection: vi.fn()
 }))
 
-// eslint-disable-next-line react/jsx-props-no-spreading
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => <div {...props} />))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  default: vi.fn((props) => <div {...props} />)
+}))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules/collection-details',
     search: '?p=TEST_COLLECTION_0',
     hash: '',
@@ -41,7 +43,7 @@ const setup = setupTest({
   },
   defaultZustandState: {
     collection: {
-      setCollectionId: jest.fn()
+      setCollectionId: vi.fn()
     }
   }
 })

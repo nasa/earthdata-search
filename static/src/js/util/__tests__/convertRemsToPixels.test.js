@@ -1,13 +1,9 @@
 import { convertRemsToPixels } from '../convertRemsToPixels'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('convertRemsToPixels', () => {
   describe('when the font size is the default', () => {
     test('returns the correct values', () => {
-      window.getComputedStyle = jest.fn()
+      window.getComputedStyle = vi.fn()
         .mockImplementationOnce(() => ({
           fontSize: 16
         }))
@@ -20,7 +16,7 @@ describe('convertRemsToPixels', () => {
 
   describe('when the font size is not the default', () => {
     test('returns the correct values', () => {
-      window.getComputedStyle = jest.fn()
+      window.getComputedStyle = vi.fn()
         .mockImplementationOnce(() => ({
           fontSize: 16.4
         }))

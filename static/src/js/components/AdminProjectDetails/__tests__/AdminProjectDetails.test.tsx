@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react'
 import AdminProjectDetails from '../AdminProjectDetails'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import ADMIN_PROJECT from '../../../operations/queries/adminProject'
 import { routes } from '../../../constants/routes'
 

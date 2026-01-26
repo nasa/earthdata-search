@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import EDSCTable from '../EDSCTable'
 import EDSCTableCell from '../EDSCTableCell'
@@ -9,12 +9,14 @@ import { collectionData, collectionDataTwo } from './__mocks__/mocks'
 import Skeleton from '../../Skeleton/Skeleton'
 import { rowContentLarge } from '../skeleton'
 
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => null))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => null) }))
 
 // Mock AutoSizer to return a fixed height and width (jsdom doesn't have sizes)
-jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
-  height: 600,
-  width: 600
+vi.mock('react-virtualized-auto-sizer', () => ({
+  default: ({ children }) => children({
+    height: 600,
+    width: 600
+  })
 }))
 
 const skeletonProps = {
@@ -49,9 +51,9 @@ const setup = setupTest({
     id: 'test-table',
     itemCount: 1,
     rowTestId: 'row-test-id',
-    isItemLoaded: jest.fn(),
-    loadMoreItems: jest.fn(),
-    setVisibleMiddleIndex: jest.fn(),
+    isItemLoaded: vi.fn(),
+    loadMoreItems: vi.fn(),
+    setVisibleMiddleIndex: vi.fn(),
     visibleMiddleIndex: 0
   }
 })
@@ -83,7 +85,7 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: [],
           itemCount: 1,
-          isItemLoaded: jest.fn().mockReturnValueOnce(false)
+          isItemLoaded: vi.fn().mockReturnValueOnce(false)
         }
       })
 
@@ -97,7 +99,7 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: [{}, {}],
           itemCount: 3,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValueOnce(true)
             .mockReturnValueOnce(true)
             .mockReturnValue(false)
@@ -114,7 +116,7 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true)
         }
       })
@@ -129,7 +131,7 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true)
         }
       })
@@ -149,11 +151,11 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          initialRowStateAccessor: jest.fn()
+          initialRowStateAccessor: vi.fn()
             .mockImplementation(() => ({
               active: true
             })),
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true),
           rowClassNamesFromRowState: ({ active }) => {
             if (active) return ['table-test-class--active']
@@ -176,9 +178,9 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true),
-          onRowMouseEnter: jest.fn()
+          onRowMouseEnter: vi.fn()
         }
       })
 
@@ -204,9 +206,9 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true),
-          onRowMouseLeave: jest.fn()
+          onRowMouseLeave: vi.fn()
         }
       })
 
@@ -232,9 +234,9 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true),
-          onRowFocus: jest.fn()
+          onRowFocus: vi.fn()
         }
       })
 
@@ -260,9 +262,9 @@ describe('EDSCTable component', () => {
         overrideProps: {
           data: collectionDataTwo,
           itemCount: 2,
-          isItemLoaded: jest.fn()
+          isItemLoaded: vi.fn()
             .mockReturnValue(true),
-          onRowBlur: jest.fn()
+          onRowBlur: vi.fn()
         }
       })
 

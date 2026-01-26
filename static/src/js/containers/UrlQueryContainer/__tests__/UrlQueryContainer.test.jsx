@@ -6,24 +6,24 @@ import * as encodeUrlQuery from '../../../util/url/url'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import UPDATE_PROJECT from '../../../operations/mutations/updateProject'
 import CREATE_PROJECT from '../../../operations/mutations/createProject'
 import { changeUrl } from '../../../util/url/changeUrl'
 import { changePath } from '../../../util/url/changePath'
 
-jest.mock('../../../util/url/changePath', () => ({
-  changePath: jest.fn()
+vi.mock('../../../util/url/changePath', () => ({
+  changePath: vi.fn()
 }))
 
-jest.mock('../../../util/url/changeUrl', () => ({
-  changeUrl: jest.fn()
+vi.mock('../../../util/url/changeUrl', () => ({
+  changeUrl: vi.fn()
 }))
 
-const mockUseNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+const mockUseNavigate = vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=C00001-EDSC',
     hash: '',
@@ -33,7 +33,7 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockUseNavigate
 }))
 
-const encodeUrlQuerySpy = jest.spyOn(encodeUrlQuery, 'encodeUrlQuery')
+const encodeUrlQuerySpy = vi.spyOn(encodeUrlQuery, 'encodeUrlQuery')
 
 const setup = setupTest({
   Component: UrlQueryContainer,
@@ -50,7 +50,7 @@ const setup = setupTest({
       }
     },
     savedProject: {
-      setProject: jest.fn()
+      setProject: vi.fn()
     }
   },
   withApolloClient: true,
@@ -58,7 +58,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     collectionSearchResultsSortKey: collectionSortKeys.usageDescending
   }))
 })
@@ -68,7 +68,7 @@ describe('UrlQueryContainer', () => {
 
   beforeEach(() => {
     delete window.location
-    window.location = { replace: jest.fn() }
+    window.location = { replace: vi.fn() }
   })
 
   afterEach(() => {
@@ -77,7 +77,7 @@ describe('UrlQueryContainer', () => {
 
   describe('when the component mounts', () => {
     test('calls changePath', async () => {
-      jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementationOnce(() => '?p=C00001-EDSC')
+      vi.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementationOnce(() => '?p=C00001-EDSC')
 
       setup()
 
@@ -149,7 +149,7 @@ describe('UrlQueryContainer', () => {
         })
 
         // Clear the mocks from the initial render
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         await act(() => {
           useEdscStore.setState((state) => {
@@ -200,7 +200,7 @@ describe('UrlQueryContainer', () => {
           })
 
           // Clear the mocks from the initial render
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           await act(() => {
             useEdscStore.setState((state) => {
@@ -222,7 +222,7 @@ describe('UrlQueryContainer', () => {
         setup()
 
         // Clear the mocks from the initial render
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         await act(() => {
           useEdscStore.setState((state) => {
@@ -278,7 +278,7 @@ describe('UrlQueryContainer', () => {
           })
 
           // Clear the mocks from the initial render
-          jest.clearAllMocks()
+          vi.clearAllMocks()
 
           await act(() => {
             useEdscStore.setState((state) => {

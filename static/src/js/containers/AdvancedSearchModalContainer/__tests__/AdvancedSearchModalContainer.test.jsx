@@ -1,11 +1,9 @@
-import React from 'react'
-
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { AdvancedSearchModalContainer } from '../AdvancedSearchModalContainer'
 import AdvancedSearchModal from '../../../components/AdvancedSearchModal/AdvancedSearchModal'
 
-jest.mock('../../../components/AdvancedSearchModal/AdvancedSearchModal', () => jest.fn(() => <div />))
+vi.mock('../../../components/AdvancedSearchModal/AdvancedSearchModal', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: AdvancedSearchModalContainer,
@@ -13,15 +11,15 @@ const setup = setupTest({
     isValid: true,
     errors: {},
     fields: [],
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleSubmit: jest.fn(),
-    resetForm: jest.fn(),
-    setFieldValue: jest.fn(),
-    setFieldTouched: jest.fn(),
+    handleBlur: vi.fn(),
+    handleChange: vi.fn(),
+    handleSubmit: vi.fn(),
+    resetForm: vi.fn(),
+    setFieldValue: vi.fn(),
+    setFieldTouched: vi.fn(),
     touched: {},
     values: {},
-    validateForm: jest.fn()
+    validateForm: vi.fn()
   }
 })
 

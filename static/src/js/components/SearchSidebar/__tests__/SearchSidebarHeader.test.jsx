@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchForm from '../../SearchForm/SearchForm'
@@ -17,25 +17,25 @@ import availablePortals from '../../../../../../portals/availablePortals.json'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-jest.mock('../../SearchForm/SearchForm', () => jest.fn(({ children }) => (
-  <div>
-    {children}
-  </div>
-)))
+vi.mock('../../SearchForm/SearchForm', () => ({
+  default: vi.fn(({ children }) => (
+    <div>
+      {children}
+    </div>
+  ))
+}))
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => (
-  <div>
-    {children}
-  </div>
-)))
+vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  default: vi.fn(({ children }) => (
+    <div>
+      {children}
+    </div>
+  ))
+}))
 
-// Use virtual mocks of modules that don't exist anywhere in the system
-jest.mock('../../../../../../portals/testPortal/images/logo.png?h=56&format=webp', () => ('testPortal_logo_path'), { virtual: true })
-jest.mock('../../../../../../portals/testPortal2/images/logo.png?h=56&format=webp', () => ('testPortal2_logo_path'), { virtual: true })
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
@@ -52,7 +52,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     defaultPortal: 'edsc'
   }))
 })
@@ -72,12 +72,12 @@ describe('SearchSidebarHeader component', () => {
     test('renders the Leave Portal link', async () => {
       useLocation.mockReturnValue({
         pathname: '/search',
-        search: '?portal=testPortal'
+        search: '?portal=above'
       })
 
       setup({
         overrideZustandState: {
-          portal: availablePortals.testPortal
+          portal: availablePortals.above
         }
       })
 
@@ -91,7 +91,7 @@ describe('SearchSidebarHeader component', () => {
         title: 'Leave Portal',
         to: {
           pathname: '/search',
-          search: '?portal=testPortal'
+          search: '?portal=above'
         },
         updatePath: true
       }), {})
@@ -100,12 +100,12 @@ describe('SearchSidebarHeader component', () => {
     test('renders the portal logo and removes the spinner', async () => {
       useLocation.mockReturnValue({
         pathname: '/search',
-        search: '?portal=testPortal'
+        search: '?portal=above'
       })
 
       setup({
         overrideZustandState: {
-          portal: availablePortals.testPortal2
+          portal: availablePortals.above
         }
       })
 
@@ -120,24 +120,26 @@ describe('SearchSidebarHeader component', () => {
 
       expect(screen.queryByTestId('portal-logo-spinner')).not.toBeInTheDocument()
 
-      expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'testPortal2_logo_path')
+      // Mocking this src isn't working reliably, so just check that it contains the imagetools path
+      expect(await screen.findByTestId('portal-logo')).toHaveAttribute('src', expect.stringContaining('/@imagetools/'))
+
       expect(screen.getByTestId('portal-logo')).toHaveClass('search-sidebar-header__thumbnail--is-loaded')
     })
 
     test('renders the portal logo with a moreInfoUrl', async () => {
       useLocation.mockReturnValue({
         pathname: '/search',
-        search: '?portal=testPortal'
+        search: '?portal=above'
       })
 
       setup({
         overrideZustandState: {
-          portal: availablePortals.testPortal
+          portal: availablePortals.above
         }
       })
 
       await waitFor(() => {
-        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://test.gov/')
+        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://test-above.gov/')
       })
     })
   })

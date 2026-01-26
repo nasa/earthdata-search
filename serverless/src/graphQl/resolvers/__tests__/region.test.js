@@ -5,7 +5,7 @@ import setupServer from './__mocks__/setupServer'
 import REGIONS from '../../../../../static/src/js/operations/queries/regions'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
-jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ regionHost: 'http://region.com' }))
+vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ regionHost: 'http://region.com' }))
 
 describe('Region Resolver', () => {
   describe('Query', () => {

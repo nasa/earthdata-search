@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { screen, waitFor } from '@testing-library/react'
 import Highlighter from 'react-highlight-words'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GranuleResultsItem from '../GranuleResultsItem'
 import * as getSearchWords from '../../../util/getSearchWords'
@@ -13,31 +13,35 @@ import EDSCImage from '../../EDSCImage/EDSCImage'
 import { metricsDataAccess } from '../../../util/metrics/metricsDataAccess'
 import { metricsAddGranuleToProject } from '../../../util/metrics/metricsAddGranuleToProject'
 
-jest.mock('../../../util/metrics/metricsDataAccess', () => ({
-  metricsDataAccess: jest.fn()
+vi.mock('../../../util/metrics/metricsDataAccess', () => ({
+  metricsDataAccess: vi.fn()
 }))
 
-jest.mock('../../../util/metrics/metricsAddGranuleToProject', () => ({
-  metricsAddGranuleToProject: jest.fn()
+vi.mock('../../../util/metrics/metricsAddGranuleToProject', () => ({
+  metricsAddGranuleToProject: vi.fn()
 }))
 
-jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
-  const mockPortalFeatureContainer = jest.fn(({ children }) => (
+vi.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
+  const mockPortalFeatureContainer = vi.fn(({ children }) => (
     <mock-mockPortalFeatureContainer data-testid="mockPortalFeatureContainer">
       {children}
     </mock-mockPortalFeatureContainer>
   ))
 
-  return mockPortalFeatureContainer
+  return { default: mockPortalFeatureContainer }
 })
 
-jest.mock('react-highlight-words', () => jest.fn(
-  ({ textToHighlight }) => <span><span>{textToHighlight}</span></span>
-))
+vi.mock('react-highlight-words', () => ({
+  default: vi.fn(
+    ({ textToHighlight }) => <span><span>{textToHighlight}</span></span>
+  )
+}))
 
-jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(
-  ({ className }) => <div className={className} alt="Browse Image for " data-testid="mock-edsc-image"><img alt="Mocked Browse" /></div>
-))
+vi.mock('../../EDSCImage/EDSCImage', () => ({
+  default: vi.fn(
+    ({ className }) => <div className={className} alt="Browse Image for " data-testid="mock-edsc-image"><img alt="Mocked Browse" /></div>
+  )
+}))
 
 const defaultProps = {
   browseUrl: undefined,
@@ -47,14 +51,14 @@ const defaultProps = {
   directDistributionInformation: {},
   focusedGranule: '',
   isCollectionInProject: false,
-  isGranuleInProject: jest.fn(() => false),
+  isGranuleInProject: vi.fn(() => false),
   isFocused: false,
   isLast: false,
   isProjectGranulesLoading: false,
   location: { search: 'location' },
-  onAddGranuleToProjectCollection: jest.fn(),
-  onExcludeGranule: jest.fn(),
-  onRemoveGranuleFromProjectCollection: jest.fn(),
+  onAddGranuleToProjectCollection: vi.fn(),
+  onExcludeGranule: vi.fn(),
+  onRemoveGranuleFromProjectCollection: vi.fn(),
   readableGranuleName: ['']
 }
 
@@ -326,11 +330,11 @@ const setup = setupTest({
   defaultProps,
   defaultZustandState: {
     granule: {
-      setGranuleId: jest.fn()
+      setGranuleId: vi.fn()
     },
     project: {
-      addGranuleToProjectCollection: jest.fn(),
-      removeGranuleFromProjectCollection: jest.fn()
+      addGranuleToProjectCollection: vi.fn(),
+      removeGranuleFromProjectCollection: vi.fn()
     }
   },
   withApolloClient: true,
@@ -338,7 +342,7 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  ReactDOM.createPortal = vi.fn((dropdown) => dropdown)
 })
 
 describe('GranuleResultsItem component', () => {
@@ -372,7 +376,7 @@ describe('GranuleResultsItem component', () => {
 
   describe('when passed a granule id filter', () => {
     test('calls Highlighter', () => {
-      const spiedSearchWords = jest.spyOn(getSearchWords, 'getSearchWords')
+      const spiedSearchWords = vi.spyOn(getSearchWords, 'getSearchWords')
 
       setup({
         overrideProps: {
@@ -581,7 +585,7 @@ describe('GranuleResultsItem component', () => {
         setup({
           overrideProps: {
             ...overrideProps,
-            isGranuleInProject: jest.fn(() => true),
+            isGranuleInProject: vi.fn(() => true),
             isCollectionInProject: true
           }
         })
@@ -598,7 +602,7 @@ describe('GranuleResultsItem component', () => {
         setup({
           overrideProps: {
             ...overrideProps,
-            isGranuleInProject: jest.fn(() => false),
+            isGranuleInProject: vi.fn(() => false),
             isCollectionInProject: true
           }
         })
@@ -652,7 +656,7 @@ describe('GranuleResultsItem component', () => {
       const { user, zustandState } = setup({
         overrideProps: {
           ...overrideProps,
-          isGranuleInProject: jest.fn(() => true)
+          isGranuleInProject: vi.fn(() => true)
         }
       })
 

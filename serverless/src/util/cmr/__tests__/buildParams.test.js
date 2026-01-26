@@ -3,7 +3,7 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 describe('util#buildParams', () => {
   test('correctly builds a search URL as a string', () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 
     const body = '{"params":{"param1":123,"param2":"abc","param3":[987]}}'
     const permittedCmrKeys = [
@@ -25,7 +25,7 @@ describe('util#buildParams', () => {
   })
 
   test('correctly builds a search URL as an object', () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
+    vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))
 
     const body = '{"params":{"param1":123,"param2":"abc","param3":[987]}}'
     const permittedCmrKeys = [

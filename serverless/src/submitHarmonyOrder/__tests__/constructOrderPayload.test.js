@@ -15,15 +15,15 @@ describe('constructOrderPayload', () => {
     delete process.env.NODE_ENV
     process.env.OBFUSCATION_SPIN = 1234
 
-    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    vi.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
 
-    jest.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'test'
     }))
 
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
+    vi.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
       background: 'mock-background-clientId'
     }))
   })

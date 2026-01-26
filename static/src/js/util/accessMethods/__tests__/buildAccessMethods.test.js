@@ -10,19 +10,15 @@ import * as buildSwodlr from '../buildAccessMethods/buildSwodlr'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
-  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableOrdering: 'false',
     disableSwodlr: 'false'
   }))
 })
 
-afterEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('when buildAccessMethods is called', () => {
   test('calls buildDownload access method', () => {
-    const buildDownloadMock = jest.spyOn(buildDownload, 'buildDownload')
+    const buildDownloadMock = vi.spyOn(buildDownload, 'buildDownload')
 
     const collectionMetadata = {
       granules: {
@@ -35,9 +31,9 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildDownloadMock).toBeCalledTimes(1)
+    expect(buildDownloadMock).toHaveBeenCalledTimes(1)
 
-    expect(buildDownloadMock).toBeCalledWith({ items: [{ online_access_flag: true }] }, false)
+    expect(buildDownloadMock).toHaveBeenCalledWith({ items: [{ online_access_flag: true }] }, false)
   })
 
   test('no access method is added if a non-existent service item is in the collection metadata', () => {
@@ -73,7 +69,7 @@ describe('when buildAccessMethods is called', () => {
   })
 
   test('calls buildEcho access method', () => {
-    const buildEchoMock = jest.spyOn(buildEcho, 'buildEcho')
+    const buildEchoMock = vi.spyOn(buildEcho, 'buildEcho')
 
     const collectionMetadata = {
       services: {
@@ -165,7 +161,7 @@ describe('when buildAccessMethods is called', () => {
   })
 
   test('calls buildEsi access method', () => {
-    const buildEsiMock = jest.spyOn(buildEsi, 'buildEsi')
+    const buildEsiMock = vi.spyOn(buildEsi, 'buildEsi')
 
     const collectionMetadata = {
       services: {
@@ -194,7 +190,7 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildEsiMock).toBeCalledTimes(1)
+    expect(buildEsiMock).toHaveBeenCalledTimes(1)
 
     expect(buildEsiMock).toHaveBeenCalledWith(
       {
@@ -218,7 +214,7 @@ describe('when buildAccessMethods is called', () => {
   })
 
   test('calls buildHarmony access method', () => {
-    const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
+    const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
     const collectionMetadata = {
       services: {
@@ -356,7 +352,7 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildHarmonyMock).toBeCalledTimes(1)
+    expect(buildHarmonyMock).toHaveBeenCalledTimes(1)
 
     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
       1,
@@ -488,7 +484,7 @@ describe('when buildAccessMethods is called', () => {
   })
 
   test('calls buildOpendap access method', () => {
-    const buildOpendapMock = jest.spyOn(buildOpendap, 'buildOpendap')
+    const buildOpendapMock = vi.spyOn(buildOpendap, 'buildOpendap')
 
     const collectionMetadata = {
       services: {
@@ -658,9 +654,9 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildOpendapMock).toBeCalledTimes(1)
+    expect(buildOpendapMock).toHaveBeenCalledTimes(1)
 
-    expect(buildOpendapMock).toBeCalledWith(
+    expect(buildOpendapMock).toHaveBeenCalledWith(
       {
         conceptId: 'S100000-EDSC',
         longName: 'Mock Service Name',
@@ -890,7 +886,7 @@ describe('when buildAccessMethods is called', () => {
   })
 
   test('calls buildSwodlr access method', () => {
-    const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
+    const buildSwodlrMock = vi.spyOn(buildSwodlr, 'buildSwodlr')
 
     const collectionMetadata = {
       services: {
@@ -938,7 +934,7 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildSwodlrMock).toBeCalledTimes(1)
+    expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
 
     expect(buildSwodlrMock).toHaveBeenCalledWith(
       {
@@ -982,7 +978,7 @@ describe('when buildAccessMethods is called', () => {
 
   describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
     test('variables on the service are returned instead of variables directly associated to the collection and buildHarmony is called 3 times', () => {
-      const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
+      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
       const collectionMetadata = {
         services: {
@@ -1339,7 +1335,7 @@ describe('when buildAccessMethods is called', () => {
 
       buildAccessMethods(collectionMetadata, isOpenSearch)
 
-      expect(buildHarmonyMock).toBeCalledTimes(3)
+      expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
@@ -1769,7 +1765,7 @@ describe('when buildAccessMethods is called', () => {
 
   describe('when the collection contains variables directly associated to the collection and no variables associated to it services (empty) and 3 service records', () => {
     test('variables on the collection are returned instead of variables associated to the service and buildHarmony is called 3 times', () => {
-      const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
+      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
       const collectionMetadata = {
         services: {
@@ -2069,7 +2065,7 @@ describe('when buildAccessMethods is called', () => {
 
       buildAccessMethods(collectionMetadata, isOpenSearch)
 
-      expect(buildHarmonyMock).toBeCalledTimes(3)
+      expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
@@ -2424,7 +2420,7 @@ describe('when buildAccessMethods is called', () => {
 
   describe('when the collection contains variables directly associated to the collection and some variables associated to some services and 3 service records', () => {
     test('variables on the collection are returned for services without variables but, variables associated to the service are returned for services that have them and buildHarmony is called 3 times', () => {
-      const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
+      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
       const collectionMetadata = {
         services: {
@@ -2748,7 +2744,7 @@ describe('when buildAccessMethods is called', () => {
 
       buildAccessMethods(collectionMetadata, isOpenSearch)
 
-      expect(buildHarmonyMock).toBeCalledTimes(3)
+      expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
@@ -3132,11 +3128,11 @@ describe('when buildAccessMethods is called', () => {
 
   describe('calls complex compilation of mutliple different access methods', () => {
     test('calls all access methods correctly', () => {
-      const buildEchoMock = jest.spyOn(buildEcho, 'buildEcho')
-      const buildEsiMock = jest.spyOn(buildEsi, 'buildEsi')
-      const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
-      const buildOpendapMock = jest.spyOn(buildOpendap, 'buildOpendap')
-      const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
+      const buildEchoMock = vi.spyOn(buildEcho, 'buildEcho')
+      const buildEsiMock = vi.spyOn(buildEsi, 'buildEsi')
+      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
+      const buildOpendapMock = vi.spyOn(buildOpendap, 'buildOpendap')
+      const buildSwodlrMock = vi.spyOn(buildSwodlr, 'buildSwodlr')
 
       const echoOrderItem1 = {
         type: 'ECHO ORDERS',

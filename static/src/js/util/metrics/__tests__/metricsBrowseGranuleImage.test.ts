@@ -2,7 +2,7 @@ import { metricsBrowseGranuleImage } from '../metricsBrowseGranuleImage'
 
 describe('metricsBrowseGranuleImage', () => {
   test('pushes the correct event to the dataLayer', () => {
-    const dataLayerPushSpy = jest.spyOn(window.dataLayer, 'push')
+    const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
     metricsBrowseGranuleImage({
       modalOpen: true,

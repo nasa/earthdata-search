@@ -23,7 +23,7 @@ import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import TopicCard from './HomeTopicCard'
+import HomeTopicCard from './HomeTopicCard'
 import HomePortalCard from './HomePortalCard'
 
 import availablePortals from '../../../../../portals/availablePortals.json'
@@ -327,7 +327,7 @@ export const Home: React.FC = () => {
             >
               {
                 topics && topics.map((topic) => (
-                  <TopicCard key={topic.title} {...topic} />
+                  <HomeTopicCard key={topic.title} {...topic} />
                 ))
               }
             </div>

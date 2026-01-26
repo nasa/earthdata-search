@@ -8,11 +8,6 @@ import {
   singleCwicGranuleResponseWithImageStringLink
 } from './mocks'
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
-
 describe('OpenSearchGranuleRequest#transformRequest', () => {
   describe('when logged out', () => {
     test('returns a basic example result correctly transformed', () => {
@@ -85,7 +80,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
   })
 
   test('formats multi-granule results correctly when parseXml gives empty granules', () => {
-    const mockParse = jest.fn().mockImplementation(() => ({
+    const mockParse = vi.fn().mockImplementation(() => ({
       feed: {
         entry: [{}, {}, {}, '']
       }
@@ -155,7 +150,7 @@ describe('OpenSearchGranuleRequest#search', () => {
 
     const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-    openSearchGranulesRequest.transformRequest = jest.fn(() => {})
+    openSearchGranulesRequest.transformRequest = vi.fn(() => {})
 
     const expectedResponse = {
       feed: {
@@ -163,7 +158,7 @@ describe('OpenSearchGranuleRequest#search', () => {
         count: 0
       }
     }
-    openSearchGranulesRequest.transformResponse = jest.fn(() => expectedResponse)
+    openSearchGranulesRequest.transformResponse = vi.fn(() => expectedResponse)
 
     await openSearchGranulesRequest.search({})
 

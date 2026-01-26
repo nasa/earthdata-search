@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import TreeItem from '../TreeItem'
 
@@ -15,10 +15,10 @@ const defaultItem = {
     level: 2,
     value: 'Child1',
     variable: { mock: 'variable' },
-    getKey: jest.fn(),
-    getName: jest.fn().mockReturnValue('Child 1'),
-    setChecked: jest.fn(),
-    setExpanded: jest.fn()
+    getKey: vi.fn(),
+    getName: vi.fn().mockReturnValue('Child 1'),
+    setChecked: vi.fn(),
+    setExpanded: vi.fn()
   }],
   checked: true,
   expanded: true,
@@ -27,10 +27,10 @@ const defaultItem = {
   label: 'Parent 1',
   level: 1,
   value: 'Parent1',
-  getKey: jest.fn(),
-  getName: jest.fn().mockReturnValue('Parent 1'),
-  setChecked: jest.fn(),
-  setExpanded: jest.fn()
+  getKey: vi.fn(),
+  getName: vi.fn().mockReturnValue('Parent 1'),
+  setChecked: vi.fn(),
+  setExpanded: vi.fn()
 }
 
 const setup = setupTest({
@@ -43,9 +43,9 @@ const setup = setupTest({
     index: 0,
     isFirst: true,
     isLast: true,
-    onChange: jest.fn(),
-    onUpdateSelectedVariables: jest.fn(),
-    onViewDetails: jest.fn()
+    onChange: vi.fn(),
+    onUpdateSelectedVariables: vi.fn(),
+    onViewDetails: vi.fn()
   }
 })
 
@@ -123,7 +123,7 @@ describe('TreeItem component', () => {
     expect(props.item.setExpanded).toHaveBeenCalledTimes(1)
     expect(props.item.setExpanded).toHaveBeenCalledWith(false)
 
-    jest.clearAllMocks()
+    vi.clearAllMocks()
 
     const expandButton = screen.getByRole('button', { name: 'Expand Parent 1' })
     await user.click(expandButton)

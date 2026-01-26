@@ -1,4 +1,4 @@
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import routerHelper from '../../../router/router'
 import HistoryContainer from '../HistoryContainer'
 
@@ -8,8 +8,8 @@ const setup = setupTest({
 
 describe('HistoryContainer', () => {
   test('sets up and tears down the router subscription', () => {
-    const subscribeMock = jest.fn()
-    const unsubscribeMock = jest.fn()
+    const subscribeMock = vi.fn()
+    const unsubscribeMock = vi.fn()
 
     routerHelper.router.subscribe = subscribeMock.mockReturnValue(unsubscribeMock)
 

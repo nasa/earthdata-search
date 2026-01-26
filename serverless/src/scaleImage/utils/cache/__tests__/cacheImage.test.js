@@ -1,54 +1,33 @@
-import redis from 'redis-mock'
-
 import { cacheImage } from '../cacheImage'
 
-import * as getCacheConnection from '../getCacheConnection'
-
-const OLD_ENV = process.env
-
-beforeEach(() => {
-  process.env = { ...OLD_ENV }
-
-  delete process.env.NODE_ENV
-})
-
-afterEach(() => {
-  process.env = OLD_ENV
-})
+const mockSet = vi.hoisted(() => vi.fn())
+vi.mock('../getCacheConnection', () => ({
+  getCacheConnection: vi.fn().mockResolvedValue({
+    set: mockSet
+  })
+}))
 
 describe('cacheImage', () => {
-  beforeEach(() => {
-    const client = redis.createClient()
-
-    jest.spyOn(getCacheConnection, 'getCacheConnection').mockImplementation(() => client)
-  })
-
   describe('when an empty value is provided', () => {
     test('does not attempt to cache', () => {
-      const setMock = jest.spyOn(redis.RedisClient.prototype, 'set').mockImplementation(() => jest.fn())
-
       cacheImage('empty-200-200', null)
 
-      expect(setMock).toBeCalledTimes(0)
+      expect(mockSet).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when a valid value is provided', () => {
     test('successfully caches the image', async () => {
-      process.env.CACHE_KEY_EXPIRE_SECONDS = 84000
-
-      const setMock = jest.spyOn(redis.RedisClient.prototype, 'set').mockImplementation(() => jest.fn())
+      process.env.CACHE_KEY_EXPIRE_SECONDS = '84000'
 
       await cacheImage('empty-200-200', 'test-image-contents')
 
-      expect(setMock).toBeCalledTimes(1)
-      expect(setMock).toBeCalledWith('empty-200-200', 'test-image-contents', 'EX', 84000)
+      expect(mockSet).toHaveBeenCalledTimes(1)
+      expect(mockSet).toHaveBeenCalledWith('empty-200-200', 'test-image-contents', 'EX', '84000')
     })
 
     test('successfully caches the image', async () => {
-      process.env.CACHE_KEY_EXPIRE_SECONDS = 84000
-
-      jest.spyOn(redis.RedisClient.prototype, 'set').mockImplementation(() => {
+      mockSet.mockImplementation(() => {
         throw new Error('Exception calling `set`')
       })
 

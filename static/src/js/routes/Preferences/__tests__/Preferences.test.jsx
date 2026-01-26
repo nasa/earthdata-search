@@ -1,16 +1,16 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Preferences from '../Preferences'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import PreferencesForm from '../../../components/Preferences/PreferencesForm'
 
-jest.mock('../../../components/Preferences/PreferencesForm', () => jest.fn(() => <div />))
+vi.mock('../../../components/Preferences/PreferencesForm', () => ({ default: vi.fn(() => <div />) }))
 
 beforeEach(() => {
-  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  vi.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 const setup = setupTest({

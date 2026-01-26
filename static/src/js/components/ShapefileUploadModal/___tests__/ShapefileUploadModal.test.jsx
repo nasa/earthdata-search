@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../vitestConfigs/getByTextWithMarkup'
 
 import * as EventEmitter from '../../../events/events'
 import ShapefileUploadModal from '../ShapefileUploadModal'
@@ -13,7 +13,7 @@ const setup = setupTest({
     ui: {
       modals: {
         openModal: MODAL_NAMES.SHAPEFILE_UPLOAD,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }
@@ -84,8 +84,8 @@ describe('ShapefileUploadModal component', () => {
     test('Browse Files button should emit event', async () => {
       const { user } = setup()
 
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      eventEmitterEmitMock.mockImplementation(() => jest.fn())
+      const eventEmitterEmitMock = vi.spyOn(EventEmitter.eventEmitter, 'emit')
+      eventEmitterEmitMock.mockImplementation(() => vi.fn())
 
       const button = screen.getByRole('button', { name: 'Browse Files' })
       await user.click(button)

@@ -1,3 +1,6 @@
+// Two classes are mocked in this test
+/* eslint-disable max-classes-per-file */
+
 import nock from 'nock'
 import MockDate from 'mockdate'
 
@@ -9,23 +12,26 @@ import generateCollectionCapabilityTags from '../handler'
 
 const OLD_ENV = process.env
 
-const mocksqsCollectionCapabilities = jest.fn().mockResolvedValue()
+const mocksqsCollectionCapabilities = vi.fn().mockResolvedValue()
 
-jest.mock('@aws-sdk/client-sqs', () => ({
-  SQSClient: jest.fn().mockImplementation(() => ({
-    send: mocksqsCollectionCapabilities
-  })),
-  SendMessageCommand: jest.fn().mockImplementation((params) => params)
+vi.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: vi.fn(class {
+    send = mocksqsCollectionCapabilities
+  }),
+  SendMessageCommand: vi.fn(class {
+    constructor(params) {
+      this.MessageBody = params.MessageBody
+      this.QueueUrl = params.QueueUrl
+    }
+  })
 }))
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
-  jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementationOnce(() => {})
+  vi.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+  vi.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementationOnce(() => {})
 
   // Manage resetting ENV variables
-  jest.resetModules()
+  vi.resetModules()
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 
@@ -47,7 +53,7 @@ describe('generateCollectionCapabilityTags', () => {
       // Set the necessary ENV variables to ensure all values are tested
       process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
-      jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+      vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
       }]))
 
@@ -67,7 +73,7 @@ describe('generateCollectionCapabilityTags', () => {
 
       const response = await generateCollectionCapabilityTags({})
 
-      expect(mocksqsCollectionCapabilities).toBeCalledTimes(1)
+      expect(mocksqsCollectionCapabilities).toHaveBeenCalledTimes(1)
 
       expect(mocksqsCollectionCapabilities.mock.calls[0]).toEqual([{
         MessageBody: JSON.stringify({
@@ -99,7 +105,7 @@ describe('generateCollectionCapabilityTags', () => {
       // Set the necessary ENV variables to ensure all values are tested
       process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
-      jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+      vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
       }]))
 
@@ -119,7 +125,7 @@ describe('generateCollectionCapabilityTags', () => {
 
       const response = await generateCollectionCapabilityTags({ pageNumber: 4 })
 
-      expect(mocksqsCollectionCapabilities).toBeCalledTimes(1)
+      expect(mocksqsCollectionCapabilities).toHaveBeenCalledTimes(1)
 
       expect(mocksqsCollectionCapabilities.mock.calls[0]).toEqual([{
         MessageBody: JSON.stringify({
@@ -151,7 +157,7 @@ describe('generateCollectionCapabilityTags', () => {
       // Set the necessary ENV variables to ensure all values are tested
       process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
-      jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
+      vi.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
       }]))
 
@@ -171,7 +177,7 @@ describe('generateCollectionCapabilityTags', () => {
 
       const response = await generateCollectionCapabilityTags({ conceptId: 'C100000-EDSC' })
 
-      expect(mocksqsCollectionCapabilities).toBeCalledTimes(1)
+      expect(mocksqsCollectionCapabilities).toHaveBeenCalledTimes(1)
 
       expect(mocksqsCollectionCapabilities.mock.calls[0]).toEqual([{
         MessageBody: JSON.stringify({

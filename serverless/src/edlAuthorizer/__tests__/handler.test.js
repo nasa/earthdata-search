@@ -7,15 +7,15 @@ import edlAuthorizer from '../handler'
 import { getEnvironmentConfig } from '../../../../sharedUtils/config'
 import { validateToken } from '../../util/authorizer/validateToken'
 
-jest.mock('../../util/authorizer/validateToken', () => ({
-  validateToken: jest.fn()
+vi.mock('../../util/authorizer/validateToken', () => ({
+  validateToken: vi.fn()
 }))
 
 let dbConnectionToMock
 let dbTracker
 
 beforeEach(() => {
-  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
+  vi.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',
       debug: false

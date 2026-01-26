@@ -1,7 +1,7 @@
 import React from 'react'
 import { act, screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import FacetsModal from '../FacetsModal'
 import FacetsModalNav from '../FacetsModalNav'
@@ -13,24 +13,26 @@ import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModal
 import useEdscStore from '../../../zustand/useEdscStore'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../../../containers/EDSCModalContainer/EDSCModalContainer', () => jest.fn((props) => (
-  <>
-    {props.body}
-    {props.footerMeta}
-    {props.innerHeader}
-  </>
-)))
+vi.mock('../../../containers/EDSCModalContainer/EDSCModalContainer', () => ({
+  default: vi.fn((props) => (
+    <>
+      {props.body}
+      {props.footerMeta}
+      {props.innerHeader}
+    </>
+  ))
+}))
 
-jest.mock('../FacetsList', () => jest.fn(() => <div />))
-jest.mock('../FacetsModalNav', () => jest.fn(() => <div />))
-jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+vi.mock('../FacetsList', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../FacetsModalNav', () => ({ default: vi.fn(() => <div />) }))
+vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: FacetsModal,
   defaultZustandState: {
     facetParams: {
-      applyViewAllFacets: jest.fn(),
-      setViewAllFacets: jest.fn()
+      applyViewAllFacets: vi.fn(),
+      setViewAllFacets: vi.fn()
     },
     facets: {
       viewAllFacets: {
@@ -42,13 +44,13 @@ const setup = setupTest({
         isLoaded: false,
         isLoading: false,
         selectedCategory: 'Test Category',
-        resetState: jest.fn()
+        resetState: vi.fn()
       }
     },
     ui: {
       modals: {
         openModal: MODAL_NAMES.VIEW_ALL_FACETS,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   }

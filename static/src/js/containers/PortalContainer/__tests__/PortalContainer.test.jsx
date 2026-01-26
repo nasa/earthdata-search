@@ -1,31 +1,31 @@
 import { waitFor } from '@testing-library/react'
 import { useLocation, useParams } from 'react-router-dom'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import PortalContainer from '../PortalContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import { changePath } from '../../../util/url/changePath'
 import { changeUrl } from '../../../util/url/changeUrl'
 
-jest.mock('../../../util/url/changePath', () => ({
-  changePath: jest.fn()
+vi.mock('../../../util/url/changePath', () => ({
+  changePath: vi.fn()
 }))
 
-jest.mock('../../../util/url/changeUrl', () => ({
-  changeUrl: jest.fn()
+vi.mock('../../../util/url/changeUrl', () => ({
+  changeUrl: vi.fn()
 }))
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
     hash: '',
     state: null,
     key: 'testKey'
   }),
-  useParams: jest.fn().mockReturnValue({
+  useParams: vi.fn().mockReturnValue({
     portalId: 'edsc'
   })
 }))
@@ -41,7 +41,7 @@ const setup = setupTest({
 
 describe('PortalContainer component', () => {
   test('renders the page title without a portal', async () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'dev',
       defaultPortal: 'edsc'
     }))
@@ -52,7 +52,7 @@ describe('PortalContainer component', () => {
   })
 
   test('renders the page title with a portal', async () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'dev',
       defaultPortal: 'edsc'
     }))
@@ -72,7 +72,7 @@ describe('PortalContainer component', () => {
   })
 
   test('updates the url if the url is using a portal path', async () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'dev',
       defaultPortal: 'edsc'
     }))
@@ -105,7 +105,7 @@ describe('PortalContainer component', () => {
   })
 
   test('updates the url if the url is using a portal path without /search', async () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'dev',
       defaultPortal: 'edsc'
     }))

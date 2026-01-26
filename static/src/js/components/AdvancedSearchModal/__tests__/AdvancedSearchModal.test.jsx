@@ -3,8 +3,9 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
+import { ApolloError } from '@apollo/client'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import AdvancedSearchModal from '../AdvancedSearchModal'
 
@@ -14,30 +15,35 @@ import RegionSearchResults from '../RegionSearchResults'
 import REGIONS from '../../../operations/queries/regions'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-jest.mock('../AdvancedSearchForm', () => jest.fn(() => null))
-jest.mock('../RegionSearchResults', () => jest.fn(() => null))
+vi.mock('../AdvancedSearchForm', () => ({
+  default: vi.fn(() => null)
+}))
+
+vi.mock('../RegionSearchResults', () => ({
+  default: vi.fn(() => null)
+}))
 
 const setup = setupTest({
   Component: AdvancedSearchModal,
   defaultProps: {
     fields: [],
     errors: {},
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleSubmit: jest.fn(),
+    handleBlur: vi.fn(),
+    handleChange: vi.fn(),
+    handleSubmit: vi.fn(),
     isValid: true,
-    resetForm: jest.fn(),
-    setFieldValue: jest.fn(),
-    setFieldTouched: jest.fn(),
+    resetForm: vi.fn(),
+    setFieldValue: vi.fn(),
+    setFieldTouched: vi.fn(),
     touched: {},
     values: {},
-    validateForm: jest.fn()
+    validateForm: vi.fn()
   },
   defaultZustandState: {
     ui: {
       modals: {
         openModal: MODAL_NAMES.ADVANCED_SEARCH,
-        setOpenModal: jest.fn()
+        setOpenModal: vi.fn()
       }
     }
   },
@@ -195,7 +201,7 @@ describe('AdvancedSearchModal component', () => {
       const componentProps = AdvancedSearchForm.mock.calls[0][0]
       const { handleSearch, setModalOverlay } = componentProps
 
-      jest.clearAllMocks()
+      vi.clearAllMocks()
 
       await act(async () => {
         handleSearch({
@@ -258,11 +264,11 @@ describe('AdvancedSearchModal component', () => {
                 keyword: 'California Region'
               }
             },
-            error: new Error('Unknown error')
+            error: new ApolloError({ errorMessage: 'Unknown error' })
           }],
           overrideZustandState: {
             errors: {
-              handleError: jest.fn()
+              handleError: vi.fn()
             }
           }
         })
@@ -270,7 +276,7 @@ describe('AdvancedSearchModal component', () => {
         const componentProps = AdvancedSearchForm.mock.calls[0][0]
         const { handleSearch, setModalOverlay } = componentProps
 
-        jest.clearAllMocks()
+        vi.clearAllMocks()
 
         await act(async () => {
           handleSearch({
@@ -315,7 +321,7 @@ describe('AdvancedSearchModal component', () => {
         expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
         expect(zustandState.errors.handleError).toHaveBeenCalledWith({
           action: 'getRegions',
-          error: new Error('Unknown error'),
+          error: new ApolloError({ errorMessage: 'Unknown error' }),
           notificationType: 'none',
           resource: 'regions'
         })

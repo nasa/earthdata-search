@@ -34,7 +34,7 @@ describe('User resolver', () => {
     describe('updatePreferences', () => {
       test('updates the user site preferences and returns the updated user', async () => {
         const databaseClient = {
-          updateSitePreferences: jest.fn().mockResolvedValue({
+          updateSitePreferences: vi.fn().mockResolvedValue({
             id: 42,
             site_preferences: {
               collectionSort: '-score',

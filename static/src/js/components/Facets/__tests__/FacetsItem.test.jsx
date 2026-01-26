@@ -1,18 +1,18 @@
 import { screen } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 import FacetsItem from '../FacetsItem'
 
 const setup = setupTest({
   Component: FacetsItem,
   defaultProps: {
-    changeHandler: jest.fn(),
+    changeHandler: vi.fn(),
     facet: {
       applied: false,
       applyingFacet: null,
       children: [],
       count: 10,
-      setApplyingFacet: jest.fn(),
+      setApplyingFacet: vi.fn(),
       title: 'Test Facet'
     },
     facetCategory: 'test_category',
@@ -55,7 +55,7 @@ describe('FacetsItem', () => {
                 applyingFacet: 'Test Facet',
                 children: [],
                 count: 10,
-                setApplyingFacet: jest.fn(),
+                setApplyingFacet: vi.fn(),
                 title: 'Test Facet'
               }
             }
@@ -153,7 +153,7 @@ describe('FacetsItem', () => {
                 applyingFacet: 'Test Facet',
                 children: [],
                 count: 10,
-                setApplyingFacet: jest.fn(),
+                setApplyingFacet: vi.fn(),
                 title: 'Test Facet'
               }
             },

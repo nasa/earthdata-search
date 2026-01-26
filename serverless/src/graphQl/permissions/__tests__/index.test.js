@@ -13,9 +13,9 @@ import buildPermissions from '../index'
 import userOwnsProjectIfProjectOwned from '../rules/userOwnsProjectIfProjectOwned'
 import userOwnsRetrieval from '../rules/userOwnsRetrieval'
 
-jest.mock('graphql-shield', () => ({
-  ...jest.requireActual('graphql-shield'),
-  shield: jest.fn()
+vi.mock('graphql-shield', async () => ({
+  ...(await vi.importActual('graphql-shield')),
+  shield: vi.fn()
 }))
 
 describe('permissions', () => {

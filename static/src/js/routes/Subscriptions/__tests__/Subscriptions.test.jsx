@@ -2,21 +2,21 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { waitFor } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import * as AppConfig from '../../../../../../sharedUtils/config'
 
 import Subscriptions from '../Subscriptions'
 import SubscriptionsList from '../../../components/SubscriptionsList/SubscriptionsList'
 
-jest.mock('../../../components/SubscriptionsList/SubscriptionsList', () => jest.fn(() => <div />))
+vi.mock('../../../components/SubscriptionsList/SubscriptionsList', () => ({ default: vi.fn(() => <div />) }))
 
 const setup = setupTest({
   Component: Subscriptions
 })
 
 beforeEach(() => {
-  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  vi.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 describe('Subscriptions component', () => {
