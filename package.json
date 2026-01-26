@@ -106,9 +106,7 @@
     "storybook": "^8.6.7",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0",
-    "vi-canvas-mock": "^1.0.0",
-    "vite-plugin-graphql-loader": "^4.0.4",
-    "vitest": "^4.0.18"
+    "vi-canvas-mock": "^1.0.0"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -225,9 +223,11 @@
     "vite": "^6.4.1",
     "vite-imagetools": "^7.1.0",
     "vite-plugin-ejs": "^1.7.0",
+    "vite-plugin-graphql-loader": "^4.0.4",
     "vite-plugin-istanbul": "^7.0.0",
     "vite-plugin-node-polyfills": "^0.23.0",
     "vite-plugin-svgr": "^4.3.0",
+    "vitest": "^4.0.18",
     "ws": "^8.18.0",
     "xpath": "0.0.27",
     "yup": "^0.32.11",
