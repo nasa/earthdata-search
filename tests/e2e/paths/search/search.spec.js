@@ -40,6 +40,8 @@ const screenshotClip = {
 
 const defaultCmrPageSize = 20
 
+const keywordInputPlaceholderText = /type to search for data/i
+
 /**
  * Test that the provided facet group is expanded and the others not
  * @param {String} facetGroup Name of the facet that should be expanded
@@ -120,7 +122,7 @@ test.describe('Path /search', () => {
       await testResultsSize(page, cmrHits)
 
       // Keyword input is empty
-      await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+      await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
       // Ensure facet group bodies are shown correctly
       await testFacetGroupExistence(page, 'features')
@@ -152,7 +154,7 @@ test.describe('Path /search', () => {
       await testResultsSize(page, cmrHits)
 
       // Keyword input is populated
-      await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('modis')
+      await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('modis')
 
       // Ensure facet group bodies are shown correctly
       await testFacetGroupExistence(page, 'features')
@@ -185,7 +187,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -221,7 +223,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -264,7 +266,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -307,7 +309,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -350,7 +352,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -394,7 +396,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -474,7 +476,7 @@ test.describe('Path /search', () => {
         await expect(page).toHaveURL('search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&sfs[0]=0&long=60')
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -521,7 +523,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -558,7 +560,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -595,7 +597,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -640,7 +642,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -689,7 +691,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -738,7 +740,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -787,7 +789,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -836,7 +838,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -885,7 +887,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -934,7 +936,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -983,7 +985,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -1030,7 +1032,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -1077,7 +1079,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -1120,7 +1122,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -1160,7 +1162,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -1194,7 +1196,7 @@ test.describe('Path /search', () => {
       await expect(page.getByTestId('panel-group-header__heading-meta-text')).toHaveText('Showing 20 of 6,209 matching collections')
 
       // Keyword input is empty
-      await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('')
+      await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
 
       // Ensure facet group bodies are shown correctly
       await testFacetGroupExistence(page, 'features')

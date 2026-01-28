@@ -5,6 +5,7 @@ import React, {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { sortBy } from 'lodash-es'
+import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
 import Collapse from 'react-bootstrap/Collapse'
 import Container from 'react-bootstrap/Container'
@@ -231,7 +232,14 @@ export const Home: React.FC = () => {
               {' '}
               Earth observations
             </h1>
-            <p className="text-white mb-0 lead">Use keywords and filter by time and spatial area to search NASA&apos;s Earth science data</p>
+            <p className="text-white mb-0 lead">
+              <Badge
+                className="home__new-badge"
+              >
+                NEW
+              </Badge>
+              Describe what you&apos;re looking for to start your search
+            </p>
           </div>
           <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
             <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
@@ -243,11 +251,11 @@ export const Home: React.FC = () => {
                   <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px" />
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
-                    type="text"
-                    placeholder="Type to search for data"
-                    value={keyword}
                     onChange={onChangeKeyword}
+                    placeholder="Wildfires in California during summer 2023"
                     ref={inputRef}
+                    type="text"
+                    value={keyword}
                   />
                 </div>
                 <Button
@@ -262,7 +270,7 @@ export const Home: React.FC = () => {
               </form>
             </div>
             <div className="d-flex flex-grow-1 justify-content-center">
-              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
+              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth science data or search with filters</PortalLinkContainer>
             </div>
           </div>
           <OverlayTrigger

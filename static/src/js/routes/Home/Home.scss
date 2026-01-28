@@ -123,4 +123,13 @@
       max-width: 1200px;
     }
   }
+
+  &__new-badge {
+    background-color: utils.$color__nasa-blue;
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: bold;
+    margin-right: 0.5rem; 
+    padding: .5rem;
+  }
 }

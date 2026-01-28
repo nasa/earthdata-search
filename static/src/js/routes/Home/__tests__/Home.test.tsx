@@ -42,6 +42,7 @@ vi.mock('../../../../../../sharedUtils/config', async () => ({
 }))
 
 const mockUseNavigate = vi.fn()
+const placeholderText = 'Wildfires in California during summer 2023'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -80,13 +81,19 @@ describe('Home', () => {
     setup()
 
     expect(screen.getByText("Search NASA's 42 Earth observations")).toBeInTheDocument()
-    expect(screen.getByText("Use keywords and filter by time and spatial area to search NASA's Earth science data")).toBeInTheDocument()
+    expect(screen.getByText("Describe what you're looking for to start your search")).toBeInTheDocument()
+  })
+
+  test('renders the NEW badge for NLP feature', () => {
+    setup()
+
+    expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
   })
 
   test('renders the search input and allows typing', async () => {
     const { user } = setup()
 
-    const searchInput = screen.getByPlaceholderText('Type to search for data')
+    const searchInput = screen.getByPlaceholderText(placeholderText)
     expect(searchInput).toBeInTheDocument()
 
     await user.type(searchInput, 'test keyword')
@@ -109,7 +116,7 @@ describe('Home', () => {
   test('calls getNlpCollections and navigate when the search form is submitted', async () => {
     const { user, zustandState } = setup()
 
-    const searchInput = screen.getByPlaceholderText('Type to search for data')
+    const searchInput = screen.getByPlaceholderText(placeholderText)
 
     await user.type(searchInput, 'test')
     await user.click(screen.getByRole('button', { name: /search/i }))
@@ -124,7 +131,7 @@ describe('Home', () => {
   test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
     const { user, zustandState } = setup()
 
-    const searchInput = screen.getByPlaceholderText('Type to search for data')
+    const searchInput = screen.getByPlaceholderText(placeholderText)
 
     await user.type(searchInput, 'test')
     await user.click(screen.getByRole('button', { name: /search/i }))
