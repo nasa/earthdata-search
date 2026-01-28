@@ -53,13 +53,13 @@ test.describe('Home Page', () => {
     })
 
     test('should navigate to the search page with the keyword parameter', async ({ page }) => {
-      await page.getByRole('textbox', { name: 'Type to search for data' }).fill('rainfall in the spring of 2000')
+      await page.getByRole('textbox', { name: 'Wildfires in California during summer 2023' }).fill('rainfall in the spring of 2000')
       await page.getByRole('button', { name: 'Search' }).click()
 
       await expect(page).toHaveURL('search?q=rainfall&qt=2000-03-20T00%3A00%3A00.000Z%2C2000-06-20T23%3A59%3A59.999Z')
 
       // Check keyword input
-      await expect(page.getByRole('textbox', { name: /type to search for data/i })).toHaveValue('rainfall')
+      await expect(page.getByRole('textbox', { name: /Wildfires in California during summer 2023/i })).toHaveValue('rainfall')
 
       // Check temporal inputs
       const temporalInputs = page.locator('.filter-stack-contents__body')

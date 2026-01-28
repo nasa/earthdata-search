@@ -48,7 +48,7 @@ test.describe('Map: NLP spatial rendering', () => {
   })
 
   test('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Type to search for data' }).fill('rainfall in DC')
+    await page.getByRole('textbox', { name: 'Wildfires in California during summer 2023' }).fill('rainfall in DC')
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
 
