@@ -40,7 +40,7 @@ const screenshotClip = {
 
 const defaultCmrPageSize = 20
 
-const keywordInputText = /Wildfires in California during summer 2023/i
+const keywordInputText = /Type to search for data/i
 
 /**
  * Test that the provided facet group is expanded and the others not
