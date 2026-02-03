@@ -254,7 +254,7 @@ export const Home: React.FC = () => {
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
                     onChange={onChangeKeyword}
-                    placeholder="Wildfires in California during the summer 2023"
+                    placeholder="Wildfires in California during the summer of 2023"
                     ref={inputRef}
                     type="text"
                     value={keyword}
