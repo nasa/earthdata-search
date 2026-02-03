@@ -42,7 +42,7 @@ vi.mock('../../../../../../sharedUtils/config', async () => ({
 }))
 
 const mockUseNavigate = vi.fn()
-const placeholderText = 'Wildfires in California during summer 2023'
+const placeholderText = 'Wildfires in California during the summer 2023'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),

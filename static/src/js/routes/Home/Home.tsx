@@ -232,14 +232,16 @@ export const Home: React.FC = () => {
               {' '}
               Earth observations
             </h1>
-            <p className="text-white mb-0 lead">
+            <div className="d-flex justify-content-center align-items-center">
               <Badge
-                className="home__new-badge"
+                className="home__new-badge me-2"
               >
                 NEW
               </Badge>
-              Describe what you&apos;re looking for to start your search
-            </p>
+              <p className="text-white mb-0 lead">
+                Describe what you&apos;re looking for to start your search
+              </p>
+            </div>
           </div>
           <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
             <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
@@ -252,7 +254,7 @@ export const Home: React.FC = () => {
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
                     onChange={onChangeKeyword}
-                    placeholder="Wildfires in California during summer 2023"
+                    placeholder="Wildfires in California during the summer 2023"
                     ref={inputRef}
                     type="text"
                     value={keyword}
