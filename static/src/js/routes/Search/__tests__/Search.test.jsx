@@ -147,6 +147,20 @@ describe('Search component', () => {
       expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
     })
 
+    test('renders the "Show inactive collections" checkbox under PortalFeatureContainer', async () => {
+      const { user } = setup()
+
+      const checkbox = await screen.findByLabelText('Show inactive collections')
+      expect(checkbox).toBeInTheDocument()
+
+      // Check for tooltip
+      await user.hover(checkbox)
+
+      const tooltip = screen.getByRole('tooltip')
+      expect(tooltip).toBeInTheDocument()
+      expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results')).toBeInTheDocument()
+    })
+
     describe('handleCheckboxCheck', () => {
       test('checking the "Include collections without granules" checkbox calls changeQuery', async () => {
         const { user, zustandState } = setup()
@@ -166,14 +180,29 @@ describe('Search component', () => {
       test('checking the "Include only EOSDIS collections" checkbox calls changeQuery', async () => {
         const { user, zustandState } = setup()
 
-        const includeWithoutGranulesCheckbox = await screen.findByText('Include only EOSDIS collections')
+        const onlyEosdisCollectionsCheckbox = await screen.findByText('Include only EOSDIS collections')
 
-        await user.click(includeWithoutGranulesCheckbox)
+        await user.click(onlyEosdisCollectionsCheckbox)
 
         expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
         expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
             onlyEosdisCollections: true
+          }
+        })
+      })
+
+      test('checking the "Show Inactive Collections" checkbox calls changeQuery', async () => {
+        const { user, zustandState } = setup()
+
+        const showInactiveCollectionsCheckbox = await screen.findByText('Show inactive collections')
+
+        await user.click(showInactiveCollectionsCheckbox)
+
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+          collection: {
+            showInactiveCollections: true
           }
         })
       })

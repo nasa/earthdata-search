@@ -6,6 +6,8 @@ import React, {
 } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { FaFilter, FaMap } from 'react-icons/fa'
 
@@ -215,13 +217,28 @@ export const Search = () => {
                                 />
                               </PortalFeatureContainer>
                               <PortalFeatureContainer inactiveCollectionsCheckbox>
-                                <Form.Check
-                                  checked={isInactiveCollectionsChecked}
-                                  id="input__show-inactive"
-                                  data-testid="input_show-inactive"
-                                  label="Show inactive collections"
-                                  onChange={(event) => handleCheckboxCheck(event)}
-                                />
+                                <OverlayTrigger
+                                  placement="top"
+                                  overlay={
+                                    (
+                                      <Tooltip id="tooltip-inactive-collections">
+                                        Include collections labeled as
+                                        planned, deprecated, preprint, in review,
+                                        superseded, or not provided in results
+                                      </Tooltip>
+                                    )
+                                  }
+                                >
+                                  <div>
+                                    <Form.Check
+                                      checked={isInactiveCollectionsChecked}
+                                      id="input__show-inactive"
+                                      data-testid="input_show-inactive"
+                                      label="Show inactive collections"
+                                      onChange={(event) => handleCheckboxCheck(event)}
+                                    />
+                                  </div>
+                                </OverlayTrigger>
                               </PortalFeatureContainer>
                             </Form.Group>
                           </SidebarFiltersItem>

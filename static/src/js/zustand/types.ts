@@ -915,7 +915,7 @@ type CollectionQuery = {
   keyword: string
   /** Flag to indicate if only EOSDIS collections should be included */
   onlyEosdisCollections: boolean
-  /** Flag to show collections labeled as 'PLANNED', 'DEPRECATED', 'PREPRINT', OR 'INREVIEW' a.k.a. 'inactive collections' */
+  /** Flag to show collections labeled as 'PLANNED', 'DEPRECATED', 'PREPRINT', 'INREVIEW', 'SUPERCEDED', 'NOT PROVIDED' a.k.a. 'inactive collections' */
   showInactiveCollections: boolean
   /** The temporal override */
   overrideTemporal: Temporal
