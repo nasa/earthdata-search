@@ -25,6 +25,7 @@
     "ui": {
       "showNonEosdisCheckbox": false,
       "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false,
       "showTophat": false
     }
   },
@@ -71,6 +72,7 @@
     "ui": {
       "showNonEosdisCheckbox": true,
       "showOnlyGranulesCheckbox": true,
+      "showInactiveCollectionsCheckbox": true,
       "showTophat": true
     }
   },
@@ -90,7 +92,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal": {
@@ -109,7 +112,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal10": {
@@ -127,7 +131,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal11": {
@@ -145,7 +150,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal2": {
@@ -163,7 +169,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal3": {
@@ -181,7 +188,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal4": {
@@ -199,7 +207,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal5": {
@@ -217,7 +226,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal6": {
@@ -235,7 +245,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal7": {
@@ -253,7 +264,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal8": {
@@ -271,7 +283,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   },
   "testPortal9": {
@@ -289,7 +302,8 @@
     },
     "ui": {
       "showNonEosdisCheckbox": false,
-      "showOnlyGranulesCheckbox": false
+      "showOnlyGranulesCheckbox": false,
+      "showInactiveCollectionsCheckbox": false
     }
   }
 }

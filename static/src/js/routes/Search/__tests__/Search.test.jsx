@@ -91,7 +91,8 @@ const setup = setupTest({
       },
       ui: {
         showNonEosdisCheckbox: true,
-        showOnlyGranulesCheckbox: true
+        showOnlyGranulesCheckbox: true,
+        showInactiveCollectionsCheckbox: true
       }
     },
     query: {

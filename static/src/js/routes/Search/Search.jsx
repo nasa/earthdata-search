@@ -69,11 +69,13 @@ export const Search = () => {
 
   const {
     hasGranulesOrCwic = false,
-    onlyEosdisCollections
+    onlyEosdisCollections,
+    showInactiveCollections
   } = collectionQuery
 
   const isHasNoGranulesChecked = !hasGranulesOrCwic
   const isEosdisChecked = onlyEosdisCollections || false
+  const isInactiveCollectionsChecked = showInactiveCollections || false
 
   const handleCheckboxCheck = (event) => {
     const { target } = event
@@ -88,6 +90,11 @@ export const Search = () => {
     if (id === 'input__only-granules') {
       if (!checked) collection.hasGranulesOrCwic = true
       if (checked) collection.hasGranulesOrCwic = undefined
+    }
+
+    if (id === 'input__show-inactive') {
+      if (!checked) collection.showInactiveCollections = undefined
+      if (checked) collection.showInactiveCollections = true
     }
 
     changeQuery({
@@ -183,6 +190,7 @@ export const Search = () => {
                         <PortalFeatureContainer
                           onlyGranulesCheckbox
                           nonEosdisCheckbox
+                          inactiveCollectionsCheckbox
                         >
                           <SidebarFiltersItem
                             heading="Additional Filters"
@@ -203,6 +211,15 @@ export const Search = () => {
                                   id="input__non-eosdis"
                                   data-testid="input_non-eosdis"
                                   label="Include only EOSDIS collections"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                />
+                              </PortalFeatureContainer>
+                              <PortalFeatureContainer inactiveCollectionsCheckbox>
+                                <Form.Check
+                                  checked={isInactiveCollectionsChecked}
+                                  id="input__show-inactive"
+                                  data-testid="input_show-inactive"
+                                  label="Show inactive collections"
                                   onChange={(event) => handleCheckboxCheck(event)}
                                 />
                               </PortalFeatureContainer>

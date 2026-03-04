@@ -28,6 +28,7 @@ export const prepareCollectionParams = () => {
     onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
+    showInactiveCollections,
     sortKey,
     spatial = {},
     tagKey: selectedTag,
@@ -98,6 +99,7 @@ export const prepareCollectionParams = () => {
     point,
     polygon,
     serviceType,
+    showInactiveCollections,
     sortKey,
     tagKey,
     temporalString,
@@ -147,6 +149,7 @@ export const buildCollectionSearchParams = (params) => {
     project,
     provider,
     serviceType,
+    showInactiveCollections,
     sortKey: selectedSortKey,
     spatialKeyword,
     standardProduct,
@@ -194,6 +197,11 @@ export const buildCollectionSearchParams = (params) => {
     sortKey
   }
 
+  let includeNonOperational
+  if (showInactiveCollections) {
+    includeNonOperational = true
+  }
+
   if (facetsToSend.science_keywords_h && facetsToSend.science_keywords_h.length > 1) {
     defaultParams.options.science_keywords_h = { or: true }
   }
@@ -233,6 +241,7 @@ export const buildCollectionSearchParams = (params) => {
     granuleDataFormatH: facetsToSend.granule_data_format_h,
     hasGranulesOrCwic,
     horizontalDataResolutionRange: facetsToSend.horizontal_data_resolution_range,
+    includeNonOperational,
     instrument,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,

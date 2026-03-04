@@ -30,6 +30,7 @@ export const initialState = {
     onlyEosdisCollections: false,
     overrideTemporal: {},
     pageNum: 1,
+    showInactiveCollections: false,
     sortKey: collectionSearchResultsSortKey,
     spatial: {},
     tagKey: '',

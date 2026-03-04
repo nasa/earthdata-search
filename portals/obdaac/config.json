@@ -36,7 +36,8 @@
     "secondary": "Ocean Biology Distributed Active Archive Center"
   },
   "ui": {
-    "showNonEosdisCheckbox": true,
-    "showOnlyGranulesCheckbox": true
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false,
+    "showInactiveCollectionsCheckbox": true
   }
 }

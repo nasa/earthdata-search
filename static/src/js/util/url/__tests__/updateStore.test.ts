@@ -102,6 +102,7 @@ describe('updateStore', () => {
         onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
+        showInactiveCollections: false,
         sortKey: collectionSortKeys.scoreDescending,
         spatial: initialState.query.collection.spatial,
         tagKey: '',
@@ -220,6 +221,7 @@ describe('updateStore', () => {
           onlyEosdisCollections: false,
           overrideTemporal: {},
           pageNum: 1,
+          showInactiveCollections: false,
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
           tagKey: '',
@@ -364,6 +366,7 @@ describe('updateStore', () => {
         ui: {
           showNonEosdisCheckbox: false,
           showOnlyGranulesCheckbox: false,
+          showInactiveCollectionsCheckbox: false,
           showTophat: true
         }
       })
@@ -384,6 +387,7 @@ describe('updateStore', () => {
           onlyEosdisCollections: false,
           overrideTemporal: {},
           pageNum: 1,
+          showInactiveCollections: false,
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
           tagKey: '',
@@ -495,6 +499,7 @@ describe('updateStore', () => {
           ui: {
             showNonEosdisCheckbox: false,
             showOnlyGranulesCheckbox: false,
+            showInactiveCollectionsCheckbox: false,
             showTophat: true
           }
         })

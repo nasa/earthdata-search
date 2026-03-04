@@ -18,7 +18,8 @@ const setup = setupTest({
       },
       ui: {
         showNonEosdisCheckbox: true,
-        showOnlyGranulesCheckbox: true
+        showOnlyGranulesCheckbox: true,
+        showInactiveCollectionsCheckbox: true
       }
     }
   }
@@ -166,6 +167,42 @@ describe('PortalFeatureContainer component', () => {
       })
 
       expect(screen.queryByText('children')).not.toBeInTheDocument()
+    })
+
+    describe('inactiveCollectionsCheckbox', () => {
+      test('renders children when showInactiveCollectionsCheckbox is enabled', () => {
+        setup({
+          overrideProps: {
+            inactiveCollectionsCheckbox: true
+          },
+          overrideZustandState: {
+            portal: {
+              ui: {
+                showInactiveCollectionsCheckbox: true
+              }
+            }
+          }
+        })
+
+        expect(screen.getByText('children')).toBeInTheDocument()
+      })
+
+      test('does not render children when showInactiveCollectionsCheckbox is disabled', () => {
+        setup({
+          overrideProps: {
+            inactiveCollectionsCheckbox: true
+          },
+          overrideZustandState: {
+            portal: {
+              ui: {
+                showInactiveCollectionsCheckbox: false
+              }
+            }
+          }
+        })
+
+        expect(screen.queryByText('children')).not.toBeInTheDocument()
+      })
     })
   })
 })

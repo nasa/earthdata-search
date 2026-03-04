@@ -40,6 +40,7 @@
   "ui": {
     "showNonEosdisCheckbox": true,
     "showOnlyGranulesCheckbox": true,
+    "showInactiveCollectionsCheckbox": true,
     "showTophat": true
   }
 }

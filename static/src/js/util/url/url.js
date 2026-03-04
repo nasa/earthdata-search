@@ -172,6 +172,11 @@ const urlDefs = {
     shortKey: 'oe',
     encode: encodeBoolean,
     decode: decodeBoolean
+  },
+  showInactiveCollections: {
+    shortKey: 'ic',
+    encode: encodeBoolean,
+    decode: decodeBoolean
   }
 }
 
@@ -241,8 +246,9 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
   collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
-  collectionQuery.spatial = spatial
+  collectionQuery.showInactiveCollections = decodeHelp(params, 'showInactiveCollections')
   collectionQuery.sortKey = decodeCollectionSortKey(params)
+  collectionQuery.spatial = spatial
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
 
@@ -342,6 +348,7 @@ export const encodeUrlQuery = (props) => {
     keyword: keywordSearch,
     onlyEosdisCollections,
     overrideTemporal: overrideTemporalSearch,
+    showInactiveCollections,
     sortKey,
     tagKey,
     temporal: temporalSearch
@@ -366,6 +373,7 @@ export const encodeUrlQuery = (props) => {
     overrideTemporalSearch,
     pointSearch,
     polygonSearch,
+    showInactiveCollections,
     tagKey,
     temporalSearch
   }
