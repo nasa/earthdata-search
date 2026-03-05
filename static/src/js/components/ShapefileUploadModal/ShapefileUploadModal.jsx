@@ -53,7 +53,7 @@ const ShapefileUploadModal = () => {
           Valid formats include:
         </p>
         <ul>
-          <li>Shapefile (.zip including .shp, .dbf, and .shx file)</li>
+          <li>Shapefile (.zip including .shp, .dbf, .shx and .prj file)</li>
           <li>Keyhole Markup Language (.kml or .kmz)</li>
           <li>GeoJSON (.json or .geojson)</li>
           <li>GeoRSS (.rss, .georss, or .xml)</li>

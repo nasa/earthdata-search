@@ -57,7 +57,7 @@ describe('ShapefileUploadModal component', () => {
     setup()
 
     expect(screen.getByText('Valid formats include:')).toBeInTheDocument()
-    expect(screen.getByText('Shapefile (.zip including .shp, .dbf, and .shx file)')).toBeInTheDocument()
+    expect(screen.getByText('Shapefile (.zip including .shp, .dbf, .shx and .prj file)')).toBeInTheDocument()
     expect(screen.getByText('Keyhole Markup Language (.kml or .kmz)')).toBeInTheDocument()
     expect(screen.getByText('GeoJSON (.json or .geojson)')).toBeInTheDocument()
     expect(screen.getByText('GeoRSS (.rss, .georss, or .xml)')).toBeInTheDocument()
