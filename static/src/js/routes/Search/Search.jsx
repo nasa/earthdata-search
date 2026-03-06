@@ -99,7 +99,7 @@ export const Search = () => {
       if (checked) collection.hasGranulesOrCwic = undefined
     }
 
-    if (id === 'input__show-inactive') {
+    if (id === 'input__include-inactive') {
       if (!checked) collection.includeInactiveCollections = undefined
       if (checked) collection.includeInactiveCollections = true
     }
@@ -224,7 +224,7 @@ export const Search = () => {
                               <PortalFeatureContainer inactiveCollectionsCheckbox>
                                 <Form.Check
                                   checked={isInactiveCollectionsChecked}
-                                  id="input__show-inactive"
+                                  id="input__include-inactive"
                                   onChange={(event) => handleCheckboxCheck(event)}
                                   label={
                                     (

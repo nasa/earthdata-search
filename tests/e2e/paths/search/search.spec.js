@@ -1180,7 +1180,7 @@ test.describe('Path /search', () => {
 
         await page.route('**/search/collections.json', (route) => {
           const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&include_non_operational=true&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
+          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_non_operational=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
           route.fulfill({
             body: JSON.stringify(nonEosdisBody),
@@ -1208,7 +1208,7 @@ test.describe('Path /search', () => {
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the correct checkbox is checked
-        await expect(page.getByTestId('input_show-inactive')).toBeChecked()
+        await expect(page.getByRole('checkbox', { name: 'Include inactive collections' })).toBeChecked()
       })
     })
   })
