@@ -63,6 +63,7 @@ describe('collectionRelevancyMetrics', () => {
           granuleDataFormatH: undefined,
           hasGranulesOrCwic: true,
           horizontalDataResolutionRange: undefined,
+          includeNonOperational: undefined,
           includeFacets: 'v2',
           includeGranuleCounts: true,
           includeHasGranules: true,

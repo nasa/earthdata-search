@@ -13,14 +13,14 @@ beforeEach(() => {
 })
 
 describe('url#decodeUrlParams', () => {
-  test('decodes showInactiveCollections correctly', () => {
+  test('decodes includeInactiveCollections correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       query: {
         ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
-          showInactiveCollections: true
+          includeInactiveCollections: true
         }
       }
     }
@@ -29,11 +29,11 @@ describe('url#decodeUrlParams', () => {
 })
 
 describe('url#encodeUrlQuery', () => {
-  test('encodes showInactiveCollections correctly', () => {
+  test('encodes includeInactiveCollections correctly', () => {
     const props = {
       collectionsQuery: {
         hasGranulesOrCwic: true,
-        showInactiveCollections: true
+        includeInactiveCollections: true
       },
       pathname: '/path/here'
     }

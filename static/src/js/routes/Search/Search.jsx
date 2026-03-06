@@ -7,9 +7,12 @@ import React, {
 import { Route, Routes } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
-import { FaFilter, FaMap } from 'react-icons/fa'
+import {
+  FaFilter,
+  FaMap,
+  FaQuestionCircle
+} from 'react-icons/fa'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
@@ -33,6 +36,8 @@ import advancedSearchFields from '../../data/advancedSearchFields'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { routes } from '../../constants/routes'
+import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+import renderTooltip from '../../util/renderTooltip'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlights = lazy(() => import('../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'))
@@ -72,12 +77,12 @@ export const Search = () => {
   const {
     hasGranulesOrCwic = false,
     onlyEosdisCollections,
-    showInactiveCollections
+    includeInactiveCollections
   } = collectionQuery
 
   const isHasNoGranulesChecked = !hasGranulesOrCwic
   const isEosdisChecked = onlyEosdisCollections || false
-  const isInactiveCollectionsChecked = showInactiveCollections || false
+  const isInactiveCollectionsChecked = includeInactiveCollections || false
 
   const handleCheckboxCheck = (event) => {
     const { target } = event
@@ -95,8 +100,8 @@ export const Search = () => {
     }
 
     if (id === 'input__show-inactive') {
-      if (!checked) collection.showInactiveCollections = undefined
-      if (checked) collection.showInactiveCollections = true
+      if (!checked) collection.includeInactiveCollections = undefined
+      if (checked) collection.includeInactiveCollections = true
     }
 
     changeQuery({
@@ -217,28 +222,32 @@ export const Search = () => {
                                 />
                               </PortalFeatureContainer>
                               <PortalFeatureContainer inactiveCollectionsCheckbox>
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={
+                                <Form.Check
+                                  checked={isInactiveCollectionsChecked}
+                                  id="input__show-inactive"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                  label={
                                     (
-                                      <Tooltip id="tooltip-inactive-collections">
-                                        Include collections labeled as
-                                        planned, deprecated, preprint, in review,
-                                        superseded, or not provided in results
-                                      </Tooltip>
+                                      <div>
+                                        Include inactive collections
+                                        {' '}
+                                        <OverlayTrigger
+                                          placement="top"
+                                          overlay={
+                                            (tooltipProps) => renderTooltip({
+                                              children: 'Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results',
+                                              ...tooltipProps
+                                            })
+                                          }
+                                        >
+                                          <span>
+                                            <EDSCIcon icon={FaQuestionCircle} size="10" variant="more-info" />
+                                          </span>
+                                        </OverlayTrigger>
+                                      </div>
                                     )
                                   }
-                                >
-                                  <div>
-                                    <Form.Check
-                                      checked={isInactiveCollectionsChecked}
-                                      id="input__show-inactive"
-                                      data-testid="input_show-inactive"
-                                      label="Show inactive collections"
-                                      onChange={(event) => handleCheckboxCheck(event)}
-                                    />
-                                  </div>
-                                </OverlayTrigger>
+                                />
                               </PortalFeatureContainer>
                             </Form.Group>
                           </SidebarFiltersItem>

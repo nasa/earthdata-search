@@ -38,6 +38,6 @@
   "ui": {
     "showNonEosdisCheckbox": false,
     "showOnlyGranulesCheckbox": false,
-    "showInactiveCollectionsCheckbox": true
+    "includeInactiveCollectionsCheckbox": true
   }
 }

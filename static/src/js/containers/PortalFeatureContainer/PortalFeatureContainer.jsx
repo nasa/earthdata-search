@@ -9,7 +9,7 @@ import useEdscStore from '../../zustand/useEdscStore'
  * @param {Boolean} props.authentication Flag to check if authentication is enabled in the portal config
  * @param {Boolean} props.nonEosdisCheckbox Flag to check if the non-EOSDIS checkbox is enabled in the portal config
  * @param {Boolean} props.onlyGranulesCheckbox Flag to check if the only granules checkbox is enabled in the portal config
- * @param {Boolean} props.inactiveCollectionsCheckbox Flag to check if show inactive collections checkbox is enabled in the portal config
+ * @param {Boolean} props.inactiveCollectionsCheckbox Flag to check if Include inactive collections checkbox is enabled in the portal config
  */
 export const PortalFeatureContainer = ({
   advancedSearch = false,
@@ -31,7 +31,7 @@ export const PortalFeatureContainer = ({
   const {
     showNonEosdisCheckbox,
     showOnlyGranulesCheckbox,
-    showInactiveCollectionsCheckbox
+    includeInactiveCollectionsCheckbox
   } = ui
 
   if (advancedSearch && configAdvancedSearch) {
@@ -50,7 +50,7 @@ export const PortalFeatureContainer = ({
     return children
   }
 
-  if (inactiveCollectionsCheckbox && showInactiveCollectionsCheckbox) {
+  if (inactiveCollectionsCheckbox && includeInactiveCollectionsCheckbox) {
     return children
   }
 

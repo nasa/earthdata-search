@@ -31,7 +31,7 @@ export const emptyDecodedResult = {
       keyword: undefined,
       onlyEosdisCollections: undefined,
       overrideTemporal: {},
-      showInactiveCollections: undefined,
+      includeInactiveCollections: undefined,
       sortKey: undefined,
       spatial: {},
       tagKey: undefined,

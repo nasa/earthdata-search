@@ -8,7 +8,6 @@ export const collectionRequestNonIndexedCmrKeys = [
   'granule_data_format_h',
   'granule_data_format',
   'horizontal_data_resolution_range',
-  'include_non_operational', // How can I double check this?
   'instrument_h',
   'instrument',
   'latency',

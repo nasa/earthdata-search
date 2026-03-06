@@ -355,7 +355,7 @@ export type PortalConfig = {
     /** Flag to show the `Include collections without granules` checkbox */
     showOnlyGranulesCheckbox: boolean
     /** Flag to show collections labeled as 'PLANNED', 'DEPRECATED', 'PREPRINT', 'INREVIEW', 'SUPERSEDED', OR 'NOT PROVIDED' a.k.a. 'inactive collections' */
-    showInactiveCollectionsCheckbox: boolean
+    includeInactiveCollectionsCheckbox: boolean
     /** Flag to show Tophat */
     showTophat: boolean
   }

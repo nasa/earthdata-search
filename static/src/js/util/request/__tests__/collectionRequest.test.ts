@@ -95,7 +95,6 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'granule_data_format_h',
       'granule_data_format',
       'horizontal_data_resolution_range',
-      'include_non_operational',
       'instrument_h',
       'instrument',
       'latency',

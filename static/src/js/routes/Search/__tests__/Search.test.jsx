@@ -92,7 +92,7 @@ const setup = setupTest({
       ui: {
         showNonEosdisCheckbox: true,
         showOnlyGranulesCheckbox: true,
-        showInactiveCollectionsCheckbox: true
+        includeInactiveCollectionsCheckbox: true
       }
     },
     query: {
@@ -147,17 +147,15 @@ describe('Search component', () => {
       expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
     })
 
-    test('renders the "Show inactive collections" checkbox under PortalFeatureContainer', async () => {
+    test('renders the "Include inactive collections" checkbox under PortalFeatureContainer', async () => {
       const { user } = setup()
 
-      const checkbox = await screen.findByLabelText('Show inactive collections')
+      const checkbox = await screen.findByLabelText('Include inactive collections')
       expect(checkbox).toBeInTheDocument()
 
-      // Check for tooltip
-      await user.hover(checkbox)
-
-      const tooltip = screen.getByRole('tooltip')
-      expect(tooltip).toBeInTheDocument()
+      const icons = screen.getAllByRole('graphics-symbol')
+      const tooltip = icons[1]
+      await user.hover(tooltip)
       expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results')).toBeInTheDocument()
     })
 
@@ -192,17 +190,17 @@ describe('Search component', () => {
         })
       })
 
-      test('checking the "Show Inactive Collections" checkbox calls changeQuery', async () => {
+      test('checking the "Include inactive collections" checkbox calls changeQuery', async () => {
         const { user, zustandState } = setup()
 
-        const showInactiveCollectionsCheckbox = await screen.findByText('Show inactive collections')
+        const includeInactiveCollectionsCheckbox = await screen.findByText('Include inactive collections')
 
-        await user.click(showInactiveCollectionsCheckbox)
+        await user.click(includeInactiveCollectionsCheckbox)
 
         expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
         expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
-            showInactiveCollections: true
+            includeInactiveCollections: true
           }
         })
       })
