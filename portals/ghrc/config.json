@@ -13,6 +13,7 @@
   },
   "ui": {
     "showNonEosdisCheckbox": false,
-    "showOnlyGranulesCheckbox": false
+    "showOnlyGranulesCheckbox": false,
+    "includeInactiveCollectionsCheckbox": true
   }
 }

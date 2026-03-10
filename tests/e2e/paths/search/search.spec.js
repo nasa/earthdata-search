@@ -1173,6 +1173,46 @@ test.describe('Path /search', () => {
     })
   })
 
+  test.describe('Includes Inactive Collections', () => {
+    test.describe('When the path is loaded with the ic=t param', () => {
+      test('loads with the checkbox selected', async ({ page }) => {
+        const cmrHits = 7704
+
+        await page.route('**/search/collections.json', (route) => {
+          const req = route.request()
+          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_non_operational=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
+
+          route.fulfill({
+            body: JSON.stringify(nonEosdisBody),
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits
+            }
+          })
+        })
+
+        await page.goto('/search?ic=t')
+
+        // Ensure the correct number of results were loaded
+        await testResultsSize(page, cmrHits)
+
+        // Ensure that the correct feature facets are selected
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
+
+        // Keyword input is empty
+        await expect(page.getByRole('textbox', { name: keywordInputPlaceholderText })).toHaveValue('')
+
+        // Ensure facet group bodies are shown correctly
+        await testFacetGroupExistence(page, 'features')
+
+        // Ensure the correct checkbox is checked
+        await expect(page.getByRole('checkbox', { name: 'Include inactive collections' })).toBeChecked()
+      })
+    })
+  })
+
   test.describe('When the path is loaded with an ee parameter', () => {
     test('loads in the correct environment', async ({ page }) => {
       const cmrHits = 6209

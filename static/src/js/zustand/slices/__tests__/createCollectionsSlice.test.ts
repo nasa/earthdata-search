@@ -210,6 +210,7 @@ describe('createCollectionsSlice', () => {
         onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
+        includeInactiveCollections: false,
         sortKey: '-score',
         spatial: {
           geoJson: {
@@ -452,6 +453,7 @@ describe('createCollectionsSlice', () => {
         onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
+        includeInactiveCollections: false,
         sortKey: '-score',
         spatial: {},
         tagKey: '',

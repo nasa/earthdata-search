@@ -48,6 +48,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'include_facets',
       'include_granule_counts',
       'include_has_granules',
+      'include_non_operational',
       'include_tags',
       'include_tags',
       'instrument_h',

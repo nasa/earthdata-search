@@ -203,6 +203,7 @@ const setup = setupTest({
         onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
+        includeInactiveCollections: false,
         sortKey: '-usage_score',
         spatial: {},
         tagKey: '',

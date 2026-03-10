@@ -69,6 +69,7 @@ describe('buildConfig', () => {
       ui: {
         showOnlyGranulesCheckbox: false,
         showNonEosdisCheckbox: false,
+        includeInactiveCollectionsCheckbox: true,
         showTophat: true
       },
       parentConfig: 'edsc'

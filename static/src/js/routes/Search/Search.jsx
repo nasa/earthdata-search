@@ -6,8 +6,13 @@ import React, {
 } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
-import { FaFilter, FaMap } from 'react-icons/fa'
+import {
+  FaFilter,
+  FaMap,
+  FaQuestionCircle
+} from 'react-icons/fa'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
@@ -31,6 +36,8 @@ import advancedSearchFields from '../../data/advancedSearchFields'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { routes } from '../../constants/routes'
+import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+import renderTooltip from '../../util/renderTooltip'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlights = lazy(() => import('../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'))
@@ -69,11 +76,13 @@ export const Search = () => {
 
   const {
     hasGranulesOrCwic = false,
-    onlyEosdisCollections
+    onlyEosdisCollections,
+    includeInactiveCollections
   } = collectionQuery
 
   const isHasNoGranulesChecked = !hasGranulesOrCwic
   const isEosdisChecked = onlyEosdisCollections || false
+  const isInactiveCollectionsChecked = includeInactiveCollections || false
 
   const handleCheckboxCheck = (event) => {
     const { target } = event
@@ -88,6 +97,11 @@ export const Search = () => {
     if (id === 'input__only-granules') {
       if (!checked) collection.hasGranulesOrCwic = true
       if (checked) collection.hasGranulesOrCwic = undefined
+    }
+
+    if (id === 'input__include-inactive') {
+      if (!checked) collection.includeInactiveCollections = undefined
+      if (checked) collection.includeInactiveCollections = true
     }
 
     changeQuery({
@@ -183,6 +197,7 @@ export const Search = () => {
                         <PortalFeatureContainer
                           onlyGranulesCheckbox
                           nonEosdisCheckbox
+                          inactiveCollectionsCheckbox
                         >
                           <SidebarFiltersItem
                             heading="Additional Filters"
@@ -204,6 +219,34 @@ export const Search = () => {
                                   data-testid="input_non-eosdis"
                                   label="Include only EOSDIS collections"
                                   onChange={(event) => handleCheckboxCheck(event)}
+                                />
+                              </PortalFeatureContainer>
+                              <PortalFeatureContainer inactiveCollectionsCheckbox>
+                                <Form.Check
+                                  checked={isInactiveCollectionsChecked}
+                                  id="input__include-inactive"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                  label={
+                                    (
+                                      <div>
+                                        Include inactive collections
+                                        {' '}
+                                        <OverlayTrigger
+                                          placement="top"
+                                          overlay={
+                                            (tooltipProps) => renderTooltip({
+                                              children: 'Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results',
+                                              ...tooltipProps
+                                            })
+                                          }
+                                        >
+                                          <span>
+                                            <EDSCIcon icon={FaQuestionCircle} size="10" variant="more-info" />
+                                          </span>
+                                        </OverlayTrigger>
+                                      </div>
+                                    )
+                                  }
                                 />
                               </PortalFeatureContainer>
                             </Form.Group>

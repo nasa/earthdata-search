@@ -9,13 +9,15 @@ import useEdscStore from '../../zustand/useEdscStore'
  * @param {Boolean} props.authentication Flag to check if authentication is enabled in the portal config
  * @param {Boolean} props.nonEosdisCheckbox Flag to check if the non-EOSDIS checkbox is enabled in the portal config
  * @param {Boolean} props.onlyGranulesCheckbox Flag to check if the only granules checkbox is enabled in the portal config
+ * @param {Boolean} props.inactiveCollectionsCheckbox Flag to check if Include inactive collections checkbox is enabled in the portal config
  */
 export const PortalFeatureContainer = ({
   advancedSearch = false,
   authentication = false,
   children,
   nonEosdisCheckbox = false,
-  onlyGranulesCheckbox = false
+  onlyGranulesCheckbox = false,
+  inactiveCollectionsCheckbox = false
 }) => {
   const portal = useEdscStore((state) => state.portal)
   const {
@@ -28,7 +30,8 @@ export const PortalFeatureContainer = ({
   } = features
   const {
     showNonEosdisCheckbox,
-    showOnlyGranulesCheckbox
+    showOnlyGranulesCheckbox,
+    includeInactiveCollectionsCheckbox
   } = ui
 
   if (advancedSearch && configAdvancedSearch) {
@@ -47,6 +50,10 @@ export const PortalFeatureContainer = ({
     return children
   }
 
+  if (inactiveCollectionsCheckbox && includeInactiveCollectionsCheckbox) {
+    return children
+  }
+
   return null
 }
 
@@ -55,7 +62,8 @@ PortalFeatureContainer.propTypes = {
   authentication: PropTypes.bool,
   children: PropTypes.node.isRequired,
   nonEosdisCheckbox: PropTypes.bool,
-  onlyGranulesCheckbox: PropTypes.bool
+  onlyGranulesCheckbox: PropTypes.bool,
+  inactiveCollectionsCheckbox: PropTypes.bool
 }
 
 export default PortalFeatureContainer
