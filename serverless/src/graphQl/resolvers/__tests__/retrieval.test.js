@@ -1033,7 +1033,7 @@ describe('Retrieval resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 DelaySeconds: 3,
@@ -1055,7 +1055,8 @@ describe('Retrieval resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })
@@ -1191,7 +1192,7 @@ describe('Retrieval resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 DelaySeconds: 3,
@@ -1213,7 +1214,8 @@ describe('Retrieval resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })
@@ -1357,7 +1359,7 @@ describe('Retrieval resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 DelaySeconds: 3,
@@ -1379,7 +1381,8 @@ describe('Retrieval resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })
@@ -1636,7 +1639,7 @@ describe('Retrieval resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 DelaySeconds: 3,
@@ -1658,7 +1661,8 @@ describe('Retrieval resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })

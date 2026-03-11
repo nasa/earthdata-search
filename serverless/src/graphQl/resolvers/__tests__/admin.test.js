@@ -1285,7 +1285,7 @@ describe('Admin Resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 Id: '1234',
@@ -1306,7 +1306,8 @@ describe('Admin Resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })
@@ -1348,7 +1349,7 @@ describe('Admin Resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 Id: '1234',
@@ -1369,7 +1370,8 @@ describe('Admin Resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })
@@ -1411,7 +1413,7 @@ describe('Admin Resolver', () => {
 
           expect(sqs.send).toHaveBeenCalledTimes(1)
           expect(sqs.send).toHaveBeenCalledWith({
-            deserialize: expect.any(Function),
+            deserialize: null,
             input: {
               Entries: [{
                 Id: '1234',
@@ -1432,7 +1434,8 @@ describe('Admin Resolver', () => {
               resolve: expect.any(Function),
               use: expect.any(Function)
             },
-            serialize: expect.any(Function)
+            schema: expect.any(Array),
+            serialize: null
           })
         })
       })
