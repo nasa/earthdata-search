@@ -54,7 +54,18 @@ export default defineConfig({
       showTophat,
       version
     }),
-    react(),
+    react({
+      babel: {
+        plugins: [
+          [
+            "babel-plugin-react-compiler",
+            {
+              target: "18"
+            }
+          ]
+        ]
+      }
+    }),
     nodePolyfills({
       include: [
         'buffer',
