@@ -8,7 +8,7 @@ import { FaCircle, FaFile } from 'react-icons/fa'
 // @ts-expect-error: This file does not have types
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 // @ts-expect-error: This file does not have types
 import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
@@ -34,12 +34,21 @@ import { changePath } from '../../util/url/changePath'
 import './SpatialSelectionDropdown.scss'
 
 interface SpatialSelectionDropdownProps {
-  homePage?: boolean;
+  searchParams?: {
+    q?: string
+  }
 }
 
-const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = ({ homePage }) => {
+const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = (
+  { searchParams = {} }
+) => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const navigate = useNavigate()
+
+  const location = useLocation()
+  const { pathname } = location
+  const isHomePage = pathname === routes.HOME
 
   const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
 
@@ -47,7 +56,15 @@ const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = ({ hom
     // Sends metrics for spatial selection usage
     metricsSpatialSelection(spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase())
 
-    if (homePage) {
+    if (isHomePage) {
+      if (searchParams.q) {
+        changeQuery({
+          collection: {
+            keyword: searchParams.q
+          }
+        })
+      }
+
       navigate(`/search${window.location.search}`)
       changePath(`${routes.SEARCH}`)
       setStartDrawing(spatialType)

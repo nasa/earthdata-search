@@ -162,8 +162,7 @@ export const Home: React.FC = () => {
 
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
   const { nlpSearch } = getApplicationConfig()
-  // Const isNlpEnabled = nlpSearch === 'true'
-  const isNlpEnabled = false
+  const isNlpEnabled = nlpSearch === 'true'
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -195,10 +194,10 @@ export const Home: React.FC = () => {
   const visiblePortals = sortedPortals.slice(0, 10)
   const hiddenPortals = sortedPortals.slice(10)
 
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: collectionsQueryKeyword = '' } = collectionQuery
   const [keyword, setKeyword] = useState(collectionsQueryKeyword)
-  console.log("🚀 ~ Home.tsx:201 ~ Home ~ keyword:", keyword)
 
   const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
@@ -218,12 +217,17 @@ export const Home: React.FC = () => {
       // If nlp is enabled, use NLP search to fetch collections
       await getNlpCollections(trimmedKeyword)
     } else {
-      // If nlp is NOT enabled, getCollections to load collections directly from CMR
+      // Manually update the query in the store
+      changeQuery({
+        collection: {
+          keyword: trimmedKeyword
+        }
+      })
+
+      // GetCollections to load collections directly from CMR
       await getCollections(trimmedKeyword || undefined)
     }
 
-    console.log(window)
-    console.log(window.location)
     // After collections are fetched, navigate to the Search route
     navigate(`/search${window.location.search}`)
   }
@@ -289,7 +293,7 @@ export const Home: React.FC = () => {
                   !isNlpEnabled && (
                     <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
                       <TemporalSelectionDropdown searchParams={searchParams} />
-                      <SpatialSelectionDropdown homePage />
+                      <SpatialSelectionDropdown searchParams={searchParams} />
                     </div>
                   )
                 }

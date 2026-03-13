@@ -28,11 +28,9 @@ import './SearchAutocomplete.scss'
 const SearchAutocomplete = () => {
   const edlToken = useEdscStore(getEdlToken)
   const collectionQuery = useEdscStore(getCollectionsQuery)
-  console.log("🚀 ~ SearchAutocomplete.jsx:31 ~ SearchAutocomplete ~ collectionQuery:", collectionQuery)
   const { keyword: initialKeyword } = collectionQuery
 
   const [keywordSearch, setKeywordSearch] = useState(initialKeyword || '')
-  console.log("🚀 ~ SearchAutocomplete.jsx:34 ~ SearchAutocomplete ~ keywordSearch:", keywordSearch)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [suggestions, setSuggestions] = useState([])

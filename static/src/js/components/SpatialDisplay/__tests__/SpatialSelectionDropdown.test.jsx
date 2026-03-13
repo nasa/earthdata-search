@@ -44,7 +44,8 @@ const setup = setupTest({
         setOpenModal: vi.fn()
       }
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('SpatialSelectionDropdown component', () => {
