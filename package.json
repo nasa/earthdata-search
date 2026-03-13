@@ -27,7 +27,7 @@
     "migrate": "node-pg-migrate",
     "start:app": "vite dev --port 8080",
     "start": "dotenvx run node bin/start.js",
-    "start:optionals": "USE_IMAGE_CACHE=true SKIP_SQS=false npm start",
+    "start:optionals": "USE_IMAGE_CACHE=true SKIP_SQS=false ORDER_DELAY_SECONDS=1 npm start",
     "copy-secrets": "cp secret.config.json.example secret.config.json",
     "test": "TZ=US/Eastern vitest",
     "test:ui": "TZ=US/Eastern vitest --ui",
