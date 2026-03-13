@@ -112,7 +112,7 @@ const GranuleResultsItem = forwardRef(({
     s3Links,
     timeEnd = 'Not Provided',
     timeStart = 'Not Provided',
-    title
+    title = 'Not Provided'
   } = granule
 
   const buildThumbnail = () => {

@@ -806,6 +806,18 @@ describe('GranuleResultsItem component', () => {
       expect(screen.getByRole('heading', { name: 'End' })).toBeInTheDocument()
       expect(screen.getAllByText('Not Provided')[1]).toBeInTheDocument()
     })
+
+    test('renders not provided for title', () => {
+      setup({
+        overrideProps: {
+          ...staticCoverageProps,
+          title: undefined
+        }
+      })
+
+      const titleElement = screen.queryByRole('heading', { name: 'Title' })
+      expect(titleElement).not.toBeInTheDocument()
+    })
   })
 
   describe('when the generate notebook tag is added', () => {
