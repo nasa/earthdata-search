@@ -29,7 +29,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
   collections: {
     collections: initialState,
 
-    getCollections: async () => {
+    getCollections: async (searchKeyword?: string) => {
       const zustandState = get()
 
       const edlToken = getEdlToken(zustandState)
@@ -41,6 +41,10 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       }
 
       const collectionParams = prepareCollectionParams()
+
+      if (searchKeyword) {
+        collectionParams.keyword = searchKeyword
+      }
 
       const {
         pageNum

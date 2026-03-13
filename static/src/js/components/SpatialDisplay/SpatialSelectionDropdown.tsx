@@ -8,6 +8,7 @@ import { FaCircle, FaFile } from 'react-icons/fa'
 // @ts-expect-error: This file does not have types
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import { useNavigate } from 'react-router-dom'
 // @ts-expect-error: This file does not have types
 import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
@@ -23,26 +24,42 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 import { MODAL_NAMES } from '../../constants/modalNames'
+import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
+import { changePath } from '../../util/url/changePath'
+
 import './SpatialSelectionDropdown.scss'
 
-const SpatialSelectionDropdown = () => {
+interface SpatialSelectionDropdownProps {
+  homePage?: boolean;
+}
+
+const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = ({ homePage }) => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
+  const navigate = useNavigate()
+
+  const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
 
   const onItemClick = (spatialType: string) => {
     // Sends metrics for spatial selection usage
     metricsSpatialSelection(spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase())
 
-    if (spatialType === 'file') {
-      setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)
+    if (homePage) {
+      navigate(`/search${window.location.search}`)
+      changePath(`${routes.SEARCH}`)
+      setStartDrawing(spatialType)
+    } else {
+      if (spatialType === 'file') {
+        setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)
 
-      return
+        return
+      }
+
+      eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
     }
-
-    eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
   }
 
   const { disableDatabaseComponents } = getApplicationConfig()

@@ -24,6 +24,9 @@ import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+// @ts-expect-error: Types do not exist for this file
+import TemporalSelectionDropdown from '../../components/TemporalDisplay/TemporalSelectionDropdown'
+import SpatialSelectionDropdown from '../../components/SpatialDisplay/SpatialSelectionDropdown'
 import HomeTopicCard from './HomeTopicCard'
 import HomePortalCard from './HomePortalCard'
 
@@ -60,6 +63,7 @@ import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
@@ -156,6 +160,11 @@ export const Home: React.FC = () => {
 
   const { numberOfGranules } = getApplicationConfig()
 
+  // Check if NLP search is enabled to conditionally show spatial/temporal buttons
+  const { nlpSearch } = getApplicationConfig()
+  // Const isNlpEnabled = nlpSearch === 'true'
+  const isNlpEnabled = false
+
   useEffect(() => {
     // Focus the search input when the component mounts
     if (inputRef.current) {
@@ -186,10 +195,17 @@ export const Home: React.FC = () => {
   const visiblePortals = sortedPortals.slice(0, 10)
   const hiddenPortals = sortedPortals.slice(10)
 
-  const [keyword, setKeyword] = useState('')
+  const collectionQuery = useEdscStore(getCollectionsQuery)
+  const { keyword: collectionsQueryKeyword = '' } = collectionQuery
+  const [keyword, setKeyword] = useState(collectionsQueryKeyword)
+  console.log("🚀 ~ Home.tsx:201 ~ Home ~ keyword:", keyword)
 
   const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
+  }
+
+  const searchParams = {
+    q: keyword
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -198,14 +214,16 @@ export const Home: React.FC = () => {
     // Fetch the collections using the NLP search
     const trimmedKeyword = keyword.trim()
 
-    if (!trimmedKeyword) {
-      // If the user did not type anything, call getCollections to load collections directly from CMR
-      await getCollections()
-    } else {
-      // If there is a keyword, use NLP search to fetch collections
+    if (isNlpEnabled) {
+      // If nlp is enabled, use NLP search to fetch collections
       await getNlpCollections(trimmedKeyword)
+    } else {
+      // If nlp is NOT enabled, getCollections to load collections directly from CMR
+      await getCollections(trimmedKeyword || undefined)
     }
 
+    console.log(window)
+    console.log(window.location)
     // After collections are fetched, navigate to the Search route
     navigate(`/search${window.location.search}`)
   }
@@ -232,16 +250,23 @@ export const Home: React.FC = () => {
               {' '}
               Earth observations
             </h1>
-            <div className="d-flex justify-content-center align-items-center">
-              <Badge
-                className="home__new-badge"
-              >
-                NEW
-              </Badge>
-              <p className="text-white mb-0 lead">
-                Describe what you&apos;re looking for to start your search
-              </p>
-            </div>
+            {
+              isNlpEnabled ? (
+                <div className="d-flex justify-content-center align-items-center">
+                  <Badge className="home__new-badge">
+                    NEW
+                  </Badge>
+                  <p className="text-white mb-0 lead">
+                    Describe what you&apos;re looking for to start your search
+                  </p>
+                </div>
+              ) : (
+                <p className="text-white mb-0 lead">
+                  Use keywords and filter by time and spatial area
+                  to search NASA&apos;s Earth science data
+                </p>
+              )
+            }
           </div>
           <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
             <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
@@ -254,12 +279,20 @@ export const Home: React.FC = () => {
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
                     onChange={onChangeKeyword}
-                    placeholder="Wildfires in California during summer 2023"
+                    placeholder={isNlpEnabled ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
                     ref={inputRef}
                     type="text"
                     value={keyword}
                   />
                 </div>
+                {
+                  !isNlpEnabled && (
+                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                      <TemporalSelectionDropdown searchParams={searchParams} />
+                      <SpatialSelectionDropdown homePage />
+                    </div>
+                  )
+                }
                 <Button
                   type="submit"
                   className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
