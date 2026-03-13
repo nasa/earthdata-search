@@ -5,6 +5,8 @@ import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
+// @ts-expect-error: Types do not exist for this file
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import Spinner from '../../../components/Spinner/Spinner'
 
@@ -37,12 +39,12 @@ vi.mock('../../../containers/MapContainer/MapContainer', () => ({ default: vi.fn
 vi.mock('../../../../../../sharedUtils/config', async () => ({
   ...(await vi.importActual('../../../../../../sharedUtils/config')),
   getApplicationConfig: vi.fn(() => ({
-    numberOfGranules: '42'
+    numberOfGranules: '42',
+    nlpSearch: 'true'
   }))
 }))
 
 const mockUseNavigate = vi.fn()
-const placeholderText = 'Wildfires in California during summer 2023'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -84,16 +86,10 @@ describe('Home', () => {
     expect(screen.getByText("Describe what you're looking for to start your search")).toBeInTheDocument()
   })
 
-  test('renders the NEW badge for NLP feature', () => {
-    setup()
-
-    expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
-  })
-
   test('renders the search input and allows typing', async () => {
     const { user } = setup()
 
-    const searchInput = screen.getByPlaceholderText(placeholderText)
+    const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
     expect(searchInput).toBeInTheDocument()
 
     await user.type(searchInput, 'test keyword')
@@ -101,46 +97,86 @@ describe('Home', () => {
     expect(searchInput).toHaveValue('test keyword')
   })
 
-  test('calls getCollections and navigate when the search form is submitted with no value', async () => {
-    const { user, zustandState } = setup()
+  describe('when nlpSearch is enabled', () => {
+    test('renders the NEW badge for NLP feature', () => {
+      setup()
 
-    await user.click(screen.getByRole('button', { name: /search/i }))
+      expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
+    })
 
-    expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
-    expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
+    test('calls getNlpCollections and navigate when the search form is submitted', async () => {
+      const { user, zustandState } = setup()
 
-    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'test')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
+      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+    })
+
+    test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
+      const { user, zustandState } = setup()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'test')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
+      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+    })
   })
 
-  test('calls getNlpCollections and navigate when the search form is submitted', async () => {
-    const { user, zustandState } = setup()
+  describe('when nlpSearch is disabled', () => {
+    beforeEach(() => {
+      getApplicationConfig.mockReturnValue({
+        nlpSearch: 'false'
+      })
+    })
 
-    const searchInput = screen.getByPlaceholderText(placeholderText)
+    test('renders temporal and spatial buttons', () => {
+      setup()
 
-    await user.type(searchInput, 'test')
-    await user.click(screen.getByRole('button', { name: /search/i }))
+      expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
+    })
 
-    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
-    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+    test('calls getCollections and navigate when the search form is submitted with no value', async () => {
+      const { user, zustandState } = setup()
 
-    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
-  })
+      await user.click(screen.getByRole('button', { name: /search/i }))
 
-  test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
-    const { user, zustandState } = setup()
+      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(2)
+      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(1)
+      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(2, undefined)
 
-    const searchInput = screen.getByPlaceholderText(placeholderText)
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+    })
 
-    await user.type(searchInput, 'test')
-    await user.click(screen.getByRole('button', { name: /search/i }))
+    test('calls getColelctions and navigate when the search form is submitted with values', async () => {
+      const { user, zustandState } = setup()
 
-    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
-    expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+      const searchInput = screen.getByPlaceholderText('Type to search for data')
 
-    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+      await user.type(searchInput, 'test')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(2)
+      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(1)
+      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(2, 'test')
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+    })
   })
 
   test('displays a spinner in the search button when loading', async () => {
