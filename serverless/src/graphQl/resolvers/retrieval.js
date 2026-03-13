@@ -244,8 +244,8 @@ export default {
               // sqs entry by ORDER_DELAY_SECONDS value for each page. i.e. page 1
               // will not wait, page 2 will wait ORDER_DELAY_SECONDS, page 3 will wait
               // ORDER_DELAY_SECONDS times 2, etc.
-              const delay = (pageNum - 1) * parseInt(process.env.ORDER_DELAY_SECONDS, 10)
-
+              // Default to 1 second if the environment variable is not set, but this can be configured to be longer if needed.
+              const delay = (pageNum - 1) * (parseInt(process.env.ORDER_DELAY_SECONDS, 10) || 1)
               // Save the order to the database
               const newOrderRecord = await databaseClient.createRetrievalOrder({
                 orderPayload,
