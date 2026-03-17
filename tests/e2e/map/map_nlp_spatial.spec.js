@@ -5,6 +5,9 @@ import { setupTests } from '../../support/setupTests'
 import commonHeaders from './__mocks__/common_collections.headers.json'
 import nlpCollections from './__mocks__/nlp/nlp_collections.body.json'
 
+// Mock the nlp search toggle
+process.env.TEST_TOGGLE = 'true'
+
 const screenshotClip = {
   x: 950,
   y: 90,
