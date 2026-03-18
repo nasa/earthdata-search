@@ -1,12 +1,10 @@
+// Unskip test once nlp feature toggle is back in place
 import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
 
 import commonHeaders from './__mocks__/common_collections.headers.json'
 import nlpCollections from './__mocks__/nlp/nlp_collections.body.json'
-
-// Mock the nlp search toggle
-process.env.TEST_TOGGLE = 'true'
 
 const screenshotClip = {
   x: 950,
@@ -50,7 +48,7 @@ test.describe('Map: NLP spatial rendering', () => {
     await page.goto('/')
   })
 
-  test('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
+  test.skip('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Wildfires in California' }).fill('rainfall in DC')
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
