@@ -51,7 +51,8 @@
     "deploy-application": "cd cdk/earthdata-search && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
     "deploy-static": "cd cdk/earthdata-search-static && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "heatmap-test": "npm run spatialToHeatmap"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.7",

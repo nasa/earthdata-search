@@ -1,30 +1,27 @@
-import getEdlToken from '../../zustand/selectors/user'
-import getEarthdataEnvironment from '../../zustand/selectors/earthdataEnvironment'
-
-import CollectionRequest from '../request/collectionRequest'
-
-// import { buildCollectionSearchParams, prepareCollectionParams } from '../collections'
-
-import getGranules from '../../zustand/selectors/granules'
-
-// import createCollectionSlice from '../../zustand/slices/createCollectionSlice'
-import updateStore from '../url/updateStore'
 import useEdscStore from '../../zustand/useEdscStore'
 
-let requestObject = new CollectionRequest(getEdlToken(), getEarthdataEnvironment())
-
+/**
+ * Test data conversion from granule measurement frequency to heatmap color
+ */
 async function getTestCollection() {
-    const params = {
-        conceptId: 'C1214470488-ASF'
-    }
+  // Get the state
+  let state = useEdscStore.getState()
 
-    let result = (await requestObject.search(params)).data
-    await updateStore({
-        focusedCollection: 'C1214470488-ASF'
-    })
-    
-    let granules = useEdscStore((state) => state.granules.getGranules())
-    let granuleMetadata = granules.items
+  // Get the functions to target a specific collection in CMR
+  const setCollectionId = state.collection.setCollectionId
+  const getCollectionMetadata = state.collection.getCollectionMetadata
 
-    console.log(granuleMetadata)
+  setCollectionId('C2763266360-LPCLOUD')
+  getCollectionMetadata()
+
+  // Get the updated state
+  state = useEdscStore.getState()
+
+  // Get the collections of the C2763266360-LPCLOUD collection
+  const testGranules = state.granules.granules.items
+
+  console.log(testGranules)
 }
+
+// Test heatmap conversion
+getTestCollection()
