@@ -131,10 +131,10 @@ const SubscriptionsListTable = ({
                           })
                         }
                       >
-                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button align-middle" />
+                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button" size="16" />
                       </OverlayTrigger>
                       <PortalLinkContainer
-                        className="subscriptions-list__button subscriptions-list__button--edit"
+                        className="subscriptions-list__button"
                         type="button"
                         to={
                           {
@@ -150,15 +150,17 @@ const SubscriptionsListTable = ({
                         variant="naked"
                         icon={FaEdit}
                         label="Edit Subscription"
+                        size="16"
                       />
                       <Button
-                        className="subscriptions-list__button subscriptions-list__button--remove"
+                        className="subscriptions-list__button"
                         onClick={() => onHandleRemove(conceptId, nativeId, collectionConceptId)}
                         variant="naked"
                         icon={Close}
                         label="Delete Subscription"
                         spinner={loading}
                         spinnerColor="black"
+                        size="16"
                       />
                     </div>
                   </td>
