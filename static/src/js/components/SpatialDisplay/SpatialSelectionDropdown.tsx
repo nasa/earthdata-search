@@ -29,10 +29,9 @@ import { routes } from '../../constants/routes'
 import useEdscStore from '../../zustand/useEdscStore'
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
-import { changePath } from '../../util/url/changePath'
-
 import './SpatialSelectionDropdown.scss'
 
+// In order to preserve the keyword from the homepage, send it as a parameter and set it with changeQuery here
 interface SpatialSelectionDropdownProps {
   searchParams?: {
     q?: string
@@ -65,8 +64,7 @@ const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = (
         })
       }
 
-      navigate(`/search${window.location.search}`)
-      changePath(`${routes.SEARCH}`)
+      navigate(`${routes.SEARCH}${window.location.search}`)
       setStartDrawing(spatialType)
     } else {
       if (spatialType === 'file') {

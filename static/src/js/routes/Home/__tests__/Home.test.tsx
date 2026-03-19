@@ -7,8 +7,10 @@ import HomePortalCard from '../HomePortalCard'
 import { Home } from '../Home'
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
-import setupTest from '../../../../../../vitestConfigs/setupTest'
 import Spinner from '../../../components/Spinner/Spinner'
+import { routes } from '../../../constants/routes'
+
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
@@ -116,7 +118,7 @@ describe('Home', () => {
       expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
 
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
     })
 
     test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
@@ -131,7 +133,7 @@ describe('Home', () => {
       expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
 
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
     })
   })
 
@@ -154,15 +156,14 @@ describe('Home', () => {
 
       await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(2)
-      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(1)
-      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(2, undefined)
+      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
 
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
     })
 
-    test('calls getColelctions and navigate when the search form is submitted with values', async () => {
+    test('calls getCollections and navigate when the search form is submitted with values', async () => {
       const { user, zustandState } = setup()
 
       const searchInput = screen.getByPlaceholderText('Type to search for data')
@@ -170,12 +171,11 @@ describe('Home', () => {
       await user.type(searchInput, 'test')
       await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(2)
-      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(1)
-      expect(zustandState.collections.getCollections).toHaveBeenNthCalledWith(2, 'test')
+      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
 
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith('/search')
+      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
     })
   })
 

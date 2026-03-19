@@ -155,12 +155,11 @@ export const Home: React.FC = () => {
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
-  const getCollections = useEdscStore((state) => state.collections.getCollections)
   const getNlpCollections = useEdscStore((state) => state.collections.getNlpCollections)
 
   const { numberOfGranules } = getApplicationConfig()
 
-  // Check if NLP search is enabled to conditionally show spatial/temporal buttons
+  // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const { nlpSearch } = getApplicationConfig()
   const isNlpEnabled = nlpSearch === 'true'
 
@@ -223,13 +222,10 @@ export const Home: React.FC = () => {
           keyword: trimmedKeyword
         }
       })
-
-      // GetCollections to load collections directly from CMR
-      await getCollections(trimmedKeyword || undefined)
     }
 
     // After collections are fetched, navigate to the Search route
-    navigate(`/search${window.location.search}`)
+    navigate(`${routes.SEARCH}${window.location.search}`)
   }
 
   return (

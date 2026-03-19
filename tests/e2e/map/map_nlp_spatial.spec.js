@@ -1,4 +1,6 @@
-// Unskip test once nlp feature toggle is back in place
+// These tests assume that the default behavior is to utilize the nlp enpoint.
+// While the nlp endpoint is turned off, these tests will fail.
+// Unskip test once nlp endpoint is ultized again.
 import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'

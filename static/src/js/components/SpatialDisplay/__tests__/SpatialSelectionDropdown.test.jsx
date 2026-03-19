@@ -13,15 +13,9 @@ import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsSpatialSelection } from '../../../util/metrics/metricsSpatialSelection'
 import { routes } from '../../../constants/routes'
 
-import { changePath } from '../../../util/url/changePath'
-
 import useEdscStore from '../../../zustand/useEdscStore'
 
 const mockUseNavigate = vi.fn()
-
-vi.mock('../../../util/url/changePath', () => ({
-  changePath: vi.fn()
-}))
 
 vi.mock('../../../util/metrics/metricsSpatialSelection', () => ({
   metricsSpatialSelection: vi.fn()
@@ -221,8 +215,6 @@ describe('SpatialSelectionDropdown component', () => {
 
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
       expect(mockUseNavigate).toHaveBeenCalledWith(`${routes.SEARCH}`)
-      expect(changePath).toHaveBeenCalledTimes(1)
-      expect(changePath).toHaveBeenCalledWith(`${routes.SEARCH}`)
 
       const updatedState = useEdscStore.getState()
       const { home: updatedHome } = updatedState

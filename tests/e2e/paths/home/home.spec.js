@@ -141,7 +141,29 @@ test.describe('Home Page', () => {
         await page.getByRole('button', { name: 'Point' }).click()
 
         await expect(page).toHaveURL('/search')
-        await expect(page.getByRole('heading', { name: 'Spatial' })).toBeVisible()
+
+        // Check that spatial search preview filters have been rendered with proper elements
+        const spatialSearchPreview = await page.getByRole('listitem').filter({ hasText: 'SpatialSpatialPointPoint:' })
+
+        await expect(spatialSearchPreview).toBeVisible()
+
+        await expect(spatialSearchPreview.getByRole('img', { name: 'Spatial' })).toBeVisible()
+        await expect(spatialSearchPreview.getByRole('heading', {
+          name: 'Spatial',
+          level: 3
+        })).toBeVisible()
+
+        await expect(spatialSearchPreview.getByText('Point', { exact: true })).toBeVisible()
+        await expect(spatialSearchPreview.getByRole('button', { name: 'Remove spatial filter' })).toBeVisible()
+        await expect(spatialSearchPreview.getByRole('textbox', { name: 'lat, lon (e.g. 44.2, 130)' })).toBeVisible()
+
+        // Check that collections preview panel has been collapsed by checking tooltip
+        await page.hover('.panels__handle')
+        await page.waitForSelector('.panels__handle-tooltip', { state: 'visible' })
+
+        // Check the content of the tooltip
+        const tooltipText = await page.locator('.panels__handle-tooltip').textContent()
+        expect(tooltipText).toContain('Expand panel')
       })
     })
 
