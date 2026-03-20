@@ -188,6 +188,14 @@ test.describe('Home Page', () => {
 
         await expect(spatialSearchPreview).toBeVisible()
 
+        // Check that collections preview panel has been collapsed by checking tooltip
+        await page.hover('.panels__handle')
+        await page.waitForSelector('.panels__handle-tooltip', { state: 'visible' })
+
+        // Check the content of the tooltip
+        const tooltipText = await page.locator('.panels__handle-tooltip').textContent()
+        expect(tooltipText).toContain('Expand panel')
+
         await expect(page).toHaveURL('/search?q=MODIS')
         await expect(page.getByRole('heading', { name: 'Spatial' })).toBeVisible()
       })
