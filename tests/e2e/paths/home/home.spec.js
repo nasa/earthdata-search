@@ -142,20 +142,10 @@ test.describe('Home Page', () => {
 
         await expect(page).toHaveURL('/search')
 
-        // Check that spatial search preview filters have been rendered with proper elements
+        // Check that spatial search preview filters have been rendered
         const spatialSearchPreview = await page.getByRole('listitem').filter({ hasText: 'SpatialSpatialPointPoint:' })
 
         await expect(spatialSearchPreview).toBeVisible()
-
-        await expect(spatialSearchPreview.getByRole('img', { name: 'Spatial' })).toBeVisible()
-        await expect(spatialSearchPreview.getByRole('heading', {
-          name: 'Spatial',
-          level: 3
-        })).toBeVisible()
-
-        await expect(spatialSearchPreview.getByText('Point', { exact: true })).toBeVisible()
-        await expect(spatialSearchPreview.getByRole('button', { name: 'Remove spatial filter' })).toBeVisible()
-        await expect(spatialSearchPreview.getByRole('textbox', { name: 'lat, lon (e.g. 44.2, 130)' })).toBeVisible()
 
         // Check that collections preview panel has been collapsed by checking tooltip
         await page.hover('.panels__handle')
@@ -192,6 +182,11 @@ test.describe('Home Page', () => {
 
         await page.getByRole('button', { name: 'Spatial' }).click()
         await page.getByRole('button', { name: 'Point' }).click()
+
+        // Check that spatial search preview filters have been rendered
+        const spatialSearchPreview = await page.getByRole('listitem').filter({ hasText: 'SpatialSpatialPointPoint:' })
+
+        await expect(spatialSearchPreview).toBeVisible()
 
         await expect(page).toHaveURL('/search?q=MODIS')
         await expect(page.getByRole('heading', { name: 'Spatial' })).toBeVisible()

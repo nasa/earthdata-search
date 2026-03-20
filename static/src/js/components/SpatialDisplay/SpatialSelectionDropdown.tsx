@@ -31,9 +31,11 @@ import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import './SpatialSelectionDropdown.scss'
 
-// In order to preserve the keyword from the homepage, send it as a parameter and set it with changeQuery here
+/** Spatial Selection Dropdown Props */
 interface SpatialSelectionDropdownProps {
+  /** Parameters for search request */
   searchParams?: {
+    /** Query Keyword for search request - optional */
     q?: string
   }
 }
