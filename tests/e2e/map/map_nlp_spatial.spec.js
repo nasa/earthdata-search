@@ -1,3 +1,6 @@
+// These tests assume that the default behavior is to utilize the nlp enpoint.
+// While the nlp endpoint is turned off, these tests will fail.
+// Unskip test once nlp endpoint is ultized again.
 import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
@@ -47,7 +50,7 @@ test.describe('Map: NLP spatial rendering', () => {
     await page.goto('/')
   })
 
-  test('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
+  test.skip('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Wildfires in California' }).fill('rainfall in DC')
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)

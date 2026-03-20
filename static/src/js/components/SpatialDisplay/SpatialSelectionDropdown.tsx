@@ -8,6 +8,7 @@ import { FaCircle, FaFile } from 'react-icons/fa'
 // @ts-expect-error: This file does not have types
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import { useLocation, useNavigate } from 'react-router-dom'
 // @ts-expect-error: This file does not have types
 import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
@@ -23,26 +24,59 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 import { MODAL_NAMES } from '../../constants/modalNames'
+import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import './SpatialSelectionDropdown.scss'
 
-const SpatialSelectionDropdown = () => {
+/** Spatial Selection Dropdown Props */
+interface SpatialSelectionDropdownProps {
+  /** Parameters for search request */
+  searchParams?: {
+    /** Query Keyword for search request - optional */
+    q?: string
+  }
+}
+
+const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = (
+  { searchParams = {} }
+) => {
   const setOpenModal = useEdscStore(setOpenModalFunction)
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
+  const navigate = useNavigate()
+
+  const location = useLocation()
+  const { pathname } = location
+  const isHomePage = pathname === routes.HOME
+
+  const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
 
   const onItemClick = (spatialType: string) => {
     // Sends metrics for spatial selection usage
     metricsSpatialSelection(spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase())
 
-    if (spatialType === 'file') {
-      setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)
+    if (isHomePage) {
+      if (searchParams.q) {
+        changeQuery({
+          collection: {
+            keyword: searchParams.q
+          }
+        })
+      }
 
-      return
+      navigate(`${routes.SEARCH}${window.location.search}`)
+      setStartDrawing(spatialType)
+    } else {
+      if (spatialType === 'file') {
+        setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)
+
+        return
+      }
+
+      eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
     }
-
-    eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
   }
 
   const { disableDatabaseComponents } = getApplicationConfig()

@@ -11,6 +11,11 @@ import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes } from '../../../constants/eventTypes'
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsSpatialSelection } from '../../../util/metrics/metricsSpatialSelection'
+import { routes } from '../../../constants/routes'
+
+import useEdscStore from '../../../zustand/useEdscStore'
+
+const mockUseNavigate = vi.fn()
 
 vi.mock('../../../util/metrics/metricsSpatialSelection', () => ({
   metricsSpatialSelection: vi.fn()
@@ -25,11 +30,12 @@ vi.mock('react-router-dom', async () => ({
     hash: '',
     state: null,
     key: 'testKey'
-  })
+  }),
+  useNavigate: () => mockUseNavigate
 }))
 
 useLocation.mockReturnValue({
-  pathname: '/search',
+  pathname: `${routes.SEARCH}`,
   search: '',
   hash: '',
   state: null,
@@ -43,8 +49,12 @@ const setup = setupTest({
       modals: {
         setOpenModal: vi.fn()
       }
+    },
+    query: {
+      changeQuery: vi.fn()
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('SpatialSelectionDropdown component', () => {
@@ -181,6 +191,56 @@ describe('SpatialSelectionDropdown component', () => {
       await user.hover(shapeFileExtensions)
 
       expect(screen.getByText('Shapefile subsetting is currently disabled')).toBeInTheDocument()
+    })
+  })
+
+  describe('if dropdown is located on the homepage', () => {
+    beforeEach(() => {
+      useLocation.mockReturnValue({
+        pathname: '/',
+        search: '',
+        hash: '',
+        state: null,
+        key: 'testKey'
+      })
+    })
+
+    test('updates query, navigates, and sets start drawing when an item is clicked', async () => {
+      const { user } = setup()
+
+      const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
+      await user.click(dropdownSelectionButton)
+
+      await user.click(screen.getByRole('button', { name: 'Polygon' }))
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith(`${routes.SEARCH}`)
+
+      const updatedState = useEdscStore.getState()
+      const { home: updatedHome } = updatedState
+      expect(updatedHome.startDrawing).toBe('Polygon')
+    })
+
+    test('updates query with keyword if provided in searchParams', async () => {
+      const { user, zustandState } = setup({
+        overrideProps: {
+          searchParams: {
+            q: 'test keyword'
+          }
+        }
+      })
+
+      const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
+      await user.click(dropdownSelectionButton)
+
+      await user.click(screen.getByRole('button', { name: 'Polygon' }))
+
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+        collection: {
+          keyword: 'test keyword'
+        }
+      })
     })
   })
 })
