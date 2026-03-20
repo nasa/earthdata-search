@@ -1,9 +1,10 @@
+import { findLast } from 'lodash-es'
 import useEdscStore from '../../../zustand/useEdscStore'
 
 /**
  * Test data conversion from granule measurement frequency to heatmap color
  */
-async function getTestCollection() {
+async function spatialToHeatmap() {
   // Get the state
   const state = useEdscStore.getState()
 
@@ -17,19 +18,26 @@ async function getTestCollection() {
   // Get the updated state
   const updatedState = useEdscStore.getState()
 
-  console.log(updatedState.collection.collectionMetadata['C2763266360-LPCLOUD'])
+  // Get the granules of the C2763266360-LPCLOUD collection
+  updatedState.granules.getGranules()
 
-  // Get the collections of the C2763266360-LPCLOUD collection
-  //const testGranules = updatedState.granules.granules.items
+  // Get the final data state
+  const finalState = useEdscStore.getState()
 
-  //console.log(testGranules)
+  // Store the granules
+  const granules = finalState.granules.granules.items
+
+  console.log(granules)
 }
 
-export default getTestCollection
+export default spatialToHeatmap
 
+/**
+ * Add the spatialToHeatmap function to the window object for testing
+ */
 window.onload = () => {
-  const executeGetTestCollection = {
-    runTestCollection: getTestCollection
+  const executeSpatialToHeatmap = {
+    runSpatialToHeatmap: spatialToHeatmap
   }
-  Object.assign(window, executeGetTestCollection)
+  Object.assign(window, executeSpatialToHeatmap)
 }
