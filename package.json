@@ -52,7 +52,7 @@
     "deploy-static": "cd cdk/earthdata-search-static && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "heatmap-test": "npm run spatialToHeatmap"
+    "heatmap-test": "tsx --require ignore-styles static/src/js/util/map/heatmap/spatialToHeatmap.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.7",
@@ -171,6 +171,7 @@
     "graphql-shield": "^7.6.5",
     "handlebars": "^4.7.8",
     "hex-to-rgba": "^2.0.1",
+    "ignore-styles": "^5.0.1",
     "immer": "^10.1.1",
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^3.2.0",
