@@ -33,9 +33,6 @@ import EmergencyNotification from './components/EmergencyNotification/EmergencyN
 
 import { routes } from './constants/routes'
 
-// Testing heatmap functionality
-import '../js/util/map/heatmap/spatialToHeatmap'
-
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
 
