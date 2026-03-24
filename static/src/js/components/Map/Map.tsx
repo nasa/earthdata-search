@@ -925,7 +925,6 @@ const Map: React.FC<MapProps> = ({
   useEffect(() => {
     // Call handleHoverGranule when the the event is fired
     eventEmitter.on(`map.layer.${focusedCollectionId}.hoverGranule`, handleHoverGranule)
-
     // Call handleFocusGranule when the the event is fired
     eventEmitter.on(`map.layer.${focusedCollectionId}.focusGranule`, handleFocusGranule)
 
@@ -935,37 +934,37 @@ const Map: React.FC<MapProps> = ({
     }
   }, [focusedCollectionId])
 
-  useEffect(() => {
-    const map = mapRef.current as OlMap
-    const controls = map.getControls()
-    const legendControl = controls.getArray().find(
-      (control) => control instanceof LegendControl
-    )
+  // useEffect(() => {
+  //   const map = mapRef.current as OlMap
+  //   const controls = map.getControls()
+  //   const legendControl = controls.getArray().find(
+  //     (control) => control instanceof LegendControl
+  //   )
 
-    // Remove the legend control if not on the collection focused page and it exists
-    if (!isFocusedCollectionPage && legendControl) {
-      controls.remove(legendControl)
-    }
+  //   // Remove the legend control if not on the collection focused page and it exists
+  //   if (!isFocusedCollectionPage && legendControl) {
+  //     controls.remove(legendControl)
+  //   }
 
-    // Add new legend control only if on focused collection page and it has layers
-    // Update the legend control when the imagery layers change
-    // This helps ensure we have a reference to the legend control when we need to update it
-    // otherwise issues would occur where the scrollbar would go to the top of the layer picker
-    if (legendControl) {
-      legendControl.update({
-        collectionId: focusedCollectionId,
-        imageryLayers
-      })
-    } else if (isFocusedCollectionPage) {
-      // Add new legend control if it doesn't exist
-      controls.push(
-        new LegendControl({
-          collectionId: focusedCollectionId,
-          imageryLayers
-        })
-      )
-    }
-  }, [isFocusedCollectionPage, imageryLayers, focusedCollectionId])
+  //   // Add new legend control only if on focused collection page and it has layers
+  //   // Update the legend control when the imagery layers change
+  //   // This helps ensure we have a reference to the legend control when we need to update it
+  //   // otherwise issues would occur where the scrollbar would go to the top of the layer picker
+  //   if (legendControl) {
+  //     legendControl.update({
+  //       collectionId: focusedCollectionId,
+  //       imageryLayers
+  //     })
+  //   } else if (isFocusedCollectionPage) {
+  //     // Add new legend control if it doesn't exist
+  //     controls.push(
+  //       new LegendControl({
+  //         collectionId: focusedCollectionId,
+  //         imageryLayers
+  //       })
+  //     )
+  //   }
+  // }, [isFocusedCollectionPage, imageryLayers, focusedCollectionId])
 
   // Update the map view when the panelsWidth changes
   useEffect(() => {
@@ -1001,7 +1000,6 @@ const Map: React.FC<MapProps> = ({
 
     // Clear the granule imagery layers
     granuleImageryLayerGroup.getLayers().clear()
-
     // Draw the granule backgrounds
     drawGranuleBackgroundsAndImagery({
       gibsLayersByCollection,
@@ -1013,67 +1011,80 @@ const Map: React.FC<MapProps> = ({
     })
 
     // If there is a focused granule draw it
-    if (focusedGranuleId) {
-      drawFocusedGranule({
-        collectionId: focusedCollectionId,
-        focusedGranuleSource,
-        granuleBackgroundsSource,
-        granuleId: focusedGranuleId,
-        isProjectPage,
-        map: (mapRef.current as OlMap),
-        onExcludeGranule,
-        setGranuleId,
-        shouldMoveMap: false,
-        timesIconSvg
-      })
-    }
+    // if (focusedGranuleId) {
+    //   drawFocusedGranule({
+    //     collectionId: focusedCollectionId,
+    //     focusedGranuleSource,
+    //     granuleBackgroundsSource,
+    //     granuleId: focusedGranuleId,
+    //     isProjectPage,
+    //     map: (mapRef.current as OlMap),
+    //     onExcludeGranule,
+    //     setGranuleId,
+    //     shouldMoveMap: false,
+    //     timesIconSvg
+    //   })
+    // }
   }, [granules, granulesKey, projectionCode])
 
   // When the spatial search changes, draw the spatial search
-  useEffect(() => {
-    drawSpatialSearch({
-      projectionCode,
-      spatialSearch,
-      vectorSource: spatialDrawingSource
-    })
-  }, [spatialSearch])
+  // useEffect(() => {
+  //   drawSpatialSearch({
+  //     projectionCode,
+  //     spatialSearch,
+  //     vectorSource: spatialDrawingSource
+  //   })
+  // }, [spatialSearch])
 
   // When the shapefile changes, draw the shapefile
-  useEffect(() => {
-    if (shapefile && shapefile.file) {
-      const { file, selectedFeatures } = shapefile
-      const { showMbr, drawingNewLayer } = spatialSearch
+  // useEffect(() => {
+  //   if (shapefile && shapefile.file) {
+  //     const { file, selectedFeatures } = shapefile
+  //     const { showMbr, drawingNewLayer } = spatialSearch
 
-      drawShapefile({
-        drawingNewLayer,
-        selectedFeatures,
-        onChangeQuery,
-        onChangeProjection,
-        onToggleTooManyPointsModal,
-        onUpdateShapefile,
-        projectionCode,
-        shapefile: file,
-        shapefileAdded: false,
-        showMbr,
-        vectorSource: spatialDrawingSource
-      })
-    }
-  }, [
-    shapefile,
-    spatialSearch,
-    projectionCode
-  ])
+  //     drawShapefile({
+  //       drawingNewLayer,
+  //       selectedFeatures,
+  //       onChangeQuery,
+  //       onChangeProjection,
+  //       onToggleTooManyPointsModal,
+  //       onUpdateShapefile,
+  //       projectionCode,
+  //       shapefile: file,
+  //       shapefileAdded: false,
+  //       showMbr,
+  //       vectorSource: spatialDrawingSource
+  //     })
+  //   }
+  // }, [
+  //   shapefile,
+  //   spatialSearch,
+  //   projectionCode
+  // ])
 
   // Draw the granule outlines
-  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-    const ctx = event.context as CanvasRenderingContext2D
+  // TODO so its def this that is causing the bottleneck
+  // Draw the granule outlines
+// Draw the granule outlines
+  useEffect(() => {
+    const handlePostRender = (event: any) => {
+      const ctx = event.context as CanvasRenderingContext2D
 
-    drawGranuleOutlines({
-      ctx,
-      granuleBackgroundsSource,
-      map: mapRef.current as OlMap
-    })
-  })
+      if (mapRef.current) {
+        drawGranuleOutlines({
+          ctx,
+          granuleBackgroundsSource,
+          map: mapRef.current
+        })
+      }
+    }
+
+    granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, handlePostRender)
+
+    return () => {
+      granuleOutlinesLayer.un(RenderEventType.POSTRENDER as LayerRenderEventTypes, handlePostRender)
+    }
+  }, [])
 
   return (
     <div ref={mapElRef} id="map" className="map" />

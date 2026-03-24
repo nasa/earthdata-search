@@ -160,6 +160,7 @@ const drawGranuleBackgroundsAndImagery = ({
       //    need to draw the granule imagery.
 
       const geometry = backgroundFeature.getGeometry() as Geometry
+      console.log('🚀 ~ file: drawGranuleBackgroundsAndImagery.ts:163 ~ geometry:', geometry)
 
       // We are only expecting MultiPolygon geometries for granules. Return if the geometry is not a MultiPolygon
       if (geometry.getType() !== 'MultiPolygon') return
@@ -226,127 +227,127 @@ const drawGranuleBackgroundsAndImagery = ({
       const geometryToClip = granuleDiffMultiPolygon as OlMultiPolygon
 
       // Create imagery layers for each GIBS layer item
-      gibsLayers.forEach((gibsLayer) => {
-        // If the GIBS layer is "subdaily", use the full timeStart (date and time).
-        // Otherwise, use only the date part of timeStart.
-        const gibsTime = gibsLayer.layerPeriod?.toLowerCase() === 'subdaily'
-          ? time
-          : time.substring(0, 10)
+      // gibsLayers.forEach((gibsLayer) => {
+      //   // If the GIBS layer is "subdaily", use the full timeStart (date and time).
+      //   // Otherwise, use only the date part of timeStart.
+      //   const gibsTime = gibsLayer.layerPeriod?.toLowerCase() === 'subdaily'
+      //     ? time
+      //     : time.substring(0, 10)
 
-        // Create a cache key for the layer.
-        const cacheKey = `${granuleId}-${gibsLayer.product}-${gibsTime}-${projectionCode}`
+      //   // Create a cache key for the layer.
+      //   const cacheKey = `${granuleId}-${gibsLayer.product}-${gibsTime}-${projectionCode}`
 
-        let resolution: string
-        if (projectionCode === projectionCodes.antarctic) {
-          resolution = gibsLayer.antarctic_resolution!
-        } else if (projectionCode === projectionCodes.arctic) {
-          resolution = gibsLayer.arctic_resolution!
-        } else {
-          resolution = gibsLayer.geographic_resolution!
-        }
+      //   let resolution: string
+      //   if (projectionCode === projectionCodes.antarctic) {
+      //     resolution = gibsLayer.antarctic_resolution!
+      //   } else if (projectionCode === projectionCodes.arctic) {
+      //     resolution = gibsLayer.arctic_resolution!
+      //   } else {
+      //     resolution = gibsLayer.geographic_resolution!
+      //   }
 
-        let imageryLayer: TileLayer
-        if (tileLayerCache.containsKey(cacheKey)) {
-          imageryLayer = tileLayerCache.get(cacheKey)
+      //   let imageryLayer: TileLayer
+      //   if (tileLayerCache.containsKey(cacheKey)) {
+      //     imageryLayer = tileLayerCache.get(cacheKey)
 
-          // `unByKey` removes the event listeners by the key provided
-          const { prerenderKey } = imageryLayer.getProperties()
+      //     // `unByKey` removes the event listeners by the key provided
+      //     const { prerenderKey } = imageryLayer.getProperties()
 
-          // Remove the existing event listeners for the cached layer
-          unByKey(prerenderKey)
-          imageryLayer.un(
-            RenderEventType.POSTRENDER as LayerRenderEventTypes,
-            onTileLayerPostrender
-          )
-        } else {
-          imageryLayer = new TileLayer({
-            className: `granule-imagery-${granuleId}`,
-            preload: 5,
-            zIndex: 3,
-            source: new WMTS({
-              crossOrigin: 'anonymous',
-              format: `image/${gibsLayer.format}`,
-              interpolate: false,
-              layer: gibsLayer.product,
-              matrixSet: resolution,
-              projection: crsProjections[projectionCode],
-              style: 'default',
-              tileGrid: getTileGrid(projectionCode, resolution),
-              tileLoadFunction: (tile, src) => {
-                // We are caching the images retrieved from GIBS so we don't have to reload them
-                // every time we redraw the granules.
+      //     // Remove the existing event listeners for the cached layer
+      //     unByKey(prerenderKey)
+      //     imageryLayer.un(
+      //       RenderEventType.POSTRENDER as LayerRenderEventTypes,
+      //       onTileLayerPostrender
+      //     )
+      //   } else {
+      //     imageryLayer = new TileLayer({
+      //       className: `granule-imagery-${granuleId}`,
+      //       preload: 5,
+      //       zIndex: 3,
+      //       source: new WMTS({
+      //         crossOrigin: 'anonymous',
+      //         format: `image/${gibsLayer.format}`,
+      //         interpolate: false,
+      //         layer: gibsLayer.product,
+      //         matrixSet: resolution,
+      //         projection: crsProjections[projectionCode],
+      //         style: 'default',
+      //         tileGrid: getTileGrid(projectionCode, resolution),
+      //         tileLoadFunction: (tile, src) => {
+      //           // We are caching the images retrieved from GIBS so we don't have to reload them
+      //           // every time we redraw the granules.
 
-                // The key for the cache is the URL of the image, excluding the domain name.
-                // Because the domain name is `gibs-{a-c}`, so it might have a different domain
-                // each time we try to load the image.
-                const tileCacheKey = src.split('nasa.gov/')[1]
+      //           // The key for the cache is the URL of the image, excluding the domain name.
+      //           // Because the domain name is `gibs-{a-c}`, so it might have a different domain
+      //           // each time we try to load the image.
+      //           const tileCacheKey = src.split('nasa.gov/')[1]
 
-                if (imageryCache.containsKey(tileCacheKey)) {
-                  // If the cache has the image, set the image to the tile
-                  const tileData = imageryCache.get(tileCacheKey);
-                  (tile as ImageTile).setImage(tileData)
-                } else {
-                  // If the cache does not have the image, load the image and add it to tile and the cache
-                  const image = new Image()
-                  image.crossOrigin = 'anonymous'
-                  image.src = src;
+      //           if (imageryCache.containsKey(tileCacheKey)) {
+      //             // If the cache has the image, set the image to the tile
+      //             const tileData = imageryCache.get(tileCacheKey);
+      //             (tile as ImageTile).setImage(tileData)
+      //           } else {
+      //             // If the cache does not have the image, load the image and add it to tile and the cache
+      //             const image = new Image()
+      //             image.crossOrigin = 'anonymous'
+      //             image.src = src;
 
-                  // Set the image to the tile
-                  // If this is not set here, for some reason the basemap tiles aren't updating when zooming.
-                  (tile as ImageTile).setImage(image)
+      //             // Set the image to the tile
+      //             // If this is not set here, for some reason the basemap tiles aren't updating when zooming.
+      //             (tile as ImageTile).setImage(image)
 
-                  image.onload = () => {
-                    // It is possible while the image is loading, it was saved to the cache by another granule
-                    // If that is the case, replace the image in the cache with the new image
-                    if (!imageryCache.containsKey(tileCacheKey)) {
-                      imageryCache.set(tileCacheKey, image)
-                    }
+      //             image.onload = () => {
+      //               // It is possible while the image is loading, it was saved to the cache by another granule
+      //               // If that is the case, replace the image in the cache with the new image
+      //               if (!imageryCache.containsKey(tileCacheKey)) {
+      //                 imageryCache.set(tileCacheKey, image)
+      //               }
 
-                    // Set the image to the tile
-                    // Set the image here after the image is loaded to ensure the whole granule image
-                    // is drawn correctly
-                    (tile as ImageTile).setImage(image)
-                  }
+      //               // Set the image to the tile
+      //               // Set the image here after the image is loaded to ensure the whole granule image
+      //               // is drawn correctly
+      //               (tile as ImageTile).setImage(image)
+      //             }
 
-                  image.onerror = () => {
-                    // If the image errored it was most likely because that tile does not exist.
-                    // Cache the response so we don't try to load it again
-                    if (!imageryCache.containsKey(tileCacheKey)) {
-                      imageryCache.set(tileCacheKey, image)
-                    }
-                  }
-                }
-              },
-              url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projectionCode}/best/wmts.cgi?TIME=${gibsTime}`,
-              wrapX: false
-            })
-          })
+      //             image.onerror = () => {
+      //               // If the image errored it was most likely because that tile does not exist.
+      //               // Cache the response so we don't try to load it again
+      //               if (!imageryCache.containsKey(tileCacheKey)) {
+      //                 imageryCache.set(tileCacheKey, image)
+      //               }
+      //             }
+      //           }
+      //         },
+      //         url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projectionCode}/best/wmts.cgi?TIME=${gibsTime}`,
+      //         wrapX: false
+      //       })
+      //     })
 
-          // Save the layer to the cache
-          tileLayerCache.set(cacheKey, imageryLayer)
-        }
+      //     // Save the layer to the cache
+      //     tileLayerCache.set(cacheKey, imageryLayer)
+      //   }
 
-        // Store the product information in the layer properties for layer visibility toggling
-        imageryLayer.set('product', gibsLayer.product)
-        imageryLayer.set('title', gibsLayer.title)
-        imageryLayer.set('granuleId', granuleId)
+      //   // Store the product information in the layer properties for layer visibility toggling
+      //   imageryLayer.set('product', gibsLayer.product)
+      //   imageryLayer.set('title', gibsLayer.title)
+      //   imageryLayer.set('granuleId', granuleId)
 
-        // Set the visibility and opacity based on the Zustand state
-        imageryLayer.setVisible(gibsLayer.isVisible ?? false)
-        imageryLayer.setOpacity(gibsLayer.opacity ?? 1)
+      //   // Set the visibility and opacity based on the Zustand state
+      //   imageryLayer.setVisible(gibsLayer.isVisible ?? false)
+      //   imageryLayer.setOpacity(gibsLayer.opacity ?? 1)
 
-        // Add the event listeners to the layer
-        const prerenderKey = imageryLayer.on(
-          RenderEventType.PRERENDER as LayerRenderEventTypes,
-          onTileLayerPrerender.bind(null, map, geometryToClip)
-        )
-        imageryLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
+      //   // Add the event listeners to the layer
+      //   const prerenderKey = imageryLayer.on(
+      //     RenderEventType.PRERENDER as LayerRenderEventTypes,
+      //     onTileLayerPrerender.bind(null, map, geometryToClip)
+      //   )
+      //   imageryLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
 
-        // Save the event listener key to the layer properties, for turning off the listener later
-        imageryLayer.set('prerenderKey', prerenderKey)
+      //   // Save the event listener key to the layer properties, for turning off the listener later
+      //   imageryLayer.set('prerenderKey', prerenderKey)
 
-        granuleImageryLayers.push(imageryLayer)
-      })
+      //   granuleImageryLayers.push(imageryLayer)
+      // })
     })
   })
 
