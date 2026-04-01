@@ -21,7 +21,7 @@ export const PortalFeatureContainer = ({
   onlyGranulesCheckbox = false,
   inactiveCollectionsCheckbox = false
 }) => {
-  const { shouldShowInactiveCollections } = getApplicationConfig()
+  const { showInactiveCollections } = getApplicationConfig()
 
   const portal = useEdscStore((state) => state.portal)
   const {
@@ -56,7 +56,7 @@ export const PortalFeatureContainer = ({
 
   if (inactiveCollectionsCheckbox
     && includeInactiveCollectionsCheckbox) {
-    if (shouldShowInactiveCollections !== 'true') {
+    if (showInactiveCollections !== 'true') {
       return null
     }
 
