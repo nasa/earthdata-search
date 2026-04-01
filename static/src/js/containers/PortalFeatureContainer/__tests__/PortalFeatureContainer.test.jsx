@@ -181,13 +181,6 @@ describe('PortalFeatureContainer component', () => {
       setup({
         overrideProps: {
           inactiveCollectionsCheckbox: true
-        },
-        overrideZustandState: {
-          portal: {
-            ui: {
-              includeInactiveCollectionsCheckbox: true
-            }
-          }
         }
       })
 
@@ -220,13 +213,6 @@ describe('PortalFeatureContainer component', () => {
       setup({
         overrideProps: {
           inactiveCollectionsCheckbox: true
-        },
-        overrideZustandState: {
-          portal: {
-            ui: {
-              includeInactiveCollectionsCheckbox: true
-            }
-          }
         }
       })
 
