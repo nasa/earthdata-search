@@ -4,6 +4,7 @@ import { screen } from '@testing-library/react'
 import { Search } from '../Search'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 const mockClassListAdd = vi.fn()
 const mockClassListRemove = vi.fn()
@@ -148,6 +149,11 @@ describe('Search component', () => {
     })
 
     test('renders the "Include inactive collections" checkbox under PortalFeatureContainer', async () => {
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig')
+        .mockReturnValue({
+          shouldShowInactiveCollections: 'true'
+        })
+
       const { user } = setup()
 
       const checkbox = await screen.findByLabelText('Include inactive collections')
@@ -157,6 +163,18 @@ describe('Search component', () => {
       const tooltip = icons[1]
       await user.hover(tooltip)
       expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results')).toBeInTheDocument()
+    })
+
+    test('does not render the "Include inactive collections" checkbox if shouldShowInactiveCollections is false', async () => {
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig')
+        .mockReturnValue({
+          shouldShowInactiveCollections: 'false'
+        })
+
+      setup()
+
+      const checkbox = screen.queryByLabelText('Include inactive collections')
+      expect(checkbox).not.toBeInTheDocument()
     })
 
     describe('handleCheckboxCheck', () => {
@@ -191,6 +209,10 @@ describe('Search component', () => {
       })
 
       test('checking the "Include inactive collections" checkbox calls changeQuery', async () => {
+        vi.spyOn(getApplicationConfig, 'getApplicationConfig')
+          .mockReturnValue({
+            shouldShowInactiveCollections: 'true'
+          })
         const { user, zustandState } = setup()
 
         const includeInactiveCollectionsCheckbox = await screen.findByText('Include inactive collections')
