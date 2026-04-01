@@ -175,7 +175,7 @@ describe('PortalFeatureContainer component', () => {
     test('renders children when includeInactiveCollectionsCheckbox is enabled', () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig')
         .mockReturnValue({
-          shouldShowInactiveCollections: 'true'
+          showInactiveCollections: 'true'
         })
 
       setup({
@@ -211,10 +211,10 @@ describe('PortalFeatureContainer component', () => {
       expect(screen.queryByText('children')).not.toBeInTheDocument()
     })
 
-    test('does not render children when shouldShowInactiveCollections is false', () => {
+    test('does not render children when showInactiveCollections is false', () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig')
         .mockReturnValue({
-          shouldShowInactiveCollections: 'false'
+          showInactiveCollections: 'false'
         })
 
       setup({

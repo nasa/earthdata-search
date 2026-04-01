@@ -151,7 +151,7 @@ describe('Search component', () => {
     test('renders the "Include inactive collections" checkbox under PortalFeatureContainer', async () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig')
         .mockReturnValue({
-          shouldShowInactiveCollections: 'true'
+          showInactiveCollections: 'true'
         })
 
       const { user } = setup()
@@ -165,10 +165,10 @@ describe('Search component', () => {
       expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results')).toBeInTheDocument()
     })
 
-    test('does not render the "Include inactive collections" checkbox if shouldShowInactiveCollections is false', async () => {
+    test('does not render the "Include inactive collections" checkbox if showInactiveCollections is false', async () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig')
         .mockReturnValue({
-          shouldShowInactiveCollections: 'false'
+          showInactiveCollections: 'false'
         })
 
       setup()
@@ -211,7 +211,7 @@ describe('Search component', () => {
       test('checking the "Include inactive collections" checkbox calls changeQuery', async () => {
         vi.spyOn(getApplicationConfig, 'getApplicationConfig')
           .mockReturnValue({
-            shouldShowInactiveCollections: 'true'
+            showInactiveCollections: 'true'
           })
 
         const { user, zustandState } = setup()
