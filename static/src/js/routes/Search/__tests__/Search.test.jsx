@@ -213,6 +213,7 @@ describe('Search component', () => {
           .mockReturnValue({
             shouldShowInactiveCollections: 'true'
           })
+
         const { user, zustandState } = setup()
 
         const includeInactiveCollectionsCheckbox = await screen.findByText('Include inactive collections')
