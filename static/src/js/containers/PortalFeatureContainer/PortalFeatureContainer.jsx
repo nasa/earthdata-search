@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import useEdscStore from '../../zustand/useEdscStore'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 /**
  * Checks the portal config for enabled features based on props passed in to the component. Renders children prop if feature is enabled in the portal config.
  * @param {Object} props The props passed into the component
@@ -19,6 +21,8 @@ export const PortalFeatureContainer = ({
   onlyGranulesCheckbox = false,
   inactiveCollectionsCheckbox = false
 }) => {
+  const { showInactiveCollections } = getApplicationConfig()
+
   const portal = useEdscStore((state) => state.portal)
   const {
     features = {},
@@ -50,7 +54,12 @@ export const PortalFeatureContainer = ({
     return children
   }
 
-  if (inactiveCollectionsCheckbox && includeInactiveCollectionsCheckbox) {
+  if (inactiveCollectionsCheckbox
+    && includeInactiveCollectionsCheckbox) {
+    if (showInactiveCollections !== 'true') {
+      return null
+    }
+
     return children
   }
 

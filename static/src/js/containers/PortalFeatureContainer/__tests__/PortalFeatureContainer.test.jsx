@@ -4,6 +4,7 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import { PortalFeatureContainer } from '../PortalFeatureContainer'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 const setup = setupTest({
   Component: PortalFeatureContainer,
@@ -168,41 +169,54 @@ describe('PortalFeatureContainer component', () => {
 
       expect(screen.queryByText('children')).not.toBeInTheDocument()
     })
+  })
 
-    describe('inactiveCollectionsCheckbox', () => {
-      test('renders children when includeInactiveCollectionsCheckbox is enabled', () => {
-        setup({
-          overrideProps: {
-            inactiveCollectionsCheckbox: true
-          },
-          overrideZustandState: {
-            portal: {
-              ui: {
-                includeInactiveCollectionsCheckbox: true
-              }
-            }
-          }
+  describe('inactiveCollectionsCheckbox', () => {
+    test('renders children when includeInactiveCollectionsCheckbox is enabled', () => {
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig')
+        .mockReturnValue({
+          showInactiveCollections: 'true'
         })
 
-        expect(screen.getByText('children')).toBeInTheDocument()
+      setup({
+        overrideProps: {
+          inactiveCollectionsCheckbox: true
+        }
       })
 
-      test('does not render children when includeInactiveCollectionsCheckbox is disabled', () => {
-        setup({
-          overrideProps: {
-            inactiveCollectionsCheckbox: true
-          },
-          overrideZustandState: {
-            portal: {
-              ui: {
-                includeInactiveCollectionsCheckbox: false
-              }
+      expect(screen.getByText('children')).toBeInTheDocument()
+    })
+
+    test('does not render children when includeInactiveCollectionsCheckbox is disabled', () => {
+      setup({
+        overrideProps: {
+          inactiveCollectionsCheckbox: true
+        },
+        overrideZustandState: {
+          portal: {
+            ui: {
+              includeInactiveCollectionsCheckbox: false
             }
           }
+        }
+      })
+
+      expect(screen.queryByText('children')).not.toBeInTheDocument()
+    })
+
+    test('does not render children when showInactiveCollections is false', () => {
+      vi.spyOn(getApplicationConfig, 'getApplicationConfig')
+        .mockReturnValue({
+          showInactiveCollections: 'false'
         })
 
-        expect(screen.queryByText('children')).not.toBeInTheDocument()
+      setup({
+        overrideProps: {
+          inactiveCollectionsCheckbox: true
+        }
       })
+
+      expect(screen.queryByText('children')).not.toBeInTheDocument()
     })
   })
 })
