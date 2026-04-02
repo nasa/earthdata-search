@@ -30,6 +30,7 @@ config="`jq '.application.disableDatabaseComponents = $newValue' --arg newValue 
 config="`jq '.application.disableEddDownload = $newValue' --arg newValue $bamboo_DISABLE_EDD_DOWNLOAD <<< $config`"
 config="`jq '.application.disableOrdering = $newValue' --arg newValue $bamboo_DISABLE_ORDERING <<< $config`"
 config="`jq '.application.disableSwodlr = $newValue' --arg newValue $bamboo_DISABLE_SWODLR <<< $config`"
+config="`jq '.application.showInactiveCollections = $newValue' --arg newValue $bamboo_SHOW_INACTIVE_COLLECTIONS <<< $config`"
 config="`jq '.application.orderStatusRefreshTime = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME <<< $config`"
 config="`jq '.application.orderStatusRefreshTimeCreating = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME_CREATING <<< $config`"
 config="`jq '.application.collectionSearchResultsSortKey = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_SORT_KEY <<< $config`"
