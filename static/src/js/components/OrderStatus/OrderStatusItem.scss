@@ -276,7 +276,6 @@ $item-height: 3rem;
       flex-direction: column;
       min-height: 25rem;
       max-height: 35rem;
-      overflow-y: scroll;
     }
 
     .tab-pane {
@@ -315,7 +314,6 @@ $item-height: 3rem;
   }
 
   .text-window-actions {
-    overflow-y: scroll;
     flex-grow: 1;
     flex-shrink: 1;
     min-height: 20rem;

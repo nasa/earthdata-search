@@ -27,6 +27,7 @@ import './TextWindowActions.scss'
  * Renders TextWindowActions.
  * @param {Node} children - React children to display in the text window
  * @param {String} clipboardContents - An string that will be copied to the users clipboard.
+ * @param {Boolean} disableBodyScroll - Disables scrolling on the body.
  * @param {Boolean} disableCopy - Disables the copy functionality.
  * @param {Boolean} disableEddInProgress - Disables EDD button when a job is still in progress (e.g. a Harmony job still in progress).
  * @param {Boolean} disableSave - Disables the save functionality.
@@ -40,6 +41,7 @@ import './TextWindowActions.scss'
 const TextWindowActions = ({
   children = null,
   clipboardContents = '',
+  disableBodyScroll = false,
   disableCopy = false,
   disableEddInProgress = false,
   disableSave = false,
@@ -160,7 +162,11 @@ const TextWindowActions = ({
           )
         }
       </header>
-      <div className="text-window-actions__body">
+      <div className={
+        `text-window-actions__body
+        ${disableBodyScroll ? 'text-window-actions__body--no-scroll' : ''}`
+      }
+      >
         {children}
       </div>
       {
@@ -302,6 +308,7 @@ const TextWindowActions = ({
 TextWindowActions.propTypes = {
   children: PropTypes.node,
   clipboardContents: PropTypes.string,
+  disableBodyScroll: PropTypes.bool,
   disableCopy: PropTypes.bool,
   disableEddInProgress: PropTypes.bool,
   disableSave: PropTypes.bool,
