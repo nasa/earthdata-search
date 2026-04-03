@@ -144,7 +144,7 @@ describe('SubscriptionsListTable component', () => {
 
       expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
       expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
-        className: 'subscriptions-list__button subscriptions-list__button--edit',
+        className: 'subscriptions-list__button',
         label: 'Edit Subscription',
         onClick: expect.any(Function),
         to: {

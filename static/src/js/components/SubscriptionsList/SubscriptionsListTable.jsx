@@ -131,7 +131,7 @@ const SubscriptionsListTable = ({
                           })
                         }
                       >
-                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button" size="16" />
+                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button" />
                       </OverlayTrigger>
                       <PortalLinkContainer
                         className="subscriptions-list__button"
@@ -150,7 +150,6 @@ const SubscriptionsListTable = ({
                         variant="naked"
                         icon={FaEdit}
                         label="Edit Subscription"
-                        size="16"
                       />
                       <Button
                         className="subscriptions-list__button"
@@ -160,7 +159,6 @@ const SubscriptionsListTable = ({
                         label="Delete Subscription"
                         spinner={loading}
                         spinnerColor="black"
-                        size="16"
                       />
                     </div>
                   </td>
