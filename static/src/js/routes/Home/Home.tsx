@@ -305,7 +305,7 @@ export const Home: React.FC = () => {
               </form>
             </div>
             <div className="d-flex flex-grow-1 justify-content-center">
-              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth science data or search with filters</PortalLinkContainer>
+              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
             </div>
           </div>
           <OverlayTrigger

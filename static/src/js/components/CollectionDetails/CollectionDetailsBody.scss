@@ -115,13 +115,15 @@
 
   &__reformatting-item-heading {
     display: flex;
-    align-items: center;
+    font-size: 0.925rem;
+    margin-bottom: 0rem;
   }
 
   &__reformatting-item-icon {
     margin: 0 0.325rem;
     color: utils.$color__carbon--40;
     font-size: 0.625rem;
+    align-items: center;
   }
 
   &__reformatting-item-body {

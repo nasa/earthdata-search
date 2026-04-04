@@ -77,7 +77,7 @@ const ShapefileUploadModal = () => {
           </Button>
           <Button
             className="shapefile-modal__action shapefile-modal__action--secondary"
-            bootstrapVariant="secondary"
+            bootstrapVariant="light"
             label="Cancel"
             onClick={onModalClose}
           >

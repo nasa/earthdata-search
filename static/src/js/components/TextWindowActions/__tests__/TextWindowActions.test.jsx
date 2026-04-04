@@ -213,6 +213,21 @@ describe('TextWindowActions component', () => {
     })
   })
 
+  describe('when disabling the body scroll', () => {
+    test('adds the no-scroll class to the body', () => {
+      setup({
+        overrideProps: {
+          disableBodyScroll: true,
+          children: <p>Child Content</p>
+        }
+      })
+
+      const child = screen.getByText('Child Content')
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(child.parentElement).toHaveClass('text-window-actions__body--no-scroll')
+    })
+  })
+
   describe('when the modals are closed', () => {
     describe('when the browser supports copy/paste', () => {
       describe('when clicking the copy button', () => {
