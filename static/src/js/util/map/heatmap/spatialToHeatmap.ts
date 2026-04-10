@@ -1,4 +1,3 @@
-import Request from '../../request/request'
 import { GranuleMetadata } from '../../../types/sharedTypes'
 import { pageAllCmrResults } from '../../../../../../serverless/src/util/cmr/pageAllCmrResults'
 
@@ -15,7 +14,7 @@ const HEATMAP: GranuleMetadata[][] = Array.from({ length: 5 }, () => new Array(0
  * Returns the corrct position in the heatmap Arrays to place a granule
  */
 function placeGranule(granule) {
-  const granuleStart = Date.parse(granule.umm.TemporalExtent.RangeDateTime.BeginningDateTime)
+  const granuleStart = Date.parse(granule.timeStart)
   let insertLocation = 0
   for (let i = 0; i < COLOR_PARTITIONS.length; i += 1) {
     if (granuleStart < COLOR_PARTITIONS[i]) {
@@ -84,40 +83,17 @@ function createFrequencyScale(collectionStart: number, collectionEnd: number) {
 }
 
 /**
- * Test data conversion from granule measurement frequency to heatmap color
+ * Convert granule measurement frequency to heatmap color
  */
-async function spatialToHeatmap() {
+async function spatialToHeatmap(conceptId, collectionResults, edlToken, earthdataEnvironment) {
   try {
-    // Get the auth values
-    const edlToken = 'eyJ0eXAiOiJKV1QiLCJvcmlnaW4iOiJFYXJ0aGRhdGEgTG9naW4iLCJzaWciOiJlZGxqd3RwdWJrZXlfb3BzIiwiYWxnIjoiUlMyNTYifQ.eyJ0eXBlIjoiVXNlciIsInVpZCI6ImJtc3VsdHplIiwiZXhwIjoxNzgwMjMxMjQ4LCJpYXQiOjE3NzUwNDcyNDgsImlzcyI6Imh0dHBzOi8vdXJzLmVhcnRoZGF0YS5uYXNhLmdvdiIsImlkZW50aXR5X3Byb3ZpZGVyIjoiZWRsIiwiYWNyIjoiZWRsX21mYSIsImFzc3VyYW5jZV9sZXZlbCI6NH0.pSJdFCVJQwPRNXRVIYHiQUWQPjJGnTTuXauent29qp4i2W7OejNkPzntuE8rCuEvKLcW7rqL20VJDjihhv4hg5XWsKOGHyKHurq8U8Iv-_QMRa8CkE25Ttipmgioap4zkOEObnGmFqDIQ32ILnOEVSiCLtGxjP47OYtsEChtgOopuag_TKaWGv-Mm7HoGxTdNE6F_pvgzDl6jX-oA04gi3R8dJ2XBkDqV69KJNu5VlqPHc0d5bAX1tnXgqUFPY77fqm98O2BgMlGQfeNGHmfVneAXceoB05QgWjBGlTSEchvkMjAAqvpMMJMCIxCYqYiK0DzR2PBzmSBl8Tfa88pig'
-    const earthdataEnvironment = 'test'
-    const baseUrl = 'https://cmr.earthdata.nasa.gov'
+    // Set the granules URL for this collection
     const granulesUrl = 'search/granules.umm_json'
-    const collectionUrl = '/search/collections.umm_json'
 
     if (edlToken) {
-      // Create a request object
-      const requestObj = new Request(baseUrl, earthdataEnvironment)
-
       const params = {
-        conceptId: 'C3993465598-NSIDC_CPRD'
+        conceptId: conceptId
       }
-      const collectionResults = await requestObj.get(collectionUrl, params)
-
-      // Get the collections start and end time
-      const collectionStart = Date.parse(collectionResults.data.items[0]
-                                          .umm
-                                          .TemporalExtents[0]
-                                          .RangeDateTimes[0]
-                                          .BeginningDateTime)
-      const collectionEnd = Date.parse(collectionResults.data.items[0]
-                                          .umm
-                                          .TemporalExtents[0]
-                                          .RangeDateTimes[0]
-                                          .EndingDateTime)
-
-      // Create the frequency scale
-      createFrequencyScale(collectionStart, collectionEnd)
 
       // Get the granules and build the heatmap
       const granules = await pageAllCmrResults({
@@ -126,23 +102,23 @@ async function spatialToHeatmap() {
         path: granulesUrl,
         queryParams: params
       })
+
+      // Get the collections start and end time
+      const collectionStart = Date.parse(collectionResults.timeStart)
+      const collectionEnd = Date.parse(collectionResults.timeEnd)
+
+      // Create the frequency scale
+      createFrequencyScale(collectionStart, collectionEnd)
+
+      // Build the heatmap
       constructHeatmap(granules)
-      console.log(HEATMAP)
     }
   } catch (e) {
-    console.log(`Something went wrong fetching the test data: ${e}`)
+    console.log(`The heatmap could not be created: ${e}`)
   }
 }
 
-/**
- * Add the spatialToHeatmap function to the window object for testing
- */
-window.addEventListener('load', () => {
-  Object.assign(window, { runSpatialToHeatmap: spatialToHeatmap })
-})
-
-export default {
+export {
   spatialToHeatmap,
-  COLOR_PARTITIONS,
   HEATMAP
 }

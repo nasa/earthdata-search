@@ -40,6 +40,11 @@ import GET_COLLECTION from '../../operations/queries/getCollection'
 import { routes } from '../../constants/routes'
 import { collectionRelevancyMetrics } from '../../util/relevancy/collectionRelevancyMetrics'
 
+import { spatialToHeatmap,
+  HEATMAP
+ } from '../../util/map/heatmap/spatialToHeatmap'
+import { Heatmap } from 'ol/layer'
+
 const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
   collection: {
     collectionId: null,
@@ -234,10 +239,20 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             state.collection.collectionMetadata[conceptId] = collectionMetadata
           })
 
+          console.log(collectionMetadata)
+
           // Fetch granules for the focused collection.
           // This will ensure OpenSearch granules are retrieved correctly, after the collection
           // metadata is loaded with the isOpenSearch flag
           get().granules.getGranules()
+
+          // Calculate the heatmap for the focused collection (only if it has granules)
+          const collectionGranules = get().granules.granules.items
+          if (collectionGranules && collectionGranules.length > 0) {
+            spatialToHeatmap(collectionMetadata, collectionGranules)
+          }
+
+          console.log(HEATMAP)
         } else {
           // If no data was returned, clear the focused collection and redirect the user back to the search page
           set((state) => {
