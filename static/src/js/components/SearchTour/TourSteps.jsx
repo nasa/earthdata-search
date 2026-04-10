@@ -42,7 +42,7 @@ const TourButtons = ({
       <div className="search-tour__buttons">
         <Button
           type="button"
-          bootstrapVariant="secondary"
+          bootstrapVariant="light"
           bootstrapSize="sm"
           onClick={() => setStepIndex(stepIndex - 1)}
         >
@@ -155,7 +155,7 @@ const TourSteps = ({
             <Button
               className="button-tour-skip"
               type="button"
-              bootstrapVariant="secondary"
+              bootstrapVariant="light"
               bootstrapSize="lg"
               onClick={
                 () => {
@@ -596,7 +596,7 @@ const TourSteps = ({
               <div className="search-tour__buttons">
                 <Button
                   type="button"
-                  bootstrapVariant="secondary"
+                  bootstrapVariant="light"
                   bootstrapSize="sm"
                   onClick={() => setStepIndex(stepIndex - 1)}
                 >

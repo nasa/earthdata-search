@@ -46,7 +46,7 @@ const DownloadScriptPanel = ({
     ? (
       <>
         <div className="order-status-item__tab-intro">
-          <p className="collection-download-display__intro mt-2">
+          <p className="collection-download-display__intro">
             <strong>Linux: </strong>
             { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
             { 'For a detailed walk through of this process, please reference this ' }
@@ -74,6 +74,7 @@ const DownloadScriptPanel = ({
           clipboardContents={downloadScript}
           modalTitle="Download Script"
           disableEdd
+          disableBodyScroll
         >
           <pre role="code" className="download-links-panel__pre">
             {downloadScript}

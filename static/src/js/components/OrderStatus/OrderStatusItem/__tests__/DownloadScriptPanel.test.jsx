@@ -51,6 +51,7 @@ describe('DownloadScriptPanel', () => {
       expect(TextWindowActions).toHaveBeenCalledWith({
         children: expect.any(Object),
         clipboardContents: 'mock script',
+        disableBodyScroll: true,
         disableEdd: true,
         fileContents: 'mock script',
         fileName: '1-download.sh',

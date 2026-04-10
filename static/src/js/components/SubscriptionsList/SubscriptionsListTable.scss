@@ -56,3 +56,11 @@
     width: 15rem;
   }
 }
+
+.subscriptions-list__button {
+  svg {
+    max-height: unset;
+    max-width: unset;
+  }
+}
+

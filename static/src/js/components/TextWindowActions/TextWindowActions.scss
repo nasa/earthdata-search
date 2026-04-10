@@ -36,6 +36,10 @@
     padding: bootstrap.$spacer;
     padding-top: bootstrap.$spacer*3.5;
     overflow-y: scroll;
+
+    &--no-scroll {
+      overflow-y: unset;
+    }
   }
 
   &__modal-body {
