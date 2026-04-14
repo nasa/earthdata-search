@@ -82,7 +82,7 @@ export const reduceAccessMethods = (items = []) => {
  * @param {boolean} isOpenSearch Is the collection an open search collection
  * @returns {object} Access methods
  */
-export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
+export const buildAccessMethods = (collectionMetadata, isOpenSearch, harmonyCapabilities) => {
   const {
     granules = {},
     services = {},
@@ -95,7 +95,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     echoOrders: (serviceItem) => buildEcho(serviceItem),
     esi: (serviceItem) => buildEsi(serviceItem),
     opendap: (serviceItem, params) => buildOpendap(serviceItem, params),
-    harmony: (serviceItem, params) => buildHarmony(serviceItem, params),
     swodlr: (serviceItem) => buildSwodlr(serviceItem),
     downloads: () => buildDownload(granules, isOpenSearch)
   }
@@ -115,7 +114,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     const formattedServiceType = formatServiceType(serviceType)
 
     // Only process service types that EDSC supports
-    if (![ESI, ECHO_ORDERS, HARMONY, OPENDAP, SWODLR].includes(formattedServiceType)) return {}
+    if (![ESI, ECHO_ORDERS, OPENDAP, SWODLR].includes(formattedServiceType)) return {}
 
     const params = {
       associatedVariables
@@ -128,8 +127,11 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
+  const harmonyMethod = buildHarmony(harmonyCapabilities)
+
   const accessMethods = {
     ...nonDownloadMethods,
+    harmony: harmonyMethod,
     ...buildMethods.downloads()
   }
 

@@ -68,6 +68,8 @@ import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
 import { getEdlToken, getUsername } from '../selectors/user'
 
+import HarmonyCapabilitiesRequest from '../../util/request/harmonyCapabilitiesRequest'
+
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
   const byId: ProjectGranules['byId'] = {}
@@ -265,6 +267,45 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         }
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let harmonyCapabilities: Record<string, any> | undefined
+      let isUnauthorized = false
+
+      // Fetch the Harmony Capabilites document
+      await Promise.all(
+        filteredIds.map(async (collectionId) => {
+          // Return if a previous request was unauthorized
+          if (isUnauthorized) return
+          try {
+            const harmonyCapabilitiesRequestObject = new HarmonyCapabilitiesRequest(
+              edlToken,
+              earthdataEnvironment
+            )
+
+            const harmonyCapabilitiesResponse = await harmonyCapabilitiesRequestObject
+              .searchHarmonyCapabilities(collectionId)
+
+            const { data } = harmonyCapabilitiesResponse
+            harmonyCapabilities = data
+          } catch (error) {
+            zustandState.errors.handleError({
+              error: error as Error,
+              action: 'getProjectCollections',
+              resource: 'harmony capabilties request'
+            })
+
+            // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
+            if (error instanceof AxiosError && error.response?.status === 401) {
+              isUnauthorized = true
+            }
+          }
+        })
+      )
+
+      if (isUnauthorized) {
+        return buildPromise(null)
+      }
+
       const collectionParams = prepareCollectionParams()
 
       const searchParams = buildCollectionSearchParams(collectionParams)
@@ -390,7 +431,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           const { [conceptId!]: savedAccessConfig } = savedAccessConfigs
 
-          const accessMethods = buildAccessMethods(metadata, isOpenSearch)
+          const accessMethods = buildAccessMethods(metadata, isOpenSearch, harmonyCapabilities)
 
           const accessMethodsObject = insertSavedAccessConfig(
             accessMethods,
@@ -652,8 +693,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const { byId } = collections
       const collection = byId[collectionId]
 
+      // COME BACK, is there a better way of doing this?
       if (collection) {
-        collection.selectedAccessMethod = selectedAccessMethod
+        collection.selectedAccessMethod = selectedAccessMethod || 'harmony'
       }
     }),
 
@@ -711,6 +753,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       }
     }),
 
+    // This is where I'm going to send user selections
     updateAccessMethod: ({ collectionId, method }) => {
       const [methodKey] = Object.keys(method)
       const newMethod = method[methodKey]

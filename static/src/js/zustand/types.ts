@@ -602,6 +602,60 @@ type KeywordMapping = {
   label: string
 }
 
+/**
+ * Represents the specific processing capabilities of a Harmony service.
+ */
+export interface CapabilitiesType {
+  /** Spatial, temporal, and variable subsetting options */
+  subsetting?: {
+    /** True if the service can subset by a bounding box */
+    bbox?: boolean;
+    /** True if the service can subset using a GeoJSON, Shapefile, or KML */
+    shape?: boolean;
+    /** True if the service can subset by a date-time range */
+    temporal?: boolean;
+    /** True if the service can subset by specific UMM-Var variables */
+    variable?: boolean;
+    /** True if the service can handle multiple variables in a single request */
+    multiple_variable?: boolean;
+  };
+  /** Capabilities for calculating averages over dimensions, */
+  averaging?: {
+    /** True if the service can perform time-averaging */
+    time?: boolean;
+    /** True if the service can perform area-averaging */
+    area?: boolean;
+  };
+  /** Indicates if the service can concatenate multiple input files into a single output. */
+  concatenation?: boolean | 'DEFAULT';
+  /** True if the service can reproject data to a different Coordinate Reference System (CRS) */
+  reprojection?: boolean;
+  /** A list of supported output mime-types, such as "application/netcdf", "text/csv", "image/tiff", or "image/png" */
+  output_formats?: string[];
+}
+
+/**
+ * Details regarding a specific Harmony service and its unique capabilities [1, 4].
+ */
+export interface HarmonyService {
+  /** The name of the service (e.g., "giovanni-averaging-service") [4] */
+  name: string;
+  /** The CMR concept URL for the service [1, 4] */
+  href: string;
+  /** The specific capabilities supported by this individual service [4] */
+  capabilities: CapabilitiesType
+}
+
+/**
+ * Represents a variable associated with a Harmony collection.
+ */
+export type VariableType = {
+  /** The name of the variable */
+  name: string;
+  /** The CMR concept URL for the variable */
+  href: string;
+};
+
 /** The Harmony access method */
 export type HarmonyAccessMethod = {
   /** The default value for concatenation */
@@ -644,6 +698,8 @@ export type HarmonyAccessMethod = {
   type: 'Harmony'
   /** The Harmony access method URL */
   url: string
+  /** Services supplied from the Harmony Capabilites Document */
+  services: [HarmonyService]
   /** The Harmony access method variables */
   variables: {
     /** The variable ID */

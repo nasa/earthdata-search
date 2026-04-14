@@ -1,93 +1,44 @@
-import { uniq } from 'lodash-es'
-
-import { getVariables } from '../getVariables'
-
-import { supportsBoundingBoxSubsetting } from '../supportsBoundingBoxSubsetting'
-import { supportsConcatenation } from '../supportsConcatenation'
-import { defaultConcatenation } from '../defaultConcatenation'
-import { supportsShapefileSubsetting } from '../supportsShapefileSubsetting'
-import { supportsTemporalSubsetting } from '../supportsTemporalSubsetting'
-import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
+import { getEnvironmentConfig } from '../../../../../../sharedUtils/config'
 
 /**
  * Builds the Harmony access method
- * @param {object} serviceItem serviceItem in the Collection Metadata
- * @param {object} associatedVariables variables that are either in the serviceItem or collectionMetadata (prioritizes the serviceItem variables)
- * @param {integer} index the harmony index for this harmony service item
+ * @param {object} harmonyCapabilites object that contains capabilites document from harmony endpoint
  * @returns {object} Access method for Harmony
  */
-export const buildHarmony = (serviceItem, params) => {
-  const { associatedVariables } = params
-
+export const buildHarmony = (harmonyCapabilities) => {
   const {
-    description,
-    conceptId: serviceConceptId,
-    type: serviceType,
-    longName,
-    name,
+    bboxSubset,
+    concatenate,
+    conceptId,
+    outputFormats,
+    services,
+    shapeSubset,
+    shortName,
+    temporalSubset,
+    variables,
+    variableSubset
+  } = harmonyCapabilities
+
+  const url = getEnvironmentConfig().harmonyHost
+
+  return {
+    defaultConcatenation: false,
+    enableConcatenateDownload: false,
+    enableSpatialSubsetting: false,
+    enableTemporalSubsetting: false,
+    id: conceptId,
+    isValid: true,
+    services,
+    shortName,
+    supportedOutputFormats: outputFormats,
+    supportedOutputProjections: [],
+    supportsBoundingBoxSubsetting: bboxSubset,
+    supportsConcatenation: concatenate,
+    supportsShapefileSubsetting: shapeSubset,
+    supportsTemporalSubsetting: temporalSubset,
+    supportsVariableSubsetting: variableSubset,
+    type: 'Harmony',
     url,
-    supportedReformattings
-  } = serviceItem
-
-  const { urlValue } = url
-
-  const {
-    hierarchyMappings,
-    keywordMappings,
     variables
-  } = getVariables(associatedVariables)
-
-  const {
-    supportedOutputProjections
-  } = serviceItem
-
-  const outputFormats = []
-
-  if (supportedReformattings) {
-    supportedReformattings.forEach((reformatting) => {
-      const { supportedOutputFormats } = reformatting
-
-      // Collect all supported output formats from each mapping
-      outputFormats.push(...supportedOutputFormats)
-    })
   }
-
-  let outputProjections = []
-  if (supportedOutputProjections) {
-    outputProjections = supportedOutputProjections.filter((projection) => {
-      const { projectionAuthority } = projection
-
-      return projectionAuthority != null
-    }).map((projection) => {
-      const { projectionAuthority } = projection
-
-      return projectionAuthority
-    })
-  }
-
-  return [
-    {
-      description,
-      enableTemporalSubsetting: true,
-      enableSpatialSubsetting: true,
-      hierarchyMappings,
-      id: serviceConceptId,
-      isValid: true,
-      keywordMappings,
-      longName,
-      name,
-      supportedOutputFormats: uniq(outputFormats),
-      supportedOutputProjections: outputProjections,
-      supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceItem),
-      supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
-      supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
-      supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-      supportsConcatenation: supportsConcatenation(serviceItem),
-      defaultConcatenation: defaultConcatenation(serviceItem),
-      enableConcatenateDownload: defaultConcatenation(serviceItem),
-      type: serviceType,
-      url: urlValue,
-      variables
-    }
-  ]
 }

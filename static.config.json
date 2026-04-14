@@ -60,18 +60,21 @@
     "test": {
       "apiHost": "http://localhost:3000",
       "edscHost": "http://localhost:8080",
-      "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.WPMuvg26HcYGxGYi7Hl9_FO6YiiJNHWalQ35_1oP5do"
+      "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.WPMuvg26HcYGxGYi7Hl9_FO6YiiJNHWalQ35_1oP5do",
+      "harmonyHost": "https://harmony.earthdata.nasa.gov"
     },
     "development": {
       "dbHost": "127.0.0.1",
       "dbName": "edsc_dev",
       "databasePort": 5432,
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080"
+      "edscHost": "http://localhost:8080",
+      "harmonyHost": "https://harmony.earthdata.nasa.gov"
     },
     "production": {
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080"
+      "edscHost": "http://localhost:8080",
+      "harmonyHost": "https://harmony.earthdata.nasa.gov"
     }
   },
   "earthdata": {
