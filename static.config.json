@@ -60,21 +60,18 @@
     "test": {
       "apiHost": "http://localhost:3000",
       "edscHost": "http://localhost:8080",
-      "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.WPMuvg26HcYGxGYi7Hl9_FO6YiiJNHWalQ35_1oP5do",
-      "harmonyHost": "https://harmony.earthdata.nasa.gov"
+      "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.WPMuvg26HcYGxGYi7Hl9_FO6YiiJNHWalQ35_1oP5do"
     },
     "development": {
       "dbHost": "127.0.0.1",
       "dbName": "edsc_dev",
       "databasePort": 5432,
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080",
-      "harmonyHost": "https://harmony.earthdata.nasa.gov"
+      "edscHost": "http://localhost:8080"
     },
     "production": {
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080",
-      "harmonyHost": "https://harmony.earthdata.nasa.gov"
+      "edscHost": "http://localhost:8080"
     }
   },
   "earthdata": {
@@ -89,7 +86,8 @@
       "graphQlHost": "https://graphql.earthdata.nasa.gov",
       "regionHost": "https://soto.podaac.earthdatacloud.nasa.gov/fts/v1",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
-      "redirectUriPath": "/urs_callback"
+      "redirectUriPath": "/urs_callback",
+      "harmonyHost": "https://harmony.earthdata.nasa.gov"
     },
     "sit": {
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
@@ -101,7 +99,8 @@
       "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
       "regionHost": "https://soto.podaac.earthdatacloud.nasa.gov/fts/v1",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
-      "redirectUriPath": "/urs_callback"
+      "redirectUriPath": "/urs_callback",
+      "harmonyHost": "https://harmony.sit.earthdata.nasa.gov"
     },
     "uat": {
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
@@ -113,7 +112,8 @@
       "graphQlHost": "https://graphql.uat.earthdata.nasa.gov",
       "regionHost": "https://soto.podaac.earthdatacloud.nasa.gov/fts/v1",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
-      "redirectUriPath": "/urs_callback"
+      "redirectUriPath": "/urs_callback",
+      "harmonyHost": "https://harmony.uat.earthdata.nasa.gov"
     },
     "prod": {
       "cmrHost": "https://cmr.earthdata.nasa.gov",
@@ -125,7 +125,8 @@
       "graphQlHost": "https://graphql.earthdata.nasa.gov",
       "regionHost": "https://soto.podaac.earthdatacloud.nasa.gov/fts/v1",
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
-      "redirectUriPath": "/urs_callback"
+      "redirectUriPath": "/urs_callback",
+      "harmonyHost": "https://harmony.earthdata.nasa.gov"
     }
   },
   "experiments": {}
