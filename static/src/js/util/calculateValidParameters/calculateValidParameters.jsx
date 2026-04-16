@@ -4,7 +4,7 @@ const calculateValidParameters = (userSelections, services) => {
     return {}
   }
 
-  // Filter services based on user selections
+  // Filter services based on ALL user selections (used to determine if spatial/temporal/etc are enabled)
   const validServices = services.filter((service) => {
     const { subsetting } = service.capabilities
 
@@ -19,6 +19,19 @@ const calculateValidParameters = (userSelections, services) => {
         return false
       }
     }
+
+    return true
+  })
+
+  // Filter services based on user selections IGNORING the output format.
+  // This ensures the dropdown options don't collapse down to only the currently selected format.
+  const validServicesIgnoringFormat = services.filter((service) => {
+    const { subsetting } = service.capabilities
+
+    if (userSelections.spatialSubset && (!subsetting.bbox && !subsetting.shape)) return false
+    if (userSelections.temporalSubset && !subsetting.temporal) return false
+    if (userSelections.concatenate && !service.capabilities?.concatenation) return false
+    if (userSelections.reproject && !service.capabilities?.reprojection) return false
 
     return true
   })
@@ -62,7 +75,6 @@ const calculateValidParameters = (userSelections, services) => {
 
   validServices.forEach((service) => {
     const { subsetting } = service.capabilities
-
     if (subsetting.variable) calculatedCapabilities.variableSubset = true
     if (subsetting.bbox || subsetting.shape) calculatedCapabilities.spatialSubset = true
     // Some services allow for bbox but not shape, need to enable each individually
@@ -74,6 +86,20 @@ const calculateValidParameters = (userSelections, services) => {
 
     const formats = service.capabilities?.output_formats || []
     formats.forEach((format) => validFormats.add(format))
+  })
+
+  // Calculate which formats should be available in the dropdown based on the services
+  // that remain valid when we ignore the current format selection
+  const formatsAvailableForDropdown = new Set()
+  validServicesIgnoringFormat.forEach((service) => {
+    const formats = service.capabilities?.output_formats || []
+    formats.forEach((format) => formatsAvailableForDropdown.add(format))
+  })
+
+  const allFormatsSet = new Set()
+  services.forEach((service) => {
+    const formats = service.capabilities?.output_formats || []
+    formats.forEach((format) => allFormatsSet.add(format))
   })
 
   return {
@@ -101,7 +127,8 @@ const calculateValidParameters = (userSelections, services) => {
     },
     outputFormats: {
       enabled: validFormats.size > 0,
-      value: Array.from(validFormats)
+      enabledFormats: Array.from(formatsAvailableForDropdown),
+      allFormats: Array.from(allFormatsSet)
     }
   }
 }

@@ -193,7 +193,11 @@ const AccessMethod = ({
     const { conceptId: collectionId } = metadata
 
     const { target } = event
-    const { value } = target
+    let { value } = target
+
+    if (value === '') {
+      value = undefined
+    }
 
     onUpdateAccessMethod({
       collectionId,
@@ -555,9 +559,23 @@ const AccessMethod = ({
 
   if (isHarmony) {
     // Filter the supportedOutputFormats to only those formats Harmony supports
-    supportedOutputFormatOptions = supportedOutputFormats.map((format) => (
-      <option key={format} value={format}>{format}</option>
-    ))
+    // and disable formats that are not currently valid based on user selections
+    supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
+      // Default to enabled if calculatedCapabilities is empty (initial load)
+      let isOptionDisabled = false
+
+      if (Object.keys(calculatedCapabilities).length > 0) {
+        // If capabilities are calculated, check if this format is in the enabledFormats array
+        const { enabledFormats = [] } = calculatedCapabilities.outputFormats || {}
+        isOptionDisabled = !enabledFormats.includes(format)
+      }
+
+      return (
+        <option key={format} value={format} disabled={isOptionDisabled}>
+          {format}
+        </option>
+      )
+    })
 
     // Build options for supportedOutputProjections
     supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
@@ -680,13 +698,13 @@ const AccessMethod = ({
                     calculatedCapabilities && (
                       <>
                         <p>
-                          Below are the customiztion options available to you.
+                          Below are the customization options available to you.
                         </p>
                         <EDSCAlert
                           bootstrapVariant="warning"
                           icon={AlertMediumPriority}
                         >
-                          Please note that selecting one customization may lead
+                          Please note that selecting some customization options may lead
                           to others becoming disabled.
                         </EDSCAlert>
                       </>
@@ -727,27 +745,53 @@ const AccessMethod = ({
                 )
               }
               {
-                supportedOutputFormatOptions.length > 0 && (
+                (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Output Format"
-                    intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
+                    heading="Spatial Subsetting"
+                    intro="When enabled, spatial subsetting will trim the data to the selected area range."
                     nested
+                    warning={(userSelections.spatialSubset && capabilitesError) ? `${capabilitesError}` : harmonyMbrWarning}
+                    faded={isDisabled('spatialSubset')}
                   >
-                    <select
-                      id="input__output-format"
-                      className="form-select form-select-sm"
-                      onChange={handleOutputFormatSelection}
-                      value={selectedOutputFormat}
-                      data-testid="access-methods__output-format-options"
-                    >
-                      {
-                        [
-                          <option key="output-format-none" value="">No Data Conversion</option>,
-                          ...supportedOutputFormatOptions
-                        ]
-                      }
-                    </select>
+                    {
+                      selectedSpatialDisplay
+                        && (
+                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
+                            <Form.Check
+                              id="input__spatial-subsetting"
+                              type="checkbox"
+                              label={
+                                (
+                                  <span className={`mb-1 d-block ${(!(isSpatialSubsettingSelected) && 'text-muted')}`}>
+                                    Trim output granules to the selected spatial constraint
+                                  </span>
+                                )
+                              }
+                              checked={isSpatialSubsettingSelected}
+                              onChange={handleToggleSpatialSubsetting}
+                              disabled={isDisabled('spatialSubset')}
+                            />
+                            {
+                              isSpatialSubsettingSelected && (
+                                <p className="access-method__section-status mt-2 mb-0">
+                                  Selected Area:
+                                  <br />
+                                  {selectedSpatialDisplay}
+                                </p>
+                              )
+                            }
+                          </Form.Group>
+                        )
+                    }
+                    {
+                      !selectedSpatialDisplay && (
+                        <p className="access-method__section-status mb-0">
+                          No spatial area selected.
+                          Make a spatial selection to enable spatial subsetting.
+                        </p>
+                      )
+                    }
                   </ProjectPanelSection>
                 )
               }
@@ -803,53 +847,27 @@ const AccessMethod = ({
                 )
               }
               {
-                (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
+                supportedOutputFormatOptions.length > 0 && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Spatial Subsetting"
-                    intro="When enabled, spatial subsetting will trim the data to the selected area range."
+                    heading="Output Format"
+                    intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
                     nested
-                    warning={(userSelections.spatialSubset && capabilitesError) ? `${capabilitesError}` : harmonyMbrWarning}
-                    faded={isDisabled('spatialSubset')}
                   >
-                    {
-                      selectedSpatialDisplay
-                        && (
-                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
-                            <Form.Check
-                              id="input__spatial-subsetting"
-                              type="checkbox"
-                              label={
-                                (
-                                  <span className={`mb-1 d-block ${(!(isSpatialSubsettingSelected) && 'text-muted')}`}>
-                                    Trim output granules to the selected spatial constraint
-                                  </span>
-                                )
-                              }
-                              checked={isSpatialSubsettingSelected}
-                              onChange={handleToggleSpatialSubsetting}
-                              disabled={isDisabled('spatialSubset')}
-                            />
-                            {
-                              isSpatialSubsettingSelected && (
-                                <p className="access-method__section-status mt-2 mb-0">
-                                  Selected Area:
-                                  <br />
-                                  {selectedSpatialDisplay}
-                                </p>
-                              )
-                            }
-                          </Form.Group>
-                        )
-                    }
-                    {
-                      !selectedSpatialDisplay && (
-                        <p className="access-method__section-status mb-0">
-                          No spatial area selected.
-                          Make a spatial selection to enable spatial subsetting.
-                        </p>
-                      )
-                    }
+                    <select
+                      id="input__output-format"
+                      className="form-select form-select-sm"
+                      onChange={handleOutputFormatSelection}
+                      value={selectedOutputFormat}
+                      data-testid="access-methods__output-format-options"
+                    >
+                      {
+                        [
+                          <option key="output-format-none" value="">No Data Conversion</option>,
+                          ...supportedOutputFormatOptions
+                        ]
+                      }
+                    </select>
                   </ProjectPanelSection>
                 )
               }
