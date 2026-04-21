@@ -309,6 +309,13 @@ export default class Request {
     return this.post(this.searchPath, params)
   }
 
+  /*
+   * Makes a GET request to this.searchPath
+   */
+  getSearch(params: RequestParams) {
+    return this.get(this.searchPath, params)
+  }
+
   /**
    * Handle an unauthorized response
    */

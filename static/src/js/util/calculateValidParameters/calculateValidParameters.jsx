@@ -1,17 +1,24 @@
 const calculateValidParameters = (userSelections, services) => {
-  console.log('calculateValidParameters')
   if (services.length === 0) {
     return {}
   }
 
-  // Filter services based on ALL user selections (used to determine if spatial/temporal/etc are enabled)
-  const validServices = services.filter((service) => {
+  // Helper to determine if a service supports the user's selections excluding output formats
+  const supportsUserSelections = (service) => {
     const { subsetting } = service.capabilities
 
+    if (userSelections.variableSubset && !subsetting.variable) return false
     if (userSelections.spatialSubset && (!subsetting.bbox && !subsetting.shape)) return false
     if (userSelections.temporalSubset && !subsetting.temporal) return false
     if (userSelections.concatenate && !service.capabilities?.concatenation) return false
     if (userSelections.reproject && !service.capabilities?.reprojection) return false
+
+    return true
+  }
+
+  // Filter services based on ALL user selections
+  const validServices = services.filter((service) => {
+    if (!supportsUserSelections(service)) return false
 
     if (userSelections.outputFormatSelection) {
       if (service.capabilities?.output_formats
@@ -25,39 +32,7 @@ const calculateValidParameters = (userSelections, services) => {
 
   // Filter services based on user selections IGNORING the output format.
   // This ensures the dropdown options don't collapse down to only the currently selected format.
-  const validServicesIgnoringFormat = services.filter((service) => {
-    const { subsetting } = service.capabilities
-
-    if (userSelections.spatialSubset && (!subsetting.bbox && !subsetting.shape)) return false
-    if (userSelections.temporalSubset && !subsetting.temporal) return false
-    if (userSelections.concatenate && !service.capabilities?.concatenation) return false
-    if (userSelections.reproject && !service.capabilities?.reprojection) return false
-
-    return true
-  })
-
-  // Create descriptive error message if no valid services are found
-  if (validServices.length === 0) {
-    const activeSelections = []
-
-    if (userSelections.variableSubset) activeSelections.push('Variable Subsetting')
-    if (userSelections.spatialSubset) activeSelections.push('Spatial Subsetting')
-    if (userSelections.temporalSubset) activeSelections.push('Temporal Subsetting')
-    if (userSelections.concatenate) activeSelections.push('Concatenation')
-    if (userSelections.reproject) activeSelections.push('Reprojection')
-    if (userSelections.outputFormatSelection) activeSelections.push(`${userSelections.outputFormatSelection} as Output Format`)
-
-    let selectionsString = activeSelections.join(' and ')
-    if (activeSelections.length > 2) {
-      const last = activeSelections.pop()
-      selectionsString = `${activeSelections.join(', ')}, and ${last}`
-    }
-
-    return {
-      hasConflict: true,
-      errorMessage: `Cannot select ${selectionsString}.`
-    }
-  }
+  const validServicesIgnoringFormat = services.filter(supportsUserSelections)
 
   // Initiate all capabilites as disabled (false) and let
   // valid services determine if they are enabled (true)
@@ -71,8 +46,6 @@ const calculateValidParameters = (userSelections, services) => {
     reproject: false
   }
 
-  const validFormats = new Set()
-
   validServices.forEach((service) => {
     const { subsetting } = service.capabilities
     if (subsetting.variable) calculatedCapabilities.variableSubset = true
@@ -83,9 +56,6 @@ const calculateValidParameters = (userSelections, services) => {
     if (subsetting.temporal) calculatedCapabilities.temporalSubset = true
     if (service.capabilities?.concatenation) calculatedCapabilities.concatenate = true
     if (service.capabilities?.reprojection) calculatedCapabilities.reproject = true
-
-    const formats = service.capabilities?.output_formats || []
-    formats.forEach((format) => validFormats.add(format))
   })
 
   // Calculate which formats should be available in the dropdown based on the services
@@ -126,7 +96,7 @@ const calculateValidParameters = (userSelections, services) => {
       value: null
     },
     outputFormats: {
-      enabled: validFormats.size > 0,
+      enabled: validServices.length > 0 && formatsAvailableForDropdown.size > 0,
       enabledFormats: Array.from(formatsAvailableForDropdown),
       allFormats: Array.from(allFormatsSet)
     }

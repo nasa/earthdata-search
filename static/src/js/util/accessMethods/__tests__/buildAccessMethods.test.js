@@ -16,6 +16,33 @@ beforeEach(() => {
   }))
 })
 
+const harmonyCapabilities = {
+  bboxSubset: true,
+  concatenate: false,
+  conceptId: 'C100000-EDSC',
+  outputFormats: ['image/tiff', 'application/x-netcdf4'],
+  services: [
+    {
+      name: 'giovanni-time-series-adapter',
+      capabilities: {
+        subsetting: {
+          temporal: true
+        }
+      }
+    }
+  ],
+  shapeSubset: true,
+  shortName: 'MOCK_SHORT_NAME',
+  temporalSubset: true,
+  variables: [
+    {
+      conceptId: 'V100000-EDSC',
+      name: 'mock_variable'
+    }
+  ],
+  variableSubset: true
+}
+
 describe('when buildAccessMethods is called', () => {
   test('calls buildDownload access method', () => {
     const buildDownloadMock = vi.spyOn(buildDownload, 'buildDownload')
@@ -29,7 +56,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch)
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'test')
 
     expect(buildDownloadMock).toHaveBeenCalledTimes(1)
 
@@ -63,7 +90,15 @@ describe('when buildAccessMethods is called', () => {
 
     const isOpenSearch = false
 
-    const accessMethods = buildAccessMethods(collectionMetadata, isOpenSearch)
+    const harmonyCapabilitiesNoServices = {
+      services: []
+    }
+
+    const accessMethods = buildAccessMethods(
+      collectionMetadata,
+      isOpenSearch,
+      harmonyCapabilitiesNoServices
+    )
 
     expect(accessMethods).toEqual({})
   })
@@ -113,7 +148,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch)
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
     expect(buildEchoMock).toHaveBeenCalledTimes(2)
 
@@ -188,7 +223,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch)
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
     expect(buildEsiMock).toHaveBeenCalledTimes(1)
 
@@ -350,136 +385,42 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch)
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
     expect(buildHarmonyMock).toHaveBeenCalledTimes(1)
 
     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
       1,
       {
-        conceptId: 'S100000-EDSC',
-        longName: 'Mock Service Name',
-        name: 'mock-name',
-        serviceOptions: {
-          aggregation: {
-            concatenate: {
-              concatenateDefault: true
-            }
-          },
-          interpolationTypes: [
-            'Bilinear Interpolation',
-            'Nearest Neighbor'
-          ],
-          subset: {
-            spatialSubset: { boundingBox: { allowMultipleValues: false } },
-            variableSubset: { allowMultipleValues: true }
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ]
-        },
-        supportedOutputProjections: [
+        bboxSubset: true,
+        concatenate: false,
+        conceptId: 'C100000-EDSC',
+        outputFormats: [
+          'image/tiff',
+          'application/x-netcdf4'
+        ],
+        services: [
           {
-            projectionName: 'Polar Stereographic'
-          },
-          {
-            projectionName: 'Geographic'
+            capabilities: {
+              subsetting: {
+                temporal: true
+              }
+            },
+            name: 'giovanni-time-series-adapter'
           }
         ],
-        supportedReformattings: [
+        shapeSubset: true,
+        shortName: 'MOCK_SHORT_NAME',
+        temporalSubset: true,
+        variableSubset: true,
+        variables: [
           {
-            supportedInputFormat: 'NETCDF-4',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ]
-          },
-          {
-            supportedInputFormat: 'GEOTIFF',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ]
+            conceptId: 'V100000-EDSC',
+            name: 'mock_variable'
           }
-        ],
-        type: 'Harmony',
-        url: {
-          description: 'Mock URL',
-          urlValue: 'https://example.com'
-        },
-        variables: {
-          count: 0,
-          items: null
-        }
+        ]
       },
-      {
-        associatedVariables: {
-          count: 4,
-          items: [
-            {
-              conceptId: 'V100000-EDSC',
-              definition: 'Alpha channel value',
-              longName: 'Alpha channel ',
-              name: 'alpha_var',
-              nativeId: 'mmt_variable_3972',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100001-EDSC',
-              definition: 'Blue channel value',
-              longName: 'Blue channel',
-              name: 'blue_var',
-              nativeId: 'mmt_variable_3971',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100002-EDSC',
-              definition: 'Green channel value',
-              longName: 'Green channel',
-              name: 'green_var',
-              nativeId: 'mmt_variable_3970',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100003-EDSC',
-              definition: 'Red channel value',
-              longName: 'Red Channel',
-              name: 'red_var',
-              nativeId: 'mmt_variable_3969',
-              scienceKeywords: null
-            }
-          ]
-        }
-      }
+      'dev'
     )
   })
 
@@ -652,7 +593,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch)
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
     expect(buildOpendapMock).toHaveBeenCalledTimes(1)
 
@@ -932,7 +873,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch)
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
     expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
 
@@ -976,2155 +917,2156 @@ describe('when buildAccessMethods is called', () => {
     )
   })
 
-  describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
-    test('variables on the service are returned instead of variables directly associated to the collection and buildHarmony is called 3 times', () => {
-      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
+  // Come back to these in EDSC-4661
+  // describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
+  //   test('variables on the service are returned instead of variables directly associated to the collection and buildHarmony is called 3 times', () => {
+  //     const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
-      const collectionMetadata = {
-        services: {
-          items: [{
-            conceptId: 'S100000-EDSC',
-            longName: 'Mock Service Name',
-            name: 'mock-name',
-            type: 'Harmony',
-            url: {
-              description: 'Mock URL',
-              urlValue: 'https://example.com'
-            },
-            serviceOptions: {
-              subset: {
-                spatialSubset: {
-                  boundingBox: {
-                    allowMultipleValues: false
-                  }
-                },
-                variableSubset: {
-                  allowMultipleValues: true
-                }
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              interpolationTypes: [
-                'Bilinear Interpolation',
-                'Nearest Neighbor'
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ]
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }],
-            variables: {
-              count: 4,
-              items: [
-                {
-                  conceptId: 'V100000-EDSC',
-                  definition: 'Alpha channel value',
-                  longName: 'Alpha channel ',
-                  name: 'alpha_var',
-                  nativeId: 'mmt_variable_3972',
-                  scienceKeywords: null
-                },
-                {
-                  conceptId: 'V100001-EDSC',
-                  definition: 'Blue channel value',
-                  longName: 'Blue channel',
-                  name: 'blue_var',
-                  nativeId: 'mmt_variable_3971',
-                  scienceKeywords: null
-                },
-                {
-                  conceptId: 'V100002-EDSC',
-                  definition: 'Green channel value',
-                  longName: 'Green channel',
-                  name: 'green_var',
-                  nativeId: 'mmt_variable_3970',
-                  scienceKeywords: null
-                },
-                {
-                  conceptId: 'V100003-EDSC',
-                  definition: 'Red channel value',
-                  longName: 'Red Channel',
-                  name: 'red_var',
-                  nativeId: 'mmt_variable_3969',
-                  scienceKeywords: null
-                }
-              ]
-            }
-          },
-          {
-            conceptId: 'S100001-EDSC',
-            longName: 'Mock Service Name 2',
-            name: 'mock-name 2',
-            type: 'Harmony',
-            url: {
-              description: 'Mock URL',
-              urlValue: 'https://example2.com'
-            },
-            serviceOptions: {
-              subset: {
-                spatialSubset: {
-                  boundingBox: {
-                    allowMultipleValues: false
-                  }
-                },
-                variableSubset: {
-                  allowMultipleValues: true
-                }
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              interpolationTypes: [
-                'Bilinear Interpolation',
-                'Nearest Neighbor'
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ]
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }],
-            variables: {
-              count: 4,
-              items: [
-                {
-                  conceptId: 'V100006-EDSC',
-                  definition: 'Alpha channel value',
-                  longName: 'Alpha channel ',
-                  name: 'alpha_var',
-                  nativeId: 'mmt_variable_3973',
-                  scienceKeywords: null
-                },
-                {
-                  conceptId: 'V100007-EDSC',
-                  definition: 'Blue channel value',
-                  longName: 'Blue channel',
-                  name: 'blue_var',
-                  nativeId: 'mmt_variable_3974',
-                  scienceKeywords: null
-                },
-                {
-                  conceptId: 'V100008-EDSC',
-                  definition: 'Green channel value',
-                  longName: 'Green channel',
-                  name: 'green_var',
-                  nativeId: 'mmt_variable_3975',
-                  scienceKeywords: null
-                },
-                {
-                  conceptId: 'V100009-EDSC',
-                  definition: 'Red channel value',
-                  longName: 'Red Channel',
-                  name: 'red_var',
-                  nativeId: 'mmt_variable_3966',
-                  scienceKeywords: null
-                }
-              ]
-            }
-          },
-          {
-            conceptId: 'S100002-EDSC',
-            longName: 'Mock Service Name 3',
-            name: 'mock-name 3',
-            type: 'Harmony',
-            url: {
-              description: 'Mock URL',
-              urlValue: 'https://example3.com'
-            },
-            serviceOptions: {
-              subset: {
-                spatialSubset: {
-                  boundingBox: {
-                    allowMultipleValues: false
-                  }
-                },
-                variableSubset: {
-                  allowMultipleValues: true
-                }
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              interpolationTypes: [
-                'Bilinear Interpolation',
-                'Nearest Neighbor'
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ]
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          }]
-        },
-        variables: {
-          count: 3,
-          items: [
-            {
-              conceptId: 'V100003-EDSC',
-              definition: 'Beta channel value',
-              longName: 'Beta channel ',
-              name: 'beta_var',
-              nativeId: 'mmt_variable_4972',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100004-EDSC',
-              definition: 'Orange channel value',
-              longName: 'Orange channel',
-              name: 'orange_var',
-              nativeId: 'mmt_variable_4971',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100005-EDSC',
-              definition: 'Purple channel value',
-              longName: 'Purple channel',
-              name: 'purple_var',
-              nativeId: 'mmt_variable_4970',
-              scienceKeywords: null
-            }
-          ]
-        }
-      }
-      const isOpenSearch = false
+  //     const collectionMetadata = {
+  //       services: {
+  //         items: [{
+  //           conceptId: 'S100000-EDSC',
+  //           longName: 'Mock Service Name',
+  //           name: 'mock-name',
+  //           type: 'Harmony',
+  //           url: {
+  //             description: 'Mock URL',
+  //             urlValue: 'https://example.com'
+  //           },
+  //           serviceOptions: {
+  //             subset: {
+  //               spatialSubset: {
+  //                 boundingBox: {
+  //                   allowMultipleValues: false
+  //                 }
+  //               },
+  //               variableSubset: {
+  //                 allowMultipleValues: true
+  //               }
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             interpolationTypes: [
+  //               'Bilinear Interpolation',
+  //               'Nearest Neighbor'
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ]
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }],
+  //           variables: {
+  //             count: 4,
+  //             items: [
+  //               {
+  //                 conceptId: 'V100000-EDSC',
+  //                 definition: 'Alpha channel value',
+  //                 longName: 'Alpha channel ',
+  //                 name: 'alpha_var',
+  //                 nativeId: 'mmt_variable_3972',
+  //                 scienceKeywords: null
+  //               },
+  //               {
+  //                 conceptId: 'V100001-EDSC',
+  //                 definition: 'Blue channel value',
+  //                 longName: 'Blue channel',
+  //                 name: 'blue_var',
+  //                 nativeId: 'mmt_variable_3971',
+  //                 scienceKeywords: null
+  //               },
+  //               {
+  //                 conceptId: 'V100002-EDSC',
+  //                 definition: 'Green channel value',
+  //                 longName: 'Green channel',
+  //                 name: 'green_var',
+  //                 nativeId: 'mmt_variable_3970',
+  //                 scienceKeywords: null
+  //               },
+  //               {
+  //                 conceptId: 'V100003-EDSC',
+  //                 definition: 'Red channel value',
+  //                 longName: 'Red Channel',
+  //                 name: 'red_var',
+  //                 nativeId: 'mmt_variable_3969',
+  //                 scienceKeywords: null
+  //               }
+  //             ]
+  //           }
+  //         },
+  //         {
+  //           conceptId: 'S100001-EDSC',
+  //           longName: 'Mock Service Name 2',
+  //           name: 'mock-name 2',
+  //           type: 'Harmony',
+  //           url: {
+  //             description: 'Mock URL',
+  //             urlValue: 'https://example2.com'
+  //           },
+  //           serviceOptions: {
+  //             subset: {
+  //               spatialSubset: {
+  //                 boundingBox: {
+  //                   allowMultipleValues: false
+  //                 }
+  //               },
+  //               variableSubset: {
+  //                 allowMultipleValues: true
+  //               }
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             interpolationTypes: [
+  //               'Bilinear Interpolation',
+  //               'Nearest Neighbor'
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ]
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }],
+  //           variables: {
+  //             count: 4,
+  //             items: [
+  //               {
+  //                 conceptId: 'V100006-EDSC',
+  //                 definition: 'Alpha channel value',
+  //                 longName: 'Alpha channel ',
+  //                 name: 'alpha_var',
+  //                 nativeId: 'mmt_variable_3973',
+  //                 scienceKeywords: null
+  //               },
+  //               {
+  //                 conceptId: 'V100007-EDSC',
+  //                 definition: 'Blue channel value',
+  //                 longName: 'Blue channel',
+  //                 name: 'blue_var',
+  //                 nativeId: 'mmt_variable_3974',
+  //                 scienceKeywords: null
+  //               },
+  //               {
+  //                 conceptId: 'V100008-EDSC',
+  //                 definition: 'Green channel value',
+  //                 longName: 'Green channel',
+  //                 name: 'green_var',
+  //                 nativeId: 'mmt_variable_3975',
+  //                 scienceKeywords: null
+  //               },
+  //               {
+  //                 conceptId: 'V100009-EDSC',
+  //                 definition: 'Red channel value',
+  //                 longName: 'Red Channel',
+  //                 name: 'red_var',
+  //                 nativeId: 'mmt_variable_3966',
+  //                 scienceKeywords: null
+  //               }
+  //             ]
+  //           }
+  //         },
+  //         {
+  //           conceptId: 'S100002-EDSC',
+  //           longName: 'Mock Service Name 3',
+  //           name: 'mock-name 3',
+  //           type: 'Harmony',
+  //           url: {
+  //             description: 'Mock URL',
+  //             urlValue: 'https://example3.com'
+  //           },
+  //           serviceOptions: {
+  //             subset: {
+  //               spatialSubset: {
+  //                 boundingBox: {
+  //                   allowMultipleValues: false
+  //                 }
+  //               },
+  //               variableSubset: {
+  //                 allowMultipleValues: true
+  //               }
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             interpolationTypes: [
+  //               'Bilinear Interpolation',
+  //               'Nearest Neighbor'
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ]
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         }]
+  //       },
+  //       variables: {
+  //         count: 3,
+  //         items: [
+  //           {
+  //             conceptId: 'V100003-EDSC',
+  //             definition: 'Beta channel value',
+  //             longName: 'Beta channel ',
+  //             name: 'beta_var',
+  //             nativeId: 'mmt_variable_4972',
+  //             scienceKeywords: null
+  //           },
+  //           {
+  //             conceptId: 'V100004-EDSC',
+  //             definition: 'Orange channel value',
+  //             longName: 'Orange channel',
+  //             name: 'orange_var',
+  //             nativeId: 'mmt_variable_4971',
+  //             scienceKeywords: null
+  //           },
+  //           {
+  //             conceptId: 'V100005-EDSC',
+  //             definition: 'Purple channel value',
+  //             longName: 'Purple channel',
+  //             name: 'purple_var',
+  //             nativeId: 'mmt_variable_4970',
+  //             scienceKeywords: null
+  //           }
+  //         ]
+  //       }
+  //     }
+  //     const isOpenSearch = false
 
-      buildAccessMethods(collectionMetadata, isOpenSearch)
+  //     buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
-      expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
+  //     expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        1,
-        {
-          conceptId: 'S100000-EDSC',
-          longName: 'Mock Service Name',
-          name: 'mock-name',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       1,
+  //       {
+  //         conceptId: 'S100000-EDSC',
+  //         longName: 'Mock Service Name',
+  //         name: 'mock-name',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
 
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example.com'
-          },
-          variables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100000-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100001-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3970',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Red channel value',
-                longName: 'Red Channel',
-                name: 'red_var',
-                nativeId: 'mmt_variable_3969',
-                scienceKeywords: null
-              }
-            ]
-          }
-        },
-        {
-          associatedVariables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100000-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100001-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3970',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Red channel value',
-                longName: 'Red Channel',
-                name: 'red_var',
-                nativeId: 'mmt_variable_3969',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example.com'
+  //         },
+  //         variables: {
+  //           count: 4,
+  //           items: [
+  //             {
+  //               conceptId: 'V100000-EDSC',
+  //               definition: 'Alpha channel value',
+  //               longName: 'Alpha channel ',
+  //               name: 'alpha_var',
+  //               nativeId: 'mmt_variable_3972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100001-EDSC',
+  //               definition: 'Blue channel value',
+  //               longName: 'Blue channel',
+  //               name: 'blue_var',
+  //               nativeId: 'mmt_variable_3971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100002-EDSC',
+  //               definition: 'Green channel value',
+  //               longName: 'Green channel',
+  //               name: 'green_var',
+  //               nativeId: 'mmt_variable_3970',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Red channel value',
+  //               longName: 'Red Channel',
+  //               name: 'red_var',
+  //               nativeId: 'mmt_variable_3969',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 4,
+  //           items: [
+  //             {
+  //               conceptId: 'V100000-EDSC',
+  //               definition: 'Alpha channel value',
+  //               longName: 'Alpha channel ',
+  //               name: 'alpha_var',
+  //               nativeId: 'mmt_variable_3972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100001-EDSC',
+  //               definition: 'Blue channel value',
+  //               longName: 'Blue channel',
+  //               name: 'blue_var',
+  //               nativeId: 'mmt_variable_3971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100002-EDSC',
+  //               definition: 'Green channel value',
+  //               longName: 'Green channel',
+  //               name: 'green_var',
+  //               nativeId: 'mmt_variable_3970',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Red channel value',
+  //               longName: 'Red Channel',
+  //               name: 'red_var',
+  //               nativeId: 'mmt_variable_3969',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
 
-      // Checks also that harmony increments it's index correctly
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        2,
-        {
-          conceptId: 'S100001-EDSC',
-          longName: 'Mock Service Name 2',
-          name: 'mock-name 2',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example2.com'
-          },
-          variables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100006-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3973',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100007-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3974',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100008-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3975',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100009-EDSC',
-                definition: 'Red channel value',
-                longName: 'Red Channel',
-                name: 'red_var',
-                nativeId: 'mmt_variable_3966',
-                scienceKeywords: null
-              }
-            ]
-          }
-        },
-        {
-          associatedVariables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100006-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3973',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100007-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3974',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100008-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3975',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100009-EDSC',
-                definition: 'Red channel value',
-                longName: 'Red Channel',
-                name: 'red_var',
-                nativeId: 'mmt_variable_3966',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
+  //     // Checks also that harmony increments it's index correctly
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       2,
+  //       {
+  //         conceptId: 'S100001-EDSC',
+  //         longName: 'Mock Service Name 2',
+  //         name: 'mock-name 2',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example2.com'
+  //         },
+  //         variables: {
+  //           count: 4,
+  //           items: [
+  //             {
+  //               conceptId: 'V100006-EDSC',
+  //               definition: 'Alpha channel value',
+  //               longName: 'Alpha channel ',
+  //               name: 'alpha_var',
+  //               nativeId: 'mmt_variable_3973',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100007-EDSC',
+  //               definition: 'Blue channel value',
+  //               longName: 'Blue channel',
+  //               name: 'blue_var',
+  //               nativeId: 'mmt_variable_3974',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100008-EDSC',
+  //               definition: 'Green channel value',
+  //               longName: 'Green channel',
+  //               name: 'green_var',
+  //               nativeId: 'mmt_variable_3975',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100009-EDSC',
+  //               definition: 'Red channel value',
+  //               longName: 'Red Channel',
+  //               name: 'red_var',
+  //               nativeId: 'mmt_variable_3966',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 4,
+  //           items: [
+  //             {
+  //               conceptId: 'V100006-EDSC',
+  //               definition: 'Alpha channel value',
+  //               longName: 'Alpha channel ',
+  //               name: 'alpha_var',
+  //               nativeId: 'mmt_variable_3973',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100007-EDSC',
+  //               definition: 'Blue channel value',
+  //               longName: 'Blue channel',
+  //               name: 'blue_var',
+  //               nativeId: 'mmt_variable_3974',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100008-EDSC',
+  //               definition: 'Green channel value',
+  //               longName: 'Green channel',
+  //               name: 'green_var',
+  //               nativeId: 'mmt_variable_3975',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100009-EDSC',
+  //               definition: 'Red channel value',
+  //               longName: 'Red Channel',
+  //               name: 'red_var',
+  //               nativeId: 'mmt_variable_3966',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
 
-      // Checks also that harmony increments it's index correctly
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        3,
-        {
-          conceptId: 'S100002-EDSC',
-          longName: 'Mock Service Name 3',
-          name: 'mock-name 3',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example3.com'
-          }
-        },
-        {
-          associatedVariables: {
-            count: 3,
-            items: [
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Beta channel value',
-                longName: 'Beta channel ',
-                name: 'beta_var',
-                nativeId: 'mmt_variable_4972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100004-EDSC',
-                definition: 'Orange channel value',
-                longName: 'Orange channel',
-                name: 'orange_var',
-                nativeId: 'mmt_variable_4971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100005-EDSC',
-                definition: 'Purple channel value',
-                longName: 'Purple channel',
-                name: 'purple_var',
-                nativeId: 'mmt_variable_4970',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
-    })
-  })
+  //     // Checks also that harmony increments it's index correctly
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       3,
+  //       {
+  //         conceptId: 'S100002-EDSC',
+  //         longName: 'Mock Service Name 3',
+  //         name: 'mock-name 3',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example3.com'
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 3,
+  //           items: [
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Beta channel value',
+  //               longName: 'Beta channel ',
+  //               name: 'beta_var',
+  //               nativeId: 'mmt_variable_4972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100004-EDSC',
+  //               definition: 'Orange channel value',
+  //               longName: 'Orange channel',
+  //               name: 'orange_var',
+  //               nativeId: 'mmt_variable_4971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100005-EDSC',
+  //               definition: 'Purple channel value',
+  //               longName: 'Purple channel',
+  //               name: 'purple_var',
+  //               nativeId: 'mmt_variable_4970',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
+  //   })
+  // })
 
-  describe('when the collection contains variables directly associated to the collection and no variables associated to it services (empty) and 3 service records', () => {
-    test('variables on the collection are returned instead of variables associated to the service and buildHarmony is called 3 times', () => {
-      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
+  // describe('when the collection contains variables directly associated to the collection and no variables associated to it services (empty) and 3 service records', () => {
+  //   test('variables on the collection are returned instead of variables associated to the service and buildHarmony is called 3 times', () => {
+  //     const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
-      const collectionMetadata = {
-        services: {
-          items: [
-            {
-              conceptId: 'S100000-EDSC',
-              longName: 'Mock Service Name',
-              name: 'mock-name',
-              type: 'Harmony',
-              url: {
-                description: 'Mock URL',
-                urlValue: 'https://example.com'
-              },
-              serviceOptions: {
-                subset: {
-                  spatialSubset: {
-                    boundingBox: {
-                      allowMultipleValues: false
-                    }
-                  },
-                  variableSubset: {
-                    allowMultipleValues: true
-                  }
-                },
-                supportedOutputProjections: [
-                  {
-                    projectionName: 'Polar Stereographic'
-                  },
-                  {
-                    projectionName: 'Geographic'
-                  }
-                ],
-                interpolationTypes: [
-                  'Bilinear Interpolation',
-                  'Nearest Neighbor'
-                ],
-                supportedReformattings: [
-                  {
-                    supportedInputFormat: 'NETCDF-4',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  },
-                  {
-                    supportedInputFormat: 'GEOTIFF',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  }
-                ]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ],
-              variables: {
-                count: 0,
-                items: []
-              }
-            },
-            {
-              conceptId: 'S100001-EDSC',
-              longName: 'Mock Service Name 2',
-              name: 'mock-name 2',
-              type: 'Harmony',
-              url: {
-                description: 'Mock URL',
-                urlValue: 'https://example2.com'
-              },
-              serviceOptions: {
-                subset: {
-                  spatialSubset: {
-                    boundingBox: {
-                      allowMultipleValues: false
-                    }
-                  },
-                  variableSubset: {
-                    allowMultipleValues: true
-                  }
-                },
-                supportedOutputProjections: [
-                  {
-                    projectionName:
-                      'Polar Stereographic'
-                  },
-                  {
-                    projectionName:
-                      'Geographic'
-                  }
-                ],
-                interpolationTypes: [
-                  'Bilinear Interpolation',
-                  'Nearest Neighbor'
-                ],
-                supportedReformattings: [
-                  {
-                    supportedInputFormat: 'NETCDF-4',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  },
-                  {
-                    supportedInputFormat: 'GEOTIFF',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  }]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName:
-                    'Polar Stereographic'
-                },
-                {
-                  projectionName:
-                    'Geographic'
-                }
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ],
-              variables: {
-                count: 4,
-                items: []
-              }
-            },
-            {
-              conceptId: 'S100002-EDSC',
-              longName: 'Mock Service Name 3',
-              name: 'mock-name 3',
-              type: 'Harmony',
-              url: {
-                description: 'Mock URL',
-                urlValue: 'https://example3.com'
-              },
-              serviceOptions: {
-                subset: {
-                  spatialSubset: {
-                    boundingBox: {
-                      allowMultipleValues: false
-                    }
-                  },
-                  variableSubset: {
-                    allowMultipleValues: true
-                  }
-                },
-                supportedOutputProjections: [
-                  {
-                    projectionName:
-                      'Polar Stereographic'
-                  },
-                  {
-                    projectionName:
-                      'Geographic'
-                  }
-                ],
-                interpolationTypes: [
-                  'Bilinear Interpolation',
-                  'Nearest Neighbor'
-                ],
-                supportedReformattings: [
-                  {
-                    supportedInputFormat: 'NETCDF-4',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  },
-                  {
-                    supportedInputFormat: 'GEOTIFF',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  }
-                ]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        variables: {
-          count: 3,
-          items: [
-            {
-              conceptId: 'V100003-EDSC',
-              definition: 'Beta channel value',
-              longName: 'Beta channel ',
-              name: 'beta_var',
-              nativeId: 'mmt_variable_4972',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100004-EDSC',
-              definition: 'Orange channel value',
-              longName: 'Orange channel',
-              name: 'orange_var',
-              nativeId: 'mmt_variable_4971',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100005-EDSC',
-              definition: 'Purple channel value',
-              longName: 'Purple channel',
-              name: 'purple_var',
-              nativeId: 'mmt_variable_4970',
-              scienceKeywords: null
-            }
-          ]
-        }
-      }
-      const isOpenSearch = false
+  //     const collectionMetadata = {
+  //       services: {
+  //         items: [
+  //           {
+  //             conceptId: 'S100000-EDSC',
+  //             longName: 'Mock Service Name',
+  //             name: 'mock-name',
+  //             type: 'Harmony',
+  //             url: {
+  //               description: 'Mock URL',
+  //               urlValue: 'https://example.com'
+  //             },
+  //             serviceOptions: {
+  //               subset: {
+  //                 spatialSubset: {
+  //                   boundingBox: {
+  //                     allowMultipleValues: false
+  //                   }
+  //                 },
+  //                 variableSubset: {
+  //                   allowMultipleValues: true
+  //                 }
+  //               },
+  //               supportedOutputProjections: [
+  //                 {
+  //                   projectionName: 'Polar Stereographic'
+  //                 },
+  //                 {
+  //                   projectionName: 'Geographic'
+  //                 }
+  //               ],
+  //               interpolationTypes: [
+  //                 'Bilinear Interpolation',
+  //                 'Nearest Neighbor'
+  //               ],
+  //               supportedReformattings: [
+  //                 {
+  //                   supportedInputFormat: 'NETCDF-4',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 },
+  //                 {
+  //                   supportedInputFormat: 'GEOTIFF',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 }
+  //               ]
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ],
+  //             variables: {
+  //               count: 0,
+  //               items: []
+  //             }
+  //           },
+  //           {
+  //             conceptId: 'S100001-EDSC',
+  //             longName: 'Mock Service Name 2',
+  //             name: 'mock-name 2',
+  //             type: 'Harmony',
+  //             url: {
+  //               description: 'Mock URL',
+  //               urlValue: 'https://example2.com'
+  //             },
+  //             serviceOptions: {
+  //               subset: {
+  //                 spatialSubset: {
+  //                   boundingBox: {
+  //                     allowMultipleValues: false
+  //                   }
+  //                 },
+  //                 variableSubset: {
+  //                   allowMultipleValues: true
+  //                 }
+  //               },
+  //               supportedOutputProjections: [
+  //                 {
+  //                   projectionName:
+  //                     'Polar Stereographic'
+  //                 },
+  //                 {
+  //                   projectionName:
+  //                     'Geographic'
+  //                 }
+  //               ],
+  //               interpolationTypes: [
+  //                 'Bilinear Interpolation',
+  //                 'Nearest Neighbor'
+  //               ],
+  //               supportedReformattings: [
+  //                 {
+  //                   supportedInputFormat: 'NETCDF-4',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 },
+  //                 {
+  //                   supportedInputFormat: 'GEOTIFF',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 }]
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName:
+  //                   'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName:
+  //                   'Geographic'
+  //               }
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ],
+  //             variables: {
+  //               count: 4,
+  //               items: []
+  //             }
+  //           },
+  //           {
+  //             conceptId: 'S100002-EDSC',
+  //             longName: 'Mock Service Name 3',
+  //             name: 'mock-name 3',
+  //             type: 'Harmony',
+  //             url: {
+  //               description: 'Mock URL',
+  //               urlValue: 'https://example3.com'
+  //             },
+  //             serviceOptions: {
+  //               subset: {
+  //                 spatialSubset: {
+  //                   boundingBox: {
+  //                     allowMultipleValues: false
+  //                   }
+  //                 },
+  //                 variableSubset: {
+  //                   allowMultipleValues: true
+  //                 }
+  //               },
+  //               supportedOutputProjections: [
+  //                 {
+  //                   projectionName:
+  //                     'Polar Stereographic'
+  //                 },
+  //                 {
+  //                   projectionName:
+  //                     'Geographic'
+  //                 }
+  //               ],
+  //               interpolationTypes: [
+  //                 'Bilinear Interpolation',
+  //                 'Nearest Neighbor'
+  //               ],
+  //               supportedReformattings: [
+  //                 {
+  //                   supportedInputFormat: 'NETCDF-4',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 },
+  //                 {
+  //                   supportedInputFormat: 'GEOTIFF',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 }
+  //               ]
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ]
+  //           }
+  //         ]
+  //       },
+  //       variables: {
+  //         count: 3,
+  //         items: [
+  //           {
+  //             conceptId: 'V100003-EDSC',
+  //             definition: 'Beta channel value',
+  //             longName: 'Beta channel ',
+  //             name: 'beta_var',
+  //             nativeId: 'mmt_variable_4972',
+  //             scienceKeywords: null
+  //           },
+  //           {
+  //             conceptId: 'V100004-EDSC',
+  //             definition: 'Orange channel value',
+  //             longName: 'Orange channel',
+  //             name: 'orange_var',
+  //             nativeId: 'mmt_variable_4971',
+  //             scienceKeywords: null
+  //           },
+  //           {
+  //             conceptId: 'V100005-EDSC',
+  //             definition: 'Purple channel value',
+  //             longName: 'Purple channel',
+  //             name: 'purple_var',
+  //             nativeId: 'mmt_variable_4970',
+  //             scienceKeywords: null
+  //           }
+  //         ]
+  //       }
+  //     }
+  //     const isOpenSearch = false
 
-      buildAccessMethods(collectionMetadata, isOpenSearch)
+  //     buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
-      expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
+  //     expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        1,
-        {
-          conceptId: 'S100000-EDSC',
-          longName: 'Mock Service Name',
-          name: 'mock-name',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName:
-                  'Polar Stereographic'
-              },
-              {
-                projectionName:
-                  'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName:
-                'Polar Stereographic'
-            },
-            {
-              projectionName:
-                'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example.com'
-          },
-          variables: {
-            count: 0,
-            items: []
-          }
-        },
-        {
-          associatedVariables: {
-            count: 3,
-            items: [
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Beta channel value',
-                longName: 'Beta channel ',
-                name: 'beta_var',
-                nativeId: 'mmt_variable_4972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100004-EDSC',
-                definition: 'Orange channel value',
-                longName: 'Orange channel',
-                name: 'orange_var',
-                nativeId: 'mmt_variable_4971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100005-EDSC',
-                definition: 'Purple channel value',
-                longName: 'Purple channel',
-                name: 'purple_var',
-                nativeId: 'mmt_variable_4970',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       1,
+  //       {
+  //         conceptId: 'S100000-EDSC',
+  //         longName: 'Mock Service Name',
+  //         name: 'mock-name',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName:
+  //                 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName:
+  //                 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName:
+  //               'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName:
+  //               'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example.com'
+  //         },
+  //         variables: {
+  //           count: 0,
+  //           items: []
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 3,
+  //           items: [
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Beta channel value',
+  //               longName: 'Beta channel ',
+  //               name: 'beta_var',
+  //               nativeId: 'mmt_variable_4972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100004-EDSC',
+  //               definition: 'Orange channel value',
+  //               longName: 'Orange channel',
+  //               name: 'orange_var',
+  //               nativeId: 'mmt_variable_4971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100005-EDSC',
+  //               definition: 'Purple channel value',
+  //               longName: 'Purple channel',
+  //               name: 'purple_var',
+  //               nativeId: 'mmt_variable_4970',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        2,
-        {
-          conceptId: 'S100001-EDSC',
-          longName: 'Mock Service Name 2',
-          name: 'mock-name 2',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName:
-                  'Polar Stereographic'
-              },
-              {
-                projectionName:
-                  'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName:
-                'Polar Stereographic'
-            },
-            {
-              projectionName:
-                'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example2.com'
-          },
-          variables: {
-            count: 4,
-            items: []
-          }
-        },
-        {
-          associatedVariables: {
-            count: 3,
-            items: [
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Beta channel value',
-                longName: 'Beta channel ',
-                name: 'beta_var',
-                nativeId: 'mmt_variable_4972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100004-EDSC',
-                definition: 'Orange channel value',
-                longName: 'Orange channel',
-                name: 'orange_var',
-                nativeId: 'mmt_variable_4971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100005-EDSC',
-                definition: 'Purple channel value',
-                longName: 'Purple channel',
-                name: 'purple_var',
-                nativeId: 'mmt_variable_4970',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       2,
+  //       {
+  //         conceptId: 'S100001-EDSC',
+  //         longName: 'Mock Service Name 2',
+  //         name: 'mock-name 2',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName:
+  //                 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName:
+  //                 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName:
+  //               'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName:
+  //               'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example2.com'
+  //         },
+  //         variables: {
+  //           count: 4,
+  //           items: []
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 3,
+  //           items: [
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Beta channel value',
+  //               longName: 'Beta channel ',
+  //               name: 'beta_var',
+  //               nativeId: 'mmt_variable_4972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100004-EDSC',
+  //               definition: 'Orange channel value',
+  //               longName: 'Orange channel',
+  //               name: 'orange_var',
+  //               nativeId: 'mmt_variable_4971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100005-EDSC',
+  //               definition: 'Purple channel value',
+  //               longName: 'Purple channel',
+  //               name: 'purple_var',
+  //               nativeId: 'mmt_variable_4970',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        3,
-        {
-          conceptId: 'S100002-EDSC',
-          longName: 'Mock Service Name 3',
-          name: 'mock-name 3',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example3.com'
-          }
-        },
-        {
-          associatedVariables: {
-            count: 3,
-            items: [
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Beta channel value',
-                longName: 'Beta channel ',
-                name: 'beta_var',
-                nativeId: 'mmt_variable_4972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100004-EDSC',
-                definition: 'Orange channel value',
-                longName: 'Orange channel',
-                name: 'orange_var',
-                nativeId: 'mmt_variable_4971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100005-EDSC',
-                definition: 'Purple channel value',
-                longName: 'Purple channel',
-                name: 'purple_var',
-                nativeId: 'mmt_variable_4970',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
-    })
-  })
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       3,
+  //       {
+  //         conceptId: 'S100002-EDSC',
+  //         longName: 'Mock Service Name 3',
+  //         name: 'mock-name 3',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example3.com'
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 3,
+  //           items: [
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Beta channel value',
+  //               longName: 'Beta channel ',
+  //               name: 'beta_var',
+  //               nativeId: 'mmt_variable_4972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100004-EDSC',
+  //               definition: 'Orange channel value',
+  //               longName: 'Orange channel',
+  //               name: 'orange_var',
+  //               nativeId: 'mmt_variable_4971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100005-EDSC',
+  //               definition: 'Purple channel value',
+  //               longName: 'Purple channel',
+  //               name: 'purple_var',
+  //               nativeId: 'mmt_variable_4970',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
+  //   })
+  // })
 
-  describe('when the collection contains variables directly associated to the collection and some variables associated to some services and 3 service records', () => {
-    test('variables on the collection are returned for services without variables but, variables associated to the service are returned for services that have them and buildHarmony is called 3 times', () => {
-      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
+  // describe('when the collection contains variables directly associated to the collection and some variables associated to some services and 3 service records', () => {
+  //   test('variables on the collection are returned for services without variables but, variables associated to the service are returned for services that have them and buildHarmony is called 3 times', () => {
+  //     const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
 
-      const collectionMetadata = {
-        services: {
-          items: [
-            {
-              conceptId: 'S100000-EDSC',
-              longName: 'Mock Service Name',
-              name: 'mock-name',
-              type: 'Harmony',
-              url: {
-                description: 'Mock URL',
-                urlValue: 'https://example.com'
-              },
-              serviceOptions: {
-                subset: {
-                  spatialSubset: {
-                    boundingBox: {
-                      allowMultipleValues: false
-                    }
-                  },
-                  variableSubset: {
-                    allowMultipleValues: true
-                  }
-                },
-                supportedOutputProjections: [
-                  {
-                    projectionName: 'Polar Stereographic'
-                  },
-                  {
-                    projectionName: 'Geographic'
-                  }
-                ],
-                interpolationTypes: [
-                  'Bilinear Interpolation',
-                  'Nearest Neighbor'
-                ],
-                supportedReformattings: [
-                  {
-                    supportedInputFormat: 'NETCDF-4',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  },
-                  {
-                    supportedInputFormat: 'GEOTIFF',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  }]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ],
-              variables: {
-                count: 4,
-                items: [
-                  {
-                    conceptId: 'V100000-EDSC',
-                    definition: 'Alpha channel value',
-                    longName: 'Alpha channel ',
-                    name: 'alpha_var',
-                    nativeId: 'mmt_variable_3972',
-                    scienceKeywords: null
-                  },
-                  {
-                    conceptId: 'V100001-EDSC',
-                    definition: 'Blue channel value',
-                    longName: 'Blue channel',
-                    name: 'blue_var',
-                    nativeId: 'mmt_variable_3971',
-                    scienceKeywords: null
-                  },
-                  {
-                    conceptId: 'V100002-EDSC',
-                    definition: 'Green channel value',
-                    longName: 'Green channel',
-                    name: 'green_var',
-                    nativeId: 'mmt_variable_3970',
-                    scienceKeywords: null
-                  },
-                  {
-                    conceptId: 'V100003-EDSC',
-                    definition: 'Red channel value',
-                    longName: 'Red Channel',
-                    name: 'red_var',
-                    nativeId: 'mmt_variable_3969',
-                    scienceKeywords: null
-                  }
-                ]
-              }
-            },
-            {
-              conceptId: 'S100001-EDSC',
-              longName: 'Mock Service Name 2',
-              name: 'mock-name 2',
-              type: 'Harmony',
-              url: {
-                description: 'Mock URL',
-                urlValue: 'https://example2.com'
-              },
-              serviceOptions: {
-                subset: {
-                  spatialSubset: {
-                    boundingBox: {
-                      allowMultipleValues: false
-                    }
-                  },
-                  variableSubset: {
-                    allowMultipleValues: true
-                  }
-                },
-                supportedOutputProjections: [
-                  {
-                    projectionName: 'Polar Stereographic'
-                  },
-                  {
-                    projectionName: 'Geographic'
-                  }
-                ],
-                interpolationTypes: [
-                  'Bilinear Interpolation',
-                  'Nearest Neighbor'
-                ],
-                supportedReformattings: [
-                  {
-                    supportedInputFormat: 'NETCDF-4',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  },
-                  {
-                    supportedInputFormat: 'GEOTIFF',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  }
-                ]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ]
-            },
-            {
-              conceptId: 'S100002-EDSC',
-              longName: 'Mock Service Name 3',
-              name: 'mock-name 3',
-              type: 'Harmony',
-              url: {
-                description: 'Mock URL',
-                urlValue: 'https://example3.com'
-              },
-              serviceOptions: {
-                subset: {
-                  spatialSubset: {
-                    boundingBox: {
-                      allowMultipleValues: false
-                    }
-                  },
-                  variableSubset: {
-                    allowMultipleValues: true
-                  }
-                },
-                supportedOutputProjections: [
-                  {
-                    projectionName: 'Polar Stereographic'
-                  },
-                  {
-                    projectionName: 'Geographic'
-                  }
-                ],
-                interpolationTypes: [
-                  'Bilinear Interpolation',
-                  'Nearest Neighbor'
-                ],
-                supportedReformattings: [
-                  {
-                    supportedInputFormat: 'NETCDF-4',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  },
-                  {
-                    supportedInputFormat: 'GEOTIFF',
-                    supportedOutputFormats: [
-                      'GEOTIFF',
-                      'PNG',
-                      'TIFF',
-                      'NETCDF-4'
-                    ]
-                  }
-                ]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Polar Stereographic'
-                },
-                {
-                  projectionName: 'Geographic'
-                }
-              ],
-              supportedReformattings: [
-                {
-                  supportedInputFormat: 'NETCDF-4',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                },
-                {
-                  supportedInputFormat: 'GEOTIFF',
-                  supportedOutputFormats: [
-                    'GEOTIFF',
-                    'PNG',
-                    'TIFF',
-                    'NETCDF-4'
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        variables: {
-          count: 3,
-          items: [
-            {
-              conceptId: 'V100003-EDSC',
-              definition: 'Beta channel value',
-              longName: 'Beta channel ',
-              name: 'beta_var',
-              nativeId: 'mmt_variable_4972',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100004-EDSC',
-              definition: 'Orange channel value',
-              longName: 'Orange channel',
-              name: 'orange_var',
-              nativeId: 'mmt_variable_4971',
-              scienceKeywords: null
-            },
-            {
-              conceptId: 'V100005-EDSC',
-              definition: 'Purple channel value',
-              longName: 'Purple channel',
-              name: 'purple_var',
-              nativeId: 'mmt_variable_4970',
-              scienceKeywords: null
-            }
-          ]
-        }
-      }
+  //     const collectionMetadata = {
+  //       services: {
+  //         items: [
+  //           {
+  //             conceptId: 'S100000-EDSC',
+  //             longName: 'Mock Service Name',
+  //             name: 'mock-name',
+  //             type: 'Harmony',
+  //             url: {
+  //               description: 'Mock URL',
+  //               urlValue: 'https://example.com'
+  //             },
+  //             serviceOptions: {
+  //               subset: {
+  //                 spatialSubset: {
+  //                   boundingBox: {
+  //                     allowMultipleValues: false
+  //                   }
+  //                 },
+  //                 variableSubset: {
+  //                   allowMultipleValues: true
+  //                 }
+  //               },
+  //               supportedOutputProjections: [
+  //                 {
+  //                   projectionName: 'Polar Stereographic'
+  //                 },
+  //                 {
+  //                   projectionName: 'Geographic'
+  //                 }
+  //               ],
+  //               interpolationTypes: [
+  //                 'Bilinear Interpolation',
+  //                 'Nearest Neighbor'
+  //               ],
+  //               supportedReformattings: [
+  //                 {
+  //                   supportedInputFormat: 'NETCDF-4',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 },
+  //                 {
+  //                   supportedInputFormat: 'GEOTIFF',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 }]
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ],
+  //             variables: {
+  //               count: 4,
+  //               items: [
+  //                 {
+  //                   conceptId: 'V100000-EDSC',
+  //                   definition: 'Alpha channel value',
+  //                   longName: 'Alpha channel ',
+  //                   name: 'alpha_var',
+  //                   nativeId: 'mmt_variable_3972',
+  //                   scienceKeywords: null
+  //                 },
+  //                 {
+  //                   conceptId: 'V100001-EDSC',
+  //                   definition: 'Blue channel value',
+  //                   longName: 'Blue channel',
+  //                   name: 'blue_var',
+  //                   nativeId: 'mmt_variable_3971',
+  //                   scienceKeywords: null
+  //                 },
+  //                 {
+  //                   conceptId: 'V100002-EDSC',
+  //                   definition: 'Green channel value',
+  //                   longName: 'Green channel',
+  //                   name: 'green_var',
+  //                   nativeId: 'mmt_variable_3970',
+  //                   scienceKeywords: null
+  //                 },
+  //                 {
+  //                   conceptId: 'V100003-EDSC',
+  //                   definition: 'Red channel value',
+  //                   longName: 'Red Channel',
+  //                   name: 'red_var',
+  //                   nativeId: 'mmt_variable_3969',
+  //                   scienceKeywords: null
+  //                 }
+  //               ]
+  //             }
+  //           },
+  //           {
+  //             conceptId: 'S100001-EDSC',
+  //             longName: 'Mock Service Name 2',
+  //             name: 'mock-name 2',
+  //             type: 'Harmony',
+  //             url: {
+  //               description: 'Mock URL',
+  //               urlValue: 'https://example2.com'
+  //             },
+  //             serviceOptions: {
+  //               subset: {
+  //                 spatialSubset: {
+  //                   boundingBox: {
+  //                     allowMultipleValues: false
+  //                   }
+  //                 },
+  //                 variableSubset: {
+  //                   allowMultipleValues: true
+  //                 }
+  //               },
+  //               supportedOutputProjections: [
+  //                 {
+  //                   projectionName: 'Polar Stereographic'
+  //                 },
+  //                 {
+  //                   projectionName: 'Geographic'
+  //                 }
+  //               ],
+  //               interpolationTypes: [
+  //                 'Bilinear Interpolation',
+  //                 'Nearest Neighbor'
+  //               ],
+  //               supportedReformattings: [
+  //                 {
+  //                   supportedInputFormat: 'NETCDF-4',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 },
+  //                 {
+  //                   supportedInputFormat: 'GEOTIFF',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 }
+  //               ]
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             conceptId: 'S100002-EDSC',
+  //             longName: 'Mock Service Name 3',
+  //             name: 'mock-name 3',
+  //             type: 'Harmony',
+  //             url: {
+  //               description: 'Mock URL',
+  //               urlValue: 'https://example3.com'
+  //             },
+  //             serviceOptions: {
+  //               subset: {
+  //                 spatialSubset: {
+  //                   boundingBox: {
+  //                     allowMultipleValues: false
+  //                   }
+  //                 },
+  //                 variableSubset: {
+  //                   allowMultipleValues: true
+  //                 }
+  //               },
+  //               supportedOutputProjections: [
+  //                 {
+  //                   projectionName: 'Polar Stereographic'
+  //                 },
+  //                 {
+  //                   projectionName: 'Geographic'
+  //                 }
+  //               ],
+  //               interpolationTypes: [
+  //                 'Bilinear Interpolation',
+  //                 'Nearest Neighbor'
+  //               ],
+  //               supportedReformattings: [
+  //                 {
+  //                   supportedInputFormat: 'NETCDF-4',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 },
+  //                 {
+  //                   supportedInputFormat: 'GEOTIFF',
+  //                   supportedOutputFormats: [
+  //                     'GEOTIFF',
+  //                     'PNG',
+  //                     'TIFF',
+  //                     'NETCDF-4'
+  //                   ]
+  //                 }
+  //               ]
+  //             },
+  //             supportedOutputProjections: [
+  //               {
+  //                 projectionName: 'Polar Stereographic'
+  //               },
+  //               {
+  //                 projectionName: 'Geographic'
+  //               }
+  //             ],
+  //             supportedReformattings: [
+  //               {
+  //                 supportedInputFormat: 'NETCDF-4',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               },
+  //               {
+  //                 supportedInputFormat: 'GEOTIFF',
+  //                 supportedOutputFormats: [
+  //                   'GEOTIFF',
+  //                   'PNG',
+  //                   'TIFF',
+  //                   'NETCDF-4'
+  //                 ]
+  //               }
+  //             ]
+  //           }
+  //         ]
+  //       },
+  //       variables: {
+  //         count: 3,
+  //         items: [
+  //           {
+  //             conceptId: 'V100003-EDSC',
+  //             definition: 'Beta channel value',
+  //             longName: 'Beta channel ',
+  //             name: 'beta_var',
+  //             nativeId: 'mmt_variable_4972',
+  //             scienceKeywords: null
+  //           },
+  //           {
+  //             conceptId: 'V100004-EDSC',
+  //             definition: 'Orange channel value',
+  //             longName: 'Orange channel',
+  //             name: 'orange_var',
+  //             nativeId: 'mmt_variable_4971',
+  //             scienceKeywords: null
+  //           },
+  //           {
+  //             conceptId: 'V100005-EDSC',
+  //             definition: 'Purple channel value',
+  //             longName: 'Purple channel',
+  //             name: 'purple_var',
+  //             nativeId: 'mmt_variable_4970',
+  //             scienceKeywords: null
+  //           }
+  //         ]
+  //       }
+  //     }
 
-      const isOpenSearch = false
+  //     const isOpenSearch = false
 
-      buildAccessMethods(collectionMetadata, isOpenSearch)
+  //     buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilities, 'dev')
 
-      expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
+  //     expect(buildHarmonyMock).toHaveBeenCalledTimes(3)
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        1,
-        {
-          conceptId: 'S100000-EDSC',
-          longName: 'Mock Service Name',
-          name: 'mock-name',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example.com'
-          },
-          variables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100000-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100001-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3970',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Red channel value',
-                longName: 'Red Channel',
-                name: 'red_var',
-                nativeId: 'mmt_variable_3969',
-                scienceKeywords: null
-              }
-            ]
-          }
-        },
-        {
-          associatedVariables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100000-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100001-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3970',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Red channel value',
-                longName: 'Red Channel',
-                name: 'red_var',
-                nativeId: 'mmt_variable_3969',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       1,
+  //       {
+  //         conceptId: 'S100000-EDSC',
+  //         longName: 'Mock Service Name',
+  //         name: 'mock-name',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example.com'
+  //         },
+  //         variables: {
+  //           count: 4,
+  //           items: [
+  //             {
+  //               conceptId: 'V100000-EDSC',
+  //               definition: 'Alpha channel value',
+  //               longName: 'Alpha channel ',
+  //               name: 'alpha_var',
+  //               nativeId: 'mmt_variable_3972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100001-EDSC',
+  //               definition: 'Blue channel value',
+  //               longName: 'Blue channel',
+  //               name: 'blue_var',
+  //               nativeId: 'mmt_variable_3971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100002-EDSC',
+  //               definition: 'Green channel value',
+  //               longName: 'Green channel',
+  //               name: 'green_var',
+  //               nativeId: 'mmt_variable_3970',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Red channel value',
+  //               longName: 'Red Channel',
+  //               name: 'red_var',
+  //               nativeId: 'mmt_variable_3969',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 4,
+  //           items: [
+  //             {
+  //               conceptId: 'V100000-EDSC',
+  //               definition: 'Alpha channel value',
+  //               longName: 'Alpha channel ',
+  //               name: 'alpha_var',
+  //               nativeId: 'mmt_variable_3972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100001-EDSC',
+  //               definition: 'Blue channel value',
+  //               longName: 'Blue channel',
+  //               name: 'blue_var',
+  //               nativeId: 'mmt_variable_3971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100002-EDSC',
+  //               definition: 'Green channel value',
+  //               longName: 'Green channel',
+  //               name: 'green_var',
+  //               nativeId: 'mmt_variable_3970',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Red channel value',
+  //               longName: 'Red Channel',
+  //               name: 'red_var',
+  //               nativeId: 'mmt_variable_3969',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        2,
-        {
-          conceptId: 'S100001-EDSC',
-          longName: 'Mock Service Name 2',
-          name: 'mock-name 2',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example2.com'
-          }
-        },
-        {
-          associatedVariables: {
-            count: 3,
-            items: [
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Beta channel value',
-                longName: 'Beta channel ',
-                name: 'beta_var',
-                nativeId: 'mmt_variable_4972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100004-EDSC',
-                definition: 'Orange channel value',
-                longName: 'Orange channel',
-                name: 'orange_var',
-                nativeId: 'mmt_variable_4971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100005-EDSC',
-                definition: 'Purple channel value',
-                longName: 'Purple channel',
-                name: 'purple_var',
-                nativeId: 'mmt_variable_4970',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       2,
+  //       {
+  //         conceptId: 'S100001-EDSC',
+  //         longName: 'Mock Service Name 2',
+  //         name: 'mock-name 2',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example2.com'
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 3,
+  //           items: [
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Beta channel value',
+  //               longName: 'Beta channel ',
+  //               name: 'beta_var',
+  //               nativeId: 'mmt_variable_4972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100004-EDSC',
+  //               definition: 'Orange channel value',
+  //               longName: 'Orange channel',
+  //               name: 'orange_var',
+  //               nativeId: 'mmt_variable_4971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100005-EDSC',
+  //               definition: 'Purple channel value',
+  //               longName: 'Purple channel',
+  //               name: 'purple_var',
+  //               nativeId: 'mmt_variable_4970',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        3,
-        {
-          conceptId: 'S100002-EDSC',
-          longName: 'Mock Service Name 3',
-          name: 'mock-name 3',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example3.com'
-          }
-        },
-        {
-          associatedVariables: {
-            count: 3,
-            items: [
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'Beta channel value',
-                longName: 'Beta channel ',
-                name: 'beta_var',
-                nativeId: 'mmt_variable_4972',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100004-EDSC',
-                definition: 'Orange channel value',
-                longName: 'Orange channel',
-                name: 'orange_var',
-                nativeId: 'mmt_variable_4971',
-                scienceKeywords: null
-              },
-              {
-                conceptId: 'V100005-EDSC',
-                definition: 'Purple channel value',
-                longName: 'Purple channel',
-                name: 'purple_var',
-                nativeId: 'mmt_variable_4970',
-                scienceKeywords: null
-              }
-            ]
-          }
-        }
-      )
-    })
-  })
+  //     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+  //       3,
+  //       {
+  //         conceptId: 'S100002-EDSC',
+  //         longName: 'Mock Service Name 3',
+  //         name: 'mock-name 3',
+  //         serviceOptions: {
+  //           interpolationTypes: [
+  //             'Bilinear Interpolation',
+  //             'Nearest Neighbor'
+  //           ],
+  //           subset: {
+  //             spatialSubset: { boundingBox: { allowMultipleValues: false } },
+  //             variableSubset: { allowMultipleValues: true }
+  //           },
+  //           supportedOutputProjections: [
+  //             {
+  //               projectionName: 'Polar Stereographic'
+  //             },
+  //             {
+  //               projectionName: 'Geographic'
+  //             }
+  //           ],
+  //           supportedReformattings: [
+  //             {
+  //               supportedInputFormat: 'NETCDF-4',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             },
+  //             {
+  //               supportedInputFormat: 'GEOTIFF',
+  //               supportedOutputFormats: [
+  //                 'GEOTIFF',
+  //                 'PNG',
+  //                 'TIFF',
+  //                 'NETCDF-4'
+  //               ]
+  //             }
+  //           ]
+  //         },
+  //         supportedOutputProjections: [
+  //           {
+  //             projectionName: 'Polar Stereographic'
+  //           },
+  //           {
+  //             projectionName: 'Geographic'
+  //           }
+  //         ],
+  //         supportedReformattings: [
+  //           {
+  //             supportedInputFormat: 'NETCDF-4',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           },
+  //           {
+  //             supportedInputFormat: 'GEOTIFF',
+  //             supportedOutputFormats: [
+  //               'GEOTIFF',
+  //               'PNG',
+  //               'TIFF',
+  //               'NETCDF-4'
+  //             ]
+  //           }
+  //         ],
+  //         type: 'Harmony',
+  //         url: {
+  //           description: 'Mock URL',
+  //           urlValue: 'https://example3.com'
+  //         }
+  //       },
+  //       {
+  //         associatedVariables: {
+  //           count: 3,
+  //           items: [
+  //             {
+  //               conceptId: 'V100003-EDSC',
+  //               definition: 'Beta channel value',
+  //               longName: 'Beta channel ',
+  //               name: 'beta_var',
+  //               nativeId: 'mmt_variable_4972',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100004-EDSC',
+  //               definition: 'Orange channel value',
+  //               longName: 'Orange channel',
+  //               name: 'orange_var',
+  //               nativeId: 'mmt_variable_4971',
+  //               scienceKeywords: null
+  //             },
+  //             {
+  //               conceptId: 'V100005-EDSC',
+  //               definition: 'Purple channel value',
+  //               longName: 'Purple channel',
+  //               name: 'purple_var',
+  //               nativeId: 'mmt_variable_4970',
+  //               scienceKeywords: null
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     )
+  //   })
+  // })
 
   describe('calls complex compilation of mutliple different access methods', () => {
     test('calls all access methods correctly', () => {
@@ -3167,91 +3109,6 @@ describe('when buildAccessMethods is called', () => {
               form: 'mock form'
             }
           ]
-        }
-      }
-
-      const harmonyItem1 = {
-        conceptId: 'S100000-EDSC',
-        longName: 'Mock Service Name',
-        name: 'mock-name',
-        type: 'Harmony',
-        url: {
-          description: 'Mock URL',
-          urlValue: 'https://example.com'
-        },
-        serviceOptions: {
-          subset: {
-            spatialSubset: {
-              boundingBox: {
-                allowMultipleValues: false
-              }
-            },
-            variableSubset: {
-              allowMultipleValues: true
-            }
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          interpolationTypes: [
-            'Bilinear Interpolation',
-            'Nearest Neighbor'
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }]
-        },
-        supportedOutputProjections: [
-          {
-            projectionName: 'Polar Stereographic'
-          },
-          {
-            projectionName: 'Geographic'
-          }
-        ],
-        supportedReformattings: [
-          {
-            supportedInputFormat: 'NETCDF-4',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ]
-          },
-          {
-            supportedInputFormat: 'GEOTIFF',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ]
-          }],
-        variables: {
-          count: 0,
-          items: null
         }
       }
 
@@ -3469,106 +3326,14 @@ describe('when buildAccessMethods is called', () => {
         }
       }
 
-      const harmonyItem2 = {
-        conceptId: 'S100001-EDSC',
-        longName: 'Mock Service Name 2',
-        name: 'mock-name 2',
-        type: 'Harmony',
-        url: {
-          description: 'Mock URL',
-          urlValue: 'https://example2.com'
-        },
-        serviceOptions: {
-          subset: {
-            spatialSubset: {
-              boundingBox: {
-                allowMultipleValues: false
-              }
-            },
-            variableSubset: {
-              allowMultipleValues: true
-            }
-          },
-          supportedOutputProjections: [
-            {
-              projectionName:
-                'Polar Stereographic'
-            },
-            {
-              projectionName:
-                'Geographic'
-            }
-          ],
-          interpolationTypes: [
-            'Bilinear Interpolation',
-            'Nearest Neighbor'
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }]
-        },
-        supportedOutputProjections: [
-          {
-            projectionName:
-              'Polar Stereographic'
-          },
-          {
-            projectionName:
-              'Geographic'
-          }
-        ],
-        supportedReformattings: [
-          {
-            supportedInputFormat: 'NETCDF-4',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ]
-          },
-          {
-            supportedInputFormat: 'GEOTIFF',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ]
-          }
-        ],
-        variables: {
-          count: 0,
-          items: []
-        }
-      }
-
       const collectionMetadata = {
         services: {
           items: [
             echoOrderItem1,
             esiItem,
             echoOrderItem2,
-            harmonyItem1,
             opendapItem,
-            swodlrItem,
-            harmonyItem2
+            swodlrItem
           ]
         },
         variables: {
@@ -3604,43 +3369,18 @@ describe('when buildAccessMethods is called', () => {
 
       const isOpenSearch = false
 
-      const accessMethods = buildAccessMethods(collectionMetadata, isOpenSearch)
+      const accessMethods = buildAccessMethods(
+        collectionMetadata,
+        isOpenSearch,
+        harmonyCapabilities,
+        'dev'
+      )
 
       expect(buildEchoMock).toHaveBeenCalledTimes(2) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
       expect(buildEsiMock).toHaveBeenCalledTimes(1) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
-      expect(buildHarmonyMock).toHaveBeenCalledTimes(2)
+      expect(buildHarmonyMock).toHaveBeenCalledTimes(1)
       expect(buildOpendapMock).toHaveBeenCalledTimes(1)
       expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
-
-      const defaultAssociatedVariables = {
-        count: 3,
-        items: [
-          {
-            conceptId: 'V100000-EDSC',
-            definition: 'Alpha channel value',
-            longName: 'Alpha channel ',
-            name: 'alpha_var',
-            nativeId: 'mmt_variable_3972',
-            scienceKeywords: null
-          },
-          {
-            conceptId: 'V100001-EDSC',
-            definition: 'Blue channel value',
-            longName: 'Blue channel',
-            name: 'blue_var',
-            nativeId: 'mmt_variable_3971',
-            scienceKeywords: null
-          },
-          {
-            conceptId: 'V100002-EDSC',
-            definition: 'Green channel value',
-            longName: 'Green channel',
-            name: 'green_var',
-            nativeId: 'mmt_variable_3970',
-            scienceKeywords: null
-          }
-        ]
-      }
 
       // ESI & Echo Order expected Calls
       const echoCall1 = {
@@ -3715,88 +3455,35 @@ describe('when buildAccessMethods is called', () => {
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
         {
-          conceptId: 'S100000-EDSC',
-          longName: 'Mock Service Name',
-          name: 'mock-name',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
+          bboxSubset: true,
+          concatenate: false,
+          conceptId: 'C100000-EDSC',
+          outputFormats: [
+            'image/tiff',
+            'application/x-netcdf4'
+          ],
+          services: [
             {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
+              capabilities: {
+                subsetting: {
+                  temporal: true
+                }
+              },
+              name: 'giovanni-time-series-adapter'
             }
           ],
-          supportedReformattings: [
+          shapeSubset: true,
+          shortName: 'MOCK_SHORT_NAME',
+          temporalSubset: true,
+          variableSubset: true,
+          variables: [
             {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
+              conceptId: 'V100000-EDSC',
+              name: 'mock_variable'
             }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example.com'
-          },
-          variables: {
-            count: 0,
-            items: null
-          }
+          ]
         },
-        {
-          associatedVariables: defaultAssociatedVariables
-        }
+        'dev'
       )
 
       expect(buildOpendapMock).toHaveBeenNthCalledWith(
@@ -4028,94 +3715,6 @@ describe('when buildAccessMethods is called', () => {
         }
       )
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        2,
-        {
-          conceptId: 'S100001-EDSC',
-          longName: 'Mock Service Name 2',
-          name: 'mock-name 2',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName:
-                'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example2.com'
-          },
-          variables: {
-            count: 0,
-            items: []
-          }
-        },
-        {
-          associatedVariables: defaultAssociatedVariables
-        }
-      )
-
       expect(buildSwodlrMock).toHaveBeenNthCalledWith(
         1,
         {
@@ -4194,129 +3793,42 @@ describe('when buildAccessMethods is called', () => {
             type: 'ESI',
             url: 'https://example.com'
           },
-          harmony0: {
+          harmony: {
             defaultConcatenation: false,
             enableConcatenateDownload: false,
-            enableTemporalSubsetting: true,
-            enableSpatialSubsetting: true,
-            hierarchyMappings: [
+            enableSpatialSubsetting: false,
+            enableTemporalSubsetting: false,
+            id: 'C100000-EDSC',
+            isValid: true,
+            services: [
               {
-                id: 'V100000-EDSC'
-              },
-              {
-                id: 'V100001-EDSC'
-              },
-              {
-                id: 'V100002-EDSC'
+                capabilities: {
+                  subsetting: {
+                    temporal: true
+                  }
+                },
+                name: 'giovanni-time-series-adapter'
               }
             ],
-            id: 'S100000-EDSC',
-            isValid: true,
-            keywordMappings: [],
-            longName: 'Mock Service Name',
-            name: 'mock-name',
+            shortName: 'MOCK_SHORT_NAME',
             supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
+              'image/tiff',
+              'application/x-netcdf4'
             ],
             supportedOutputProjections: [],
             supportsBoundingBoxSubsetting: true,
             supportsConcatenation: false,
-            supportsShapefileSubsetting: false,
-            supportsTemporalSubsetting: false,
+            supportsShapefileSubsetting: true,
+            supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
             type: 'Harmony',
-            url: 'https://example.com',
-            variables: {
-              'V100000-EDSC': {
+            url: undefined,
+            variables: [
+              {
                 conceptId: 'V100000-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3972',
-                scienceKeywords: null
-              },
-              'V100001-EDSC': {
-                conceptId: 'V100001-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3971',
-                scienceKeywords: null
-              },
-              'V100002-EDSC': {
-                conceptId: 'V100002-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3970',
-                scienceKeywords: null
+                name: 'mock_variable'
               }
-            }
-          },
-          harmony1: {
-            defaultConcatenation: false,
-            enableConcatenateDownload: false,
-            enableTemporalSubsetting: true,
-            enableSpatialSubsetting: true,
-            hierarchyMappings: [
-              {
-                id: 'V100000-EDSC'
-              },
-              {
-                id: 'V100001-EDSC'
-              },
-              {
-                id: 'V100002-EDSC'
-              }
-            ],
-            id: 'S100001-EDSC',
-            isValid: true,
-            keywordMappings: [],
-            longName: 'Mock Service Name 2',
-            name: 'mock-name 2',
-            supportedOutputFormats: [
-              'GEOTIFF',
-              'PNG',
-              'TIFF',
-              'NETCDF-4'
-            ],
-            supportedOutputProjections: [],
-            supportsBoundingBoxSubsetting: true,
-            supportsConcatenation: false,
-            supportsShapefileSubsetting: false,
-            supportsTemporalSubsetting: false,
-            supportsVariableSubsetting: true,
-            type: 'Harmony',
-            url: 'https://example2.com',
-            variables: {
-              'V100000-EDSC': {
-                conceptId: 'V100000-EDSC',
-                definition: 'Alpha channel value',
-                longName: 'Alpha channel ',
-                name: 'alpha_var',
-                nativeId: 'mmt_variable_3972',
-                scienceKeywords: null
-              },
-              'V100001-EDSC': {
-                conceptId: 'V100001-EDSC',
-                definition: 'Blue channel value',
-                longName: 'Blue channel',
-                name: 'blue_var',
-                nativeId: 'mmt_variable_3971',
-                scienceKeywords: null
-              },
-              'V100002-EDSC': {
-                conceptId: 'V100002-EDSC',
-                definition: 'Green channel value',
-                longName: 'Green channel',
-                name: 'green_var',
-                nativeId: 'mmt_variable_3970',
-                scienceKeywords: null
-              }
-            }
+            ]
           },
           opendap: {
             hierarchyMappings: [

@@ -58,6 +58,7 @@ import type {
 
 import type {
   CollectionMetadata,
+  HarmonyCapabilities,
   GranuleResponseData,
   GranulesMetadata,
   Response,
@@ -268,7 +269,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let harmonyCapabilities: Record<string, any> | undefined
+      let harmonyCapabilities = {} as HarmonyCapabilities
       let isUnauthorized = false
 
       // Fetch the Harmony Capabilites document
@@ -283,7 +284,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             )
 
             const harmonyCapabilitiesResponse = await harmonyCapabilitiesRequestObject
-              .searchHarmonyCapabilities(collectionId)
+              .search({ collectionId })
 
             const { data } = harmonyCapabilitiesResponse
             harmonyCapabilities = data
@@ -431,7 +432,12 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           const { [conceptId!]: savedAccessConfig } = savedAccessConfigs
 
-          const accessMethods = buildAccessMethods(metadata, isOpenSearch, harmonyCapabilities)
+          const accessMethods = buildAccessMethods(
+            metadata,
+            isOpenSearch,
+            harmonyCapabilities,
+            earthdataEnvironment
+          )
 
           const accessMethodsObject = insertSavedAccessConfig(
             accessMethods,

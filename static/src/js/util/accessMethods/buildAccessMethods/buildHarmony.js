@@ -1,11 +1,11 @@
-import { getEnvironmentConfig } from '../../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
 
 /**
  * Builds the Harmony access method
  * @param {object} harmonyCapabilites object that contains capabilites document from harmony endpoint
  * @returns {object} Access method for Harmony
  */
-export const buildHarmony = (harmonyCapabilities) => {
+export const buildHarmony = (harmonyCapabilities, earthdataEnvironment) => {
   const {
     bboxSubset,
     concatenate,
@@ -19,7 +19,7 @@ export const buildHarmony = (harmonyCapabilities) => {
     variableSubset
   } = harmonyCapabilities
 
-  const url = getEnvironmentConfig().harmonyHost
+  const url = getEarthdataConfig(earthdataEnvironment).harmonyHost
 
   return {
     defaultConcatenation: false,

@@ -1,6 +1,7 @@
 import Request from './request'
 // @ts-expect-error This file does not have types
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { HarmonyRequestParams } from '../../types/sharedTypes'
 
 export default class HarmonyCapabilitiesRequest extends Request {
   constructor(edlToken: string, earthdataEnvironment: string) {
@@ -11,7 +12,7 @@ export default class HarmonyCapabilitiesRequest extends Request {
     this.searchPath = 'capabilities'
   }
 
-  searchHarmonyCapabilities(collectionId: string) {
-    return this.get('capabilities', { collectionId })
+  search(params: HarmonyRequestParams) {
+    return this.getSearch(params)
   }
 }

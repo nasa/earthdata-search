@@ -10,7 +10,6 @@ import { buildDownload } from './buildAccessMethods/buildDownload'
 const ECHO_ORDERS = 'echoOrders'
 const ESI = 'esi'
 const OPENDAP = 'opendap'
-const HARMONY = 'harmony'
 const SWODLR = 'swodlr'
 
 /**
@@ -32,7 +31,6 @@ export const formatServiceType = (serviceType) => {
 export const reduceAccessMethods = (items = []) => {
   let esiIndex = 0
   let echoIndex = 0
-  let harmonyIndex = 0
 
   const accessMethods = items.reduce((methods, item) => {
     const { type: serviceType } = item
@@ -51,11 +49,6 @@ export const reduceAccessMethods = (items = []) => {
         updatedAccessMethods[`${methodKey}${echoIndex}`] = item
 
         echoIndex += 1
-        break
-      case (HARMONY):
-        updatedAccessMethods[`${methodKey}${harmonyIndex}`] = item
-
-        harmonyIndex += 1
         break
       // No need to create a "accessMethodKey" since you can only have one openDap or SWODLR
       case (OPENDAP):
@@ -82,7 +75,12 @@ export const reduceAccessMethods = (items = []) => {
  * @param {boolean} isOpenSearch Is the collection an open search collection
  * @returns {object} Access methods
  */
-export const buildAccessMethods = (collectionMetadata, isOpenSearch, harmonyCapabilities) => {
+export const buildAccessMethods = (
+  collectionMetadata,
+  isOpenSearch,
+  harmonyCapabilities,
+  earthdataEnvironment
+) => {
   const {
     granules = {},
     services = {},
@@ -127,11 +125,15 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch, harmonyCapa
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
-  const harmonyMethod = buildHarmony(harmonyCapabilities)
+  const harmonyMethod = harmonyCapabilities?.services.length > 0
+    ? buildHarmony(harmonyCapabilities, earthdataEnvironment) : undefined
+
+  if (harmonyMethod) {
+    nonDownloadMethods.harmony = harmonyMethod
+  }
 
   const accessMethods = {
     ...nonDownloadMethods,
-    harmony: harmonyMethod,
     ...buildMethods.downloads()
   }
 

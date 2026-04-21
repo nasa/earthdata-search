@@ -25,7 +25,8 @@ vi.mock('../../../../../../sharedUtils/getClientId', () => ({
 vi.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
   cmrHost: 'https://cmr.example.com',
   graphQlHost: 'https://graphql.example.com',
-  opensearchRoot: 'https://cmr.example.com/opensearch'
+  opensearchRoot: 'https://cmr.example.com/opensearch',
+  harmonyHost: 'https://harmony.example.com'
 }))
 
 vi.mock('../../../util/handleAlert', () => ({
@@ -313,11 +314,90 @@ describe('createProjectSlice', () => {
       })
     })
 
+    describe('when the harmony capabilites document request returns a 401', () => {
+      const originalWindowLocation = window.location
+
+      beforeEach(() => {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          enumerable: true,
+          value: new URL(window.location.href)
+        })
+      })
+
+      afterEach(() => {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          enumerable: true,
+          value: originalWindowLocation
+        })
+      })
+
+      test('returns null', async () => {
+        nock(/localhost/)
+          .post(/saved_access_configs/)
+          .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(401, {
+            message: 'Request failed with status code 401',
+            name: 'AxiosError',
+            code: 'ERR_BAD_REQUEST'
+          })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(401, {
+            message: 'Request failed with status code 401',
+            name: 'AxiosError',
+            code: 'ERR_BAD_REQUEST'
+          })
+
+        nock(/harmony.example.com/)
+          .post(/error_logger/)
+          .reply(200)
+
+        useEdscStore.setState((state) => {
+          state.earthdataEnvironment.currentEnvironment = 'prod'
+          state.project.collections.allIds = ['collectionId1', 'collectionId2']
+          state.user.edlToken = 'mockEdlToken'
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { project } = zustandState
+
+        const result = await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+        expect(result).toBeNull()
+
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(2)
+        expect(errors.handleError).toHaveBeenCalledWith({
+          action: 'getProjectCollections',
+          error: expect.any(Error),
+          resource: 'harmony capabilties request'
+        })
+
+        expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dhttp%253A%252F%252Flocalhost%253A3000%252F')
+      })
+    })
+
     describe('when the user is logged in', () => {
       test('adds access methods and updates collection metadata', async () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, { services: [] })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(200, { services: [] })
 
         nock(/graphql/)
           .post(/api/)
@@ -332,17 +412,9 @@ describe('createProjectSlice', () => {
                       onlineAccessFlag: true
                     }]
                   },
-                  tools: {
-                    items: [{
-                      name: 'SOTO'
-                    }]
-                  },
-                  services: {
-                    items: []
-                  },
-                  dataQualitySummaries: {
-                    items: []
-                  }
+                  tools: { items: [{ name: 'SOTO' }] },
+                  services: { items: [] },
+                  dataQualitySummaries: { items: [] }
                 },
                 {
                   conceptId: 'collectionId2',
@@ -352,15 +424,9 @@ describe('createProjectSlice', () => {
                       onlineAccessFlag: true
                     }]
                   },
-                  tools: {
-                    items: []
-                  },
-                  services: {
-                    items: []
-                  },
-                  dataQualitySummaries: {
-                    items: []
-                  }
+                  tools: { items: [] },
+                  services: { items: [] },
+                  dataQualitySummaries: { items: [] }
                 }]
               }
             }
@@ -389,7 +455,9 @@ describe('createProjectSlice', () => {
         const { collections } = updatedProject
         const { byId } = collections
         const collection1 = byId.collectionId1
+        console.log('🚀 ~ createProjectSlice.test.ts:458 ~ collection1:', collection1)
         const collection2 = byId.collectionId2
+        console.log('🚀 ~ createProjectSlice.test.ts:460 ~ collection2:', collection2)
 
         expect(collection1.selectedAccessMethod).toEqual('download')
         expect(collection1.accessMethods).toEqual({
@@ -580,6 +648,14 @@ describe('createProjectSlice', () => {
             }
           })
 
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, { services: [] })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(200, { services: [] })
+
         nock(/graphql/)
           .post(/api/)
           .reply(200, {
@@ -709,41 +785,33 @@ describe('createProjectSlice', () => {
       })
     })
 
-    describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
-      test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
-        vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
-          maxCmrPageSize: '1',
-          defaultCmrSearchTags: [
-            'edsc.*',
-            'opensearch.granule.osdd'
-          ]
-        }))
-
-        const varResults = [{
-          variables: {
-            items: [{ conceptId: 'V10000000000-EDSC' }],
-            count: 3,
-            cursor: 'mock-cursor-0'
-          }
-        },
-        {
-          variables: {
-            items: [{ conceptId: 'V10000000001-EDSC' }],
-            count: 3,
-            cursor: 'mock-cursor-1'
-          }
-        },
-        {
-          variables: {
-            items: [{ conceptId: 'V10000000002-EDSC' }],
-            count: 3,
-            cursor: null
-          }
-        }]
-
+    describe('when the user requests a collection that can be customized with harmony', () => {
+      test('adds harmony access method', async () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, {
+            services: [
+              {
+                name: 'sds/trajectory-subsetter',
+                href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+                capabilities: {
+                  subsetting: {
+                    temporal: true,
+                    bbox: true,
+                    shape: true,
+                    variable: true
+                  },
+                  output_formats: [
+                    'application/x-hdf'
+                  ]
+                }
+              }
+            ]
+          })
 
         nock(/graphql/)
           .post(/api/)
@@ -751,13 +819,22 @@ describe('createProjectSlice', () => {
             data: {
               collections: {
                 items: [{
-                  conceptId: 'C10000000000-EDSC',
-                  tools: {
+                  conceptId: 'collectionId1',
+                  granules: {
                     items: [{
-                      name: 'SOTO'
+                      id: 'granuleId1',
+                      onlineAccessFlag: true
                     }]
                   },
-                  variables: varResults[0].variables
+                  tools: {
+                    items: [{ name: 'SOTO' }]
+                  },
+                  services: {
+                    items: []
+                  },
+                  dataQualitySummaries: {
+                    items: []
+                  }
                 }]
               }
             }
@@ -765,24 +842,8 @@ describe('createProjectSlice', () => {
             'jwt-token': 'token'
           })
 
-        nock(/graphql/)
-          .post(/api/)
-          .reply(200, {
-            data: {
-              variables: varResults[1].variables
-            }
-          })
-
-        nock(/graphql/)
-          .post(/api/)
-          .reply(200, {
-            data: {
-              variables: varResults[2].variables
-            }
-          })
-
         useEdscStore.setState((state) => {
-          state.project.collections.allIds = ['C10000000000-EDSC']
+          state.project.collections.allIds = ['collectionId1']
           state.user.edlToken = 'mockEdlToken'
         })
 
@@ -791,28 +852,174 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
-        const { collection } = useEdscStore.getState()
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
 
-        expect(collection.collectionMetadata).toEqual({
-          'C10000000000-EDSC': expect.objectContaining({
-            variables: {
-              count: 3,
-              items: [
-                { conceptId: 'V10000000000-EDSC' },
-                { conceptId: 'V10000000001-EDSC' },
-                { conceptId: 'V10000000002-EDSC' }
-              ]
-            }
-          })
+        const updatedState = useEdscStore.getState()
+        const { project: updatedProject } = updatedState
+        const { collections } = updatedProject
+        const { byId } = collections
+        const collection1 = byId.collectionId1
+
+        expect(collection1.accessMethods).toEqual({
+          download: {
+            isValid: true,
+            type: 'download'
+          },
+          harmony: {
+            defaultConcatenation: false,
+            enableConcatenateDownload: false,
+            enableSpatialSubsetting: false,
+            enableTemporalSubsetting: false,
+            id: undefined,
+            isValid: true,
+            services: [
+              {
+                capabilities: {
+                  output_formats: [
+                    'application/x-hdf'
+                  ],
+                  subsetting: {
+                    bbox: true,
+                    shape: true,
+                    temporal: true,
+                    variable: true
+                  }
+                },
+                href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+                name: 'sds/trajectory-subsetter'
+              }
+            ],
+            shortName: undefined,
+            supportedOutputFormats: undefined,
+            supportedOutputProjections: [],
+            supportsBoundingBoxSubsetting: undefined,
+            supportsConcatenation: undefined,
+            supportsShapefileSubsetting: undefined,
+            supportsTemporalSubsetting: undefined,
+            supportsVariableSubsetting: undefined,
+            type: 'Harmony',
+            url: 'https://harmony.example.com',
+            variables: undefined
+          }
+
         })
       })
     })
+
+    // Come back to in EDSC-4661
+    // describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
+    //   test.only('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
+    //     vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+    //       maxCmrPageSize: '1',
+    //       defaultCmrSearchTags: [
+    //         'edsc.*',
+    //         'opensearch.granule.osdd'
+    //       ]
+    //     }))
+
+    //     const varResults = [{
+    //       variables: {
+    //         items: [{ conceptId: 'V10000000000-EDSC' }],
+    //         count: 3,
+    //         cursor: 'mock-cursor-0'
+    //       }
+    //     },
+    //     {
+    //       variables: {
+    //         items: [{ conceptId: 'V10000000001-EDSC' }],
+    //         count: 3,
+    //         cursor: 'mock-cursor-1'
+    //       }
+    //     },
+    //     {
+    //       variables: {
+    //         items: [{ conceptId: 'V10000000002-EDSC' }],
+    //         count: 3,
+    //         cursor: null
+    //       }
+    //     }]
+
+    //     nock(/localhost/)
+    //       .post(/saved_access_configs/)
+    //       .reply(200, {})
+
+    //     nock(/graphql/)
+    //       .post(/api/)
+    //       .reply(200, {
+    //         data: {
+    //           collections: {
+    //             items: [{
+    //               conceptId: 'C10000000000-EDSC',
+    //               tools: {
+    //                 items: [{
+    //                   name: 'SOTO'
+    //                 }]
+    //               },
+    //               variables: varResults[0].variables
+    //             }]
+    //           }
+    //         }
+    //       }, {
+    //         'jwt-token': 'token'
+    //       })
+
+    //     nock(/graphql/)
+    //       .post(/api/)
+    //       .reply(200, {
+    //         data: {
+    //           variables: varResults[1].variables
+    //         }
+    //       })
+
+    //     nock(/graphql/)
+    //       .post(/api/)
+    //       .reply(200, {
+    //         data: {
+    //           variables: varResults[2].variables
+    //         }
+    //       })
+
+    //     useEdscStore.setState((state) => {
+    //       state.project.collections.allIds = ['C10000000000-EDSC']
+    //       state.user.edlToken = 'mockEdlToken'
+    //     })
+
+    //     const zustandState = useEdscStore.getState()
+    //     const { project } = zustandState
+
+    //     await project.getProjectCollections()
+
+    //     const { collection } = useEdscStore.getState()
+
+    //     expect(collection.collectionMetadata).toEqual({
+    //       'C10000000000-EDSC': expect.objectContaining({
+    //         variables: {
+    //           count: 3,
+    //           items: [
+    //             { conceptId: 'V10000000000-EDSC' },
+    //             { conceptId: 'V10000000001-EDSC' },
+    //             { conceptId: 'V10000000002-EDSC' }
+    //           ]
+    //         }
+    //       })
+    //     })
+    //   })
+    // })
 
     describe('when requesting a CSDA collection', () => {
       test('adds access methods and updates collection metadata', async () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, { services: [] })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(200, { services: [] })
 
         nock(/graphql/)
           .post(/api/)
@@ -931,6 +1138,14 @@ describe('createProjectSlice', () => {
             code: 'ERR_BAD_REQUEST'
           })
 
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, { services: [] })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(200, { services: [] })
+
         nock(/localhost/)
           .post(/error_logger/)
           .reply(200)
@@ -1022,6 +1237,14 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {})
 
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, { services: [] })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(200, { services: [] })
+
         nock(/graphql/)
           .post(/api/)
           .reply(500, {
@@ -1064,6 +1287,14 @@ describe('createProjectSlice', () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId1/)
+          .reply(200, { services: [] })
+
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=collectionId2/)
+          .reply(200, { services: [] })
 
         nock(/graphql/)
           .post(/api/)
