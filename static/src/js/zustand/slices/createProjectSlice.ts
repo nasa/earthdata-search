@@ -277,6 +277,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         filteredIds.map(async (collectionId) => {
           // Return if a previous request was unauthorized
           if (isUnauthorized) return
+          const version = '2'
           try {
             const harmonyCapabilitiesRequestObject = new HarmonyCapabilitiesRequest(
               edlToken,
@@ -284,7 +285,10 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             )
 
             const harmonyCapabilitiesResponse = await harmonyCapabilitiesRequestObject
-              .search({ collectionId })
+              .search({
+                collectionId,
+                version
+              })
 
             const { data } = harmonyCapabilitiesResponse
             harmonyCapabilities = data

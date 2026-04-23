@@ -339,7 +339,7 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(401, {
             message: 'Request failed with status code 401',
             name: 'AxiosError',
@@ -347,7 +347,7 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(401, {
             message: 'Request failed with status code 401',
             name: 'AxiosError',
@@ -392,11 +392,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -649,11 +649,11 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -792,7 +792,7 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, {
             services: [
               {
@@ -1014,11 +1014,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1139,11 +1139,11 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(200, { services: [] })
 
         nock(/localhost/)
@@ -1238,11 +1238,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1289,11 +1289,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1/)
+          .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2/)
+          .get(/capabilities\?collectionId=collectionId2&version=2/)
           .reply(200, { services: [] })
 
         nock(/graphql/)

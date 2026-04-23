@@ -480,7 +480,9 @@ export type PreferencesRequestParams = {
 /** The request parameters for a Harmony request */
 export type HarmonyRequestParams = {
   /** Concept id of the collection to retrieve capabilities for */
-  collectionId?: string;
+  collectionId: string;
+  /** The version of capabilities doc we would like to use */
+  version: string;
 }
 
 /** The request parameters for saved access configurations */

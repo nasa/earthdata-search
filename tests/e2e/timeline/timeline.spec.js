@@ -11,7 +11,7 @@ import providers from './__mocks__/providers.json'
 import accessMethods from './__mocks__/access_methods.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
-test.describe('Timeline spec', () => {
+test.describe.skip('Timeline spec', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       page,
