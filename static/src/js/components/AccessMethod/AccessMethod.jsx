@@ -16,7 +16,7 @@ import { pluralize } from '../../util/pluralize'
 import calculateValidParameters from '../../util/calculateValidParameters/calculateValidParameters'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
-import { ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
+import { harmonyFormatMapping, ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import Button from '../Button/Button'
@@ -62,10 +62,8 @@ const AccessMethod = ({
   temporal
 }) => {
   const {
-    setShowMbr,
     setActivePanel
   } = useEdscStore((state) => ({
-    setShowMbr: state.map.setShowMbr,
     setActivePanel: state.projectPanels.setActivePanel
   }))
 
@@ -112,17 +110,10 @@ const AccessMethod = ({
   const [isHarmony, setIsHarmony] = useState(false)
   const [granuleList, setGranuleList] = useState([])
   const [calculatedCapabilities, setCalculatedCapabilities] = useState({})
-  const [capabilitesError, setCapabilitesError] = useState('')
 
   useEffect(() => {
-    setCapabilitesError('')
     const recalculated = calculateValidParameters(userSelections, services)
-
-    if (recalculated.hasConflict) {
-      setCapabilitesError(recalculated.errorMessage)
-    } else {
-      setCalculatedCapabilities(recalculated)
-    }
+    setCalculatedCapabilities(recalculated)
   }, [userSelections])
 
   const {
@@ -172,7 +163,7 @@ const AccessMethod = ({
 
     onSelectAccessMethod({
       collectionId,
-      selectedAccessMethod: null
+      selectedAccessMethod: 'harmony'
     })
   }
 
@@ -193,11 +184,7 @@ const AccessMethod = ({
     const { conceptId: collectionId } = metadata
 
     const { target } = event
-    let { value } = target
-
-    if (value === '') {
-      value = undefined
-    }
+    const { value } = target
 
     onUpdateAccessMethod({
       collectionId,
@@ -247,8 +234,6 @@ const AccessMethod = ({
     const { target } = event
     const { checked } = target
 
-    if (!checked) { setCapabilitesError('') }
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -264,8 +249,6 @@ const AccessMethod = ({
 
     const { target } = event
     const { checked } = target
-
-    if (!checked) { setCapabilitesError('') }
 
     onUpdateAccessMethod({
       collectionId,
@@ -559,8 +542,11 @@ const AccessMethod = ({
 
   if (isHarmony) {
     // Filter the supportedOutputFormats to only those formats Harmony supports
-    // and disable formats that are not currently valid based on user selections
-    supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
+    const harmonySupportedFormats = supportedOutputFormats.filter(
+      (format) => harmonyFormatMapping[format] !== undefined
+    )
+    // Disable formats that are not currently valid based on user selections
+    supportedOutputFormatOptions = harmonySupportedFormats.map((format) => {
       // Default to enabled if calculatedCapabilities is empty (initial load)
       let isOptionDisabled = false
 
@@ -572,7 +558,7 @@ const AccessMethod = ({
 
       return (
         <option key={format} value={format} disabled={isOptionDisabled}>
-          {format}
+          {harmonyFormatMapping[format]}
         </option>
       )
     })
@@ -615,7 +601,6 @@ const AccessMethod = ({
       && !calculatedCapabilities.spatialSubset.shapeenabled
       && nonBoundingBoxSpatialType
     ) {
-      // I don't see the outline on the map
       warning = `Only bounding boxes are supported. Your ${nonBoundingBoxSpatialType} has been automatically converted into the bounding box shown above and outlined on the map.`
     }
 
@@ -626,11 +611,6 @@ const AccessMethod = ({
     spatial,
     calculatedCapabilities
   ])
-
-  useEffect(() => {
-    // Toggle the spatial polygon warning if the warning is present
-    setShowMbr(!!harmonyMbrWarning)
-  }, [harmonyMbrWarning])
 
   // Get spatial and temporal display values
   const selectedTemporalDisplay = createTemporalDisplay(temporal)
@@ -751,7 +731,7 @@ const AccessMethod = ({
                     heading="Spatial Subsetting"
                     intro="When enabled, spatial subsetting will trim the data to the selected area range."
                     nested
-                    warning={(userSelections.spatialSubset && capabilitesError) ? `${capabilitesError}` : harmonyMbrWarning}
+                    warning={harmonyMbrWarning}
                     faded={isDisabled('spatialSubset')}
                   >
                     {
@@ -801,7 +781,7 @@ const AccessMethod = ({
                     customHeadingTag="h4"
                     heading="Temporal Subsetting"
                     intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
-                    warning={(userSelections.temporalSubset && capabilitesError) ? `${capabilitesError}` : (isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.')}
+                    warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
                     nested
                     disabled={isDisabled('temporalSubset')}
                     faded={isDisabled('temporalSubset')}

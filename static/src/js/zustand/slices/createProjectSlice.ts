@@ -699,9 +699,8 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const { byId } = collections
       const collection = byId[collectionId]
 
-      // COME BACK, is there a better way of doing this?
       if (collection) {
-        collection.selectedAccessMethod = selectedAccessMethod || 'harmony'
+        collection.selectedAccessMethod = selectedAccessMethod
       }
     }),
 
