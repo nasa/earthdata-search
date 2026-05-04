@@ -3133,6 +3133,34 @@
           "strategy": "mobile",
           "ttfb": 2
         }
+      },
+      "prod": {
+        "desktop": {
+          "accessibilityScore": 92,
+          "bestPracticesScore": 92,
+          "cls": 0.02,
+          "date": "2026-05-04",
+          "fcp": 1206.74,
+          "inp": "No value",
+          "lcp": 1372.31,
+          "performanceScore": 66,
+          "seoScore": 85,
+          "strategy": "desktop",
+          "ttfb": 2
+        },
+        "mobile": {
+          "accessibilityScore": 89,
+          "bestPracticesScore": 92,
+          "cls": 0.06,
+          "date": "2026-05-04",
+          "fcp": 6087.23,
+          "inp": "No value",
+          "lcp": 7686.05,
+          "performanceScore": 40,
+          "seoScore": 85,
+          "strategy": "mobile",
+          "ttfb": 2
+        }
       }
     }
   },
