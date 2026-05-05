@@ -15,15 +15,15 @@ export const encodeTemporal = (temporal) => {
   } = temporal
 
   const valuesToEncode = [
-    startDate || '',
-    endDate || ''
+    startDate,
+    endDate
   ]
 
   if (isRecurring) {
-    valuesToEncode.push(...[recurringDayStart || '', recurringDayEnd || ''])
+    valuesToEncode.push(...[recurringDayStart, recurringDayEnd])
   }
 
-  if (valuesToEncode.filter(Boolean).length === 0 && !isRecurring) return undefined
+  if (valuesToEncode.filter(Boolean).length === 0) return undefined
 
   const encodedString = valuesToEncode.join(',')
 
@@ -50,9 +50,8 @@ export const decodeTemporal = (string) => {
 
   // We check `values.length > 2` because when `encodeTemporal` runs with `isRecurring: true`,
   // it appends the recurring day start and end values to the array (even if they are empty strings).
-  // This means a recurring temporal string will always have at least 3 commas (length 4, e.g. "start,end,,").
   // This check ensures we preserve the `isRecurring: true` state when decoding the URL, even if the user
-  // has enabled recurring but left the actual day inputs blank.
+  // Note this occurs during collection filtering only
   const isRecurring = values.length > 2 || !!(recurringDayStart && recurringDayEnd)
 
   const temporal = {
