@@ -58,7 +58,6 @@ import type {
 
 import type {
   CollectionMetadata,
-  HarmonyCapabilities,
   GranuleResponseData,
   GranulesMetadata,
   Response,
@@ -69,7 +68,11 @@ import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
 import { getEdlToken, getUsername } from '../selectors/user'
 
-import HarmonyCapabilitiesRequest from '../../util/request/harmonyCapabilitiesRequest'
+import
+getDerivedHarmonyState,
+{ HarmonyCapabilitiesDocument } from '../../util/getDerivedHarmonyState/getDerivedHarmonyState'
+
+import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -268,30 +271,28 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         }
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let harmonyCapabilities = {} as HarmonyCapabilities
-      let isUnauthorized = false
+      let harmonyCapabilitiesDocument = {} as HarmonyCapabilitiesDocument
 
-      // Fetch the Harmony Capabilites document
+      // Fetch the Harmony capabilities document
       await Promise.all(
+        // Purpose of function is to set the harmonyCapabiltiiesDocument
+        // eslint-disable-next-line consistent-return
         filteredIds.map(async (collectionId) => {
-          // Return if a previous request was unauthorized
-          if (isUnauthorized) return
           const version = '2'
           try {
-            const harmonyCapabilitiesRequestObject = new HarmonyCapabilitiesRequest(
+            const harmonyCapabilitiesDocumentRequestObject = new HarmonyCapabilitiesDocumentRequest(
               edlToken,
               earthdataEnvironment
             )
 
-            const harmonyCapabilitiesResponse = await harmonyCapabilitiesRequestObject
-              .search({
-                collectionId,
-                version
-              })
+            const harmonyCapabilitiesDocumentResponse = await
+            harmonyCapabilitiesDocumentRequestObject.search({
+              collectionId,
+              version
+            })
 
-            const { data } = harmonyCapabilitiesResponse
-            harmonyCapabilities = data
+            const { data } = harmonyCapabilitiesDocumentResponse
+            harmonyCapabilitiesDocument = data
           } catch (error) {
             zustandState.errors.handleError({
               error: error as Error,
@@ -301,15 +302,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
             // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
             if (error instanceof AxiosError && error.response?.status === 401) {
-              isUnauthorized = true
+              return buildPromise(null)
             }
           }
         })
       )
-
-      if (isUnauthorized) {
-        return buildPromise(null)
-      }
 
       const collectionParams = prepareCollectionParams()
 
@@ -439,7 +436,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           const accessMethods = buildAccessMethods(
             metadata,
             isOpenSearch,
-            harmonyCapabilities,
+            harmonyCapabilitiesDocument,
             earthdataEnvironment
           )
 
@@ -762,10 +759,103 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       }
     }),
 
-    // This is where I'm going to send user selections
+    // When users make a selection, recalculate what fields are enabled or disabled
+    // based on those user selections and update them in Zustand
+    updateHarmonySelection: ({ collectionId, newSelections }) => {
+      set((state) => {
+        const { collections } = state.project
+        const { byId } = collections
+        const collection = byId[collectionId]
+
+        const { selectedAccessMethod, accessMethods } = collection
+
+        // If missing selectedAccessMethod or accessMethods, do no execute
+        if (!selectedAccessMethod || !accessMethods) return
+
+        const selectedMethod = accessMethods[selectedAccessMethod]
+
+        // Type guard to ensure we have the correct method type ('Harmony')
+        if (selectedMethod && selectedMethod.type === 'Harmony') {
+          // Update selections we will use to getDerivedHarmonyState
+          const updatedSelections = {
+            ...selectedMethod.harmonyUserSelections,
+            ...newSelections
+          }
+
+          // Update the harmony method's user selections
+          selectedMethod.harmonyUserSelections = updatedSelections
+
+          // Recalculate the derived state
+          selectedMethod.derivedHarmonyState = getDerivedHarmonyState(
+            updatedSelections,
+            selectedMethod.harmonyCapabilitiesDocument
+          )
+
+          const { capabilities } = selectedMethod.derivedHarmonyState
+
+          if (!capabilities) return
+
+          const {
+            temporalSubset,
+            spatialSubset,
+            outputFormats
+          } = capabilities
+
+          // Use the derived harmony state to set what is enabled or disabled
+          selectedMethod.enableTemporalSubsetting = updatedSelections.temporalSubset || false
+
+          selectedMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
+
+          selectedMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat
+
+          selectedMethod.availableOutputFormats = outputFormats.availableOutputFormats
+
+          selectedMethod.isTemporalSubsettingDisabled = temporalSubset.disabled
+
+          selectedMethod.isSpatialSubsettingDisabled = spatialSubset.disabled
+
+          selectedMethod.isShapeSubsettingDisabled = spatialSubset.shapeDisabled
+
+          selectedMethod.isOutputFormatsDisabled = outputFormats.disabled
+        }
+      })
+    },
+
+    // The primary purpose of this method is to trigger a state update (a side effect). A return value is not used.
+    // eslint-disable-next-line consistent-return
     updateAccessMethod: ({ collectionId, method }) => {
       const [methodKey] = Object.keys(method)
       const newMethod = method[methodKey]
+
+      // For Harmony updates, we have a map to convert UI state changes
+      // into the format expected by our `updateHarmonySelection` action.
+      const newMethodToDerivedHarmonyStateMap = {
+        enableSpatialSubsetting: 'spatialSubset',
+        enableTemporalSubsetting: 'temporalSubset',
+        selectedOutputFormat: 'selectedOutputFormat'
+      }
+
+      if (methodKey === 'harmony') {
+        const [updateKey] = Object.keys(newMethod)
+        // Tell the compiler to trust that `updateKey` is one of the map's keys.
+        const newSelectionKey = newMethodToDerivedHarmonyStateMap[
+          updateKey as keyof typeof newMethodToDerivedHarmonyStateMap
+        ]
+
+        // If the incoming update key is one we want to map and handle via `updateHarmonySelection`...
+        if (newSelectionKey) {
+          const newSelections = {
+            // Assert that `updateKey` is a valid key of `newMethod`
+            [newSelectionKey]: newMethod[updateKey as keyof typeof newMethod]
+          }
+
+          // ...then we call the dedicated action. This action will correctly recalculate the derived state.
+          return get().project.updateHarmonySelection({
+            collectionId,
+            newSelections
+          })
+        }
+      }
 
       set((state) => {
         const { collections } = state.project

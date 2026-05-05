@@ -13,7 +13,6 @@ import Form from 'react-bootstrap/Form'
 import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import { pluralize } from '../../util/pluralize'
-import calculateValidParameters from '../../util/calculateValidParameters/calculateValidParameters'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
 import { harmonyFormatMapping, ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
@@ -72,10 +71,11 @@ const AccessMethod = ({
   const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
+    availableOutputFormats = [],
     form,
     rawModel = null,
     selectedVariables = [],
-    selectedOutputFormat,
+    selectedOutputFormat = undefined,
     selectedOutputProjection,
     supportedOutputFormats = [],
     supportedOutputProjections = [],
@@ -86,35 +86,19 @@ const AccessMethod = ({
     supportsConcatenation = false,
     supportsSwodlr = false,
     defaultConcatenation = false,
-    services = [],
     enableTemporalSubsetting: isTemporalSubsettingSelected = false,
     enableSpatialSubsetting: isSpatialSubsettingSelected = false,
-    enableConcatenateDownload: isConcatenationSelected = defaultConcatenation
+    enableConcatenateDownload: isConcatenateSelected = defaultConcatenation,
+    isTemporalSubsettingDisabled = false,
+    isSpatialSubsettingDisabled = false,
+    isShapeSubsettingDisabled = false
   } = selectedMethod || {}
-
-  const userSelections = useMemo(() => ({
-    spatialSubset: isSpatialSubsettingSelected,
-    temporalSubset: isTemporalSubsettingSelected,
-    concatenate: isConcatenationSelected,
-    outputFormatSelection: selectedOutputFormat
-  }), [
-    isSpatialSubsettingSelected,
-    isTemporalSubsettingSelected,
-    isConcatenationSelected,
-    selectedOutputFormat
-  ])
 
   // This does not work currently. It's supposed to disable temporalSubsetting but I dont know why that's needed.
   const { isRecurring } = temporal
 
   const [isHarmony, setIsHarmony] = useState(false)
   const [granuleList, setGranuleList] = useState([])
-  const [calculatedCapabilities, setCalculatedCapabilities] = useState({})
-
-  useEffect(() => {
-    const recalculated = calculateValidParameters(userSelections, services)
-    setCalculatedCapabilities(recalculated)
-  }, [userSelections])
 
   const {
     granules: projectCollectionGranules = {}
@@ -321,7 +305,6 @@ const AccessMethod = ({
             onChange={(methodName) => handleAccessMethodSelection(methodName)}
             radioList={radioList}
             renderRadio={renderRadioItem}
-            disabled
           />
         </>
       )
@@ -335,13 +318,6 @@ const AccessMethod = ({
         renderRadio={renderRadioItem}
       />
     )
-  }
-
-  const isDisabled = (key) => {
-    if (Object.keys(calculatedCapabilities).length === 0) return false
-
-    // If the capability has been disabled, return true
-    return !calculatedCapabilities[key]?.enabled
   }
 
   const { conceptId: collectionId } = metadata
@@ -541,21 +517,11 @@ const AccessMethod = ({
   let supportedOutputProjectionOptions = []
 
   if (isHarmony) {
-    // Filter the supportedOutputFormats to only those formats Harmony supports
-    const harmonySupportedFormats = supportedOutputFormats.filter(
-      (format) => harmonyFormatMapping[format] !== undefined
-    )
-    // Disable formats that are not currently valid based on user selections
-    supportedOutputFormatOptions = harmonySupportedFormats.map((format) => {
-      // Default to enabled if calculatedCapabilities is empty (initial load)
-      let isOptionDisabled = false
+    // The derived harmony state is the source of truth. Options are disabled if they are not part of the availableOutputFormats array
+    supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
+      const isOptionDisabled = !availableOutputFormats.includes(format)
 
-      if (Object.keys(calculatedCapabilities).length > 0) {
-        // If capabilities are calculated, check if this format is in the enabledFormats array
-        const { enabledFormats = [] } = calculatedCapabilities.outputFormats || {}
-        isOptionDisabled = !enabledFormats.includes(format)
-      }
-
+      // Map options to human readable formats but keep the mime-type for values
       return (
         <option key={format} value={format} disabled={isOptionDisabled}>
           {harmonyFormatMapping[format]}
@@ -595,11 +561,13 @@ const AccessMethod = ({
   const harmonyMbrWarning = useMemo(() => {
     let warning
 
+    // If a service supports bbox but not shape, show this warning
     if (
-      isSpatialSubsettingSelected
-      && calculatedCapabilities?.spatialSubset?.bboxenabled
-      && !calculatedCapabilities.spatialSubset.shapeenabled
-      && nonBoundingBoxSpatialType
+      (isSpatialSubsettingSelected
+      && supportsBoundingBoxSubsetting
+      && !supportsShapefileSubsetting
+      && nonBoundingBoxSpatialType)
+      || (isSpatialSubsettingSelected && isShapeSubsettingDisabled && nonBoundingBoxSpatialType)
     ) {
       warning = `Only bounding boxes are supported. Your ${nonBoundingBoxSpatialType} has been automatically converted into the bounding box shown above and outlined on the map.`
     }
@@ -609,7 +577,7 @@ const AccessMethod = ({
     isSpatialSubsettingSelected,
     nonBoundingBoxSpatialType,
     spatial,
-    calculatedCapabilities
+    isShapeSubsettingDisabled
   ])
 
   // Get spatial and temporal display values
@@ -675,7 +643,7 @@ const AccessMethod = ({
                 // Relay customization limitations
                 <div className="access-method__harmony-method-info">
                   {
-                    calculatedCapabilities && (
+                    isCustomizationAvailable && (
                       <>
                         <p>
                           Below are the customization options available to you.
@@ -716,7 +684,7 @@ const AccessMethod = ({
                             </div>
                           )
                         }
-                        checked={isConcatenationSelected}
+                        checked={isConcatenateSelected}
                         disabled={isRecurring}
                         onChange={handleConcatenationSelection}
                       />
@@ -732,7 +700,7 @@ const AccessMethod = ({
                     intro="When enabled, spatial subsetting will trim the data to the selected area range."
                     nested
                     warning={harmonyMbrWarning}
-                    faded={isDisabled('spatialSubset')}
+                    faded={isSpatialSubsettingDisabled}
                   >
                     {
                       selectedSpatialDisplay
@@ -750,7 +718,7 @@ const AccessMethod = ({
                               }
                               checked={isSpatialSubsettingSelected}
                               onChange={handleToggleSpatialSubsetting}
-                              disabled={isDisabled('spatialSubset')}
+                              disabled={isSpatialSubsettingDisabled}
                             />
                             {
                               isSpatialSubsettingSelected && (
@@ -783,8 +751,8 @@ const AccessMethod = ({
                     intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
                     warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
                     nested
-                    disabled={isDisabled('temporalSubset')}
-                    faded={isDisabled('temporalSubset')}
+                    disabled={isTemporalSubsettingDisabled}
+                    faded={isTemporalSubsettingDisabled}
                   >
                     {
                       (startDate || endDate) && (
@@ -800,7 +768,7 @@ const AccessMethod = ({
                               )
                             }
                             checked={isTemporalSubsettingSelected}
-                            disabled={isRecurring || isDisabled('temporalSubset')}
+                            disabled={isRecurring || isTemporalSubsettingDisabled}
                             onChange={handleToggleTemporalSubsetting}
                           />
                           {

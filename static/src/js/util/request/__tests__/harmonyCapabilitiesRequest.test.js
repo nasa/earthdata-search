@@ -1,6 +1,6 @@
-import HarmonyCapabilitiesRequest from '../harmonyCapabilitiesRequest'
+import HarmonyCapabilitiesRequest from '../harmonyCapabilitiesDocumentRequest'
 
-describe('HarmonyCapabilitiesRequest#constructor', () => {
+describe('HarmonyCapabilitiesDocumentRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
     const request = new HarmonyCapabilitiesRequest(token, 'prod')

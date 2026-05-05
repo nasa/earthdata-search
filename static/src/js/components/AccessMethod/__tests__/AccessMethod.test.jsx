@@ -603,6 +603,7 @@ describe('AccessMethod component', () => {
           overrideProps: {
             accessMethods: {
               harmony: {
+                availableOutputFormats: ['application/netcdf4'],
                 name: 'test name',
                 description: 'test description',
                 isValid: true,

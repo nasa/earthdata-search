@@ -3,7 +3,7 @@ import Request from './request'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { HarmonyRequestParams } from '../../types/sharedTypes'
 
-export default class HarmonyCapabilitiesRequest extends Request {
+export default class HarmonyCapabilitiesDocumentRequest extends Request {
   constructor(edlToken: string, earthdataEnvironment: string) {
     super(getEarthdataConfig(earthdataEnvironment).harmonyHost, earthdataEnvironment)
 

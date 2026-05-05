@@ -9,7 +9,7 @@ import GranuleRequest from '../../../util/request/granuleRequest'
 
 // @ts-expect-error This file does not have types
 import * as applicationConfig from '../../../../../../sharedUtils/config'
-import { EchoOrderAccessMethod } from '../../types'
+import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
 
 vi.mock('uuid', () => ({
@@ -67,6 +67,7 @@ describe('createProjectSlice', () => {
       submittedProject: expect.any(Function),
       toggleCollectionVisibility: expect.any(Function),
       updateAccessMethod: expect.any(Function),
+      updateHarmonySelection: expect.any(Function),
       updateProjectGranuleParams: expect.any(Function),
       updateProjectGranuleResults: expect.any(Function)
     })
@@ -314,7 +315,7 @@ describe('createProjectSlice', () => {
       })
     })
 
-    describe('when the harmony capabilites document request returns a 401', () => {
+    describe('when the harmony capabilities document request returns a 401', () => {
       const originalWindowLocation = window.location
 
       beforeEach(() => {
@@ -374,11 +375,25 @@ describe('createProjectSlice', () => {
         expect(result).toBeNull()
 
         const { errors } = useEdscStore.getState()
-        expect(errors.handleError).toHaveBeenCalledTimes(2)
-        expect(errors.handleError).toHaveBeenCalledWith({
+        expect(errors.handleError).toHaveBeenCalledTimes(3)
+        expect(errors.handleError).toHaveBeenNthCalledWith(1, {
           action: 'getProjectCollections',
           error: expect.any(Error),
           resource: 'harmony capabilties request'
+        })
+
+        expect(errors.handleError).toHaveBeenNthCalledWith(2, {
+          action: 'getProjectCollections',
+          error: expect.any(Error),
+          resource: 'harmony capabilties request'
+        })
+
+        expect(errors.handleError).toHaveBeenNthCalledWith(3, {
+          error: expect.any(Error),
+          action: 'getProjectCollections',
+          resource: 'project collections',
+          showAlertButton: true,
+          title: 'Something went wrong fetching collection metadata'
         })
 
         expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dhttp%253A%252F%252Flocalhost%253A3000%252F')
@@ -794,6 +809,11 @@ describe('createProjectSlice', () => {
         nock(/harmony.example.com/)
           .get(/capabilities\?collectionId=collectionId1&version=2/)
           .reply(200, {
+            bboxSubset: true,
+            concatenate: false,
+            conceptId: 'collectionId1',
+            reproject: false,
+            outputFormats: ['application/x-hdf'],
             services: [
               {
                 name: 'sds/trajectory-subsetter',
@@ -810,7 +830,12 @@ describe('createProjectSlice', () => {
                   ]
                 }
               }
-            ]
+            ],
+            shapeSubset: true,
+            shortName: 'Short Name',
+            temporalSubset: true,
+            variables: [],
+            variableSubset: true
           })
 
         nock(/graphql/)
@@ -867,145 +892,162 @@ describe('createProjectSlice', () => {
             type: 'download'
           },
           harmony: {
+            availableOutputFormats: [
+              'application/x-hdf'
+            ],
             defaultConcatenation: false,
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
-            id: undefined,
+            id: 'collectionId1',
+            isOutputFormatsDisabled: false,
+            isShapeSubsettingDisabled: false,
+            isSpatialSubsettingDisabled: false,
+            isTemporalSubsettingDisabled: false,
             isValid: true,
-            services: [
-              {
-                capabilities: {
-                  output_formats: [
-                    'application/x-hdf'
-                  ],
-                  subsetting: {
-                    bbox: true,
-                    shape: true,
-                    temporal: true,
-                    variable: true
-                  }
-                },
-                href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
-                name: 'sds/trajectory-subsetter'
-              }
-            ],
-            shortName: undefined,
-            supportedOutputFormats: undefined,
-            supportedOutputProjections: [],
-            supportsBoundingBoxSubsetting: undefined,
-            supportsConcatenation: undefined,
-            supportsShapefileSubsetting: undefined,
-            supportsTemporalSubsetting: undefined,
-            supportsVariableSubsetting: undefined,
+            selectedOutputFormat: undefined,
+            shortName: 'Short Name',
+            supportedOutputFormats: ['application/x-hdf'],
+            supportedOutputProjections: ['application/x-hdf'],
+            supportsBoundingBoxSubsetting: true,
+            supportsConcatenation: false,
+            supportsShapefileSubsetting: true,
+            supportsTemporalSubsetting: true,
+            supportsVariableSubsetting: true,
             type: 'Harmony',
             url: 'https://harmony.example.com',
-            variables: undefined
+            harmonyCapabilitiesDocument: {
+              bboxSubset: true,
+              concatenate: false,
+              conceptId: 'collectionId1',
+              reproject: false,
+              outputFormats: ['application/x-hdf'],
+              services: [
+                {
+                  name: 'sds/trajectory-subsetter',
+                  href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+                  capabilities: {
+                    subsetting: {
+                      temporal: true,
+                      bbox: true,
+                      shape: true,
+                      variable: true
+                    },
+                    output_formats: [
+                      'application/x-hdf'
+                    ]
+                  }
+                }
+              ],
+              shapeSubset: true,
+              shortName: 'Short Name',
+              temporalSubset: true,
+              variables: [],
+              variableSubset: true
+            }
           }
-
         })
       })
     })
 
-    // Come back to in EDSC-4661
-    // describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
-    //   test.only('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
-    //     vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
-    //       maxCmrPageSize: '1',
-    //       defaultCmrSearchTags: [
-    //         'edsc.*',
-    //         'opensearch.granule.osdd'
-    //       ]
-    //     }))
+    describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
+      test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
+        vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+          maxCmrPageSize: '1',
+          defaultCmrSearchTags: [
+            'edsc.*',
+            'opensearch.granule.osdd'
+          ]
+        }))
 
-    //     const varResults = [{
-    //       variables: {
-    //         items: [{ conceptId: 'V10000000000-EDSC' }],
-    //         count: 3,
-    //         cursor: 'mock-cursor-0'
-    //       }
-    //     },
-    //     {
-    //       variables: {
-    //         items: [{ conceptId: 'V10000000001-EDSC' }],
-    //         count: 3,
-    //         cursor: 'mock-cursor-1'
-    //       }
-    //     },
-    //     {
-    //       variables: {
-    //         items: [{ conceptId: 'V10000000002-EDSC' }],
-    //         count: 3,
-    //         cursor: null
-    //       }
-    //     }]
+        const varResults = [{
+          variables: {
+            items: [{ conceptId: 'V10000000000-EDSC' }],
+            count: 3,
+            cursor: 'mock-cursor-0'
+          }
+        },
+        {
+          variables: {
+            items: [{ conceptId: 'V10000000001-EDSC' }],
+            count: 3,
+            cursor: 'mock-cursor-1'
+          }
+        },
+        {
+          variables: {
+            items: [{ conceptId: 'V10000000002-EDSC' }],
+            count: 3,
+            cursor: null
+          }
+        }]
 
-    //     nock(/localhost/)
-    //       .post(/saved_access_configs/)
-    //       .reply(200, {})
+        nock(/harmony.example.com/)
+          .get(/capabilities\?collectionId=C10000000000-EDSC&version=2/)
+          .reply(200, { services: [] })
 
-    //     nock(/graphql/)
-    //       .post(/api/)
-    //       .reply(200, {
-    //         data: {
-    //           collections: {
-    //             items: [{
-    //               conceptId: 'C10000000000-EDSC',
-    //               tools: {
-    //                 items: [{
-    //                   name: 'SOTO'
-    //                 }]
-    //               },
-    //               variables: varResults[0].variables
-    //             }]
-    //           }
-    //         }
-    //       }, {
-    //         'jwt-token': 'token'
-    //       })
+        nock(/graphql/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              collections: {
+                items: [{
+                  conceptId: 'C10000000000-EDSC',
+                  tools: {
+                    items: [{
+                      name: 'SOTO'
+                    }]
+                  },
+                  variables: varResults[0].variables
+                }]
+              }
+            }
+          }, {
+            'jwt-token': 'token'
+          })
 
-    //     nock(/graphql/)
-    //       .post(/api/)
-    //       .reply(200, {
-    //         data: {
-    //           variables: varResults[1].variables
-    //         }
-    //       })
+        nock(/graphql/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              variables: varResults[1].variables
+            }
+          })
 
-    //     nock(/graphql/)
-    //       .post(/api/)
-    //       .reply(200, {
-    //         data: {
-    //           variables: varResults[2].variables
-    //         }
-    //       })
+        nock(/graphql/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              variables: varResults[2].variables
+            }
+          })
 
-    //     useEdscStore.setState((state) => {
-    //       state.project.collections.allIds = ['C10000000000-EDSC']
-    //       state.user.edlToken = 'mockEdlToken'
-    //     })
+        useEdscStore.setState((state) => {
+          state.project.collections.allIds = ['C10000000000-EDSC']
+          state.user.edlToken = 'mockEdlToken'
+        })
 
-    //     const zustandState = useEdscStore.getState()
-    //     const { project } = zustandState
+        const zustandState = useEdscStore.getState()
+        const { project } = zustandState
 
-    //     await project.getProjectCollections()
+        await project.getProjectCollections()
 
-    //     const { collection } = useEdscStore.getState()
+        const { collection } = useEdscStore.getState()
 
-    //     expect(collection.collectionMetadata).toEqual({
-    //       'C10000000000-EDSC': expect.objectContaining({
-    //         variables: {
-    //           count: 3,
-    //           items: [
-    //             { conceptId: 'V10000000000-EDSC' },
-    //             { conceptId: 'V10000000001-EDSC' },
-    //             { conceptId: 'V10000000002-EDSC' }
-    //           ]
-    //         }
-    //       })
-    //     })
-    //   })
-    // })
+        expect(collection.collectionMetadata).toEqual({
+          'C10000000000-EDSC': expect.objectContaining({
+            variables: {
+              count: 3,
+              items: [
+                { conceptId: 'V10000000000-EDSC' },
+                { conceptId: 'V10000000001-EDSC' },
+                { conceptId: 'V10000000002-EDSC' }
+              ]
+            }
+          })
+        })
+      })
+    })
 
     describe('when requesting a CSDA collection', () => {
       test('adds access methods and updates collection metadata', async () => {
@@ -2102,6 +2144,172 @@ describe('createProjectSlice', () => {
       expect(updatedProjectCollection.accessMethods?.echoOrders0).toEqual({
         ...accessMethod,
         model: '<mockModel>Updated</mockModel>'
+      })
+    })
+
+    test('updates harmony selection when method type is harmony', () => {
+      const collectionId = 'collectionId'
+      const accessMethod = {
+        availableOutputFormats: [
+          'application/netcdf',
+          'application/x-netcdf4',
+          'application/x-netcdf4;profile=opendap_url'
+        ],
+        defaultConcatenation: false,
+        enableConcatenateDownload: false,
+        enableSpatialSubsetting: false,
+        enableTemporalSubsetting: false,
+        id: 'C4054955340-GES_DISC',
+        isOutputFormatsDisabled: false,
+        isShapeSubsettingDisabled: false,
+        isSpatialSubsettingDisabled: false,
+        isTemporalSubsettingDisabled: false,
+        isValid: true,
+        shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+        selectedOutputFormat: undefined,
+        supportedOutputFormats: [
+          'application/netcdf',
+          'application/x-netcdf4',
+          'application/x-netcdf4;profile=opendap_url'
+        ],
+        supportedOutputProjections: [
+          'application/netcdf',
+          'application/x-netcdf4',
+          'application/x-netcdf4;profile=opendap_url'
+        ],
+        supportsBoundingBoxSubsetting: true,
+        supportsConcatenation: false,
+        supportsShapefileSubsetting: true,
+        supportsSpatialSubsetting: true,
+        supportsTemporalSubsetting: true,
+        supportsVariableSubsetting: true,
+        type: 'Harmony',
+        url: 'https://harmony.earthdata.nasa.gov',
+        derivedHarmonyState: {
+          capabilities: {
+            concatenate: {
+              disabled: true,
+              supported: false,
+              value: null
+            },
+            outputFormats: {
+              availableOutputFormats: [
+                'application/netcdf',
+                'application/x-netcdf4',
+                'application/x-netcdf4;profile=opendap_url'
+              ],
+              disabled: false,
+              supported: [
+                'application/netcdf',
+                'application/x-netcdf4',
+                'application/x-netcdf4;profile=opendap_url'
+              ],
+              value: ''
+            },
+            reproject: {
+              disabled: true,
+              supported: false,
+              value: null
+            },
+            spatialSubset: {
+              bboxDisabled: false,
+              bboxSupported: true,
+              disabled: false,
+              shapeDisabled: false,
+              shapeSupported: true,
+              supported: true,
+              value: null
+            },
+            temporalSubset: {
+              disabled: false,
+              supported: true,
+              value: null
+            },
+            variableSubset: {
+              disabled: false,
+              supported: true,
+              value: null
+            }
+          },
+          collectionId: 'C4054955340-GES_DISC',
+          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+          variables: []
+        },
+        harmonyUserSelections: {
+          temporalSubset: true
+        },
+        harmonyCapabilitiesDocument: {
+          bboxSubset: true,
+          concatenate: false,
+          conceptId: 'C4054955340-GES_DISC',
+          reproject: false,
+          outputFormats: [
+            'application/netcdf',
+            'application/x-netcdf4',
+            'application/x-netcdf4;profile=opendap_url'
+          ],
+          services: [
+            {
+              name: 'mock-harmony-service',
+              href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S123456789-GES_DISC',
+              capabilities: {
+                subsetting: {
+                  temporal: true,
+                  bbox: true,
+                  shape: true,
+                  variable: true
+                },
+                output_formats: [
+                  'application/netcdf',
+                  'application/x-netcdf4',
+                  'application/x-netcdf4;profile=opendap_url'
+                ]
+              }
+            }
+          ],
+          shapeSubset: true,
+          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+          temporalSubset: true,
+          variables: [],
+          variableSubset: true
+        }
+      }
+
+      useEdscStore.setState((state) => {
+        state.project.collections.allIds.push(collectionId)
+        state.project.collections.byId[collectionId] = {
+          granules: initialGranuleState,
+          isVisible: true,
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            },
+            harmony: accessMethod as HarmonyAccessMethod
+          },
+          selectedAccessMethod: 'harmony'
+        }
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { project } = zustandState
+
+      project.updateAccessMethod({
+        collectionId,
+        method: {
+          harmony: {
+            enableTemporalSubsetting: true
+          }
+        }
+      })
+
+      const updatedState = useEdscStore.getState()
+      const { project: updatedProject } = updatedState
+      const updatedProjectCollection = updatedProject.collections.byId[collectionId]
+
+      expect(updatedProjectCollection.accessMethods?.harmony).toEqual({
+        ...accessMethod,
+        enableTemporalSubsetting: true
       })
     })
   })

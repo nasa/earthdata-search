@@ -163,6 +163,12 @@ test.describe('page titles', () => {
           })
         })
 
+        await page.route('**/capabilities?collectionId=C1443528505-LAADS&version=2', async (route) => {
+          await route.fulfill({
+            json: { services: [] }
+          })
+        })
+
         await page.route(/graphql.*\/api/, async (route) => {
           route.fulfill({
             headers: authHeaders,

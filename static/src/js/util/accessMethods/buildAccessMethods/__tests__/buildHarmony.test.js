@@ -1,100 +1,112 @@
 import { buildHarmony } from '../buildHarmony'
-import * as applicationConfig from '../../../../../../../sharedUtils/config'
 
-vi.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
-  harmonyHost: 'https://harmony.example.com'
-}))
+import { getEarthdataConfig } from '../../../../../../../sharedUtils/config'
+import getDerivedHarmonyState from '../../../../util/getDerivedHarmonyState/getDerivedHarmonyState'
+
+vi.mock('../../../../../../../sharedUtils/config')
+vi.mock('../../../../util/getDerivedHarmonyState/getDerivedHarmonyState')
 
 describe('buildHarmony', () => {
-  test('returns a harmony access method with all capabilities enabled', () => {
-    const mockHarmonyCapabilities = {
-      bboxSubset: true,
-      concatenate: true,
-      conceptId: 'C10000-EDSC',
-      outputFormats: ['text/csv', 'application/netcdf'],
-      services: [
-        {
-          name: 'giovanni-time-series-adapter',
-          capabilities: { subsetting: { temporal: true } }
-        }
-      ],
-      shapeSubset: true,
-      shortName: 'MOCK_HARMONY',
-      temporalSubset: true,
-      variables: [{
-        conceptId: 'V10000-EDSC',
-        name: 'Mock Variable'
-      }],
-      variableSubset: true
-    }
+  const earthdataEnvironment = 'prod'
 
-    const accessMethod = buildHarmony(mockHarmonyCapabilities)
+  const mockHarmonyCapabilitiesDocument = {
+    conceptId: 'C4054955340-GES_DISC',
+    shortName: 'GPM_3GPROFF18SSMIS_CLIM'
+  }
 
-    expect(accessMethod).toEqual({
-      defaultConcatenation: false,
-      enableConcatenateDownload: false,
-      enableSpatialSubsetting: false,
-      enableTemporalSubsetting: false,
-      id: 'C10000-EDSC',
-      isValid: true,
-      services: [
-        {
-          name: 'giovanni-time-series-adapter',
-          capabilities: { subsetting: { temporal: true } }
-        }
-      ],
-      shortName: 'MOCK_HARMONY',
-      supportedOutputFormats: ['text/csv', 'application/netcdf'],
-      supportedOutputProjections: [],
-      supportsBoundingBoxSubsetting: true,
-      supportsConcatenation: true,
-      supportsShapefileSubsetting: true,
-      supportsTemporalSubsetting: true,
-      supportsVariableSubsetting: true,
-      type: 'Harmony',
-      url: 'https://harmony.example.com',
-      variables: [{
-        conceptId: 'V10000-EDSC',
-        name: 'Mock Variable'
-      }]
+  const mockUserSelections = {
+    spatialSubset: true,
+    temporalSubset: false,
+    outputFormat: 'application/netcdf'
+  }
+
+  beforeEach(() => {
+    getEarthdataConfig.mockReturnValue({
+      harmonyHost: 'https://harmony.example.com'
+    })
+
+    getDerivedHarmonyState.mockReturnValue({
+      collectionId: 'C4054955340-GES_DISC',
+      shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+      capabilities: {
+        concatenate: {
+          supported: false,
+          disabled: true
+        },
+        outputFormats: {
+          availableOutputFormats: ['application/netcdf'],
+          supported: ['application/netcdf', 'application/x-netcdf4'],
+          disabled: false
+        },
+        temporalSubset: {
+          supported: true,
+          disabled: false
+        },
+        spatialSubset: {
+          supported: true,
+          disabled: false,
+          bboxSupported: true,
+          shapeSupported: false,
+          shapeDisabled: true
+        },
+        variableSubset: {
+          supported: true,
+          disabled: false
+        },
+        variables: [
+          {
+            name: 'Grid/cloudWaterContent',
+            href: 'https://example.com'
+          }
+        ]
+      }
     })
   })
 
-  test('returns a harmony access method with minimal capabilities enabled', () => {
-    const mockHarmonyCapabilities = {
-      bboxSubset: false,
-      concatenate: false,
-      conceptId: 'C20000-EDSC',
-      outputFormats: [],
-      services: [],
-      shapeSubset: false,
-      shortName: 'MINIMAL_HARMONY',
-      temporalSubset: false,
-      variables: [],
-      variableSubset: false
-    }
+  test('builds the access method using the derived harmony state', () => {
+    const result = buildHarmony(
+      mockHarmonyCapabilitiesDocument,
+      earthdataEnvironment,
+      mockUserSelections
+    )
 
-    const accessMethod = buildHarmony(mockHarmonyCapabilities)
+    expect(getEarthdataConfig).toHaveBeenCalledWith('prod')
+    expect(getDerivedHarmonyState).toHaveBeenCalledWith(
+      mockUserSelections,
+      mockHarmonyCapabilitiesDocument
+    )
 
-    expect(accessMethod).toEqual({
+    // Verify it correctly maps the derived state to the access method object
+    expect(result).toEqual({
+      availableOutputFormats: ['application/netcdf'],
+      harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
       defaultConcatenation: false,
       enableConcatenateDownload: false,
-      enableSpatialSubsetting: false,
+      enableSpatialSubsetting: true,
       enableTemporalSubsetting: false,
-      id: 'C20000-EDSC',
+      id: 'C4054955340-GES_DISC',
       isValid: true,
-      services: [],
-      shortName: 'MINIMAL_HARMONY',
-      supportedOutputFormats: [],
-      supportedOutputProjections: [],
-      supportsBoundingBoxSubsetting: false,
+      shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+      supportedOutputFormats: ['application/netcdf', 'application/x-netcdf4'],
+      supportedOutputProjections: ['application/netcdf', 'application/x-netcdf4'],
+      supportsBoundingBoxSubsetting: true,
       supportsConcatenation: false,
       supportsShapefileSubsetting: false,
-      supportsTemporalSubsetting: false,
-      supportsVariableSubsetting: false,
+      supportsTemporalSubsetting: true,
+      supportsVariableSubsetting: true,
+      isTemporalSubsettingDisabled: false,
+      isSpatialSubsettingDisabled: false,
+      isOutputFormatsDisabled: false,
+      isShapeSubsettingDisabled: true,
+      selectedOutputFormat: 'application/netcdf',
       type: 'Harmony',
       url: 'https://harmony.example.com',
-      variables: []
+      variables: [
+        {
+          name: 'Grid/cloudWaterContent',
+          href: 'https://example.com'
+        }
+      ]
     })
   })
 })

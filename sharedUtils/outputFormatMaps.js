@@ -12,7 +12,7 @@ export const ousFormatMapping = {
 /**
  * Harmony expects that output formats be provided in the form of mimetypes,
  * this is a map between mimetypes and their respective human readable values
- * TO-DO, these values will be coming from capabilites doc version 4
+ * TO-DO, EDSC-4661 these values will be coming from capabilities doc version 4
  */
 export const harmonyFormatMapping = {
   'application/x-netcdf4': 'X-NETCDF-4',

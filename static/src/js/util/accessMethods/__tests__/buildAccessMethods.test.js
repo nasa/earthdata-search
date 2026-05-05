@@ -20,6 +20,7 @@ const harmonyCapabilities = {
   bboxSubset: true,
   concatenate: false,
   conceptId: 'C100000-EDSC',
+  reproject: false,
   outputFormats: ['image/tiff', 'application/x-netcdf4'],
   services: [
     {
@@ -395,6 +396,7 @@ describe('when buildAccessMethods is called', () => {
         bboxSubset: true,
         concatenate: false,
         conceptId: 'C100000-EDSC',
+        reproject: false,
         outputFormats: [
           'image/tiff',
           'application/x-netcdf4'
@@ -420,7 +422,15 @@ describe('when buildAccessMethods is called', () => {
           }
         ]
       },
-      'dev'
+      'dev',
+      {
+        concatenate: false,
+        reproject: false,
+        selectedOutputFormat: '',
+        spatialSubset: false,
+        temporalSubset: false,
+        variableSubset: false
+      }
     )
   })
 
@@ -3458,6 +3468,7 @@ describe('when buildAccessMethods is called', () => {
           bboxSubset: true,
           concatenate: false,
           conceptId: 'C100000-EDSC',
+          reproject: false,
           outputFormats: [
             'image/tiff',
             'application/x-netcdf4'
@@ -3483,7 +3494,15 @@ describe('when buildAccessMethods is called', () => {
             }
           ]
         },
-        'dev'
+        'dev',
+        {
+          concatenate: false,
+          reproject: false,
+          selectedOutputFormat: '',
+          spatialSubset: false,
+          temporalSubset: false,
+          variableSubset: false
+        }
       )
 
       expect(buildOpendapMock).toHaveBeenNthCalledWith(
@@ -3794,28 +3813,57 @@ describe('when buildAccessMethods is called', () => {
             url: 'https://example.com'
           },
           harmony: {
+            availableOutputFormats: [],
             defaultConcatenation: false,
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
+            harmonyCapabilitiesDocument: {
+              bboxSubset: true,
+              concatenate: false,
+              conceptId: 'C100000-EDSC',
+              outputFormats: [
+                'image/tiff',
+                'application/x-netcdf4'
+              ],
+              reproject: false,
+              services: [
+                {
+                  capabilities: {
+                    subsetting: {
+                      temporal: true
+                    }
+                  },
+                  name: 'giovanni-time-series-adapter'
+                }
+              ],
+              shapeSubset: true,
+              shortName: 'MOCK_SHORT_NAME',
+              temporalSubset: true,
+              variableSubset: true,
+              variables: [
+                {
+                  conceptId: 'V100000-EDSC',
+                  name: 'mock_variable'
+                }
+              ]
+            },
             id: 'C100000-EDSC',
+            isOutputFormatsDisabled: false,
+            isShapeSubsettingDisabled: true,
+            isSpatialSubsettingDisabled: true,
+            isTemporalSubsettingDisabled: false,
             isValid: true,
-            services: [
-              {
-                capabilities: {
-                  subsetting: {
-                    temporal: true
-                  }
-                },
-                name: 'giovanni-time-series-adapter'
-              }
-            ],
+            selectedOutputFormat: undefined,
             shortName: 'MOCK_SHORT_NAME',
             supportedOutputFormats: [
               'image/tiff',
               'application/x-netcdf4'
             ],
-            supportedOutputProjections: [],
+            supportedOutputProjections: [
+              'image/tiff',
+              'application/x-netcdf4'
+            ],
             supportsBoundingBoxSubsetting: true,
             supportsConcatenation: false,
             supportsShapefileSubsetting: true,
@@ -3823,12 +3871,7 @@ describe('when buildAccessMethods is called', () => {
             supportsVariableSubsetting: true,
             type: 'Harmony',
             url: undefined,
-            variables: [
-              {
-                conceptId: 'V100000-EDSC',
-                name: 'mock_variable'
-              }
-            ]
+            variables: undefined
           },
           opendap: {
             hierarchyMappings: [

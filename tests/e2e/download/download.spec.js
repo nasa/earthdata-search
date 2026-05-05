@@ -10,7 +10,7 @@ import { setupTests } from '../../support/setupTests'
 import { login, MockGetUserRoute } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 
-test.describe.skip('Download spec', () => {
+test.describe('Download spec', () => {
   test('get to the download page', async ({ page, context }) => {
     await setupTests({
       page,

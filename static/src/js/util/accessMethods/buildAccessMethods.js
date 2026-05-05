@@ -78,9 +78,18 @@ export const reduceAccessMethods = (items = []) => {
 export const buildAccessMethods = (
   collectionMetadata,
   isOpenSearch,
-  harmonyCapabilities,
+  harmonyCapabilitiesDocument,
   earthdataEnvironment
 ) => {
+  const userSelections = {
+    variableSubset: false,
+    spatialSubset: false,
+    temporalSubset: false,
+    concatenate: false,
+    reproject: false,
+    selectedOutputFormat: ''
+  }
+
   const {
     granules = {},
     services = {},
@@ -125,8 +134,8 @@ export const buildAccessMethods = (
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
-  const harmonyMethod = harmonyCapabilities?.services.length > 0
-    ? buildHarmony(harmonyCapabilities, earthdataEnvironment) : undefined
+  const harmonyMethod = harmonyCapabilitiesDocument?.services?.length > 0
+    ? buildHarmony(harmonyCapabilitiesDocument, earthdataEnvironment, userSelections) : undefined
 
   if (harmonyMethod) {
     nonDownloadMethods.harmony = harmonyMethod
