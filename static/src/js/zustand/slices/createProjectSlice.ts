@@ -806,7 +806,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           selectedMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
 
-          selectedMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat
+          selectedMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat || undefined
 
           selectedMethod.availableOutputFormats = outputFormats.availableOutputFormats
 

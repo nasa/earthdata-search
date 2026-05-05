@@ -500,9 +500,9 @@ describe('useCreateRetrieval', () => {
               collections: {
                 byId: {
                   collectionId: {
-                    selectedAccessMethod: 'harmony0',
+                    selectedAccessMethod: 'harmony',
                     accessMethods: {
-                      harmony0: accessMethod
+                      harmony: accessMethod
                     }
                   }
                 }

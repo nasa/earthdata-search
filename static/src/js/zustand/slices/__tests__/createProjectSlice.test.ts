@@ -2204,7 +2204,7 @@ describe('createProjectSlice', () => {
                 'application/x-netcdf4',
                 'application/x-netcdf4;profile=opendap_url'
               ],
-              value: ''
+              value: undefined
             },
             reproject: {
               disabled: true,

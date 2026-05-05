@@ -87,7 +87,7 @@ export const buildAccessMethods = (
     temporalSubset: false,
     concatenate: false,
     reproject: false,
-    selectedOutputFormat: ''
+    selectedOutputFormat: undefined
   }
 
   const {

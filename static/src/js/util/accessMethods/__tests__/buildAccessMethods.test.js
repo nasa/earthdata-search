@@ -426,7 +426,7 @@ describe('when buildAccessMethods is called', () => {
       {
         concatenate: false,
         reproject: false,
-        selectedOutputFormat: '',
+        selectedOutputFormat: undefined,
         spatialSubset: false,
         temporalSubset: false,
         variableSubset: false
@@ -3498,7 +3498,7 @@ describe('when buildAccessMethods is called', () => {
         {
           concatenate: false,
           reproject: false,
-          selectedOutputFormat: '',
+          selectedOutputFormat: undefined,
           spatialSubset: false,
           temporalSubset: false,
           variableSubset: false

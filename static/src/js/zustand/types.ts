@@ -641,7 +641,7 @@ export type HarmonyAccessMethod = {
   /** The access method shortName */
   shortName: string
   /** The selected output format */
-  selectedOutputFormat?: string
+  selectedOutputFormat?: string | undefined
   /** The supported output formats */
   supportedOutputFormats: string[]
   /** The supported output projections */

@@ -13,7 +13,7 @@ export interface UserSelections {
   /** Flag to indicate if reprojection is selected */
   reproject?: boolean
   /** The selected output format */
-  selectedOutputFormat?: string
+  selectedOutputFormat?: string | undefined
 }
 
 /**
@@ -159,7 +159,7 @@ export interface DerivedHarmonyState {
       /** The list of output formats available based on current selections */
       availableOutputFormats: string[]
       /** The currently selected output format */
-      value: string
+      value: string | undefined
     };
   };
 }
@@ -310,7 +310,7 @@ export const getDerivedHarmonyState = (
         supported: outputFormats,
         disabled: !(validServices.length > 0) && !(formatsAvailableForDropdown.size > 0),
         availableOutputFormats: Array.from(formatsAvailableForDropdown),
-        value: userSelections.selectedOutputFormat || ''
+        value: userSelections.selectedOutputFormat || undefined
       }
     }
   }

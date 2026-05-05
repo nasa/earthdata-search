@@ -88,8 +88,9 @@ export const useCreateRetrieval = () => {
         selectedService = 'OPeNDAP'
         selectedType = 'opendap'
       } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
-        const { name } = selectedMethod as HarmonyAccessMethod
-        selectedService = name
+        // This is wrong. Need to think about this..
+        const { shortName } = selectedMethod as HarmonyAccessMethod
+        selectedService = shortName
         selectedType = 'harmony'
       } else if (type === ACCESS_METHOD_TYPES.SWODLR) {
         selectedService = 'SWODLR'
