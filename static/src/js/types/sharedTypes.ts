@@ -477,6 +477,14 @@ export type PreferencesRequestParams = {
   preferences: Partial<PreferencesData>
 }
 
+/** The request parameters for a Harmony request */
+export type HarmonyRequestParams = {
+  /** Concept id of the collection to retrieve capabilities for */
+  collectionId: string;
+  /** The version of capabilities doc we would like to use */
+  version: string;
+}
+
 /** The request parameters for saved access configurations */
 export type SavedAccessConfigsParams = {
   /** The collection IDs to retrieve */
@@ -489,6 +497,7 @@ export type RequestParams = TimelineRequestParams
   | PreferencesRequestParams
   | SavedAccessConfigsParams
   | ShapefileRequestParams
+  | HarmonyRequestParams
 
 /** The saved access configurations */
 export type SavedAccessConfigs = {

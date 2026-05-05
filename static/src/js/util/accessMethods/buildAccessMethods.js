@@ -10,7 +10,6 @@ import { buildDownload } from './buildAccessMethods/buildDownload'
 const ECHO_ORDERS = 'echoOrders'
 const ESI = 'esi'
 const OPENDAP = 'opendap'
-const HARMONY = 'harmony'
 const SWODLR = 'swodlr'
 
 /**
@@ -32,7 +31,6 @@ export const formatServiceType = (serviceType) => {
 export const reduceAccessMethods = (items = []) => {
   let esiIndex = 0
   let echoIndex = 0
-  let harmonyIndex = 0
 
   const accessMethods = items.reduce((methods, item) => {
     const { type: serviceType } = item
@@ -51,11 +49,6 @@ export const reduceAccessMethods = (items = []) => {
         updatedAccessMethods[`${methodKey}${echoIndex}`] = item
 
         echoIndex += 1
-        break
-      case (HARMONY):
-        updatedAccessMethods[`${methodKey}${harmonyIndex}`] = item
-
-        harmonyIndex += 1
         break
       // No need to create a "accessMethodKey" since you can only have one openDap or SWODLR
       case (OPENDAP):
@@ -82,7 +75,21 @@ export const reduceAccessMethods = (items = []) => {
  * @param {boolean} isOpenSearch Is the collection an open search collection
  * @returns {object} Access methods
  */
-export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
+export const buildAccessMethods = (
+  collectionMetadata,
+  isOpenSearch,
+  harmonyCapabilitiesDocument,
+  earthdataEnvironment
+) => {
+  const userSelections = {
+    variableSubset: false,
+    spatialSubset: false,
+    temporalSubset: false,
+    concatenate: false,
+    reproject: false,
+    selectedOutputFormat: undefined
+  }
+
   const {
     granules = {},
     services = {},
@@ -95,7 +102,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     echoOrders: (serviceItem) => buildEcho(serviceItem),
     esi: (serviceItem) => buildEsi(serviceItem),
     opendap: (serviceItem, params) => buildOpendap(serviceItem, params),
-    harmony: (serviceItem, params) => buildHarmony(serviceItem, params),
     swodlr: (serviceItem) => buildSwodlr(serviceItem),
     downloads: () => buildDownload(granules, isOpenSearch)
   }
@@ -114,8 +120,8 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
     const formattedServiceType = formatServiceType(serviceType)
 
-    // Only process service types that EDSC supports
-    if (![ESI, ECHO_ORDERS, HARMONY, OPENDAP, SWODLR].includes(formattedServiceType)) return {}
+    // Only process service types that EDSC supports. These values come from UMM-S records. As harmony no longer comes from UMM-S, we exclude it here.
+    if (![ESI, ECHO_ORDERS, OPENDAP, SWODLR].includes(formattedServiceType)) return {}
 
     const params = {
       associatedVariables
@@ -127,6 +133,13 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   }, [])
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
+
+  const harmonyMethod = harmonyCapabilitiesDocument?.services?.length > 0
+    ? buildHarmony(harmonyCapabilitiesDocument, earthdataEnvironment, userSelections) : undefined
+
+  if (harmonyMethod) {
+    nonDownloadMethods.harmony = harmonyMethod
+  }
 
   const accessMethods = {
     ...nonDownloadMethods,

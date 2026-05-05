@@ -19,6 +19,12 @@ import type {
 } from '../types/sharedTypes'
 import { ModalName } from '../constants/modalNames'
 
+import {
+  HarmonyCapabilitiesDocument,
+  DerivedHarmonyState,
+  UserSelections as HarmonyUserSelections
+} from '../../js/util/getDerivedHarmonyState/getDerivedHarmonyState'
+
 export type CollectionSlice = {
   /**
    * The Collection Slice of the store. This saves the focused collection ID and
@@ -604,10 +610,10 @@ type KeywordMapping = {
 
 /** The Harmony access method */
 export type HarmonyAccessMethod = {
+  /** After users make a selection, these output formats are still available */
+  availableOutputFormats: string[]
   /** The default value for concatenation */
   defaultConcatenation: boolean
-  /** The Harmony access method description */
-  description: string
   /** Flag to indicate if concatenation download is enabled */
   enableConcatenateDownload: boolean
   /** Flag to indicate if spatial subsetting is enabled */
@@ -615,17 +621,27 @@ export type HarmonyAccessMethod = {
   /** Flag to indicate if temporal subsetting is enabled */
   enableTemporalSubsetting: boolean
   /** Variable ids grouped by their hierarchical names */
-  hierarchyMappings: HierarchyMappings[]
+  // TODO in EDSC-4661
+  // hierarchyMappings: HierarchyMappings[]
   /** The Harmony access method ID */
   id: string
   /** Is the access method valid */
   isValid: boolean
+  /** Flag to indicate if outputFormats have been disabled due to previous user selections */
+  isOutputFormatsDisabled: boolean
+  /** Flag to indicate if shape subsetting has been disabled due to previous user selections */
+  isShapeSubsettingDisabled: boolean
+  /** Flag to indicate if spatial subsetting has been disabled due to previous user selections */
+  isSpatialSubsettingDisabled: boolean
+  /** Flag to indicate if temporal subsetting has been disabled due to previous user selections */
+  isTemporalSubsettingDisabled: boolean
   /** Variable ids grouped by their scienceKeywords */
-  keywordMappings: KeywordMapping[]
-  /** The access method long name */
-  longName: string
-  /** The access method name */
-  name: string
+  // TODO in EDSC-4661
+  // keywordMappings: KeywordMapping[]
+  /** The access method shortName */
+  shortName: string
+  /** The selected output format */
+  selectedOutputFormat?: string | undefined
   /** The supported output formats */
   supportedOutputFormats: string[]
   /** The supported output projections */
@@ -645,10 +661,20 @@ export type HarmonyAccessMethod = {
   /** The Harmony access method URL */
   url: string
   /** The Harmony access method variables */
-  variables: {
-    /** The variable ID */
-    [variableId: string]: VariableMetadata
-  }
+  // TODO in EDSC-4661
+  // variables: {
+  //   /** The variable ID */
+  //   [variableId: string]: VariableMetadata
+  // }
+  /** The active filters/selections chosen by the user. */
+  harmonyUserSelections?: HarmonyUserSelections
+  /** Shows important information such as supported, disabled, and value (if applicable) for each capability */
+  derivedHarmonyState?: DerivedHarmonyState | Record<string, never>
+  /**
+   * The document describing supported Harmony capabilities.
+   * ie. https://harmony.earthdata.nasa.gov/capabilities?collectionId=<COLLECTION_ID>
+   */
+  harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument
 }
 
 /** The OPeNDAP access method */
@@ -674,7 +700,7 @@ type OpendapAccessMethod = {
   /** Flag to indicate if variable subsetting is supported */
   supportsVariableSubsetting?: boolean
   /** The type of access method */
-  type: string
+  type: 'OPeNDAP'
   /** The OPeNDAP access method URL */
   url?: string
   /** The OPeNDAP access method variables */
@@ -821,6 +847,13 @@ type UpdateProjectGranuleParams = {
   pageNum: number
 }
 
+type UpdateHarmonySelectionParams = {
+  /** The collection ID to update */
+  collectionId: string
+  /** The new user selections for Harmony */
+  newSelections: Partial<HarmonyUserSelections>
+}
+
 export type ProjectSlice = {
   /** The Project Slice of the store */
   project: {
@@ -856,6 +889,8 @@ export type ProjectSlice = {
     submittedProject: () => void
     /** Function to toggle the visibility of a project collection */
     toggleCollectionVisibility: (collectionId: string) => void
+        /** Function to update the user's selections for Harmony */
+    updateHarmonySelection: ({ collectionId, newSelections }: UpdateHarmonySelectionParams) => void
     /** Function to update the access method for a project collection */
     updateAccessMethod: ({ collectionId, method }: UpdateAccessMethodParams) => void
     /** Function to update the granule params for a project collection */

@@ -9,17 +9,17 @@ import React, {
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form'
-import * as Select from '@radix-ui/react-select'
-import * as ScrollArea from '@radix-ui/react-scroll-area'
+
+import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
-import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
+import { harmonyFormatMapping, ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import Button from '../Button/Button'
-import ExternalLink from '../ExternalLink/ExternalLink'
+import EDSCAlert from '../EDSCAlert/EDSCAlert'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
@@ -73,10 +73,11 @@ const AccessMethod = ({
   const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
+    availableOutputFormats = [],
     form,
     rawModel = null,
     selectedVariables = [],
-    selectedOutputFormat,
+    selectedOutputFormat = undefined,
     selectedOutputProjection,
     supportedOutputFormats = [],
     supportedOutputProjections = [],
@@ -87,24 +88,17 @@ const AccessMethod = ({
     supportsConcatenation = false,
     supportsSwodlr = false,
     defaultConcatenation = false,
-    enableTemporalSubsetting: propsEnableTemporalSubsetting = true,
-    enableSpatialSubsetting: propsEnableSpatialSubsetting = true
+    enableTemporalSubsetting: isTemporalSubsettingSelected = false,
+    enableSpatialSubsetting: isSpatialSubsettingSelected = false,
+    enableConcatenateDownload: isConcatenateSelected = defaultConcatenation,
+    isTemporalSubsettingDisabled = false,
+    isSpatialSubsettingDisabled = false,
+    isShapeSubsettingDisabled = false
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
 
-  // Initialize State Variables
-  const [
-    enableTemporalSubsetting,
-    setEnableTemporalSubsetting
-  ] = useState(propsEnableTemporalSubsetting)
-  const [
-    enableSpatialSubsetting,
-    setEnableSpatialSubsetting
-  ] = useState(propsEnableSpatialSubsetting)
-  const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   const [isHarmony, setIsHarmony] = useState(false)
-  const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
   const [granuleList, setGranuleList] = useState([])
 
   const {
@@ -119,19 +113,6 @@ const AccessMethod = ({
 
   let granulesToDisplay = []
 
-  // If a Harmony selection is made with concatenation service update to be enabled on form mount
-  useEffect(() => {
-    setEnableConcatenateDownload(defaultConcatenation)
-  }, [defaultConcatenation])
-
-  useEffect(() => {
-    setEnableTemporalSubsetting(propsEnableTemporalSubsetting)
-  }, [propsEnableTemporalSubsetting])
-
-  useEffect(() => {
-    setEnableSpatialSubsetting(propsEnableSpatialSubsetting)
-  }, [propsEnableSpatialSubsetting])
-
   useEffect(() => {
     if (addedGranuleIds.length > 0) {
       granulesToDisplay = addedGranuleIds
@@ -144,33 +125,31 @@ const AccessMethod = ({
     setGranuleList(granuleListObj)
 
     // Disable temporal subsetting if the user has a recurring date selected
-    if (enableTemporalSubsetting && isRecurring) {
-      setEnableTemporalSubsetting(false)
+    if (isTemporalSubsettingSelected && isRecurring) {
+      onUpdateAccessMethod({
+        collectionId: metadata.conceptId,
+        method: {
+          [selectedAccessMethod]: {
+            enableTemporalSubsetting: false
+          }
+        }
+      })
     }
 
     if (selectedAccessMethod) {
-      setIsHarmony(selectedAccessMethod.startsWith('harmony'))
-    }
-
-    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')
-    && accessMethods[selectedAccessMethod].name
-    && selectedHarmonyMethodName === '') {
-      setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
+      setIsHarmony(selectedAccessMethod === 'harmony')
     }
   }, [projectCollection])
 
-  const handleHarmonyTypeAccessMethodSelection = () => {
+  const handleCustomizeDownload = () => {
     setIsHarmony(true)
 
     const { conceptId: collectionId } = metadata
 
     onSelectAccessMethod({
       collectionId,
-      selectedAccessMethod: null
+      selectedAccessMethod: 'harmony'
     })
-
-    // Clear the text for the <Select> in step 2
-    setSelectedHarmonyMethodName('')
   }
 
   const handleAccessMethodSelection = (method) => {
@@ -224,8 +203,6 @@ const AccessMethod = ({
     const { target } = event
     const { checked } = target
 
-    setEnableConcatenateDownload(checked)
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -241,8 +218,6 @@ const AccessMethod = ({
 
     const { target } = event
     const { checked } = target
-
-    setEnableTemporalSubsetting(checked)
 
     onUpdateAccessMethod({
       collectionId,
@@ -260,8 +235,6 @@ const AccessMethod = ({
     const { target } = event
     const { checked } = target
 
-    setEnableSpatialSubsetting(checked)
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -270,15 +243,6 @@ const AccessMethod = ({
         }
       }
     })
-  }
-
-  const handleHarmonySelection = (event, harmonyMethods) => {
-    if (event) {
-      const setHarmonyMethodVar = harmonyMethods.find(({ methodKey }) => methodKey === event).name
-      setSelectedHarmonyMethodName(setHarmonyMethodVar)
-
-      handleAccessMethodSelection(event)
-    }
   }
 
   const renderRadioItem = useCallback((radioItem, onPropsChange, selected) => {
@@ -330,10 +294,10 @@ const AccessMethod = ({
             key={id}
             id={id}
             value="HarmonyMethodType"
-            title="Customize with Harmony"
-            description="Select a Harmony service to customize options"
-            details="Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis."
-            onChange={() => handleHarmonyTypeAccessMethodSelection()}
+            title="Customize Download"
+            description="Select from the parameters below to customize your download"
+            details="Select options like variables, transformations, and output formats by applying parameters. Data will be staged in the cloud for download and analysis."
+            onChange={() => handleCustomizeDownload()}
             checked={isHarmony}
           />
 
@@ -357,77 +321,6 @@ const AccessMethod = ({
     )
   }
 
-  const createHarmonySelectItem = (radioItem, selected) => {
-    const {
-      id,
-      methodKey,
-      title,
-      subtitle,
-      description,
-      details,
-      customizationOptions
-    } = radioItem
-
-    return (
-      <Select.Item className="harmony-select-item" key={methodKey} value={methodKey}>
-        <AccessMethodRadio
-          key={id}
-          id={id}
-          value={methodKey}
-          title={title}
-          subtitle={subtitle}
-          description={description}
-          details={details}
-          checked={selected === methodKey}
-          customizationOptions={customizationOptions}
-          onChange={() => true}
-          isHarmony
-        />
-      </Select.Item>
-    )
-  }
-
-  const createHarmonySelector = (harmonyMethods) => (
-    <Select.Root
-      name="harmony-method-selector"
-      value={selectedHarmonyMethodName}
-      onValueChange={(e) => handleHarmonySelection(e, harmonyMethods)}
-    >
-      <span>Service</span>
-      <Select.Trigger key="harmony-trigger" className="harmony-select-trigger">
-        <Select.Value placeholder="Choose a service">
-          {selectedHarmonyMethodName}
-        </Select.Value>
-        <Select.Icon className="harmony-select-icon" />
-      </Select.Trigger>
-
-      <Select.Portal>
-        <Select.Content className="harmony-select-content" position="popper">
-          <ScrollArea.Root className="harmony-scroll-area-root" type="auto">
-            <Select.Viewport key="harmony-selector-viewport" className="harmony-select-viewport" asChild>
-              <ScrollArea.Viewport className="harmony-scroll-area-viewport" style={{ overflowY: undefined }}>
-                <div id="harmony_methods">
-                  {
-                    harmonyMethods.map(
-                      (radio) => createHarmonySelectItem(radio, selectedAccessMethod)
-                    )
-                  }
-                </div>
-              </ScrollArea.Viewport>
-            </Select.Viewport>
-            <ScrollArea.Scrollbar
-              className="harmony-scroll-area-scrollbar"
-              orientation="vertical"
-            >
-              <ScrollArea.Thumb className="harmony-scroll-area-thumb" />
-            </ScrollArea.Scrollbar>
-            <Select.Arrow />
-          </ScrollArea.Root>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
-  )
-
   const { conceptId: collectionId } = metadata
 
   const accessMethodsByType = {
@@ -447,7 +340,6 @@ const AccessMethod = ({
     const {
       type,
       name,
-      description: descriptionFromMetadata,
       supportsBoundingBoxSubsetting: hasBBoxSubsetting,
       supportsShapefileSubsetting: hasShapefileSubsetting,
       supportsTemporalSubsetting: hasTemporalSubsetting,
@@ -510,8 +402,6 @@ const AccessMethod = ({
 
       case 'Harmony': {
         id = `${collectionId}_access-method__harmony_${methodKey}`
-        title = name
-        description = descriptionFromMetadata
         hasHarmony = true
         hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
         hasFormats = supportedOutputFormats
@@ -586,7 +476,7 @@ const AccessMethod = ({
 
   // Push isLoading state from zustand to radioItems to enable skeleton loading
   // Push id and other required props for key creation
-  if (isLoading) {
+  if (isLoading && radioList.length === 0) {
     const loadingRadioProps = {
       title: '',
       description: '',
@@ -609,9 +499,6 @@ const AccessMethod = ({
   const granuleListUndefined = granuleList[0] === undefined
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
-  // Harmony access methods are postfixed with an index given that there can be more than one
-  // const { isHarmony, selectedHarmonyMethodName } = this.state
-
   // Default supportedOutputFormatOptions
   let supportedOutputFormatOptions = []
 
@@ -631,17 +518,19 @@ const AccessMethod = ({
   let supportedOutputProjectionOptions = []
 
   if (isHarmony) {
-    // Filter the supportedOutputFormats to only those formats Harmony supports
-    supportedOutputFormatOptions = supportedOutputFormats.filter(
-      (format) => harmonyFormatMapping[format] !== undefined
-    )
+    // The derived harmony state is the source of truth. Options are disabled if they are not part of the availableOutputFormats array
+    supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
+      const isOptionDisabled = !availableOutputFormats.includes(format)
 
-    // Build options for supportedOutputFormats
-    supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
-      <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
-    ))
+      // Map options to human readable formats but keep the mime-type for values
+      return (
+        <option key={format} value={format} disabled={isOptionDisabled}>
+          {harmonyFormatMapping[format]}
+        </option>
+      )
+    })
 
-    // Build options for supportedOutputFormats
+    // Build options for supportedOutputProjections
     supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
       <option key={format} value={format}>{format}</option>
     ))
@@ -673,22 +562,23 @@ const AccessMethod = ({
   const harmonyMbrWarning = useMemo(() => {
     let warning
 
+    // If a service supports bbox but not shape, show this warning
     if (
-      enableSpatialSubsetting
+      (isSpatialSubsettingSelected
       && supportsBoundingBoxSubsetting
       && !supportsShapefileSubsetting
-      && nonBoundingBoxSpatialType
+      && nonBoundingBoxSpatialType)
+      || (isSpatialSubsettingSelected && isShapeSubsettingDisabled && nonBoundingBoxSpatialType)
     ) {
-      warning = `Only bounding boxes are supported. If this option is enabled, your ${nonBoundingBoxSpatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
+      warning = `Only bounding boxes are supported. Your ${nonBoundingBoxSpatialType} has been automatically converted into the bounding box shown above and outlined on the map.`
     }
 
     return warning
   }, [
-    enableSpatialSubsetting,
+    isSpatialSubsettingSelected,
     nonBoundingBoxSpatialType,
     spatial,
-    supportsBoundingBoxSubsetting,
-    supportsShapefileSubsetting
+    isShapeSubsettingDisabled
   ])
 
   useEffect(() => {
@@ -704,8 +594,6 @@ const AccessMethod = ({
   const hasVariables = selectedMethod.variables
     ? Object.keys(selectedMethod.variables).length > 0
     : false
-
-  const harmonyMethods = accessMethodsByType.Harmony
 
   return (
     <div className="access-method">
@@ -733,15 +621,10 @@ const AccessMethod = ({
         </div>
       </ProjectPanelSection>
       <ProjectPanelSection
-        heading="Select a service and customize options"
+        heading="Customization Options"
         step={2}
         faded={!selectedAccessMethod && !isHarmony}
       >
-        {
-          isHarmony && harmonyMethods.length > 0 && (
-            createHarmonySelector(harmonyMethods)
-          )
-        }
         {
           isCustomizationAvailable && (
             <>
@@ -763,16 +646,25 @@ const AccessMethod = ({
                 )
               }
               {
-                // Show Harmony method description
-                isHarmony && (
-                  <div className="access-method__harmony-method-info">
-                    <h3 className="project-panel-section__heading">{selectedHarmonyMethodName}</h3>
-                    <p>{accessMethods[selectedAccessMethod].description}</p>
-                    <ExternalLink href="https://harmony.earthdata.nasa.gov/docs#service-capabilities">
-                      Documentation
-                    </ExternalLink>
-                  </div>
-                )
+                // Relay customization limitations
+                <div className="access-method__harmony-method-info">
+                  {
+                    isCustomizationAvailable && (
+                      <>
+                        <p>
+                          Below are the customization options available to you.
+                        </p>
+                        <EDSCAlert
+                          bootstrapVariant="warning"
+                          icon={AlertMediumPriority}
+                        >
+                          Please note that selecting some customization options may lead
+                          to others becoming disabled.
+                        </EDSCAlert>
+                      </>
+                    )
+                  }
+                </div>
               }
               {
                 supportsConcatenation && (
@@ -798,11 +690,62 @@ const AccessMethod = ({
                             </div>
                           )
                         }
-                        checked={enableConcatenateDownload}
+                        checked={isConcatenateSelected}
                         disabled={isRecurring}
                         onChange={handleConcatenationSelection}
                       />
                     </Form.Group>
+                  </ProjectPanelSection>
+                )
+              }
+              {
+                (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
+                  <ProjectPanelSection
+                    customHeadingTag="h4"
+                    heading="Spatial Subsetting"
+                    intro="When enabled, spatial subsetting will trim the data to the selected area range."
+                    nested
+                    warning={harmonyMbrWarning}
+                    faded={isSpatialSubsettingDisabled}
+                  >
+                    {
+                      selectedSpatialDisplay
+                        && (
+                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
+                            <Form.Check
+                              id="input__spatial-subsetting"
+                              type="checkbox"
+                              label={
+                                (
+                                  <span className={`mb-1 d-block ${(!(isSpatialSubsettingSelected) && 'text-muted')}`}>
+                                    Trim output granules to the selected spatial constraint
+                                  </span>
+                                )
+                              }
+                              checked={isSpatialSubsettingSelected}
+                              onChange={handleToggleSpatialSubsetting}
+                              disabled={isSpatialSubsettingDisabled}
+                            />
+                            {
+                              isSpatialSubsettingSelected && (
+                                <p className="access-method__section-status mt-2 mb-0">
+                                  Selected Area:
+                                  <br />
+                                  {selectedSpatialDisplay}
+                                </p>
+                              )
+                            }
+                          </Form.Group>
+                        )
+                    }
+                    {
+                      !selectedSpatialDisplay && (
+                        <p className="access-method__section-status mb-0">
+                          No spatial area selected.
+                          Make a spatial selection to enable spatial subsetting.
+                        </p>
+                      )
+                    }
                   </ProjectPanelSection>
                 )
               }
@@ -814,6 +757,8 @@ const AccessMethod = ({
                     intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
                     warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
                     nested
+                    disabled={isTemporalSubsettingDisabled}
+                    faded={isTemporalSubsettingDisabled}
                   >
                     {
                       (startDate || endDate) && (
@@ -823,17 +768,17 @@ const AccessMethod = ({
                             type="checkbox"
                             label={
                               (
-                                <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
+                                <span className={`mb-1 d-block ${!isTemporalSubsettingSelected && 'text-muted'}`}>
                                   Trim output granules to the selected temporal constraint
                                 </span>
                               )
                             }
-                            checked={enableTemporalSubsetting}
-                            disabled={isRecurring}
+                            checked={isTemporalSubsettingSelected}
+                            disabled={isRecurring || isTemporalSubsettingDisabled}
                             onChange={handleToggleTemporalSubsetting}
                           />
                           {
-                            enableTemporalSubsetting && (
+                            isTemporalSubsettingSelected && (
                               <p className="access-method__section-status mt-2 mb-0">
                                 Selected Range:
                                 <br />
@@ -856,51 +801,27 @@ const AccessMethod = ({
                 )
               }
               {
-                (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
+                supportedOutputFormatOptions.length > 0 && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Spatial Subsetting"
-                    intro="When enabled, spatial subsetting will trim the data to the selected area range."
+                    heading="Output Format"
+                    intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
                     nested
-                    warning={harmonyMbrWarning}
                   >
-                    {
-                      selectedSpatialDisplay
-                        && (
-                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
-                            <Form.Check
-                              id="input__spatial-subsetting"
-                              type="checkbox"
-                              label={
-                                (
-                                  <span className={`mb-1 d-block ${(!(enableSpatialSubsetting) && 'text-muted')}`}>
-                                    Trim output granules to the selected spatial constraint
-                                  </span>
-                                )
-                              }
-                              checked={enableSpatialSubsetting}
-                              onChange={handleToggleSpatialSubsetting}
-                            />
-                            {
-                              enableSpatialSubsetting && (
-                                <p className="access-method__section-status mt-2 mb-0">
-                                  Selected Area:
-                                  <br />
-                                  {selectedSpatialDisplay}
-                                </p>
-                              )
-                            }
-                          </Form.Group>
-                        )
-                    }
-                    {
-                      !selectedSpatialDisplay && (
-                        <p className="access-method__section-status mb-0">
-                          No spatial area selected.
-                          Make a spatial selection to enable spatial subsetting.
-                        </p>
-                      )
-                    }
+                    <select
+                      id="input__output-format"
+                      className="form-select form-select-sm"
+                      onChange={handleOutputFormatSelection}
+                      value={selectedOutputFormat}
+                      data-testid="access-methods__output-format-options"
+                    >
+                      {
+                        [
+                          <option key="output-format-none" value="">No Data Conversion</option>,
+                          ...supportedOutputFormatOptions
+                        ]
+                      }
+                    </select>
                   </ProjectPanelSection>
                 )
               }
@@ -942,31 +863,6 @@ const AccessMethod = ({
                         </>
                       )
                     }
-                  </ProjectPanelSection>
-                )
-              }
-              {
-                supportedOutputFormatOptions.length > 0 && (
-                  <ProjectPanelSection
-                    customHeadingTag="h4"
-                    heading="Output Format"
-                    intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
-                    nested
-                  >
-                    <select
-                      id="input__output-format"
-                      className="form-select form-select-sm"
-                      onChange={handleOutputFormatSelection}
-                      value={selectedOutputFormat}
-                      data-testid="access-methods__output-format-options"
-                    >
-                      {
-                        [
-                          <option key="output-format-none" value="">No Data Conversion</option>,
-                          ...supportedOutputFormatOptions
-                        ]
-                      }
-                    </select>
                   </ProjectPanelSection>
                 )
               }

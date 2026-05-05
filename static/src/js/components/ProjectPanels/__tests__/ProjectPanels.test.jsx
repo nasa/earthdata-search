@@ -14,9 +14,18 @@ import VariableTreePanel from '../VariableTreePanel'
 
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
 import { breadcrumbSkeleton, titleSkeleton } from '../../Panels/skeleton'
 import { changePath } from '../../../util/url/changePath'
+
+// Mocking window.getComputedStyle for jsdom which does not have the visual rendering needed for layout calculations
+const mockGetComputedStyle = vi.fn().mockImplementation(() => ({
+  // Simplebar-react calls getPropertyValue on the returned object. We mock it to prevent the test from crashing.
+  getPropertyValue: () => ''
+}))
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: mockGetComputedStyle
+})
 
 vi.mock('../../../util/url/changePath', () => ({
   changePath: vi.fn()
@@ -195,7 +204,7 @@ describe('ProjectPanels component', () => {
         }
       })
 
-      expect(Skeleton).toHaveBeenCalledTimes(10)
+      expect(Skeleton).toHaveBeenCalledTimes(4)
 
       expect(Skeleton).toHaveBeenNthCalledWith(1, expect.objectContaining({
         shapes: breadcrumbSkeleton
@@ -206,35 +215,11 @@ describe('ProjectPanels component', () => {
       }), {})
 
       expect(Skeleton).toHaveBeenNthCalledWith(3, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(5, expect.objectContaining({
         shapes: breadcrumbSkeleton
       }), {})
 
-      expect(Skeleton).toHaveBeenNthCalledWith(6, expect.objectContaining({
+      expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining({
         shapes: titleSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(7, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(8, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(9, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(10, expect.objectContaining({
-        shapes: radioListItemSkeleton
       }), {})
     })
   })

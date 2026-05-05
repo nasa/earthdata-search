@@ -1,93 +1,55 @@
-import { uniq } from 'lodash-es'
-
-import { getVariables } from '../getVariables'
-
-import { supportsBoundingBoxSubsetting } from '../supportsBoundingBoxSubsetting'
-import { supportsConcatenation } from '../supportsConcatenation'
-import { defaultConcatenation } from '../defaultConcatenation'
-import { supportsShapefileSubsetting } from '../supportsShapefileSubsetting'
-import { supportsTemporalSubsetting } from '../supportsTemporalSubsetting'
-import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
+import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
+import getDerivedHarmonyState from '../../getDerivedHarmonyState/getDerivedHarmonyState'
 
 /**
  * Builds the Harmony access method
- * @param {object} serviceItem serviceItem in the Collection Metadata
- * @param {object} associatedVariables variables that are either in the serviceItem or collectionMetadata (prioritizes the serviceItem variables)
- * @param {integer} index the harmony index for this harmony service item
+ * @param {object} harmonyCapabilitiesDocument object that contains capabilities document from harmony endpoint
  * @returns {object} Access method for Harmony
  */
-export const buildHarmony = (serviceItem, params) => {
-  const { associatedVariables } = params
+export const buildHarmony = (harmonyCapabilitiesDocument, earthdataEnvironment, userSelections) => {
+  const derivedHarmonyState = getDerivedHarmonyState(userSelections, harmonyCapabilitiesDocument)
+
+  const { collectionId, shortName, capabilities } = derivedHarmonyState
 
   const {
-    description,
-    conceptId: serviceConceptId,
-    type: serviceType,
-    longName,
-    name,
-    url,
-    supportedReformattings
-  } = serviceItem
-
-  const { urlValue } = url
-
-  const {
-    hierarchyMappings,
-    keywordMappings,
+    concatenate,
+    outputFormats,
+    temporalSubset,
+    spatialSubset,
+    variableSubset,
     variables
-  } = getVariables(associatedVariables)
+  } = capabilities
 
-  const {
-    supportedOutputProjections
-  } = serviceItem
+  const url = getEarthdataConfig(earthdataEnvironment).harmonyHost
 
-  const outputFormats = []
-
-  if (supportedReformattings) {
-    supportedReformattings.forEach((reformatting) => {
-      const { supportedOutputFormats } = reformatting
-
-      // Collect all supported output formats from each mapping
-      outputFormats.push(...supportedOutputFormats)
-    })
+  // This is the initial structure that is supplied to accessMethods.
+  // Supported means that it is supported in the top level of the capabilities document,
+  // Enabled means that a user has enabled (selected) it
+  // isDisabled is derived from harmony state after users make their selections
+  return {
+    availableOutputFormats: outputFormats.availableOutputFormats,
+    harmonyCapabilitiesDocument,
+    defaultConcatenation: false,
+    enableConcatenateDownload: false,
+    enableSpatialSubsetting: userSelections.spatialSubset,
+    enableTemporalSubsetting: userSelections.temporalSubset,
+    id: collectionId,
+    isValid: true,
+    shortName,
+    supportedOutputFormats: outputFormats.supported,
+    supportedOutputProjections: outputFormats.supported, // Will change
+    supportsBoundingBoxSubsetting: spatialSubset.bboxSupported,
+    supportsConcatenation: concatenate.supported,
+    supportsShapefileSubsetting: spatialSubset.shapeSupported,
+    supportsTemporalSubsetting: temporalSubset.supported,
+    supportsVariableSubsetting: variableSubset.supported,
+    isTemporalSubsettingDisabled: temporalSubset.disabled,
+    isSpatialSubsettingDisabled: spatialSubset.disabled,
+    isOutputFormatsDisabled: outputFormats.disabled,
+    isShapeSubsettingDisabled: spatialSubset.shapeDisabled,
+    selectedOutputFormat: userSelections.outputFormat,
+    type: 'Harmony',
+    url,
+    variables
   }
-
-  let outputProjections = []
-  if (supportedOutputProjections) {
-    outputProjections = supportedOutputProjections.filter((projection) => {
-      const { projectionAuthority } = projection
-
-      return projectionAuthority != null
-    }).map((projection) => {
-      const { projectionAuthority } = projection
-
-      return projectionAuthority
-    })
-  }
-
-  return [
-    {
-      description,
-      enableTemporalSubsetting: true,
-      enableSpatialSubsetting: true,
-      hierarchyMappings,
-      id: serviceConceptId,
-      isValid: true,
-      keywordMappings,
-      longName,
-      name,
-      supportedOutputFormats: uniq(outputFormats),
-      supportedOutputProjections: outputProjections,
-      supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceItem),
-      supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
-      supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
-      supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-      supportsConcatenation: supportsConcatenation(serviceItem),
-      defaultConcatenation: defaultConcatenation(serviceItem),
-      enableConcatenateDownload: defaultConcatenation(serviceItem),
-      type: serviceType,
-      url: urlValue,
-      variables
-    }
-  ]
 }
