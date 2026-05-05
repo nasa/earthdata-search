@@ -79,7 +79,6 @@
     "dev": {},
     "test": {
       "cmrHost": "https://cmr.earthdata.nasa.gov",
-      "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
       "edlJwk": "https://urs.earthdata.nasa.gov/.well-known/edl_ops_jwks.json",
       "edlJwkId": "edljwtpubkey_ops",
@@ -91,7 +90,6 @@
     },
     "sit": {
       "cmrHost": "https://cmr.sit.earthdata.nasa.gov",
-      "echoRestRoot": "https://cmr.sit.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
       "edlJwk": "https://sit.urs.earthdata.nasa.gov/.well-known/edl_sit_jwks.json",
       "edlJwkId": "edljwtpubkey_sit",
@@ -103,7 +101,6 @@
     },
     "uat": {
       "cmrHost": "https://cmr.uat.earthdata.nasa.gov",
-      "echoRestRoot": "https://cmr.uat.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
       "edlJwk": "https://uat.urs.earthdata.nasa.gov/.well-known/edl_uat_jwks.json",
       "edlJwkId": "edljwtpubkey_uat",
@@ -115,7 +112,6 @@
     },
     "prod": {
       "cmrHost": "https://cmr.earthdata.nasa.gov",
-      "echoRestRoot": "https://cmr.earthdata.nasa.gov/legacy-services/rest",
       "edlHost": "https://urs.earthdata.nasa.gov",
       "edlJwk": "https://urs.earthdata.nasa.gov/.well-known/edl_ops_jwks.json",
       "edlJwkId": "edljwtpubkey_ops",
