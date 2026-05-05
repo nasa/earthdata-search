@@ -61,8 +61,10 @@ const AccessMethod = ({
   temporal
 }) => {
   const {
+    setShowMbr,
     setActivePanel
   } = useEdscStore((state) => ({
+    setShowMbr: state.map.setShowMbr,
     setActivePanel: state.projectPanels.setActivePanel
   }))
 
@@ -94,7 +96,6 @@ const AccessMethod = ({
     isShapeSubsettingDisabled = false
   } = selectedMethod || {}
 
-  // This does not work currently. It's supposed to disable temporalSubsetting but I dont know why that's needed.
   const { isRecurring } = temporal
 
   const [isHarmony, setIsHarmony] = useState(false)
@@ -579,6 +580,11 @@ const AccessMethod = ({
     spatial,
     isShapeSubsettingDisabled
   ])
+
+  useEffect(() => {
+    // Toggle the spatial polygon warning if the warning is present
+    setShowMbr(!!harmonyMbrWarning)
+  }, [harmonyMbrWarning])
 
   // Get spatial and temporal display values
   const selectedTemporalDisplay = createTemporalDisplay(temporal)

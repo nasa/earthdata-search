@@ -74,6 +74,8 @@ getDerivedHarmonyState,
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
+const HARMONY_VERSION = '2'
+
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
   const byId: ProjectGranules['byId'] = {}
@@ -278,7 +280,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         // Purpose of function is to set the harmonyCapabiltiiesDocument
         // eslint-disable-next-line consistent-return
         filteredIds.map(async (collectionId) => {
-          const version = '2'
+          const version = HARMONY_VERSION
           try {
             const harmonyCapabilitiesDocumentRequestObject = new HarmonyCapabilitiesDocumentRequest(
               edlToken,
@@ -821,8 +823,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       })
     },
 
-    // The primary purpose of this method is to trigger a state update (a side effect). A return value is not used.
-    // eslint-disable-next-line consistent-return
     updateAccessMethod: ({ collectionId, method }) => {
       const [methodKey] = Object.keys(method)
       const newMethod = method[methodKey]
@@ -849,8 +849,8 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             [newSelectionKey]: newMethod[updateKey as keyof typeof newMethod]
           }
 
-          // ...then we call the dedicated action. This action will correctly recalculate the derived state.
-          return get().project.updateHarmonySelection({
+          // Call the dedicated action. This action will correctly recalculate the derived state.
+          get().project.updateHarmonySelection({
             collectionId,
             newSelections
           })

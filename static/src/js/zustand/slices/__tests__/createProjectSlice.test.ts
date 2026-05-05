@@ -470,9 +470,7 @@ describe('createProjectSlice', () => {
         const { collections } = updatedProject
         const { byId } = collections
         const collection1 = byId.collectionId1
-        console.log('🚀 ~ createProjectSlice.test.ts:458 ~ collection1:', collection1)
         const collection2 = byId.collectionId2
-        console.log('🚀 ~ createProjectSlice.test.ts:460 ~ collection2:', collection2)
 
         expect(collection1.selectedAccessMethod).toEqual('download')
         expect(collection1.accessMethods).toEqual({
@@ -2147,7 +2145,7 @@ describe('createProjectSlice', () => {
       })
     })
 
-    test('updates harmony selection when method type is harmony', () => {
+    test('updates harmony selection of temporalSubset/enableTemporalSubsetting when method type is harmony', () => {
       const collectionId = 'collectionId'
       const accessMethod = {
         availableOutputFormats: [

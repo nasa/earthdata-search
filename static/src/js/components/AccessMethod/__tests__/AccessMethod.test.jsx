@@ -1409,8 +1409,8 @@ describe('AccessMethod component', () => {
           })
 
           describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
-            test.skip('displays a warning and a bounding box Selected Area', async () => {
-              const { user } = setup({
+            test('displays a warning and a bounding box Selected Area', async () => {
+              setup({
                 overrideProps: {
                   accessMethods: {
                     harmony: {
@@ -1419,7 +1419,7 @@ describe('AccessMethod component', () => {
                       isValid: true,
                       type: 'Harmony',
                       supportsBoundingBoxSubsetting: true,
-                      supportsShapefileSubsetting: false,
+                      isShapeSubsettingDisabled: false,
                       enableSpatialSubsetting: true
                     }
                   },
@@ -1434,22 +1434,21 @@ describe('AccessMethod component', () => {
                 }
               })
 
-              const checkbox = screen.getByRole('checkbox')
-              await user.click(checkbox)
-
-              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your point will be automatically converted into the bounding box shown above and outlined on the map.')
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your point has been automatically converted into the bounding box shown above and outlined on the map.')
 
               const zustandState = useEdscStore.getState()
               const { map } = zustandState
               const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(2)
-              expect(setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
             })
           })
 
           describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
-            test.skip('displays a warning and a bounding box Selected Area', async () => {
-              const { user } = setup({
+            test('displays a warning and a bounding box Selected Area', async () => {
+              setup({
                 overrideProps: {
                   accessMethods: {
                     harmony: {
@@ -1458,7 +1457,8 @@ describe('AccessMethod component', () => {
                       isValid: true,
                       type: 'Harmony',
                       supportsBoundingBoxSubsetting: true,
-                      enableSpatialSubsetting: false
+                      isShapeSubsettingDisabled: true,
+                      enableSpatialSubsetting: true
                     }
                   },
                   metadata: {
@@ -1472,22 +1472,21 @@ describe('AccessMethod component', () => {
                 }
               })
 
-              const checkbox = screen.getByRole('checkbox')
-              await user.click(checkbox)
-
-              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your circle will be automatically converted into the bounding box shown above and outlined on the map.')
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your circle has been automatically converted into the bounding box shown above and outlined on the map.')
 
               const zustandState = useEdscStore.getState()
               const { map } = zustandState
               const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(2)
-              expect(setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
             })
           })
 
           describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
-            test.skip('displays a warning and a bounding box Selected Area', async () => {
-              const { user } = setup({
+            test('displays a warning and a bounding box Selected Area', async () => {
+              setup({
                 overrideProps: {
                   accessMethods: {
                     harmony: {
@@ -1496,7 +1495,8 @@ describe('AccessMethod component', () => {
                       isValid: true,
                       type: 'Harmony',
                       supportsBoundingBoxSubsetting: true,
-                      enableSpatialSubsetting: false
+                      isShapeSubsettingDisabled: true,
+                      enableSpatialSubsetting: true
                     }
                   },
                   metadata: {
@@ -1510,22 +1510,21 @@ describe('AccessMethod component', () => {
                 }
               })
 
-              const checkbox = screen.getByRole('checkbox')
-              await user.click(checkbox)
-
-              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your line will be automatically converted into the bounding box shown above and outlined on the map.')
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your line has been automatically converted into the bounding box shown above and outlined on the map.')
 
               const zustandState = useEdscStore.getState()
               const { map } = zustandState
               const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(2)
-              expect(setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
             })
           })
 
           describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
-            test.skip('displays a warning and a bounding box Selected Area', async () => {
-              const { user } = setup({
+            test('displays a warning and a bounding box Selected Area', async () => {
+              setup({
                 overrideProps: {
                   accessMethods: {
                     harmony: {
@@ -1534,7 +1533,8 @@ describe('AccessMethod component', () => {
                       isValid: true,
                       type: 'Harmony',
                       supportsBoundingBoxSubsetting: true,
-                      enableSpatialSubsetting: false
+                      isShapeSubsettingDisabled: true,
+                      enableSpatialSubsetting: true
                     }
                   },
                   metadata: {
@@ -1548,16 +1548,15 @@ describe('AccessMethod component', () => {
                 }
               })
 
-              const checkbox = screen.getByRole('checkbox')
-              await user.click(checkbox)
-
-              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your polygon will be automatically converted into the bounding box shown above and outlined on the map.')
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your polygon has been automatically converted into the bounding box shown above and outlined on the map.')
 
               const zustandState = useEdscStore.getState()
               const { map } = zustandState
               const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(2)
-              expect(setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
             })
           })
         })

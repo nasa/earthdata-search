@@ -553,7 +553,7 @@ describe('useCreateRetrieval', () => {
         expect(metricsDataAccess).toHaveBeenCalledWith({
           collections: [{
             collectionId: 'collectionId',
-            service: 'PODAAC Concise',
+            service: 'Harmony',
             type: 'harmony'
           }],
           type: 'data_access_completion'

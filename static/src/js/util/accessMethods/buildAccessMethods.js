@@ -120,7 +120,7 @@ export const buildAccessMethods = (
 
     const formattedServiceType = formatServiceType(serviceType)
 
-    // Only process service types that EDSC supports
+    // Only process service types that EDSC supports. These values come from UMM-S records. As harmony no longer comes from UMM-S, we exclude it here.
     if (![ESI, ECHO_ORDERS, OPENDAP, SWODLR].includes(formattedServiceType)) return {}
 
     const params = {

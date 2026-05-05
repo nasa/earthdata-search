@@ -16,11 +16,7 @@ import { prepareRetrievalParams } from '../util/retrievals'
 import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import { metricsDataAccess } from '../util/metrics/metricsDataAccess'
 
-import type {
-  EchoOrderAccessMethod,
-  EsiAccessMethod,
-  HarmonyAccessMethod
-} from '../zustand/types'
+import type { EchoOrderAccessMethod, EsiAccessMethod } from '../zustand/types'
 
 export const useCreateRetrieval = () => {
   const navigate = useNavigate()
@@ -88,9 +84,7 @@ export const useCreateRetrieval = () => {
         selectedService = 'OPeNDAP'
         selectedType = 'opendap'
       } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
-        // This is wrong. Need to think about this..
-        const { shortName } = selectedMethod as HarmonyAccessMethod
-        selectedService = shortName
+        selectedService = 'Harmony'
         selectedType = 'harmony'
       } else if (type === ACCESS_METHOD_TYPES.SWODLR) {
         selectedService = 'SWODLR'
