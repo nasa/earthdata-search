@@ -1,4 +1,4 @@
-import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
+import { getApplicationConfig, getEarthdataConfig } from '../../../../../../sharedUtils/config'
 import getDerivedHarmonyState from '../../getDerivedHarmonyState/getDerivedHarmonyState'
 
 /**
@@ -6,7 +6,7 @@ import getDerivedHarmonyState from '../../getDerivedHarmonyState/getDerivedHarmo
  * @param {object} harmonyCapabilitiesDocument object that contains capabilities document from harmony endpoint
  * @returns {object} Access method for Harmony
  */
-export const buildHarmony = (harmonyCapabilitiesDocument, earthdataEnvironment, userSelections) => {
+export const buildHarmony = (harmonyCapabilitiesDocument, userSelections) => {
   const derivedHarmonyState = getDerivedHarmonyState(userSelections, harmonyCapabilitiesDocument)
 
   const { collectionId, shortName, capabilities } = derivedHarmonyState
@@ -20,7 +20,9 @@ export const buildHarmony = (harmonyCapabilitiesDocument, earthdataEnvironment, 
     variables
   } = capabilities
 
-  const url = getEarthdataConfig(earthdataEnvironment).harmonyHost
+  const { env } = getApplicationConfig()
+
+  const url = getEarthdataConfig(env).harmonyHost
 
   // This is the initial structure that is supplied to accessMethods.
   // Supported means that it is supported in the top level of the capabilities document,

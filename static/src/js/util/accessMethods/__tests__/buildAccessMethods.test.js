@@ -12,7 +12,8 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 beforeEach(() => {
   vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableOrdering: 'false',
-    disableSwodlr: 'false'
+    disableSwodlr: 'false',
+    env: 'dev'
   }))
 })
 
@@ -57,7 +58,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {}, 'test')
+    buildAccessMethods(collectionMetadata, isOpenSearch, {})
 
     expect(buildDownloadMock).toHaveBeenCalledTimes(1)
 
@@ -145,7 +146,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {}, 'dev')
+    buildAccessMethods(collectionMetadata, isOpenSearch, {})
 
     expect(buildEchoMock).toHaveBeenCalledTimes(2)
 
@@ -220,7 +221,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {}, 'dev')
+    buildAccessMethods(collectionMetadata, isOpenSearch, {})
 
     expect(buildEsiMock).toHaveBeenCalledTimes(1)
 
@@ -252,7 +253,7 @@ describe('when buildAccessMethods is called', () => {
 
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilitiesDocument, 'dev')
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilitiesDocument)
 
     expect(buildHarmonyMock).toHaveBeenCalledTimes(1)
 
@@ -288,7 +289,6 @@ describe('when buildAccessMethods is called', () => {
           }
         ]
       },
-      'dev',
       {
         concatenate: false,
         reproject: false,
@@ -469,7 +469,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {}, 'dev')
+    buildAccessMethods(collectionMetadata, isOpenSearch, {})
 
     expect(buildOpendapMock).toHaveBeenCalledTimes(1)
 
@@ -749,7 +749,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {}, 'dev')
+    buildAccessMethods(collectionMetadata, isOpenSearch, {})
 
     expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
 
@@ -1097,8 +1097,7 @@ describe('when buildAccessMethods is called', () => {
       const accessMethods = buildAccessMethods(
         collectionMetadata,
         isOpenSearch,
-        harmonyCapabilitiesDocument,
-        'dev'
+        harmonyCapabilitiesDocument
       )
 
       expect(buildEchoMock).toHaveBeenCalledTimes(2) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
@@ -1209,7 +1208,6 @@ describe('when buildAccessMethods is called', () => {
             }
           ]
         },
-        'dev',
         {
           concatenate: false,
           reproject: false,

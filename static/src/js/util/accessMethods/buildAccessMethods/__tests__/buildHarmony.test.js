@@ -1,14 +1,12 @@
 import { buildHarmony } from '../buildHarmony'
 
-import { getEarthdataConfig } from '../../../../../../../sharedUtils/config'
+import { getEarthdataConfig, getApplicationConfig } from '../../../../../../../sharedUtils/config'
 import getDerivedHarmonyState from '../../../../util/getDerivedHarmonyState/getDerivedHarmonyState'
 
 vi.mock('../../../../../../../sharedUtils/config')
 vi.mock('../../../../util/getDerivedHarmonyState/getDerivedHarmonyState')
 
 describe('buildHarmony', () => {
-  const earthdataEnvironment = 'prod'
-
   const mockHarmonyCapabilitiesDocument = {
     conceptId: 'C4054955340-GES_DISC',
     shortName: 'GPM_3GPROFF18SSMIS_CLIM'
@@ -23,6 +21,10 @@ describe('buildHarmony', () => {
   beforeEach(() => {
     getEarthdataConfig.mockReturnValue({
       harmonyHost: 'https://harmony.example.com'
+    })
+
+    getApplicationConfig.mockReturnValue({
+      env: 'prod'
     })
 
     getDerivedHarmonyState.mockReturnValue({
@@ -66,7 +68,6 @@ describe('buildHarmony', () => {
   test('builds the access method using the derived harmony state', () => {
     const result = buildHarmony(
       mockHarmonyCapabilitiesDocument,
-      earthdataEnvironment,
       mockUserSelections
     )
 

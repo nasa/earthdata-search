@@ -74,7 +74,7 @@ getDerivedHarmonyState,
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
-const HARMONY_VERSION = '2'
+const HARMONY_CAPABILITES_API_VERSION = '2'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -280,7 +280,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         // Purpose of function is to set the harmonyCapabiltiiesDocument
         // eslint-disable-next-line consistent-return
         filteredIds.map(async (collectionId) => {
-          const version = HARMONY_VERSION
+          const version = HARMONY_CAPABILITES_API_VERSION
           try {
             const harmonyCapabilitiesDocumentRequestObject = new HarmonyCapabilitiesDocumentRequest(
               edlToken,
@@ -438,8 +438,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           const accessMethods = buildAccessMethods(
             metadata,
             isOpenSearch,
-            harmonyCapabilitiesDocument,
-            earthdataEnvironment
+            harmonyCapabilitiesDocument
           )
 
           const accessMethodsObject = insertSavedAccessConfig(

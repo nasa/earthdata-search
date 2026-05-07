@@ -1168,7 +1168,7 @@ describe('AccessMethod component', () => {
           expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
-        describe('when the user clicks the checkbox', () => {
+        describe('when the user clicks the checkbox for temporal subsetting', () => {
           test('calls onUpdateAccessMethod and updates enableTemporalSubsetting to true', async () => {
             const collectionId = 'collectionId'
             const { props, user } = setup({
@@ -1370,7 +1370,7 @@ describe('AccessMethod component', () => {
           expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
-        describe('when the user checks enableSpatialSubsetting', () => {
+        describe('when the user clicks the checkbox for spatial subsetting', () => {
           test('calls onUpdateAccessMethod and updates enableSpatialSubsetting', async () => {
             const collectionId = 'collectionId'
             const { props, user } = setup({
@@ -1650,6 +1650,7 @@ describe('AccessMethod component', () => {
           expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(true)
         })
 
+        // TODO EDSC-4661 when incorporating concatenation
         test.skip('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
