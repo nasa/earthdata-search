@@ -50,7 +50,7 @@ export const decodeTemporal = (string) => {
 
   // We check `values.length > 2` because when `encodeTemporal` runs with `isRecurring: true`,
   // it appends the recurring day start and end values to the array (even if they are empty strings).
-  // This check ensures we preserve the `isRecurring: true` state when decoding the URL, even if the user
+  // This check ensures we preserve the `isRecurring: true` state when decoding the URL
   // Note this occurs during collection filtering only
   const isRecurring = values.length > 2 || !!(recurringDayStart && recurringDayEnd)
 
