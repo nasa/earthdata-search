@@ -59,7 +59,8 @@ const ProjectPanels = () => {
     setActivePanel,
     setCollectionId,
     togglePanels,
-    updateAccessMethod
+    updateAccessMethod,
+    updateHarmonySelection
   } = useEdscStore((state) => ({
     dataQualitySummaries: state.dataQualitySummaries.byCollectionId,
     isLoading: state.project.collections.isLoading,
@@ -69,7 +70,8 @@ const ProjectPanels = () => {
     setActivePanel: state.projectPanels.setActivePanel,
     setCollectionId: state.collection.setCollectionId,
     togglePanels: state.projectPanels.setIsOpen,
-    updateAccessMethod: state.project.updateAccessMethod
+    updateAccessMethod: state.project.updateAccessMethod,
+    updateHarmonySelection: state.project.updateHarmonySelection
   }))
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
@@ -450,6 +452,7 @@ const ProjectPanels = () => {
             onSetActivePanel={setActivePanel}
             onTogglePanels={togglePanels}
             onUpdateAccessMethod={updateAccessMethod}
+            onUpdateHarmonySelection={updateHarmonySelection}
             selectedAccessMethod={selectedAccessMethod}
             spatial={spatial}
             temporal={preferredTemporal}
