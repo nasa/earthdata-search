@@ -144,7 +144,104 @@ describe('SubscriptionsBody component', () => {
       const button = screen.getByRole('button', { name: 'Create Subscription' })
       await user.click(button)
 
-      expect(addToast).toHaveBeenCalledTimes(1)
+      await waitFor(() => {
+        expect(addToast).toHaveBeenCalledTimes(1)
+      })
+
+      expect(addToast).toHaveBeenCalledWith('Subscription created', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    })
+
+    test('submits the form when Enter is pressed in the input field', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              hasGranulesOrCwic: true,
+              spatial: {
+                point: ['39.76036, -78.7812']
+              }
+            }
+          }
+        },
+        overrideApolloClientMocks: [{
+          request: {
+            query: SUBSCRIPTIONS,
+            variables: {
+              params: {
+                subscriberId: 'testuser',
+                type: 'collection'
+              }
+            }
+          },
+          result: {
+            data: {
+              subscriptions: {
+                items: []
+              }
+            }
+          }
+        }, {
+          request: {
+            query: CREATE_SUBSCRIPTION,
+            variables: {
+              params: {
+                subscriberId: 'testuser',
+                name: 'Dataset Search Subscription (Point)',
+                type: 'collection',
+                query: 'has_granules_or_cwic=true&point[]=39.76036, -78.7812'
+              }
+            }
+          },
+          result: {
+            data: {
+              createSubscription: {
+                conceptId: 'SUB-12345'
+              }
+            }
+          }
+        }, {
+          request: {
+            query: SUBSCRIPTIONS,
+            variables: {
+              params: {
+                subscriberId: 'testuser',
+                type: 'collection'
+              }
+            }
+          },
+          result: {
+            data: {
+              subscriptions: {
+                items: [{
+                  collection: {
+                    conceptId: 'C123-PROV',
+                    title: 'Test Collection'
+                  },
+                  collectionConceptId: 'C123-PROV',
+                  conceptId: 'SUB-12345',
+                  creationDate: '2024-01-01T12:00:00Z',
+                  name: 'Dataset Search Subscription (Point)',
+                  nativeId: 'native-id-12345',
+                  query: 'has_granules_or_cwic=true&point[]=39.76036, -78.7812',
+                  revisionDate: '2024-01-01T12:00:00Z',
+                  type: 'collection'
+                }]
+              }
+            }
+          }
+        }]
+      })
+
+      const input = screen.getByRole('textbox')
+      await user.type(input, '{Enter}')
+
+      await waitFor(() => {
+        expect(addToast).toHaveBeenCalledTimes(1)
+      })
+
       expect(addToast).toHaveBeenCalledWith('Subscription created', {
         appearance: 'success',
         autoDismiss: true
@@ -287,7 +384,10 @@ describe('SubscriptionsBody component', () => {
         const button = screen.getByRole('button', { name: 'Create New Subscription' })
         await user.click(button)
 
-        expect(addToast).toHaveBeenCalledTimes(1)
+        await waitFor(() => {
+          expect(addToast).toHaveBeenCalledTimes(1)
+        })
+
         expect(addToast).toHaveBeenCalledWith('Subscription created', {
           appearance: 'success',
           autoDismiss: true
@@ -373,7 +473,10 @@ describe('SubscriptionsBody component', () => {
         const button = screen.getByRole('button', { name: 'Create Subscription' })
         await user.click(button)
 
-        expect(addToast).toHaveBeenCalledTimes(1)
+        await waitFor(() => {
+          expect(addToast).toHaveBeenCalledTimes(1)
+        })
+
         expect(addToast).toHaveBeenCalledWith('Subscription created', {
           appearance: 'success',
           autoDismiss: true
@@ -475,7 +578,10 @@ describe('SubscriptionsBody component', () => {
         const button = screen.getByRole('button', { name: 'Create Subscription' })
         await user.click(button)
 
-        expect(addToast).toHaveBeenCalledTimes(1)
+        await waitFor(() => {
+          expect(addToast).toHaveBeenCalledTimes(1)
+        })
+
         expect(addToast).toHaveBeenCalledWith('Subscription created', {
           appearance: 'success',
           autoDismiss: true
