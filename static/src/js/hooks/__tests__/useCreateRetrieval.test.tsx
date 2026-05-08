@@ -500,9 +500,9 @@ describe('useCreateRetrieval', () => {
               collections: {
                 byId: {
                   collectionId: {
-                    selectedAccessMethod: 'harmony0',
+                    selectedAccessMethod: 'harmony',
                     accessMethods: {
-                      harmony0: accessMethod
+                      harmony: accessMethod
                     }
                   }
                 }
@@ -553,7 +553,7 @@ describe('useCreateRetrieval', () => {
         expect(metricsDataAccess).toHaveBeenCalledWith({
           collections: [{
             collectionId: 'collectionId',
-            service: 'PODAAC Concise',
+            service: 'Harmony',
             type: 'harmony'
           }],
           type: 'data_access_completion'
