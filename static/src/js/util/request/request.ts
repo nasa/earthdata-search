@@ -309,6 +309,14 @@ export default class Request {
     return this.post(this.searchPath, params)
   }
 
+  /*
+    * Makes a GET request to this.searchPath.
+    * Use this method when you need to pass query parameters in the URL, as opposed to sending a JSON payload in a request body.
+  * */
+  getSearch(params: RequestParams) {
+    return this.get(this.searchPath, params)
+  }
+
   /**
    * Handle an unauthorized response
    */

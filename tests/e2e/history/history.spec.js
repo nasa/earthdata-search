@@ -86,6 +86,12 @@ test.describe('History', () => {
       })
     })
 
+    await page.route(`**/capabilities?collectionId=${conceptId}&version=2`, async (route) => {
+      await route.fulfill({
+        json: { services: [] }
+      })
+    })
+
     await login(page, context)
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
