@@ -62,6 +62,16 @@ describe('temporalEncoders', () => {
     })
 
     test('returns an object containing both startDate and endDate when both are provided', () => {
+      expect(decodeTemporal('2002-07-04T00:00:00Z,2019-05-06T00:00:00Z')).toEqual({
+        startDate: '2002-07-04T00:00:00Z',
+        endDate: '2019-05-06T00:00:00Z',
+        recurringDayStart: '',
+        recurringDayEnd: '',
+        isRecurring: false
+      })
+    })
+
+    test('returns an object containing both startDate, endDate, recurringDayStart and recurringDayEnd when all are provided', () => {
       expect(decodeTemporal('2002-07-04T00:00:00Z,2019-05-06T00:00:00Z,31,58')).toEqual({
         startDate: '2002-07-04T00:00:00Z',
         endDate: '2019-05-06T00:00:00Z',
