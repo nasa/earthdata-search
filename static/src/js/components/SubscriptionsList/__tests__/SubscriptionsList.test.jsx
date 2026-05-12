@@ -117,4 +117,19 @@ describe('SubscriptionsList component', () => {
       }, {})
     })
   })
+
+  describe('when the username has not been loaded yet', () => {
+    it('should not fetch subscriptions', async () => {
+      setup({
+        overrideZustandState: {
+          user: {
+            username: null
+          }
+        }
+      })
+
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(SubscriptionsListTable).toHaveBeenCalledTimes(0)
+    })
+  })
 })

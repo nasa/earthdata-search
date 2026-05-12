@@ -21,6 +21,7 @@ const SubscriptionsList = () => {
   const username = useEdscStore(getUsername)
 
   const { data, loading } = useQuery(SUBSCRIPTIONS, {
+    skip: !username,
     variables: {
       params: {
         subscriberId: username
@@ -41,7 +42,7 @@ const SubscriptionsList = () => {
     <>
       <h2 className="route-wrapper__page-heading">Subscriptions</h2>
       {
-        (loading) && (
+        (loading || !username) && (
           <Spinner
             className="subscriptions-list__spinner"
             type="dots"
