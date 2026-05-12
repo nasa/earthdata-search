@@ -266,10 +266,27 @@ const normalizeSpatial = (metadata: {
         [swLon, swLat]
       ])
 
-      // Interpolate the polygon to add points between each point
-      const interpolatedPolygon = interpolateBoxPolygon(polygonCoordinates, 250, 6)
+      // Divide the polygon if it crosses the antimeridian
+      const { interiors: dividedCoordinates } = dividePolygon(polygonCoordinates.map(
+        ([lng, lat]: number[]) => ({
+          lng,
+          lat
+        })
+      ))
 
-      multiPolygons.push(interpolatedPolygon)
+      // Add each divided polygon to the multi-polygon array
+      dividedCoordinates.forEach((dividedPolygon: { lat: number, lng: number }[]) => {
+        const dividedPolygonCoordinates = dividedPolygon.map((point) => [point.lng, point.lat])
+
+        // Interpolate the polygon to add points between each point
+        const interpolatedPolygon = interpolateBoxPolygon(
+          dividedPolygonCoordinates,
+          250,
+          6
+        )
+
+        multiPolygons.push(interpolatedPolygon)
+      })
     })
 
     // Return the bounding box as GeoJSON MultiPolygon
