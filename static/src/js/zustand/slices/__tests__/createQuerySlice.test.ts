@@ -368,6 +368,7 @@ describe('createQuerySlice', () => {
           state.query.collection.byId.collectionId = {
             granules: {
               ...initialGranuleQuery,
+              readableGranuleName: ['granuleName'],
               pageNum: 2
             }
           }
@@ -390,6 +391,7 @@ describe('createQuerySlice', () => {
 
         expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
           ...initialGranuleQuery,
+          readableGranuleName: ['granuleName'],
           pageNum: 3
         })
 
