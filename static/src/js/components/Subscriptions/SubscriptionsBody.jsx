@@ -224,6 +224,7 @@ export const SubscriptionsBody = ({
             </p>
             <div className="subscriptions-body__query">
               <Form
+                // Natively triggers both when a user clicks submit or hits enter
                 onSubmit={
                   (e) => {
                     e.preventDefault()
