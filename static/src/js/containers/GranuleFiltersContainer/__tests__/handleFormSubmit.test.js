@@ -79,4 +79,40 @@ describe('handleFormSubmit', () => {
       expect(setSubmittingMock).toHaveBeenCalledWith(false)
     })
   })
+
+  describe('when readableGranuleName is defined with whitespace', () => {
+    test('splits the value on the comma and trims whitespace', () => {
+      useEdscStore.setState({
+        query: {
+          changeGranuleQuery: vi.fn()
+        }
+      })
+
+      const values = {
+        readableGranuleName: ' 1, 2 , 3 '
+      }
+
+      const config = {
+        props: {
+          collectionMetadata: {
+            conceptId: 'collectionId'
+          }
+        },
+        setSubmitting: setSubmittingMock
+      }
+
+      handleFormSubmit(values, config)
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      expect(query.changeGranuleQuery).toHaveBeenCalledTimes(1)
+      expect(query.changeGranuleQuery).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        query: { readableGranuleName: ['1', '2', '3'] }
+      })
+
+      expect(setSubmittingMock).toHaveBeenCalledTimes(1)
+      expect(setSubmittingMock).toHaveBeenCalledWith(false)
+    })
+  })
 })
