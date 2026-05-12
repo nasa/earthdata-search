@@ -105,16 +105,22 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           }
         }
 
-        const prunedQuery = pruneFilters(query)
-
-        if (isEmpty(prunedQuery)) {
+        if (isEmpty(query)) {
           state.query.collection.byId[collectionId].granules = {
             ...initialGranuleQuery
           }
         } else {
+          const currentGranuleQuery = state.query.collection.byId[collectionId]?.granules || {}
+
+          const mergedQuery = {
+            ...currentGranuleQuery,
+            ...query
+          }
+
+          const prunedQuery = pruneFilters(mergedQuery)
+
           state.query.collection.byId[collectionId].granules = {
             ...initialGranuleQuery,
-            ...state.query.collection.byId[collectionId]?.granules,
             ...prunedQuery
           }
         }

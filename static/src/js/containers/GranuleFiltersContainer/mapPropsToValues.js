@@ -75,7 +75,9 @@ export const mapPropsToValues = () => {
       recurringDayEnd: temporalRecurringDayEnd || '',
       isRecurring: temporalIsRecurring || false
     },
-    readableGranuleName: readableGranuleName || ''
+    readableGranuleName: Array.isArray(readableGranuleName)
+      ? readableGranuleName.join(',')
+      : readableGranuleName || ''
   }
 }
 
