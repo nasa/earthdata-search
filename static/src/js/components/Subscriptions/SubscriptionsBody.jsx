@@ -223,7 +223,18 @@ export const SubscriptionsBody = ({
               Subscribe to be notified by email when new data matching your search query becomes available.
             </p>
             <div className="subscriptions-body__query">
-              <Form>
+              <Form
+                // Natively triggers both when a user clicks submit or hits enter
+                onSubmit={
+                  (e) => {
+                    e.preventDefault()
+                    if (!displayWarning) {
+                      setSubmittingNewSubscription(true)
+                      handleCreateSubscription()
+                    }
+                  }
+                }
+              >
                 <div className="subscriptions-body__query-primary">
                   <h4 className="subscriptions-body__query-primary-heading h6">Create a new subscription</h4>
                   <Form.Group className="subscriptions-body__form-group subscriptions-body__form-group--coords mb-3">
@@ -305,13 +316,7 @@ export const SubscriptionsBody = ({
                     label="Create Subscription"
                     spinner={submittingNewSubscription}
                     icon={Plus}
-                    onClick={
-                      async () => {
-                        setSubmittingNewSubscription(true)
-
-                        handleCreateSubscription()
-                      }
-                    }
+                    type="submit"
                   >
                     Create Subscription
                   </Button>
