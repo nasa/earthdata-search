@@ -84,41 +84,43 @@ function createFrequencyScale(collectionStart: number, collectionEnd: number) {
 
 /**
  * Convert granule measurement frequency to heatmap color
+ * Test collection: C1327985578-ASF
  */
-async function spatialToHeatmap(conceptId, collectionResults, edlToken, earthdataEnvironment) {
-  try {
-    // Set the granules URL for this collection
-    const granulesUrl = 'search/granules.umm_json'
-
-    if (edlToken) {
-      const params = {
-        conceptId: conceptId
-      }
-
+async function spatialToHeatmap(collectionResults) {
+  // Only perform these operations if the collection has granules
+  if (collectionResults.hasGranules) {
+    try {
       // Get the granules and build the heatmap
-      const granules = await pageAllCmrResults({
-        cmrToken: edlToken,
-        deployedEnvironment: earthdataEnvironment,
-        path: granulesUrl,
-        queryParams: params
-      })
+      const granules = collectionResults.granules
 
       // Get the collections start and end time
       const collectionStart = Date.parse(collectionResults.timeStart)
       const collectionEnd = Date.parse(collectionResults.timeEnd)
+
+      console.log(collectionStart)
+      console.log(collectionEnd)
+      console.log(granules)
 
       // Create the frequency scale
       createFrequencyScale(collectionStart, collectionEnd)
 
       // Build the heatmap
       constructHeatmap(granules)
+      console.log(HEATMAP)
+    } catch (e) {
+      console.log(`The heatmap could not be created: ${e}`)
     }
-  } catch (e) {
-    console.log(`The heatmap could not be created: ${e}`)
   }
+}
+
+/**
+ * Exposes the Heatmap for the current collection's granules
+ */
+function getHeatmap() {
+  return HEATMAP
 }
 
 export {
   spatialToHeatmap,
-  HEATMAP
+  getHeatmap
 }
