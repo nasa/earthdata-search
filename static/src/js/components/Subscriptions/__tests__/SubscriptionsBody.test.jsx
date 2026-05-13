@@ -380,9 +380,7 @@ describe('SubscriptionsBody component', () => {
         const button = screen.getByRole('button', { name: 'Create New Subscription' })
         await user.click(button)
 
-        await waitFor(() => {
-          expect(addToast).toHaveBeenCalledTimes(1)
-        })
+        expect(addToast).toHaveBeenCalledTimes(1)
 
         expect(addToast).toHaveBeenCalledWith('Subscription created', {
           appearance: 'success',
@@ -469,9 +467,7 @@ describe('SubscriptionsBody component', () => {
         const button = screen.getByRole('button', { name: 'Create Subscription' })
         await user.click(button)
 
-        await waitFor(() => {
-          expect(addToast).toHaveBeenCalledTimes(1)
-        })
+        expect(addToast).toHaveBeenCalledTimes(1)
 
         expect(addToast).toHaveBeenCalledWith('Subscription created', {
           appearance: 'success',
@@ -574,9 +570,7 @@ describe('SubscriptionsBody component', () => {
         const button = screen.getByRole('button', { name: 'Create Subscription' })
         await user.click(button)
 
-        await waitFor(() => {
-          expect(addToast).toHaveBeenCalledTimes(1)
-        })
+        expect(addToast).toHaveBeenCalledTimes(1)
 
         expect(addToast).toHaveBeenCalledWith('Subscription created', {
           appearance: 'success',
