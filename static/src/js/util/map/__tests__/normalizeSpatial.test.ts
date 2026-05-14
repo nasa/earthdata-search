@@ -116,6 +116,43 @@ describe('normalizeSpatial', () => {
         })
       })
     })
+
+    describe('when the box crosses the antimeridian', () => {
+      test('returns a geojson multi polygon', () => {
+        const granule = {
+          boxes: ['51.37013 178.36708 52.38609 -179.99104']
+        }
+
+        const response = normalizeSpatial(granule)
+
+        expect(response).toEqual({
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'MultiPolygon',
+            coordinates: [
+              [
+                [
+                  [180, 52.38615173370995],
+                  [178.36708, 52.38609],
+                  [178.36708, 51.37013],
+                  [178.36708, 51.37013],
+                  [180, 51.37019227207734]
+                ]
+              ],
+              [
+                [
+                  [-180, 51.37019227207734],
+                  [-179.99104, 51.37013],
+                  [-179.99104, 52.38609],
+                  [-180, 52.38615173370995]
+                ]
+              ]
+            ]
+          }
+        })
+      })
+    })
   })
 
   describe('when the granule has a line', () => {
