@@ -40,7 +40,8 @@ import GET_COLLECTION from '../../operations/queries/getCollection'
 import { routes } from '../../constants/routes'
 import { collectionRelevancyMetrics } from '../../util/relevancy/collectionRelevancyMetrics'
 
-import { spatialToHeatmap, getHeatmap } from '../../util/map/heatmap/spatialToHeatmap'
+import spatialToHeatmap from '../../util/map/heatmap/spatialToHeatmap'
+import { pageAllCmrResults } from '../../../../../serverless/src/util/cmr/pageAllCmrResults'
 
 const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
   collection: {
@@ -59,6 +60,8 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const focusedCollectionMetadata = getFocusedCollectionMetadata(zustandState)
 
       const username = getUsername(zustandState)
+
+      let genHeatmap = true // Placeholder for testing
 
       if (!focusedCollectionId) {
         changeUrl({
@@ -161,6 +164,20 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             versionId
           } = collection
 
+          // Get granules of the focused collection for generating heatmap
+          let focusedGranules = null
+          if (genHeatmap) {
+            // Get all granules for focused collection
+            focusedGranules = await pageAllCmrResults({
+              cmrToken: edlToken,
+              deployedEnvironment: earthdataEnvironment,
+              path: 'search/granules.umm_json',
+              queryParams: {
+                conceptId: conceptId
+              }
+            })
+          }
+
           // Retrieves all variables if there are more than `maxCmrPageSize`
           if (variables && variables.count > maxCmrPageSize) {
             variables.items = await retrieveVariablesRequest(
@@ -241,8 +258,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // metadata is loaded with the isOpenSearch flag
           get().granules.getGranules()
 
-          // Calculate the heatmap for the focused collection (only if it has granules)
-          spatialToHeatmap(collectionMetadata)
+          // Calculate the heatmap for the focused collection
+          if (genHeatmap) {
+            spatialToHeatmap(collectionMetadata, focusedGranules)
+          }
         } else {
           // If no data was returned, clear the focused collection and redirect the user back to the search page
           set((state) => {

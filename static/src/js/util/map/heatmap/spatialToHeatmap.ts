@@ -86,20 +86,13 @@ function createFrequencyScale(collectionStart: number, collectionEnd: number) {
  * Convert granule measurement frequency to heatmap color
  * Test collection: C1327985578-ASF
  */
-async function spatialToHeatmap(collectionResults) {
+async function spatialToHeatmap(collectionResults, granules) {
   // Only perform these operations if the collection has granules
   if (collectionResults.hasGranules) {
     try {
-      // Get the granules and build the heatmap
-      const granules = collectionResults.granules
-
       // Get the collections start and end time
       const collectionStart = Date.parse(collectionResults.timeStart)
       const collectionEnd = Date.parse(collectionResults.timeEnd)
-
-      console.log(collectionStart)
-      console.log(collectionEnd)
-      console.log(granules)
 
       // Create the frequency scale
       createFrequencyScale(collectionStart, collectionEnd)
@@ -113,14 +106,4 @@ async function spatialToHeatmap(collectionResults) {
   }
 }
 
-/**
- * Exposes the Heatmap for the current collection's granules
- */
-function getHeatmap() {
-  return HEATMAP
-}
-
-export {
-  spatialToHeatmap,
-  getHeatmap
-}
+export default spatialToHeatmap
