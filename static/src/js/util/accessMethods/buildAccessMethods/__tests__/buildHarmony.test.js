@@ -1,8 +1,10 @@
 import { buildHarmony } from '../buildHarmony'
+import { getHarmonyVariables } from '../../getVariables'
 
 import { getEarthdataConfig, getApplicationConfig } from '../../../../../../../sharedUtils/config'
 import getDerivedHarmonyState from '../../../../util/getDerivedHarmonyState/getDerivedHarmonyState'
 
+vi.mock('../../getVariables')
 vi.mock('../../../../../../../sharedUtils/config')
 vi.mock('../../../../util/getDerivedHarmonyState/getDerivedHarmonyState')
 
@@ -19,6 +21,14 @@ describe('buildHarmony', () => {
   }
 
   beforeEach(() => {
+    getHarmonyVariables.mockReturnValue({
+      hierarchyMappings: [{ id: 'mock-hierarchy' }],
+      keywordMappings: [{ id: 'mock-keyword' }],
+      variables: {
+        V123: { name: 'Grid/cloudWaterContent' }
+      }
+    })
+
     getEarthdataConfig.mockReturnValue({
       harmonyHost: 'https://harmony.example.com'
     })
@@ -33,32 +43,38 @@ describe('buildHarmony', () => {
       capabilities: {
         concatenate: {
           supported: false,
-          disabled: true
+          disabled: true,
+          value: null
         },
         outputFormats: {
           availableOutputFormats: ['application/netcdf'],
           supported: ['application/netcdf', 'application/x-netcdf4'],
-          disabled: false
+          disabled: false,
+          value: 'application/netcdf'
         },
         temporalSubset: {
           supported: true,
-          disabled: false
+          disabled: false,
+          value: null
         },
         spatialSubset: {
           supported: true,
           disabled: false,
           bboxSupported: true,
           shapeSupported: false,
-          shapeDisabled: true
+          shapeDisabled: true,
+          value: null
         },
         variableSubset: {
           supported: true,
-          disabled: false
+          disabled: false,
+          value: null
         },
         variables: [
           {
             name: 'Grid/cloudWaterContent',
-            href: 'https://example.com'
+            href: 'https://example.com',
+            scienceKeywords: []
           }
         ]
       }
@@ -80,13 +96,21 @@ describe('buildHarmony', () => {
     // Verify it correctly maps the derived state to the access method object
     expect(result).toEqual({
       availableOutputFormats: ['application/netcdf'],
-      harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
-      defaultConcatenation: false,
       enableConcatenateDownload: false,
       enableSpatialSubsetting: true,
       enableTemporalSubsetting: false,
+      harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+      hierarchyMappings: [{ id: 'mock-hierarchy' }],
       id: 'C4054955340-GES_DISC',
+      isOutputFormatsDisabled: false,
+      isShapeSubsettingDisabled: true,
+      isSpatialSubsettingDisabled: false,
+      isTemporalSubsettingDisabled: false,
       isValid: true,
+      isVariableSubsettingDisabled: false,
+      keywordMappings: [{ id: 'mock-keyword' }],
+      selectedOutputFormat: 'application/netcdf',
+      selectedVariables: [],
       shortName: 'GPM_3GPROFF18SSMIS_CLIM',
       supportedOutputFormats: ['application/netcdf', 'application/x-netcdf4'],
       supportedOutputProjections: ['application/netcdf', 'application/x-netcdf4'],
@@ -95,19 +119,11 @@ describe('buildHarmony', () => {
       supportsShapefileSubsetting: false,
       supportsTemporalSubsetting: true,
       supportsVariableSubsetting: true,
-      isTemporalSubsettingDisabled: false,
-      isSpatialSubsettingDisabled: false,
-      isOutputFormatsDisabled: false,
-      isShapeSubsettingDisabled: true,
-      selectedOutputFormat: 'application/netcdf',
       type: 'Harmony',
       url: 'https://harmony.example.com',
-      variables: [
-        {
-          name: 'Grid/cloudWaterContent',
-          href: 'https://example.com'
-        }
-      ]
+      variables: {
+        V123: { name: 'Grid/cloudWaterContent' }
+      }
     })
   })
 })

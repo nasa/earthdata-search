@@ -9,7 +9,13 @@ export const computeHierarchyMappings = (variables) => {
 
   // Loop through each variable
   variables.forEach((variable) => {
-    const { conceptId: variableId, name } = variable
+    const { conceptId, name, href } = variable
+
+    let variableId = conceptId
+    if (!variableId && href) {
+      const hrefParts = href.split('/')
+      variableId = hrefParts[hrefParts.length - 1]
+    }
 
     // If the name isn't hierarchical, push the variableId onto calculatedMappings
     if (!name.includes('/')) {

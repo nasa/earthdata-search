@@ -74,7 +74,7 @@ getDerivedHarmonyState,
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
-const HARMONY_CAPABILITES_API_VERSION = '2'
+const HARMONY_CAPABILITES_API_VERSION = '3'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -799,7 +799,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           const {
             temporalSubset,
             spatialSubset,
-            outputFormats
+            outputFormats,
+            variableSubset,
+            concatenate
           } = capabilities
 
           // Use the derived harmony state to set what is enabled or disabled
@@ -807,7 +809,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           selectedMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
 
+          selectedMethod.enableConcatenateDownload = updatedSelections.concatenate || false
+
           selectedMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat || undefined
+
+          selectedMethod.selectedVariables = updatedSelections.selectedVariables || []
 
           selectedMethod.availableOutputFormats = outputFormats.availableOutputFormats
 
@@ -818,6 +824,10 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           selectedMethod.isShapeSubsettingDisabled = spatialSubset.shapeDisabled
 
           selectedMethod.isOutputFormatsDisabled = outputFormats.disabled
+
+          selectedMethod.isVariableSubsettingDisabled = variableSubset.disabled
+
+          selectedMethod.isConcatenationDisabled = concatenate.disabled
         }
       })
     },
@@ -829,9 +839,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       // For Harmony updates, we have a map to convert UI state changes
       // into the format expected by our `updateHarmonySelection` action.
       const newMethodToDerivedHarmonyStateMap = {
+        enableConcatenateDownload: 'concatenate',
         enableSpatialSubsetting: 'spatialSubset',
         enableTemporalSubsetting: 'temporalSubset',
-        selectedOutputFormat: 'selectedOutputFormat'
+        selectedOutputFormat: 'selectedOutputFormat',
+        selectedVariables: 'selectedVariables'
       }
 
       if (methodKey === 'harmony') {

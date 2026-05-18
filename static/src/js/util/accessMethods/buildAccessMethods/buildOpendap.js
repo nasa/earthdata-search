@@ -1,6 +1,6 @@
 import { uniq } from 'lodash-es'
 
-import { getVariables } from '../getVariables'
+import { getOpendapVariables } from '../getVariables'
 import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
 
 /**
@@ -24,7 +24,7 @@ export const buildOpendap = (serviceItem, params) => {
     hierarchyMappings,
     keywordMappings,
     variables
-  } = getVariables(associatedVariables)
+  } = getOpendapVariables(associatedVariables)
 
   const outputFormats = []
 

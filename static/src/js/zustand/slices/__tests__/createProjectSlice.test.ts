@@ -340,7 +340,7 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(401, {
             message: 'Request failed with status code 401',
             name: 'AxiosError',
@@ -348,7 +348,7 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(401, {
             message: 'Request failed with status code 401',
             name: 'AxiosError',
@@ -407,11 +407,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -662,11 +662,11 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -805,13 +805,28 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, {
-            bboxSubset: true,
-            concatenate: false,
             conceptId: 'collectionId1',
-            reproject: false,
-            outputFormats: ['application/x-hdf'],
+            shortName: 'Short Name',
+            summary: {
+              subsetting: {
+                bbox: true,
+                shape: true,
+                temporal: true,
+                variable: true
+              },
+              reprojection: {
+                supported: false,
+                supportProjections: [],
+                interpolationMethods: []
+              },
+              concatenation: false,
+              outputFormats: [{
+                mimeType: 'application/x-hdf',
+                name: 'HDF'
+              }]
+            },
             services: [
               {
                 name: 'sds/trajectory-subsetter',
@@ -823,17 +838,14 @@ describe('createProjectSlice', () => {
                     shape: true,
                     variable: true
                   },
-                  output_formats: [
-                    'application/x-hdf'
-                  ]
+                  outputFormats: [{
+                    mimeType: 'application/x-hdf',
+                    name: 'HDF'
+                  }]
                 }
               }
             ],
-            shapeSubset: true,
-            shortName: 'Short Name',
-            temporalSubset: true,
-            variables: [],
-            variableSubset: true
+            variables: []
           })
 
         nock(/graphql/)
@@ -891,22 +903,83 @@ describe('createProjectSlice', () => {
           },
           harmony: {
             availableOutputFormats: [
-              'application/x-hdf'
+              {
+                mimeType: 'application/x-hdf',
+                name: 'HDF'
+              }
             ],
-            defaultConcatenation: false,
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
+            harmonyCapabilitiesDocument: {
+              conceptId: 'collectionId1',
+              services: [
+                {
+                  capabilities: {
+                    outputFormats: [
+                      {
+                        mimeType: 'application/x-hdf',
+                        name: 'HDF'
+                      }
+                    ],
+                    subsetting: {
+                      bbox: true,
+                      shape: true,
+                      temporal: true,
+                      variable: true
+                    }
+                  },
+                  href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+                  name: 'sds/trajectory-subsetter'
+                }
+              ],
+              shortName: 'Short Name',
+              summary: {
+                concatenation: false,
+                outputFormats: [
+                  {
+                    mimeType: 'application/x-hdf',
+                    name: 'HDF'
+                  }
+                ],
+                reprojection: {
+                  interpolationMethods: [],
+                  supportProjections: [],
+                  supported: false
+                },
+                subsetting: {
+                  bbox: true,
+                  shape: true,
+                  temporal: true,
+                  variable: true
+                }
+              },
+              variables: []
+            },
+            hierarchyMappings: [],
             id: 'collectionId1',
             isOutputFormatsDisabled: false,
             isShapeSubsettingDisabled: false,
             isSpatialSubsettingDisabled: false,
             isTemporalSubsettingDisabled: false,
             isValid: true,
+            isVariableSubsettingDisabled: false,
+            keywordMappings: [],
             selectedOutputFormat: undefined,
+            selectedVariables: [],
             shortName: 'Short Name',
-            supportedOutputFormats: ['application/x-hdf'],
-            supportedOutputProjections: ['application/x-hdf'],
+            supportedOutputFormats: [
+              {
+                mimeType: 'application/x-hdf',
+                name: 'HDF'
+              }
+            ],
+            supportedOutputProjections: [
+              {
+                mimeType: 'application/x-hdf',
+                name: 'HDF'
+              }
+            ],
             supportsBoundingBoxSubsetting: true,
             supportsConcatenation: false,
             supportsShapefileSubsetting: true,
@@ -914,35 +987,7 @@ describe('createProjectSlice', () => {
             supportsVariableSubsetting: true,
             type: 'Harmony',
             url: 'https://harmony.example.com',
-            harmonyCapabilitiesDocument: {
-              bboxSubset: true,
-              concatenate: false,
-              conceptId: 'collectionId1',
-              reproject: false,
-              outputFormats: ['application/x-hdf'],
-              services: [
-                {
-                  name: 'sds/trajectory-subsetter',
-                  href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
-                  capabilities: {
-                    subsetting: {
-                      temporal: true,
-                      bbox: true,
-                      shape: true,
-                      variable: true
-                    },
-                    output_formats: [
-                      'application/x-hdf'
-                    ]
-                  }
-                }
-              ],
-              shapeSubset: true,
-              shortName: 'Short Name',
-              temporalSubset: true,
-              variables: [],
-              variableSubset: true
-            }
+            variables: {}
           }
         })
       })
@@ -981,7 +1026,7 @@ describe('createProjectSlice', () => {
         }]
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=C10000000000-EDSC&version=2/)
+          .get(/capabilities\?collectionId=C10000000000-EDSC&version=3/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1054,11 +1099,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1179,11 +1224,11 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(200, { services: [] })
 
         nock(/localhost/)
@@ -1278,11 +1323,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1329,11 +1374,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=2/)
+          .get(/capabilities\?collectionId=collectionId1&version=3/)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=2/)
+          .get(/capabilities\?collectionId=collectionId2&version=3/)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -2147,129 +2192,128 @@ describe('createProjectSlice', () => {
 
     test('updates harmony selection of temporalSubset/enableTemporalSubsetting when method type is harmony', () => {
       const collectionId = 'collectionId'
-      const accessMethod = {
-        availableOutputFormats: [
-          'application/netcdf',
-          'application/x-netcdf4',
-          'application/x-netcdf4;profile=opendap_url'
-        ],
-        defaultConcatenation: false,
+      const harmonyAccessMethod: HarmonyAccessMethod = {
+        availableOutputFormats: [{
+          name: 'NETCDF-4',
+          mimeType: 'application/x-netcdf4'
+        }],
         enableConcatenateDownload: false,
         enableSpatialSubsetting: false,
         enableTemporalSubsetting: false,
         id: 'C4054955340-GES_DISC',
+        isValid: true,
         isOutputFormatsDisabled: false,
         isShapeSubsettingDisabled: false,
         isSpatialSubsettingDisabled: false,
         isTemporalSubsettingDisabled: false,
-        isValid: true,
+        isVariableSubsettingDisabled: false,
+        isConcatenationDisabled: true,
         shortName: 'GPM_3GPROFF18SSMIS_CLIM',
         selectedOutputFormat: undefined,
-        supportedOutputFormats: [
-          'application/netcdf',
-          'application/x-netcdf4',
-          'application/x-netcdf4;profile=opendap_url'
-        ],
-        supportedOutputProjections: [
-          'application/netcdf',
-          'application/x-netcdf4',
-          'application/x-netcdf4;profile=opendap_url'
-        ],
+        selectedVariables: [],
+        supportedOutputFormats: ['application/x-netcdf4'],
+        supportedOutputProjections: [],
         supportsBoundingBoxSubsetting: true,
         supportsConcatenation: false,
         supportsShapefileSubsetting: true,
-        supportsSpatialSubsetting: true,
         supportsTemporalSubsetting: true,
         supportsVariableSubsetting: true,
         type: 'Harmony',
         url: 'https://harmony.earthdata.nasa.gov',
-        derivedHarmonyState: {
-          capabilities: {
-            concatenate: {
-              disabled: true,
-              supported: false,
-              value: null
-            },
-            outputFormats: {
-              availableOutputFormats: [
-                'application/netcdf',
-                'application/x-netcdf4',
-                'application/x-netcdf4;profile=opendap_url'
-              ],
-              disabled: false,
-              supported: [
-                'application/netcdf',
-                'application/x-netcdf4',
-                'application/x-netcdf4;profile=opendap_url'
-              ],
-              value: undefined
-            },
-            reproject: {
-              disabled: true,
-              supported: false,
-              value: null
-            },
-            spatialSubset: {
-              bboxDisabled: false,
-              bboxSupported: true,
-              disabled: false,
-              shapeDisabled: false,
-              shapeSupported: true,
-              supported: true,
-              value: null
-            },
-            temporalSubset: {
-              disabled: false,
-              supported: true,
-              value: null
-            },
-            variableSubset: {
-              disabled: false,
-              supported: true,
-              value: null
-            }
-          },
-          collectionId: 'C4054955340-GES_DISC',
-          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
-          variables: []
-        },
+        variables: {},
+        hierarchyMappings: [],
+        keywordMappings: [],
         harmonyUserSelections: {
           temporalSubset: true
         },
-        harmonyCapabilitiesDocument: {
-          bboxSubset: true,
-          concatenate: false,
-          conceptId: 'C4054955340-GES_DISC',
-          reproject: false,
-          outputFormats: [
-            'application/netcdf',
-            'application/x-netcdf4',
-            'application/x-netcdf4;profile=opendap_url'
-          ],
-          services: [
-            {
-              name: 'mock-harmony-service',
-              href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S123456789-GES_DISC',
-              capabilities: {
-                subsetting: {
-                  temporal: true,
-                  bbox: true,
-                  shape: true,
-                  variable: true
-                },
-                output_formats: [
-                  'application/netcdf',
-                  'application/x-netcdf4',
-                  'application/x-netcdf4;profile=opendap_url'
-                ]
-              }
-            }
-          ],
-          shapeSubset: true,
+        derivedHarmonyState: {
+          collectionId: 'C4054955340-GES_DISC',
           shortName: 'GPM_3GPROFF18SSMIS_CLIM',
-          temporalSubset: true,
           variables: [],
-          variableSubset: true
+          capabilities: {
+            variableSubset: {
+              supported: true,
+              disabled: false,
+              value: null
+            },
+            spatialSubset: {
+              supported: true,
+              disabled: false,
+              bboxSupported: true,
+              bboxDisabled: false,
+              shapeSupported: true,
+              shapeDisabled: false,
+              value: null
+            },
+            temporalSubset: {
+              supported: true,
+              disabled: false,
+              value: null
+            },
+            concatenate: {
+              supported: false,
+              disabled: true,
+              value: null
+            },
+            reproject: {
+              supported: false,
+              disabled: true,
+              value: null
+            },
+            outputFormats: {
+              supported: [{
+                name: 'NETCDF-4',
+                mimeType: 'application/x-netcdf4'
+              }],
+              disabled: false,
+              availableOutputFormats: [{
+                name: 'NETCDF-4',
+                mimeType: 'application/x-netcdf4'
+              }],
+              value: ''
+            }
+          }
+        },
+
+        harmonyCapabilitiesDocument: {
+          conceptId: 'C4054955340-GES_DISC',
+          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+          summary: {
+            subsetting: {
+              variable: true,
+              bbox: true,
+              shape: true,
+              temporal: true
+            },
+            reprojection: {
+              supported: false,
+              supportedProjections: [],
+              interpolationMethods: []
+            },
+            concatenation: false,
+            outputFormats: [{
+              name: 'NETCDF-4',
+              mimeType: 'application/x-netcdf4'
+            }]
+          },
+          services: [{
+            name: 'mock-harmony-service',
+            href: 'https://example.com/service',
+            capabilities: {
+              subsetting: {
+                variable: true,
+                bbox: true,
+                shape: true,
+                temporal: true
+              },
+              concatenation: false,
+              outputFormats: [{
+                name: 'NETCDF-4',
+                mimeType: 'application/x-netcdf4'
+              }]
+            }
+          }],
+          variables: []
         }
       }
 
@@ -2283,7 +2327,10 @@ describe('createProjectSlice', () => {
               isValid: true,
               type: 'download'
             },
-            harmony: accessMethod as HarmonyAccessMethod
+            harmony: {
+              ...harmonyAccessMethod,
+              enableTemporalSubsetting: false
+            }
           },
           selectedAccessMethod: 'harmony'
         }
@@ -2306,7 +2353,7 @@ describe('createProjectSlice', () => {
       const updatedProjectCollection = updatedProject.collections.byId[collectionId]
 
       expect(updatedProjectCollection.accessMethods?.harmony).toEqual({
-        ...accessMethod,
+        ...harmonyAccessMethod,
         enableTemporalSubsetting: true
       })
     })

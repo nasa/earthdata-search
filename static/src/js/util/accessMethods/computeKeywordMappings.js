@@ -6,7 +6,13 @@ export const computeKeywordMappings = (items) => {
   const calculatedMappings = {}
 
   items.forEach((variable) => {
-    const { conceptId: variableId, scienceKeywords = [] } = variable
+    const { conceptId, href, scienceKeywords = [] } = variable
+
+    let variableId = conceptId
+    if (!variableId && href) {
+      const hrefParts = href.split('/')
+      variableId = hrefParts[hrefParts.length - 1]
+    }
 
     // Skip this iteration of the loop if scienceKeywords is null
     if (scienceKeywords == null) return

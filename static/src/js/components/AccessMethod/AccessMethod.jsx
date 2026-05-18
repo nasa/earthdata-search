@@ -15,7 +15,7 @@ import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
-import { harmonyFormatMapping, ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
+import { ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import Button from '../Button/Button'
@@ -87,13 +87,14 @@ const AccessMethod = ({
     supportsVariableSubsetting = false,
     supportsConcatenation = false,
     supportsSwodlr = false,
-    defaultConcatenation = false,
     enableTemporalSubsetting: isTemporalSubsettingSelected = false,
     enableSpatialSubsetting: isSpatialSubsettingSelected = false,
-    enableConcatenateDownload: isConcatenateSelected = defaultConcatenation,
+    enableConcatenateDownload: isConcatenateSelected = false,
     isTemporalSubsettingDisabled = false,
     isSpatialSubsettingDisabled = false,
-    isShapeSubsettingDisabled = false
+    isShapeSubsettingDisabled = false,
+    isVariableSubsettingDisabled = false,
+    isConcatenationDisabled = false
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
@@ -520,19 +521,23 @@ const AccessMethod = ({
   if (isHarmony) {
     // The derived harmony state is the source of truth. Options are disabled if they are not part of the availableOutputFormats array
     supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
-      const isOptionDisabled = !availableOutputFormats.includes(format)
+      const isOptionDisabled = !availableOutputFormats.some(
+        (availableFormat) => availableFormat.mimeType === format.mimeType
+      )
 
       // Map options to human readable formats but keep the mime-type for values
       return (
-        <option key={format} value={format} disabled={isOptionDisabled}>
-          {harmonyFormatMapping[format]}
+        <option key={format.mimeType} value={format.mimeType} disabled={isOptionDisabled}>
+          {format.name}
         </option>
       )
     })
 
     // Build options for supportedOutputProjections
     supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
-      <option key={format} value={format}>{format}</option>
+      <option key={format.mimeType} value={format.mimeType}>
+        {format.name}
+      </option>
     ))
   }
 
@@ -673,6 +678,8 @@ const AccessMethod = ({
                     heading="Combine Data"
                     intro="Select from available operations to combine the data."
                     nested
+                    faded={isConcatenationDisabled}
+                    disabled={isConcatenationDisabled}
                   >
                     <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
                       <Form.Check
@@ -832,6 +839,8 @@ const AccessMethod = ({
                     heading="Variables"
                     intro="Use science keywords to subset your collection granules by measurements and variables."
                     nested
+                    disabled={isVariableSubsettingDisabled}
+                    faded={isVariableSubsettingDisabled}
                   >
                     {
                       !hasVariables ? (

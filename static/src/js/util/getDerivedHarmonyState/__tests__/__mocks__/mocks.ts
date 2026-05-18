@@ -1,22 +1,43 @@
 export const mockHarmonyCapabilitiesDocument = {
-  bboxSubset: true,
-  concatenate: false,
   conceptId: 'C1234567890-EEDTEST',
-  reproject: false,
-  outputFormats: [
-    'text/csv',
-    'application/netcdf',
-    'application/x-netcdf4',
-    'application/x-netcdf4;profile=opendap_url'
-  ],
-  shapeSubset: true,
   shortName: 'mock_collection',
-  temporalSubset: true,
-  variableSubset: true,
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supported: false,
+      supportedProjections: [],
+      interpolationMethods: []
+    },
+    concatenation: true,
+    outputFormats: [
+      {
+        name: 'CSV',
+        mimeType: 'text/csv'
+      },
+      {
+        name: 'NetCDF',
+        mimeType: 'application/netcdf'
+      },
+      {
+        name: 'NetCDF-4',
+        mimeType: 'application/x-netcdf4'
+      },
+      {
+        name: 'OPeNDAP URL',
+        mimeType: 'application/x-netcdf4;profile=opendap_url'
+      }
+    ]
+  },
   variables: [
     {
       name: 'mock_variable',
-      href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/V123456789-EEDTEST'
+      href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/V123456789-EEDTEST',
+      scienceKeywords: []
     }
   ],
   services: [
@@ -26,11 +47,14 @@ export const mockHarmonyCapabilitiesDocument = {
       capabilities: {
         subsetting: {
           temporal: true,
-          variable: true,
-          multiple_variable: false
+          variable: false
         },
-        output_formats: [
-          'text/csv'
+        concatenation: false,
+        outputFormats: [
+          {
+            name: 'CSV',
+            mimeType: 'text/csv'
+          }
         ]
       }
     },
@@ -45,9 +69,16 @@ export const mockHarmonyCapabilitiesDocument = {
           shape: true,
           variable: true
         },
-        output_formats: [
-          'application/netcdf',
-          'application/x-netcdf4'
+        concatenation: false,
+        outputFormats: [
+          {
+            name: 'NetCDF',
+            mimeType: 'application/netcdf'
+          },
+          {
+            name: 'NetCDF-4',
+            mimeType: 'application/x-netcdf4'
+          }
         ]
       }
     },
@@ -59,8 +90,12 @@ export const mockHarmonyCapabilitiesDocument = {
           bbox: true,
           variable: true
         },
-        output_formats: [
-          'application/x-netcdf4;profile=opendap_url'
+        concatenation: true,
+        outputFormats: [
+          {
+            name: 'OPeNDAP URL',
+            mimeType: 'application/x-netcdf4;profile=opendap_url'
+          }
         ]
       }
     }
@@ -68,11 +103,24 @@ export const mockHarmonyCapabilitiesDocument = {
 }
 
 export const mockNoOutputFormatService = {
-  bboxSubset: true,
-  concatenate: false,
   conceptId: 'C1234567890-EEDTEST-NoServices',
-  reproject: false,
-  outputFormats: [],
+  shortName: 'mock_collection',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supported: false,
+      supportedProjections: [],
+      interpolationMethods: []
+    },
+    concatenation: false,
+    outputFormats: []
+  },
+  variables: [],
   services: [
     {
       name: 'giovanni-time-series-adapter',
@@ -82,8 +130,11 @@ export const mockNoOutputFormatService = {
           temporal: true,
           variable: true
         },
-        output_formats: [
-          'text/csv'
+        outputFormats: [
+          {
+            name: 'CSV',
+            mimeType: 'text/csv'
+          }
         ]
       }
     },
@@ -98,12 +149,7 @@ export const mockNoOutputFormatService = {
         }
       }
     }
-  ],
-  shapeSubset: true,
-  shortName: 'mock_collection',
-  temporalSubset: true,
-  variableSubset: true,
-  variables: []
+  ]
 }
 
 export const mockUserSelectionsTemporal = {
@@ -121,4 +167,12 @@ export const mockUserSelectionsOutputFormat = {
 export const mockUserSelectionsOutputFormatandSubsetting = {
   spatialSubset: true,
   selectedOutputFormat: 'application/x-netcdf4'
+}
+
+export const mockUserSelectionsConcatenateSubsetting = {
+  concatenate: true
+}
+
+export const mockUserSelectionsVariablesSubsetting = {
+  selectedVariables: ['mock-variable']
 }

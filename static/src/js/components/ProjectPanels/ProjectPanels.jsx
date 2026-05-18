@@ -47,7 +47,7 @@ const ProjectPanels = () => {
   const location = useLocation()
   const { search } = location
 
-  const [selectedVariable, setSelectedVariable] = useState(null)
+  const [selectedVariableId, setSelectedVariableId] = useState(null)
 
   // Pull values from Zustand
   const {
@@ -111,16 +111,13 @@ const ProjectPanels = () => {
     const { byId: projectCollectionsById } = projectCollections
     const projectCollection = projectCollectionsById[collectionId]
     const {
-      accessMethods,
       selectedAccessMethod
     } = projectCollection
-    const selectedMethod = accessMethods[selectedAccessMethod]
 
     updateAccessMethod({
       collectionId,
       method: {
         [selectedAccessMethod]: {
-          ...selectedMethod,
           selectedVariables: newSelectedVariables
         }
       }
@@ -129,13 +126,22 @@ const ProjectPanels = () => {
 
   // Handler for viewing details of a variable
   const onViewDetails = (variable, index) => {
-    setSelectedVariable(variable)
+    const { conceptId, href } = variable
+    let variableId = conceptId
+
+    // If conceptId is missing (Harmony variables), extract it from the end of the href
+    if (!variableId && href) {
+      const hrefParts = href.split('/')
+      variableId = hrefParts[hrefParts.length - 1]
+    }
+
+    setSelectedVariableId(variableId)
     onChangePanel(`0.${index}.2`)
   }
 
   // Handler for clearing the selected variable
   const clearSelectedVariable = (panelId) => {
-    setSelectedVariable(null)
+    setSelectedVariableId(null)
     onChangePanel(panelId)
   }
 
@@ -197,6 +203,10 @@ const ProjectPanels = () => {
       duplicateCollections = []
     } = collectionMetadata
 
+    // Look up the full variable details from the collection metadata using the selected ID
+    const { variables: collectionVariables = {} } = collectionMetadata
+    const { items = [] } = collectionVariables
+    const detailedVariable = items.find((v) => v.conceptId === selectedVariableId)
     const { granules: granulesQuery = {} } = granulesQueries[collectionId] || {}
     const { temporal: granuleTemporal = {} } = granulesQuery
 
@@ -477,7 +487,7 @@ const ProjectPanels = () => {
           backButtonOptions={backButtonOptions}
         >
           <VariableDetailsPanel
-            variable={selectedVariable}
+            variable={detailedVariable}
           />
         </PanelItem>
       </PanelGroup>

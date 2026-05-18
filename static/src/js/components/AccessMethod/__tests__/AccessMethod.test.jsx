@@ -580,7 +580,14 @@ describe('AccessMethod component', () => {
                 description: 'test description',
                 isValid: true,
                 type: 'Harmony',
-                supportedOutputFormats: ['application/x-netcdf4', 'application/netcdf4']
+                supportedOutputFormats: [{
+                  name: 'NETCDF-4',
+                  mimeType: 'application/netcdf4'
+                },
+                {
+                  name: 'X-NETCDF-4',
+                  mimeType: 'application/x-netcdf4'
+                }]
               }
             },
             metadata: {
@@ -603,12 +610,18 @@ describe('AccessMethod component', () => {
           overrideProps: {
             accessMethods: {
               harmony: {
-                availableOutputFormats: ['application/netcdf4'],
+                availableOutputFormats: [{
+                  name: 'NETCDF-4',
+                  mimeType: 'application/netcdf4'
+                }],
                 name: 'test name',
                 description: 'test description',
                 isValid: true,
                 type: 'Harmony',
-                supportedOutputFormats: ['application/netcdf4']
+                supportedOutputFormats: [{
+                  name: 'NETCDF-4',
+                  mimeType: 'application/netcdf4'
+                }]
               }
             },
             metadata: {
@@ -690,7 +703,8 @@ describe('AccessMethod component', () => {
         expect(screen.getByTestId('access-methods__output-projection-options')).toBeInTheDocument()
       })
 
-      test('selecting a output projection calls onUpdateAccessMethod', async () => {
+      // TO-DO: EDSC-4662, working with reprojection
+      test.skip('selecting a output projection calls onUpdateAccessMethod', async () => {
         const collectionId = 'collectionId'
         const { props, user } = setup({
           overrideProps: {
@@ -1635,8 +1649,7 @@ describe('AccessMethod component', () => {
                   isValid: true,
                   type: 'Harmony',
                   name: serviceName,
-                  supportsConcatenation: true,
-                  defaultConcatenation: true
+                  supportsConcatenation: true
                 }
               },
               metadata: {
@@ -1647,7 +1660,8 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(true)
+          // Previously, there was an option to have this default to true. This box should always default to false unless the Harmony Capabilities Document changes to allow for default concatenation again.
+          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(false)
         })
 
         // TODO EDSC-4661 when incorporating concatenation

@@ -10,7 +10,13 @@ const computeVariables = (items) => {
   const variables = {}
 
   items.forEach((variable) => {
-    const { conceptId: variableId } = variable
+    const { conceptId, href } = variable
+
+    let variableId = conceptId
+    if (!variableId && href) {
+      const hrefParts = href.split('/')
+      variableId = hrefParts[hrefParts.length - 1]
+    }
 
     variables[variableId] = variable
   })
@@ -22,7 +28,7 @@ const computeVariables = (items) => {
  * Fetches the variable metadata for the provided variableIds
  * @param {Object} data variable object response from CMR
  */
-export const getVariables = (data) => {
+export const getOpendapVariables = (data) => {
   const { count } = data
 
   // Default items to an empty array
@@ -36,6 +42,22 @@ export const getVariables = (data) => {
   const hierarchyMappings = computeHierarchyMappings(items)
   const keywordMappings = computeKeywordMappings(items)
   const variables = computeVariables(items)
+
+  return {
+    hierarchyMappings,
+    keywordMappings,
+    variables
+  }
+}
+
+/**
+ * Fetches the variable metadata for the provided variableIds
+ * @param {Object} data variable object response from CMR
+ */
+export const getHarmonyVariables = (data = []) => {
+  const hierarchyMappings = computeHierarchyMappings(data)
+  const keywordMappings = computeKeywordMappings(data)
+  const variables = computeVariables(data)
 
   return {
     hierarchyMappings,
