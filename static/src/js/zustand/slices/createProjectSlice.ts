@@ -273,7 +273,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         }
       }
 
-      let harmonyCapabilitiesDocument = {} as HarmonyCapabilitiesDocument
+      const harmonyCapabilitiesDocuments: Record<string, HarmonyCapabilitiesDocument> = {}
 
       // Fetch the Harmony capabilities document
       await Promise.all(
@@ -294,7 +294,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             })
 
             const { data } = harmonyCapabilitiesDocumentResponse
-            harmonyCapabilitiesDocument = data
+            harmonyCapabilitiesDocuments[collectionId] = data
           } catch (error) {
             zustandState.errors.handleError({
               error: error as Error,
@@ -438,7 +438,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           const accessMethods = buildAccessMethods(
             metadata,
             isOpenSearch,
-            harmonyCapabilitiesDocument
+            harmonyCapabilitiesDocuments[conceptId!]
           )
 
           const accessMethodsObject = insertSavedAccessConfig(

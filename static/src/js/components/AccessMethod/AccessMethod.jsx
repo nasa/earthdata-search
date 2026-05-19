@@ -94,7 +94,8 @@ const AccessMethod = ({
     isSpatialSubsettingDisabled = false,
     isShapeSubsettingDisabled = false,
     isVariableSubsettingDisabled = false,
-    isConcatenationDisabled = false
+    isConcatenationDisabled = false,
+    variables = []
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
@@ -596,8 +597,8 @@ const AccessMethod = ({
   const selectedSpatialDisplay = createSpatialDisplay(spatial, !!harmonyMbrWarning)
 
   // Checking to see if the selectedMethod variables exists and has at least one variable
-  const hasVariables = selectedMethod.variables
-    ? Object.keys(selectedMethod.variables).length > 0
+  const hasVariables = variables
+    ? Object.keys(variables).length > 0
     : false
 
   return (
