@@ -110,7 +110,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
-    "@apollo/server": "^5.5.0",
+    "@apollo/server": "^5.5.1",
     "@as-integrations/aws-lambda": "^4.0.1",
     "@aws-sdk/client-s3": "^3.352.0",
     "@aws-sdk/client-secrets-manager": "^3.352.0",
@@ -261,7 +261,8 @@
     "react-toast-notifications": {
       "react": "$react",
       "react-dom": "$react-dom"
-    }
+    },
+    "@apollo/protobufjs": "1.2.8"
   },
   "resolutions": {
     "@testing-library/dom": "9.3.3"
