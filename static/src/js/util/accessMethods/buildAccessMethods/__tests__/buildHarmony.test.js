@@ -1,5 +1,5 @@
 import { buildHarmony } from '../buildHarmony'
-import { getHarmonyVariables } from '../../getVariables'
+import { getVariables } from '../../getVariables'
 
 import { getEarthdataConfig, getApplicationConfig } from '../../../../../../../sharedUtils/config'
 import getDerivedHarmonyState from '../../../../util/getDerivedHarmonyState/getDerivedHarmonyState'
@@ -21,7 +21,7 @@ describe('buildHarmony', () => {
   }
 
   beforeEach(() => {
-    getHarmonyVariables.mockReturnValue({
+    getVariables.mockReturnValue({
       hierarchyMappings: [{ id: 'mock-hierarchy' }],
       keywordMappings: [{ id: 'mock-keyword' }],
       variables: {
@@ -47,8 +47,12 @@ describe('buildHarmony', () => {
           value: null
         },
         outputFormats: {
-          availableOutputFormats: ['application/netcdf'],
-          supported: ['application/netcdf', 'application/x-netcdf4'],
+          outputFormatAvailability: { netcdf: true },
+          supported: [
+            {
+              mimeType: 'application/netcdf',
+              name: 'NETCDF-4'
+            }],
           disabled: false,
           value: 'application/netcdf'
         },
@@ -95,7 +99,7 @@ describe('buildHarmony', () => {
 
     // Verify it correctly maps the derived state to the access method object
     expect(result).toEqual({
-      availableOutputFormats: ['application/netcdf'],
+      outputFormatAvailability: { netcdf: true },
       enableConcatenateDownload: false,
       enableSpatialSubsetting: true,
       enableTemporalSubsetting: false,
@@ -112,8 +116,18 @@ describe('buildHarmony', () => {
       selectedOutputFormat: 'application/netcdf',
       selectedVariables: [],
       shortName: 'GPM_3GPROFF18SSMIS_CLIM',
-      supportedOutputFormats: ['application/netcdf', 'application/x-netcdf4'],
-      supportedOutputProjections: ['application/netcdf', 'application/x-netcdf4'],
+      supportedOutputFormats: [
+        {
+          name: 'NETCDF-4',
+          mimeType: 'application/netcdf'
+        }
+      ],
+      supportedOutputProjections: [
+        {
+          name: 'NETCDF-4',
+          mimeType: 'application/netcdf'
+        }
+      ],
       supportsBoundingBoxSubsetting: true,
       supportsConcatenation: false,
       supportsShapefileSubsetting: false,

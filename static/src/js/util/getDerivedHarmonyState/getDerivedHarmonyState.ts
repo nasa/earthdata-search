@@ -36,8 +36,11 @@ export interface HarmonySubsetting {
  * Reprojection metadata supplied from the Harmony Capabilities Document
  */
 export interface HarmonyReprojection {
+  /** Flag indicating if reprojection is supported for the collection */
   supported: boolean,
+  /** An array of supported projection codes (e.g., 'EPSG:4326') */
   supportedProjections: string[],
+  /** An array of supported interpolation methods (e.g., 'bilinear', 'nearest neighbor') */
   interpolationMethods: string[]
 }
 
@@ -69,7 +72,7 @@ export interface HarmonyService {
     reprojection?: HarmonyReprojection
     /** The supported output formats */
     outputFormats?: HarmonyOutputFormats[]
-  };
+  }
 }
 
 /**
@@ -108,9 +111,13 @@ export interface HarmonyVariable {
  * If one of the listed services supports a capability, it will show up as true in the summary
 */
 export interface HarmonySummaryofTopLevelCapabilities {
+  /** A summary of all available subsetting capabilities across all services. */
   subsetting: HarmonySubsetting,
+  /** A summary of all available reprojection capabilities across all services. */
   reprojection: HarmonyReprojection,
+  /** A boolean flag indicating if concatenation is supported by any service. */
   concatenation: boolean,
+  /** An aggregated list of all unique output formats available across all services. */
   outputFormats: HarmonyOutputFormats[]
 }
 
@@ -152,7 +159,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for variable subsetting (currently always null) */
       value: null
-    };
+    }
     /** The derived state for spatial subsetting */
       spatialSubset: {
       /** Flag to indicate if spatial subsetting (bbox or shape) is supported by the collection */
@@ -160,7 +167,7 @@ export interface DerivedHarmonyState {
       /** Flag to indicate if spatial subsetting is disabled based on current selections */
       disabled: boolean
       /** Flag to indicate if bounding box subsetting is supported by the collection */
-      bboxSupported?: boolean
+      bboxSupported: boolean
       /** Flag to indicate if bounding box subsetting is disabled based on current selections */
       bboxDisabled: boolean
       /** Flag to indicate if shapefile subsetting is supported by the collection */
@@ -169,7 +176,7 @@ export interface DerivedHarmonyState {
       shapeDisabled: boolean
       /** The value for spatial subsetting (currently always null) */
       value: null
-    };
+    }
     /** The derived state for temporal subsetting */
       temporalSubset: {
       /** Flag to indicate if temporal subsetting is supported by the collection */
@@ -178,7 +185,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for temporal subsetting (currently always null) */
       value: null
-    };
+    }
     /** The derived state for concatenation */
       concatenate: {
       /** Flag to indicate if concatenation is supported by the collection */
@@ -187,7 +194,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for concatenation (currently always null) */
       value: null
-    };
+    }
     /** The derived state for reprojection */
       reproject: {
       /** Flag to indicate if reprojection is supported by the collection */
@@ -196,7 +203,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for reprojection (currently always null) */
       value: null
-    };
+    }
     /** The derived state for output formats */
       outputFormats: {
       /** The full list of supported output formats across all services */
@@ -204,11 +211,13 @@ export interface DerivedHarmonyState {
       /** Flag to indicate if output format selection is disabled */
       disabled: boolean
       /** The list of output formats available based on current selections */
-      availableOutputFormats: HarmonyOutputFormats[]
+      outputFormatAvailability: {
+        [formatName: string]: boolean
+      }
       /** The currently selected output format */
       value: string
-    };
-  };
+    }
+  }
 }
 
 /**
@@ -223,8 +232,8 @@ export const getDerivedHarmonyState = (
   harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument
 ): DerivedHarmonyState | Record<string, never> => {
   const {
-    conceptId = '',
-    shortName = '',
+    conceptId,
+    shortName,
     summary: {
       subsetting: {
         bbox = false,
@@ -235,11 +244,11 @@ export const getDerivedHarmonyState = (
       reprojection: {
         supported: reprojectionSupported
       },
-      concatenation = false,
+      concatenation,
       outputFormats = []
     },
-    services = [],
-    variables = []
+    services,
+    variables
   } = harmonyCapabilitiesDocument
 
   // If there are no services to parse though, then there will be no derived harmony state
@@ -322,12 +331,18 @@ export const getDerivedHarmonyState = (
   // we come up with our outputFormats based on validServicesIgnoringFormat.
   // For exmaple, if I select X-NETCDF04 (OPeNDAP URL), then that would mean my only valid service is sds/hoss-opendap-url
   // which has only one outputFormat. A user should still be able to choose from other outputFormats in this scenario.
-  const formatsAvailableForDropdown = new Set<HarmonyOutputFormats>()
+  // Get a set of all AVAILABLE format names from the services that are still valid.
+  const availableFormatNames = new Set<string>()
   validServicesIgnoringFormat.forEach((service) => {
-    const { capabilities: serviceCapabilities } = service
+    const formats = service.capabilities.outputFormats || []
+    formats.forEach((format) => availableFormatNames.add(format.name))
+  })
 
-    const formats = serviceCapabilities.outputFormats || []
-    formats.forEach((format) => formatsAvailableForDropdown.add(format))
+  // Build the new availability object by comparing against ALL supported formats.
+  const outputFormatAvailability: { [formatName: string]: boolean } = {}
+  outputFormats.forEach((supportedFormat) => {
+    // Check if the supported format's name exists in our set of available names.
+    outputFormatAvailability[supportedFormat.name] = availableFormatNames.has(supportedFormat.name)
   })
 
   return {
@@ -366,8 +381,8 @@ export const getDerivedHarmonyState = (
       },
       outputFormats: {
         supported: outputFormats,
-        disabled: !(validServices.length > 0) && !(formatsAvailableForDropdown.size > 0),
-        availableOutputFormats: Array.from(formatsAvailableForDropdown),
+        disabled: !(validServices.length > 0) && !(availableFormatNames.size > 0),
+        outputFormatAvailability,
         value: userSelections.selectedOutputFormat || ''
       }
     }

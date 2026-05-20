@@ -12,6 +12,8 @@ import * as applicationConfig from '../../../../../../sharedUtils/config'
 import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
 
+const HARMONY_CAPABILITES_API_VERSION = '3'
+
 vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-request-id')
 }))
@@ -340,7 +342,7 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(401, {
             message: 'Request failed with status code 401',
             name: 'AxiosError',
@@ -348,7 +350,7 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(401, {
             message: 'Request failed with status code 401',
             name: 'AxiosError',
@@ -407,11 +409,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -662,11 +664,11 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -805,7 +807,7 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
             conceptId: 'collectionId1',
             shortName: 'Short Name',
@@ -902,12 +904,7 @@ describe('createProjectSlice', () => {
             type: 'download'
           },
           harmony: {
-            availableOutputFormats: [
-              {
-                mimeType: 'application/x-hdf',
-                name: 'HDF'
-              }
-            ],
+            outputFormatAvailability: { HDF: true },
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
@@ -1026,7 +1023,7 @@ describe('createProjectSlice', () => {
         }]
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=C10000000000-EDSC&version=3/)
+          .get(`/capabilities?collectionId=C10000000000-EDSC&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1099,11 +1096,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1224,11 +1221,11 @@ describe('createProjectSlice', () => {
           })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/localhost/)
@@ -1323,11 +1320,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -1374,11 +1371,11 @@ describe('createProjectSlice', () => {
           .reply(200, {})
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId1&version=3/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/harmony.example.com/)
-          .get(/capabilities\?collectionId=collectionId2&version=3/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, { services: [] })
 
         nock(/graphql/)
@@ -2193,10 +2190,7 @@ describe('createProjectSlice', () => {
     test('updates harmony selection of temporalSubset/enableTemporalSubsetting when method type is harmony', () => {
       const collectionId = 'collectionId'
       const harmonyAccessMethod: HarmonyAccessMethod = {
-        availableOutputFormats: [{
-          name: 'NETCDF-4',
-          mimeType: 'application/x-netcdf4'
-        }],
+        outputFormatAvailability: { 'NETCDF-4': true },
         enableConcatenateDownload: false,
         enableSpatialSubsetting: false,
         enableTemporalSubsetting: false,
@@ -2211,7 +2205,10 @@ describe('createProjectSlice', () => {
         shortName: 'GPM_3GPROFF18SSMIS_CLIM',
         selectedOutputFormat: undefined,
         selectedVariables: [],
-        supportedOutputFormats: ['application/x-netcdf4'],
+        supportedOutputFormats: [{
+          name: 'NETCDF-4',
+          mimeType: 'application/x-netcdf4'
+        }],
         supportedOutputProjections: [],
         supportsBoundingBoxSubsetting: true,
         supportsConcatenation: false,
@@ -2266,10 +2263,7 @@ describe('createProjectSlice', () => {
                 mimeType: 'application/x-netcdf4'
               }],
               disabled: false,
-              availableOutputFormats: [{
-                name: 'NETCDF-4',
-                mimeType: 'application/x-netcdf4'
-              }],
+              outputFormatAvailability: { 'NETCDF-4': true },
               value: ''
             }
           }

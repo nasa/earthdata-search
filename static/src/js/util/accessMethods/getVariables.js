@@ -1,5 +1,6 @@
 import { computeKeywordMappings } from './computeKeywordMappings'
 import { computeHierarchyMappings } from './computeHierarchyMappings'
+import { determineVariableId } from '../determineVariableId'
 
 /**
  * Given the items result from a CMR variable search, returns the variables in an object with the key being the concept id
@@ -10,13 +11,7 @@ const computeVariables = (items) => {
   const variables = {}
 
   items.forEach((variable) => {
-    const { conceptId, href } = variable
-
-    let variableId = conceptId
-    if (!variableId && href) {
-      const hrefParts = href.split('/')
-      variableId = hrefParts[hrefParts.length - 1]
-    }
+    const variableId = determineVariableId(variable)
 
     variables[variableId] = variable
   })
@@ -25,39 +20,19 @@ const computeVariables = (items) => {
 }
 
 /**
- * Fetches the variable metadata for the provided variableIds
- * @param {Object} data variable object response from CMR
+ * Processes variable data from CMR into a consistent format.
+ * This function can handle both the object structure from a CMR search (`{ count, items }`)
+ * and a direct array of variable items.
+ * @param {Object|Array} data - Variable object response from CMR or an array of variables from the harmony capabilities document.
+ * @returns {{hierarchyMappings: Array, keywordMappings: Array, variables: Object}} An object containing the computed mappings and variables.
  */
-export const getOpendapVariables = (data) => {
-  const { count } = data
+export const getVariables = (data) => {
+  // Determine the source of the variable items, defaulting to an empty array.
+  const variableItems = (Array.isArray(data) ? data : data?.items) || []
 
-  // Default items to an empty array
-  let items = []
-
-  // If variables exist, pull them from the response
-  if (count > 0) {
-    ({ items } = data)
-  }
-
-  const hierarchyMappings = computeHierarchyMappings(items)
-  const keywordMappings = computeKeywordMappings(items)
-  const variables = computeVariables(items)
-
-  return {
-    hierarchyMappings,
-    keywordMappings,
-    variables
-  }
-}
-
-/**
- * Fetches the variable metadata for the provided variableIds
- * @param {Object} data variable object response from CMR
- */
-export const getHarmonyVariables = (data = []) => {
-  const hierarchyMappings = computeHierarchyMappings(data)
-  const keywordMappings = computeKeywordMappings(data)
-  const variables = computeVariables(data)
+  const hierarchyMappings = computeHierarchyMappings(variableItems)
+  const keywordMappings = computeKeywordMappings(variableItems)
+  const variables = computeVariables(variableItems)
 
   return {
     hierarchyMappings,

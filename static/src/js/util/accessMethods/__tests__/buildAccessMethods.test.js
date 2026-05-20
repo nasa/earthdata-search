@@ -1489,7 +1489,10 @@ describe('when buildAccessMethods is called', () => {
             url: 'https://example.com'
           },
           harmony: {
-            availableOutputFormats: [],
+            outputFormatAvailability: {
+              GeoTIFF: false,
+              'NetCDF-4': false
+            },
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
@@ -1584,9 +1587,18 @@ describe('when buildAccessMethods is called', () => {
             longName: 'Mock Service Name',
             name: 'mock-name',
             supportedOutputFormats: [
-              'ASCII',
-              'BINARY',
-              'NETCDF-4'
+              {
+                name: 'ASCII',
+                mimeType: 'ASCII'
+              },
+              {
+                name: 'BINARY',
+                mimeType: 'BINARY'
+              },
+              {
+                name: 'NETCDF-4',
+                mimeType: 'NETCDF-4'
+              }
             ],
             supportsVariableSubsetting: true,
             type: 'OPeNDAP',

@@ -1,4 +1,4 @@
-import { getHarmonyVariables } from '../getVariables'
+import { getVariables } from '../getVariables'
 
 import { getApplicationConfig, getEarthdataConfig } from '../../../../../../sharedUtils/config'
 
@@ -32,14 +32,14 @@ export const buildHarmony = (harmonyCapabilitiesDocument, userSelections) => {
     hierarchyMappings,
     keywordMappings,
     variables
-  } = getHarmonyVariables(derivedVariables)
+  } = getVariables(derivedVariables)
 
   // This is the initial structure that is supplied to accessMethods.
   // Supported means that it is supported in the top level of the capabilities document,
   // Enabled means that a user has enabled (selected) it
   // isDisabled is derived from harmony state after users make their selections
   return {
-    availableOutputFormats: outputFormats.availableOutputFormats,
+    outputFormatAvailability: outputFormats.outputFormatAvailability,
     enableConcatenateDownload: userSelections.concatenate || false,
     enableSpatialSubsetting: userSelections.spatialSubset || false,
     enableTemporalSubsetting: userSelections.temporalSubset || false,

@@ -48,20 +48,12 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
     expect(result.capabilities.spatialSubset.shapeDisabled).toBe(false)
     // Formats of the 2 remaining valid services
-    expect(result.capabilities.outputFormats.availableOutputFormats).toEqual([
-      {
-        name: 'CSV',
-        mimeType: 'text/csv'
-      },
-      {
-        name: 'NetCDF',
-        mimeType: 'application/netcdf'
-      },
-      {
-        name: 'NetCDF-4',
-        mimeType: 'application/x-netcdf4'
-      }
-    ])
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      CSV: true,
+      NetCDF: true,
+      'NetCDF-4': true,
+      'OPeNDAP URL': false
+    })
   })
 
   test('calculates parameters correctly when spatial subsetting is selected', () => {
@@ -75,20 +67,12 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.spatialSubset.disabled).toBe(false)
     expect(result.capabilities.temporalSubset.disabled).toBe(false)
     // Formats of the 2 remaining valid services
-    expect(result.capabilities.outputFormats.availableOutputFormats).toEqual([
-      {
-        name: 'NetCDF',
-        mimeType: 'application/netcdf'
-      },
-      {
-        name: 'NetCDF-4',
-        mimeType: 'application/x-netcdf4'
-      },
-      {
-        name: 'OPeNDAP URL',
-        mimeType: 'application/x-netcdf4;profile=opendap_url'
-      }
-    ])
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      CSV: false,
+      NetCDF: true,
+      'NetCDF-4': true,
+      'OPeNDAP URL': true
+    })
   })
 
   test('ignores output format selection when generating enabledFormats to prevent dropdown collapse', () => {
@@ -104,26 +88,14 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.variableSubset.disabled).toBe(true)
     expect(result.capabilities.spatialSubset.disabled).toBe(true)
 
-    // AvailableOutputFormats should STILL include all formats because it evaluates valid services
+    // OutputFormatAvailability should STILL include all formats because it evaluates valid services
     // IGNORING the currently selected format
-    expect(result.capabilities.outputFormats.availableOutputFormats).toEqual([
-      {
-        name: 'CSV',
-        mimeType: 'text/csv'
-      },
-      {
-        name: 'NetCDF',
-        mimeType: 'application/netcdf'
-      },
-      {
-        name: 'NetCDF-4',
-        mimeType: 'application/x-netcdf4'
-      },
-      {
-        name: 'OPeNDAP URL',
-        mimeType: 'application/x-netcdf4;profile=opendap_url'
-      }
-    ])
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      CSV: true,
+      NetCDF: true,
+      'NetCDF-4': true,
+      'OPeNDAP URL': true
+    })
   })
 
   test('disables output formats when the remaining valid services do not support any formats', () => {
@@ -142,7 +114,7 @@ describe('getDerivedHarmonyState', () => {
 
     // The valid service (HOSS-geographic) has no formats
     expect(result.capabilities.outputFormats.disabled).toBe(false)
-    expect(result.capabilities.outputFormats.availableOutputFormats).toEqual([])
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({})
   })
 
   test('calculates parameters correctly when concatenate has been selected', () => {
@@ -164,12 +136,12 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.temporalSubset.disabled).toBe(true)
 
     // The only available output format should be from the remaining service
-    expect(result.capabilities.outputFormats.availableOutputFormats).toEqual([
-      {
-        name: 'OPeNDAP URL',
-        mimeType: 'application/x-netcdf4;profile=opendap_url'
-      }
-    ])
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      CSV: false,
+      NetCDF: false,
+      'NetCDF-4': false,
+      'OPeNDAP URL': true
+    })
   })
 
   test('calculates parameters correctly when a variable has been selected', () => {
@@ -193,19 +165,11 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.concatenate.disabled).toBe(false)
 
     // The available output formats should be from the TWO remaining services, NOT giovanni (meaning no CSV).
-    expect(result.capabilities.outputFormats.availableOutputFormats).toEqual([
-      {
-        name: 'NetCDF',
-        mimeType: 'application/netcdf'
-      },
-      {
-        name: 'NetCDF-4',
-        mimeType: 'application/x-netcdf4'
-      },
-      {
-        name: 'OPeNDAP URL',
-        mimeType: 'application/x-netcdf4;profile=opendap_url'
-      }
-    ])
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      CSV: false,
+      NetCDF: true,
+      'NetCDF-4': true,
+      'OPeNDAP URL': true
+    })
   })
 })

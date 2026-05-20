@@ -29,6 +29,7 @@ import { isAccessMethodValid } from '../../util/accessMethods'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
+import { determineVariableId } from '../../util/determineVariableId'
 
 import { routes } from '../../constants/routes'
 import { MODAL_NAMES } from '../../constants/modalNames'
@@ -126,14 +127,7 @@ const ProjectPanels = () => {
 
   // Handler for viewing details of a variable
   const onViewDetails = (variable, index) => {
-    const { conceptId, href } = variable
-    let variableId = conceptId
-
-    // If conceptId is missing (Harmony variables), extract it from the end of the href
-    if (!variableId && href) {
-      const hrefParts = href.split('/')
-      variableId = hrefParts[hrefParts.length - 1]
-    }
+    const variableId = determineVariableId(variable)
 
     setSelectedVariableId(variableId)
     onChangePanel(`0.${index}.2`)

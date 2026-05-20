@@ -73,7 +73,7 @@ const AccessMethod = ({
   const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
-    availableOutputFormats = [],
+    outputFormatAvailability = {},
     form,
     rawModel = null,
     selectedVariables = [],
@@ -505,34 +505,33 @@ const AccessMethod = ({
   let supportedOutputFormatOptions = []
 
   if (isOpendap) {
-    // Filter the supportedOutputFormats to only those formats CMR supports
-    supportedOutputFormatOptions = supportedOutputFormats.filter(
-      (format) => ousFormatMapping[format] !== undefined
-    )
-
-    // Build options for supportedOutputFormats
-    supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
-      <option key={format} value={ousFormatMapping[format]}>{format}</option>
-    ))
+    // We filter the formats based on whether their mimeType exists in the ousFormatMapping,
+    // then map the result to <option> elements.
+    supportedOutputFormatOptions = supportedOutputFormats
+      .filter((format) => ousFormatMapping[format.mimeType] !== undefined)
+      .map((format) => (
+        <option key={format.mimeType} value={ousFormatMapping[format.mimeType]}>
+          {format.name}
+        </option>
+      ))
   }
 
   // Default supportedOutputProjectionOptions
   let supportedOutputProjectionOptions = []
 
   if (isHarmony) {
-    // The derived harmony state is the source of truth. Options are disabled if they are not part of the availableOutputFormats array
-    supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
-      const isOptionDisabled = !availableOutputFormats.some(
-        (availableFormat) => availableFormat.mimeType === format.mimeType
-      )
-
-      // Map options to human readable formats but keep the mime-type for values
-      return (
-        <option key={format.mimeType} value={format.mimeType} disabled={isOptionDisabled}>
-          {format.name}
-        </option>
-      )
-    })
+    // The derived harmony state is the source of truth.
+    // The `outputFormatAvailability` object provides a true/false value for each format's name.
+    supportedOutputFormatOptions = supportedOutputFormats.map((format) => (
+      // We disable the option if its availability is `false`.
+      <option
+        key={format.mimeType}
+        value={format.mimeType}
+        disabled={!outputFormatAvailability[format.name]}
+      >
+        {format.name}
+      </option>
+    ))
 
     // Build options for supportedOutputProjections
     supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (

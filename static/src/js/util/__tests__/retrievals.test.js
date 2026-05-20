@@ -42,9 +42,18 @@ describe('retrievals', () => {
                   name: 'harmony/gdal-argo Subsetter and Reformatter.',
                   selectedOutputProjection: 'EPSG:4326',
                   supportedOutputFormats: [
-                    'TIFF',
-                    'PNG',
-                    'GIF'
+                    {
+                      mimeType: 'TIFF',
+                      name: 'TIFF'
+                    },
+                    {
+                      mimeType: 'PNG',
+                      name: 'PNG'
+                    },
+                    {
+                      mimeType: 'GIF',
+                      name: 'GIF'
+                    }
                   ],
                   supportedOutputProjections: [
                     'EPSG:4326'
@@ -199,9 +208,18 @@ describe('retrievals', () => {
                   name: 'harmony/gdal-argo Subsetter and Reformatter.',
                   selectedOutputProjection: 'EPSG:4326',
                   supportedOutputFormats: [
-                    'TIFF',
-                    'PNG',
-                    'GIF'
+                    {
+                      mimeType: 'TIFF',
+                      name: 'TIFF'
+                    },
+                    {
+                      mimeType: 'PNG',
+                      name: 'PNG'
+                    },
+                    {
+                      mimeType: 'GIF',
+                      name: 'GIF'
+                    }
                   ],
                   supportedOutputProjections: [
                     'EPSG:4326'

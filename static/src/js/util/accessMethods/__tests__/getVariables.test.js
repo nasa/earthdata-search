@@ -1,4 +1,4 @@
-import { getOpendapVariables, getHarmonyVariables } from '../getVariables'
+import { getVariables } from '../getVariables'
 import {
   opendapVariablesResponse,
   mockOpendapKeywordMappings,
@@ -8,10 +8,10 @@ import {
   mockHarmonyVariables
 } from './mocks'
 
-describe('getOpendapVariables', () => {
+describe('getVariables', () => {
   describe('when variables exist', () => {
     test('correctly formats variables from graphql', () => {
-      const { keywordMappings, variables } = getOpendapVariables(opendapVariablesResponse)
+      const { keywordMappings, variables } = getVariables(opendapVariablesResponse)
 
       expect(keywordMappings).toEqual(mockOpendapKeywordMappings)
       expect(variables).toEqual(mockOpendapVariables)
@@ -20,7 +20,7 @@ describe('getOpendapVariables', () => {
 
   describe('when no variables exist', () => {
     test('correctly formats variables from graphql', () => {
-      const { keywordMappings, variables } = getOpendapVariables({
+      const { keywordMappings, variables } = getVariables({
         count: 0,
         items: null
       })
@@ -31,11 +31,11 @@ describe('getOpendapVariables', () => {
   })
 })
 
-describe('getHarmonyVariables', () => {
+describe('getVariables', () => {
   describe('when variables exist', () => {
     test('correctly formats variables from the capabilities document', () => {
       // Harmony variables come as an array, not an object with `items`
-      const { keywordMappings, variables } = getHarmonyVariables(harmonyVariablesResponse.items)
+      const { keywordMappings, variables } = getVariables(harmonyVariablesResponse.items)
 
       expect(keywordMappings).toEqual(mockHarmonyKeywordMappings)
       expect(variables).toEqual(mockHarmonyVariables)
@@ -44,7 +44,7 @@ describe('getHarmonyVariables', () => {
 
   describe('when no variables exist', () => {
     test('correctly returns empty data structures', () => {
-      const { keywordMappings, variables } = getHarmonyVariables([])
+      const { keywordMappings, variables } = getVariables([])
 
       expect(keywordMappings).toEqual([])
       expect(variables).toEqual({})

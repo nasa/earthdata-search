@@ -815,7 +815,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           selectedMethod.selectedVariables = updatedSelections.selectedVariables || []
 
-          selectedMethod.availableOutputFormats = outputFormats.availableOutputFormats
+          selectedMethod.outputFormatAvailability = outputFormats.outputFormatAvailability
 
           selectedMethod.isTemporalSubsettingDisabled = temporalSubset.disabled
 

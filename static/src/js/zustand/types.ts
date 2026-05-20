@@ -611,8 +611,8 @@ type KeywordMapping = {
 
 /** The Harmony access method */
 export type HarmonyAccessMethod = {
-  /** After users make a selection, these output formats are still available */
-  availableOutputFormats: HarmonyOutputFormats[]
+  /** An object mapping format names to their availability (true/false) based on current selections. */
+  outputFormatAvailability: { [formatName: string]: boolean }
   /** Flag to indicate if concatenation download is enabled */
   enableConcatenateDownload: boolean
   /** Flag to indicate if spatial subsetting is enabled */
@@ -646,7 +646,7 @@ export type HarmonyAccessMethod = {
   /** The selected variables */
   selectedVariables?: string[] | []
   /** The supported output formats */
-  supportedOutputFormats: string[]
+  supportedOutputFormats: HarmonyOutputFormats[]
   /** The supported output projections */
   supportedOutputProjections: string[]
   /** Flag to indicate if bounding box subsetting is supported */
@@ -698,7 +698,7 @@ type OpendapAccessMethod = {
   /** The selected output format */
   selectedOutputFormat?: string
   /** The supported output formats */
-  supportedOutputFormats?: string[]
+  supportedOutputFormats?: HarmonyOutputFormats[]
   /** Flag to indicate if variable subsetting is supported */
   supportsVariableSubsetting?: boolean
   /** The type of access method */

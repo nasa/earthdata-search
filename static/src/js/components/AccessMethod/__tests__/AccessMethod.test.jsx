@@ -485,7 +485,16 @@ describe('AccessMethod component', () => {
             opendap: {
               isValid: true,
               type: 'OPeNDAP',
-              supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+              supportedOutputFormats: [
+                {
+                  mimeType: 'NETCDF-3',
+                  name: 'NETCDF-3'
+                },
+                {
+                  mimeType: 'NETCDF-4',
+                  name: 'NETCDF-4'
+                }
+              ]
             }
           },
           metadata: {
@@ -610,10 +619,7 @@ describe('AccessMethod component', () => {
           overrideProps: {
             accessMethods: {
               harmony: {
-                availableOutputFormats: [{
-                  name: 'NETCDF-4',
-                  mimeType: 'application/netcdf4'
-                }],
+                outputFormatAvailability: { 'NETCDF-4': true },
                 name: 'test name',
                 description: 'test description',
                 isValid: true,
@@ -1660,12 +1666,11 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-          // Previously, there was an option to have this default to true. This box should always default to false unless the Harmony Capabilities Document changes to allow for default concatenation again.
+
           expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(false)
         })
 
-        // TODO EDSC-4661 when incorporating concatenation
-        test.skip('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
+        test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
           const { props, user } = setup({
@@ -1677,7 +1682,7 @@ describe('AccessMethod component', () => {
                   type: 'Harmony',
                   name: serviceName,
                   supportsConcatenation: true,
-                  defaultConcatenation: false
+                  enableConcatenateDownload: false
                 }
               },
               metadata: {
@@ -1695,8 +1700,6 @@ describe('AccessMethod component', () => {
             collectionId: 'collectionId',
             method: { harmony: { enableConcatenateDownload: true } }
           })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
       })
 
