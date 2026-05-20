@@ -21,7 +21,7 @@ import { ModalName } from '../constants/modalNames'
 
 import {
   HarmonyCapabilitiesDocument,
-  HarmonyOutputFormats,
+  HarmonyOutputFormat,
   DerivedHarmonyState,
   UserSelections as HarmonyUserSelections
 } from '../../js/util/getDerivedHarmonyState/getDerivedHarmonyState'
@@ -646,7 +646,7 @@ export type HarmonyAccessMethod = {
   /** The selected variables */
   selectedVariables?: string[] | []
   /** The supported output formats */
-  supportedOutputFormats: HarmonyOutputFormats[]
+  supportedOutputFormats: HarmonyOutputFormat[]
   /** The supported output projections */
   supportedOutputProjections: string[]
   /** Flag to indicate if bounding box subsetting is supported */
@@ -698,7 +698,7 @@ type OpendapAccessMethod = {
   /** The selected output format */
   selectedOutputFormat?: string
   /** The supported output formats */
-  supportedOutputFormats?: HarmonyOutputFormats[]
+  supportedOutputFormats?: HarmonyOutputFormat[]
   /** Flag to indicate if variable subsetting is supported */
   supportsVariableSubsetting?: boolean
   /** The type of access method */

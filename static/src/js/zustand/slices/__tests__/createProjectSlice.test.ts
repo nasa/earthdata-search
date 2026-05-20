@@ -2,7 +2,11 @@ import nock from 'nock'
 import MockDate from 'mockdate'
 
 import useEdscStore from '../../useEdscStore'
-import { initialGranuleState, initialState } from '../createProjectSlice'
+import {
+  initialGranuleState,
+  initialState,
+  HARMONY_CAPABILITES_API_VERSION
+} from '../createProjectSlice'
 
 // @ts-expect-error This file does not have types
 import GranuleRequest from '../../../util/request/granuleRequest'
@@ -11,8 +15,6 @@ import GranuleRequest from '../../../util/request/granuleRequest'
 import * as applicationConfig from '../../../../../../sharedUtils/config'
 import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
-
-const HARMONY_CAPABILITES_API_VERSION = '3'
 
 vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-request-id')
@@ -2301,6 +2303,11 @@ describe('createProjectSlice', () => {
                 temporal: true
               },
               concatenation: false,
+              reprojection: {
+                supported: false,
+                supportedProjections: [],
+                interpolationMethods: []
+              },
               outputFormats: [{
                 name: 'NETCDF-4',
                 mimeType: 'application/x-netcdf4'

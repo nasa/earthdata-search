@@ -35,12 +35,33 @@ describe('retrievals', () => {
           byId: {
             'C100000-EDSC': {
               accessMethods: {
-                harmony0: {
+                harmony: {
                   id: 'S100000-EDSC',
                   isValid: true,
-                  longName: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam.',
-                  name: 'harmony/gdal-argo Subsetter and Reformatter.',
-                  selectedOutputProjection: 'EPSG:4326',
+                  shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
+                  outputFormatAvailability: {
+                    TIFF: true,
+                    PNG: true,
+                    GIF: true
+                  },
+                  enableConcatenateDownload: false,
+                  enableSpatialSubsetting: false,
+                  enableTemporalSubsetting: false,
+                  isOutputFormatsDisabled: false,
+                  isShapeSubsettingDisabled: false,
+                  isSpatialSubsettingDisabled: false,
+                  isTemporalSubsettingDisabled: false,
+                  isVariableSubsettingDisabled: false,
+                  isConcatenationDisabled: false,
+                  hierarchyMappings: [],
+                  keywordMappings: [],
+                  selectedOutputFormat: undefined,
+                  selectedVariables: [],
+                  supportsBoundingBoxSubsetting: true,
+                  supportsConcatenation: false,
+                  supportsShapefileSubsetting: true,
+                  supportsTemporalSubsetting: true,
+                  supportsVariableSubsetting: true,
                   supportedOutputFormats: [
                     {
                       mimeType: 'TIFF',
@@ -62,10 +83,8 @@ describe('retrievals', () => {
                   url: 'https://harmony.sit.earthdata.nasa.gov',
                   variables: {
                     'V100000-EDSC': {
-                      conceptId: 'V100000-EDSC',
-                      definition: 'Alpha channel value',
-                      longName: 'Alpha channel ',
                       name: 'alpha_var',
+                      href: 'https://cmr.earthdata.nasa.gov/search/concepts/V2292306567-POCLOUD',
                       scienceKeywords: [
                         {
                           category: 'EARTH SCIENCE',
@@ -74,6 +93,20 @@ describe('retrievals', () => {
                         }
                       ]
                     }
+                  },
+                  harmonyUserSelections: {},
+                  derivedHarmonyState: {},
+                  harmonyCapabilitiesDocument: {
+                    conceptId: 'C100000-EDSC',
+                    shortName: 'Mock',
+                    summary: {
+                      subsetting: {},
+                      reprojection: {},
+                      concatenation: false,
+                      outputFormats: []
+                    },
+                    services: [],
+                    variables: []
                   }
                 }
               },
@@ -99,7 +132,7 @@ describe('retrievals', () => {
                   }
                 }
               },
-              selectedAccessMethod: 'harmony0'
+              selectedAccessMethod: 'harmony'
             }
           }
         }
@@ -119,13 +152,21 @@ describe('retrievals', () => {
     expect(response).toEqual({
       collections: [{
         accessMethod: {
+          enableConcatenateDownload: false,
+          enableSpatialSubsetting: false,
+          enableTemporalSubsetting: false,
           mbr: {
             neLat: 34.00000001,
             neLng: -76.99999999,
             swLat: 33.99999999,
             swLng: -77.00000001
           },
-          selectedOutputProjection: 'EPSG:4326',
+          selectedOutputFormat: undefined,
+          selectedVariableNames: [],
+          selectedVariables: [],
+          supportsBoundingBoxSubsetting: true,
+          supportsConcatenation: false,
+          supportsShapefileSubsetting: true,
           type: 'Harmony',
           url: 'https://harmony.sit.earthdata.nasa.gov'
         },
@@ -201,12 +242,34 @@ describe('retrievals', () => {
           byId: {
             'C100000-EDSC': {
               accessMethods: {
-                harmony0: {
+                harmony: {
                   id: 'S100000-EDSC',
                   isValid: true,
-                  longName: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam.',
-                  name: 'harmony/gdal-argo Subsetter and Reformatter.',
-                  selectedOutputProjection: 'EPSG:4326',
+
+                  shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
+                  outputFormatAvailability: {
+                    TIFF: true,
+                    PNG: true,
+                    GIF: true
+                  },
+                  enableConcatenateDownload: false,
+                  enableSpatialSubsetting: false,
+                  enableTemporalSubsetting: false,
+                  isOutputFormatsDisabled: false,
+                  isShapeSubsettingDisabled: false,
+                  isSpatialSubsettingDisabled: false,
+                  isTemporalSubsettingDisabled: false,
+                  isVariableSubsettingDisabled: false,
+                  isConcatenationDisabled: false,
+                  hierarchyMappings: [],
+                  keywordMappings: [],
+                  selectedOutputFormat: undefined,
+                  selectedVariables: [],
+                  supportsBoundingBoxSubsetting: true,
+                  supportsConcatenation: false,
+                  supportsShapefileSubsetting: true,
+                  supportsTemporalSubsetting: true,
+                  supportsVariableSubsetting: true,
                   supportedOutputFormats: [
                     {
                       mimeType: 'TIFF',
@@ -240,6 +303,20 @@ describe('retrievals', () => {
                         }
                       ]
                     }
+                  },
+                  harmonyUserSelections: {},
+                  derivedHarmonyState: {},
+                  harmonyCapabilitiesDocument: {
+                    conceptId: 'C100000-EDSC',
+                    shortName: 'Mock',
+                    summary: {
+                      subsetting: {},
+                      reprojection: {},
+                      concatenation: false,
+                      outputFormats: []
+                    },
+                    services: [],
+                    variables: []
                   }
                 }
               },
@@ -248,7 +325,7 @@ describe('retrievals', () => {
                 allIds: [],
                 byId: {}
               },
-              selectedAccessMethod: 'harmony0'
+              selectedAccessMethod: 'harmony'
             }
           }
         }
@@ -268,13 +345,21 @@ describe('retrievals', () => {
     expect(response).toEqual({
       collections: [{
         accessMethod: {
+          enableConcatenateDownload: false,
+          enableSpatialSubsetting: false,
+          enableTemporalSubsetting: false,
           mbr: {
             neLat: 34.00000001,
             neLng: -76.99999999,
             swLat: 33.99999999,
             swLng: -77.00000001
           },
-          selectedOutputProjection: 'EPSG:4326',
+          selectedOutputFormat: undefined,
+          selectedVariableNames: [],
+          selectedVariables: [],
+          supportsBoundingBoxSubsetting: true,
+          supportsConcatenation: false,
+          supportsShapefileSubsetting: true,
           type: 'Harmony',
           url: 'https://harmony.sit.earthdata.nasa.gov'
         },
@@ -320,6 +405,7 @@ describe('retrievals', () => {
       environment: 'prod',
       jsondata: {
         portalId: 'edsc',
+        selectedFeatures: undefined,
         shapefileId: undefined,
         source: '?p=C100000-EDSC'
       }

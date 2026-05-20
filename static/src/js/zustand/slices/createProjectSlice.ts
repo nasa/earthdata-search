@@ -74,7 +74,7 @@ getDerivedHarmonyState,
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
-const HARMONY_CAPABILITES_API_VERSION = '3'
+export const HARMONY_CAPABILITES_API_VERSION = '3'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []

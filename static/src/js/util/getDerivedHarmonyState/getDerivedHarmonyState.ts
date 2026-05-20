@@ -44,10 +44,7 @@ export interface HarmonyReprojection {
   interpolationMethods: string[]
 }
 
-/**
- * Reprojection metadata supplied from the Harmony Capabilities Document
- */
-export interface HarmonyOutputFormats {
+export interface HarmonyOutputFormat {
   /** Human readable name of the format */
   name: string,
   /** MimeType to be sent as value to Harmony */
@@ -67,11 +64,11 @@ export interface HarmonyService {
     /** The subsetting capabilities of the service */
     subsetting: HarmonySubsetting
     /** Flag to indicate if concatenation is supported */
-    concatenation?: boolean
+    concatenation: boolean
     /** Flag to indicate if reprojection is supported */
-    reprojection?: HarmonyReprojection
+    reprojection: HarmonyReprojection
     /** The supported output formats */
-    outputFormats?: HarmonyOutputFormats[]
+    outputFormats: HarmonyOutputFormat[]
   }
 }
 
@@ -107,6 +104,11 @@ export interface HarmonyVariable {
 }
 
 /**
++ * An object mapping format names to their availability status.
++ */
+export type HarmonyOutputFormatAvailability = Record<string, boolean>
+
+/**
  * Describes the top level capabilities of a collection
  * If one of the listed services supports a capability, it will show up as true in the summary
 */
@@ -118,7 +120,7 @@ export interface HarmonySummaryofTopLevelCapabilities {
   /** A boolean flag indicating if concatenation is supported by any service. */
   concatenation: boolean,
   /** An aggregated list of all unique output formats available across all services. */
-  outputFormats: HarmonyOutputFormats[]
+  outputFormats: HarmonyOutputFormat[]
 }
 
 /**
@@ -207,13 +209,11 @@ export interface DerivedHarmonyState {
     /** The derived state for output formats */
       outputFormats: {
       /** The full list of supported output formats across all services */
-      supported: HarmonyOutputFormats[]
+      supported: HarmonyOutputFormat[]
       /** Flag to indicate if output format selection is disabled */
       disabled: boolean
       /** The list of output formats available based on current selections */
-      outputFormatAvailability: {
-        [formatName: string]: boolean
-      }
+      outputFormatAvailability: HarmonyOutputFormatAvailability
       /** The currently selected output format */
       value: string
     }
@@ -262,8 +262,8 @@ export const getDerivedHarmonyState = (
     const { subsetting: serviceSubsetting } = serviceCapabilities || {}
     if (!serviceSubsetting) return false
 
-    // If a user selected it, check that it's availabele in the service's subsetting.
-    // If not return false (the service does not support the user selections).
+    // If a user selected it, check that it's available in the service's subsetting.
+    // If not, return false (the service does not support the user selections).
     if (userSelections.variableSubset && !serviceSubsetting.variable) return false
     if (
       userSelections.spatialSubset
@@ -280,26 +280,21 @@ export const getDerivedHarmonyState = (
     return true
   }
 
-  // Filter services based on ALL user selections
-  // This is used for determining which capabilities are disabled
-  const validServices = services.filter((service) => {
-    if (!supportsUserSelections(service)) return false
+  // Find all services that support the user selections (ignoring output format).
+  const validServicesIgnoringFormat = services.filter(supportsUserSelections)
 
+  // From that pre-filtered list, create the final list of valid services
+  // by applying the output format selection.
+  const validServices = validServicesIgnoringFormat.filter((service) => {
     if (userSelections.selectedOutputFormat) {
-      if (service.capabilities?.outputFormats
-        && !service.capabilities.outputFormats.some(
-          (format) => format.mimeType === userSelections.selectedOutputFormat
-        )
-      ) {
-        return false
-      }
+      return service.capabilities.outputFormats.some(
+        (format) => format.mimeType === userSelections.selectedOutputFormat
+      )
     }
 
+    // If no output format is selected, the service is valid.
     return true
   })
-
-  // Used for determining which outputformats are still available
-  const validServicesIgnoringFormat = services.filter(supportsUserSelections)
 
   const disabledCapabilities = {
     variableSubset: true,
@@ -339,7 +334,7 @@ export const getDerivedHarmonyState = (
   })
 
   // Build the new availability object by comparing against ALL supported formats.
-  const outputFormatAvailability: { [formatName: string]: boolean } = {}
+  const outputFormatAvailability: HarmonyOutputFormatAvailability = {}
   outputFormats.forEach((supportedFormat) => {
     // Check if the supported format's name exists in our set of available names.
     outputFormatAvailability[supportedFormat.name] = availableFormatNames.has(supportedFormat.name)
