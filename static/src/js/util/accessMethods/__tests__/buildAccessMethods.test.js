@@ -1539,7 +1539,7 @@ describe('when buildAccessMethods is called', () => {
             supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
             type: 'Harmony',
-            url: undefined,
+            url: 'https://harmony.earthdata.nasa.gov',
             variables: {
               'V100000-EDSC': {
                 href: 'https://cmr.example.com/search/concepts/V100000-EDSC',

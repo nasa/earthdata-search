@@ -2256,7 +2256,7 @@ describe('createProjectSlice', () => {
             },
             reproject: {
               supported: false,
-              disabled: true,
+              disabled: false,
               value: null
             },
             outputFormats: {
