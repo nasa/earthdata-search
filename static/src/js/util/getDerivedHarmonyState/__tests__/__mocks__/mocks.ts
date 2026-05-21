@@ -49,6 +49,11 @@ export const mockHarmonyCapabilitiesDocument = {
           temporal: true,
           variable: false
         },
+        reprojection: {
+          supported: false,
+          supportedProjections: [],
+          interpolationMethods: []
+        },
         concatenation: false,
         outputFormats: [
           {
@@ -68,6 +73,11 @@ export const mockHarmonyCapabilitiesDocument = {
           dimension: true,
           shape: true,
           variable: true
+        },
+        reprojection: {
+          supported: false,
+          supportedProjections: [],
+          interpolationMethods: []
         },
         concatenation: false,
         outputFormats: [
@@ -89,6 +99,11 @@ export const mockHarmonyCapabilitiesDocument = {
         subsetting: {
           bbox: true,
           variable: true
+        },
+        reprojection: {
+          supported: false,
+          supportedProjections: [],
+          interpolationMethods: []
         },
         concatenation: true,
         outputFormats: [
@@ -130,6 +145,12 @@ export const mockNoOutputFormatService = {
           temporal: true,
           variable: true
         },
+        reprojection: {
+          supported: false,
+          supportedProjections: [],
+          interpolationMethods: []
+        },
+        concatenation: false,
         outputFormats: [
           {
             name: 'CSV',
@@ -146,7 +167,14 @@ export const mockNoOutputFormatService = {
           bbox: true,
           shape: true,
           variable: true
-        }
+        },
+        reprojection: {
+          supported: false,
+          supportedProjections: [],
+          interpolationMethods: []
+        },
+        concatenation: false,
+        outputFormats: []
       }
     }
   ]
