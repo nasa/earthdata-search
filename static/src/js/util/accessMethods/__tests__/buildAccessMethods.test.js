@@ -13,7 +13,7 @@ beforeEach(() => {
   vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableOrdering: 'false',
     disableSwodlr: 'false',
-    env: 'dev'
+    env: 'test'
   }))
 })
 
