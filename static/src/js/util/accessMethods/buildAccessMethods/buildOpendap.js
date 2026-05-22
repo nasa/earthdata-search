@@ -45,7 +45,10 @@ export const buildOpendap = (serviceItem, params) => {
       keywordMappings,
       longName,
       name,
-      supportedOutputFormats: uniq(outputFormats),
+      supportedOutputFormats: uniq(outputFormats).map((mimeType) => ({
+        name: mimeType,
+        mimeType
+      })),
       supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
       type: serviceType,
       variables
