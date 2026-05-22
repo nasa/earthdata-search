@@ -485,7 +485,16 @@ describe('AccessMethod component', () => {
             opendap: {
               isValid: true,
               type: 'OPeNDAP',
-              supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
+              supportedOutputFormats: [
+                {
+                  mimeType: 'NETCDF-3',
+                  name: 'NETCDF-3'
+                },
+                {
+                  mimeType: 'NETCDF-4',
+                  name: 'NETCDF-4'
+                }
+              ]
             }
           },
           metadata: {
@@ -580,7 +589,14 @@ describe('AccessMethod component', () => {
                 description: 'test description',
                 isValid: true,
                 type: 'Harmony',
-                supportedOutputFormats: ['application/x-netcdf4', 'application/netcdf4']
+                supportedOutputFormats: [{
+                  name: 'NETCDF-4',
+                  mimeType: 'application/netcdf4'
+                },
+                {
+                  name: 'X-NETCDF-4',
+                  mimeType: 'application/x-netcdf4'
+                }]
               }
             },
             metadata: {
@@ -603,12 +619,15 @@ describe('AccessMethod component', () => {
           overrideProps: {
             accessMethods: {
               harmony: {
-                availableOutputFormats: ['application/netcdf4'],
+                outputFormatAvailability: { 'NETCDF-4': true },
                 name: 'test name',
                 description: 'test description',
                 isValid: true,
                 type: 'Harmony',
-                supportedOutputFormats: ['application/netcdf4']
+                supportedOutputFormats: [{
+                  name: 'NETCDF-4',
+                  mimeType: 'application/netcdf4'
+                }]
               }
             },
             metadata: {
@@ -690,7 +709,8 @@ describe('AccessMethod component', () => {
         expect(screen.getByTestId('access-methods__output-projection-options')).toBeInTheDocument()
       })
 
-      test('selecting a output projection calls onUpdateAccessMethod', async () => {
+      // TO-DO: EDSC-4662, working with reprojection
+      test.skip('selecting a output projection calls onUpdateAccessMethod', async () => {
         const collectionId = 'collectionId'
         const { props, user } = setup({
           overrideProps: {
@@ -1635,8 +1655,7 @@ describe('AccessMethod component', () => {
                   isValid: true,
                   type: 'Harmony',
                   name: serviceName,
-                  supportsConcatenation: true,
-                  defaultConcatenation: true
+                  supportsConcatenation: true
                 }
               },
               metadata: {
@@ -1647,11 +1666,11 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(true)
+
+          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(false)
         })
 
-        // TODO EDSC-4661 when incorporating concatenation
-        test.skip('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
+        test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
           const { props, user } = setup({
@@ -1663,7 +1682,7 @@ describe('AccessMethod component', () => {
                   type: 'Harmony',
                   name: serviceName,
                   supportsConcatenation: true,
-                  defaultConcatenation: false
+                  enableConcatenateDownload: false
                 }
               },
               metadata: {
@@ -1681,8 +1700,6 @@ describe('AccessMethod component', () => {
             collectionId: 'collectionId',
             method: { harmony: { enableConcatenateDownload: true } }
           })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
       })
 

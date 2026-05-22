@@ -21,6 +21,7 @@ import { ModalName } from '../constants/modalNames'
 
 import {
   HarmonyCapabilitiesDocument,
+  HarmonyOutputFormat,
   DerivedHarmonyState,
   UserSelections as HarmonyUserSelections
 } from '../../js/util/getDerivedHarmonyState/getDerivedHarmonyState'
@@ -610,10 +611,8 @@ type KeywordMapping = {
 
 /** The Harmony access method */
 export type HarmonyAccessMethod = {
-  /** After users make a selection, these output formats are still available */
-  availableOutputFormats: string[]
-  /** The default value for concatenation */
-  defaultConcatenation: boolean
+  /** An object mapping format names to their availability (true/false) based on current selections. */
+  outputFormatAvailability: { [formatName: string]: boolean }
   /** Flag to indicate if concatenation download is enabled */
   enableConcatenateDownload: boolean
   /** Flag to indicate if spatial subsetting is enabled */
@@ -621,8 +620,7 @@ export type HarmonyAccessMethod = {
   /** Flag to indicate if temporal subsetting is enabled */
   enableTemporalSubsetting: boolean
   /** Variable ids grouped by their hierarchical names */
-  // TODO in EDSC-4661
-  // hierarchyMappings: HierarchyMappings[]
+  hierarchyMappings: HierarchyMappings[]
   /** The Harmony access method ID */
   id: string
   /** Is the access method valid */
@@ -635,15 +633,20 @@ export type HarmonyAccessMethod = {
   isSpatialSubsettingDisabled: boolean
   /** Flag to indicate if temporal subsetting has been disabled due to previous user selections */
   isTemporalSubsettingDisabled: boolean
+  /** Flag to indicate if variable subsetting has been disabled due to previous user selections */
+  isVariableSubsettingDisabled: boolean
+  /** Flag to indicate if variable subsetting has been disabled due to previous user selections */
+  isConcatenationDisabled: boolean
   /** Variable ids grouped by their scienceKeywords */
-  // TODO in EDSC-4661
-  // keywordMappings: KeywordMapping[]
+  keywordMappings: KeywordMapping[]
   /** The access method shortName */
   shortName: string
   /** The selected output format */
   selectedOutputFormat?: string | undefined
+  /** The selected variables */
+  selectedVariables?: string[] | []
   /** The supported output formats */
-  supportedOutputFormats: string[]
+  supportedOutputFormats: HarmonyOutputFormat[]
   /** The supported output projections */
   supportedOutputProjections: string[]
   /** Flag to indicate if bounding box subsetting is supported */
@@ -661,11 +664,10 @@ export type HarmonyAccessMethod = {
   /** The Harmony access method URL */
   url: string
   /** The Harmony access method variables */
-  // TODO in EDSC-4661
-  // variables: {
-  //   /** The variable ID */
-  //   [variableId: string]: VariableMetadata
-  // }
+  variables: {
+    /** The variable ID */
+    [variableId: string]: VariableMetadata
+  }
   /** The active filters/selections chosen by the user. */
   harmonyUserSelections?: HarmonyUserSelections
   /** Shows important information such as supported, disabled, and value (if applicable) for each capability */
@@ -696,7 +698,7 @@ type OpendapAccessMethod = {
   /** The selected output format */
   selectedOutputFormat?: string
   /** The supported output formats */
-  supportedOutputFormats?: string[]
+  supportedOutputFormats?: HarmonyOutputFormat[]
   /** Flag to indicate if variable subsetting is supported */
   supportsVariableSubsetting?: boolean
   /** The type of access method */
