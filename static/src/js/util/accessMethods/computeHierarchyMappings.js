@@ -1,4 +1,5 @@
 import { isArray, isEmpty } from 'lodash-es'
+import { determineVariableId } from '../determineVariableId'
 
 /**
  * Returns variable ids grouped by their hierarchical names
@@ -9,7 +10,9 @@ export const computeHierarchyMappings = (variables) => {
 
   // Loop through each variable
   variables.forEach((variable) => {
-    const { conceptId: variableId, name } = variable
+    const variableId = determineVariableId(variable)
+
+    const { name } = variable
 
     // If the name isn't hierarchical, push the variableId onto calculatedMappings
     if (!name.includes('/')) {

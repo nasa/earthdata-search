@@ -15,7 +15,7 @@ import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
-import { harmonyFormatMapping, ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
+import { ousFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import Button from '../Button/Button'
@@ -73,7 +73,7 @@ const AccessMethod = ({
   const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
-    availableOutputFormats = [],
+    outputFormatAvailability = {},
     form,
     rawModel = null,
     selectedVariables = [],
@@ -87,13 +87,15 @@ const AccessMethod = ({
     supportsVariableSubsetting = false,
     supportsConcatenation = false,
     supportsSwodlr = false,
-    defaultConcatenation = false,
     enableTemporalSubsetting: isTemporalSubsettingSelected = false,
     enableSpatialSubsetting: isSpatialSubsettingSelected = false,
-    enableConcatenateDownload: isConcatenateSelected = defaultConcatenation,
+    enableConcatenateDownload: isConcatenateSelected = false,
     isTemporalSubsettingDisabled = false,
     isSpatialSubsettingDisabled = false,
-    isShapeSubsettingDisabled = false
+    isShapeSubsettingDisabled = false,
+    isVariableSubsettingDisabled = false,
+    isConcatenationDisabled = false,
+    variables = []
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
@@ -503,36 +505,39 @@ const AccessMethod = ({
   let supportedOutputFormatOptions = []
 
   if (isOpendap) {
-    // Filter the supportedOutputFormats to only those formats CMR supports
-    supportedOutputFormatOptions = supportedOutputFormats.filter(
-      (format) => ousFormatMapping[format] !== undefined
-    )
-
-    // Build options for supportedOutputFormats
-    supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
-      <option key={format} value={ousFormatMapping[format]}>{format}</option>
-    ))
+    // We filter the formats based on whether their mimeType exists in the ousFormatMapping,
+    // then map the result to <option> elements.
+    supportedOutputFormatOptions = supportedOutputFormats
+      .filter((format) => ousFormatMapping[format.mimeType] !== undefined)
+      .map((format) => (
+        <option key={format.mimeType} value={ousFormatMapping[format.mimeType]}>
+          {format.name}
+        </option>
+      ))
   }
 
   // Default supportedOutputProjectionOptions
   let supportedOutputProjectionOptions = []
 
   if (isHarmony) {
-    // The derived harmony state is the source of truth. Options are disabled if they are not part of the availableOutputFormats array
-    supportedOutputFormatOptions = supportedOutputFormats.map((format) => {
-      const isOptionDisabled = !availableOutputFormats.includes(format)
-
-      // Map options to human readable formats but keep the mime-type for values
-      return (
-        <option key={format} value={format} disabled={isOptionDisabled}>
-          {harmonyFormatMapping[format]}
-        </option>
-      )
-    })
+    // The derived harmony state is the source of truth.
+    // The `outputFormatAvailability` object provides a true/false value for each format's name.
+    supportedOutputFormatOptions = supportedOutputFormats.map((format) => (
+      // We disable the option if its availability is `false`.
+      <option
+        key={format.mimeType}
+        value={format.mimeType}
+        disabled={!outputFormatAvailability[format.name]}
+      >
+        {format.name}
+      </option>
+    ))
 
     // Build options for supportedOutputProjections
     supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
-      <option key={format} value={format}>{format}</option>
+      <option key={format.mimeType} value={format.mimeType}>
+        {format.name}
+      </option>
     ))
   }
 
@@ -591,8 +596,8 @@ const AccessMethod = ({
   const selectedSpatialDisplay = createSpatialDisplay(spatial, !!harmonyMbrWarning)
 
   // Checking to see if the selectedMethod variables exists and has at least one variable
-  const hasVariables = selectedMethod.variables
-    ? Object.keys(selectedMethod.variables).length > 0
+  const hasVariables = variables
+    ? Object.keys(variables).length > 0
     : false
 
   return (
@@ -673,6 +678,8 @@ const AccessMethod = ({
                     heading="Combine Data"
                     intro="Select from available operations to combine the data."
                     nested
+                    faded={isConcatenationDisabled}
+                    disabled={isConcatenationDisabled}
                   >
                     <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
                       <Form.Check
@@ -832,6 +839,8 @@ const AccessMethod = ({
                     heading="Variables"
                     intro="Use science keywords to subset your collection granules by measurements and variables."
                     nested
+                    disabled={isVariableSubsettingDisabled}
+                    faded={isVariableSubsettingDisabled}
                   >
                     {
                       !hasVariables ? (

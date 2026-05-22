@@ -33,7 +33,6 @@ const permittedCollectionMetadataFields = [
   'versionId'
 ]
 const permittedAccessMethodFields = [
-  'defaultConcatenation',
   'enableConcatenateDownload',
   'enableSpatialSubsetting',
   'enableTemporalSubsetting',

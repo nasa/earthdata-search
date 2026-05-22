@@ -476,7 +476,6 @@ describe('useCreateRetrieval', () => {
     describe('when the access method type is harmony', () => {
       test('calls metricsDataAccess with the correct data', async () => {
         const accessMethod = {
-          defaultConcatenation: false,
           enableConcatenateDownload: false,
           enableSpatialSubsetting: true,
           enableTemporalSubsetting: true,

@@ -13,36 +13,57 @@ beforeEach(() => {
   vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableOrdering: 'false',
     disableSwodlr: 'false',
-    env: 'dev'
+    env: 'test'
   }))
 })
 
 const harmonyCapabilitiesDocument = {
-  bboxSubset: true,
-  concatenate: false,
   conceptId: 'C100000-EDSC',
-  reproject: false,
-  outputFormats: ['image/tiff', 'application/x-netcdf4'],
+  shortName: 'MOCK_SHORT_NAME',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supported: false,
+      supportedProjections: [],
+      interpolationMethods: []
+    },
+    concatenation: false,
+    outputFormats: [
+      {
+        name: 'GeoTIFF',
+        mimeType: 'image/tiff'
+      },
+      {
+        name: 'NetCDF-4',
+        mimeType: 'application/x-netcdf4'
+      }
+    ]
+  },
   services: [
     {
       name: 'giovanni-time-series-adapter',
       capabilities: {
         subsetting: {
-          temporal: true
+          bbox: true,
+          shape: true,
+          temporal: true,
+          variable: true
         }
       }
     }
   ],
-  shapeSubset: true,
-  shortName: 'MOCK_SHORT_NAME',
-  temporalSubset: true,
   variables: [
     {
-      conceptId: 'V100000-EDSC',
-      name: 'mock_variable'
+      name: 'mock_variable',
+      href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+      scienceKeywords: []
     }
-  ],
-  variableSubset: true
+  ]
 }
 
 describe('when buildAccessMethods is called', () => {
@@ -259,36 +280,7 @@ describe('when buildAccessMethods is called', () => {
 
     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
       1,
-      {
-        bboxSubset: true,
-        concatenate: false,
-        conceptId: 'C100000-EDSC',
-        reproject: false,
-        outputFormats: [
-          'image/tiff',
-          'application/x-netcdf4'
-        ],
-        services: [
-          {
-            capabilities: {
-              subsetting: {
-                temporal: true
-              }
-            },
-            name: 'giovanni-time-series-adapter'
-          }
-        ],
-        shapeSubset: true,
-        shortName: 'MOCK_SHORT_NAME',
-        temporalSubset: true,
-        variableSubset: true,
-        variables: [
-          {
-            conceptId: 'V100000-EDSC',
-            name: 'mock_variable'
-          }
-        ]
-      },
+      harmonyCapabilitiesDocument,
       {
         concatenate: false,
         reproject: false,
@@ -1178,36 +1170,7 @@ describe('when buildAccessMethods is called', () => {
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
-        {
-          bboxSubset: true,
-          concatenate: false,
-          conceptId: 'C100000-EDSC',
-          reproject: false,
-          outputFormats: [
-            'image/tiff',
-            'application/x-netcdf4'
-          ],
-          services: [
-            {
-              capabilities: {
-                subsetting: {
-                  temporal: true
-                }
-              },
-              name: 'giovanni-time-series-adapter'
-            }
-          ],
-          shapeSubset: true,
-          shortName: 'MOCK_SHORT_NAME',
-          temporalSubset: true,
-          variableSubset: true,
-          variables: [
-            {
-              conceptId: 'V100000-EDSC',
-              name: 'mock_variable'
-            }
-          ]
-        },
+        harmonyCapabilitiesDocument,
         {
           concatenate: false,
           reproject: false,
@@ -1526,27 +1489,49 @@ describe('when buildAccessMethods is called', () => {
             url: 'https://example.com'
           },
           harmony: {
-            availableOutputFormats: [],
-            defaultConcatenation: false,
+            outputFormatAvailability: {
+              GeoTIFF: false,
+              'NetCDF-4': false
+            },
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
             harmonyCapabilitiesDocument,
+            hierarchyMappings: [
+              {
+                id: 'V100000-EDSC'
+              }
+            ],
             id: 'C100000-EDSC',
             isOutputFormatsDisabled: false,
-            isShapeSubsettingDisabled: true,
-            isSpatialSubsettingDisabled: true,
+            isShapeSubsettingDisabled: false,
+            isSpatialSubsettingDisabled: false,
             isTemporalSubsettingDisabled: false,
             isValid: true,
+            isVariableSubsettingDisabled: false,
+            keywordMappings: [],
             selectedOutputFormat: undefined,
+            selectedVariables: [],
             shortName: 'MOCK_SHORT_NAME',
             supportedOutputFormats: [
-              'image/tiff',
-              'application/x-netcdf4'
+              {
+                mimeType: 'image/tiff',
+                name: 'GeoTIFF'
+              },
+              {
+                mimeType: 'application/x-netcdf4',
+                name: 'NetCDF-4'
+              }
             ],
             supportedOutputProjections: [
-              'image/tiff',
-              'application/x-netcdf4'
+              {
+                mimeType: 'image/tiff',
+                name: 'GeoTIFF'
+              },
+              {
+                mimeType: 'application/x-netcdf4',
+                name: 'NetCDF-4'
+              }
             ],
             supportsBoundingBoxSubsetting: true,
             supportsConcatenation: false,
@@ -1554,8 +1539,14 @@ describe('when buildAccessMethods is called', () => {
             supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
             type: 'Harmony',
-            url: undefined,
-            variables: undefined
+            url: 'https://harmony.earthdata.nasa.gov',
+            variables: {
+              'V100000-EDSC': {
+                href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+                name: 'mock_variable',
+                scienceKeywords: []
+              }
+            }
           },
           opendap: {
             hierarchyMappings: [
@@ -1596,9 +1587,18 @@ describe('when buildAccessMethods is called', () => {
             longName: 'Mock Service Name',
             name: 'mock-name',
             supportedOutputFormats: [
-              'ASCII',
-              'BINARY',
-              'NETCDF-4'
+              {
+                name: 'ASCII',
+                mimeType: 'ASCII'
+              },
+              {
+                name: 'BINARY',
+                mimeType: 'BINARY'
+              },
+              {
+                name: 'NETCDF-4',
+                mimeType: 'NETCDF-4'
+              }
             ],
             supportsVariableSubsetting: true,
             type: 'OPeNDAP',

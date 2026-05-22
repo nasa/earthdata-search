@@ -14,10 +14,45 @@ export interface UserSelections {
   reproject?: boolean
   /** The selected output format */
   selectedOutputFormat?: string | undefined
+  /** The selected variables */
+  selectedVariables?: string[] | []
 }
 
 /**
- * The service and all its capabilities
+ * Accepted fields in the subsetting object
+ */
+export interface HarmonySubsetting {
+  /** Flag to indicate if variable subsetting is supported */
+  variable?: boolean
+  /** Flag to indicate if bounding box subsetting is supported */
+  bbox?: boolean
+  /** Flag to indicate if shapefile subsetting is supported */
+  shape?: boolean
+  /** Flag to indicate if temporal subsetting is supported */
+  temporal?: boolean
+}
+
+/**
+ * Reprojection metadata supplied from the Harmony Capabilities Document
+ */
+export interface HarmonyReprojection {
+  /** Flag indicating if reprojection is supported for the collection */
+  supported: boolean,
+  /** An array of supported projection codes (e.g., 'EPSG:4326') */
+  supportedProjections: string[],
+  /** An array of supported interpolation methods (e.g., 'bilinear', 'nearest neighbor') */
+  interpolationMethods: string[]
+}
+
+export interface HarmonyOutputFormat {
+  /** Human readable name of the format */
+  name: string,
+  /** MimeType to be sent as value to Harmony */
+  mimeType: string
+}
+
+/**
+ * A service and all its capabilities
  */
 export interface HarmonyService {
   /** The name of the variable */
@@ -27,23 +62,33 @@ export interface HarmonyService {
   /** The capabilities supported by the service */
   capabilities: {
     /** The subsetting capabilities of the service */
-    subsetting?: {
-      /** Flag to indicate if variable subsetting is supported */
-      variable?: boolean
-      /** Flag to indicate if bounding box subsetting is supported */
-      bbox?: boolean
-      /** Flag to indicate if shapefile subsetting is supported */
-      shape?: boolean
-      /** Flag to indicate if temporal subsetting is supported */
-      temporal?: boolean
-    };
+    subsetting: HarmonySubsetting
     /** Flag to indicate if concatenation is supported */
-    concatenation?: boolean
+    concatenation: boolean
     /** Flag to indicate if reprojection is supported */
-    reprojection?: boolean
+    reprojection: HarmonyReprojection
     /** The supported output formats */
-    output_formats?: string[]
-  };
+    outputFormats: HarmonyOutputFormat[]
+  }
+}
+
+/**
+ * Science Keywords of a Variable supplied from the Harmony Capabilities Document
+ * Descends by specificity, not alphabetically
+ */
+export interface HarmonyScienceKeyword {
+  /** The category of the science keyword */
+  category: string,
+  /** The topic of the science keyword */
+  topic?: string,
+  /** The term of the science keyword */
+  term?: string,
+  /** The variable level 1 of the science keyword */
+  variableLevel1?: string,
+  /** The variable level 2 of the science keyword */
+  variableLevel2?: string,
+  /** The variable level 2 of the science keyword */
+  variableLevel3?: string
 }
 
 /**
@@ -54,34 +99,45 @@ export interface HarmonyVariable {
   name: string
   /** The CMR href for the variable concept */
   href: string
+  /** The Science Keywords of the variable */
+  scienceKeywords: HarmonyScienceKeyword[]
 }
+
+/**
++ * An object mapping format names to their availability status.
++ */
+export type HarmonyOutputFormatAvailability = Record<string, boolean>
+
+/**
+ * Describes the top level capabilities of a collection
+ * If one of the listed services supports a capability, it will show up as true in the summary
+*/
+export interface HarmonySummaryofTopLevelCapabilities {
+  /** A summary of all available subsetting capabilities across all services. */
+  subsetting: HarmonySubsetting,
+  /** A summary of all available reprojection capabilities across all services. */
+  reprojection: HarmonyReprojection,
+  /** A boolean flag indicating if concatenation is supported by any service. */
+  concatenation: boolean,
+  /** An aggregated list of all unique output formats available across all services. */
+  outputFormats: HarmonyOutputFormat[]
+}
+
 /**
  * The document describing supported Harmony capabilities.
  * ie. https://harmony.earthdata.nasa.gov/capabilities?collectionId=<COLLECTION_ID>
  */
 export interface HarmonyCapabilitiesDocument {
-  /** Flag to indicate if bounding box subsetting is supported */
-  bboxSubset: boolean
-  /** Flag to indicate if concatenation is supported */
-  concatenate: boolean
   /** The collection's concept ID */
   conceptId: string
-  /** Flag to indicate if reprojection is supported */
-  reproject: boolean
-  /** An array of all available output formats */
-  outputFormats: string[]
-  /** Services supplied from the Harmony Capabilities Document */
-  services: HarmonyService[]
-  /** Flag to indicate if shapefile subsetting is supported */
-  shapeSubset: boolean
   /** The collection's short name */
   shortName: string
-  /** Flag to indicate if temporal subsetting is supported */
-  temporalSubset: boolean
+  /** Summary of the collection's top level capabilities */
+  summary: HarmonySummaryofTopLevelCapabilities
+  /** Services supplied from the Harmony Capabilities Document */
+  services: HarmonyService[]
   /** The collection's variables */
   variables: HarmonyVariable[]
-  /** Flag to indicate if variable subsetting is supported */
-  variableSubset: boolean
 }
 /**
  * The returned obejct from this function.
@@ -105,7 +161,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for variable subsetting (currently always null) */
       value: null
-    };
+    }
     /** The derived state for spatial subsetting */
       spatialSubset: {
       /** Flag to indicate if spatial subsetting (bbox or shape) is supported by the collection */
@@ -113,7 +169,7 @@ export interface DerivedHarmonyState {
       /** Flag to indicate if spatial subsetting is disabled based on current selections */
       disabled: boolean
       /** Flag to indicate if bounding box subsetting is supported by the collection */
-      bboxSupported?: boolean
+      bboxSupported: boolean
       /** Flag to indicate if bounding box subsetting is disabled based on current selections */
       bboxDisabled: boolean
       /** Flag to indicate if shapefile subsetting is supported by the collection */
@@ -122,7 +178,7 @@ export interface DerivedHarmonyState {
       shapeDisabled: boolean
       /** The value for spatial subsetting (currently always null) */
       value: null
-    };
+    }
     /** The derived state for temporal subsetting */
       temporalSubset: {
       /** Flag to indicate if temporal subsetting is supported by the collection */
@@ -131,7 +187,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for temporal subsetting (currently always null) */
       value: null
-    };
+    }
     /** The derived state for concatenation */
       concatenate: {
       /** Flag to indicate if concatenation is supported by the collection */
@@ -140,7 +196,7 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for concatenation (currently always null) */
       value: null
-    };
+    }
     /** The derived state for reprojection */
       reproject: {
       /** Flag to indicate if reprojection is supported by the collection */
@@ -149,19 +205,19 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** The value for reprojection (currently always null) */
       value: null
-    };
+    }
     /** The derived state for output formats */
       outputFormats: {
       /** The full list of supported output formats across all services */
-      supported: string[]
+      supported: HarmonyOutputFormat[]
       /** Flag to indicate if output format selection is disabled */
       disabled: boolean
       /** The list of output formats available based on current selections */
-      availableOutputFormats: string[]
+      outputFormatAvailability: HarmonyOutputFormatAvailability
       /** The currently selected output format */
-      value: string | undefined
-    };
-  };
+      value: string
+    }
+  }
 }
 
 /**
@@ -172,33 +228,27 @@ export interface DerivedHarmonyState {
  * @returns A computed state object defining which capabilities are supported and disabled.
  */
 export const getDerivedHarmonyState = (
-  userSelections: UserSelections = {},
-  harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
-    bboxSubset: false,
-    concatenate: false,
-    conceptId: '',
-    reproject: false,
-    outputFormats: [],
-    services: [],
-    shapeSubset: false,
-    shortName: '',
-    temporalSubset: false,
-    variables: [],
-    variableSubset: false
-  }
+  userSelections: UserSelections,
+  harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument
 ): DerivedHarmonyState | Record<string, never> => {
   const {
-    bboxSubset,
-    concatenate,
     conceptId,
-    outputFormats = [],
-    reproject,
-    services = [],
-    shapeSubset,
     shortName,
-    temporalSubset,
-    variables = [],
-    variableSubset
+    summary: {
+      subsetting: {
+        bbox = false,
+        shape = false,
+        temporal = false,
+        variable = false
+      },
+      reprojection: {
+        supported: reprojectionSupported
+      },
+      concatenation,
+      outputFormats = []
+    },
+    services,
+    variables
   } = harmonyCapabilitiesDocument
 
   // If there are no services to parse though, then there will be no derived harmony state
@@ -208,37 +258,43 @@ export const getDerivedHarmonyState = (
 
   // Helper function to determine if a service supports the user's selections (excluding output formats, see below)
   const supportsUserSelections = (service: HarmonyService) => {
-    const { subsetting } = service.capabilities || {}
-    if (!subsetting) return false
+    const { capabilities: serviceCapabilities } = service
+    const { subsetting: serviceSubsetting } = serviceCapabilities || {}
+    if (!serviceSubsetting) return false
 
-    // If a user selected it, check that it's availabele in the service's subsetting.
-    // If not return false (the service does not support the user selections).
-    if (userSelections.variableSubset && !subsetting.variable) return false
-    if (userSelections.spatialSubset && (!subsetting.bbox && !subsetting.shape)) return false
-    if (userSelections.temporalSubset && !subsetting.temporal) return false
-    if (userSelections.concatenate && !service.capabilities?.concatenation) return false
-    if (userSelections.reproject && !service.capabilities?.reprojection) return false
+    // If a user selected it, check that it's available in the service's subsetting.
+    // If not, return false (the service does not support the user selections).
+    if (userSelections.variableSubset && !serviceSubsetting.variable) return false
+    if (
+      userSelections.spatialSubset
+      && (!serviceSubsetting.bbox
+      && !serviceSubsetting.shape)
+    ) return false
+    if (userSelections.temporalSubset && !serviceSubsetting.temporal) return false
+    // Provide a default of 0 if selectedVariables.length is undefined
+    if (((userSelections.selectedVariables?.length ?? 0) > 0)
+      && !serviceSubsetting.variable) return false
+    if (userSelections.concatenate && !serviceCapabilities.concatenation) return false
+    if (userSelections.reproject && !serviceCapabilities.reprojection) return false
 
     return true
   }
 
-  // Filter services based on ALL user selections
-  // This is used for determining which capabilities are disabled
-  const validServices = services.filter((service) => {
-    if (!supportsUserSelections(service)) return false
+  // Find all services that support the user selections (ignoring output format).
+  const validServicesIgnoringFormat = services.filter(supportsUserSelections)
 
+  // From that pre-filtered list, create the final list of valid services
+  // by applying the output format selection.
+  const validServices = validServicesIgnoringFormat.filter((service) => {
     if (userSelections.selectedOutputFormat) {
-      if (service.capabilities?.output_formats
-        && !service.capabilities.output_formats.includes(userSelections.selectedOutputFormat)) {
-        return false
-      }
+      return service.capabilities.outputFormats.some(
+        (format) => format.mimeType === userSelections.selectedOutputFormat
+      )
     }
 
+    // If no output format is selected, the service is valid.
     return true
   })
-
-  // Used for determining which outputformats are still available
-  const validServicesIgnoringFormat = services.filter(supportsUserSelections)
 
   const disabledCapabilities = {
     variableSubset: true,
@@ -252,24 +308,36 @@ export const getDerivedHarmonyState = (
 
   // Look at all valid services and determine which capbitlities have been disabled based on selections
   validServices.forEach((service) => {
-    const { subsetting } = service.capabilities || {}
-    if (subsetting?.variable) disabledCapabilities.variableSubset = false
-    if (subsetting?.bbox || subsetting?.shape) disabledCapabilities.spatialSubset = false
-    if (subsetting?.bbox) disabledCapabilities.bbox = false
-    if (subsetting?.shape) disabledCapabilities.shape = false
-    if (subsetting?.temporal) disabledCapabilities.temporalSubset = false
-    if (service.capabilities?.concatenation) disabledCapabilities.concatenate = false
-    if (service.capabilities?.reprojection) disabledCapabilities.reproject = false
+    const { capabilities: serviceCapabilities } = service
+    const { subsetting: serviceSubsetting } = serviceCapabilities
+    if (serviceSubsetting.variable) disabledCapabilities.variableSubset = false
+    if (
+      serviceSubsetting.bbox
+      || serviceSubsetting.shape
+    ) disabledCapabilities.spatialSubset = false
+    if (serviceSubsetting.bbox) disabledCapabilities.bbox = false
+    if (serviceSubsetting.shape) disabledCapabilities.shape = false
+    if (serviceSubsetting.temporal) disabledCapabilities.temporalSubset = false
+    if (serviceCapabilities.concatenation) disabledCapabilities.concatenate = false
+    if (serviceCapabilities.reprojection) disabledCapabilities.reproject = false
   })
 
   // To prevent the output format list from collapsing down to just what's availabe to us in the current valid service,
   // we come up with our outputFormats based on validServicesIgnoringFormat.
   // For exmaple, if I select X-NETCDF04 (OPeNDAP URL), then that would mean my only valid service is sds/hoss-opendap-url
   // which has only one outputFormat. A user should still be able to choose from other outputFormats in this scenario.
-  const formatsAvailableForDropdown = new Set<string>()
+  // Get a set of all AVAILABLE format names from the services that are still valid.
+  const availableFormatNames = new Set<string>()
   validServicesIgnoringFormat.forEach((service) => {
-    const formats = service.capabilities?.output_formats || []
-    formats.forEach((format) => formatsAvailableForDropdown.add(format))
+    const formats = service.capabilities.outputFormats || []
+    formats.forEach((format) => availableFormatNames.add(format.name))
+  })
+
+  // Build the new availability object by comparing against ALL supported formats.
+  const outputFormatAvailability: HarmonyOutputFormatAvailability = {}
+  outputFormats.forEach((supportedFormat) => {
+    // Check if the supported format's name exists in our set of available names.
+    outputFormatAvailability[supportedFormat.name] = availableFormatNames.has(supportedFormat.name)
   })
 
   return {
@@ -278,39 +346,39 @@ export const getDerivedHarmonyState = (
     variables,
     capabilities: {
       variableSubset: {
-        supported: variableSubset,
+        supported: variable,
         disabled: disabledCapabilities.variableSubset,
         value: null
       },
       spatialSubset: {
-        supported: bboxSubset || shapeSubset,
+        supported: bbox || shape,
         disabled: disabledCapabilities.spatialSubset,
-        bboxSupported: bboxSubset,
+        bboxSupported: bbox,
         bboxDisabled: disabledCapabilities.bbox,
-        shapeSupported: shapeSubset,
+        shapeSupported: shape,
         shapeDisabled: disabledCapabilities.shape,
         value: null
       },
       temporalSubset: {
-        supported: temporalSubset,
+        supported: temporal,
         disabled: disabledCapabilities.temporalSubset,
         value: null
       },
       concatenate: {
-        supported: concatenate,
+        supported: concatenation,
         disabled: disabledCapabilities.concatenate,
         value: null
       },
       reproject: {
-        supported: reproject,
+        supported: reprojectionSupported,
         disabled: disabledCapabilities.reproject,
         value: null
       },
       outputFormats: {
         supported: outputFormats,
-        disabled: !(validServices.length > 0) && !(formatsAvailableForDropdown.size > 0),
-        availableOutputFormats: Array.from(formatsAvailableForDropdown),
-        value: userSelections.selectedOutputFormat || undefined
+        disabled: !(validServices.length > 0) && !(availableFormatNames.size > 0),
+        outputFormatAvailability,
+        value: userSelections.selectedOutputFormat || ''
       }
     }
   }
