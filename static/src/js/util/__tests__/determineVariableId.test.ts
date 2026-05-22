@@ -24,4 +24,14 @@ describe('determineVariableId', () => {
     const result = determineVariableId(harmonyVariable)
     expect(result).toEqual('V456-HARMONY')
   })
+
+  test('returns undefined when no variable information is blank from harmony', () => {
+    const harmonyVariable = {
+      name: '',
+      href: '',
+      scienceKeywords: []
+    }
+    const result = determineVariableId(harmonyVariable)
+    expect(result).toEqual(undefined)
+  })
 })

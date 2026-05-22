@@ -4,12 +4,19 @@ import { HarmonyScienceKeyword } from './getDerivedHarmonyState/getDerivedHarmon
  * Represents the shape of a variable object from a UMM-S record.
  */
 interface UmmSVariable {
+  /** Concept Id of the variable */
   conceptId?: string
+  /** Definition of the variable */
   definition: string
+  /** Instance Information of the variable (if applicable) */
   instanceInformation: null
+  /** Long Name of the variable */
   longName: string
+  /** Name of the variable */
   name: string
+  /** Native Id of the variable */
   nativeId: string
+  /** Science Keywords of the variable */
   scienceKeywords: HarmonyScienceKeyword[]
 }
 
@@ -17,8 +24,11 @@ interface UmmSVariable {
  * Represents the shape of a variable object from a Harmony capabilities document.
  */
 interface HarmonyVariable {
+  /** Name of the variable */
   name: string
+  /** CMR url of the variable */
   href: string
+  /** Science Keywords of the variable */
   scienceKeywords: HarmonyScienceKeyword[]
 }
 
