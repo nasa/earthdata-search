@@ -120,7 +120,15 @@ describe('insertSavedAccessConfig', () => {
         isValid: true,
         type: 'download'
       },
-      harmony0: {
+      harmony: {
+        outputFormatAvailability: {
+          GEOTIFF: true,
+          PNG: true,
+          TIFF: true,
+          'NETCDF-4': true
+        },
+        enableConcatenateDownload: false,
+        enableSpatialSubsetting: false,
         enableTemporalSubsetting: true,
         hierarchyMappings: [
           {
@@ -138,17 +146,37 @@ describe('insertSavedAccessConfig', () => {
         ],
         id: 'S100000-EDSC',
         isValid: true,
+        isOutputFormatsDisabled: false,
+        isShapeSubsettingDisabled: false,
+        isSpatialSubsettingDisabled: false,
+        isTemporalSubsettingDisabled: false,
+        isVariableSubsettingDisabled: false,
+        isConcatenationDisabled: false,
         keywordMappings: [],
-        longName: 'Mock Service Name',
-        name: 'mock-name',
+        shortName: 'Mock Harmony Method',
+        selectedOutputFormat: undefined,
+        selectedVariables: [],
         supportedOutputFormats: [
-          'GEOTIFF',
-          'PNG',
-          'TIFF',
-          'NETCDF-4'
+          {
+            name: 'GEOTIFF',
+            mimeType: 'GEOTIFF'
+          },
+          {
+            name: 'PNG',
+            mimeType: 'PNG'
+          },
+          {
+            name: 'TIFF',
+            mimeType: 'TIFF'
+          },
+          {
+            name: 'NETCDF-4',
+            mimeType: 'NETCDF-4'
+          }
         ],
         supportedOutputProjections: [],
         supportsBoundingBoxSubsetting: true,
+        supportsConcatenation: false,
         supportsShapefileSubsetting: false,
         supportsTemporalSubsetting: false,
         supportsVariableSubsetting: true,
@@ -156,42 +184,29 @@ describe('insertSavedAccessConfig', () => {
         url: 'https://example.com',
         variables: {
           'V100000-EDSC': {
-            conceptId: 'V100000-EDSC',
-            definition: 'Alpha channel value',
-            longName: 'Alpha channel ',
             name: 'alpha_var',
-            nativeId: 'mmt_variable_3972',
-            scienceKeywords: null
-          },
-          'V100001-EDSC': {
-            conceptId: 'V100001-EDSC',
-            definition: 'Blue channel value',
-            longName: 'Blue channel',
-            name: 'blue_var',
-            nativeId: 'mmt_variable_3971',
-            scienceKeywords: null
-          },
-          'V100002-EDSC': {
-            conceptId: 'V100002-EDSC',
-            definition: 'Green channel value',
-            longName: 'Green channel',
-            name: 'green_var',
-            nativeId: 'mmt_variable_3970',
-            scienceKeywords: null
-          },
-          'V100003-EDSC': {
-            conceptId: 'V100003-EDSC',
-            definition: 'Red channel value',
-            longName: 'Red Channel',
-            name: 'red_var',
-            nativeId: 'mmt_variable_3969',
-            scienceKeywords: null
+            href: 'https://cmr.earthdata.nasa.gov/search/concepts/V100000-EDSC',
+            scienceKeywords: []
           }
+        },
+        harmonyUserSelections: {},
+        derivedHarmonyState: {},
+        harmonyCapabilitiesDocument: {
+          conceptId: 'S100000-EDSC',
+          shortName: 'Mock',
+          summary: {
+            subsetting: {},
+            reprojection: {},
+            concatenation: false,
+            outputFormats: []
+          },
+          services: [],
+          variables: []
         }
       }
     }
     const savedAccessConfig = {
-      ...methods.harmony0,
+      ...methods.harmony,
       selectedVariables: ['V1233801717-EEDTEST'],
       selectedOutputFormat: 'image/png'
     }
@@ -201,9 +216,9 @@ describe('insertSavedAccessConfig', () => {
     expect(result).toEqual({
       methods: {
         ...methods,
-        harmony0: savedAccessConfig
+        harmony: savedAccessConfig
       },
-      selectedAccessMethod: 'harmony0'
+      selectedAccessMethod: 'harmony'
     })
   })
 })
