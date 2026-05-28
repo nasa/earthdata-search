@@ -27,11 +27,11 @@ if (!fs.existsSync('./cdk/earthdata-search/cdk.out/earthdata-search-dev.template
   childProcess.execSync('npm run run-synth', { stdio: 'inherit' })
 }
 
-let sqsCommands = []
+let optionalCommands = []
 
 const setupSqs = process.env.SKIP_SQS !== 'true'
 if (setupSqs) {
-  sqsCommands = [{
+  optionalCommands = [{
     // Run the ElasticMQ server
     command: 'npm run start:elasticmq',
     name: 'elasticmq'
@@ -40,6 +40,15 @@ if (setupSqs) {
     command: 'npm run start:sqs',
     name: 'sqs'
   }]
+}
+
+const useGeocoder = process.env.USE_GEOCODER === 'true'
+if (useGeocoder) {
+  optionalCommands.push({
+    // Run the geocoder lambda locally
+    command: 'npm run start:geocoder',
+    name: 'geocoder'
+  })
 }
 
 const defaultCommands = [{
@@ -58,7 +67,7 @@ const defaultCommands = [{
 }]
 
 // Start the services
-concurrently(sqsCommands.concat(defaultCommands), {
+concurrently(optionalCommands.concat(defaultCommands), {
   prefix: 'name',
   padPrefix: true,
   prefixColors: 'auto',

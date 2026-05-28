@@ -12,9 +12,44 @@
 
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
+import { PassThrough, Readable } from 'node:stream'
 
 // eslint-disable-next-line import/extensions
 import { getApiResources } from './getApiResources.mjs'
+
+const streamMetadataByStream = new WeakMap()
+
+// Provide a minimal awslambda shim so streamifyResponse handlers can stream locally.
+if (!global.awslambda) {
+  global.awslambda = {
+    streamifyResponse: (handler) => handler,
+    HttpResponseStream: {
+      from: (responseStream, metadata = {}) => {
+        streamMetadataByStream.set(responseStream, metadata)
+
+        return responseStream
+      }
+    }
+  }
+}
+
+const getReadableBody = (body) => {
+  if (!body) return null
+
+  if (typeof body.pipe === 'function') {
+    return body
+  }
+
+  if (typeof body.getReader === 'function') {
+    return Readable.fromWeb(body)
+  }
+
+  if (typeof body[Symbol.asyncIterator] === 'function') {
+    return Readable.from(body)
+  }
+
+  return null
+}
 
 // Get the template path from command line arguments
 const templateFilePath = process.argv[2]
@@ -86,6 +121,34 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
 
   console.log(`Calling lambda: ${method.lambdaFunction.functionName}`)
   const { default: handler } = (await import(handlerPath)).default
+
+  // Streaming handlers generally use (event, responseStream, context).
+  // If that shape is detected, forward chunks directly to Fastify.
+  if (method.lambdaFunction.functionName.startsWith('NlpSearchLambdaFunction')) {
+    const responseStream = new PassThrough()
+    responseStream.setContentType = (contentType) => {
+      reply.header('content-type', contentType)
+    }
+
+    Promise.resolve(handler(event, responseStream, {}))
+      .then((streamResponseMetadata) => {
+        const metadata = streamMetadataByStream.get(responseStream) || streamResponseMetadata || {}
+
+        if (metadata?.statusCode) reply.code(metadata.statusCode)
+        if (metadata?.headers) reply.headers(metadata.headers)
+
+        if (metadata?.isBase64Encoded) {
+          request.log.warn('Streaming response marked as base64 encoded; proxy forwards raw stream chunks.')
+        }
+      })
+      .catch((error) => {
+        request.log.error({ error }, 'Streaming lambda handler failed')
+        responseStream.destroy(error)
+      })
+
+    return reply.send(responseStream)
+  }
+
   // Call the lambda function
   const response = await handler(event, {})
 
@@ -99,6 +162,11 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
   // Set the response status code and headers
   reply.code(statusCode)
   reply.headers(headers)
+
+  const readableBody = getReadableBody(responseBody)
+  if (readableBody) {
+    return reply.send(readableBody)
+  }
 
   // If the response is base64 encoded, return the response as a buffer
   // This is necessary for the scale image lambda

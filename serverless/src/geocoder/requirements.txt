@@ -1,0 +1,3 @@
+boto3==1.36.1
+e84-geoai-common==0.0.7
+natural-language-geocoding @ git+https://github.com/Element84/natural-language-geocoding@059f6c9
