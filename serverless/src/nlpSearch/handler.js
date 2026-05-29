@@ -15,8 +15,6 @@ import {
 } from 'ai'
 import { z } from 'zod'
 
-
-
 let bedrock
 
 /**
