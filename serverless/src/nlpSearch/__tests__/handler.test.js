@@ -10,9 +10,9 @@ import {
 } from '../handler'
 
 const mockBedrock = await vi.hoisted(async () => {
-  const { MockLanguageModelV3: Asdf, simulateReadableStream } = await import('ai/test')
+  const { MockLanguageModelV3: LocalMockLanguageModelV3, simulateReadableStream } = await import('ai/test')
 
-  return new Asdf({
+  return new LocalMockLanguageModelV3({
     doStream: async () => ({
       stream: simulateReadableStream({
         chunks: [
@@ -110,42 +110,34 @@ describe('nlpSearch handler', () => {
   })
 
   describe('when USE_NLP_SEARCH is true', () => {
-    describe('when USE_GEOCODER is false', () => {
-      test('returns an error when trying to call the local geocoder', async () => {
-        process.env.USE_NLP_SEARCH = 'true'
-        process.env.USE_GEOCODER = 'false'
-        process.env.AWS_ACCESS_KEY_ID = 'fake'
-        process.env.AWS_SECRET_ACCESS_KEY = 'fake'
+    test('streams status messages and the final result', async () => {
+      process.env.USE_NLP_SEARCH = 'true'
+      process.env.USE_GEOCODER = 'false'
+      process.env.AWS_ACCESS_KEY_ID = 'fake'
+      process.env.AWS_SECRET_ACCESS_KEY = 'fake'
 
-        const event = {
-          queryStringParameters: {
-            query: 'Find me rainfall data over California in 2020'
-          }
+      const event = {
+        queryStringParameters: {
+          query: 'Find me rainfall data over California in 2020'
         }
+      }
 
-        const responseStream = {
-          write: vi.fn(),
-          end: vi.fn()
-        }
+      const responseStream = {
+        write: vi.fn(),
+        end: vi.fn()
+      }
 
-        await nlpSearchHandler(event, responseStream)
+      await nlpSearchHandler(event, responseStream)
 
-        expect(responseStream.write).toHaveBeenCalledTimes(3)
-        expect(responseStream.write).toHaveBeenNthCalledWith(1, 'Analyzing your query...\n')
-        expect(responseStream.write).toHaveBeenNthCalledWith(2, 'Final result:\n')
+      expect(responseStream.write).toHaveBeenCalledTimes(3)
+      expect(responseStream.write).toHaveBeenNthCalledWith(1, 'Analyzing your query...\n')
+      expect(responseStream.write).toHaveBeenNthCalledWith(2, 'Final result:\n')
 
-        // The actual result isn't populated because the tools are not executed by the doStream mock. Those tools are tested separately.
-        expect(responseStream.write).toHaveBeenNthCalledWith(3, '{"keyword":null,"query":"Find me rainfall data over California in 2020","spatial":null,"spatialArea":null,"temporal":null}')
+      // The actual result isn't populated because the tools are not executed by the doStream mock. Those tools are tested separately.
+      expect(responseStream.write).toHaveBeenNthCalledWith(3, '{"keyword":null,"query":"Find me rainfall data over California in 2020","spatial":null,"spatialArea":null,"temporal":null}')
 
-        expect(responseStream.end).toHaveBeenCalledTimes(1)
-        expect(responseStream.end).toHaveBeenCalledWith()
-      })
-    })
-
-    describe('when USE_GEOCODER is true', () => {
-      test('processes the query and returns results', async () => {
-        // TODO mock the Bedrock response and test the full flow
-      })
+      expect(responseStream.end).toHaveBeenCalledTimes(1)
+      expect(responseStream.end).toHaveBeenCalledWith()
     })
   })
 })
@@ -304,7 +296,7 @@ describe('convertTemporalToolExecute', () => {
 
 describe('lookupSpatialToolExecute', () => {
   describe('when USE_GEOCODER is false', () => {
-    test('throws an error', async () => {
+    test('returns a mock value', async () => {
       process.env.USE_GEOCODER = 'false'
 
       const setResults = vi.fn()
@@ -313,7 +305,11 @@ describe('lookupSpatialToolExecute', () => {
         spatial: 'California'
       }
 
-      await expect(lookupSpatialToolExecute(input, setResults)).rejects.toThrow('The USE_GEOCODER environment variable must be set to true to call the local geocoder lambda.')
+      await lookupSpatialToolExecute(input, setResults)
+
+      expect(setResults).toHaveBeenCalledTimes(2)
+      expect(setResults).toHaveBeenCalledWith('spatial', 'California')
+      expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-77.172259 38.791653, -77.172259 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.172259 38.791653))')
     })
   })
 

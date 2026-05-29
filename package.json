@@ -28,7 +28,7 @@
     "start:app": "vite dev --port 8080",
     "start": "dotenvx run node bin/start.js",
     "start:geocoder": "docker build -f geocoder.Dockerfile -t geocoder-lambda . && docker run -p 4001:8080 -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY geocoder-lambda",
-    "start:optionals": "USE_IMAGE_CACHE=true USE_NLP_SEARCH=true USE_GEOCODER=true SKIP_SQS=false ORDER_DELAY_SECONDS=1 npm start",
+    "start:optionals": "USE_IMAGE_CACHE=true SKIP_SQS=false USE_NLP_SEARCH=true USE_GEOCODER=true ORDER_DELAY_SECONDS=1 npm start",
     "copy-secrets": "cp secret.config.json.example secret.config.json",
     "test": "TZ=US/Eastern vitest",
     "test:ui": "TZ=US/Eastern vitest --ui",

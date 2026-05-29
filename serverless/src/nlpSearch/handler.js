@@ -15,6 +15,8 @@ import {
 } from 'ai'
 import { z } from 'zod'
 
+
+
 let bedrock
 
 /**
@@ -51,7 +53,6 @@ const getSpatial = async (query) => {
     return callPythonLocal(query)
   }
 
-  // TODO test in SIT
   const lambdaClient = new LambdaClient({
     apiVersion: '2012-11-05',
     region: 'us-east-1'
@@ -67,7 +68,14 @@ const getSpatial = async (query) => {
   })
 
   const response = await lambdaClient.send(lambdaCommand)
+  if (response.FunctionError) {
+    throw new Error(`Geocoder invocation failed: ${response.FunctionError}`)
+  }
+
   const responsePayload = JSON.parse(new TextDecoder().decode(response.Payload))
+  if (responsePayload.statusCode !== 200 || !responsePayload.body) {
+    throw new Error(`Geocoder returned ${responsePayload.statusCode ?? 'an invalid response'}`)
+  }
 
   return responsePayload.body
 }
@@ -91,7 +99,7 @@ export const convertTemporalToolExecute = async (
 ) => {
   try {
     console.log(`Converting temporal expression "${temporal}" to a date range.`)
-    const { text } = await generateText({
+    const { output } = await generateText({
       model,
       prompt: `Convert the following input to a date range.
   - Extract the start and end dates in ISO-8601 format, always include the time, and for the end date use the full day (e.g., "YYYY-12-31T23:59:59.999Z").
@@ -113,8 +121,7 @@ export const convertTemporalToolExecute = async (
       })
     })
 
-    console.log(`Converted temporal expression to date range: ${text}`)
-    setResults('temporal', JSON.parse(text))
+    setResults('temporal', output)
   } catch (error) {
     console.error('Error during temporal conversion:', error)
     responseStream.write('Error during temporal conversion\n')
@@ -124,9 +131,13 @@ export const convertTemporalToolExecute = async (
 }
 
 export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
-  console.log('🚀 ~ handler.js:127 ~ lookupSpatialToolExecute ~ process.env.USE_GEOCODER:', process.env.USE_GEOCODER)
+  setResults('spatial', spatial)
+
   if (process.env.USE_GEOCODER !== 'true') {
-    throw new Error('The USE_GEOCODER environment variable must be set to true to call the local geocoder lambda.')
+    // If we aren't geocoding, set a default spatial area for testing purposes. This is the bounding box for the area around Washington DC.
+    setResults('spatialArea', 'POLYGON((-77.172259 38.791653, -77.172259 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.172259 38.791653))')
+
+    return { ok: true }
   }
 
   console.log(`Looking up spatial area for "${spatial}" using the geocoder lambda...`)
@@ -136,14 +147,32 @@ export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
 
   console.log(`Geocoder lambda returned spatial area: ${spatialArea}`)
 
-  setResults('spatial', spatial)
   setResults('spatialArea', spatialArea.trim())
 
   return { ok: true }
 }
 
-export const handler = async (event, responseStream) => {
-  const { queryStringParameters } = event
+export const handler = async (event, originalResponseStream) => {
+  const httpResponseMetadata = {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'text/plain',
+      'X-Custom-Header': 'some-value'
+    }
+  }
+
+  let responseStream = originalResponseStream
+
+  if (process.env.NODE_ENV === 'production') {
+    // This will only work in AWS Lambda environments. In development, we use the original response stream which is a PassThrough stream provided by lambda-stream.
+    // eslint-disable-next-line no-undef
+    responseStream = awslambda.HttpResponseStream.from(
+      originalResponseStream,
+      httpResponseMetadata
+    )
+  }
+
+  const { queryStringParameters = {} } = event
   const { query } = queryStringParameters
 
   responseStream.write('Analyzing your query...\n')
@@ -157,7 +186,6 @@ export const handler = async (event, responseStream) => {
     temporal: null
   }
 
-  console.log('🚀 ~ handler.js:156 ~ handler ~ process.env.USE_NLP_SEARCH:', process.env.USE_NLP_SEARCH)
   if (process.env.USE_NLP_SEARCH !== 'true') {
     responseStream.write('The USE_NLP_SEARCH environment variable is not set to true. Skipping NLP search.\n')
     responseStream.write('Set USE_NLP_SEARCH=true and restart the server to enable NLP search.\n')
@@ -186,7 +214,7 @@ export const handler = async (event, responseStream) => {
 
   bedrock = createAmazonBedrock(bedrockOptions)
 
-  const model = bedrock('amazon.nova-pro-v1:0')
+  const model = bedrock(process.env.BEDROCK_MODEL_ID || 'amazon.nova-pro-v1:0')
 
   const result = streamText({
     model,
@@ -199,7 +227,7 @@ ${query}
 
 Required workflow:
 1) Identify spatial, temporal, and keyword values from the query.
-2) For every value you find, call tool "reportFound" once per field.
+2) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools.
 3) If spatial exists, call tool "lookupSpatial" with the spatial value.
 4) If temporal exists, call tool "convertTemporal" with the temporal value.`,
     tools: {
@@ -234,7 +262,7 @@ Required workflow:
       responseStream.end()
     },
     onFinish: async ({ text }) => {
-      console.log('🚀 ~ handler.js:237 ~ handler ~ text:', text)
+      console.log('streamText finished, called with text:', text)
       console.log('Extraction complete. Final results:', JSON.stringify(extractedResults))
       responseStream.write('Final result:\n')
       responseStream.write(JSON.stringify(extractedResults))

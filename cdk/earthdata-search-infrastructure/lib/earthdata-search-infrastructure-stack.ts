@@ -128,14 +128,7 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                   'bedrock:InvokeModelWithResponseStream',
                   'bedrock:InvokeModel'
                 ],
-                Resource: 'arn:aws:bedrock:*::foundation-model/*'
-              },
-              {
-                Effect: 'Allow',
-                Action: [
-                  'bedrock:InvokeModel'
-                ],
-                Resource: 'arn:aws:bedrock:*::inference-profile/*'
+                Resource: '*'
               }
             ]
           }

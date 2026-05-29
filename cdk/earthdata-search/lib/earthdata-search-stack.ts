@@ -18,6 +18,7 @@ export interface EarthdataSearchStackProps extends cdk.StackProps {
 const logGroupSuffix = ''
 
 const {
+  BEDROCK_MODEL_ID,
   CACHE_KEY_EXPIRE_SECONDS = '84000',
   CLOUDFRONT_BUCKET_NAME = 'local-bucket',
   COLORMAP_JOB_ENABLED,
@@ -96,6 +97,7 @@ export class EarthdataSearchStack extends cdk.Stack {
     } = queues
 
     const environment = {
+      BEDROCK_MODEL_ID,
       CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheEndpoint`),
       CACHE_KEY_EXPIRE_SECONDS,
       CACHE_PORT: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCachePort`),

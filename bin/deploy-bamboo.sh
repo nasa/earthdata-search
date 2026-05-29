@@ -111,10 +111,6 @@ COPY --from=node_builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Verify installations
-RUN node -v && npm -v && python --version
-
-
 COPY . /build
 WORKDIR /build
 
@@ -137,6 +133,7 @@ dockerRun() {
     -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
     -e "AWS_ACCOUNT=$bamboo_AWS_ACCOUNT" \
     -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
+    -e "BEDROCK_MODEL_ID=$bamboo_BEDROCK_MODEL_ID" \
     -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
     -e "COLORMAP_JOB_ENABLED=$bamboo_COLORMAP_JOB_ENABLED" \
     -e "DB_ALLOCATED_STORAGE=$bamboo_DB_ALLOCATED_STORAGE" \

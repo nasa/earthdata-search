@@ -13,12 +13,6 @@ ENV AWS_DEFAULT_REGION=us-east-1
 # Copy geocoder directory to the container
 COPY serverless/src/geocoder/ ${LAMBDA_TASK_ROOT}
 
-# Install git to allow for cloning repositories if needed
-RUN dnf update -y && \
-    dnf install -y git && \
-    dnf clean all
-
-
 # Install dependencies
 RUN pip install -r requirements.txt
 

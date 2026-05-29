@@ -344,15 +344,11 @@ export class Functions extends Construct {
 
     const geocoderLambdaFunction = new lambda.Function(geocoderNestedStack, 'GeocoderLambda', {
       code: lambda.Code.fromAsset('../../serverless/src/geocoder'),
-      currentVersionOptions: {
-        removalPolicy: cdk.RemovalPolicy.RETAIN
-      },
       environment: defaultLambdaConfig.environment,
       ephemeralStorageSize: cdk.Size.gibibytes(2),
       functionName: `${functionNamePrefix}-geocoder${defaultLambdaConfig.logGroupSuffix}`,
       handler: 'handler.main',
       logGroup: geocoderLogGroup,
-      memorySize: 512,
       role: defaultLambdaConfig.role,
       runtime: lambda.Runtime.PYTHON_3_13,
       securityGroups: defaultLambdaConfig.securityGroups,
@@ -505,8 +501,7 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/nlpSearch/handler.js',
       functionName: 'nlpSearch',
-      functionNamePrefix,
-      timeout: cdk.Duration.minutes(5)
+      functionNamePrefix
     })
 
     /**
