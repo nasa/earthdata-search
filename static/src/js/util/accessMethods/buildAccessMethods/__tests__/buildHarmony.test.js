@@ -174,6 +174,10 @@ describe('buildHarmony', () => {
         keywordMappings: [],
         longName: 'Mock Service Name',
         name: 'mock-name',
+        supportedInputFormats: [
+          'NETCDF-4',
+          'GEOTIFF'
+        ],
         supportedOutputFormats: [
           'GEOTIFF',
           'PNG',
@@ -647,6 +651,10 @@ describe('buildHarmony', () => {
             keywordMappings: [],
             longName: 'Mock Service Name',
             name: 'mock-name',
+            supportedInputFormats: [
+              'NETCDF-4',
+              'GEOTIFF'
+            ],
             supportedOutputFormats: [
               'GEOTIFF',
               'PNG',
@@ -725,6 +733,10 @@ describe('buildHarmony', () => {
             keywordMappings: [],
             longName: 'Mock Service Name 2',
             name: 'mock-name 2',
+            supportedInputFormats: [
+              'NETCDF-4',
+              'GEOTIFF'
+            ],
             supportedOutputFormats: [
               'GEOTIFF',
               'PNG',
@@ -798,6 +810,10 @@ describe('buildHarmony', () => {
             keywordMappings: [],
             longName: 'Mock Service Name 3',
             name: 'mock-name 3',
+            supportedInputFormats: [
+              'NETCDF-4',
+              'GEOTIFF'
+            ],
             supportedOutputFormats: [
               'GEOTIFF',
               'PNG',

@@ -78,6 +78,7 @@ const AccessMethod = ({
     selectedVariables = [],
     selectedOutputFormat,
     selectedOutputProjection,
+    supportedInputFormats = [],
     supportedOutputFormats = [],
     supportedOutputProjections = [],
     supportsTemporalSubsetting = false,
@@ -630,6 +631,16 @@ const AccessMethod = ({
   // Default supportedOutputProjectionOptions
   let supportedOutputProjectionOptions = []
 
+  // Determine if native output format is supported by checking for overlap
+  // between supported input formats and supported output formats.
+  // If there's overlap, the service can return the original/native format,
+  // so we should show the "No Data Conversion" option.
+  // If there's no overlap (e.g., input: NetCDF/HDF5, output: GeoTIFF only),
+  // the service always reformats, so we should hide the option.
+  const supportsNativeOutput = isHarmony && supportedInputFormats.length > 0 && supportedOutputFormats.length > 0
+    ? supportedInputFormats.some((inputFormat) => supportedOutputFormats.includes(inputFormat))
+    : false
+
   if (isHarmony) {
     // Filter the supportedOutputFormats to only those formats Harmony supports
     supportedOutputFormatOptions = supportedOutputFormats.filter(
@@ -962,7 +973,7 @@ const AccessMethod = ({
                     >
                       {
                         [
-                          <option key="output-format-none" value="">No Data Conversion</option>,
+                          ...(supportsNativeOutput ? [<option key="output-format-none" value="">No Data Conversion</option>] : []),
                           ...supportedOutputFormatOptions
                         ]
                       }
