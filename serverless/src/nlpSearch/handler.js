@@ -212,7 +212,7 @@ export const handler = async (event, originalResponseStream) => {
 
   bedrock = createAmazonBedrock(bedrockOptions)
 
-  const model = bedrock(process.env.BEDROCK_MODEL_ID || 'amazon.nova-pro-v1:0')
+  const model = bedrock(process.env.BEDROCK_MODEL_ID)
 
   const result = streamText({
     model,

@@ -18,7 +18,7 @@ export interface EarthdataSearchStackProps extends cdk.StackProps {
 const logGroupSuffix = ''
 
 const {
-  BEDROCK_MODEL_ID,
+  BEDROCK_MODEL_ID = 'amazon.nova-pro-v1:0',
   CACHE_KEY_EXPIRE_SECONDS = '84000',
   CLOUDFRONT_BUCKET_NAME = 'local-bucket',
   COLORMAP_JOB_ENABLED,
