@@ -973,7 +973,7 @@ const AccessMethod = ({
                     >
                       {
                         [
-                          ...(supportsNativeOutput ? [<option key="output-format-none" value="">No Data Conversion</option>] : []),
+                          ...((!isHarmony || supportsNativeOutput) ? [<option key="output-format-none" value="">No Data Conversion</option>] : []),
                           ...supportedOutputFormatOptions
                         ]
                       }
