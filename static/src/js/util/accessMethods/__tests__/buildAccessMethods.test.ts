@@ -1,13 +1,23 @@
 import { buildAccessMethods } from '../buildAccessMethods'
 
+// @ts-expect-error This file does not have types
 import * as buildDownload from '../buildAccessMethods/buildDownload'
+// @ts-expect-error This file does not have types
 import * as buildEcho from '../buildAccessMethods/buildEcho'
+// @ts-expect-error This file does not have types
 import * as buildEsi from '../buildAccessMethods/buildEsi'
 import * as buildHarmony from '../buildAccessMethods/buildHarmony'
+// @ts-expect-error This file does not have types
 import * as buildOpendap from '../buildAccessMethods/buildOpendap'
+// @ts-expect-error This file does not have types
 import * as buildSwodlr from '../buildAccessMethods/buildSwodlr'
 
+// @ts-expect-error This file does not have types
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import {
+  DerivedHarmonyState,
+  HarmonyCapabilitiesDocument
+} from '../../getDerivedHarmonyState/getDerivedHarmonyState'
 
 beforeEach(() => {
   vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
@@ -17,7 +27,7 @@ beforeEach(() => {
   }))
 })
 
-const harmonyCapabilitiesDocument = {
+const harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   conceptId: 'C100000-EDSC',
   shortName: 'MOCK_SHORT_NAME',
   summary: {
@@ -28,21 +38,10 @@ const harmonyCapabilitiesDocument = {
       variable: true
     },
     reprojection: {
-      supported: false,
-      supportedProjections: [],
-      interpolationMethods: []
+      supportedProjections: []
     },
     concatenation: false,
-    outputFormats: [
-      {
-        name: 'GeoTIFF',
-        mimeType: 'image/tiff'
-      },
-      {
-        name: 'NetCDF-4',
-        mimeType: 'application/x-netcdf4'
-      }
-    ]
+    outputFormats: []
   },
   services: [
     {
@@ -53,15 +52,68 @@ const harmonyCapabilitiesDocument = {
           shape: true,
           temporal: true,
           variable: true
-        }
-      }
+        },
+        concatenation: false,
+        reprojection: {
+          supportedProjections: []
+        },
+        outputFormats: []
+      },
+      href: ''
     }
   ],
   variables: [
     {
       name: 'mock_variable',
       href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
-      scienceKeywords: []
+      scienceKeywords: [],
+      longName: '',
+      units: ''
+    }
+  ]
+}
+
+const derivedHarmonyState: DerivedHarmonyState = {
+  capabilities: {
+    concatenate: {
+      disabled: true,
+      supported: false
+    },
+    outputFormats: {
+      disabled: true,
+      outputFormatAvailability: {},
+      supported: [],
+      value: ''
+    },
+    reproject: {
+      disabled: true,
+      outputProjectionAvailability: {},
+      supported: [],
+      value: ''
+    },
+    spatialSubset: {
+      disabled: false,
+      shapeDisabled: false,
+      supported: true
+    },
+    temporalSubset: {
+      disabled: false,
+      supported: true
+    },
+    variableSubset: {
+      disabled: false,
+      supported: true
+    }
+  },
+  collectionId: 'C100000-EDSC',
+  shortName: 'MOCK_SHORT_NAME',
+  variables: [
+    {
+      name: 'mock_variable',
+      href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+      scienceKeywords: [],
+      longName: '',
+      units: ''
     }
   ]
 }
@@ -79,14 +131,14 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {})
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
 
     expect(buildDownloadMock).toHaveBeenCalledTimes(1)
 
     expect(buildDownloadMock).toHaveBeenCalledWith({ items: [{ online_access_flag: true }] }, false)
   })
 
-  test('no access method is added if a non-existent service item is in the collection metadata', () => {
+  test('no access method is added if a non-existent service item is in the collection metadata and there is no capabilities document', () => {
     const collectionMetadata = {
       services: {
         items: [
@@ -116,7 +168,7 @@ describe('when buildAccessMethods is called', () => {
     const accessMethods = buildAccessMethods(
       collectionMetadata,
       isOpenSearch,
-      {}
+      null
     )
 
     expect(accessMethods).toEqual({})
@@ -167,7 +219,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {})
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
 
     expect(buildEchoMock).toHaveBeenCalledTimes(2)
 
@@ -242,7 +294,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {})
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
 
     expect(buildEsiMock).toHaveBeenCalledTimes(1)
 
@@ -281,14 +333,7 @@ describe('when buildAccessMethods is called', () => {
     expect(buildHarmonyMock).toHaveBeenNthCalledWith(
       1,
       harmonyCapabilitiesDocument,
-      {
-        concatenate: false,
-        reproject: false,
-        selectedOutputFormat: undefined,
-        spatialSubset: false,
-        temporalSubset: false,
-        variableSubset: false
-      }
+      {}
     )
   })
 
@@ -461,7 +506,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {})
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
 
     expect(buildOpendapMock).toHaveBeenCalledTimes(1)
 
@@ -741,7 +786,7 @@ describe('when buildAccessMethods is called', () => {
     }
     const isOpenSearch = false
 
-    buildAccessMethods(collectionMetadata, isOpenSearch, {})
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
 
     expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
 
@@ -1171,14 +1216,7 @@ describe('when buildAccessMethods is called', () => {
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
         harmonyCapabilitiesDocument,
-        {
-          concatenate: false,
-          reproject: false,
-          selectedOutputFormat: undefined,
-          spatialSubset: false,
-          temporalSubset: false,
-          variableSubset: false
-        }
+        {}
       )
 
       expect(buildOpendapMock).toHaveBeenNthCalledWith(
@@ -1489,53 +1527,36 @@ describe('when buildAccessMethods is called', () => {
             url: 'https://example.com'
           },
           harmony: {
-            outputFormatAvailability: {
-              GeoTIFF: false,
-              'NetCDF-4': false
-            },
+            outputFormatAvailability: {},
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
             harmonyCapabilitiesDocument,
+            derivedHarmonyState,
+            harmonyUserSelections: {},
             hierarchyMappings: [
               {
                 id: 'V100000-EDSC'
               }
             ],
             id: 'C100000-EDSC',
-            isOutputFormatsDisabled: false,
+            isConcatenationDisabled: true,
             isShapeSubsettingDisabled: false,
             isSpatialSubsettingDisabled: false,
             isTemporalSubsettingDisabled: false,
             isValid: true,
             isVariableSubsettingDisabled: false,
             keywordMappings: [],
+            outputProjectionAvailability: {},
             selectedOutputFormat: undefined,
+            selectedOutputProjection: undefined,
             selectedVariables: [],
             shortName: 'MOCK_SHORT_NAME',
-            supportedOutputFormats: [
-              {
-                mimeType: 'image/tiff',
-                name: 'GeoTIFF'
-              },
-              {
-                mimeType: 'application/x-netcdf4',
-                name: 'NetCDF-4'
-              }
-            ],
-            supportedOutputProjections: [
-              {
-                mimeType: 'image/tiff',
-                name: 'GeoTIFF'
-              },
-              {
-                mimeType: 'application/x-netcdf4',
-                name: 'NetCDF-4'
-              }
-            ],
-            supportsBoundingBoxSubsetting: true,
+            supportedOutputFormats: [],
+            supportedOutputProjections: [],
             supportsConcatenation: false,
-            supportsShapefileSubsetting: true,
+            supportsShapefileSubsetting: false,
+            supportsSpatialSubsetting: true,
             supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
             type: 'Harmony',
@@ -1543,8 +1564,10 @@ describe('when buildAccessMethods is called', () => {
             variables: {
               'V100000-EDSC': {
                 href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+                longName: '',
                 name: 'mock_variable',
-                scienceKeywords: []
+                scienceKeywords: [],
+                units: ''
               }
             }
           },

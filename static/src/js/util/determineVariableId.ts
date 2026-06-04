@@ -1,36 +1,6 @@
-import { HarmonyScienceKeyword } from './getDerivedHarmonyState/getDerivedHarmonyState'
+import { HarmonyVariable } from './getDerivedHarmonyState/getDerivedHarmonyState'
 
-/**
- * Represents the shape of a variable object from a UMM-S record.
- */
-interface UmmSVariable {
-  /** Concept Id of the variable */
-  conceptId?: string
-  /** Definition of the variable */
-  definition: string
-  /** Instance Information of the variable (if applicable) */
-  instanceInformation: null
-  /** Long Name of the variable */
-  longName: string
-  /** Name of the variable */
-  name: string
-  /** Native Id of the variable */
-  nativeId: string
-  /** Science Keywords of the variable */
-  scienceKeywords: HarmonyScienceKeyword[]
-}
-
-/**
- * Represents the shape of a variable object from a Harmony capabilities document.
- */
-interface HarmonyVariable {
-  /** Name of the variable */
-  name: string
-  /** CMR url of the variable */
-  href: string
-  /** Science Keywords of the variable */
-  scienceKeywords: HarmonyScienceKeyword[]
-}
+import { UmmSVariable } from '../types/sharedTypes'
 
 /**
  * Determines the variable ID from a variable object.
@@ -42,16 +12,17 @@ interface HarmonyVariable {
 export const determineVariableId = (
   variable: UmmSVariable | HarmonyVariable
 ): string | undefined => {
+  let variableId
   // Use a type guard to check for 'conceptId'.
   // The `variable.conceptId` check ensures we don't return an empty string.
   if ('conceptId' in variable && variable.conceptId) {
-    return variable.conceptId
+    variableId = variable.conceptId
   }
 
   // Use a type guard to check for 'href'. This is the fallback for Harmony variables.
   if ('href' in variable && variable.href) {
-    return variable.href.split('/').pop()
+    variableId = variable.href.split('/').pop()
   }
 
-  return undefined
+  return variableId
 }

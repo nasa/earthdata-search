@@ -1,7 +1,6 @@
-import { uniq } from 'lodash-es'
-
 import { getVariables } from '../getVariables'
 import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
+import { ousFormatMapping } from '../../../../../../sharedUtils/outputFormatMaps'
 
 /**
  * Builds the oPeNDAP access method
@@ -37,6 +36,13 @@ export const buildOpendap = (serviceItem, params) => {
     })
   }
 
+  const formattedOutputFormats = outputFormats
+    .filter((format) => ousFormatMapping[format] !== undefined)
+    .map((format) => ({
+      name: format,
+      mimeType: ousFormatMapping[format]
+    }))
+
   return [
     {
       hierarchyMappings,
@@ -45,10 +51,7 @@ export const buildOpendap = (serviceItem, params) => {
       keywordMappings,
       longName,
       name,
-      supportedOutputFormats: uniq(outputFormats).map((mimeType) => ({
-        name: mimeType,
-        mimeType
-      })),
+      supportedOutputFormats: formattedOutputFormats,
       supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
       type: serviceType,
       variables

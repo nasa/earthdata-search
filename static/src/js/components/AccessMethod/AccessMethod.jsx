@@ -69,16 +69,18 @@ const AccessMethod = ({
   }))
 
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
+  console.log("🚀 ~ AccessMethod.jsx:72 ~ AccessMethod ~ accessMethods:", accessMethods)
 
   const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
     outputFormatAvailability = {},
+    outputProjectionAvailability = {},
     form,
     rawModel = null,
     selectedVariables = [],
-    selectedOutputFormat = undefined,
-    selectedOutputProjection,
+    selectedOutputFormat = '',
+    selectedOutputProjection = '',
     supportedOutputFormats = [],
     supportedOutputProjections = [],
     supportsTemporalSubsetting = false,
@@ -508,9 +510,8 @@ const AccessMethod = ({
     // We filter the formats based on whether their mimeType exists in the ousFormatMapping,
     // then map the result to <option> elements.
     supportedOutputFormatOptions = supportedOutputFormats
-      .filter((format) => ousFormatMapping[format.mimeType] !== undefined)
       .map((format) => (
-        <option key={format.mimeType} value={ousFormatMapping[format.mimeType]}>
+        <option key={format.mimeType} value={format.mimeType}>
           {format.name}
         </option>
       ))
@@ -533,10 +534,16 @@ const AccessMethod = ({
       </option>
     ))
 
-    // Build options for supportedOutputProjections
-    supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
-      <option key={format.mimeType} value={format.mimeType}>
-        {format.name}
+    // The derived harmony state is the source of truth.
+    // The `outputFormatAvailability` object provides a true/false value for each format's name.
+    supportedOutputProjectionOptions = supportedOutputProjections.map((projection) => (
+      // We disable the option if its availability is `false`.
+      <option
+        key={projection.crs}
+        value={projection.crs}
+        disabled={!outputProjectionAvailability[projection.name]}
+      >
+        {`${projection.crs} | ${projection.name} `}
       </option>
     ))
   }
@@ -573,7 +580,7 @@ const AccessMethod = ({
       && supportsBoundingBoxSubsetting
       && !supportsShapefileSubsetting
       && nonBoundingBoxSpatialType)
-      || (isSpatialSubsettingSelected && isShapeSubsettingDisabled && nonBoundingBoxSpatialType)
+      || (!isSpatialSubsettingDisabled && isShapeSubsettingDisabled && nonBoundingBoxSpatialType)
     ) {
       warning = `Only bounding boxes are supported. Your ${nonBoundingBoxSpatialType} has been automatically converted into the bounding box shown above and outlined on the map.`
     }
@@ -672,41 +679,7 @@ const AccessMethod = ({
                 </div>
               }
               {
-                supportsConcatenation && (
-                  <ProjectPanelSection
-                    customHeadingTag="h4"
-                    heading="Combine Data"
-                    intro="Select from available operations to combine the data."
-                    nested
-                    faded={isConcatenationDisabled}
-                    disabled={isConcatenationDisabled}
-                  >
-                    <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
-                      <Form.Check
-                        id="input__concatinate-subsetting"
-                        type="checkbox"
-                        label={
-                          (
-                            <div>
-                              <span className="mb-1 d-block">
-                                Enable Concatenation
-                              </span>
-                              <span className="mb-1 d-block text-muted">
-                                Data will be concatenated along a newly created dimension
-                              </span>
-                            </div>
-                          )
-                        }
-                        checked={isConcatenateSelected}
-                        disabled={isRecurring}
-                        onChange={handleConcatenationSelection}
-                      />
-                    </Form.Group>
-                  </ProjectPanelSection>
-                )
-              }
-              {
-                (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
+                ((supportsShapefileSubsetting || supportsBoundingBoxSubsetting) || !isSpatialSubsettingDisabled) && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
                     heading="Spatial Subsetting"
@@ -733,15 +706,11 @@ const AccessMethod = ({
                               onChange={handleToggleSpatialSubsetting}
                               disabled={isSpatialSubsettingDisabled}
                             />
-                            {
-                              isSpatialSubsettingSelected && (
-                                <p className="access-method__section-status mt-2 mb-0">
-                                  Selected Area:
-                                  <br />
-                                  {selectedSpatialDisplay}
-                                </p>
-                              )
-                            }
+                            <p className="access-method__section-status mt-2 mb-0">
+                              Selected Area:
+                              <br />
+                              {selectedSpatialDisplay}
+                            </p>
                           </Form.Group>
                         )
                     }
@@ -784,15 +753,11 @@ const AccessMethod = ({
                             disabled={isRecurring || isTemporalSubsettingDisabled}
                             onChange={handleToggleTemporalSubsetting}
                           />
-                          {
-                            isTemporalSubsettingSelected && (
-                              <p className="access-method__section-status mt-2 mb-0">
-                                Selected Range:
-                                <br />
-                                {selectedTemporalDisplay}
-                              </p>
-                            )
-                          }
+                          <p className="access-method__section-status mt-2 mb-0">
+                            Selected Range:
+                            <br />
+                            {selectedTemporalDisplay}
+                          </p>
                         </Form.Group>
                       )
                     }
@@ -808,35 +773,10 @@ const AccessMethod = ({
                 )
               }
               {
-                supportedOutputFormatOptions.length > 0 && (
-                  <ProjectPanelSection
-                    customHeadingTag="h4"
-                    heading="Output Format"
-                    intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
-                    nested
-                  >
-                    <select
-                      id="input__output-format"
-                      className="form-select form-select-sm"
-                      onChange={handleOutputFormatSelection}
-                      value={selectedOutputFormat}
-                      data-testid="access-methods__output-format-options"
-                    >
-                      {
-                        [
-                          <option key="output-format-none" value="">No Data Conversion</option>,
-                          ...supportedOutputFormatOptions
-                        ]
-                      }
-                    </select>
-                  </ProjectPanelSection>
-                )
-              }
-              {
                 supportsVariableSubsetting && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Variables"
+                    heading="Variable Subsetting"
                     intro="Use science keywords to subset your collection granules by measurements and variables."
                     nested
                     disabled={isVariableSubsettingDisabled}
@@ -876,7 +816,66 @@ const AccessMethod = ({
                 )
               }
               {
-                supportedOutputProjectionOptions.length > 0 && (
+                supportsConcatenation && (
+                  <ProjectPanelSection
+                    customHeadingTag="h4"
+                    heading="Combine Data"
+                    intro="Select from available operations to combine the data."
+                    nested
+                    faded={isConcatenationDisabled}
+                    disabled={isConcatenationDisabled}
+                  >
+                    <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
+                      <Form.Check
+                        id="input__concatinate-subsetting"
+                        type="checkbox"
+                        label={
+                          (
+                            <div>
+                              <span className="mb-1 d-block">
+                                Enable Concatenation
+                              </span>
+                              <span className="mb-1 d-block text-muted">
+                                Data will be concatenated along a newly created dimension
+                              </span>
+                            </div>
+                          )
+                        }
+                        checked={isConcatenateSelected}
+                        disabled={isRecurring}
+                        onChange={handleConcatenationSelection}
+                      />
+                    </Form.Group>
+                  </ProjectPanelSection>
+                )
+              }
+              {
+                supportedOutputFormats.length > 0 && (
+                  <ProjectPanelSection
+                    customHeadingTag="h4"
+                    heading="Output Format Conversion"
+                    intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
+                    nested
+                  >
+                    <select
+                      id="input__output-format"
+                      className="form-select form-select-sm"
+                      onChange={handleOutputFormatSelection}
+                      value={selectedOutputFormat}
+                      data-testid="access-methods__output-format-options"
+                    >
+                      {
+                        [
+                          <option key="output-format-none" value="">Default Format</option>,
+                          ...supportedOutputFormatOptions
+                        ]
+                      }
+                    </select>
+                  </ProjectPanelSection>
+                )
+              }
+              {
+                supportedOutputProjections.length > 0 && (
                   <ProjectPanelSection
                     heading="Output Projection Selection"
                     intro="Choose a desired output projection from supported EPSG Codes."

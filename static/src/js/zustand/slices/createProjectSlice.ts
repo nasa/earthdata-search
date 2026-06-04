@@ -7,7 +7,6 @@ import { mbr } from '@edsc/geo-utils'
 // @ts-expect-error This file does not have types
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-// @ts-expect-error This file does not have types
 import { buildAccessMethods } from '../../util/accessMethods/buildAccessMethods'
 // @ts-expect-error This file does not have types
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
@@ -53,7 +52,8 @@ import type {
   ImmerStateCreator,
   ProjectGranuleResults,
   ProjectGranules,
-  AccessMethodTypes
+  AccessMethodTypes,
+  HarmonyAccessMethod
 } from '../types'
 
 import type {
@@ -68,9 +68,10 @@ import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
 import { getEdlToken, getUsername } from '../selectors/user'
 
-import
-getDerivedHarmonyState,
-{ HarmonyCapabilitiesDocument } from '../../util/getDerivedHarmonyState/getDerivedHarmonyState'
+import getDerivedHarmonyState, {
+  HarmonyCapabilitiesDocument,
+  UserSelections
+} from '../../util/getDerivedHarmonyState/getDerivedHarmonyState'
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
@@ -294,7 +295,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             })
 
             const { data } = harmonyCapabilitiesDocumentResponse
-            harmonyCapabilitiesDocuments[collectionId] = data
+
+            // Harmony will always return a response. If the requested collection Id is not valid with harmony,
+            // It will return an object with a an error code. Check for that code and if it exists set
+            // document to null
+            harmonyCapabilitiesDocuments[collectionId] = data.code ? null : data
           } catch (error) {
             zustandState.errors.handleError({
               error: error as Error,
@@ -762,7 +767,15 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
     // When users make a selection, recalculate what fields are enabled or disabled
     // based on those user selections and update them in Zustand
-    updateHarmonySelection: ({ collectionId, newSelections }) => {
+    updateHarmonySelection: (
+      {
+        collectionId,
+        newSelections
+      }: {
+        collectionId: string,
+        newSelections: UserSelections
+      }
+    ) => {
       set((state) => {
         const { collections } = state.project
         const { byId } = collections
@@ -777,22 +790,24 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
         // Type guard to ensure we have the correct method type ('Harmony')
         if (selectedMethod && selectedMethod.type === 'Harmony') {
+          const harmonyMethod = selectedMethod as HarmonyAccessMethod
+
           // Update selections we will use to getDerivedHarmonyState
           const updatedSelections = {
-            ...selectedMethod.harmonyUserSelections,
+            ...harmonyMethod.harmonyUserSelections,
             ...newSelections
           }
 
           // Update the harmony method's user selections
-          selectedMethod.harmonyUserSelections = updatedSelections
+          harmonyMethod.harmonyUserSelections = updatedSelections
 
           // Recalculate the derived state
-          selectedMethod.derivedHarmonyState = getDerivedHarmonyState(
+          harmonyMethod.derivedHarmonyState = getDerivedHarmonyState(
             updatedSelections,
-            selectedMethod.harmonyCapabilitiesDocument
+            harmonyMethod.harmonyCapabilitiesDocument
           )
 
-          const { capabilities } = selectedMethod.derivedHarmonyState
+          const { capabilities } = harmonyMethod.derivedHarmonyState
 
           if (!capabilities) return
 
@@ -801,33 +816,36 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             spatialSubset,
             outputFormats,
             variableSubset,
-            concatenate
+            concatenate,
+            reproject
           } = capabilities
 
           // Use the derived harmony state to set what is enabled or disabled
-          selectedMethod.enableTemporalSubsetting = updatedSelections.temporalSubset || false
+          harmonyMethod.enableTemporalSubsetting = updatedSelections.temporalSubset || false
 
-          selectedMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
+          harmonyMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
 
-          selectedMethod.enableConcatenateDownload = updatedSelections.concatenate || false
+          harmonyMethod.enableConcatenateDownload = updatedSelections.concatenate || false
 
-          selectedMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat || undefined
+          harmonyMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat || ''
 
-          selectedMethod.selectedVariables = updatedSelections.selectedVariables || []
+          harmonyMethod.selectedOutputProjection = updatedSelections.selectedOutputProjection || ''
 
-          selectedMethod.outputFormatAvailability = outputFormats.outputFormatAvailability
+          harmonyMethod.selectedVariables = updatedSelections.selectedVariables || []
 
-          selectedMethod.isTemporalSubsettingDisabled = temporalSubset.disabled
+          harmonyMethod.outputFormatAvailability = outputFormats.outputFormatAvailability
 
-          selectedMethod.isSpatialSubsettingDisabled = spatialSubset.disabled
+          harmonyMethod.outputProjectionAvailability = reproject.outputProjectionAvailability
 
-          selectedMethod.isShapeSubsettingDisabled = spatialSubset.shapeDisabled
+          harmonyMethod.isTemporalSubsettingDisabled = temporalSubset.disabled
 
-          selectedMethod.isOutputFormatsDisabled = outputFormats.disabled
+          harmonyMethod.isSpatialSubsettingDisabled = spatialSubset.disabled
 
-          selectedMethod.isVariableSubsettingDisabled = variableSubset.disabled
+          harmonyMethod.isShapeSubsettingDisabled = spatialSubset.shapeDisabled
 
-          selectedMethod.isConcatenationDisabled = concatenate.disabled
+          harmonyMethod.isVariableSubsettingDisabled = variableSubset.disabled
+
+          harmonyMethod.isConcatenationDisabled = concatenate.disabled
         }
       })
     },
@@ -843,6 +861,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         enableSpatialSubsetting: 'spatialSubset',
         enableTemporalSubsetting: 'temporalSubset',
         selectedOutputFormat: 'selectedOutputFormat',
+        selectedOutputProjection: 'selectedOutputProjection',
         selectedVariables: 'selectedVariables'
       }
 
@@ -866,6 +885,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             newSelections
           })
         }
+
+        // Prevents a second set() from being called below
+        return
       }
 
       set((state) => {
@@ -877,14 +899,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
         if (!collection?.accessMethods || !oldMethod) return
 
-        if (collection) {
-          collection.accessMethods = {
-            ...collection.accessMethods,
-            [methodKey]: {
-              ...(oldMethod as AccessMethodTypes),
-              ...(newMethod as AccessMethodTypes)
-            }
-          }
+        if (collection && collection.accessMethods) {
+          collection.accessMethods[methodKey] = {
+            ...oldMethod,
+            ...newMethod
+          } as AccessMethodTypes
         }
       })
     },

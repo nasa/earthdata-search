@@ -7,6 +7,7 @@ import type { FeatureCollection, GeoJsonObject } from 'geojson'
 import type { Style } from 'ol/style'
 import type { crsProjections } from '../util/map/crs'
 import type { PreferencesData, MapLayer } from '../zustand/types'
+import { HarmonyScienceKeyword } from '../util/getDerivedHarmonyState/getDerivedHarmonyState'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -534,22 +535,7 @@ export type Shapefile = {
   selectedFeatures: string[]
 }
 
-export type ScienceKeyword = {
-  /** The science keyword detailed variable name */
-  detailed_variable?: string
-  /** The science keyword term */
-  term?: string
-  /** The science keyword topic */
-  topic?: string
-  /** The science keyword variable level 1 name */
-  variable_level_1?: string
-  /** The science keyword variable level 2 name */
-  variable_level_2?: string
-  /** The science keyword variable level 3 name */
-  variable_level_3?: string
-}
-
-export type VariableMetadata = {
+export type UmmSVariable = {
   /** The variable concept ID */
   conceptId: string
   /** The variable definition */
@@ -566,7 +552,7 @@ export type VariableMetadata = {
     directDistributionInformation?: Record<string, unknown>
     /** Description of the chunking strategy for the store */
     chunkingInformation?: string
-  }
+  } | null
   /** The variable long name */
   longName: string
   /** The variable name */
@@ -574,7 +560,7 @@ export type VariableMetadata = {
   /** The variable native ID */
   nativeId: string
   /** The variable science keywords */
-  scienceKeywords: ScienceKeyword[]
+  scienceKeywords: HarmonyScienceKeyword[]
 }
 
 export type Subscription = {

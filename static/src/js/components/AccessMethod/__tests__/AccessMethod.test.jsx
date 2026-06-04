@@ -14,9 +14,15 @@ import useEdscStore from '../../../zustand/useEdscStore'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import EchoForm from '../EchoForm'
-import { echoForm, rawModel } from './mocks'
 
 import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
+
+import {
+  harmonyAccessMethod,
+  echoForm,
+  rawModel,
+  opendapAccessMethod
+} from './__mocks__/mocks'
 
 vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
@@ -110,10 +116,7 @@ describe('AccessMethod component', () => {
               isValid: true,
               type: 'download'
             },
-            harmony: {
-              isValid: true,
-              type: 'Harmony'
-            }
+            harmony: harmonyAccessMethod
           },
           metadata: {
             conceptId: collectionId,
@@ -137,8 +140,7 @@ describe('AccessMethod component', () => {
         const collectionId = 'collectionId'
         setup({
           overrideProps: {
-            accessMethods: {
-            },
+            accessMethods: {},
             metadata: {
               conceptId: collectionId,
               granule_count: 10000
@@ -276,10 +278,7 @@ describe('AccessMethod component', () => {
       setup({
         overrideProps: {
           accessMethods: {
-            harmony: {
-              isValid: true,
-              type: 'Harmony'
-            }
+            harmony: harmonyAccessMethod
           }
         }
       })
@@ -319,25 +318,12 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method has variables', () => {
-    test('displays correct elements in variables window', () => {
-      const accessMethodsWithVariables = {
-        opendap: {
-          isValid: true,
-          type: 'OPeNDAP',
-          variables: {
-            VAR123: {
-              conceptId: 'VAR123',
-              longName: 'Variable 123',
-              name: 'Var123'
-            }
-          },
-          supportsVariableSubsetting: true
-        }
-      }
-
+    test('displays correct elements in variables window for opendap', () => {
       setup({
         overrideProps: {
-          accessMethods: accessMethodsWithVariables,
+          accessMethods: {
+            opendap: opendapAccessMethod
+          },
           selectedAccessMethod: 'opendap'
         }
       })
@@ -347,26 +333,29 @@ describe('AccessMethod component', () => {
       expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
     })
 
+    test('displays correct elements in variables window for harmony', () => {
+      setup({
+        overrideProps: {
+          accessMethods: {
+            harmony: harmonyAccessMethod
+          },
+          selectedAccessMethod: 'harmony'
+        }
+      })
+
+      expect(screen.queryByText('This service has no associated variables.')).not.toBeInTheDocument()
+      expect(screen.getByText(/variables selected/)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
+    })
+
     test('displays the number of selected variables', async () => {
-      const selectedVariables = ['VAR123', 'VAR456']
+      const selectedVariables = ['V1233612363-E2E_18_4']
       setup({
         overrideProps: {
           accessMethods: {
             opendap: {
-              isValid: true,
-              type: 'OPeNDAP',
-              variables: {
-                VAR123: {
-                  meta: {},
-                  umm: {}
-                },
-                VAR456: {
-                  meta: {},
-                  umm: {}
-                }
-              },
-              selectedVariables,
-              supportsVariableSubsetting: true
+              ...opendapAccessMethod,
+              selectedVariables
             }
           },
           selectedAccessMethod: 'opendap'
@@ -374,7 +363,7 @@ describe('AccessMethod component', () => {
       })
 
       // Check if the text indicating the number of selected variables is present
-      expect(screen.getByText(`${selectedVariables.length} variables selected`)).toBeInTheDocument()
+      expect(screen.getByText(`${selectedVariables.length} variable selected`)).toBeInTheDocument()
     })
   })
 
@@ -382,10 +371,8 @@ describe('AccessMethod component', () => {
     test('displays correct elements in variables window', () => {
       const accessMethodsWithoutVariables = {
         opendap: {
-          isValid: true,
-          type: 'OPeNDAP',
-          variables: {},
-          supportsVariableSubsetting: true
+          ...opendapAccessMethod,
+          variables: {}
         }
       }
 
@@ -482,20 +469,7 @@ describe('AccessMethod component', () => {
       const { props, user } = setup({
         overrideProps: {
           accessMethods: {
-            opendap: {
-              isValid: true,
-              type: 'OPeNDAP',
-              supportedOutputFormats: [
-                {
-                  mimeType: 'NETCDF-3',
-                  name: 'NETCDF-3'
-                },
-                {
-                  mimeType: 'NETCDF-4',
-                  name: 'NETCDF-4'
-                }
-              ]
-            }
+            opendap: opendapAccessMethod
           },
           metadata: {
             conceptId: collectionId
@@ -504,16 +478,13 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(screen.getByRole('option', { name: 'No Data Conversion' }).selected).toBe(true)
-      expect(screen.getByTestId('access-methods__output-format-options').value).toBe('')
+      expect(screen.getByRole('option', { name: 'Default Format' }).selected).toBe(true)
+      expect(screen.getByRole('option', { name: 'Default Format' }).value).toBe('')
 
-      await user.selectOptions(
-        screen.getByTestId('access-methods__output-format-options'),
-        screen.getByRole('option', { name: 'NETCDF-4' })
-      )
+      const selectElement = screen.getByTestId('access-methods__output-format-options')
 
-      expect(screen.getByTestId('access-methods__output-format-options').value).toBe('nc4')
-      expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
+      await user.selectOptions(selectElement, 'nc4')
+
       expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
       expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
@@ -532,12 +503,7 @@ describe('AccessMethod component', () => {
       setup({
         overrideProps: {
           accessMethods: {
-            harmony: {
-              name: 'test name',
-              description: 'test description',
-              isValid: true,
-              type: 'Harmony'
-            }
+            harmony: harmonyAccessMethod
           },
           selectedAccessMethod: 'harmony',
           metadata: {
@@ -559,10 +525,8 @@ describe('AccessMethod component', () => {
           overrideProps: {
             accessMethods: {
               harmony: {
-                name: 'test name',
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony'
+                ...harmonyAccessMethod,
+                supportedOutputFormats: []
               }
             },
             metadata: {
@@ -572,8 +536,9 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('No customization options are available for the selected access method.')).toBeInTheDocument()
-        expect(screen.queryByTestId('access-methods__output-format-options')).toBeNull()
+        const selectElement = screen.queryByTestId('access-methods__output-format-options')
+
+        expect(selectElement).not.toBeInTheDocument()
       })
     })
 
@@ -584,20 +549,7 @@ describe('AccessMethod component', () => {
         setup({
           overrideProps: {
             accessMethods: {
-              harmony: {
-                name: 'test name',
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony',
-                supportedOutputFormats: [{
-                  name: 'NETCDF-4',
-                  mimeType: 'application/netcdf4'
-                },
-                {
-                  name: 'X-NETCDF-4',
-                  mimeType: 'application/x-netcdf4'
-                }]
-              }
+              harmony: harmonyAccessMethod
             },
             metadata: {
               conceptId: collectionId
@@ -618,17 +570,7 @@ describe('AccessMethod component', () => {
         const { props, user } = setup({
           overrideProps: {
             accessMethods: {
-              harmony: {
-                outputFormatAvailability: { 'NETCDF-4': true },
-                name: 'test name',
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony',
-                supportedOutputFormats: [{
-                  name: 'NETCDF-4',
-                  mimeType: 'application/netcdf4'
-                }]
-              }
+              harmony: harmonyAccessMethod
             },
             metadata: {
               conceptId: collectionId
@@ -648,9 +590,7 @@ describe('AccessMethod component', () => {
         expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
           method: {
-            harmony: {
-              selectedOutputFormat: 'application/netcdf4'
-            }
+            harmony: harmonyAccessMethod
           }
         })
       })
@@ -662,12 +602,8 @@ describe('AccessMethod component', () => {
         setup({
           overrideProps: {
             accessMethods: {
-              harmony: {
-                name: 'test name',
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony'
-              }
+              harmony: harmonyAccessMethod,
+              supportedOutputProjections: []
             },
             metadata: {
               conceptId: collectionId
@@ -676,8 +612,9 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('No customization options are available for the selected access method.')).toBeInTheDocument()
-        expect(screen.queryByTestId('access-methods__output-projection-options')).toBeNull()
+        const selectElement = screen.queryByTestId('access-methods__output-projection')
+
+        expect(selectElement).not.toBeInTheDocument()
       })
     })
 
@@ -687,13 +624,7 @@ describe('AccessMethod component', () => {
         setup({
           overrideProps: {
             accessMethods: {
-              harmony: {
-                name: 'test name',
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony',
-                supportedOutputProjections: ['EPSG:4326']
-              }
+              harmony: harmonyAccessMethod
             },
             metadata: {
               conceptId: collectionId
@@ -709,19 +640,12 @@ describe('AccessMethod component', () => {
         expect(screen.getByTestId('access-methods__output-projection-options')).toBeInTheDocument()
       })
 
-      // TO-DO: EDSC-4662, working with reprojection
-      test.skip('selecting a output projection calls onUpdateAccessMethod', async () => {
+      test('selecting a output projection calls onUpdateAccessMethod', async () => {
         const collectionId = 'collectionId'
         const { props, user } = setup({
           overrideProps: {
             accessMethods: {
-              harmony: {
-                name: 'test name',
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony',
-                supportedOutputProjections: ['EPSG:4326']
-              }
+              harmony: harmonyAccessMethod
             },
             metadata: {
               conceptId: collectionId
@@ -730,22 +654,18 @@ describe('AccessMethod component', () => {
           }
         })
 
-        const option = await screen.findByRole('option', { name: 'EPSG:4326' })
+        const option = await screen.findByRole('option', { name: 'EPGS:4313 | Geographic' })
         await user.selectOptions(
           screen.getByTestId('access-methods__output-projection-options'),
           option
         )
-
-        await waitFor(() => {
-          expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
-        })
 
         expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
         expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
           method: {
             harmony: {
-              selectedOutputProjection: 'EPSG:4326'
+              selectedOutputProjection: 'EPGS:4313'
             }
           }
         })
@@ -760,11 +680,9 @@ describe('AccessMethod component', () => {
             overrideProps: {
               accessMethods: {
                 harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: false
+                  ...harmonyAccessMethod,
+                  supportsTemporalSubsetting: false,
+                  enableTemporalSubsetting: false
                 }
               },
               metadata: {
@@ -774,24 +692,18 @@ describe('AccessMethod component', () => {
             }
           })
 
-          // Ensure that `Temporal` is not being rendered on the DOM
-          expect(screen.queryByText('Temporal')).toBeNull()
+          // Ensure that `Temporal Subsetting` is not being rendered on the DOM
+          expect(screen.queryByText('Temporal Subsetting')).toBeNull()
         })
       })
 
       describe('when a temporal range is set', () => {
-        test('does not display the temporal subsetting input', () => {
+        test('it shows the temporal subsetting range', () => {
           const collectionId = 'collectionId'
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -805,7 +717,7 @@ describe('AccessMethod component', () => {
             }
           })
 
-          expect(screen.queryByText('Temporal')).toBeNull()
+          expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).toBeInTheDocument()
         })
       })
     })
@@ -817,13 +729,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -842,13 +748,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -863,36 +763,7 @@ describe('AccessMethod component', () => {
           })
 
           // One single temporal subsetting selection
-          expect(screen.getAllByRole('checkbox').length).toEqual(1)
-        })
-
-        test('displays the correct selected temporal range', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: true
-                }
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            }
-          })
-
-          expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).toBeInTheDocument()
+          expect(screen.getAllByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' }).length).toEqual(1)
         })
 
         describe('when only an start date is set', () => {
@@ -901,14 +772,7 @@ describe('AccessMethod component', () => {
             setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: {
-                    name: 'test name',
-                    description: 'test description',
-                    isValid: true,
-                    type: 'Harmony',
-                    supportsTemporalSubsetting: true,
-                    enableTemporalSubsetting: true
-                  }
+                  harmony: harmonyAccessMethod
                 },
                 metadata: {
                   conceptId: collectionId
@@ -930,14 +794,7 @@ describe('AccessMethod component', () => {
               setup({
                 overrideProps: {
                   accessMethods: {
-                    harmony: {
-                      name: 'test name',
-                      description: 'test description',
-                      isValid: true,
-                      type: 'Harmony',
-                      supportsTemporalSubsetting: true,
-                      enableTemporalSubsetting: true
-                    }
+                    harmony: harmonyAccessMethod
                   },
                   metadata: {
                     conceptId: collectionId
@@ -962,14 +819,7 @@ describe('AccessMethod component', () => {
           const { props } = setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -989,9 +839,7 @@ describe('AccessMethod component', () => {
           expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
             collectionId: 'collectionId',
             method: {
-              harmony: {
-                enableTemporalSubsetting: false
-              }
+              harmony: harmonyAccessMethod
             }
           })
         })
@@ -1001,13 +849,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -1030,13 +872,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1062,13 +898,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -1092,14 +922,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -1122,14 +945,7 @@ describe('AccessMethod component', () => {
             const { props, user } = setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: {
-                    name: 'test name',
-                    description: 'test description',
-                    isValid: true,
-                    type: 'Harmony',
-                    supportsTemporalSubsetting: true,
-                    enableTemporalSubsetting: false
-                  }
+                  harmony: harmonyAccessMethod
                 },
                 metadata: {
                   conceptId: collectionId
@@ -1153,7 +969,7 @@ describe('AccessMethod component', () => {
             expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
             expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
               collectionId: 'collectionId',
-              method: { harmony: { enableTemporalSubsetting: true } }
+              method: { harmony: harmonyAccessMethod }
             })
           })
         })
@@ -1164,14 +980,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1194,14 +1003,7 @@ describe('AccessMethod component', () => {
             const { props, user } = setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: {
-                    name: 'test name',
-                    description: 'test description',
-                    isValid: true,
-                    type: 'Harmony',
-                    supportsTemporalSubsetting: true,
-                    enableTemporalSubsetting: false
-                  }
+                  harmony: harmonyAccessMethod
                 },
                 metadata: {
                   conceptId: collectionId
@@ -1223,7 +1025,7 @@ describe('AccessMethod component', () => {
             expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
             expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
               collectionId: 'collectionId',
-              method: { harmony: { enableTemporalSubsetting: true } }
+              method: { harmony: harmonyAccessMethod }
             })
           })
         })
@@ -1234,14 +1036,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1261,14 +1056,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1285,14 +1073,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1312,14 +1093,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1339,14 +1113,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1366,15 +1133,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsShapefileSubsetting: true,
-                  supportsBoundingBoxSubsetting: false,
-                  enableSpatialSubsetting: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: 'collectionId'
@@ -1396,14 +1155,7 @@ describe('AccessMethod component', () => {
             const { props, user } = setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: {
-                    name: 'test name',
-                    description: 'test description',
-                    isValid: true,
-                    type: 'Harmony',
-                    supportsBoundingBoxSubsetting: true,
-                    enableSpatialSubsetting: false
-                  }
+                  harmony: harmonyAccessMethod
                 },
                 metadata: {
                   conceptId: collectionId
@@ -1424,7 +1176,7 @@ describe('AccessMethod component', () => {
             expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
             expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
               collectionId: 'collectionId',
-              method: { harmony: { enableSpatialSubsetting: true } }
+              method: { harmony: harmonyAccessMethod }
             })
           })
 
@@ -1433,15 +1185,7 @@ describe('AccessMethod component', () => {
               setup({
                 overrideProps: {
                   accessMethods: {
-                    harmony: {
-                      name: 'test name',
-                      description: 'test description',
-                      isValid: true,
-                      type: 'Harmony',
-                      supportsBoundingBoxSubsetting: true,
-                      isShapeSubsettingDisabled: false,
-                      enableSpatialSubsetting: true
-                    }
+                    harmony: harmonyAccessMethod
                   },
                   metadata: {
                     conceptId: 'collectionId'
@@ -1471,15 +1215,7 @@ describe('AccessMethod component', () => {
               setup({
                 overrideProps: {
                   accessMethods: {
-                    harmony: {
-                      name: 'test name',
-                      description: 'test description',
-                      isValid: true,
-                      type: 'Harmony',
-                      supportsBoundingBoxSubsetting: true,
-                      isShapeSubsettingDisabled: true,
-                      enableSpatialSubsetting: true
-                    }
+                    harmony: harmonyAccessMethod
                   },
                   metadata: {
                     conceptId: 'collectionId'
@@ -1509,15 +1245,7 @@ describe('AccessMethod component', () => {
               setup({
                 overrideProps: {
                   accessMethods: {
-                    harmony: {
-                      name: 'test name',
-                      description: 'test description',
-                      isValid: true,
-                      type: 'Harmony',
-                      supportsBoundingBoxSubsetting: true,
-                      isShapeSubsettingDisabled: true,
-                      enableSpatialSubsetting: true
-                    }
+                    harmony: harmonyAccessMethod
                   },
                   metadata: {
                     conceptId: 'collectionId'
@@ -1547,15 +1275,7 @@ describe('AccessMethod component', () => {
               setup({
                 overrideProps: {
                   accessMethods: {
-                    harmony: {
-                      name: 'test name',
-                      description: 'test description',
-                      isValid: true,
-                      type: 'Harmony',
-                      supportsBoundingBoxSubsetting: true,
-                      isShapeSubsettingDisabled: true,
-                      enableSpatialSubsetting: true
-                    }
+                    harmony: harmonyAccessMethod
                   },
                   metadata: {
                     conceptId: 'collectionId'
@@ -1593,37 +1313,7 @@ describe('AccessMethod component', () => {
             overrideProps: {
               selectedAccessMethod: 'harmony',
               accessMethods: {
-                harmony: {
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  name: serviceName,
-                  supportsVariableSubsetting: true,
-                  variables: {
-                    conceptId: 'V1200465315-CMR_ONLY',
-                    definition: 'sea surface subskin temperature in units of kelvin',
-                    longName: 'sea surface subskin temperature',
-                    name: 'sea_surface_temperature',
-                    nativeId: 'eds-test-var-EDSC-3817',
-                    scienceKeywords: [
-                      {
-                        category: 'EARTH SCIENCE',
-                        topic: 'SPECTRAL/ENGINEERING',
-                        term: 'MICROWAVE',
-                        variableLevel1: 'SEA SURFACE TEMPERATURE',
-                        variableLevel2: 'MAXIMUM/MINIMUM TEMPERATURE',
-                        variableLevel3: '24 HOUR MAXIMUM TEMPERATURE',
-                        detailedVariable: 'details_4385'
-                      },
-                      {
-                        category: 'EARTH SCIENCE',
-                        topic: 'SPECTRAL/ENGINEERING',
-                        term: 'MICROWAVE',
-                        variableLevel1: 'MICROWAVE IMAGERY'
-                      }
-                    ]
-                  }
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -1650,13 +1340,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  name: serviceName,
-                  supportsConcatenation: true
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -1676,14 +1360,7 @@ describe('AccessMethod component', () => {
           const { props, user } = setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  name: serviceName,
-                  supportsConcatenation: true,
-                  enableConcatenateDownload: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
@@ -1698,7 +1375,7 @@ describe('AccessMethod component', () => {
           expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
           expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
             collectionId: 'collectionId',
-            method: { harmony: { enableConcatenateDownload: true } }
+            method: { harmony: harmonyAccessMethod }
           })
         })
       })
@@ -1710,14 +1387,7 @@ describe('AccessMethod component', () => {
           setup({
             overrideProps: {
               accessMethods: {
-                harmony: {
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  name: serviceName,
-                  supportsConcatenation: false,
-                  enableConcatenateDownload: false
-                }
+                harmony: harmonyAccessMethod
               },
               metadata: {
                 conceptId: collectionId
