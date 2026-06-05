@@ -182,6 +182,8 @@ export interface DerivedHarmonyState {
       disabled: boolean
       /** Flag to indicate services that support spatial do not support shape subsetting */
       shapeDisabled: boolean
+      /** Flag to indicate services that support spatial do not support bounding box subsetting */
+      bboxDisabled: boolean
     }
     /** The derived state for temporal subsetting */
     temporalSubset: {
@@ -371,7 +373,8 @@ export const getDerivedHarmonyState = (
       spatialSubset: {
         supported: summaryBbox,
         disabled: disabledCapabilities.spatialSubset,
-        shapeDisabled: disabledCapabilities.shape
+        shapeDisabled: disabledCapabilities.shape,
+        bboxDisabled: disabledCapabilities.bbox
       },
       temporalSubset: {
         supported: summaryTemporal,

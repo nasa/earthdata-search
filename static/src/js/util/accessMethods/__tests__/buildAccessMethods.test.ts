@@ -94,6 +94,7 @@ const derivedHarmonyState: DerivedHarmonyState = {
     spatialSubset: {
       disabled: false,
       shapeDisabled: false,
+      bboxDisabled: false,
       supported: true
     },
     temporalSubset: {
@@ -1541,7 +1542,6 @@ describe('when buildAccessMethods is called', () => {
             ],
             id: 'C100000-EDSC',
             isConcatenationDisabled: true,
-            isShapeSubsettingDisabled: false,
             isSpatialSubsettingDisabled: false,
             isTemporalSubsettingDisabled: false,
             isValid: true,
@@ -1555,7 +1555,8 @@ describe('when buildAccessMethods is called', () => {
             supportedOutputFormats: [],
             supportedOutputProjections: [],
             supportsConcatenation: false,
-            supportsShapefileSubsetting: false,
+            supportsShapefileSubsetting: true,
+            supportsBoundingBoxSubsetting: true,
             supportsSpatialSubsetting: true,
             supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
@@ -1612,15 +1613,15 @@ describe('when buildAccessMethods is called', () => {
             supportedOutputFormats: [
               {
                 name: 'ASCII',
-                mimeType: 'ASCII'
+                mimeType: 'ascii'
               },
               {
                 name: 'BINARY',
-                mimeType: 'BINARY'
+                mimeType: 'dods'
               },
               {
                 name: 'NETCDF-4',
-                mimeType: 'NETCDF-4'
+                mimeType: 'nc4'
               }
             ],
             supportsVariableSubsetting: true,

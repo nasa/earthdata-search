@@ -289,107 +289,40 @@ describe('AccessMethod component', () => {
         checked: false,
         description: 'Select from the parameters below to customize your download',
         details: 'Select options like variables, transformations, and output formats by applying parameters. Data will be staged in the cloud for download and analysis.',
+        disabled: false,
+        errorMessage: '',
         externalLink: {
           link: 'https://harmony.earthdata.nasa.gov/',
           message: 'What is Harmony?'
         },
+        isLoading: undefined,
         id: 'undefined_access-method__harmony_type',
         title: 'Customize Download',
-        value: 'HarmonyMethodType'
+        value: 'harmony'
       }), {})
 
       expect(AccessMethodRadio).toHaveBeenNthCalledWith(2, expect.objectContaining({
         checked: false,
         description: 'Select from the parameters below to customize your download',
         details: 'Select options like variables, transformations, and output formats by applying parameters. Data will be staged in the cloud for download and analysis.',
+        disabled: false,
+        errorMessage: '',
         externalLink: {
           link: 'https://harmony.earthdata.nasa.gov/',
           message: 'What is Harmony?'
         },
+        isLoading: undefined,
         id: 'undefined_access-method__harmony_type',
         title: 'Customize Download',
-        value: 'HarmonyMethodType'
+        value: 'harmony'
       }), {})
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
-      // Multiple `Harmony` services are possible for a collection
-      expect(directDownloadAccessMethodRadioButton.value).toEqual('HarmonyMethodType')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony')
     })
   })
 
-  describe('when the selected access method has variables', () => {
-    test('displays correct elements in variables window for opendap', () => {
-      setup({
-        overrideProps: {
-          accessMethods: {
-            opendap: opendapAccessMethod
-          },
-          selectedAccessMethod: 'opendap'
-        }
-      })
-
-      expect(screen.queryByText('This service has no associated variables.')).not.toBeInTheDocument()
-      expect(screen.getByText(/variables selected/)).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
-    })
-
-    test('displays correct elements in variables window for harmony', () => {
-      setup({
-        overrideProps: {
-          accessMethods: {
-            harmony: harmonyAccessMethod
-          },
-          selectedAccessMethod: 'harmony'
-        }
-      })
-
-      expect(screen.queryByText('This service has no associated variables.')).not.toBeInTheDocument()
-      expect(screen.getByText(/variables selected/)).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
-    })
-
-    test('displays the number of selected variables', async () => {
-      const selectedVariables = ['V1233612363-E2E_18_4']
-      setup({
-        overrideProps: {
-          accessMethods: {
-            opendap: {
-              ...opendapAccessMethod,
-              selectedVariables
-            }
-          },
-          selectedAccessMethod: 'opendap'
-        }
-      })
-
-      // Check if the text indicating the number of selected variables is present
-      expect(screen.getByText(`${selectedVariables.length} variable selected`)).toBeInTheDocument()
-    })
-  })
-
-  describe('when the selected access method has no variables', () => {
-    test('displays correct elements in variables window', () => {
-      const accessMethodsWithoutVariables = {
-        opendap: {
-          ...opendapAccessMethod,
-          variables: {}
-        }
-      }
-
-      setup({
-        overrideProps: {
-          accessMethods: accessMethodsWithoutVariables,
-          selectedAccessMethod: 'opendap'
-        }
-      })
-
-      expect(screen.getByText('No variables available for selected item.')).toBeInTheDocument()
-      expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
-      expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
-    })
-  })
-
-  describe('when the selected access method has an echoform', () => {
+  describe('Selected Access Method: Echo Forms/Echo Orders', () => {
     test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
 
@@ -463,7 +396,7 @@ describe('AccessMethod component', () => {
     })
   })
 
-  describe('when the selected access method is opendap', () => {
+  describe('Selected Access Method: OPeNDAP', () => {
     test('selecting a output format calls onUpdateAccessMethod', async () => {
       const collectionId = 'collectionId'
       const { props, user } = setup({
@@ -495,955 +428,159 @@ describe('AccessMethod component', () => {
         }
       })
     })
-  })
 
-  describe('when the selected access method type is harmony', () => {
-    test('sets the checkbox checked in Step 1 for "Customize Download"', () => {
-      const collectionId = 'collectionId'
-      setup({
-        overrideProps: {
-          accessMethods: {
-            harmony: harmonyAccessMethod
-          },
-          selectedAccessMethod: 'harmony',
-          metadata: {
-            conceptId: collectionId
-          }
-        }
-      })
-
-      const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
-
-      const radioInput = within(harmonyTypeInput).getByRole('radio')
-      expect(radioInput.checked).toBe(true)
-    })
-
-    describe('when supportedOutputFormats does not exist', () => {
-      test('does not display outputFormat field', () => {
-        const collectionId = 'collectionId'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              harmony: {
-                ...harmonyAccessMethod,
-                supportedOutputFormats: []
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'harmony'
-          }
-        })
-
-        const selectElement = screen.queryByTestId('access-methods__output-format-options')
-
-        expect(selectElement).not.toBeInTheDocument()
-      })
-    })
-
-    describe('when supportedOutputFormats exist', () => {
-      test('displays outputFormat field', async () => {
-        const collectionId = 'collectionId'
-
-        setup({
-          overrideProps: {
-            accessMethods: {
-              harmony: harmonyAccessMethod
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'harmony'
-          }
-        })
-
-        await waitFor(() => {
-          expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
-        })
-
-        expect(screen.getByTestId('access-methods__output-format-options')).toBeInTheDocument()
-      })
-
-      test('selecting an output format calls onUpdateAccessMethod', async () => {
-        const collectionId = 'collectionId'
-        const { props, user } = setup({
-          overrideProps: {
-            accessMethods: {
-              harmony: harmonyAccessMethod
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'harmony'
-          }
-        })
-
-        const option = await screen.findByRole('option', { name: 'NETCDF-4' })
-
-        await user.selectOptions(
-          screen.getByTestId('access-methods__output-format-options'),
-          option
-        )
-
-        expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-          collectionId: 'collectionId',
-          method: {
-            harmony: harmonyAccessMethod
-          }
-        })
-      })
-    })
-
-    describe('when supportedOutputProjections do not exist', () => {
-      test('does not display outputFormat field', () => {
-        const collectionId = 'collectionId'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              harmony: harmonyAccessMethod,
-              supportedOutputProjections: []
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'harmony'
-          }
-        })
-
-        const selectElement = screen.queryByTestId('access-methods__output-projection')
-
-        expect(selectElement).not.toBeInTheDocument()
-      })
-    })
-
-    describe('when supportedOutputProjections exist', () => {
-      test('displays outputProjection field', async () => {
-        const collectionId = 'collectionId'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              harmony: harmonyAccessMethod
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'harmony'
-          }
-        })
-
-        await waitFor(() => {
-          expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
-        })
-
-        expect(screen.getByTestId('access-methods__output-projection-options')).toBeInTheDocument()
-      })
-
-      test('selecting a output projection calls onUpdateAccessMethod', async () => {
-        const collectionId = 'collectionId'
-        const { props, user } = setup({
-          overrideProps: {
-            accessMethods: {
-              harmony: harmonyAccessMethod
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'harmony'
-          }
-        })
-
-        const option = await screen.findByRole('option', { name: 'EPGS:4313 | Geographic' })
-        await user.selectOptions(
-          screen.getByTestId('access-methods__output-projection-options'),
-          option
-        )
-
-        expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-          collectionId: 'collectionId',
-          method: {
-            harmony: {
-              selectedOutputProjection: 'EPGS:4313'
-            }
-          }
-        })
-      })
-    })
-
-    describe('when temporal subsetting is not supported', () => {
-      describe('when a temporal range is not set', () => {
-        test('does not display the temporal subsetting input', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: {
-                  ...harmonyAccessMethod,
-                  supportsTemporalSubsetting: false,
-                  enableTemporalSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony'
-            }
-          })
-
-          // Ensure that `Temporal Subsetting` is not being rendered on the DOM
-          expect(screen.queryByText('Temporal Subsetting')).toBeNull()
-        })
-      })
-
-      describe('when a temporal range is set', () => {
-        test('it shows the temporal subsetting range', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            }
-          })
-
-          expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).toBeInTheDocument()
-        })
-      })
-    })
-
-    describe('when temporal subsetting is supported', () => {
-      describe('when a temporal range is not set', () => {
-        test('displays a message about temporal subsetting', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony'
-            }
-          })
-
-          expect(screen.getByText('No temporal range selected. Make a temporal selection to enable temporal subsetting.')).toBeInTheDocument()
-        })
-      })
-
-      describe('when a temporal range is set', () => {
-        test('displays a checkbox input', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            }
-          })
-
-          // One single temporal subsetting selection
-          expect(screen.getAllByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' }).length).toEqual(1)
-        })
-
-        describe('when only an start date is set', () => {
-          test('displays the correct selected temporal range', () => {
+    describe('Variables Subsetting', () => {
+      describe('when variables subsetting is supported', () => {
+        describe('and when variables is an empty object', () => {
+          test('displays meaningful message', () => {
             const collectionId = 'collectionId'
+
             setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: harmonyAccessMethod
+                  opendap: {
+                    ...opendapAccessMethod,
+                    variables: {}
+                  }
                 },
                 metadata: {
                   conceptId: collectionId
                 },
-                selectedAccessMethod: 'harmony',
-                temporal: {
-                  startDate: '2008-06-27T00:00:00.979Z',
-                  isRecurring: false
-                }
+                selectedAccessMethod: 'opendap'
               }
             })
 
-            expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to Present')).toBeInTheDocument()
-          })
-
-          describe('when only an end date is set', () => {
-            test('displays the correct selected temporal range', () => {
-              const collectionId = 'collectionId'
-              setup({
-                overrideProps: {
-                  accessMethods: {
-                    harmony: harmonyAccessMethod
-                  },
-                  metadata: {
-                    conceptId: collectionId
-                  },
-                  selectedAccessMethod: 'harmony',
-                  temporal: {
-                    endDate: '2008-06-27T00:00:00.979Z',
-                    isRecurring: false
-                  }
-                }
-              })
-
-              expect(screen.getByText('Selected Range:Up to 2008-06-27 00:00:00')).toBeInTheDocument()
-            })
-          })
-        })
-      })
-
-      describe('when the temporal selection is recurring', () => {
-        test('sets the checkbox unchecked with onUpdateAccessMethod', async () => {
-          const collectionId = 'collectionId'
-          const { props } = setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                recurringDayStart: 0,
-                recurringDayEnd: 10,
-                isRecurring: true
-              }
-            }
-          })
-
-          expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-          expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-            collectionId: 'collectionId',
-            method: {
-              harmony: harmonyAccessMethod
-            }
+            expect(screen.getByText('No variables available for selected item.')).toBeInTheDocument()
+            expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
+            expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
           })
         })
 
-        test('sets the checkbox disabled', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                recurringDayStart: 0,
-                recurringDayEnd: 10,
-                isRecurring: true
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').disabled).toEqual(true)
-        })
-
-        test('sets a warning in the section', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                recurringDayStart: 0,
-                recurringDayEnd: 10,
-                isRecurring: true
-              }
-            }
-          })
-
-          expect(screen.getByText('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')).toBeInTheDocument()
-        })
-      })
-
-      describe('when enableTemporalSubsetting is not set', () => {
-        test('defaults the checkbox to unchecked', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-      })
-
-      describe('when enableTemporalSubsetting is set to true', () => {
-        test('sets the checkbox checked', () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(true)
-        })
-
-        describe('when the user clicks the checkbox', () => {
-          test('calls onUpdateAccessMethod and updates enableTemporalSubsetting to false', async () => {
+        describe('and when variables is a populated object', () => {
+          test('displays Edit Variables Button', () => {
             const collectionId = 'collectionId'
-            const { props, user } = setup({
+
+            setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: harmonyAccessMethod
+                  opendap: opendapAccessMethod
                 },
                 metadata: {
                   conceptId: collectionId
                 },
-                selectedAccessMethod: 'harmony',
-                temporal: {
-                  startDate: '2008-06-27T00:00:00.979Z',
-                  endDate: '2021-08-01T23:59:59.048Z',
-                  isRecurring: false
-                }
+                selectedAccessMethod: 'opendap'
               }
             })
 
-            const checkbox = screen.getByRole('checkbox')
-
-            // Ensure `checkbox` is false first
-            expect(checkbox.checked).toEqual(false)
-
-            await user.click(checkbox)
-
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-              collectionId: 'collectionId',
-              method: { harmony: harmonyAccessMethod }
-            })
+            expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
           })
         })
-      })
 
-      describe('when enableTemporalSubsetting is set to false', () => {
-        test('sets the checkbox unchecked', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-
-        describe('when the user clicks the checkbox for temporal subsetting', () => {
-          test('calls onUpdateAccessMethod and updates enableTemporalSubsetting to true', async () => {
-            const collectionId = 'collectionId'
-            const { props, user } = setup({
+        describe('when the variables have been selected', () => {
+          test('displays the number of selected variables', async () => {
+            const selectedVariables = ['V1233612363-E2E_18_4']
+            setup({
               overrideProps: {
                 accessMethods: {
-                  harmony: harmonyAccessMethod
-                },
-                metadata: {
-                  conceptId: collectionId
-                },
-                selectedAccessMethod: 'harmony',
-                temporal: {
-                  startDate: '2008-06-27T00:00:00.979Z',
-                  endDate: '2021-08-01T23:59:59.048Z',
-                  isRecurring: false
-                }
-              }
-            })
-
-            const checkbox = screen.getByRole('checkbox')
-            expect(checkbox.checked).toEqual(false)
-
-            await user.click(checkbox)
-
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-              collectionId: 'collectionId',
-              method: { harmony: harmonyAccessMethod }
-            })
-          })
-        })
-      })
-
-      describe('when enableSpatialSubsetting is set to false', () => {
-        test('sets the checkbox unchecked for boundingBox', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              spatial: {
-                ...emptySpatial,
-                boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-
-        test('no area selected shows up when not passing in a spatial value', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              spatial: {}
-            }
-          })
-
-          expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
-        })
-
-        test('sets the checkbox unchecked for circle', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              spatial: {
-                ...emptySpatial,
-                circle: ['64.125,7.8161,983270-18.28125']
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-
-        test('sets the checkbox unchecked for point', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              spatial: {
-                ...emptySpatial,
-                point: ['82.6875,-18.61541']
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-
-        test('sets the checkbox unchecked for line', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              spatial: {
-                ...emptySpatial,
-                line: ['82.6875,-18.61541,83.1231, -16.11311']
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-
-        test('sets the checkbox unchecked for shapefile', () => {
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony',
-              spatial: {
-                ...emptySpatial,
-                polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
-              }
-            }
-          })
-
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
-        })
-
-        describe('when the user clicks the checkbox for spatial subsetting', () => {
-          test('calls onUpdateAccessMethod and updates enableSpatialSubsetting', async () => {
-            const collectionId = 'collectionId'
-            const { props, user } = setup({
-              overrideProps: {
-                accessMethods: {
-                  harmony: harmonyAccessMethod
-                },
-                metadata: {
-                  conceptId: collectionId
-                },
-                selectedAccessMethod: 'harmony',
-                spatial: {
-                  ...emptySpatial,
-                  boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
-                }
-              }
-            })
-
-            const checkbox = screen.getByRole('checkbox')
-            expect(checkbox.checked).toEqual(false)
-
-            await user.click(checkbox)
-
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-              collectionId: 'collectionId',
-              method: { harmony: harmonyAccessMethod }
-            })
-          })
-
-          describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
-            test('displays a warning and a bounding box Selected Area', async () => {
-              setup({
-                overrideProps: {
-                  accessMethods: {
-                    harmony: harmonyAccessMethod
-                  },
-                  metadata: {
-                    conceptId: 'collectionId'
-                  },
-                  selectedAccessMethod: 'harmony',
-                  spatial: {
-                    ...emptySpatial,
-                    point: ['82.6875,-18.61541']
+                  opendap: {
+                    ...opendapAccessMethod,
+                    selectedVariables
                   }
-                }
-              })
-
-              // First alert is always there and tells users about parameters becoming disabled.
-              const mbrWarning = screen.getAllByRole('alert')
-              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your point has been automatically converted into the bounding box shown above and outlined on the map.')
-
-              const zustandState = useEdscStore.getState()
-              const { map } = zustandState
-              const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(1)
-              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-            })
-          })
-
-          describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
-            test('displays a warning and a bounding box Selected Area', async () => {
-              setup({
-                overrideProps: {
-                  accessMethods: {
-                    harmony: harmonyAccessMethod
-                  },
-                  metadata: {
-                    conceptId: 'collectionId'
-                  },
-                  selectedAccessMethod: 'harmony',
-                  spatial: {
-                    ...emptySpatial,
-                    circle: ['64.125,7.8161,983270-18.28125']
-                  }
-                }
-              })
-
-              // First alert is always there and tells users about parameters becoming disabled.
-              const mbrWarning = screen.getAllByRole('alert')
-              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your circle has been automatically converted into the bounding box shown above and outlined on the map.')
-
-              const zustandState = useEdscStore.getState()
-              const { map } = zustandState
-              const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(1)
-              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-            })
-          })
-
-          describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
-            test('displays a warning and a bounding box Selected Area', async () => {
-              setup({
-                overrideProps: {
-                  accessMethods: {
-                    harmony: harmonyAccessMethod
-                  },
-                  metadata: {
-                    conceptId: 'collectionId'
-                  },
-                  selectedAccessMethod: 'harmony',
-                  spatial: {
-                    ...emptySpatial,
-                    line: ['82.6875,-18.61541,83.1231, -16.11311']
-                  }
-                }
-              })
-
-              // First alert is always there and tells users about parameters becoming disabled.
-              const mbrWarning = screen.getAllByRole('alert')
-              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your line has been automatically converted into the bounding box shown above and outlined on the map.')
-
-              const zustandState = useEdscStore.getState()
-              const { map } = zustandState
-              const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(1)
-              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-            })
-          })
-
-          describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
-            test('displays a warning and a bounding box Selected Area', async () => {
-              setup({
-                overrideProps: {
-                  accessMethods: {
-                    harmony: harmonyAccessMethod
-                  },
-                  metadata: {
-                    conceptId: 'collectionId'
-                  },
-                  selectedAccessMethod: 'harmony',
-                  spatial: {
-                    ...emptySpatial,
-                    polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
-                  }
-                }
-              })
-
-              // First alert is always there and tells users about parameters becoming disabled.
-              const mbrWarning = screen.getAllByRole('alert')
-              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your polygon has been automatically converted into the bounding box shown above and outlined on the map.')
-
-              const zustandState = useEdscStore.getState()
-              const { map } = zustandState
-              const { setShowMbr } = map
-              expect(setShowMbr).toHaveBeenCalledTimes(1)
-              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-            })
-          })
-        })
-      })
-    })
-
-    describe('when a service name is passed in', () => {
-      describe('when the service type is `Harmony`', () => {
-        test('edit variables button calls `onSetActivePanel`', async () => {
-          const collectionId = 'collectionId'
-          const serviceName = 'harmony-service-name'
-
-          const { user } = setup({
-            overrideProps: {
-              selectedAccessMethod: 'harmony',
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
+                },
+                selectedAccessMethod: 'opendap'
               }
-            }
+            })
+
+            // Check if the text indicating the number of selected variables is present
+            expect(screen.getByText(`${selectedVariables.length} variable selected`)).toBeInTheDocument()
           })
-
-          const editVariablesBtn = screen.getByRole('button', { name: 'Edit Variables' })
-          await user.click(editVariablesBtn)
-
-          const zustandState = useEdscStore.getState()
-          const { projectPanels } = zustandState
-          const { setActivePanel } = projectPanels
-          expect(setActivePanel).toHaveBeenCalledTimes(1)
-          expect(setActivePanel).toHaveBeenCalledWith('0.0.1')
-        })
-      })
-
-      describe('when the service type is `Harmony` and concatenation is available', () => {
-        test('the `Combine Data` option is available when concatenation service is true', () => {
-          const collectionId = 'collectionId'
-          const serviceName = 'harmony-service-name'
-          const concatCheckboxName = 'Enable Concatenation Data will be concatenated along a newly created dimension'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony'
-            }
-          })
-
-          expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-
-          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(false)
-        })
-
-        test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
-          const collectionId = 'collectionId'
-          const serviceName = 'harmony-service-name'
-          const { props, user } = setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony'
-            }
-          })
-
-          expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-          await user.click(screen.getByRole('checkbox'))
-
-          expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-          expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-            collectionId: 'collectionId',
-            method: { harmony: harmonyAccessMethod }
-          })
-        })
-      })
-
-      describe('when the service type is `Harmony` and concatenation is unavailable', () => {
-        test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
-          const collectionId = 'collectionId'
-          const serviceName = 'harmony-service-name'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                harmony: harmonyAccessMethod
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony'
-            }
-          })
-
-          expect(screen.queryAllByText(/Combine Data/)).toHaveLength(0)
         })
       })
     })
   })
 
-  describe('when the selected access method is swodlr', () => {
-    describe('when there are less than 10 granules', () => {
-      test('SWODLR Option displayed', async () => {
-        const collectionId = 'collectionId'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              swodlr: {
-                type: 'SWODLR',
-                supportsSwodlr: true
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'swodlr',
-            projectCollection: {
-              isVisible: true,
-              granules: {
-                addedGranuleIds: [
-                  'G10000000000-EDSC',
-                  'G1000000001-EDSC'
-                ],
-                byId: {
-                  'G10000000000-EDSC': {
-                    id: 'G10000000000-EDSC'
-                  },
-                  'G1000000001-EDSC': {
-                    id: 'G1000000001-EDSC'
+  describe('Selected Access Method: SWODLR', () => {
+    describe('when the selected access method is swodlr', () => {
+      describe('when there are less than 10 granules', () => {
+        test('SWODLR Option displayed', async () => {
+          const collectionId = 'collectionId'
+          setup({
+            overrideProps: {
+              accessMethods: {
+                swodlr: {
+                  type: 'SWODLR',
+                  supportsSwodlr: true
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'swodlr',
+              projectCollection: {
+                isVisible: true,
+                granules: {
+                  addedGranuleIds: [
+                    'G10000000000-EDSC',
+                    'G1000000001-EDSC'
+                  ],
+                  byId: {
+                    'G10000000000-EDSC': {
+                      id: 'G10000000000-EDSC'
+                    },
+                    'G1000000001-EDSC': {
+                      id: 'G1000000001-EDSC'
+                    }
                   }
                 }
               }
             }
-          }
+          })
+
+          const swodlrText = await screen.findByText('Granule Extent')
+          expect(swodlrText).toBeInTheDocument()
         })
 
-        const swodlrText = await screen.findByText('Granule Extent')
-        expect(swodlrText).toBeInTheDocument()
+        describe('when the granule list contains undefined values', () => {
+          test('does not load the SWODLR form', async () => {
+            const collectionId = 'C1000000000-EDSC'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  swodlr: {
+                    type: 'SWODLR',
+                    supportsSwodlr: true
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'swodlr',
+                projectCollection: {
+                  isVisible: true,
+                  granules: {
+                    addedGranuleIds: [
+                      'G1000000000-EDSC',
+                      'G1000000001-EDSC',
+                      'G1000000002-EDSC'
+                    ],
+                    byId: {}
+                  }
+                }
+              }
+            })
+
+            await waitFor(() => {
+              const swodlrText = screen.queryByText('Granule Extent')
+
+              // The swodlr form will not load
+              expect(swodlrText).not.toBeInTheDocument()
+            })
+          })
+        })
       })
 
-      describe('when the granule list contains undefined values', () => {
-        test('does not load the SWODLR form', async () => {
+      describe('when there are more than 10 granules', () => {
+        test('SWODLR Options do not display', async () => {
           const collectionId = 'C1000000000-EDSC'
           setup({
             overrideProps: {
@@ -1468,6 +605,21 @@ describe('AccessMethod component', () => {
                   byId: {}
                 }
               }
+            },
+            overrideZustandState: {
+              granule: {
+                granuleMetadata: {
+                  'G1000000000-EDSC': {
+                    id: 'G1000000000-EDSC'
+                  },
+                  'G1000000001-EDSC': {
+                    id: 'G1000000001-EDSC'
+                  },
+                  'G1000000002-EDSC': {
+                    id: 'G1000000002-EDSC'
+                  }
+                }
+              }
             }
           })
 
@@ -1480,56 +632,839 @@ describe('AccessMethod component', () => {
         })
       })
     })
+  })
 
-    describe('when there are more than 10 granules', () => {
-      test('SWODLR Options do not display', async () => {
-        const collectionId = 'C1000000000-EDSC'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              swodlr: {
-                type: 'SWODLR',
-                supportsSwodlr: true
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'swodlr',
-            projectCollection: {
-              isVisible: true,
-              granules: {
-                addedGranuleIds: [
-                  'G1000000000-EDSC',
-                  'G1000000001-EDSC',
-                  'G1000000002-EDSC'
-                ],
-                byId: {}
-              }
-            }
+  describe('Selected Access Method: Harmony', () => {
+    test('sets the checkbox checked in Step 1 for "Customize Download"', () => {
+      const collectionId = 'collectionId'
+      setup({
+        overrideProps: {
+          accessMethods: {
+            harmony: harmonyAccessMethod
           },
-          overrideZustandState: {
-            granule: {
-              granuleMetadata: {
-                'G1000000000-EDSC': {
-                  id: 'G1000000000-EDSC'
-                },
-                'G1000000001-EDSC': {
-                  id: 'G1000000001-EDSC'
-                },
-                'G1000000002-EDSC': {
-                  id: 'G1000000002-EDSC'
-                }
-              }
-            }
+          selectedAccessMethod: 'harmony',
+          metadata: {
+            conceptId: collectionId
           }
+        }
+      })
+
+      const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
+
+      const radioInput = within(harmonyTypeInput).getByRole('radio')
+      expect(radioInput.checked).toBe(true)
+    })
+
+    describe('Spatial Subsetting', () => {
+      describe('when supportsSpatialSubsetting is set to false', () => {
+        describe('when a spatial range is not set', () => {
+          test('does not display the spatial subsetting input', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    supportsSpatialSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                spatial: {}
+              }
+            })
+
+            // Ensure that `Spatial Subsetting` is not being rendered on the DOM
+            expect(screen.queryByText('Spatial Subsetting')).toBeNull()
+          })
         })
 
-        await waitFor(() => {
-          const swodlrText = screen.queryByText('Granule Extent')
+        describe('when a spatial range is set', () => {
+          test('does not display the spatial subsetting input', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    supportsSpatialSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                spatial: {
+                  ...emptySpatial,
+                  boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+                }
+              }
+            })
 
-          // The swodlr form will not load
-          expect(swodlrText).not.toBeInTheDocument()
+            // Ensure that `Spatial Subsetting` is not being rendered on the DOM
+            expect(screen.queryByText('Spatial Subsetting')).toBeNull()
+          })
+        })
+      })
+
+      describe('when supportsSpatialSubsetting is set to true', () => {
+        describe('when enableSpatialSubsetting is set to false', () => {
+          test('sets the checkbox unchecked for boundingBox', () => {
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: 'collectionId'
+                },
+                selectedAccessMethod: 'harmony',
+                spatial: {
+                  ...emptySpatial,
+                  boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+                }
+              }
+            })
+
+            expect(screen.getByRole('checkbox', { name: 'Trim output granules to the selected spatial constraint' }).checked).toEqual(false)
+          })
+
+          test('no area selected shows up when not passing in a spatial value', () => {
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: 'collectionId'
+                },
+                selectedAccessMethod: 'harmony',
+                spatial: {}
+              }
+            })
+
+            expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
+          })
+
+          describe('when the user clicks the checkbox for spatial subsetting', () => {
+            test('calls onUpdateAccessMethod and updates enableSpatialSubsetting to true', async () => {
+              const collectionId = 'collectionId'
+              const { props, user } = setup({
+                overrideProps: {
+                  accessMethods: {
+                    harmony: harmonyAccessMethod
+                  },
+                  metadata: {
+                    conceptId: collectionId
+                  },
+                  selectedAccessMethod: 'harmony',
+                  spatial: {
+                    ...emptySpatial,
+                    boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+                  }
+                }
+              })
+
+              const checkbox = screen.getByRole('checkbox', { name: 'Trim output granules to the selected spatial constraint' })
+              expect(checkbox.checked).toEqual(false)
+
+              await user.click(checkbox)
+
+              expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+              expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
+                collectionId: 'collectionId',
+                method: {
+                  harmony: {
+                    enableSpatialSubsetting: true
+                  }
+                }
+              })
+            })
+
+            describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
+              test('displays a warning and a bounding box Selected Area', async () => {
+                setup({
+                  overrideProps: {
+                    accessMethods: {
+                      harmony: {
+                        ...harmonyAccessMethod,
+                        supportsShapefileSubsetting: false
+                      }
+                    },
+                    metadata: {
+                      conceptId: 'collectionId'
+                    },
+                    selectedAccessMethod: 'harmony',
+                    spatial: {
+                      ...emptySpatial,
+                      point: ['82.6875,-18.61541']
+                    }
+                  }
+                })
+
+                // First alert is always there and tells users about parameters becoming disabled.
+                const mbrWarning = screen.getAllByRole('alert')
+                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your point has been automatically converted into the bounding box shown above and outlined on the map.')
+
+                const zustandState = useEdscStore.getState()
+                const { map } = zustandState
+                const { setShowMbr } = map
+                expect(setShowMbr).toHaveBeenCalledTimes(1)
+                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+              })
+            })
+
+            describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
+              test('displays a warning and a bounding box Selected Area', async () => {
+                setup({
+                  overrideProps: {
+                    accessMethods: {
+                      harmony: {
+                        ...harmonyAccessMethod,
+                        supportsShapefileSubsetting: false
+                      }
+                    },
+                    metadata: {
+                      conceptId: 'collectionId'
+                    },
+                    selectedAccessMethod: 'harmony',
+                    spatial: {
+                      ...emptySpatial,
+                      circle: ['64.125,7.8161,983270-18.28125']
+                    }
+                  }
+                })
+
+                // First alert is always there and tells users about parameters becoming disabled.
+                const mbrWarning = screen.getAllByRole('alert')
+                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your circle has been automatically converted into the bounding box shown above and outlined on the map.')
+
+                const zustandState = useEdscStore.getState()
+                const { map } = zustandState
+                const { setShowMbr } = map
+                expect(setShowMbr).toHaveBeenCalledTimes(1)
+                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+              })
+            })
+
+            describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
+              test('displays a warning and a bounding box Selected Area', async () => {
+                setup({
+                  overrideProps: {
+                    accessMethods: {
+                      harmony: {
+                        ...harmonyAccessMethod,
+                        supportsShapefileSubsetting: false
+                      }
+                    },
+                    metadata: {
+                      conceptId: 'collectionId'
+                    },
+                    selectedAccessMethod: 'harmony',
+                    spatial: {
+                      ...emptySpatial,
+                      line: ['82.6875,-18.61541,83.1231, -16.11311']
+                    }
+                  }
+                })
+
+                // First alert is always there and tells users about parameters becoming disabled.
+                const mbrWarning = screen.getAllByRole('alert')
+                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your line has been automatically converted into the bounding box shown above and outlined on the map.')
+
+                const zustandState = useEdscStore.getState()
+                const { map } = zustandState
+                const { setShowMbr } = map
+                expect(setShowMbr).toHaveBeenCalledTimes(1)
+                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+              })
+            })
+
+            describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
+              test('displays a warning and a bounding box Selected Area', async () => {
+                setup({
+                  overrideProps: {
+                    accessMethods: {
+                      harmony: {
+                        ...harmonyAccessMethod,
+                        supportsShapefileSubsetting: false
+                      }
+                    },
+                    metadata: {
+                      conceptId: 'collectionId'
+                    },
+                    selectedAccessMethod: 'harmony',
+                    spatial: {
+                      ...emptySpatial,
+                      polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
+                    }
+                  }
+                })
+
+                // First alert is always there and tells users about parameters becoming disabled.
+                const mbrWarning = screen.getAllByRole('alert')
+                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your polygon has been automatically converted into the bounding box shown above and outlined on the map.')
+
+                const zustandState = useEdscStore.getState()
+                const { map } = zustandState
+                const { setShowMbr } = map
+                expect(setShowMbr).toHaveBeenCalledTimes(1)
+                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+              })
+            })
+          })
+        })
+      })
+    })
+
+    describe('Temporal Subsetting', () => {
+      describe('when temporal subsetting is not supported', () => {
+        describe('when a temporal range is not set', () => {
+          test('does not display the temporal subsetting input', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    supportsTemporalSubsetting: false,
+                    enableTemporalSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {}
+              }
+            })
+
+            // Ensure that `Temporal Subsetting` is not being rendered on the DOM
+            expect(screen.queryByText('Temporal Subsetting')).toBeNull()
+          })
+        })
+
+        describe('when a temporal range is set', () => {
+          test('it does not shows the temporal subsetting range', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    supportsTemporalSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {
+                  startDate: '2008-06-27T00:00:00.979Z',
+                  endDate: '2021-08-01T23:59:59.048Z',
+                  isRecurring: false
+                }
+              }
+            })
+
+            expect(screen.queryByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).not.toBeInTheDocument()
+          })
+        })
+      })
+
+      describe('when temporal subsetting is supported', () => {
+        describe('when a temporal range is not set', () => {
+          test('displays a message about temporal subsetting', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {}
+              }
+            })
+
+            expect(screen.getByText('No temporal range selected. Make a temporal selection to enable temporal subsetting.')).toBeInTheDocument()
+          })
+        })
+
+        describe('when a temporal range is set', () => {
+          test('displays a checkbox input', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {
+                  startDate: '2008-06-27T00:00:00.979Z',
+                  endDate: '2021-08-01T23:59:59.048Z',
+                  isRecurring: false
+                }
+              }
+            })
+
+            // One single temporal subsetting selection
+            expect(screen.getAllByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' }).length).toEqual(1)
+          })
+
+          describe('when only an start date is set', () => {
+            test('displays the correct selected temporal range', () => {
+              const collectionId = 'collectionId'
+              setup({
+                overrideProps: {
+                  accessMethods: {
+                    harmony: harmonyAccessMethod
+                  },
+                  metadata: {
+                    conceptId: collectionId
+                  },
+                  selectedAccessMethod: 'harmony',
+                  temporal: {
+                    startDate: '2008-06-27T00:00:00.979Z',
+                    isRecurring: false
+                  }
+                }
+              })
+
+              expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to Present')).toBeInTheDocument()
+            })
+
+            describe('when only an end date is set', () => {
+              test('displays the correct selected temporal range', () => {
+                const collectionId = 'collectionId'
+                setup({
+                  overrideProps: {
+                    accessMethods: {
+                      harmony: harmonyAccessMethod
+                    },
+                    metadata: {
+                      conceptId: collectionId
+                    },
+                    selectedAccessMethod: 'harmony',
+                    temporal: {
+                      endDate: '2008-06-27T00:00:00.979Z',
+                      isRecurring: false
+                    }
+                  }
+                })
+
+                expect(screen.getByText('Selected Range:Up to 2008-06-27 00:00:00')).toBeInTheDocument()
+              })
+            })
+          })
+        })
+
+        describe('when the temporal selection is recurring', () => {
+          test('disables checkbox and shows error', async () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {
+                  startDate: '2008-06-27T00:00:00.979Z',
+                  endDate: '2021-08-01T23:59:59.048Z',
+                  recurringDayStart: 0,
+                  recurringDayEnd: 10,
+                  isRecurring: true
+                }
+              }
+            })
+
+            expect(screen.getByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' })).toBeDisabled()
+            expect(screen.getByText('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')).toBeInTheDocument()
+          })
+        })
+
+        describe('when enableTemporalSubsetting is set to false', () => {
+          test('defaults the checkbox to unchecked', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {
+                  startDate: '2008-06-27T00:00:00.979Z',
+                  endDate: '2021-08-01T23:59:59.048Z',
+                  isRecurring: false
+                }
+              }
+            })
+
+            expect(screen.getByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' }).checked).toEqual(false)
+          })
+        })
+
+        describe('when enableTemporalSubsetting is set to true', () => {
+          test('sets the checkbox checked', () => {
+            const collectionId = 'collectionId'
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    enableTemporalSubsetting: true
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                temporal: {
+                  startDate: '2008-06-27T00:00:00.979Z',
+                  endDate: '2021-08-01T23:59:59.048Z',
+                  isRecurring: false
+                }
+              }
+            })
+
+            expect(screen.getByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' }).checked).toEqual(true)
+          })
+
+          describe('when the user clicks the checkbox', () => {
+            test('calls onUpdateAccessMethod and updates enableTemporalSubsetting to false', async () => {
+              const collectionId = 'collectionId'
+              const { props, user } = setup({
+                overrideProps: {
+                  accessMethods: {
+                    harmony: {
+                      ...harmonyAccessMethod,
+                      enableTemporalSubsetting: true
+                    }
+                  },
+                  metadata: {
+                    conceptId: collectionId
+                  },
+                  selectedAccessMethod: 'harmony',
+                  temporal: {
+                    startDate: '2008-06-27T00:00:00.979Z',
+                    endDate: '2021-08-01T23:59:59.048Z',
+                    isRecurring: false
+                  }
+                }
+              })
+
+              const checkbox = screen.getByRole('checkbox', { name: 'Trim output granules to the selected temporal constraint' })
+
+              // Ensure `checkbox` is true first
+              expect(checkbox.checked).toEqual(true)
+
+              await user.click(checkbox)
+
+              expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+              expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
+                collectionId: 'collectionId',
+                method: {
+                  harmony: {
+                    enableTemporalSubsetting: false
+                  }
+                }
+              })
+            })
+          })
+        })
+      })
+    })
+
+    describe('Output Formats', () => {
+      describe('when supportedOutputFormats is an empty array (not supported)', () => {
+        test('does not display outputFormat field', () => {
+          const collectionId = 'collectionId'
+          setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: {
+                  ...harmonyAccessMethod,
+                  supportedOutputFormats: []
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          const selectElement = screen.queryByTestId('access-methods__output-format-options')
+
+          expect(selectElement).not.toBeInTheDocument()
+        })
+      })
+
+      describe('when supportedOutputFormats is a populated array (supported)', () => {
+        test('displays outputFormat field', async () => {
+          const collectionId = 'collectionId'
+
+          setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: harmonyAccessMethod
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          await expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
+
+          expect(screen.getByTestId('access-methods__output-format-options')).toBeInTheDocument()
+        })
+
+        test('selecting an output format calls onUpdateAccessMethod', async () => {
+          const collectionId = 'collectionId'
+          const { props, user } = setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: harmonyAccessMethod
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          const option = await screen.findByRole('option', { name: 'NETCDF-4' })
+
+          await user.selectOptions(
+            screen.getByTestId('access-methods__output-format-options'),
+            option
+          )
+
+          expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: {
+              harmony: { selectedOutputFormat: 'application/netcdf' }
+            }
+          })
+        })
+
+        describe('when supportedOutputFormats contains options that are disabled', () => {
+          test('disables those options in dropdown', async () => {
+            const collectionId = 'collectionId'
+
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    outputFormatAvailability: { 'NETCDF-4': false }
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony'
+              }
+            })
+
+            await waitFor(() => {
+              expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
+            })
+
+            expect(screen.getByRole('option', { name: 'NETCDF-4' })).toBeDisabled()
+          })
+        })
+      })
+    })
+
+    describe('Output Projections', () => {
+      describe('when supportedOutputProjections is an empty array (not supported)', () => {
+        test('does not display outputFormat field', () => {
+          const collectionId = 'collectionId'
+          setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: harmonyAccessMethod,
+                supportedOutputProjections: []
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          const selectElement = screen.queryByTestId('access-methods__output-projection')
+
+          expect(selectElement).not.toBeInTheDocument()
+        })
+      })
+
+      describe('when supportedOutputProjections exist (supported)', () => {
+        test('displays outputProjection field', async () => {
+          const collectionId = 'collectionId'
+          setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: harmonyAccessMethod
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          await expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
+
+          expect(screen.getByTestId('access-methods__output-projection-options')).toBeInTheDocument()
+        })
+
+        test('selecting a output projection calls onUpdateAccessMethod', async () => {
+          const collectionId = 'collectionId'
+          const { props, user } = setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: harmonyAccessMethod
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          const option = await screen.findByRole('option', { name: 'EPGS:4313 | Geographic' })
+          await user.selectOptions(
+            screen.getByTestId('access-methods__output-projection-options'),
+            option
+          )
+
+          expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: {
+              harmony: {
+                selectedOutputProjection: 'EPGS:4313'
+              }
+            }
+          })
+        })
+
+        describe('when supportedOutputFormats contains options that are disabled', () => {
+          test('disables those options in dropdown', async () => {
+            const collectionId = 'collectionId'
+
+            setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    outputProjectionAvailability: { Geographic: false }
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony'
+              }
+            })
+
+            const option = await screen.findByRole('option', { name: 'EPGS:4313 | Geographic' })
+
+            expect(option).toBeDisabled()
+          })
+        })
+      })
+    })
+
+    describe('Concatenate', () => {
+      describe('when a service does not support concatenation', () => {
+        test('Combine Data box is absent', () => {
+          const collectionId = 'collectionId'
+          setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: harmonyAccessMethod
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          expect(screen.queryByText(/Combine Data/)).not.toBeInTheDocument()
+        })
+      })
+
+      describe('when a service supports concatenation', () => {
+        test('Combine Data box is populated', () => {
+          const collectionId = 'collectionId'
+          const concatCheckboxName = 'Enable Concatenation Data will be concatenated along a newly created dimension'
+          setup({
+            overrideProps: {
+              accessMethods: {
+                harmony: {
+                  ...harmonyAccessMethod,
+                  supportsConcatenation: true
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony'
+            }
+          })
+
+          expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
+
+          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(false)
+        })
+
+        describe('when a user checks the checkbox for concatenation', () => {
+          test('updates enableConcateDownload to true with on', async () => {
+            const collectionId = 'collectionId'
+            const concatCheckboxName = 'Enable Concatenation Data will be concatenated along a newly created dimension'
+            const { user, props } = setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: {
+                    ...harmonyAccessMethod,
+                    supportsConcatenation: true
+                  }
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony'
+              }
+            })
+
+            await user.click(screen.getByRole('checkbox', { name: concatCheckboxName }))
+
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
+              collectionId: 'collectionId',
+              method: { harmony: { enableConcatenateDownload: true } }
+            })
+          })
         })
       })
     })

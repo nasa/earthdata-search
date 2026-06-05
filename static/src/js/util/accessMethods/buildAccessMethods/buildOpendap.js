@@ -36,12 +36,21 @@ export const buildOpendap = (serviceItem, params) => {
     })
   }
 
-  const formattedOutputFormats = outputFormats
-    .filter((format) => ousFormatMapping[format] !== undefined)
-    .map((format) => ({
-      name: format,
-      mimeType: ousFormatMapping[format]
-    }))
+  const formattedOutputFormats = Array.from(
+    outputFormats.reduce((uniqueMap, format) => {
+      const mimeType = ousFormatMapping[format]
+
+      // If the mapping exists AND we haven't already added this mimeType
+      if (mimeType !== undefined && !uniqueMap.has(mimeType)) {
+        uniqueMap.set(mimeType, {
+          name: format,
+          mimeType
+        })
+      }
+
+      return uniqueMap
+    }, new Map()).values()
+  )
 
   return [
     {

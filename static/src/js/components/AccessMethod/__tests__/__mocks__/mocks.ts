@@ -110,7 +110,8 @@ const derivedHarmonyState: DerivedHarmonyState = {
     },
     spatialSubset: {
       disabled: false,
-      shapeDisabled: true, // true because shapefile is not supported
+      shapeDisabled: true, // True because shapefile is not supported
+      bboxDisabled: false,
       supported: true
     },
     temporalSubset: {
@@ -150,7 +151,6 @@ export const harmonyAccessMethod: HarmonyAccessMethod = {
   ],
   id: 'C100000-EDSC',
   isConcatenationDisabled: true,
-  isShapeSubsettingDisabled: false,
   isSpatialSubsettingDisabled: false,
   isTemporalSubsettingDisabled: false,
   isValid: true,
@@ -174,7 +174,8 @@ export const harmonyAccessMethod: HarmonyAccessMethod = {
     }
   ],
   supportsConcatenation: false,
-  supportsShapefileSubsetting: false,
+  supportsShapefileSubsetting: true,
+  supportsBoundingBoxSubsetting: true,
   supportsSpatialSubsetting: true,
   supportsTemporalSubsetting: true,
   supportsVariableSubsetting: true,

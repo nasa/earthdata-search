@@ -841,7 +841,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           harmonyMethod.isSpatialSubsettingDisabled = spatialSubset.disabled
 
-          harmonyMethod.isShapeSubsettingDisabled = spatialSubset.shapeDisabled
+          harmonyMethod.supportsShapefileSubsetting = !(spatialSubset.shapeDisabled)
+
+          harmonyMethod.supportsBoundingBoxSubsetting = !(spatialSubset.bboxDisabled)
 
           harmonyMethod.isVariableSubsettingDisabled = variableSubset.disabled
 

@@ -65,7 +65,6 @@ export const buildHarmony = (
     hierarchyMappings,
     id: collectionId,
     isConcatenationDisabled: concatenate.disabled,
-    isShapeSubsettingDisabled: spatialSubset.shapeDisabled,
     isSpatialSubsettingDisabled: spatialSubset.disabled,
     isTemporalSubsettingDisabled: temporalSubset.disabled,
     isValid: true,
@@ -81,7 +80,9 @@ export const buildHarmony = (
     supportedOutputProjections: reproject.supported,
     supportsConcatenation: concatenate.supported,
     // Some services support bbox, but not shapefile so we use this field to specify when that's the case
-    supportsShapefileSubsetting: spatialSubset.shapeDisabled,
+    supportsShapefileSubsetting: !(spatialSubset.shapeDisabled),
+    // Some services support shapefiles, but not bounding box so we use this field to specify when that's the case
+    supportsBoundingBoxSubsetting: !(spatialSubset.bboxDisabled),
     supportsSpatialSubsetting: spatialSubset.supported,
     supportsTemporalSubsetting: temporalSubset.supported,
     supportsVariableSubsetting: variableSubset.supported,

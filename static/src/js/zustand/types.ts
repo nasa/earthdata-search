@@ -627,8 +627,6 @@ export type HarmonyAccessMethod = {
   id: string
   /** Disabled flag for concatenation */
   isConcatenationDisabled: boolean
-  /** Disabled flag for shape subsetting */
-  isShapeSubsettingDisabled: boolean
   /** Disabled flag for spatial subsetting */
   isSpatialSubsettingDisabled: boolean
   /** Disabled flag for temporal subsetting */
@@ -661,6 +659,8 @@ export type HarmonyAccessMethod = {
   supportsSpatialSubsetting: boolean
   /** Flag to indicate if shapefile subsetting is supported */
   supportsShapefileSubsetting: boolean
+  /** Flag to indicate if shapefile subsetting is supported */
+  supportsBoundingBoxSubsetting: boolean
   /** Flag to indicate if temporal subsetting is supported */
   supportsTemporalSubsetting: boolean
   /** Flag to indicate if variable subsetting is supported */

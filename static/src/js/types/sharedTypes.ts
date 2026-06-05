@@ -439,6 +439,21 @@ export type ShapefileFile = FeatureCollection & {
   name?: string
 }
 
+export type ScienceKeyword = {
+  /** The science keyword detailed variable name */
+  detailed_variable?: string
+  /** The science keyword term */
+  term?: string
+  /** The science keyword topic */
+  topic?: string
+  /** The science keyword variable level 1 name */
+  variable_level_1?: string
+  /** The science keyword variable level 2 name */
+  variable_level_2?: string
+  /** The science keyword variable level 3 name */
+  variable_level_3?: string
+}
+
 export type ShapefileRequestParams = {
   /** The Earthdata environment */
   earthdataEnvironment: string

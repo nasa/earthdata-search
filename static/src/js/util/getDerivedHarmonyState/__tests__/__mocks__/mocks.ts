@@ -37,7 +37,9 @@ export const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
     {
       name: 'mock_variable',
       href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/V123456789-EEDTEST',
-      scienceKeywords: []
+      scienceKeywords: [],
+      longName: '',
+      units: ''
     }
   ],
   services: [

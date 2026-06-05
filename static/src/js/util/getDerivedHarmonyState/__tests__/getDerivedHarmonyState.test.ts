@@ -44,6 +44,7 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.variableSubset.disabled).toBe(false)
     expect(result.capabilities.spatialSubset.disabled).toBe(false)
     expect(result.capabilities.spatialSubset.shapeDisabled).toBe(false)
+    expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
     // Formats of the 2 remaining valid services
     expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
       CSV: true,
@@ -124,7 +125,7 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.concatenate.disabled).toBe(false)
 
     // 'sds/hoss-opendap-url' also supports bbox and variable subsetting, so those should remain enabled.
-    expect(result.capabilities.spatialSubset.disabled).toBe(false)
+    expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
     expect(result.capabilities.variableSubset.disabled).toBe(false)
 
     // 'sds/hoss-opendap-url' DOES NOT support shape or temporal subsetting, so they must be disabled.

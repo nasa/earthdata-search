@@ -157,7 +157,8 @@ describe('buildHarmony', () => {
         spatialSubset: {
           supported: true,
           disabled: false,
-          shapeDisabled: true
+          shapeDisabled: true,
+          bboxDisabled: false
         },
         variableSubset: {
           supported: true,
@@ -288,6 +289,7 @@ describe('buildHarmony', () => {
           spatialSubset: {
             disabled: false,
             shapeDisabled: true,
+            bboxDisabled: false,
             supported: true
           },
           temporalSubset: {
@@ -318,7 +320,6 @@ describe('buildHarmony', () => {
       ],
       id: 'C100000-EDSC',
       isConcatenationDisabled: true,
-      isShapeSubsettingDisabled: true,
       isSpatialSubsettingDisabled: false,
       isTemporalSubsettingDisabled: false,
       isValid: true,
@@ -356,8 +357,9 @@ describe('buildHarmony', () => {
         }
       ],
       supportsConcatenation: false,
-      supportsShapefileSubsetting: true,
+      supportsShapefileSubsetting: false,
       supportsSpatialSubsetting: true,
+      supportsBoundingBoxSubsetting: true,
       supportsTemporalSubsetting: true,
       supportsVariableSubsetting: true,
       type: 'Harmony',

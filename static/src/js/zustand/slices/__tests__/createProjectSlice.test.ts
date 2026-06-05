@@ -136,6 +136,7 @@ const mockDerivedHarmonyState: DerivedHarmonyState = {
     spatialSubset: {
       disabled: false,
       shapeDisabled: false,
+      bboxDisabled: false,
       supported: true
     },
     temporalSubset: {
@@ -994,7 +995,6 @@ describe('createProjectSlice', () => {
             hierarchyMappings: [],
             id: 'collectionId1',
             isConcatenationDisabled: true,
-            isShapeSubsettingDisabled: false,
             isSpatialSubsettingDisabled: false,
             isTemporalSubsettingDisabled: false,
             isValid: true,
@@ -1013,7 +1013,8 @@ describe('createProjectSlice', () => {
             ],
             supportedOutputProjections: [],
             supportsConcatenation: false,
-            supportsShapefileSubsetting: false,
+            supportsShapefileSubsetting: true,
+            supportsBoundingBoxSubsetting: true,
             supportsSpatialSubsetting: true,
             supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
@@ -2248,7 +2249,6 @@ describe('createProjectSlice', () => {
         enableTemporalSubsetting: false,
         id: 'C4054955340-GES_DISC',
         isValid: true,
-        isShapeSubsettingDisabled: false,
         isSpatialSubsettingDisabled: false,
         isTemporalSubsettingDisabled: false,
         isVariableSubsettingDisabled: false,
@@ -2263,6 +2263,7 @@ describe('createProjectSlice', () => {
         supportedOutputProjections: [],
         supportsConcatenation: false,
         supportsShapefileSubsetting: true,
+        supportsBoundingBoxSubsetting: true,
         supportsTemporalSubsetting: true,
         supportsVariableSubsetting: true,
         type: 'Harmony',

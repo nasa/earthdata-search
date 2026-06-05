@@ -12,7 +12,6 @@ export const supportsVariableSubsetting = (service) => {
 
   const { subset = {} } = serviceOptions
   const { variableSubset = {} } = subset
-  console.log("🚀 ~ supportsVariableSubsetting.js:15 ~ supportsVariableSubsetting ~ variableSubset:", variableSubset)
 
   return !isEmpty(variableSubset)
 }

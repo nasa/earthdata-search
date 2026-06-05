@@ -147,7 +147,6 @@ describe('insertSavedAccessConfig', () => {
         id: 'S100000-EDSC',
         isValid: true,
         isOutputFormatsDisabled: false,
-        isShapeSubsettingDisabled: false,
         isSpatialSubsettingDisabled: false,
         isTemporalSubsettingDisabled: false,
         isVariableSubsettingDisabled: false,

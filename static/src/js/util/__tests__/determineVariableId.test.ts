@@ -1,8 +1,10 @@
+import { UmmSVariable } from '../../types/sharedTypes'
 import { determineVariableId } from '../determineVariableId'
+import { HarmonyVariable } from '../getDerivedHarmonyState/getDerivedHarmonyState'
 
 describe('determineVariableId', () => {
   test('returns conceptId when it exists (UMM-S variable)', () => {
-    const ummsVariable = {
+    const ummsVariable: UmmSVariable = {
       conceptId: 'V123-CMR',
       definition: 'A variable for testing',
       instanceInformation: null,
@@ -16,20 +18,24 @@ describe('determineVariableId', () => {
   })
 
   test('returns the ID from href when conceptId is missing (Harmony variable)', () => {
-    const harmonyVariable = {
+    const harmonyVariable: HarmonyVariable = {
       name: 'A harmony variable',
       href: 'https://cmr.example.com/search/concepts/V456-HARMONY',
-      scienceKeywords: []
+      scienceKeywords: [],
+      longName: '',
+      units: ''
     }
     const result = determineVariableId(harmonyVariable)
     expect(result).toEqual('V456-HARMONY')
   })
 
   test('returns undefined when no variable information is blank from harmony', () => {
-    const harmonyVariable = {
+    const harmonyVariable: HarmonyVariable = {
       name: '',
       href: '',
-      scienceKeywords: []
+      scienceKeywords: [],
+      longName: '',
+      units: ''
     }
     const result = determineVariableId(harmonyVariable)
     expect(result).toEqual(undefined)
