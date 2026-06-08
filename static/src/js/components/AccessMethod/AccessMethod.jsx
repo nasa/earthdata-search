@@ -275,11 +275,9 @@ const AccessMethod = ({
 
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
-      console.log('🚀 ~ AccessMethod.jsx:330 ~ AccessMethod ~ accessMethods:', accessMethods)
 
       const {
-        type: accessMethodType,
-        name
+        type: accessMethodType
       } = accessMethod
 
       let id = null
@@ -374,7 +372,6 @@ const AccessMethod = ({
             methodKey,
             title,
             subtitle,
-            name,
             description,
             details,
             disabled,
@@ -424,8 +421,7 @@ const AccessMethod = ({
   let supportedOutputFormatOptions = []
 
   if (isOpendap) {
-    // We filter the formats based on whether their mimeType exists in the ousFormatMapping,
-    // then map the result to <option> elements.
+    // Map each supported format to an <option> element
     supportedOutputFormatOptions = supportedOutputFormats
       .map((format) => (
         <option key={format.mimeType} value={format.mimeType}>
@@ -452,7 +448,7 @@ const AccessMethod = ({
     ))
 
     // The derived harmony state is the source of truth.
-    // The `outputFormatAvailability` object provides a true/false value for each format's name.
+    // The `outputProjectionAvailability` object provides a true/false value for each format's name.
     supportedOutputProjectionOptions = supportedOutputProjections.map((projection) => (
       // We disable the option if its availability is `false`.
       <option

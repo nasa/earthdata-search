@@ -14,12 +14,11 @@ const harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   summary: {
     subsetting: {
       bbox: true,
-      shape: false, // Changed to false to match supportsShapefileSubsetting: false
+      shape: false,
       temporal: true,
       variable: true
     },
     reprojection: {
-      // Added projection to match the access method
       supportedProjections: [
         {
           name: 'Geographic',
@@ -28,7 +27,6 @@ const harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
       ]
     },
     concatenation: false,
-    // Added output format to match the access method
     outputFormats: [
       {
         name: 'NETCDF-4',
@@ -42,7 +40,7 @@ const harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
       capabilities: {
         subsetting: {
           bbox: true,
-          shape: false, // Changed to false
+          shape: false,
           temporal: true,
           variable: true
         },
@@ -83,9 +81,9 @@ const derivedHarmonyState: DerivedHarmonyState = {
       supported: false
     },
     outputFormats: {
-      disabled: false, // Changed to false because we now have a format
+      disabled: false,
       outputFormatAvailability: {
-        'NETCDF-4': true // Added to match access method
+        'NETCDF-4': true
       },
       supported: [
         {
@@ -96,9 +94,9 @@ const derivedHarmonyState: DerivedHarmonyState = {
       value: ''
     },
     reproject: {
-      disabled: false, // Changed to false because we now have a projection
+      disabled: false,
       outputProjectionAvailability: {
-        'EPGS:4313': true // Added to match access method
+        'EPGS:4313': true
       },
       supported: [
         {
@@ -110,7 +108,7 @@ const derivedHarmonyState: DerivedHarmonyState = {
     },
     spatialSubset: {
       disabled: false,
-      shapeDisabled: true, // True because shapefile is not supported
+      shapeDisabled: true,
       bboxDisabled: false,
       supported: true
     },

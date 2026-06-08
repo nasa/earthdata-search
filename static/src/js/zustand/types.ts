@@ -678,12 +678,6 @@ export type HarmonyAccessMethod = {
 
 /** The OPeNDAP access method */
 export type OpendapAccessMethod = {
-  /** Flag to indicate if concatenation download is enabled */
-  enableConcatenateDownload?: boolean,
-  /** Flag to indicate if spatial subsetting is enabled */
-  enableSpatialSubsetting?: boolean,
-  /** Flag to indicate if temporal subsetting is enabled */
-  enableTemporalSubsetting?: boolean,
   /** The OPeNDAP access method description */
   description?: string
   /** Variable ids grouped by their hierarchical names */
@@ -702,6 +696,7 @@ export type OpendapAccessMethod = {
   selectedOutputFormat?: string
   /** The supported output formats */
   selectedOutputProjection?: undefined
+  /** The supported output formats, based on Harmony Formats for consistency */
   supportedOutputFormats?: HarmonyOutputFormat[]
   /** Flag to indicate if variable subsetting is supported */
   supportsVariableSubsetting?: boolean

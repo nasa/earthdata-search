@@ -8,7 +8,7 @@ import {
   mockHarmonyVariables
 } from './mocks'
 
-describe('getVariables', () => {
+describe('getVariables (OPENDaP)', () => {
   describe('when variables exist', () => {
     test('correctly formats variables from graphql', () => {
       const { keywordMappings, variables } = getVariables(opendapVariablesResponse)
@@ -31,7 +31,7 @@ describe('getVariables', () => {
   })
 })
 
-describe('getVariables', () => {
+describe('getVariables (Harmony)', () => {
   describe('when variables exist', () => {
     test('correctly formats variables from the capabilities document', () => {
       // Harmony variables come as an array, not an object with `items`

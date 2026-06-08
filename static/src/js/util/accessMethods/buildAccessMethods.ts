@@ -114,7 +114,6 @@ export const buildAccessMethods = (
 
   const { items: serviceItems = [] } = services
 
-  // Type definition for the buildMethods dictionary
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const buildMethods: Record<string, (...args: any[]) => any> = {
     echoOrders: (serviceItem: EchoOrderAccessMethod) => buildEcho(serviceItem),
