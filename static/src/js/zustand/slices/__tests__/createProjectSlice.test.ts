@@ -85,7 +85,7 @@ const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   variables: []
 }
 
-const mockNonHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
+const mockNoServicesCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   conceptId: 'collectionId1',
   shortName: 'Short Name',
   summary: {
@@ -528,11 +528,11 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -783,12 +783,12 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
-            ...mockNonHarmonyCapabilitiesDocument,
+            ...mockNoServicesCapabilitiesDocument,
             conceptId: 'collectionid2'
           } as HarmonyCapabilitiesDocument)
 
@@ -1061,7 +1061,7 @@ describe('createProjectSlice', () => {
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=C10000000000-EDSC&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
-            ...mockNonHarmonyCapabilitiesDocument,
+            ...mockNoServicesCapabilitiesDocument,
             conceptId: 'C10000000000-EDSC'
           } as HarmonyCapabilitiesDocument)
 
@@ -1136,12 +1136,12 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
-            ...mockNonHarmonyCapabilitiesDocument,
+            ...mockNoServicesCapabilitiesDocument,
             conceptId: 'collectionId2'
           } as HarmonyCapabilitiesDocument)
 
@@ -1264,12 +1264,12 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
-            ...mockNonHarmonyCapabilitiesDocument,
+            ...mockNoServicesCapabilitiesDocument,
             conceptId: 'collectionId2'
           } as HarmonyCapabilitiesDocument)
 
@@ -1366,12 +1366,12 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
-            ...mockNonHarmonyCapabilitiesDocument,
+            ...mockNoServicesCapabilitiesDocument,
             conceptId: 'collectionId2'
           } as HarmonyCapabilitiesDocument)
 
@@ -1420,12 +1420,12 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNonHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
           .reply(200, {
-            ...mockNonHarmonyCapabilitiesDocument,
+            ...mockNoServicesCapabilitiesDocument,
             conceptId: 'collectionId2'
           } as HarmonyCapabilitiesDocument)
 
