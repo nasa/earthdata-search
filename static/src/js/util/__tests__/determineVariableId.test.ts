@@ -1,10 +1,10 @@
-import { UmmSVariable } from '../../types/sharedTypes'
+import { VariableMetadata } from '../../types/sharedTypes'
 import { determineVariableId } from '../determineVariableId'
 import { HarmonyVariable } from '../getDerivedHarmonyState/getDerivedHarmonyState'
 
 describe('determineVariableId', () => {
   test('returns conceptId when it exists (UMM-S variable)', () => {
-    const ummsVariable: UmmSVariable = {
+    const variableMetadata: VariableMetadata = {
       conceptId: 'V123-CMR',
       definition: 'A variable for testing',
       instanceInformation: null,
@@ -13,7 +13,7 @@ describe('determineVariableId', () => {
       nativeId: 'test-var-1',
       scienceKeywords: []
     }
-    const result = determineVariableId(ummsVariable)
+    const result = determineVariableId(variableMetadata)
     expect(result).toEqual('V123-CMR')
   })
 

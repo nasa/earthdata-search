@@ -1112,7 +1112,6 @@ describe('createProjectSlice', () => {
         await project.getProjectCollections()
 
         const { collection } = useEdscStore.getState()
-        console.log(collection.collectionMetadata)
 
         expect(collection.collectionMetadata).toEqual({
           'C10000000000-EDSC': expect.objectContaining({

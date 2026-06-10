@@ -550,7 +550,7 @@ export type ScienceKeyword = {
   variable_level_3?: string
 }
 
-export type UmmSVariable = {
+export type VariableMetadata = {
   /** The variable concept ID */
   conceptId: string
   /** The variable definition */

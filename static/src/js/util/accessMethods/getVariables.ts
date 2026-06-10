@@ -4,21 +4,21 @@ import { computeKeywordMappings } from './computeKeywordMappings'
 import { computeHierarchyMappings } from './computeHierarchyMappings'
 import { determineVariableId } from '../determineVariableId'
 import { HarmonyVariable } from '../getDerivedHarmonyState/getDerivedHarmonyState'
-import { UmmSVariable } from '../../types/sharedTypes'
+import { VariableMetadata } from '../../types/sharedTypes'
 import { HierarchyMapping, KeywordMapping } from '../../zustand/types'
 
 /**
- * Response from CMR with the ummSVariable array in it.
+ * Response from CMR with the VariableMetadata array in it.
  */
 export interface CmrVariableResponse {
   count?: number;
-  items?: UmmSVariable[]
+  items?: VariableMetadata[]
 }
 
 export interface VariablesResult {
   hierarchyMappings: HierarchyMapping[]
   keywordMappings: KeywordMapping[]
-  variables: Record<string, HarmonyVariable | UmmSVariable>
+  variables: Record<string, HarmonyVariable | VariableMetadata>
 }
 
 /**
@@ -28,11 +28,11 @@ export interface VariablesResult {
  * @returns Object mapping concept IDs to variable metadata
  */
 const computeVariables = (
-  items: HarmonyVariable[] | UmmSVariable[]
-): Record<string, HarmonyVariable | UmmSVariable> => {
-  const variables: Record<string, HarmonyVariable | UmmSVariable> = {}
+  items: HarmonyVariable[] | VariableMetadata[]
+): Record<string, HarmonyVariable | VariableMetadata> => {
+  const variables: Record<string, HarmonyVariable | VariableMetadata> = {}
 
-  items.forEach((variable: HarmonyVariable | UmmSVariable) => {
+  items.forEach((variable: HarmonyVariable | VariableMetadata) => {
     const variableId = determineVariableId(variable)
 
     if (!variableId) return
@@ -54,7 +54,7 @@ export const getVariables = (
   data: HarmonyVariable[] | CmrVariableResponse
 ): VariablesResult => {
   // Determine the source of the variable items, defaulting to an empty array.
-  const variableItems: HarmonyVariable[] | UmmSVariable[] = (
+  const variableItems: HarmonyVariable[] | VariableMetadata[] = (
     Array.isArray(data) ? data : (data as CmrVariableResponse).items
   ) || []
 

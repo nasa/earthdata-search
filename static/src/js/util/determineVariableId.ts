@@ -1,16 +1,16 @@
 import { HarmonyVariable } from './getDerivedHarmonyState/getDerivedHarmonyState'
 
-import { UmmSVariable } from '../types/sharedTypes'
+import { VariableMetadata } from '../types/sharedTypes'
 
 /**
  * Determines the variable ID from a variable object.
  * The input can be a standard UMM-S variable or a Harmony variable.
  * Prefers the conceptId, but will fall back to parsing the href for Harmony variables.
- * @param {UmmSVariable | HarmonyVariable} variable - The variable object.
+ * @param {VariableMetadata | HarmonyVariable} variable - The variable object.
  * @returns {string | undefined} The determined variable ID, or undefined if not found.
  */
 export const determineVariableId = (
-  variable: UmmSVariable | HarmonyVariable
+  variable: VariableMetadata | HarmonyVariable
 ): string | undefined => {
   let variableId
   // Use a type guard to check for 'conceptId'.

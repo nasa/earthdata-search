@@ -42,8 +42,8 @@ export const buildHarmony = (
     reproject
   } = capabilities
 
-  const { env } = getApplicationConfig()
-  const url = getEarthdataConfig(env).harmonyHost
+  const { env: earthdataEnvironment } = getApplicationConfig()
+  const { harmonyHost } = getEarthdataConfig(earthdataEnvironment)
 
   const {
     hierarchyMappings,
@@ -87,7 +87,7 @@ export const buildHarmony = (
     supportsTemporalSubsetting: temporalSubset.supported,
     supportsVariableSubsetting: variableSubset.supported,
     type: 'Harmony',
-    url,
+    url: harmonyHost,
     variables: variables as Record<string, HarmonyVariable>
   }
 }

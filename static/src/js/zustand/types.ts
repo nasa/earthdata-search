@@ -14,7 +14,7 @@ import type {
   Temporal,
   TimelineIntervals,
   UrsProfile,
-  UmmSVariable,
+  VariableMetadata,
   Subscription
 } from '../types/sharedTypes'
 import { ModalName } from '../constants/modalNames'
@@ -707,7 +707,7 @@ export type OpendapAccessMethod = {
   /** The OPeNDAP access method variables */
   variables: {
     /** The variable ID */
-    [variableId: string]: UmmSVariable
+    [variableId: string]: VariableMetadata
   }
 }
 
