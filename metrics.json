@@ -3571,6 +3571,34 @@
           "strategy": "mobile",
           "ttfb": 1
         }
+      },
+      "prod": {
+        "desktop": {
+          "accessibilityScore": 92,
+          "bestPracticesScore": 92,
+          "cls": 0.02,
+          "date": "2026-06-15",
+          "fcp": 1212.18,
+          "inp": "No value",
+          "lcp": 1543,
+          "performanceScore": 72,
+          "seoScore": 85,
+          "strategy": "desktop",
+          "ttfb": 1
+        },
+        "mobile": {
+          "accessibilityScore": 88,
+          "bestPracticesScore": 92,
+          "cls": 0.06,
+          "date": "2026-06-15",
+          "fcp": 6079.78,
+          "inp": "No value",
+          "lcp": 7144.29,
+          "performanceScore": 32,
+          "seoScore": 85,
+          "strategy": "mobile",
+          "ttfb": 2
+        }
       }
     }
   }
