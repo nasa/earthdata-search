@@ -349,7 +349,7 @@ describe('lookupSpatialToolExecute', () => {
         lambdaClientMock.on(InvokeCommand).resolves({
           Payload: Buffer.from(JSON.stringify({
             isBase64Encoded: false,
-            statusCode: 200,
+            status_code: 200,
             body: 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'
           }))
         })
