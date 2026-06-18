@@ -66,11 +66,15 @@ const getSpatial = async (query) => {
   })
 
   const response = await lambdaClient.send(lambdaCommand)
+  console.log('🚀 ~ handler.js:69 ~ getSpatial ~ response:', response)
   if (response.FunctionError) {
     throw new Error(`Geocoder invocation failed: ${response.FunctionError}`)
   }
 
+  console.log('🚀 ~ handler.js:75 ~ getSpatial ~ response.Payload:', response.Payload)
+
   const responsePayload = JSON.parse(new TextDecoder().decode(response.Payload))
+  console.log('🚀 ~ handler.js:75 ~ getSpatial ~ responsePayload:', responsePayload)
   if (responsePayload.statusCode !== 200 || !responsePayload.body) {
     throw new Error(`Geocoder returned ${responsePayload.statusCode ?? 'an invalid response'}`)
   }
@@ -133,7 +137,7 @@ export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
 
   if (process.env.USE_GEOCODER !== 'true') {
     // If we aren't geocoding, set a default spatial area for testing purposes. This is the bounding box for the area around Washington DC.
-    setResults('spatialArea', 'POLYGON((-77.172259 38.791653, -77.172259 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.172259 38.791653))')
+    setResults('spatialArea', 'POLYGON((-77.119759 38.791653, -77.119759 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.119759 38.791653))')
 
     return { ok: true }
   }

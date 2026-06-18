@@ -349,6 +349,7 @@ export class Functions extends Construct {
       functionName: `${functionNamePrefix}-geocoder${defaultLambdaConfig.logGroupSuffix}`,
       handler: 'handler.main',
       logGroup: geocoderLogGroup,
+      memorySize: 512,
       role: defaultLambdaConfig.role,
       runtime: lambda.Runtime.PYTHON_3_13,
       securityGroups: defaultLambdaConfig.securityGroups,
@@ -501,7 +502,8 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/nlpSearch/handler.js',
       functionName: 'nlpSearch',
-      functionNamePrefix
+      functionNamePrefix,
+      memorySize: 512
     })
 
     /**

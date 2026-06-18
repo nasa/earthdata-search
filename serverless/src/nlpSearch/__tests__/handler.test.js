@@ -309,7 +309,7 @@ describe('lookupSpatialToolExecute', () => {
 
       expect(setResults).toHaveBeenCalledTimes(2)
       expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-      expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-77.172259 38.791653, -77.172259 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.172259 38.791653))')
+      expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-77.119759 38.791653, -77.119759 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.119759 38.791653))')
     })
   })
 
