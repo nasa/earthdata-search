@@ -129,6 +129,13 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                   'bedrock:InvokeModel'
                 ],
                 Resource: '*'
+              },
+              {
+                Effect: 'Allow',
+                Action: [
+                  'es:ESHttpPost'
+                ],
+                Resource: '*'
               }
             ]
           }
