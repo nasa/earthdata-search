@@ -44,9 +44,32 @@ type AdminPreferencesMetrics {
   baseLayer: [AdminPreferencesEntry]
 }
 
+type AdminProject {
+  "ID of the project"
+  id: Int
+
+  "Obfuscated ID of the project"
+  obfuscatedId: String!
+
+  "Name of the project"
+  name: String
+
+  "Path of the project"
+  path: String!
+
+  "Timestamp of when the project was created"
+  createdAt: DateTime
+
+  "Timestamp of when the project was last updated"
+  updatedAt: DateTime!
+
+  "User who created the project"
+  user: User
+}
+
 type AdminProjects {
   "List of projects"
-  adminProjects: [Project]
+  adminProjects: [AdminProject]
 
   "Pagination information"
   pageInfo: PageInfo
@@ -119,7 +142,7 @@ type Query {
   adminProject(
     "Obfuscated ID to filter by"
     obfuscatedId: String!
-  ): Project
+  ): AdminProject
 
   "Retrieves projects"
   adminProjects(
