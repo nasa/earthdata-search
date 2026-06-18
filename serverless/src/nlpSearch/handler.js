@@ -11,7 +11,8 @@ import {
   streamText,
   generateText,
   Output,
-  tool
+  tool,
+  hasToolCall
 } from 'ai'
 import { z } from 'zod'
 
@@ -66,17 +67,13 @@ const getSpatial = async (query) => {
   })
 
   const response = await lambdaClient.send(lambdaCommand)
-  console.log('🚀 ~ handler.js:69 ~ getSpatial ~ response:', response)
   if (response.FunctionError) {
     throw new Error(`Geocoder invocation failed: ${response.FunctionError}`)
   }
 
-  console.log('🚀 ~ handler.js:75 ~ getSpatial ~ response.Payload:', response.Payload)
-
   const responsePayload = JSON.parse(new TextDecoder().decode(response.Payload))
-  console.log('🚀 ~ handler.js:75 ~ getSpatial ~ responsePayload:', responsePayload)
-  if (responsePayload.statusCode !== 200 || !responsePayload.body) {
-    throw new Error(`Geocoder returned ${responsePayload.statusCode ?? 'an invalid response'}`)
+  if (responsePayload.status_code !== 200 || !responsePayload.body) {
+    throw new Error(`Geocoder returned ${responsePayload.status_code ?? 'an invalid response'}`)
   }
 
   return responsePayload.body
@@ -231,7 +228,8 @@ Required workflow:
 1) Identify spatial, temporal, and keyword values from the query.
 2) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools.
 3) If spatial exists, call tool "lookupSpatial" with the spatial value.
-4) If temporal exists, call tool "convertTemporal" with the temporal value.`,
+4) If temporal exists, call tool "convertTemporal" with the temporal value.
+5) After all tools have been called and have returned their results, call the "finalCall" tool to indicate that processing is complete.`,
     tools: {
       reportFound: tool({
         inputSchema: z.object({
@@ -256,6 +254,14 @@ Required workflow:
           spatial: z.string()
         }),
         execute: async (input) => lookupSpatialToolExecute(input, setResults)
+      }),
+      finalCall: tool({
+        inputSchema: z.object({}),
+        execute: async () => {
+          console.log('Final tool call executed. All tools should have been called at this point.')
+
+          return { ok: true }
+        }
       })
     },
     onError: async (error) => {
@@ -263,9 +269,11 @@ Required workflow:
       responseStream.write(`Error: ${error.message}\n`)
       responseStream.end()
     },
+    stopWhen: hasToolCall('finalAnswer'),
     onFinish: async ({ text }) => {
       console.log('streamText finished, called with text:', text)
       console.log('Extraction complete. Final results:', JSON.stringify(extractedResults))
+
       responseStream.write('Final result:\n')
       responseStream.write(JSON.stringify(extractedResults))
 

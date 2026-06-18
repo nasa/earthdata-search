@@ -95,9 +95,6 @@ def main(event, context):
 
     query = event.get("query", "")
 
-    # TODO tmp debug logging
-    logger.info(f"Received geocoding query: {query}")
-
     # If the query is empty, return an empty response
     if not query:
         return {
@@ -110,9 +107,7 @@ def main(event, context):
         place_lookup = _get_place_lookup()
 
         geometry = extract_geometry_from_text(bedrock_llm, query, place_lookup)
-        logger.info(f"Extracted geometry: {geometry}")
         bounding_box = geometry.bounds if geometry else None
-        logger.info(f"Extracted bounding box: {bounding_box}")
 
         # Convert bounding_box to WKT POLYGON format if geometry was successfully extracted
         if bounding_box:
