@@ -339,7 +339,7 @@ export class Functions extends Construct {
     const geocoderNestedStack = new cdk.NestedStack(scope, 'GeocoderNestedStack')
     const geocoderLogGroup = new logs.LogGroup(geocoderNestedStack, 'GeocoderLogGroup', {
       logGroupName: `/aws/lambda/${functionNamePrefix}-geocoder`,
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      retention: logs.RetentionDays.ONE_MONTH
     })
 
     const geocoderLambdaFunction = new lambda.Function(geocoderNestedStack, 'GeocoderLambda', {
