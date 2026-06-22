@@ -1,7 +1,4 @@
 type Project {
-  "ID of the project"
-  id: Int!
-
   "Obfuscated ID of the project"
   obfuscatedId: String!
 
@@ -65,7 +62,7 @@ type Mutation {
     obfuscatedId: String!
 
     "Name of the project"
-    name: String,
+    name: String
 
     "Path of the project"
     path: String

@@ -147,6 +147,22 @@ export default {
       return true
     }
   },
+  AdminProject: {
+    obfuscatedId: async (parent) => {
+      const { id } = parent
+
+      return obfuscateId(id)
+    },
+    user: async (parent, args, context) => {
+      const { loaders } = context
+
+      // Use the users dataloader to fetch the user for the retrieval using the userId
+      // from the parent Retrieval
+      const loaderData = await loaders.users.load(parent.userId)
+
+      return camelcaseKeys(loaderData, { deep: true })
+    }
+  },
   MultiCollectionRetrieval: {
     obfuscatedId: async (parent) => {
       const { retrievalId } = parent
