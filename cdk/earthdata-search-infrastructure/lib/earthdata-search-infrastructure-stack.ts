@@ -168,7 +168,7 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
       databaseUsername: 'edsc',
       dbInstanceClass: DB_INSTANCE_CLASS,
       dbName: `edsc_${STAGE_NAME}`,
-      engineVersion: '14.10',
+      engineVersion: '18.4',
       lambdaSecurityGroupId: lambdaSecurityGroup.securityGroup.attrGroupId,
       logicalIdPrefix: 'Encrypted',
       stageName: STAGE_NAME,
