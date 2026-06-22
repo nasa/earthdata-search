@@ -115,7 +115,7 @@ jobs:
 
     # Leave or update comment on the PR
     - name: Find Comment
-      uses: peter-evans/find-comment@v3
+      uses: peter-evans/find-comment@v4
       id: find-comment
       with:
         issue-number: ${{ github.event.pull_request.number }}
@@ -123,13 +123,13 @@ jobs:
         body-includes: Bundle Size Comparison
     - name: Create comment
       if: steps.find-comment.outputs.comment-id == ''
-      uses: peter-evans/create-or-update-comment@v4
+      uses: peter-evans/create-or-update-comment@v5
       with:
         issue-number: ${{ github.event.pull_request.number }}
         body-path: bundle-size-comment.md
     - name: Update comment
       if: steps.find-comment.outputs.comment-id != ''
-      uses: peter-evans/create-or-update-comment@v4
+      uses: peter-evans/create-or-update-comment@v5
       with:
         comment-id: ${{ steps.find-comment.outputs.comment-id }}
         body-path: bundle-size-comment.md
