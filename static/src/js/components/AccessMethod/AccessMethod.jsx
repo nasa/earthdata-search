@@ -592,7 +592,7 @@ const AccessMethod = ({
                   <ProjectPanelSection
                     customHeadingTag="h4"
                     heading="Spatial Subsetting"
-                    intro="When enabled, spatial subsetting will trim the data to the selected area range."
+                    intro="When enabled, spatial subsetting will trim the data to the spatial constraint range."
                     nested
                     warning={harmonyMbrWarning}
                     faded={isSpatialSubsettingDisabled}
@@ -616,7 +616,7 @@ const AccessMethod = ({
                               disabled={isSpatialSubsettingDisabled}
                             />
                             <p className="access-method__section-status mt-2 mb-0">
-                              Selected Area:
+                              Spatial Constraint:
                               <br />
                               {selectedSpatialDisplay}
                             </p>
@@ -626,7 +626,7 @@ const AccessMethod = ({
                     {
                       !selectedSpatialDisplay && (
                         <p className="access-method__section-status mb-0">
-                          No spatial area selected.
+                          No spatial constraint selected.
                           Make a spatial selection to enable spatial subsetting.
                         </p>
                       )
@@ -663,7 +663,7 @@ const AccessMethod = ({
                             onChange={handleToggleTemporalSubsetting}
                           />
                           <p className="access-method__section-status mt-2 mb-0">
-                            Selected Range:
+                            Temporal Constraint:
                             <br />
                             {selectedTemporalDisplay}
                           </p>
@@ -673,7 +673,7 @@ const AccessMethod = ({
                     {
                       !(startDate || endDate) && (
                         <p className="access-method__section-status mb-0">
-                          No temporal range selected.
+                          No temporal constraint selected.
                           Make a temporal selection to enable temporal subsetting.
                         </p>
                       )

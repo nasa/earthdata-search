@@ -848,11 +848,11 @@ type UpdateProjectGranuleParams = {
   pageNum: number
 }
 
-type UpdateHarmonySelectionParams = {
+export type UpdateHarmonySelectionParams = {
   /** The collection ID to update */
   collectionId: string
-  /** The new user selections for Harmony */
-  newSelections: Partial<UserSelections>
+  /** They key to be updated in Harmony Access Method */
+  newMethod: Partial<HarmonyAccessMethod>
 }
 
 export type ProjectSlice = {
@@ -891,7 +891,7 @@ export type ProjectSlice = {
     /** Function to toggle the visibility of a project collection */
     toggleCollectionVisibility: (collectionId: string) => void
     /** Function to update the user's selections for Harmony */
-    updateHarmonySelection: ({ collectionId, newSelections }: UpdateHarmonySelectionParams) => void
+    updateHarmonySelection: ({ collectionId, newMethod }: UpdateHarmonySelectionParams) => void
     /** Function to update the access method for a project collection */
     updateAccessMethod: ({ collectionId, method }: UpdateAccessMethodParams) => void
     /** Function to update the granule params for a project collection */

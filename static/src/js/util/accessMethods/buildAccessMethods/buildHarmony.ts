@@ -16,14 +16,9 @@ import { HarmonyAccessMethod } from '../../../zustand/types'
  * @returns Access method configuration for Harmony, or null if no valid services exist
  */
 export const buildHarmony = (
-  harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument | null,
+  harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument,
   userSelections: UserSelections
 ): HarmonyAccessMethod | null => {
-  // If there is no document, OR if there are no services, OR if the services length is 0, return null
-  if (!harmonyCapabilitiesDocument?.services?.length) {
-    return null
-  }
-
   const derivedHarmonyState = getDerivedHarmonyState(userSelections, harmonyCapabilitiesDocument)
 
   const {

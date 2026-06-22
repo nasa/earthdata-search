@@ -53,7 +53,8 @@ import type {
   ProjectGranuleResults,
   ProjectGranules,
   AccessMethodTypes,
-  HarmonyAccessMethod
+  HarmonyAccessMethod,
+  UpdateHarmonySelectionParams
 } from '../types'
 
 import type {
@@ -68,9 +69,9 @@ import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
 import { getEdlToken, getUsername } from '../selectors/user'
 
-import getDerivedHarmonyState, {
-  HarmonyCapabilitiesDocument,
-  UserSelections
+import {
+  getDerivedHarmonyState,
+  HarmonyCapabilitiesDocument
 } from '../../util/getDerivedHarmonyState/getDerivedHarmonyState'
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
@@ -770,11 +771,8 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
     updateHarmonySelection: (
       {
         collectionId,
-        newSelections
-      }: {
-        collectionId: string,
-        newSelections: UserSelections
-      }
+        newMethod
+      }: UpdateHarmonySelectionParams
     ) => {
       set((state) => {
         const { collections } = state.project
@@ -783,72 +781,84 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
         const { selectedAccessMethod, accessMethods } = collection
 
-        // If missing selectedAccessMethod or accessMethods, do no execute
+        // If missing selectedAccessMethod or accessMethods, do not execute
         if (!selectedAccessMethod || !accessMethods) return
 
         const selectedMethod = accessMethods[selectedAccessMethod]
 
         // Type guard to ensure we have the correct method type ('Harmony')
-        if (selectedMethod && selectedMethod.type === 'Harmony') {
-          const harmonyMethod = selectedMethod as HarmonyAccessMethod
-
-          // Update selections we will use to getDerivedHarmonyState
-          const updatedSelections = {
-            ...harmonyMethod.harmonyUserSelections,
-            ...newSelections
-          }
-
-          // Update the harmony method's user selections
-          harmonyMethod.harmonyUserSelections = updatedSelections
-
-          // Recalculate the derived state
-          harmonyMethod.derivedHarmonyState = getDerivedHarmonyState(
-            updatedSelections,
-            harmonyMethod.harmonyCapabilitiesDocument
-          )
-
-          const { capabilities } = harmonyMethod.derivedHarmonyState
-
-          if (!capabilities) return
-
-          const {
-            temporalSubset,
-            spatialSubset,
-            outputFormats,
-            variableSubset,
-            concatenate,
-            reproject
-          } = capabilities
-
-          // Use the derived harmony state to set what is enabled or disabled
-          harmonyMethod.enableTemporalSubsetting = updatedSelections.temporalSubset || false
-
-          harmonyMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
-
-          harmonyMethod.enableConcatenateDownload = updatedSelections.concatenate || false
-
-          harmonyMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat || ''
-
-          harmonyMethod.selectedOutputProjection = updatedSelections.selectedOutputProjection || ''
-
-          harmonyMethod.selectedVariables = updatedSelections.selectedVariables || []
-
-          harmonyMethod.outputFormatAvailability = outputFormats.outputFormatAvailability
-
-          harmonyMethod.outputProjectionAvailability = reproject.outputProjectionAvailability
-
-          harmonyMethod.isTemporalSubsettingDisabled = temporalSubset.disabled
-
-          harmonyMethod.isSpatialSubsettingDisabled = spatialSubset.disabled
-
-          harmonyMethod.supportsShapefileSubsetting = !(spatialSubset.shapeDisabled)
-
-          harmonyMethod.supportsBoundingBoxSubsetting = !(spatialSubset.bboxDisabled)
-
-          harmonyMethod.isVariableSubsettingDisabled = variableSubset.disabled
-
-          harmonyMethod.isConcatenationDisabled = concatenate.disabled
+        if (selectedMethod && selectedMethod.type !== 'Harmony') {
+          return
         }
+
+        // Map to convert UI state changes into the format expected by derived state
+        const newMethodToDerivedHarmonyStateMap = {
+          enableConcatenateDownload: 'concatenate',
+          enableSpatialSubsetting: 'spatialSubset',
+          enableTemporalSubsetting: 'temporalSubset',
+          selectedOutputFormat: 'selectedOutputFormat',
+          selectedOutputProjection: 'selectedOutputProjection',
+          selectedVariables: 'selectedVariables'
+        } as const
+
+        const harmonyMethod = selectedMethod as HarmonyAccessMethod
+
+        // Start with existing selections
+        const updatedSelections = { ...harmonyMethod.harmonyUserSelections }
+
+        // Grab the key and value from the incoming payload
+        const [updateKey] = Object.keys(newMethod)
+        const updateValue = newMethod[updateKey as keyof typeof newMethod]
+
+        // Map the UI key to the internal harmony selection key
+        const newSelectionKey = newMethodToDerivedHarmonyStateMap[
+            updateKey as keyof typeof newMethodToDerivedHarmonyStateMap
+        ]
+
+        // Apply the mapped update to our updatedSelections
+        if (newSelectionKey) {
+          (updatedSelections as Record<string, unknown>)[newSelectionKey] = updateValue
+        }
+
+        // Update the harmony method's user selections
+        harmonyMethod.harmonyUserSelections = updatedSelections
+
+        // Recalculate the derived state with the CORRECTED mapped selections
+        harmonyMethod.derivedHarmonyState = getDerivedHarmonyState(
+          updatedSelections,
+          harmonyMethod.harmonyCapabilitiesDocument
+        )
+
+        const { capabilities } = harmonyMethod.derivedHarmonyState
+
+        if (!capabilities) return
+
+        const {
+          temporalSubset,
+          spatialSubset,
+          outputFormats,
+          variableSubset,
+          concatenate,
+          reproject
+        } = capabilities
+
+        // Use the derived harmony state to set what is enabled or disabled
+        harmonyMethod.enableTemporalSubsetting = updatedSelections.temporalSubset || false
+        harmonyMethod.enableSpatialSubsetting = updatedSelections.spatialSubset || false
+        harmonyMethod.enableConcatenateDownload = updatedSelections.concatenate || false
+        harmonyMethod.selectedOutputFormat = updatedSelections.selectedOutputFormat || ''
+        harmonyMethod.selectedOutputProjection = updatedSelections.selectedOutputProjection || ''
+        harmonyMethod.selectedVariables = updatedSelections.selectedVariables || []
+
+        harmonyMethod.outputFormatAvailability = outputFormats.outputFormatAvailability
+        harmonyMethod.outputProjectionAvailability = reproject.outputProjectionAvailability
+
+        harmonyMethod.isTemporalSubsettingDisabled = temporalSubset.disabled
+        harmonyMethod.isSpatialSubsettingDisabled = spatialSubset.disabled
+        harmonyMethod.supportsShapefileSubsetting = !(spatialSubset.shapeDisabled)
+        harmonyMethod.supportsBoundingBoxSubsetting = !(spatialSubset.bboxDisabled)
+        harmonyMethod.isVariableSubsettingDisabled = variableSubset.disabled
+        harmonyMethod.isConcatenationDisabled = concatenate.disabled
       })
     },
 
@@ -856,40 +866,12 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const [methodKey] = Object.keys(method)
       const newMethod = method[methodKey]
 
-      // For Harmony updates, we have a map to convert UI state changes
-      // into the format expected by our `updateHarmonySelection` action.
-      const newMethodToDerivedHarmonyStateMap = {
-        enableConcatenateDownload: 'concatenate',
-        enableSpatialSubsetting: 'spatialSubset',
-        enableTemporalSubsetting: 'temporalSubset',
-        selectedOutputFormat: 'selectedOutputFormat',
-        selectedOutputProjection: 'selectedOutputProjection',
-        selectedVariables: 'selectedVariables'
-      }
-
       if (methodKey === 'harmony') {
-        const [updateKey] = Object.keys(newMethod)
-        // Tell the compiler to trust that `updateKey` is one of the map's keys.
-        const newSelectionKey = newMethodToDerivedHarmonyStateMap[
-          updateKey as keyof typeof newMethodToDerivedHarmonyStateMap
-        ]
-
-        // If the incoming update key is one we want to map and handle via `updateHarmonySelection`...
-        if (newSelectionKey) {
-          const newSelections = {
-            // Assert that `updateKey` is a valid key of `newMethod`
-            [newSelectionKey]: newMethod[updateKey as keyof typeof newMethod]
-          }
-
-          // Call the dedicated action. This action will correctly recalculate the derived state.
-          get().project.updateHarmonySelection({
-            collectionId,
-            newSelections
-          })
-        }
-
-        // Prevents a second set() from being called below
-        return
+        // Call the dedicated action. This action will correctly recalculate the derived state.
+        get().project.updateHarmonySelection({
+          collectionId,
+          newMethod: newMethod as Partial<HarmonyAccessMethod>
+        })
       }
 
       set((state) => {

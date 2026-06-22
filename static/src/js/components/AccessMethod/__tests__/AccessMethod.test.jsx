@@ -10,8 +10,6 @@ import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
 import Skeleton from '../../Skeleton/Skeleton'
 
-import useEdscStore from '../../../zustand/useEdscStore'
-
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 
@@ -500,87 +498,47 @@ describe('AccessMethod component', () => {
   })
 
   describe('Selected Access Method: SWODLR', () => {
-    describe('when the selected access method is swodlr', () => {
-      describe('when there are less than 10 granules', () => {
-        test('SWODLR Option displayed', async () => {
-          const collectionId = 'collectionId'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                swodlr: {
-                  type: 'SWODLR',
-                  supportsSwodlr: true
-                }
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'swodlr',
-              projectCollection: {
-                isVisible: true,
-                granules: {
-                  addedGranuleIds: [
-                    'G10000000000-EDSC',
-                    'G1000000001-EDSC'
-                  ],
-                  byId: {
-                    'G10000000000-EDSC': {
-                      id: 'G10000000000-EDSC'
-                    },
-                    'G1000000001-EDSC': {
-                      id: 'G1000000001-EDSC'
-                    }
+    describe('when there are less than 10 granules', () => {
+      test('SWODLR Option displayed', async () => {
+        const collectionId = 'collectionId'
+        setup({
+          overrideProps: {
+            accessMethods: {
+              swodlr: {
+                type: 'SWODLR',
+                supportsSwodlr: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'swodlr',
+            projectCollection: {
+              isVisible: true,
+              granules: {
+                addedGranuleIds: [
+                  'G10000000000-EDSC',
+                  'G1000000001-EDSC'
+                ],
+                byId: {
+                  'G10000000000-EDSC': {
+                    id: 'G10000000000-EDSC'
+                  },
+                  'G1000000001-EDSC': {
+                    id: 'G1000000001-EDSC'
                   }
                 }
               }
             }
-          })
-
-          const swodlrText = await screen.findByText('Granule Extent')
-          expect(swodlrText).toBeInTheDocument()
+          }
         })
 
-        describe('when the granule list contains undefined values', () => {
-          test('does not load the SWODLR form', async () => {
-            const collectionId = 'C1000000000-EDSC'
-            setup({
-              overrideProps: {
-                accessMethods: {
-                  swodlr: {
-                    type: 'SWODLR',
-                    supportsSwodlr: true
-                  }
-                },
-                metadata: {
-                  conceptId: collectionId
-                },
-                selectedAccessMethod: 'swodlr',
-                projectCollection: {
-                  isVisible: true,
-                  granules: {
-                    addedGranuleIds: [
-                      'G1000000000-EDSC',
-                      'G1000000001-EDSC',
-                      'G1000000002-EDSC'
-                    ],
-                    byId: {}
-                  }
-                }
-              }
-            })
-
-            await waitFor(() => {
-              const swodlrText = screen.queryByText('Granule Extent')
-
-              // The swodlr form will not load
-              expect(swodlrText).not.toBeInTheDocument()
-            })
-          })
-        })
+        const swodlrText = await screen.findByText('Granule Extent')
+        expect(swodlrText).toBeInTheDocument()
       })
 
-      describe('when there are more than 10 granules', () => {
-        test('SWODLR Options do not display', async () => {
+      describe('when the granule list contains undefined values', () => {
+        test('does not load the SWODLR form', async () => {
           const collectionId = 'C1000000000-EDSC'
           setup({
             overrideProps: {
@@ -605,21 +563,6 @@ describe('AccessMethod component', () => {
                   byId: {}
                 }
               }
-            },
-            overrideZustandState: {
-              granule: {
-                granuleMetadata: {
-                  'G1000000000-EDSC': {
-                    id: 'G1000000000-EDSC'
-                  },
-                  'G1000000001-EDSC': {
-                    id: 'G1000000001-EDSC'
-                  },
-                  'G1000000002-EDSC': {
-                    id: 'G1000000002-EDSC'
-                  }
-                }
-              }
             }
           })
 
@@ -629,6 +572,59 @@ describe('AccessMethod component', () => {
             // The swodlr form will not load
             expect(swodlrText).not.toBeInTheDocument()
           })
+        })
+      })
+    })
+
+    describe('when there are more than 10 granules', () => {
+      test('SWODLR Options do not display', async () => {
+        const collectionId = 'C1000000000-EDSC'
+        setup({
+          overrideProps: {
+            accessMethods: {
+              swodlr: {
+                type: 'SWODLR',
+                supportsSwodlr: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'swodlr',
+            projectCollection: {
+              isVisible: true,
+              granules: {
+                addedGranuleIds: [
+                  'G1000000000-EDSC',
+                  'G1000000001-EDSC',
+                  'G1000000002-EDSC'
+                ],
+                byId: {}
+              }
+            }
+          },
+          overrideZustandState: {
+            granule: {
+              granuleMetadata: {
+                'G1000000000-EDSC': {
+                  id: 'G1000000000-EDSC'
+                },
+                'G1000000001-EDSC': {
+                  id: 'G1000000001-EDSC'
+                },
+                'G1000000002-EDSC': {
+                  id: 'G1000000002-EDSC'
+                }
+              }
+            }
+          }
+        })
+
+        await waitFor(() => {
+          const swodlrText = screen.queryByText('Granule Extent')
+
+          // The swodlr form will not load
+          expect(swodlrText).not.toBeInTheDocument()
         })
       })
     })
@@ -710,8 +706,8 @@ describe('AccessMethod component', () => {
       })
 
       describe('when supportsSpatialSubsetting is set to true', () => {
-        describe('when enableSpatialSubsetting is set to false', () => {
-          test('sets the checkbox unchecked for boundingBox', () => {
+        describe('when checkbox for spatial subsetting is unchecked', () => {
+          test('sets the checkbox unchecked', () => {
             setup({
               overrideProps: {
                 accessMethods: {
@@ -745,174 +741,170 @@ describe('AccessMethod component', () => {
               }
             })
 
-            expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
+            expect(screen.getByText('No spatial constraint selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
           })
 
-          describe('when the user clicks the checkbox for spatial subsetting', () => {
-            test('calls onUpdateAccessMethod and updates enableSpatialSubsetting to true', async () => {
-              const collectionId = 'collectionId'
-              const { props, user } = setup({
+          describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Spatial Constraint', async () => {
+              const { zustandState } = setup({
                 overrideProps: {
                   accessMethods: {
-                    harmony: harmonyAccessMethod
+                    harmony: {
+                      ...harmonyAccessMethod,
+                      supportsShapefileSubsetting: false
+                    }
                   },
                   metadata: {
-                    conceptId: collectionId
+                    conceptId: 'collectionId'
                   },
                   selectedAccessMethod: 'harmony',
                   spatial: {
                     ...emptySpatial,
-                    boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+                    point: ['82.6875,-18.61541']
                   }
                 }
               })
 
-              const checkbox = screen.getByRole('checkbox', { name: 'Trim output granules to the selected spatial constraint' })
-              expect(checkbox.checked).toEqual(false)
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your point has been automatically converted into the bounding box shown above and outlined on the map.')
 
-              await user.click(checkbox)
+              const { map } = zustandState
+              const { setShowMbr } = map
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+            })
+          })
 
-              expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-              expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-                collectionId: 'collectionId',
-                method: {
-                  harmony: {
-                    enableSpatialSubsetting: true
+          describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Spatial Constraint', async () => {
+              const { zustandState } = setup({
+                overrideProps: {
+                  accessMethods: {
+                    harmony: {
+                      ...harmonyAccessMethod,
+                      supportsShapefileSubsetting: false
+                    }
+                  },
+                  metadata: {
+                    conceptId: 'collectionId'
+                  },
+                  selectedAccessMethod: 'harmony',
+                  spatial: {
+                    ...emptySpatial,
+                    circle: ['64.125,7.8161,983270-18.28125']
                   }
                 }
               })
+
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your circle has been automatically converted into the bounding box shown above and outlined on the map.')
+
+              const { map } = zustandState
+              const { setShowMbr } = map
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+            })
+          })
+
+          describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Spatial Constraint', async () => {
+              const { zustandState } = setup({
+                overrideProps: {
+                  accessMethods: {
+                    harmony: {
+                      ...harmonyAccessMethod,
+                      supportsShapefileSubsetting: false
+                    }
+                  },
+                  metadata: {
+                    conceptId: 'collectionId'
+                  },
+                  selectedAccessMethod: 'harmony',
+                  spatial: {
+                    ...emptySpatial,
+                    line: ['82.6875,-18.61541,83.1231, -16.11311']
+                  }
+                }
+              })
+
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your line has been automatically converted into the bounding box shown above and outlined on the map.')
+
+              const { map } = zustandState
+              const { setShowMbr } = map
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+            })
+          })
+
+          describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Spatial Constraint', async () => {
+              const { zustandState } = setup({
+                overrideProps: {
+                  accessMethods: {
+                    harmony: {
+                      ...harmonyAccessMethod,
+                      supportsShapefileSubsetting: false
+                    }
+                  },
+                  metadata: {
+                    conceptId: 'collectionId'
+                  },
+                  selectedAccessMethod: 'harmony',
+                  spatial: {
+                    ...emptySpatial,
+                    polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
+                  }
+                }
+              })
+
+              // First alert is always there and tells users about parameters becoming disabled.
+              const mbrWarning = screen.getAllByRole('alert')
+              expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your polygon has been automatically converted into the bounding box shown above and outlined on the map.')
+
+              const { map } = zustandState
+              const { setShowMbr } = map
+              expect(setShowMbr).toHaveBeenCalledTimes(1)
+              expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
+            })
+          })
+        })
+
+        describe('when checkbox for spatial subsetting is checked', () => {
+          test('calls onUpdateAccessMethod and updates enableSpatialSubsetting to true', async () => {
+            const collectionId = 'collectionId'
+            const { props, user } = setup({
+              overrideProps: {
+                accessMethods: {
+                  harmony: harmonyAccessMethod
+                },
+                metadata: {
+                  conceptId: collectionId
+                },
+                selectedAccessMethod: 'harmony',
+                spatial: {
+                  ...emptySpatial,
+                  boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+                }
+              }
             })
 
-            describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
-              test('displays a warning and a bounding box Selected Area', async () => {
-                setup({
-                  overrideProps: {
-                    accessMethods: {
-                      harmony: {
-                        ...harmonyAccessMethod,
-                        supportsShapefileSubsetting: false
-                      }
-                    },
-                    metadata: {
-                      conceptId: 'collectionId'
-                    },
-                    selectedAccessMethod: 'harmony',
-                    spatial: {
-                      ...emptySpatial,
-                      point: ['82.6875,-18.61541']
-                    }
-                  }
-                })
+            const checkbox = screen.getByRole('checkbox', { name: 'Trim output granules to the selected spatial constraint' })
+            expect(checkbox.checked).toEqual(false)
 
-                // First alert is always there and tells users about parameters becoming disabled.
-                const mbrWarning = screen.getAllByRole('alert')
-                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your point has been automatically converted into the bounding box shown above and outlined on the map.')
+            await user.click(checkbox)
 
-                const zustandState = useEdscStore.getState()
-                const { map } = zustandState
-                const { setShowMbr } = map
-                expect(setShowMbr).toHaveBeenCalledTimes(1)
-                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-              })
-            })
-
-            describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
-              test('displays a warning and a bounding box Selected Area', async () => {
-                setup({
-                  overrideProps: {
-                    accessMethods: {
-                      harmony: {
-                        ...harmonyAccessMethod,
-                        supportsShapefileSubsetting: false
-                      }
-                    },
-                    metadata: {
-                      conceptId: 'collectionId'
-                    },
-                    selectedAccessMethod: 'harmony',
-                    spatial: {
-                      ...emptySpatial,
-                      circle: ['64.125,7.8161,983270-18.28125']
-                    }
-                  }
-                })
-
-                // First alert is always there and tells users about parameters becoming disabled.
-                const mbrWarning = screen.getAllByRole('alert')
-                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your circle has been automatically converted into the bounding box shown above and outlined on the map.')
-
-                const zustandState = useEdscStore.getState()
-                const { map } = zustandState
-                const { setShowMbr } = map
-                expect(setShowMbr).toHaveBeenCalledTimes(1)
-                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-              })
-            })
-
-            describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
-              test('displays a warning and a bounding box Selected Area', async () => {
-                setup({
-                  overrideProps: {
-                    accessMethods: {
-                      harmony: {
-                        ...harmonyAccessMethod,
-                        supportsShapefileSubsetting: false
-                      }
-                    },
-                    metadata: {
-                      conceptId: 'collectionId'
-                    },
-                    selectedAccessMethod: 'harmony',
-                    spatial: {
-                      ...emptySpatial,
-                      line: ['82.6875,-18.61541,83.1231, -16.11311']
-                    }
-                  }
-                })
-
-                // First alert is always there and tells users about parameters becoming disabled.
-                const mbrWarning = screen.getAllByRole('alert')
-                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your line has been automatically converted into the bounding box shown above and outlined on the map.')
-
-                const zustandState = useEdscStore.getState()
-                const { map } = zustandState
-                const { setShowMbr } = map
-                expect(setShowMbr).toHaveBeenCalledTimes(1)
-                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-              })
-            })
-
-            describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
-              test('displays a warning and a bounding box Selected Area', async () => {
-                setup({
-                  overrideProps: {
-                    accessMethods: {
-                      harmony: {
-                        ...harmonyAccessMethod,
-                        supportsShapefileSubsetting: false
-                      }
-                    },
-                    metadata: {
-                      conceptId: 'collectionId'
-                    },
-                    selectedAccessMethod: 'harmony',
-                    spatial: {
-                      ...emptySpatial,
-                      polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
-                    }
-                  }
-                })
-
-                // First alert is always there and tells users about parameters becoming disabled.
-                const mbrWarning = screen.getAllByRole('alert')
-                expect(mbrWarning[1]).toHaveTextContent('Only bounding boxes are supported. Your polygon has been automatically converted into the bounding box shown above and outlined on the map.')
-
-                const zustandState = useEdscStore.getState()
-                const { map } = zustandState
-                const { setShowMbr } = map
-                expect(setShowMbr).toHaveBeenCalledTimes(1)
-                expect(setShowMbr).toHaveBeenNthCalledWith(1, true)
-              })
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
+              collectionId: 'collectionId',
+              method: {
+                harmony: {
+                  enableSpatialSubsetting: true
+                }
+              }
             })
           })
         })
@@ -969,13 +961,13 @@ describe('AccessMethod component', () => {
               }
             })
 
-            expect(screen.queryByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).not.toBeInTheDocument()
+            expect(screen.queryByText('Temporal Constraint:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).not.toBeInTheDocument()
           })
         })
       })
 
       describe('when temporal subsetting is supported', () => {
-        describe('when a temporal range is not set', () => {
+        describe('when a temporal constraint is not set', () => {
           test('displays a message about temporal subsetting', () => {
             const collectionId = 'collectionId'
             setup({
@@ -991,7 +983,7 @@ describe('AccessMethod component', () => {
               }
             })
 
-            expect(screen.getByText('No temporal range selected. Make a temporal selection to enable temporal subsetting.')).toBeInTheDocument()
+            expect(screen.getByText('No temporal constraint selected. Make a temporal selection to enable temporal subsetting.')).toBeInTheDocument()
           })
         })
 
@@ -1038,7 +1030,7 @@ describe('AccessMethod component', () => {
                 }
               })
 
-              expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to Present')).toBeInTheDocument()
+              expect(screen.getByText('Temporal Constraint:2008-06-27 00:00:00 to Present')).toBeInTheDocument()
             })
 
             describe('when only an end date is set', () => {
@@ -1060,7 +1052,7 @@ describe('AccessMethod component', () => {
                   }
                 })
 
-                expect(screen.getByText('Selected Range:Up to 2008-06-27 00:00:00')).toBeInTheDocument()
+                expect(screen.getByText('Temporal Constraint:Up to 2008-06-27 00:00:00')).toBeInTheDocument()
               })
             })
           })

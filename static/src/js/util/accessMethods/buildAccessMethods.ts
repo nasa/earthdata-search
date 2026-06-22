@@ -20,22 +20,26 @@ import {
   OpendapAccessMethod,
   SwodlrAccessMethod
 } from '../../zustand/types'
-import { CollectionMetadata } from '../../types/sharedTypes'
-import { HarmonyCapabilitiesDocument } from '../getDerivedHarmonyState/getDerivedHarmonyState'
+import { CollectionMetadata, VariableMetadata } from '../../types/sharedTypes'
+import {
+  HarmonyCapabilitiesDocument,
+  HarmonyVariable
+} from '../getDerivedHarmonyState/getDerivedHarmonyState'
 
 /** What is returned form this function */
 export type AccessMethodItems = Record<string, AccessMethodTypes>
 
-/** Each Access Method is a little different, this is a catch-all interface for all of them them */
-export type AnyAccessMethod = {
-    type: string;
-    variables?: {
-      count?: number
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      items?: any[]
-    };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any
+/** ServiceItems look different depending on whether they come from Harmony or umm. This captures both cases */
+export type AnyAccessMethodServiceItem = {
+  /** Access Method Type. IE: Harmony, ESI, OPeNDAP */
+  type: string;
+  /** Associated Variables of the access method */
+  variables?: {
+    /** Number of associated variables */
+    count: number
+    /** Array of variables. Can be either from harmony or umm */
+    items: HarmonyVariable[] | VariableMetadata[]
+  };
 }
 
 const ECHO_ORDERS = 'echoOrders'
@@ -126,15 +130,18 @@ export const buildAccessMethods = (
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  const nonDownloadMethodItems = serviceItems.flatMap((serviceItem: AnyAccessMethod) => {
+  const nonDownloadMethodItems = serviceItems.flatMap((serviceItem: AnyAccessMethodServiceItem) => {
     let associatedVariables = collectionAssociatedVariables
     const {
       type: serviceType,
-      variables: serviceAssociatedVariables = {}
+      variables: serviceAssociatedVariables = {
+        count: 0,
+        items: []
+      }
     } = serviceItem
 
     // Overwrite variables if there are variables associated to the service record
-    if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
+    if (serviceAssociatedVariables.items.length > 0) {
       associatedVariables = serviceAssociatedVariables
     }
 
@@ -156,8 +163,9 @@ export const buildAccessMethods = (
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
-  const harmonyMethod: HarmonyAccessMethod | null = harmonyCapabilitiesDocument
-    && buildHarmony(harmonyCapabilitiesDocument, {})
+  // If the harmony document does not exist OR if the services length is 0, return null
+  const harmonyMethod: HarmonyAccessMethod | null = harmonyCapabilitiesDocument?.services.length
+    ? buildHarmony(harmonyCapabilitiesDocument, {}) : null
 
   if (harmonyMethod) {
     nonDownloadMethods.harmony = harmonyMethod

@@ -1,6 +1,6 @@
-import { HarmonyVariable } from './getDerivedHarmonyState/getDerivedHarmonyState'
+import type { HarmonyVariable } from './getDerivedHarmonyState/getDerivedHarmonyState'
 
-import { VariableMetadata } from '../types/sharedTypes'
+import type { VariableMetadata } from '../types/sharedTypes'
 
 /**
  * Determines the variable ID from a variable object.

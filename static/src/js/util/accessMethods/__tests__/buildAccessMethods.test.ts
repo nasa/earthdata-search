@@ -175,6 +175,46 @@ describe('when buildAccessMethods is called', () => {
     expect(accessMethods).toEqual({})
   })
 
+  test('no harmony access method is added if harmony capabilities document contains services: [] ', () => {
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            type: 'unknown',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+
+    const noServicesHarmonyCapabilitiesDocument = {
+      ...harmonyCapabilitiesDocument,
+      services: []
+    }
+    const isOpenSearch = false
+
+    const accessMethods = buildAccessMethods(
+      collectionMetadata,
+      isOpenSearch,
+      noServicesHarmonyCapabilitiesDocument
+    )
+
+    expect(accessMethods).toEqual({})
+  })
+
   test('calls buildEcho access method', () => {
     const buildEchoMock = vi.spyOn(buildEcho, 'buildEcho')
 

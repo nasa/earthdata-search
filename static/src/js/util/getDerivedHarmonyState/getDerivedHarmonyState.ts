@@ -42,6 +42,7 @@ export interface SupportedProjection {
 
 /**
  * Reprojection metadata supplied from the Harmony Capabilities Document
+ * At this time, we do not support Interpolation Methods
  */
 export interface HarmonyReprojection {
   /** An array of supported projection objects */
