@@ -799,7 +799,7 @@ const AccessMethod = ({
                     >
                       {
                         [
-                          <option key="output-projection-none" value="">Default Projection</option>,
+                          <option key="output-projection-none" value="">No Reprojection</option>,
                           ...supportedOutputProjectionOptions
                         ]
                       }
