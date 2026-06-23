@@ -592,10 +592,18 @@ export type EchoOrderAccessMethod = {
   url: string
 }
 
-export type HierarchyMapping = {
-    /** The variable concept id */
-    id: string
-}
+/** A Hierarchy Mapping may take one of two data shapes */
+export type HierarchyMapping =
+  | {
+      /** The variable concept id */
+      id: string
+    }
+  | {
+      /** The label for a group of children */
+      label: string
+      /** The child items, which can be either more labels or ids */
+      children: HierarchyMapping[]
+    }
 
 export type KeywordMapping = {
   /** The variable concept IDs */

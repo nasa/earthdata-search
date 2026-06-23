@@ -7,17 +7,21 @@ import { HarmonyVariable } from '../getDerivedHarmonyState/getDerivedHarmonyStat
 import { VariableMetadata } from '../../types/sharedTypes'
 import { HierarchyMapping, KeywordMapping } from '../../zustand/types'
 
-/**
- * Response from CMR with the VariableMetadata array in it.
- */
+/** Response from CMR with the VariableMetadata array in it. */
 export interface CmrVariableResponse {
-  count?: number;
-  items?: VariableMetadata[]
+  /** Number of variable items */
+  count: number;
+  /** Associated variables array */
+  items: VariableMetadata[]
 }
 
+/** Response object from this function */
 export interface VariablesResult {
+  /** Nested heierarchy structure of variables */
   hierarchyMappings: HierarchyMapping[]
+  /** Keyword mapping structure of variables */
   keywordMappings: KeywordMapping[]
+  /** Object containing variables keyed by their concept Id */
   variables: Record<string, HarmonyVariable | VariableMetadata>
 }
 
