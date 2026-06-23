@@ -155,8 +155,7 @@ export const handler = async (event, originalResponseStream) => {
   const httpResponseMetadata = {
     statusCode: 200,
     headers: {
-      'Content-Type': 'text/plain',
-      'X-Custom-Header': 'some-value'
+      'Content-Type': 'text/plain'
     }
   }
 
@@ -227,7 +226,7 @@ ${query}
 Required workflow:
 1) Identify spatial, temporal, and keyword values from the query.
 2) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools.
-3) If spatial exists, call tool "lookupSpatial" with the spatial value.
+3) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "reportFound" and "lookupSpatial".
 4) If temporal exists, call tool "convertTemporal" with the temporal value.
 5) After all tools have been called and have returned their results, call the "finalCall" tool to indicate that processing is complete.`,
     tools: {
@@ -269,7 +268,7 @@ Required workflow:
       responseStream.write(`Error: ${error.message}\n`)
       responseStream.end()
     },
-    stopWhen: hasToolCall('finalAnswer'),
+    stopWhen: hasToolCall('finalCall'),
     onFinish: async ({ text }) => {
       console.log('streamText finished, called with text:', text)
       console.log('Extraction complete. Final results:', JSON.stringify(extractedResults))
