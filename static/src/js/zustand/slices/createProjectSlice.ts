@@ -53,8 +53,7 @@ import type {
   ProjectGranuleResults,
   ProjectGranules,
   AccessMethodTypes,
-  HarmonyAccessMethod,
-  UpdateHarmonySelectionParams
+  HarmonyAccessMethod
 } from '../types'
 
 import type {
@@ -768,12 +767,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
     // When users make a selection, recalculate what fields are enabled or disabled
     // based on those user selections and update them in Zustand
-    updateHarmonySelection: (
-      {
-        collectionId,
-        newMethod
-      }: UpdateHarmonySelectionParams
-    ) => {
+    updateHarmonySelection: ({ collectionId, newMethod }) => {
       set((state) => {
         const { collections } = state.project
         const { byId } = collections
