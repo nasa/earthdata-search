@@ -10,6 +10,8 @@ export const computeKeywordMappings = (items) => {
   items.forEach((variable) => {
     const variableId = determineVariableId(variable)
 
+    if (!variableId) return
+
     const { scienceKeywords = [] } = variable
 
     // Skip this iteration of the loop if scienceKeywords is null

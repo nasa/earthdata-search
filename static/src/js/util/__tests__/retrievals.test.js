@@ -2,6 +2,88 @@ import routerHelper from '../../router/router'
 import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
 
+const mockHarmonyAccessMethod = {
+  id: 'S100000-EDSC',
+  isValid: true,
+  shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
+  outputFormatAvailability: {
+    TIFF: true,
+    PNG: true,
+    GIF: true
+  },
+  enableConcatenateDownload: false,
+  enableSpatialSubsetting: false,
+  enableTemporalSubsetting: false,
+  isSpatialSubsettingDisabled: false,
+  isTemporalSubsettingDisabled: false,
+  isVariableSubsettingDisabled: false,
+  isConcatenationDisabled: false,
+  hierarchyMappings: [],
+  keywordMappings: [],
+  selectedOutputFormat: undefined,
+  selectedVariables: [],
+  supportsBoundingBoxSubsetting: true,
+  supportsConcatenation: false,
+  supportsShapefileSubsetting: true,
+  supportsTemporalSubsetting: true,
+  supportsVariableSubsetting: true,
+  supportedOutputFormats: [
+    {
+      mimeType: 'TIFF',
+      name: 'TIFF'
+    },
+    {
+      mimeType: 'PNG',
+      name: 'PNG'
+    },
+    {
+      mimeType: 'GIF',
+      name: 'GIF'
+    }
+  ],
+  supportedOutputProjections: [
+    {
+      crs: 'EPSG:4326',
+      name: 'Geographic'
+    }
+  ],
+  type: 'Harmony',
+  url: 'https://harmony.sit.earthdata.nasa.gov',
+  variables: {
+    'V100000-EDSC': {
+      href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+      longName: '',
+      name: 'mock_variable',
+      scienceKeywords: [],
+      units: ''
+    }
+  },
+  harmonyUserSelections: {},
+  derivedHarmonyState: {},
+  harmonyCapabilitiesDocument: {
+    conceptId: 'C100000-EDSC',
+    shortName: 'Mock',
+    summary: {
+      subsetting: {},
+      reprojection: {
+        supportedProjections: [
+          {
+            name: 'Geographic',
+            crs: 'EPSG:4326'
+          }
+        ]
+      },
+      concatenation: false,
+      outputFormats: []
+    },
+    services: [],
+    variables: []
+  },
+  outputProjectionAvailability: { Geographic: true },
+  selectedOutputProjection: undefined,
+  supportsSpatialSubsetting: false
+}
+
 beforeEach(() => {
   routerHelper.router.state = {
     location: {
@@ -35,80 +117,7 @@ describe('retrievals', () => {
           byId: {
             'C100000-EDSC': {
               accessMethods: {
-                harmony: {
-                  id: 'S100000-EDSC',
-                  isValid: true,
-                  shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
-                  outputFormatAvailability: {
-                    TIFF: true,
-                    PNG: true,
-                    GIF: true
-                  },
-                  enableConcatenateDownload: false,
-                  enableSpatialSubsetting: false,
-                  enableTemporalSubsetting: false,
-                  isOutputFormatsDisabled: false,
-                  isShapeSubsettingDisabled: false,
-                  isSpatialSubsettingDisabled: false,
-                  isTemporalSubsettingDisabled: false,
-                  isVariableSubsettingDisabled: false,
-                  isConcatenationDisabled: false,
-                  hierarchyMappings: [],
-                  keywordMappings: [],
-                  selectedOutputFormat: undefined,
-                  selectedVariables: [],
-                  supportsBoundingBoxSubsetting: true,
-                  supportsConcatenation: false,
-                  supportsShapefileSubsetting: true,
-                  supportsTemporalSubsetting: true,
-                  supportsVariableSubsetting: true,
-                  supportedOutputFormats: [
-                    {
-                      mimeType: 'TIFF',
-                      name: 'TIFF'
-                    },
-                    {
-                      mimeType: 'PNG',
-                      name: 'PNG'
-                    },
-                    {
-                      mimeType: 'GIF',
-                      name: 'GIF'
-                    }
-                  ],
-                  supportedOutputProjections: [
-                    'EPSG:4326'
-                  ],
-                  type: 'Harmony',
-                  url: 'https://harmony.sit.earthdata.nasa.gov',
-                  variables: {
-                    'V100000-EDSC': {
-                      name: 'alpha_var',
-                      href: 'https://cmr.earthdata.nasa.gov/search/concepts/V2292306567-POCLOUD',
-                      scienceKeywords: [
-                        {
-                          category: 'EARTH SCIENCE',
-                          topic: 'ATMOSPHERE',
-                          term: 'ATMOSPHERIC PRESSURE'
-                        }
-                      ]
-                    }
-                  },
-                  harmonyUserSelections: {},
-                  derivedHarmonyState: {},
-                  harmonyCapabilitiesDocument: {
-                    conceptId: 'C100000-EDSC',
-                    shortName: 'Mock',
-                    summary: {
-                      subsetting: {},
-                      reprojection: {},
-                      concatenation: false,
-                      outputFormats: []
-                    },
-                    services: [],
-                    variables: []
-                  }
-                }
+                harmony: mockHarmonyAccessMethod
               },
               granules: {
                 count: 100,
@@ -242,83 +251,7 @@ describe('retrievals', () => {
           byId: {
             'C100000-EDSC': {
               accessMethods: {
-                harmony: {
-                  id: 'S100000-EDSC',
-                  isValid: true,
-
-                  shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
-                  outputFormatAvailability: {
-                    TIFF: true,
-                    PNG: true,
-                    GIF: true
-                  },
-                  enableConcatenateDownload: false,
-                  enableSpatialSubsetting: false,
-                  enableTemporalSubsetting: false,
-                  isOutputFormatsDisabled: false,
-                  isShapeSubsettingDisabled: false,
-                  isSpatialSubsettingDisabled: false,
-                  isTemporalSubsettingDisabled: false,
-                  isVariableSubsettingDisabled: false,
-                  isConcatenationDisabled: false,
-                  hierarchyMappings: [],
-                  keywordMappings: [],
-                  selectedOutputFormat: undefined,
-                  selectedVariables: [],
-                  supportsBoundingBoxSubsetting: true,
-                  supportsConcatenation: false,
-                  supportsShapefileSubsetting: true,
-                  supportsTemporalSubsetting: true,
-                  supportsVariableSubsetting: true,
-                  supportedOutputFormats: [
-                    {
-                      mimeType: 'TIFF',
-                      name: 'TIFF'
-                    },
-                    {
-                      mimeType: 'PNG',
-                      name: 'PNG'
-                    },
-                    {
-                      mimeType: 'GIF',
-                      name: 'GIF'
-                    }
-                  ],
-                  supportedOutputProjections: [
-                    'EPSG:4326'
-                  ],
-                  type: 'Harmony',
-                  url: 'https://harmony.sit.earthdata.nasa.gov',
-                  variables: {
-                    'V100000-EDSC': {
-                      conceptId: 'V100000-EDSC',
-                      definition: 'Alpha channel value',
-                      longName: 'Alpha channel ',
-                      name: 'alpha_var',
-                      scienceKeywords: [
-                        {
-                          category: 'EARTH SCIENCE',
-                          topic: 'ATMOSPHERE',
-                          term: 'ATMOSPHERIC PRESSURE'
-                        }
-                      ]
-                    }
-                  },
-                  harmonyUserSelections: {},
-                  derivedHarmonyState: {},
-                  harmonyCapabilitiesDocument: {
-                    conceptId: 'C100000-EDSC',
-                    shortName: 'Mock',
-                    summary: {
-                      subsetting: {},
-                      reprojection: {},
-                      concatenation: false,
-                      outputFormats: []
-                    },
-                    services: [],
-                    variables: []
-                  }
-                }
+                harmony: mockHarmonyAccessMethod
               },
               granules: {
                 count: 100,
