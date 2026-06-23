@@ -212,7 +212,7 @@ export const handler = async (event, originalResponseStream) => {
 
   bedrock = createAmazonBedrock(bedrockOptions)
 
-  const model = bedrock(process.env.BEDROCK_MODEL_ID)
+  const model = bedrock(process.env.BEDROCK_MODEL_ID || 'amazon.nova-pro-v1:0')
 
   const result = streamText({
     model,
@@ -225,8 +225,8 @@ ${query}
 
 Required workflow:
 1) Identify spatial, temporal, and keyword values from the query.
-2) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools.
-3) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "reportFound" and "lookupSpatial".
+2) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in the a single call to "reportFound.
+3) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "lookupSpatial".
 4) If temporal exists, call tool "convertTemporal" with the temporal value.
 5) After all tools have been called and have returned their results, call the "finalCall" tool to indicate that processing is complete.`,
     tools: {
