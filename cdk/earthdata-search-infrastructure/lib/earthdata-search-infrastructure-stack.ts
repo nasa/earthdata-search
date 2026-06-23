@@ -164,6 +164,7 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
     // eslint-disable-next-line no-new
     new infrastructure.Database(this, 'EDSCDatabase', {
       allocatedStorage: DB_ALLOCATED_STORAGE,
+      allowMajorVersionUpgrade: true,
       appName: 'EDSC',
       databaseUsername: 'edsc',
       dbInstanceClass: DB_INSTANCE_CLASS,
