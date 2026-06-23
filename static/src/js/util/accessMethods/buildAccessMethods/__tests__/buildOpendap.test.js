@@ -231,15 +231,15 @@ describe('buildOpendap', () => {
           supportedOutputFormats: [
             {
               name: 'ASCII',
-              mimeType: 'ASCII'
+              mimeType: 'ascii'
             },
             {
               name: 'BINARY',
-              mimeType: 'BINARY'
+              mimeType: 'dods'
             },
             {
               name: 'NETCDF-4',
-              mimeType: 'NETCDF-4'
+              mimeType: 'nc4'
             }
           ],
           supportsVariableSubsetting: true,
@@ -578,15 +578,15 @@ describe('buildOpendap', () => {
           supportedOutputFormats: [
             {
               name: 'ASCII',
-              mimeType: 'ASCII'
+              mimeType: 'ascii'
             },
             {
               name: 'BINARY',
-              mimeType: 'BINARY'
+              mimeType: 'dods'
             },
             {
               name: 'NETCDF-4',
-              mimeType: 'NETCDF-4'
+              mimeType: 'nc4'
             }
           ],
           supportsVariableSubsetting: true,
@@ -835,15 +835,15 @@ describe('buildOpendap', () => {
           supportedOutputFormats: [
             {
               name: 'ASCII',
-              mimeType: 'ASCII'
+              mimeType: 'ascii'
             },
             {
               name: 'BINARY',
-              mimeType: 'BINARY'
+              mimeType: 'dods'
             },
             {
               name: 'NETCDF-4',
-              mimeType: 'NETCDF-4'
+              mimeType: 'nc4'
             }
           ],
           supportsVariableSubsetting: true,

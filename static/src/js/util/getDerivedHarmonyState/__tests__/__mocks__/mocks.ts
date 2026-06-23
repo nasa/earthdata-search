@@ -1,4 +1,6 @@
-export const mockHarmonyCapabilitiesDocument = {
+import { HarmonyCapabilitiesDocument } from '../../getDerivedHarmonyState'
+
+export const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   conceptId: 'C1234567890-EEDTEST',
   shortName: 'mock_collection',
   summary: {
@@ -9,9 +11,7 @@ export const mockHarmonyCapabilitiesDocument = {
       variable: true
     },
     reprojection: {
-      supported: false,
-      supportedProjections: [],
-      interpolationMethods: []
+      supportedProjections: []
     },
     concatenation: true,
     outputFormats: [
@@ -37,7 +37,9 @@ export const mockHarmonyCapabilitiesDocument = {
     {
       name: 'mock_variable',
       href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/V123456789-EEDTEST',
-      scienceKeywords: []
+      scienceKeywords: [],
+      longName: '',
+      units: ''
     }
   ],
   services: [
@@ -50,9 +52,7 @@ export const mockHarmonyCapabilitiesDocument = {
           variable: false
         },
         reprojection: {
-          supported: false,
-          supportedProjections: [],
-          interpolationMethods: []
+          supportedProjections: []
         },
         concatenation: false,
         outputFormats: [
@@ -70,14 +70,11 @@ export const mockHarmonyCapabilitiesDocument = {
         subsetting: {
           temporal: true,
           bbox: true,
-          dimension: true,
           shape: true,
           variable: true
         },
         reprojection: {
-          supported: false,
-          supportedProjections: [],
-          interpolationMethods: []
+          supportedProjections: []
         },
         concatenation: false,
         outputFormats: [
@@ -101,9 +98,7 @@ export const mockHarmonyCapabilitiesDocument = {
           variable: true
         },
         reprojection: {
-          supported: false,
-          supportedProjections: [],
-          interpolationMethods: []
+          supportedProjections: []
         },
         concatenation: true,
         outputFormats: [
@@ -117,7 +112,143 @@ export const mockHarmonyCapabilitiesDocument = {
   ]
 }
 
-export const mockNoOutputFormatService = {
+export const mockHarmonyCapabiltiesDocumentWithReprojection: HarmonyCapabilitiesDocument = {
+  conceptId: 'C2949811996-POCLOUD',
+  shortName: 'OPERA_L3_DSWX-S1_V1',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supportedProjections: [
+        {
+          name: 'Geographic',
+          crs: 'EPSG:4326'
+        },
+        {
+          name: 'NSIDC Sea Ice Polar Stereographic North',
+          crs: 'EPSG:3413'
+        },
+        {
+          name: 'WGS 84 / Antarctic Polar Stereographic',
+          crs: 'EPSG:3031'
+        }
+      ]
+    },
+    concatenation: true,
+    outputFormats: [
+      {
+        name: 'JPEG',
+        mimeType: 'image/jpeg'
+      },
+      {
+        name: 'PNG',
+        mimeType: 'image/png'
+      },
+      {
+        name: 'GIF',
+        mimeType: 'image/GIF'
+      }
+    ]
+  },
+  services: [
+    {
+      name: 'output format of PNG disables all but reprojection',
+      href: 'https://cmr.earthdata.nasa.gov/search/concepts/S2697183066-XYZ_PROV',
+      capabilities: {
+        subsetting: {
+          bbox: false,
+          shape: false,
+          temporal: false,
+          variable: false
+        },
+        reprojection: {
+          supportedProjections: [
+            {
+              name: 'Geographic',
+              crs: 'EPSG:4326'
+            },
+            {
+              name: 'NSIDC Sea Ice Polar Stereographic North',
+              crs: 'EPSG:3413'
+            },
+            {
+              name: 'WGS 84 / Antarctic Polar Stereographic',
+              crs: 'EPSG:3031'
+            }
+          ]
+        },
+        concatenation: false,
+        outputFormats: [
+          {
+            name: 'PNG',
+            mimeType: 'image/png'
+          }
+        ]
+      }
+    },
+    {
+      name: 'output format of JPEG disables all but one reprojection, geographic',
+      href: 'https://cmr.earthdata.nasa.gov/search/concepts/S2697183066-XYZ_PROV',
+      capabilities: {
+        subsetting: {
+          bbox: false,
+          shape: false,
+          temporal: false,
+          variable: false
+        },
+        reprojection: {
+          supportedProjections: [
+            {
+              name: 'Geographic',
+              crs: 'EPSG:4326'
+            }
+          ]
+        },
+        concatenation: false,
+        outputFormats: [
+          {
+            name: 'JPEG',
+            mimeType: 'image/jpeg'
+          }
+        ]
+      }
+    },
+    {
+      name: 'selecting NSIDC Sea Ice Polar Stereographic North reprojection limits output to GIF',
+      href: 'https://cmr.earthdata.nasa.gov/search/concepts/S2697183066-XYZ_PROV',
+      capabilities: {
+        subsetting: {
+          bbox: true,
+          shape: true,
+          temporal: true,
+          variable: true
+        },
+        reprojection: {
+          supportedProjections: [
+            {
+              name: 'NSIDC Sea Ice Polar Stereographic North',
+              crs: 'EPSG:3413'
+            }
+          ]
+        },
+        concatenation: true,
+        outputFormats: [
+          {
+            name: 'GIF',
+            mimeType: 'image/GIF'
+          }
+        ]
+      }
+    }
+  ],
+  variables: []
+}
+
+export const mockNoOutputFormatService: HarmonyCapabilitiesDocument = {
   conceptId: 'C1234567890-EEDTEST-NoServices',
   shortName: 'mock_collection',
   summary: {
@@ -128,9 +259,7 @@ export const mockNoOutputFormatService = {
       variable: true
     },
     reprojection: {
-      supported: false,
-      supportedProjections: [],
-      interpolationMethods: []
+      supportedProjections: []
     },
     concatenation: false,
     outputFormats: []
@@ -146,9 +275,7 @@ export const mockNoOutputFormatService = {
           variable: true
         },
         reprojection: {
-          supported: false,
-          supportedProjections: [],
-          interpolationMethods: []
+          supportedProjections: []
         },
         concatenation: false,
         outputFormats: [
@@ -169,38 +296,11 @@ export const mockNoOutputFormatService = {
           variable: true
         },
         reprojection: {
-          supported: false,
-          supportedProjections: [],
-          interpolationMethods: []
+          supportedProjections: []
         },
         concatenation: false,
         outputFormats: []
       }
     }
   ]
-}
-
-export const mockUserSelectionsTemporal = {
-  temporalSubset: true
-}
-
-export const mockUserSelectionsSpatial = {
-  spatialSubset: true
-}
-
-export const mockUserSelectionsOutputFormat = {
-  selectedOutputFormat: 'text/csv'
-}
-
-export const mockUserSelectionsOutputFormatandSubsetting = {
-  spatialSubset: true,
-  selectedOutputFormat: 'application/x-netcdf4'
-}
-
-export const mockUserSelectionsConcatenateSubsetting = {
-  concatenate: true
-}
-
-export const mockUserSelectionsVariablesSubsetting = {
-  selectedVariables: ['mock-variable']
 }
