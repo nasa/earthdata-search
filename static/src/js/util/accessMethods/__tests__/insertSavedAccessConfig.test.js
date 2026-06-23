@@ -121,88 +121,85 @@ describe('insertSavedAccessConfig', () => {
         type: 'download'
       },
       harmony: {
+        id: 'S100000-EDSC',
+        isValid: true,
+        shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
         outputFormatAvailability: {
-          GEOTIFF: true,
-          PNG: true,
           TIFF: true,
-          'NETCDF-4': true
+          PNG: true,
+          GIF: true
         },
         enableConcatenateDownload: false,
         enableSpatialSubsetting: false,
-        enableTemporalSubsetting: true,
-        hierarchyMappings: [
-          {
-            id: 'V100000-EDSC'
-          },
-          {
-            id: 'V100001-EDSC'
-          },
-          {
-            id: 'V100002-EDSC'
-          },
-          {
-            id: 'V100003-EDSC'
-          }
-        ],
-        id: 'S100000-EDSC',
-        isValid: true,
-        isOutputFormatsDisabled: false,
-        isShapeSubsettingDisabled: false,
+        enableTemporalSubsetting: false,
         isSpatialSubsettingDisabled: false,
         isTemporalSubsettingDisabled: false,
         isVariableSubsettingDisabled: false,
         isConcatenationDisabled: false,
+        hierarchyMappings: [],
         keywordMappings: [],
-        shortName: 'Mock Harmony Method',
         selectedOutputFormat: undefined,
         selectedVariables: [],
-        supportedOutputFormats: [
-          {
-            name: 'GEOTIFF',
-            mimeType: 'GEOTIFF'
-          },
-          {
-            name: 'PNG',
-            mimeType: 'PNG'
-          },
-          {
-            name: 'TIFF',
-            mimeType: 'TIFF'
-          },
-          {
-            name: 'NETCDF-4',
-            mimeType: 'NETCDF-4'
-          }
-        ],
-        supportedOutputProjections: [],
         supportsBoundingBoxSubsetting: true,
         supportsConcatenation: false,
-        supportsShapefileSubsetting: false,
-        supportsTemporalSubsetting: false,
+        supportsShapefileSubsetting: true,
+        supportsTemporalSubsetting: true,
         supportsVariableSubsetting: true,
+        supportedOutputFormats: [
+          {
+            mimeType: 'TIFF',
+            name: 'TIFF'
+          },
+          {
+            mimeType: 'PNG',
+            name: 'PNG'
+          },
+          {
+            mimeType: 'GIF',
+            name: 'GIF'
+          }
+        ],
+        supportedOutputProjections: [
+          {
+            crs: 'EPSG:4326',
+            name: 'Geographic'
+          }
+        ],
         type: 'Harmony',
-        url: 'https://example.com',
+        url: 'https://harmony.sit.earthdata.nasa.gov',
         variables: {
           'V100000-EDSC': {
-            name: 'alpha_var',
-            href: 'https://cmr.earthdata.nasa.gov/search/concepts/V100000-EDSC',
-            scienceKeywords: []
+            href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+            longName: '',
+            name: 'mock_variable',
+            scienceKeywords: [],
+            units: ''
           }
         },
         harmonyUserSelections: {},
         derivedHarmonyState: {},
         harmonyCapabilitiesDocument: {
-          conceptId: 'S100000-EDSC',
+          conceptId: 'C100000-EDSC',
           shortName: 'Mock',
           summary: {
             subsetting: {},
-            reprojection: {},
+            reprojection: {
+              supportedProjections: [
+                {
+                  name: 'Geographic',
+                  crs: 'EPSG:4326'
+                }
+              ]
+            },
             concatenation: false,
             outputFormats: []
           },
           services: [],
           variables: []
-        }
+        },
+        outputProjectionAvailability: { Geographic: true },
+        selectedOutputProjection: undefined,
+        supportsSpatialSubsetting: false
       }
     }
     const savedAccessConfig = {

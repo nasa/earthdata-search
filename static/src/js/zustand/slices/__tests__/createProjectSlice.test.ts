@@ -15,6 +15,10 @@ import GranuleRequest from '../../../util/request/granuleRequest'
 import * as applicationConfig from '../../../../../../sharedUtils/config'
 import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
+import {
+  DerivedHarmonyState,
+  HarmonyCapabilitiesDocument
+} from '../../../util/getDerivedHarmonyState/getDerivedHarmonyState'
 
 vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-request-id')
@@ -36,6 +40,118 @@ vi.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
 vi.mock('../../../util/handleAlert', () => ({
   handleAlert: vi.fn()
 }))
+
+const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
+  conceptId: 'collectionId1',
+  shortName: 'Short Name',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supportedProjections: []
+    },
+    concatenation: false,
+    outputFormats: [{
+      mimeType: 'application/x-hdf',
+      name: 'HDF'
+    }]
+  },
+  services: [
+    {
+      name: 'sds/trajectory-subsetter',
+      href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+      capabilities: {
+        subsetting: {
+          temporal: true,
+          bbox: true,
+          shape: true,
+          variable: true
+        },
+        outputFormats: [{
+          mimeType: 'application/x-hdf',
+          name: 'HDF'
+        }],
+        concatenation: false,
+        reprojection: {
+          supportedProjections: []
+        }
+      }
+    }
+  ],
+  variables: []
+}
+
+const mockNoServicesCapabilitiesDocument: HarmonyCapabilitiesDocument = {
+  conceptId: 'collectionId1',
+  shortName: 'Short Name',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supportedProjections: []
+    },
+    concatenation: false,
+    outputFormats: [{
+      mimeType: 'application/x-hdf',
+      name: 'HDF'
+    }]
+  },
+  services: [],
+  variables: []
+}
+
+const mockDerivedHarmonyState: DerivedHarmonyState = {
+  capabilities: {
+    concatenate: {
+      disabled: true,
+      supported: false
+    },
+    outputFormats: {
+      disabled: false,
+      outputFormatAvailability: {
+        HDF: true
+      },
+      supported: [
+        {
+          mimeType: 'application/x-hdf',
+          name: 'HDF'
+        }
+      ],
+      value: ''
+    },
+    reproject: {
+      disabled: true,
+      outputProjectionAvailability: {},
+      supported: [],
+      value: ''
+    },
+    spatialSubset: {
+      disabled: false,
+      shapeDisabled: false,
+      bboxDisabled: false,
+      supported: true
+    },
+    temporalSubset: {
+      disabled: false,
+      supported: true
+    },
+    variableSubset: {
+      disabled: false,
+      supported: true
+    }
+  },
+  collectionId: 'collectionId1',
+  shortName: 'Short Name',
+  variables: []
+}
 
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
@@ -412,11 +528,11 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -667,11 +783,14 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionid2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -810,47 +929,7 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, {
-            conceptId: 'collectionId1',
-            shortName: 'Short Name',
-            summary: {
-              subsetting: {
-                bbox: true,
-                shape: true,
-                temporal: true,
-                variable: true
-              },
-              reprojection: {
-                supported: false,
-                supportProjections: [],
-                interpolationMethods: []
-              },
-              concatenation: false,
-              outputFormats: [{
-                mimeType: 'application/x-hdf',
-                name: 'HDF'
-              }]
-            },
-            services: [
-              {
-                name: 'sds/trajectory-subsetter',
-                href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
-                capabilities: {
-                  subsetting: {
-                    temporal: true,
-                    bbox: true,
-                    shape: true,
-                    variable: true
-                  },
-                  outputFormats: [{
-                    mimeType: 'application/x-hdf',
-                    name: 'HDF'
-                  }]
-                }
-              }
-            ],
-            variables: []
-          })
+          .reply(200, mockHarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -910,61 +989,20 @@ describe('createProjectSlice', () => {
             enableConcatenateDownload: false,
             enableSpatialSubsetting: false,
             enableTemporalSubsetting: false,
-            harmonyCapabilitiesDocument: {
-              conceptId: 'collectionId1',
-              services: [
-                {
-                  capabilities: {
-                    outputFormats: [
-                      {
-                        mimeType: 'application/x-hdf',
-                        name: 'HDF'
-                      }
-                    ],
-                    subsetting: {
-                      bbox: true,
-                      shape: true,
-                      temporal: true,
-                      variable: true
-                    }
-                  },
-                  href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
-                  name: 'sds/trajectory-subsetter'
-                }
-              ],
-              shortName: 'Short Name',
-              summary: {
-                concatenation: false,
-                outputFormats: [
-                  {
-                    mimeType: 'application/x-hdf',
-                    name: 'HDF'
-                  }
-                ],
-                reprojection: {
-                  interpolationMethods: [],
-                  supportProjections: [],
-                  supported: false
-                },
-                subsetting: {
-                  bbox: true,
-                  shape: true,
-                  temporal: true,
-                  variable: true
-                }
-              },
-              variables: []
-            },
+            harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+            harmonyUserSelections: {},
+            derivedHarmonyState: mockDerivedHarmonyState,
             hierarchyMappings: [],
             id: 'collectionId1',
-            isOutputFormatsDisabled: false,
-            isShapeSubsettingDisabled: false,
+            isConcatenationDisabled: true,
             isSpatialSubsettingDisabled: false,
             isTemporalSubsettingDisabled: false,
             isValid: true,
             isVariableSubsettingDisabled: false,
             keywordMappings: [],
+            outputProjectionAvailability: {},
             selectedOutputFormat: undefined,
+            selectedOutputProjection: undefined,
             selectedVariables: [],
             shortName: 'Short Name',
             supportedOutputFormats: [
@@ -973,21 +1011,17 @@ describe('createProjectSlice', () => {
                 name: 'HDF'
               }
             ],
-            supportedOutputProjections: [
-              {
-                mimeType: 'application/x-hdf',
-                name: 'HDF'
-              }
-            ],
-            supportsBoundingBoxSubsetting: true,
+            supportedOutputProjections: [],
             supportsConcatenation: false,
             supportsShapefileSubsetting: true,
+            supportsBoundingBoxSubsetting: true,
+            supportsSpatialSubsetting: true,
             supportsTemporalSubsetting: true,
             supportsVariableSubsetting: true,
             type: 'Harmony',
             url: 'https://harmony.example.com',
             variables: {}
-          }
+          } satisfies HarmonyAccessMethod
         })
       })
     })
@@ -1026,7 +1060,10 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=C10000000000-EDSC&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'C10000000000-EDSC'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -1099,11 +1136,14 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -1224,11 +1264,14 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/localhost/)
           .post(/error_logger/)
@@ -1323,11 +1366,14 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -1374,11 +1420,14 @@ describe('createProjectSlice', () => {
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, { services: [] })
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -2191,30 +2240,29 @@ describe('createProjectSlice', () => {
 
     test('updates harmony selection of temporalSubset/enableTemporalSubsetting when method type is harmony', () => {
       const collectionId = 'collectionId'
+
       const harmonyAccessMethod: HarmonyAccessMethod = {
-        outputFormatAvailability: { 'NETCDF-4': true },
+        outputFormatAvailability: { HDF: true },
         enableConcatenateDownload: false,
         enableSpatialSubsetting: false,
         enableTemporalSubsetting: false,
         id: 'C4054955340-GES_DISC',
         isValid: true,
-        isOutputFormatsDisabled: false,
-        isShapeSubsettingDisabled: false,
         isSpatialSubsettingDisabled: false,
         isTemporalSubsettingDisabled: false,
         isVariableSubsettingDisabled: false,
         isConcatenationDisabled: true,
         shortName: 'GPM_3GPROFF18SSMIS_CLIM',
-        selectedOutputFormat: undefined,
+        selectedOutputFormat: '',
         selectedVariables: [],
         supportedOutputFormats: [{
           name: 'NETCDF-4',
           mimeType: 'application/x-netcdf4'
         }],
         supportedOutputProjections: [],
-        supportsBoundingBoxSubsetting: true,
         supportsConcatenation: false,
         supportsShapefileSubsetting: true,
+        supportsBoundingBoxSubsetting: true,
         supportsTemporalSubsetting: true,
         supportsVariableSubsetting: true,
         type: 'Harmony',
@@ -2222,100 +2270,12 @@ describe('createProjectSlice', () => {
         variables: {},
         hierarchyMappings: [],
         keywordMappings: [],
-        harmonyUserSelections: {
-          temporalSubset: true
-        },
-        derivedHarmonyState: {
-          collectionId: 'C4054955340-GES_DISC',
-          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
-          variables: [],
-          capabilities: {
-            variableSubset: {
-              supported: true,
-              disabled: false,
-              value: null
-            },
-            spatialSubset: {
-              supported: true,
-              disabled: false,
-              bboxSupported: true,
-              bboxDisabled: false,
-              shapeSupported: true,
-              shapeDisabled: false,
-              value: null
-            },
-            temporalSubset: {
-              supported: true,
-              disabled: false,
-              value: null
-            },
-            concatenate: {
-              supported: false,
-              disabled: true,
-              value: null
-            },
-            reproject: {
-              supported: false,
-              disabled: false,
-              value: null
-            },
-            outputFormats: {
-              supported: [{
-                name: 'NETCDF-4',
-                mimeType: 'application/x-netcdf4'
-              }],
-              disabled: false,
-              outputFormatAvailability: { 'NETCDF-4': true },
-              value: ''
-            }
-          }
-        },
-
-        harmonyCapabilitiesDocument: {
-          conceptId: 'C4054955340-GES_DISC',
-          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
-          summary: {
-            subsetting: {
-              variable: true,
-              bbox: true,
-              shape: true,
-              temporal: true
-            },
-            reprojection: {
-              supported: false,
-              supportedProjections: [],
-              interpolationMethods: []
-            },
-            concatenation: false,
-            outputFormats: [{
-              name: 'NETCDF-4',
-              mimeType: 'application/x-netcdf4'
-            }]
-          },
-          services: [{
-            name: 'mock-harmony-service',
-            href: 'https://example.com/service',
-            capabilities: {
-              subsetting: {
-                variable: true,
-                bbox: true,
-                shape: true,
-                temporal: true
-              },
-              concatenation: false,
-              reprojection: {
-                supported: false,
-                supportedProjections: [],
-                interpolationMethods: []
-              },
-              outputFormats: [{
-                name: 'NETCDF-4',
-                mimeType: 'application/x-netcdf4'
-              }]
-            }
-          }],
-          variables: []
-        }
+        harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+        harmonyUserSelections: { temporalSubset: true },
+        derivedHarmonyState: mockDerivedHarmonyState,
+        outputProjectionAvailability: {},
+        selectedOutputProjection: '',
+        supportsSpatialSubsetting: false
       }
 
       useEdscStore.setState((state) => {

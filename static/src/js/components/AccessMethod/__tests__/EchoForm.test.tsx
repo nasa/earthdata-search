@@ -6,7 +6,7 @@ import EDSCEchoform from '@edsc/echoforms'
 
 import EchoForm, { EchoFormProps } from '../EchoForm'
 
-import { echoForm } from './mocks'
+import { echoForm } from './__mocks__/mocks'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 

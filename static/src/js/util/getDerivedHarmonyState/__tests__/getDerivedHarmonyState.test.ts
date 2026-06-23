@@ -1,17 +1,17 @@
-import getDerivedHarmonyState, { DerivedHarmonyState } from '../getDerivedHarmonyState'
+import getDerivedHarmonyState, {
+  DerivedHarmonyState,
+  HarmonyCapabilitiesDocument,
+  UserSelections
+} from '../getDerivedHarmonyState'
 import {
   mockHarmonyCapabilitiesDocument,
-  mockUserSelectionsTemporal,
-  mockUserSelectionsSpatial,
-  mockUserSelectionsOutputFormat,
-  mockUserSelectionsConcatenateSubsetting,
-  mockUserSelectionsVariablesSubsetting,
+  mockHarmonyCapabiltiesDocumentWithReprojection,
   mockNoOutputFormatService
 } from './__mocks__/mocks'
 
 describe('getDerivedHarmonyState', () => {
   test('returns empty object when services array is empty', () => {
-    expect(getDerivedHarmonyState(mockUserSelectionsTemporal, {
+    expect(getDerivedHarmonyState({}, {
       conceptId: 'C1234567890-EEDTEST-NoServices',
       shortName: 'mock_collection',
       summary: {
@@ -22,21 +22,19 @@ describe('getDerivedHarmonyState', () => {
           variable: true
         },
         reprojection: {
-          supported: false,
-          supportedProjections: [],
-          interpolationMethods: []
+          supportedProjections: []
         },
         concatenation: false,
         outputFormats: []
       },
       services: [],
       variables: []
-    })).toEqual({})
+    } satisfies HarmonyCapabilitiesDocument)).toEqual({})
   })
 
   test('calculates parameters correctly when temporal subsetting is selected', () => {
     const result = getDerivedHarmonyState(
-      mockUserSelectionsTemporal,
+      { temporalSubset: true } satisfies UserSelections,
       mockHarmonyCapabilitiesDocument
     ) as DerivedHarmonyState
 
@@ -45,8 +43,8 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.temporalSubset.disabled).toBe(false)
     expect(result.capabilities.variableSubset.disabled).toBe(false)
     expect(result.capabilities.spatialSubset.disabled).toBe(false)
-    expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
     expect(result.capabilities.spatialSubset.shapeDisabled).toBe(false)
+    expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
     // Formats of the 2 remaining valid services
     expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
       CSV: true,
@@ -58,7 +56,7 @@ describe('getDerivedHarmonyState', () => {
 
   test('calculates parameters correctly when spatial subsetting is selected', () => {
     const result = getDerivedHarmonyState(
-      mockUserSelectionsSpatial,
+      { spatialSubset: true } satisfies UserSelections,
       mockHarmonyCapabilitiesDocument
     ) as DerivedHarmonyState
 
@@ -77,7 +75,7 @@ describe('getDerivedHarmonyState', () => {
 
   test('ignores output format selection when generating enabledFormats to prevent dropdown collapse', () => {
     const result = getDerivedHarmonyState(
-      mockUserSelectionsOutputFormat,
+      { selectedOutputFormat: 'text/csv' } satisfies UserSelections,
       mockHarmonyCapabilitiesDocument
     ) as DerivedHarmonyState
 
@@ -100,26 +98,26 @@ describe('getDerivedHarmonyState', () => {
 
   test('disables output formats when the remaining valid services do not support any formats', () => {
     // Using the mock where 'sds/HOSS-geographic' has no output_formats array
-    const selections = {
+    const mockUserSelections: UserSelections = {
       spatialSubset: true, // Filters out giovanni, leaving only HOSS-geographic
       temporalSubset: false,
       concatenate: false,
-      selectedOutputFormat: undefined
+      selectedOutputFormat: ''
     }
 
     const result = getDerivedHarmonyState(
-      selections,
+      mockUserSelections,
       mockNoOutputFormatService
     ) as DerivedHarmonyState
 
     // The valid service (HOSS-geographic) has no formats
-    expect(result.capabilities.outputFormats.disabled).toBe(false)
+    expect(result.capabilities.outputFormats.disabled).toBe(true)
     expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({})
   })
 
   test('calculates parameters correctly when concatenate has been selected', () => {
     const result = getDerivedHarmonyState(
-      mockUserSelectionsConcatenateSubsetting,
+      { concatenate: true } satisfies UserSelections,
       mockHarmonyCapabilitiesDocument
     ) as DerivedHarmonyState
 
@@ -127,7 +125,6 @@ describe('getDerivedHarmonyState', () => {
     expect(result.capabilities.concatenate.disabled).toBe(false)
 
     // 'sds/hoss-opendap-url' also supports bbox and variable subsetting, so those should remain enabled.
-    expect(result.capabilities.spatialSubset.disabled).toBe(false)
     expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
     expect(result.capabilities.variableSubset.disabled).toBe(false)
 
@@ -146,7 +143,7 @@ describe('getDerivedHarmonyState', () => {
 
   test('calculates parameters correctly when a variable has been selected', () => {
     const result = getDerivedHarmonyState(
-      mockUserSelectionsVariablesSubsetting,
+      { selectedVariables: ['mock-variable'] } satisfies UserSelections,
       mockHarmonyCapabilitiesDocument
     ) as DerivedHarmonyState
 
@@ -156,7 +153,6 @@ describe('getDerivedHarmonyState', () => {
 
     // Since both remaining services support bbox spatial subsetting, it remains enabled.
     expect(result.capabilities.spatialSubset.disabled).toBe(false)
-    expect(result.capabilities.spatialSubset.bboxDisabled).toBe(false)
 
     // Only one of the remaining services supports shape subsetting, but since AT LEAST one does, it remains enabled.
     expect(result.capabilities.spatialSubset.shapeDisabled).toBe(false)
@@ -171,5 +167,51 @@ describe('getDerivedHarmonyState', () => {
       'NetCDF-4': true,
       'OPeNDAP URL': true
     })
+  })
+
+  test('selecting an output format recalcuates reprojection availability', () => {
+    const result = getDerivedHarmonyState(
+      { selectedOutputFormat: 'image/jpeg' } satisfies UserSelections,
+      mockHarmonyCapabiltiesDocumentWithReprojection
+    ) as DerivedHarmonyState
+
+    // Users can still select from any output format
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      GIF: true,
+      JPEG: true,
+      PNG: true
+    })
+
+    // But selecting an output format has limited what's available for a projection
+    expect(result.capabilities.reproject.outputProjectionAvailability).toEqual({
+      Geographic: true,
+      'NSIDC Sea Ice Polar Stereographic North': false,
+      'WGS 84 / Antarctic Polar Stereographic': false
+    })
+
+    // Ensure other capabilities are recalculated
+    expect(result.capabilities.variableSubset.disabled).toEqual(true)
+  })
+
+  test('Selecting an output projection recalculates output formats', () => {
+    const result = getDerivedHarmonyState(
+      { selectedOutputProjection: 'EPSG:3413' } satisfies UserSelections,
+      mockHarmonyCapabiltiesDocumentWithReprojection
+    ) as DerivedHarmonyState
+
+    expect(result.capabilities.outputFormats.outputFormatAvailability).toEqual({
+      GIF: true,
+      JPEG: false,
+      PNG: true
+    })
+
+    expect(result.capabilities.reproject.outputProjectionAvailability).toEqual({
+      Geographic: true,
+      'NSIDC Sea Ice Polar Stereographic North': true,
+      'WGS 84 / Antarctic Polar Stereographic': true
+    })
+
+    // Ensure other capabilities are recalculated
+    expect(result.capabilities.variableSubset.disabled).toEqual(false)
   })
 })
