@@ -32,7 +32,10 @@ describe('getDbConnectionConfig', () => {
       password: 'password',
       host: 'db://endpoint.com',
       database: 'test-db',
-      port: 1234
+      port: 1234,
+      ssl: {
+        rejectUnauthorized: false
+      }
     })
   })
 })
