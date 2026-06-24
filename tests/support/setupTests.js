@@ -107,6 +107,11 @@ export const setupTests = async ({
     }
   })
 
+  // Prevent loading analytics scripts to speed up tests
+  await page.route('**googletagmanager**', (route) => route.abort())
+  await page.route('**google-analytics**', (route) => route.abort())
+  await page.route('**dap.digitalgov.gov**', (route) => route.abort())
+
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)
   })

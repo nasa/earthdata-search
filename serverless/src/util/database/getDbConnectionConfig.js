@@ -30,7 +30,10 @@ export const getDbConnectionConfig = async () => {
       ...configObject,
       host: process.env.DATABASE_ENDPOINT,
       database: process.env.DB_NAME,
-      port: process.env.DATABASE_PORT
+      port: process.env.DATABASE_PORT,
+      ssl: {
+        rejectUnauthorized: false // Allows self-signed certificates used by RDS
+      }
     }
   }
 
