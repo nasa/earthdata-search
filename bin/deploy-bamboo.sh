@@ -98,10 +98,11 @@ EOF
 
 cat <<EOF > Dockerfile
 # Pull the official Node image to use as a temporary reference stage
-FROM node:22 AS node_builder
+# Use bookworm to ensure both images are based on the same OS
+FROM node:22-bookworm AS node_builder
 
 # Build your actual application image
-FROM python:3.13
+FROM python:3.13-bookworm
 
 # Copy Node.js binaries and NPM from the Node stage
 COPY --from=node_builder /usr/local/bin/node /usr/local/bin/
