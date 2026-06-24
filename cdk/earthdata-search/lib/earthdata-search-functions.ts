@@ -4,6 +4,7 @@ import * as events from 'aws-cdk-lib/aws-events'
 import * as eventsTargets from 'aws-cdk-lib/aws-events-targets'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as sqs from 'aws-cdk-lib/aws-sqs'
+import * as logs from 'aws-cdk-lib/aws-logs'
 import { Construct } from 'constructs'
 
 import { application } from '@edsc/cdk-utils'
@@ -333,6 +334,38 @@ export class Functions extends Construct {
     })
 
     /**
+     * Geocoder
+     */
+    const geocoderNestedStack = new cdk.NestedStack(scope, 'GeocoderNestedStack')
+    const geocoderLogGroup = new logs.LogGroup(geocoderNestedStack, 'GeocoderLogGroup', {
+      logGroupName: `/aws/lambda/${functionNamePrefix}-geocoder`,
+      retention: logs.RetentionDays.ONE_MONTH
+    })
+
+    const geocoderLambdaFunction = new lambda.Function(geocoderNestedStack, 'GeocoderLambda', {
+      code: lambda.Code.fromAsset('../../serverless/src/geocoder'),
+      environment: defaultLambdaConfig.environment,
+      ephemeralStorageSize: cdk.Size.gibibytes(2),
+      functionName: `${functionNamePrefix}-geocoder${defaultLambdaConfig.logGroupSuffix}`,
+      handler: 'handler.main',
+      logGroup: geocoderLogGroup,
+      memorySize: 512,
+      role: defaultLambdaConfig.role,
+      runtime: lambda.Runtime.PYTHON_3_13,
+      securityGroups: defaultLambdaConfig.securityGroups,
+      timeout: cdk.Duration.seconds(30),
+      vpc: defaultLambdaConfig.vpc
+    })
+    geocoderLambdaFunction.addAlias('current')
+
+    // eslint-disable-next-line no-new
+    new logs.CfnSubscriptionFilter(geocoderNestedStack, 'GeocoderSubscriptionFilter', {
+      destinationArn: defaultLambdaConfig.logDestinationArn,
+      filterPattern: '',
+      logGroupName: geocoderLogGroup.logGroupName
+    })
+
+    /**
      * Get Saved Access Configs
      */
     const getSavedAccessConfigsNestedStack = new cdk.NestedStack(scope, 'GetSavedAccessConfigsNestedStack')
@@ -424,7 +457,7 @@ export class Functions extends Construct {
           afterBundling(inputDir: string, outputDir: string): string[] {
             return [
               `mkdir -p ${outputDir}/migrations`,
-              `cp -R ${inputDir}/../../migrations ${outputDir}/`
+              `cp -R ${inputDir}/migrations ${outputDir}/`
             ]
           },
           beforeInstall(): string[] {
@@ -451,6 +484,26 @@ export class Functions extends Construct {
         }
       },
       targets: [new eventsTargets.LambdaFunction(migrateDatabaseLambda)]
+    })
+
+    /**
+     * NLP Search
+     */
+    const nlpSearchNestedStack = new cdk.NestedStack(scope, 'nlpSearchNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(nlpSearchNestedStack, 'nlpSearchLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        methods: ['GET'],
+        path: 'nlp',
+        responseTransferMode: apigateway.ResponseTransferMode.STREAM
+      },
+      entry: '../../serverless/src/nlpSearch/handler.js',
+      functionName: 'nlpSearch',
+      functionNamePrefix,
+      memorySize: 512
     })
 
     /**

@@ -97,11 +97,32 @@ tmp
 EOF
 
 cat <<EOF > Dockerfile
-FROM node:22
+# Pull the official Node image to use as a temporary reference stage
+# Use bookworm to ensure both images are based on the same OS
+FROM node:22-bookworm AS node_builder
+
+# Build your actual application image
+FROM python:3.13-bookworm
+
+# Copy Node.js binaries and NPM from the Node stage
+COPY --from=node_builder /usr/local/bin/node /usr/local/bin/
+COPY --from=node_builder /usr/local/lib/node_modules /usr/local/lib/node_modules
+
+# Re-link npm and npx to make them globally executable
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
 COPY . /build
 WORKDIR /build
+
+# Install node modules
 RUN npm ci --omit=dev
+
+# Build the application
 RUN NODE_ENV=production npm run build
+
+# Build the geocoder lambda
+RUN bin/build-python.sh
 EOF
 
 dockerTag=edsc-$bamboo_STAGE_NAME
@@ -113,10 +134,16 @@ dockerRun() {
     -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
     -e "AWS_ACCOUNT=$bamboo_AWS_ACCOUNT" \
     -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
+    -e "BEDROCK_MODEL_ID=$bamboo_BEDROCK_MODEL_ID" \
     -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
     -e "COLORMAP_JOB_ENABLED=$bamboo_COLORMAP_JOB_ENABLED" \
     -e "DB_ALLOCATED_STORAGE=$bamboo_DB_ALLOCATED_STORAGE" \
     -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
+    -e "GEOCODE_INDEX_CACHE_BUCKET=$bamboo_GEOCODE_INDEX_CACHE_BUCKET" \
+    -e "GEOCODE_INDEX_CACHE_DIR=$bamboo_GEOCODE_INDEX_CACHE_DIR" \
+    -e "GEOCODE_INDEX_HOST=$bamboo_GEOCODE_INDEX_HOST" \
+    -e "GEOCODE_INDEX_PORT=$bamboo_GEOCODE_INDEX_PORT" \
+    -e "GEOCODE_INDEX_REGION=$bamboo_GEOCODE_INDEX_REGION" \
     -e "GIBS_JOB_ENABLED=$bamboo_GIBS_JOB_ENABLED" \
     -e "INTERNET_SERVICE_EAST_VPC=$bamboo_INTERNET_SERVICE_EAST_VPC" \
     -e "LAMBDA_TIMEOUT=$bamboo_LAMBDA_TIMEOUT" \
@@ -132,6 +159,8 @@ dockerRun() {
     -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
     -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
     -e "USE_IMAGE_CACHE=$bamboo_USE_IMAGE_CACHE" \
+    -e "USE_GEOCODER=$bamboo_USE_GEOCODER" \
+    -e "USE_NLP_SEARCH=$bamboo_USE_NLP_SEARCH" \
     -e "VPC_ID=$bamboo_VPC_ID" \
     $dockerTag "$@"
 }

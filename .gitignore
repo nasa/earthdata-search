@@ -31,3 +31,4 @@ elasticmq.conf
 *storybook.log
 
 .continue
+.env

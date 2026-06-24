@@ -47,9 +47,9 @@ jobs:
       commit: ${{ steps.getVersion.outputs.commit }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Use Node.js lts/jod
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/jod
 
@@ -77,17 +77,17 @@ jobs:
       performance_matrix: ${{ steps.versionCheck.outputs.performance_matrix }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Checkout the reports branch in a new directory
       - name: Checkout metrics branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: metrics
           path: metrics-branch
 
       - name: Use Node.js lts/jod
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/jod
 
@@ -108,19 +108,19 @@ jobs:
     steps:
       - run: echo '${{ toJSON(needs.versionCheck.outputs) }}'
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Checkout code at commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: commit-branch
           ref: ${{ needs.getVersion.outputs.commit }}
       - name: Use Node.js lts/jod
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/jod
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-node-modules
         with:
@@ -149,7 +149,7 @@ jobs:
 
       # Upload the report
       - name: Upload bundle size report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: bundleSizeReport
           path: bundleSizeReport.json
@@ -164,7 +164,7 @@ jobs:
     ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.getVersion.outputs.commit }}
 
@@ -180,7 +180,7 @@ jobs:
 
       # Upload the report
       - name: Upload cloc report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: clocReport
           path: clocReport.json
@@ -195,10 +195,10 @@ jobs:
     ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Use Node.js lts/jod
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/jod
 
@@ -208,7 +208,7 @@ jobs:
 
       # Upload the report
       - name: Upload test coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: testCoverageReport
           path: testCoverageReport.json
@@ -226,10 +226,10 @@ jobs:
         env: ${{ fromJSON(needs.versionCheck.outputs.performance_matrix) }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Use Node.js lts/jod
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/jod
 
@@ -241,7 +241,7 @@ jobs:
 
       # Upload the report
       - name: Upload performance report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: performanceReport
           path: '*PerformanceReport.json'
@@ -259,22 +259,22 @@ jobs:
     if: always()
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Checkout the reports branch in a new directory
       - name: Checkout metrics branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: metrics
           path: metrics-branch
 
       - name: Use Node.js lts/jod
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/jod
 
       - name: Download reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: metrics-reports
           pattern: '*Report'

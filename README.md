@@ -32,6 +32,7 @@ The Earthdata Search application uses NodeJS and Vite to generate static assets.
 - API Gateway
 - Lambda
 - Cloudwatch (Events)
+- Bedrock
 
 ### Prerequisites
 
@@ -111,6 +112,14 @@ Non-secure values are stored in `static.config.json`. In order to prevent confli
 
 We can configure some of the layouts for the EDSC presentation by updating the `defaultPortal` value in `overrideStatic.config.json`. For development purposes we should set this to `edsc`.
 
+##### .env File
+
+The `.env` file is used to set environment variables for local development. An example is provided and should be copied and completed before attempting to go any further.
+
+    cp .env.example .env
+
+If you are going to connect to AWS Bedrock change the values set to 'CHANGE-ME' to the appropriate values.
+
 ##### Database Migration
 
 Ensure that you have a database created:
@@ -143,9 +152,16 @@ This will start everything you need to run Earthdata Search locally.
 
 #### Optional Services
 
-By default we don't run SQS or an image cache locally. In order to run the application with those services you need to include the follow environment variables when you start the application
+By default we don't run all services locally. In order to run the application with those services you need to include the follow environment variables when you start the application.
 
-    USE_IMAGE_CACHE=true SKIP_SQS=false npm start
+- USE_IMAGE_CACHE: This will use a local Redis instance to cache images from GIBS.
+- SKIP_SQS: When set to true this will skip adding retrievals to SQS, so your retrievals will not be submitted without a manual lambdas invocation.
+- USE_NLP_SEARCH: When set to true this will call AWS Bedrock to parse your query on the landing page.
+- USE_GEOCODER: When set to true this will enable the geocoder lambda (running in Docker) to be called from the nlpSearch lambda to provide geocoding results.
+
+You can set any of these environment variables to true to run the optional services locally. To run the full application with all optional services you can run the following command:
+
+    USE_IMAGE_CACHE=true SKIP_SQS=false USE_NLP_SEARCH=true USE_GEOCODER=true npm start
 
 Or run
 

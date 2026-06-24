@@ -1,0 +1,3 @@
+boto3==1.43.17
+e84-geoai-common==0.0.7
+natural-language-geocoding==0.1.3

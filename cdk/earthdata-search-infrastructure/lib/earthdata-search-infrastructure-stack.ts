@@ -121,6 +121,21 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                   's3:PutObject'
                 ],
                 Resource: '*'
+              },
+              {
+                Effect: 'Allow',
+                Action: [
+                  'bedrock:InvokeModelWithResponseStream',
+                  'bedrock:InvokeModel'
+                ],
+                Resource: '*'
+              },
+              {
+                Effect: 'Allow',
+                Action: [
+                  'es:ESHttpPost'
+                ],
+                Resource: '*'
               }
             ]
           }
