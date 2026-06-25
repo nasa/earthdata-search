@@ -13,6 +13,9 @@ let secretsManagerClient
 const oAuthConfig = (earthdataEnvironment) => ({
   auth: {
     tokenHost: getEarthdataConfig(earthdataEnvironment).edlHost
+  },
+  options: {
+    credentialsEncodingMode: 'loose' // Don't URL encode the client credentials when sending to EDL
   }
 })
 
