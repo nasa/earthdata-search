@@ -4,10 +4,11 @@ import { login } from '../../../support/login'
 import { setupTests } from '../../../support/setupTests'
 import { getAuthHeaders } from '../../../support/getAuthHeaders'
 
-import timeline from './__mocks__/timeline.json'
-import granules from './__mocks__/granules.json'
-import shapefile from './__mocks__/shapefile.json'
 import collectionsGraphQlBody from './__mocks__/collections_graphql_body.json'
+import granules from './__mocks__/granules.json'
+import harmonyCapabilitiesDocument from './__mocks__/harmonyCapabilitiesDocument.json'
+import shapefile from './__mocks__/shapefile.json'
+import timeline from './__mocks__/timeline.json'
 
 const screenshotClip = {
   x: 1027,
@@ -16,7 +17,7 @@ const screenshotClip = {
   height: 90
 }
 
-const mbrWarning = 'Only bounding boxes are supported. If this option is enabled, your line will be automatically converted into the bounding box shown above and outlined on the map.'
+const mbrWarning = 'Only bounding boxes are supported. Your line has been automatically converted into the bounding box shown above and outlined on the map.'
 
 test.describe('Harmony with MBR', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -34,6 +35,12 @@ test.describe('Harmony with MBR', () => {
         await page.route(/saved_access_configs/, async (route) => {
           await route.fulfill({
             json: {}
+          })
+        })
+
+        await page.route('**/capabilities**', async (route) => {
+          await route.fulfill({
+            json: harmonyCapabilitiesDocument
           })
         })
 
@@ -79,11 +86,17 @@ test.describe('Harmony with MBR', () => {
 
           // Wait for the base map to load to avoid bad screenshots
           await tilesPromise
+
+          // Click 'Customize Download' radio button
+          await page.locator('.access-method-radio__radio').first().check()
         })
 
         test('displays a mbr on the map @screenshot', async ({ page }) => {
           // Expect the mbrWarning to be displayed
-          await expect(page.getByRole('alert')).toHaveText(mbrWarning)
+          await expect(page.getByRole('alert').filter({ hasText: 'Only bounding boxes are' })).toHaveText(mbrWarning)
+
+          // Click 'Trim output granules' to enable spatial subsetting (ess)
+          await page.getByRole('checkbox', { name: 'Trim output granules to the' }).check()
 
           // Expect the URL to be updated with `ess=t`
           await expect(page).toHaveURL(/pg\[1\]\[ess\]=t/)
@@ -99,17 +112,22 @@ test.describe('Harmony with MBR', () => {
 
         test.describe('when deselecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
-            await page.getByLabel('Trim output granules to the selected spatial constraint').uncheck()
+            // Click 'Trim output granules' to enable spatial subsetting (ess)
+            await page.getByRole('checkbox', { name: 'Trim output granules to the' }).check()
+
+            // Click 'Trim output granules' to disable spatial subsetting (ess)
+            await page.getByRole('checkbox', { name: 'Trim output granules to the' }).uncheck()
           })
 
-          test('removes the mbr from the map @screenshot', async ({ page }) => {
-            // Expect the mbrWarning not to be displayed
-            await expect(page.getByRole('alert')).toHaveCount(0)
+          test('continues to display an mbr the map @screenshot', async ({ page }) => {
+            // Expect the mbrWarning to still be displayed
+            await expect(page.getByRole('alert').filter({ hasText: 'Only bounding boxes are' })).toHaveText(mbrWarning)
 
             // Expect the URL to be updated with `ess=f`
             await expect(page).toHaveURL(/pg\[1\]\[ess\]=f/)
 
-            await expect(page).toHaveScreenshot('mbr-removed.png', {
+            // Expect outline to still be present so users know what will be trimmed if they select the spatial constraint
+            await expect(page).toHaveScreenshot('mbr.png', {
               clip: screenshotClip,
               maxDiffPixelRatio: 0.01
             })
@@ -126,16 +144,19 @@ test.describe('Harmony with MBR', () => {
 
           // Wait for the base map to load to avoid bad screenshots
           await tilesPromise
+
+          // Click 'Customize Download' radio button
+          await page.locator('.access-method-radio__radio').first().check()
         })
 
-        test('does not display a mbr on the map @screenshot', async ({ page }) => {
-          // Expect the mbrWarning not to be displayed
-          await expect(page.getByRole('alert')).toHaveCount(0)
+        test('displays an mbr on the map @screenshot', async ({ page }) => {
+          // Expect the mbrWarning to still be displayed
+          await expect(page.getByRole('alert').filter({ hasText: 'Only bounding boxes are' })).toHaveText(mbrWarning)
 
           // Expect the URL to be updated with `ess=f`
           await expect(page).toHaveURL(/pg\[1\]\[ess\]=f/)
 
-          await expect(page).toHaveScreenshot('mbr-removed.png', {
+          await expect(page).toHaveScreenshot('mbr.png', {
             clip: screenshotClip,
             maxDiffPixelRatio: 0.01
           })
@@ -143,12 +164,13 @@ test.describe('Harmony with MBR', () => {
 
         test.describe('when selecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
-            await page.getByLabel('Trim output granules to the selected spatial constraint').check()
+            // Click 'Trim output granules' to enable spatial subsetting (ess)
+            await page.getByRole('checkbox', { name: 'Trim output granules to the' }).check()
           })
 
-          test('adds the mbr to the map @screenshot', async ({ page }) => {
-            // Expect the mbrWarning to be displayed
-            await expect(page.getByRole('alert')).toHaveText(mbrWarning)
+          test('continues to display an mbr to the map @screenshot', async ({ page }) => {
+            // Expect the mbrWarning to still be displayed
+            await expect(page.getByRole('alert').filter({ hasText: 'Only bounding boxes are' })).toHaveText(mbrWarning)
 
             // Expect the URL to be updated with `ess=t`
             await expect(page).toHaveURL(/pg\[1\]\[ess\]=t/)

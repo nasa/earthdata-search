@@ -1,10 +1,11 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import collectionsGraphJson from './__mocks__/collections_graph.json'
-import timeline from './__mocks__/timeline.json'
+import harmonyCapabilitiesDocument from './__mocks__/harmonyCapabilitiesDocument.json'
 import granules from './__mocks__/granules.json'
 import retrieval from './__mocks__/retrieval.json'
 import retrievalCollection from './__mocks__/retrievalCollection.json'
+import timeline from './__mocks__/timeline.json'
 
 import { setupTests } from '../../support/setupTests'
 import { login, MockGetUserRoute } from '../../support/login'
@@ -151,6 +152,12 @@ test.describe('Download spec', () => {
     await page.route(/saved_access_configs/, async (route) => {
       await route.fulfill({
         json: {}
+      })
+    })
+
+    await page.route('**/capabilities**', async (route) => {
+      await route.fulfill({
+        json: harmonyCapabilitiesDocument
       })
     })
 
