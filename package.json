@@ -221,7 +221,7 @@
     "sass": "^1.83.4",
     "scatter-swap": "^0.1.0",
     "sharp": "^0.33.5",
-    "simple-oauth2": "^4.3.0",
+    "simple-oauth2": "^5.1.0",
     "simplebar": "^6.2.0",
     "simplebar-react": "^3.2.0",
     "snakecase-keys": "^2.1.0",

@@ -40,6 +40,9 @@ describe('getEdlConfig', () => {
       client: {
         id: 'prodTest',
         secret: 'prodSecret'
+      },
+      options: {
+        credentialsEncodingMode: 'loose'
       }
     })
 
@@ -62,6 +65,9 @@ describe('getEdlConfig', () => {
       client: {
         id: 'uatTest',
         secret: 'uatSecret'
+      },
+      options: {
+        credentialsEncodingMode: 'loose'
       }
     })
 
