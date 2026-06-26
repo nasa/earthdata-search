@@ -112,6 +112,13 @@ export const setupTests = async ({
   await page.route('**google-analytics**', (route) => route.abort())
   await page.route('**dap.digitalgov.gov**', (route) => route.abort())
 
+  // Mock tophat
+  await page.route('https://cdn.earthdata.nasa.gov/tophat2/tophat2.js', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/javascript',
+    path: path.join('./tests/fixtures/tophat/tophat2.js')
+  }))
+
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)
   })
