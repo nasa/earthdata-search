@@ -110,52 +110,7 @@ export const setupTests = async ({
   // Prevent loading analytics scripts to speed up tests
   await page.route('**googletagmanager**', (route) => route.abort())
   await page.route('**google-analytics**', (route) => route.abort())
-  await page.route('**dap.digitalgov.gov**', (route) => route.abort())
-
-  // Mock tophat
-  await page.route('https://cdn.earthdata.nasa.gov/tophat2/tophat2.js', (route) => route.fulfill({
-    status: 200,
-    contentType: 'application/javascript',
-    path: path.join('./tests/fixtures/tophat/tophat2.js')
-  }))
-
-  // **** Debugging helpers ****
-  // Fires when the request could not be completed at network/protocol level.
-  page.on('requestfailed', (request) => {
-    const failure = request.failure()
-    console.error('[requestfailed]', {
-      method: request.method(),
-      url: request.url(),
-      resourceType: request.resourceType(),
-      errorText: failure?.errorText
-    })
-  })
-
-  // Useful to catch CDN HTTP failures (403/404/429/5xx) that are not "requestfailed".
-  page.on('response', async (response) => {
-    const status = response.status()
-    if (status >= 400) {
-      const req = response.request()
-      console.error('[response>=400]', {
-        status,
-        method: req.method(),
-        url: response.url(),
-        resourceType: req.resourceType(),
-        headers: response.headers()
-      })
-    }
-  })
-
-  // Optional: logs from any page in this context (popups/new tabs).
-  context.on('requestfailed', (request) => {
-    const failure = request.failure()
-    console.error('[context requestfailed]', {
-      method: request.method(),
-      url: request.url(),
-      errorText: failure?.errorText
-    })
-  })
-  // **** End Debugging helpers ****
+  await page.route('**digitalgov**', (route) => route.abort())
 
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)
