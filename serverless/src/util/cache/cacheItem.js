@@ -1,15 +1,14 @@
 import { getCacheConnection } from './getCacheConnection'
 
 /**
- * Puts the given image in cache
+ * Puts the given item into the cache
  * @param {String} key This is used to retrieve the cache value later
- * @param {Buffer<Image>} image the value in the cache as a buffer
+ * @param {Buffer<item>} item the value in the cache as a buffer
+ * @param {String} expireSeconds the number of seconds before the cache expires
  */
-export const cacheImage = async (key, image) => {
-  const { CACHE_KEY_EXPIRE_SECONDS } = process.env
-
+export const cacheItem = async (key, item, expireSeconds) => {
   // Ignore empty cache attempts
-  if (image) {
+  if (item) {
     const cacheConnection = await getCacheConnection()
     /**
      * Caching methods
@@ -20,7 +19,7 @@ export const cacheImage = async (key, image) => {
      * KEEPTTL -- Retain the time to live associated with the key.
      */
     try {
-      await cacheConnection.set(key, image, 'EX', CACHE_KEY_EXPIRE_SECONDS)
+      await cacheConnection.set(key, item, 'EX', expireSeconds)
 
       console.log(`Successfully cached ${key}`)
     } catch (error) {

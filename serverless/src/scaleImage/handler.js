@@ -3,9 +3,9 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 import { buildResponse } from './utils/buildResponse'
 import { downloadImageFromSource } from './utils/downloadImageFromSource'
 
-import { cacheImage } from './utils/cache/cacheImage'
-import { generateCacheKey } from './utils/cache/generateCacheKey'
-import { getImageFromCache } from './utils/cache/getImageFromCache'
+import { cacheItem } from '../util/cache/cacheItem'
+import { generateCacheKey } from '../util/cache/generateCacheKey'
+import { getItemFromCache } from '../util/cache/getItemFromCache'
 
 import { buildUnavailableImageBuffer } from './utils/sharp/buildUnavailableImageBuffer'
 
@@ -45,20 +45,20 @@ const scaleImage = async (event) => {
       throw new Error('imageSrc is required')
     }
 
-    const useCache = process.env.USE_IMAGE_CACHE === 'true'
+    const useCache = process.env.USE_CACHE === 'true'
     const cacheKey = generateCacheKey(imageSrc, dimensions)
 
     let originalImageFromCache = null
     const originalCacheKey = generateCacheKey(imageSrc)
     if (useCache) {
-      const imageFromCache = await getImageFromCache(cacheKey)
+      const imageFromCache = await getItemFromCache(cacheKey)
       if (imageFromCache) {
         // If the image is in the cache, return it
         return buildResponse(imageFromCache)
       }
 
       // Check for the original size image in the cache if a specific granule image is not being requested
-      originalImageFromCache = await getImageFromCache(originalCacheKey)
+      originalImageFromCache = await getItemFromCache(originalCacheKey)
     }
 
     let imageBuffer
@@ -70,7 +70,7 @@ const scaleImage = async (event) => {
 
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
-        cacheImage(originalCacheKey, imageBuffer)
+        cacheItem(originalCacheKey, imageBuffer, process.env.IMAGE_CACHE_EXPIRE_SECONDS)
       }
     }
 
@@ -79,7 +79,7 @@ const scaleImage = async (event) => {
 
     // Cache the image
     if (useCache) {
-      cacheImage(cacheKey, thumbnail)
+      cacheItem(cacheKey, thumbnail, process.env.IMAGE_CACHE_EXPIRE_SECONDS)
     }
   } catch (error) {
     console.log(`Error occurred running the scale image handler ${error.toString()}`)

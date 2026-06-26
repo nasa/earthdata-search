@@ -1,19 +1,19 @@
 import { getCacheConnection } from './getCacheConnection'
 
 /**
- * Fetches image from cache.
+ * Fetches item from cache.
  * @param {String} key The cache key of the item to retrieve
- * @returns {Buffer<Image>} The image associated with given cache key or null if none is found
+ * @returns {Buffer<Item>} The item associated with given cache key or null if none is found
  */
-export const getImageFromCache = async (key) => {
+export const getItemFromCache = async (key) => {
   const client = await getCacheConnection()
 
   return client.get(key)
-    .then((image) => {
-      if (image) {
+    .then((item) => {
+      if (item) {
         console.log(`Cache HIT '${key}'`)
 
-        return image
+        return item
       }
 
       console.log(`Cache MISS '${key}'`)
