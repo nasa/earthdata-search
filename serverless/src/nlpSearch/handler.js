@@ -52,7 +52,7 @@ const callPythonLocal = async (query) => {
  */
 const getSpatial = async (query) => {
   const isCacheEnabled = process.env.USE_CACHE === 'true'
-  const cacheKey = `geocoder:${query}`
+  const cacheKey = `geocoder:${query.toLowerCase()}`
   const { GEOCODE_CACHE_EXPIRE_SECONDS } = process.env
 
   if (isCacheEnabled) {

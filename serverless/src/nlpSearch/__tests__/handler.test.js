@@ -376,10 +376,10 @@ describe('lookupSpatialToolExecute', () => {
           expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
 
           expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
-          expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:California')
+          expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
 
           expect(cacheItemMock).toHaveBeenCalledTimes(1)
-          expect(cacheItemMock).toHaveBeenCalledWith('geocoder:California', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
+          expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
         })
 
         describe('when the cache contains a value for the spatial query', () => {
@@ -402,7 +402,7 @@ describe('lookupSpatialToolExecute', () => {
             await lookupSpatialToolExecute(input, setResults)
 
             expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
-            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:California')
+            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
 
             // Does not call the geocoder lambda
             expect(global.fetch).toHaveBeenCalledTimes(0)
@@ -412,7 +412,7 @@ describe('lookupSpatialToolExecute', () => {
             expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
 
             expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
-            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:California')
+            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
 
             expect(cacheItemMock).toHaveBeenCalledTimes(0)
           })
@@ -450,10 +450,10 @@ describe('lookupSpatialToolExecute', () => {
         expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
 
         expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
-        expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:California')
+        expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
 
         expect(cacheItemMock).toHaveBeenCalledTimes(1)
-        expect(cacheItemMock).toHaveBeenCalledWith('geocoder:California', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
+        expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
       })
     })
   })
