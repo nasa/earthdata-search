@@ -32,6 +32,9 @@ export default defineConfig({
     }
   },
 
+  // Set maxFailures to 5 on CI to avoid running the entire test suite if there are many failures.
+  maxFailures: process.env.CI ? 5 : 0,
+
   snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{projectName}/{arg}{ext}',
 
   expect: {
