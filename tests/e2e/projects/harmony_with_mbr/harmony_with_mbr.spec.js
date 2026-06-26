@@ -92,9 +92,6 @@ test.describe('Harmony with MBR', () => {
           // Expect the mbrWarning to be displayed
           await expect(page.getByRole('alert').filter({ hasText: 'Only bounding boxes are' })).toHaveText(mbrWarning)
 
-          // Click 'Trim output granules' to enable spatial subsetting (ess)
-          await page.getByRole('checkbox', { name: 'Trim output granules to the' }).check()
-
           // Expect the URL to be updated with `ess=t`
           await expect(page).toHaveURL(/pg\[1\]\[ess\]=t/)
 
