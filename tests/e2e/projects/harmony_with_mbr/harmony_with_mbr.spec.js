@@ -82,13 +82,10 @@ test.describe('Harmony with MBR', () => {
           // Wait for the tiles at the right zoom level to load
           const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3\/0/)
 
-          await page.goto('/projects?p=C2930725014-LARC_CLOUD!C2930725014-LARC_CLOUD&pg[1][v]=t&pg[1][m]=harmony0&pg[1][cd]=t&pg[1][ets]=t&pg[1][ess]=t&q=TEMPO_NO2_L2&line[0]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&qt=2024-10-30T23%3A55%3A54.901Z%2C2024-10-31T20%3A05%3A11.675Z&ff=Customizable&sf=0648513294&sfs[0]=0&lat=39&long=-95&zoom=4')
+          await page.goto('/projects?p=C2930725014-LARC_CLOUD!C2930725014-LARC_CLOUD&pg[1][v]=t&pg[1][m]=harmony&pg[1][cd]=t&pg[1][ets]=t&pg[1][ess]=t&q=TEMPO_NO2_L2&line[0]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&qt=2024-10-30T23%3A55%3A54.901Z%2C2024-10-31T20%3A05%3A11.675Z&ff=Customizable&sf=0648513294&sfs[0]=0&lat=39&long=-95&zoom=4')
 
           // Wait for the base map to load to avoid bad screenshots
           await tilesPromise
-
-          // Click 'Customize Download' radio button
-          await page.locator('.access-method-radio__radio').first().check()
         })
 
         test('displays a mbr on the map @screenshot', async ({ page }) => {
@@ -112,9 +109,6 @@ test.describe('Harmony with MBR', () => {
 
         test.describe('when deselecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
-            // Click 'Trim output granules' to enable spatial subsetting (ess)
-            await page.getByRole('checkbox', { name: 'Trim output granules to the' }).check()
-
             // Click 'Trim output granules' to disable spatial subsetting (ess)
             await page.getByRole('checkbox', { name: 'Trim output granules to the' }).uncheck()
           })
@@ -140,13 +134,10 @@ test.describe('Harmony with MBR', () => {
           // Wait for the tiles at the right zoom level to load
           const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3\/0/)
 
-          await page.goto('/projects?p=C2930725014-LARC_CLOUD!C2930725014-LARC_CLOUD&pg[1][v]=t&pg[1][m]=harmony0&pg[1][cd]=t&pg[1][ets]=t&pg[1][ess]=f&q=TEMPO_NO2_L2&line[0]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&qt=2024-10-30T23%3A55%3A54.901Z%2C2024-10-31T20%3A05%3A11.675Z&ff=Customizable&sf=0648513294&sfs[0]=0&lat=39&long=-95&zoom=4')
+          await page.goto('/projects?p=C2930725014-LARC_CLOUD!C2930725014-LARC_CLOUD&pg[1][v]=t&pg[1][m]=harmony&pg[1][cd]=t&pg[1][ets]=t&pg[1][ess]=f&q=TEMPO_NO2_L2&line[0]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&qt=2024-10-30T23%3A55%3A54.901Z%2C2024-10-31T20%3A05%3A11.675Z&ff=Customizable&sf=0648513294&sfs[0]=0&lat=39&long=-95&zoom=4')
 
           // Wait for the base map to load to avoid bad screenshots
           await tilesPromise
-
-          // Click 'Customize Download' radio button
-          await page.locator('.access-method-radio__radio').first().check()
         })
 
         test('displays an mbr on the map @screenshot', async ({ page }) => {
