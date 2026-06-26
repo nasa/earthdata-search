@@ -12,6 +12,8 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 import Spinner from '../Spinner/Spinner'
 
 import { localStorageKeys } from '../../constants/localStorageKeys'
+// @ts-expect-error This file does not have types
+import RedirectingAuthState from '../RedirectingAuthState/RedirectingAuthState'
 
 interface UserLoaderProps {
   /** The child components */
@@ -33,6 +35,15 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
   const navigate = useNavigate()
 
   const [preferencesLoaded, setPreferencesLoaded] = useState(false)
+  const [isRedirectingToSearch, setisRedirectingToSearch] = useState(false)
+
+  const isUnauthorizedError = (queryError: any) => {
+    const statusCode = queryError?.networkError?.statusCode
+      || queryError?.networkError?.response?.status
+    const hasUnauthorizedMessage = /unauthorized|forbidden|401/i.test(queryError?.message || '')
+
+    return statusCode === 401 || hasUnauthorizedMessage
+  }
 
   // When the page loads, check local storage for user information
   useEffect(() => {
@@ -62,6 +73,8 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
 
   useEffect(() => {
     if (error) {
+      const unauthorizedError = isUnauthorizedError(error)
+
       // Delete the edlToken cookie
       remove('edlToken')
 
@@ -72,12 +85,18 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
       // Clear the user information from local storage
       localStorage.removeItem(localStorageKeys.user)
 
-      // Show an error banner
-      handleError({
-        error,
-        action: 'getUser query',
-        title: 'Something went wrong while logging in'
-      })
+      // If not an unauthorized Errorm show the banner
+      if (!unauthorizedError) {
+        handleError({
+          error,
+          action: 'getUser query',
+          title: 'Something went wrong while logging in'
+        })
+      }
+
+      if (unauthorizedError) {
+        setisRedirectingToSearch(true)
+      }
 
       // Redirect to the search page
       navigate(`/search?ee=${earthdataEnvironment}`, { replace: true })
@@ -107,6 +126,12 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
       setPreferencesLoaded(true)
     }
   }, [data])
+
+  if (isRedirectingToSearch) {
+    return (
+      <RedirectingAuthState showSpinner />
+    )
+  }
 
   // If the user is logged in, but doesn't have a username and preferences from either local storage
   // or the API, show a spinner

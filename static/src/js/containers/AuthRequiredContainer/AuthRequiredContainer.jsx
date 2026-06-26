@@ -6,13 +6,14 @@ import { getEnvironmentConfig, getApplicationConfig } from '../../../../../share
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import RedirectingAuthState from '../../components/RedirectingAuthState/RedirectingAuthState'
 
 export const AuthRequiredContainer = ({
   noRedirect = false,
   children
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [authStatus, setAuthStatus] = useState('checking') // "checking" | "authenticated" | "unauthenticated"
 
   useEffect(() => {
     const { apiHost } = getEnvironmentConfig()
@@ -26,8 +27,11 @@ export const AuthRequiredContainer = ({
     const returnPath = window.location.href
 
     if (token === null || token === '') {
-      setIsLoggedIn(false)
+      setAuthStatus('unauthenticated')
+
       if (!noRedirect) {
+        setAuthStatus('redirecting')
+
         let location = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
         if (disableDatabaseComponents === 'true') {
           location = '/search'
@@ -36,12 +40,20 @@ export const AuthRequiredContainer = ({
         window.location.href = location
       }
     } else {
-      setIsLoggedIn(true)
+      setAuthStatus('authenticated')
     }
   }, [])
 
-  if (isLoggedIn) {
+  if (authStatus === 'authenticated') {
     return children
+  }
+
+  if (authStatus === 'checking' || authStatus === 'redirecting') {
+    return (
+      <div data-testid="auth-required">
+        <RedirectingAuthState />
+      </div>
+    )
   }
 
   return (
