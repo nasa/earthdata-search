@@ -11,7 +11,6 @@ import GET_USER from '../../../operations/queries/getUser'
 import Spinner from '../../Spinner/Spinner'
 
 import { localStorageKeys } from '../../../constants/localStorageKeys'
-import { replace } from 'lodash-es'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({
   default: vi.fn(() => <div />)
@@ -245,7 +244,7 @@ describe('UserLoader', () => {
     })
 
     test('does not show an error message for unauthorized errors and shows the redirect message', async () => {
-       const { zustandState } = setup({
+      const { zustandState } = setup({
         overrideZustandState: {
           user: {
             edlToken: 'test-auth-token'
@@ -262,12 +261,13 @@ describe('UserLoader', () => {
       await waitFor(() => {
         expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
       })
+
       expect(zustandState.errors.handleError).toHaveBeenCalledTimes(0)
 
       expect(screen.getByText(/Redirecting to sign in/i)).toBeInTheDocument()
-      
+
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith('/search?ee=prod', {replace: true})
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search?ee=prod', { replace: true })
     })
   })
 })

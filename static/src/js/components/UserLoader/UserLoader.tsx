@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, ApolloError } from '@apollo/client'
 import { remove } from 'tiny-cookie'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,15 +9,21 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEdlToken, getUsername } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
+// @ts-expect-error This file does not have types
+import RedirectingAuthState from '../RedirectingAuthState/RedirectingAuthState'
 import Spinner from '../Spinner/Spinner'
 
 import { localStorageKeys } from '../../constants/localStorageKeys'
-// @ts-expect-error This file does not have types
-import RedirectingAuthState from '../RedirectingAuthState/RedirectingAuthState'
 
 interface UserLoaderProps {
   /** The child components */
   children: React.ReactNode
+}
+
+interface NetworkErrorLike {
+  statusCode?: number
+  response?: { status?: number }
+  message?: string
 }
 
 export const UserLoader: React.FC<UserLoaderProps> = ({
@@ -37,9 +43,9 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
   const [preferencesLoaded, setPreferencesLoaded] = useState(false)
   const [isRedirectingToSearch, setisRedirectingToSearch] = useState(false)
 
-  const isUnauthorizedError = (queryError: any) => {
-    const statusCode = queryError?.networkError?.statusCode
-      || queryError?.networkError?.response?.status
+  const isUnauthorizedError = (queryError: ApolloError) => {
+    const networkError = queryError?.networkError as NetworkErrorLike | undefined
+    const statusCode = networkError?.statusCode || networkError?.response?.status
     const hasUnauthorizedMessage = /unauthorized|forbidden|401/i.test(queryError?.message || '')
 
     return statusCode === 401 || hasUnauthorizedMessage
