@@ -390,7 +390,6 @@ describe('lookupSpatialToolExecute', () => {
 
             const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
               .mockResolvedValueOnce('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
-              // .mockImplementationOnce(() => Promise.resolve('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'))
 
             const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
 
@@ -435,6 +434,9 @@ describe('lookupSpatialToolExecute', () => {
           }))
         })
 
+        const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache').mockResolvedValueOnce(null)
+        const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
+
         const setResults = vi.fn()
 
         const input = {
@@ -446,6 +448,12 @@ describe('lookupSpatialToolExecute', () => {
         expect(setResults).toHaveBeenCalledTimes(2)
         expect(setResults).toHaveBeenCalledWith('spatial', 'California')
         expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+
+        expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
+        expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:California')
+
+        expect(cacheItemMock).toHaveBeenCalledTimes(1)
+        expect(cacheItemMock).toHaveBeenCalledWith('geocoder:California', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
       })
     })
   })
