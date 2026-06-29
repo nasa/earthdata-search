@@ -9,7 +9,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEdlToken, getUsername } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
-// @ts-expect-error This file does not have types
 import RedirectingAuthState from '../RedirectingAuthState/RedirectingAuthState'
 import Spinner from '../Spinner/Spinner'
 
@@ -19,10 +18,12 @@ interface UserLoaderProps {
   /** The child components */
   children: React.ReactNode
 }
-
 interface NetworkErrorLike {
+  /** Htto Status code exposed directly on the error object */
   statusCode?: number
+  /** HTTP Status code on a nested response object */
   response?: { status?: number }
+  /** Error Message from the network */
   message?: string
 }
 

@@ -8,6 +8,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import RedirectingAuthState from '../../components/RedirectingAuthState/RedirectingAuthState'
 
+import './AuthRequiredContainer.scss'
+
 export const AuthRequiredContainer = ({
   noRedirect = false,
   children
@@ -50,14 +52,14 @@ export const AuthRequiredContainer = ({
 
   if (authStatus === 'checking' || authStatus === 'redirecting') {
     return (
-      <div data-testid="auth-required">
+      <div className="auth-required">
         <RedirectingAuthState />
       </div>
     )
   }
 
   return (
-    <div data-testid="auth-required" className="route-wrapper" />
+    <div className="auth-required" />
   )
 }
 
