@@ -17,14 +17,14 @@ describe('RedirectingAuthState component', () => {
   })
 
   test('renders a custom message when provided', () => {
-    const cusomMessage = 'custom test message'
+    const customMessage = 'custom test message'
     setup({
       overrideProps: {
-        message: customElements
+        message: customMessage
       }
     })
 
-    expect(screen.getByText(cusomMessage)).toBeInTheDocument()
+    expect(screen.getByText(customMessage)).toBeInTheDocument()
   })
 
   test('renders a spinner when showSpinner is true', () => {

@@ -80,7 +80,7 @@ describe('AuthRequiredContainer component', () => {
         }
       })
 
-      expect(screen.getByText(/Redirecting to sign in/i)).toBeInTheDocument()
+      expect(screen.queryByText(/Redirecting to sign in/i)).not.toBeInTheDocument()
       expect(window.location.href).toEqual('http://example.com/test/path')
     })
 
