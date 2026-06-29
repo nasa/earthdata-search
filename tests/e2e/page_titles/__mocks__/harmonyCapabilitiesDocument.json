@@ -1,0 +1,19 @@
+{
+  "conceptId": "C1443528505-LAADS",
+  "shortName": "mock_collection",
+  "summary": {
+    "subsetting": {
+      "bbox": false,
+      "shape": false,
+      "temporal": false,
+      "variable": false
+    },
+    "reprojection": {
+      "supportedProjections": []
+    },
+    "concatenation": false,
+    "outputFormats": []
+  },
+  "variables": [],
+  "services": []
+}

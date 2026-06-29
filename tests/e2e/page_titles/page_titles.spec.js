@@ -6,6 +6,7 @@ import { getAuthHeaders } from '../../support/getAuthHeaders'
 
 import collectionsGraphQlJson from './__mocks__/collections_graphql.json'
 import granules from './__mocks__/granules.json'
+import harmonyCapabilitiesDocument from './__mocks__/harmonyCapabilitiesDocument.json'
 
 /**
  * This test suite verifies that page titles are correct for each route.
@@ -197,6 +198,12 @@ test.describe('page titles', () => {
 
       test.describe('when renaming an unnamed project', () => {
         test('shows the default title then updates to the saved name', async ({ page }) => {
+          await page.route('**/capabilities**', async (route) => {
+            await route.fulfill({
+              json: harmonyCapabilitiesDocument
+            })
+          })
+
           await page.goto('/project?p=!C1443528505-LAADS')
 
           await expect(page).toHaveTitle('Untitled Project - Earthdata Search')
