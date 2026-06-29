@@ -50,6 +50,7 @@ test.describe('Map: NLP spatial rendering', () => {
     await page.goto('/')
   })
 
+  // TODO: EDSC-4672 when we put NLP back onto search
   test.skip('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Wildfires in California' }).fill('rainfall in DC')
 
