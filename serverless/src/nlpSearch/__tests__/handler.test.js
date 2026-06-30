@@ -9,6 +9,9 @@ import {
   reportFoundToolExecute
 } from '../handler'
 
+import * as cacheItem from '../../util/cache/cacheItem'
+import * as getItemFromCache from '../../util/cache/getItemFromCache'
+
 const mockBedrock = await vi.hoisted(async () => {
   const { MockLanguageModelV3: LocalMockLanguageModelV3, simulateReadableStream } = await import('ai/test')
 
@@ -69,6 +72,8 @@ const lambdaClientMock = mockClient(LambdaClient)
 
 beforeEach(() => {
   lambdaClientMock.reset()
+
+  process.env.GEOCODE_CACHE_EXPIRE_SECONDS = '2592000' // 30 days
 })
 
 describe('nlpSearch handler', () => {
@@ -315,28 +320,103 @@ describe('lookupSpatialToolExecute', () => {
 
   describe('when USE_GEOCODER is true', () => {
     describe('when in development environment', () => {
-      test('calls the local python lambda and sets results', async () => {
-        process.env.USE_GEOCODER = 'true'
-        process.env.NODE_ENV = 'development'
+      describe('when USE_CACHE is false', () => {
+        test('calls the local python lambda and sets results and does not check the cache', async () => {
+          process.env.USE_GEOCODER = 'true'
+          process.env.NODE_ENV = 'development'
+          process.env.USE_CACHE = 'false'
 
-        global.fetch = vi.fn(() => Promise.resolve({
-          json: () => Promise.resolve({
-            status_code: 200,
-            body: 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'
+          global.fetch = vi.fn(() => Promise.resolve({
+            json: () => Promise.resolve({
+              status_code: 200,
+              body: 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'
+            })
+          }))
+
+          const setResults = vi.fn()
+
+          const input = {
+            spatial: 'California'
+          }
+
+          await lookupSpatialToolExecute(input, setResults)
+
+          expect(setResults).toHaveBeenCalledTimes(2)
+          expect(setResults).toHaveBeenCalledWith('spatial', 'California')
+          expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+        })
+      })
+
+      describe('when USE_CACHE is true', () => {
+        test('calls the local python lambda and sets results and checks the cache', async () => {
+          process.env.USE_GEOCODER = 'true'
+          process.env.NODE_ENV = 'development'
+          process.env.USE_CACHE = 'true'
+
+          global.fetch = vi.fn(() => Promise.resolve({
+            json: () => Promise.resolve({
+              status_code: 200,
+              body: 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'
+            })
+          }))
+
+          const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache').mockResolvedValueOnce(null)
+          const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
+
+          const setResults = vi.fn()
+
+          const input = {
+            spatial: 'California'
+          }
+
+          await lookupSpatialToolExecute(input, setResults)
+
+          expect(setResults).toHaveBeenCalledTimes(2)
+          expect(setResults).toHaveBeenCalledWith('spatial', 'California')
+          expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+
+          expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
+          expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
+
+          expect(cacheItemMock).toHaveBeenCalledTimes(1)
+          expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
+        })
+
+        describe('when the cache contains a value for the spatial query', () => {
+          test('returns the cached value and does not call the local python lambda', async () => {
+            process.env.USE_GEOCODER = 'true'
+            process.env.NODE_ENV = 'development'
+            process.env.USE_CACHE = 'true'
+
+            const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
+              .mockResolvedValueOnce('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+
+            const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
+
+            const setResults = vi.fn()
+
+            const input = {
+              spatial: 'California'
+            }
+
+            await lookupSpatialToolExecute(input, setResults)
+
+            expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
+            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
+
+            // Does not call the geocoder lambda
+            expect(global.fetch).toHaveBeenCalledTimes(0)
+
+            expect(setResults).toHaveBeenCalledTimes(2)
+            expect(setResults).toHaveBeenCalledWith('spatial', 'California')
+            expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+
+            expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
+            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
+
+            expect(cacheItemMock).toHaveBeenCalledTimes(0)
           })
-        }))
-
-        const setResults = vi.fn()
-
-        const input = {
-          spatial: 'California'
-        }
-
-        await lookupSpatialToolExecute(input, setResults)
-
-        expect(setResults).toHaveBeenCalledTimes(2)
-        expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-        expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+        })
       })
     })
 
@@ -354,6 +434,9 @@ describe('lookupSpatialToolExecute', () => {
           }))
         })
 
+        const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache').mockResolvedValueOnce(null)
+        const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
+
         const setResults = vi.fn()
 
         const input = {
@@ -365,6 +448,12 @@ describe('lookupSpatialToolExecute', () => {
         expect(setResults).toHaveBeenCalledTimes(2)
         expect(setResults).toHaveBeenCalledWith('spatial', 'California')
         expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+
+        expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
+        expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
+
+        expect(cacheItemMock).toHaveBeenCalledTimes(1)
+        expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
       })
     })
   })

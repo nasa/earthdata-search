@@ -19,9 +19,10 @@ const logGroupSuffix = ''
 
 const {
   BEDROCK_MODEL_ID = 'amazon.nova-pro-v1:0',
-  CACHE_KEY_EXPIRE_SECONDS = '84000',
+  IMAGE_CACHE_EXPIRE_SECONDS = '84000',
   CLOUDFRONT_BUCKET_NAME = 'local-bucket',
   COLORMAP_JOB_ENABLED,
+  GEOCODE_CACHE_EXPIRE_SECONDS = '2592000', // 30 days in seconds
   GEOCODE_INDEX_CACHE_BUCKET = 'local-geocode-cache-bucket',
   GEOCODE_INDEX_CACHE_DIR = '/tmp',
   GEOCODE_INDEX_HOST = 'localhost',
@@ -38,7 +39,7 @@ const {
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
   USE_GEOCODER = 'false', // Used in development only
-  USE_IMAGE_CACHE = 'false',
+  USE_CACHE = 'false',
   USE_NLP_SEARCH = 'false',
   VPC_ID = 'local-vpc'
 } = process.env
@@ -99,7 +100,7 @@ export class EarthdataSearchStack extends cdk.Stack {
     const environment = {
       BEDROCK_MODEL_ID,
       CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheEndpoint`),
-      CACHE_KEY_EXPIRE_SECONDS,
+      IMAGE_CACHE_EXPIRE_SECONDS,
       CACHE_PORT: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCachePort`),
       CATALOG_REST_QUEUE_URL: catalogRestOrderQueue.queueUrl,
       CMR_ORDERING_ORDER_QUEUE_URL: cmrOrderingOrderQueue.queueUrl,
@@ -109,6 +110,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       DATABASE_PORT: cdk.Fn.importValue(`${STAGE_NAME}-DatabasePort`),
       DB_NAME: `edsc_${STAGE_NAME}`,
       GENERATE_NOTEBOOKS_BUCKET_NAME: `${this.stackName}-generate-notebooks`,
+      GEOCODE_CACHE_EXPIRE_SECONDS,
       GEOCODE_INDEX_CACHE_BUCKET,
       GEOCODE_INDEX_CACHE_DIR,
       GEOCODE_INDEX_HOST,
@@ -124,7 +126,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       SWODLR_QUEUE_URL: swodlrOrderQueue.queueUrl,
       TAG_QUEUE_URL: tagProcessingQueue.queueUrl,
       USE_GEOCODER,
-      USE_IMAGE_CACHE,
+      USE_CACHE,
       USE_NLP_SEARCH,
       USER_DATA_QUEUE_URL: userDataQueue.queueUrl
     }

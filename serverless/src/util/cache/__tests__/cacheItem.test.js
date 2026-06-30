@@ -1,4 +1,4 @@
-import { cacheImage } from '../cacheImage'
+import { cacheItem } from '../cacheItem'
 
 const mockSet = vi.hoisted(() => vi.fn())
 vi.mock('../getCacheConnection', () => ({
@@ -7,10 +7,10 @@ vi.mock('../getCacheConnection', () => ({
   })
 }))
 
-describe('cacheImage', () => {
+describe('cacheItem', () => {
   describe('when an empty value is provided', () => {
     test('does not attempt to cache', () => {
-      cacheImage('empty-200-200', null)
+      cacheItem('empty-200-200', null, '84000')
 
       expect(mockSet).toHaveBeenCalledTimes(0)
     })
@@ -18,9 +18,9 @@ describe('cacheImage', () => {
 
   describe('when a valid value is provided', () => {
     test('successfully caches the image', async () => {
-      process.env.CACHE_KEY_EXPIRE_SECONDS = '84000'
+      process.env.IMAGE_CACHE_EXPIRE_SECONDS = '84000'
 
-      await cacheImage('empty-200-200', 'test-image-contents')
+      await cacheItem('empty-200-200', 'test-image-contents', '84000')
 
       expect(mockSet).toHaveBeenCalledTimes(1)
       expect(mockSet).toHaveBeenCalledWith('empty-200-200', 'test-image-contents', 'EX', '84000')
@@ -31,7 +31,7 @@ describe('cacheImage', () => {
         throw new Error('Exception calling `set`')
       })
 
-      const cachedImage = cacheImage('empty-200-200', 'test-image-contents')
+      const cachedImage = cacheItem('empty-200-200', 'test-image-contents', '84000')
 
       await expect(cachedImage).rejects.toThrow()
     })
