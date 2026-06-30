@@ -15,7 +15,8 @@ export const AuthRequiredContainer = ({
   children
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
-  const [authStatus, setAuthStatus] = useState('checking') // "checking" | "authenticated" | "unauthenticated"
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
     const { apiHost } = getEnvironmentConfig()
@@ -29,10 +30,10 @@ export const AuthRequiredContainer = ({
     const returnPath = window.location.href
 
     if (token === null || token === '') {
-      setAuthStatus('unauthenticated')
+      setIsLoggedIn(false)
 
       if (!noRedirect) {
-        setAuthStatus('redirecting')
+        setIsRedirecting(true)
 
         let location = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
         if (disableDatabaseComponents === 'true') {
@@ -40,17 +41,20 @@ export const AuthRequiredContainer = ({
         }
 
         window.location.href = location
+      } else {
+        setIsRedirecting(false)
       }
     } else {
-      setAuthStatus('authenticated')
+      setIsLoggedIn(true)
+      setIsRedirecting(false)
     }
   }, [])
 
-  if (authStatus === 'authenticated') {
+  if (isLoggedIn) {
     return children
   }
 
-  if (authStatus === 'checking' || authStatus === 'redirecting') {
+  if (isRedirecting) {
     return (
       <div className="auth-required">
         <RedirectingAuthState />
