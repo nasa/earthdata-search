@@ -570,7 +570,7 @@ const AccessMethod = ({
                 // Relay customization limitations
                 <div className="access-method__harmony-method-info">
                   {
-                    isCustomizationAvailable && (
+                    (type === 'Harmony') && (
                       <>
                         <p>
                           Below are the customization options available to you.
