@@ -19,10 +19,8 @@ interface UserLoaderProps {
   children: React.ReactNode
 }
 interface NetworkErrorLike {
-  /** Htto Status code exposed directly on the error object */
+  /** Http Status code exposed directly on the error object */
   statusCode?: number
-  /** HTTP Status code on a nested response object */
-  response?: { status?: number }
   /** Error Message from the network */
   message?: string
 }
@@ -46,7 +44,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
 
   const isUnauthorizedError = (queryError: ApolloError) => {
     const networkError = queryError?.networkError as NetworkErrorLike | undefined
-    const statusCode = networkError?.statusCode || networkError?.response?.status
+    const statusCode = networkError?.statusCode
     const hasUnauthorizedMessage = /unauthorized| not authorized|forbidden|401|403/i.test(queryError?.message || '')
 
     return statusCode === 401 || hasUnauthorizedMessage
