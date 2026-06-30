@@ -3,9 +3,9 @@ import scaleImage from '../handler'
 import * as buildResponse from '../utils/buildResponse'
 import * as downloadImageFromSource from '../utils/downloadImageFromSource'
 
-import * as cacheImage from '../utils/cache/cacheImage'
-import * as generateCacheKey from '../utils/cache/generateCacheKey'
-import * as getImageFromCache from '../utils/cache/getImageFromCache'
+import * as cacheItem from '../../util/cache/cacheItem'
+import * as generateCacheKey from '../../util/cache/generateCacheKey'
+import * as getItemFromCache from '../../util/cache/getItemFromCache'
 
 import * as getApplicationConfig from '../../../../sharedUtils/config'
 
@@ -30,7 +30,8 @@ describe('scaleImage', () => {
     delete process.env.NODE_ENV
 
     process.env.cmrRootUrl = 'http://example.com'
-    process.env.USE_IMAGE_CACHE = 'true'
+    process.env.USE_CACHE = 'true'
+    process.env.IMAGE_CACHE_EXPIRE_SECONDS = '84000'
   })
 
   afterEach(() => {
@@ -44,7 +45,7 @@ describe('scaleImage', () => {
 
       const cachedResponseBuffer = Buffer.from('test-image-contents')
 
-      const getImageFromCacheMock = vi.spyOn(getImageFromCache, 'getImageFromCache')
+      const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
         .mockImplementationOnce(() => cachedResponseBuffer)
 
       const buildResponseMock = vi.spyOn(buildResponse, 'buildResponse')
@@ -62,7 +63,7 @@ describe('scaleImage', () => {
         width: 85
       })
 
-      expect(getImageFromCacheMock).toHaveBeenCalledWith('http://test.com/test.jpg-h-w')
+      expect(getItemFromCacheMock).toHaveBeenCalledWith('http://test.com/test.jpg-h-w')
       expect(buildResponseMock).toHaveBeenCalledWith(cachedResponseBuffer)
     })
   })
@@ -77,7 +78,7 @@ describe('scaleImage', () => {
 
       const cachedResponseBuffer = Buffer.from('test-image-contents')
 
-      const getImageFromCacheMock = vi.spyOn(getImageFromCache, 'getImageFromCache')
+      const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
         .mockImplementationOnce(() => null)
         .mockImplementationOnce(() => cachedResponseBuffer)
 
@@ -88,7 +89,7 @@ describe('scaleImage', () => {
       const resizeImageMock = vi.spyOn(resizeImage, 'resizeImage')
         .mockImplementationOnce(() => resizedBuffer)
 
-      const cacheImageMock = vi.spyOn(cacheImage, 'cacheImage')
+      const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem')
         .mockImplementationOnce(() => resizedBuffer)
 
       const event = {
@@ -108,12 +109,12 @@ describe('scaleImage', () => {
 
       expect(generateCacheKeyMock.mock.calls[1]).toEqual(['http://test.com/test.jpg'])
 
-      expect(getImageFromCacheMock).toHaveBeenCalledTimes(2)
-      expect(getImageFromCacheMock.mock.calls[0]).toEqual([resizedCacheKey])
-      expect(getImageFromCacheMock.mock.calls[1]).toEqual([originalCacheKey])
+      expect(getItemFromCacheMock).toHaveBeenCalledTimes(2)
+      expect(getItemFromCacheMock.mock.calls[0]).toEqual([resizedCacheKey])
+      expect(getItemFromCacheMock.mock.calls[1]).toEqual([originalCacheKey])
 
       expect(resizeImageMock).toHaveBeenCalledWith(cachedResponseBuffer, 100, 100)
-      expect(cacheImageMock).toHaveBeenCalledWith('http://test.com/test.jpg-100-100', resizedBuffer)
+      expect(cacheItemMock).toHaveBeenCalledWith('http://test.com/test.jpg-100-100', resizedBuffer, '84000')
       expect(buildResponseMock).toHaveBeenCalledWith(resizedBuffer)
     })
   })
@@ -126,7 +127,7 @@ describe('scaleImage', () => {
         .mockImplementationOnce(() => resizedCacheKey)
         .mockImplementationOnce(() => originalCacheKey)
 
-      const getImageFromCacheMock = vi.spyOn(getImageFromCache, 'getImageFromCache')
+      const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
         .mockImplementationOnce(() => null)
         .mockImplementationOnce(() => null)
 
@@ -142,7 +143,7 @@ describe('scaleImage', () => {
       const resizeImageMock = vi.spyOn(resizeImage, 'resizeImage')
         .mockImplementationOnce(() => resizedBuffer)
 
-      const cacheImageMock = vi.spyOn(cacheImage, 'cacheImage')
+      const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem')
         .mockImplementationOnce(() => responseBuffer)
         .mockImplementationOnce(() => resizedBuffer)
 
@@ -163,16 +164,16 @@ describe('scaleImage', () => {
 
       expect(generateCacheKeyMock.mock.calls[1]).toEqual(['http://test.com/test.jpg'])
 
-      expect(getImageFromCacheMock).toHaveBeenCalledTimes(2)
-      expect(getImageFromCacheMock.mock.calls[0]).toEqual([resizedCacheKey])
-      expect(getImageFromCacheMock.mock.calls[1]).toEqual([originalCacheKey])
+      expect(getItemFromCacheMock).toHaveBeenCalledTimes(2)
+      expect(getItemFromCacheMock.mock.calls[0]).toEqual([resizedCacheKey])
+      expect(getItemFromCacheMock.mock.calls[1]).toEqual([originalCacheKey])
 
       expect(downloadImageFromSourceMock).toHaveBeenCalledTimes(1)
       expect(downloadImageFromSourceMock.mock.calls[0]).toEqual(['http://test.com/test.jpg'])
 
       expect(resizeImageMock).toHaveBeenCalledWith(responseBuffer, 100, 100)
-      expect(cacheImageMock.mock.calls[0]).toEqual(['http://test.com/test.jpg-h-w', responseBuffer])
-      expect(cacheImageMock.mock.calls[1]).toEqual(['http://test.com/test.jpg-100-100', resizedBuffer])
+      expect(cacheItemMock.mock.calls[0]).toEqual(['http://test.com/test.jpg-h-w', responseBuffer, '84000'])
+      expect(cacheItemMock.mock.calls[1]).toEqual(['http://test.com/test.jpg-100-100', resizedBuffer, '84000'])
       expect(buildResponseMock).toHaveBeenCalledWith(resizedBuffer)
     })
   })

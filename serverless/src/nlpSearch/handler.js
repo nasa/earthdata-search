@@ -16,6 +16,9 @@ import {
 } from 'ai'
 import { z } from 'zod'
 
+import { getItemFromCache } from '../util/cache/getItemFromCache'
+import { cacheItem } from '../util/cache/cacheItem'
+
 let bedrock
 
 /**
@@ -48,8 +51,28 @@ const callPythonLocal = async (query) => {
  * Calls the geocoder lambda to get the spatial area for a given query.
  */
 const getSpatial = async (query) => {
+  const isCacheEnabled = process.env.USE_CACHE === 'true'
+  const cacheKey = `geocoder:${query.toLowerCase()}`
+  const { GEOCODE_CACHE_EXPIRE_SECONDS } = process.env
+
+  if (isCacheEnabled) {
+    const cachedResult = await getItemFromCache(cacheKey)
+    if (cachedResult) {
+      console.log(`Found cached geocoder result for query "${query}"`)
+
+      return cachedResult.toString()
+    }
+  }
+
   if (process.env.NODE_ENV === 'development') {
-    return callPythonLocal(query)
+    const result = await callPythonLocal(query)
+
+    if (isCacheEnabled) {
+      console.log(`Caching geocoder result for query "${query}"`)
+      await cacheItem(cacheKey, Buffer.from(result), GEOCODE_CACHE_EXPIRE_SECONDS)
+    }
+
+    return result
   }
 
   const lambdaClient = new LambdaClient({
@@ -76,7 +99,14 @@ const getSpatial = async (query) => {
     throw new Error(`Geocoder returned ${responsePayload.status_code ?? 'an invalid response'}`)
   }
 
-  return responsePayload.body
+  const result = responsePayload.body
+
+  if (isCacheEnabled) {
+    console.log(`Caching geocoder result for query "${query}"`)
+    await cacheItem(cacheKey, Buffer.from(result), GEOCODE_CACHE_EXPIRE_SECONDS)
+  }
+
+  return result
 }
 
 export const reportFoundToolExecute = async ({ field, value }, responseStream, setResults) => {
