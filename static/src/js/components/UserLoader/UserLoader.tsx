@@ -92,7 +92,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
       // Clear the user information from local storage
       localStorage.removeItem(localStorageKeys.user)
 
-      // If not an unauthorized Errorm show the banner
+      // If not an unauthorized Error show the banner
       if (!unauthorizedError) {
         handleError({
           error,
