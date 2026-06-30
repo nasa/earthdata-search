@@ -262,6 +262,8 @@ describe('UserLoader', () => {
         expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
       })
 
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledWith(null)
+
       expect(zustandState.errors.handleError).toHaveBeenCalledTimes(0)
 
       expect(screen.getByText(/Redirecting to sign in/i)).toBeInTheDocument()

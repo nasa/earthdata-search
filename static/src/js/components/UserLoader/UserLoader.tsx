@@ -47,7 +47,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
   const isUnauthorizedError = (queryError: ApolloError) => {
     const networkError = queryError?.networkError as NetworkErrorLike | undefined
     const statusCode = networkError?.statusCode || networkError?.response?.status
-    const hasUnauthorizedMessage = /unauthorized|forbidden|401/i.test(queryError?.message || '')
+    const hasUnauthorizedMessage = /unauthorized| not authorized|forbidden|401|403/i.test(queryError?.message || '')
 
     return statusCode === 401 || hasUnauthorizedMessage
   }
@@ -136,7 +136,7 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
 
   if (isRedirectingToSearch) {
     return (
-      <RedirectingAuthState showSpinner />
+      <RedirectingAuthState />
     )
   }
 
