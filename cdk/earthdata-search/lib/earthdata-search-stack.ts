@@ -132,6 +132,7 @@ export class EarthdataSearchStack extends cdk.Stack {
     }
 
     const defaultLambdaConfig = {
+      architecture: lambda.Architecture.ARM_64,
       bundling: {
         externalModules: [
           '@aws-sdk/*',

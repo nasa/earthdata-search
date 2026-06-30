@@ -343,6 +343,7 @@ export class Functions extends Construct {
     })
 
     const geocoderLambdaFunction = new lambda.Function(geocoderNestedStack, 'GeocoderLambda', {
+      architecture: lambda.Architecture.ARM_64,
       code: lambda.Code.fromAsset('../../serverless/src/geocoder'),
       environment: defaultLambdaConfig.environment,
       ephemeralStorageSize: cdk.Size.gibibytes(2),
@@ -619,10 +620,10 @@ export class Functions extends Construct {
      * Scale Image
      */
     // Downloaded the lambda layer zip from https://github.com/pH200/sharp-layer/releases
-    // Download the release-x64.zip file, rename it sharp-{release}-x64.zip and place it in the layers directory
+    // Download the release-arm64.zip file, rename it sharp-{release}-arm64.zip and place it in the layers directory
     // The release number needs to match the version of sharp installed in package.json
     const sharpLambdaLayer = new lambda.LayerVersion(scope, 'SharpLambdaLayer', {
-      code: lambda.Code.fromAsset('../../layers/sharp-0.33.5-x64.zip'),
+      code: lambda.Code.fromAsset('../../layers/sharp-0.33.5-arm64.zip'),
       compatibleRuntimes: [defaultLambdaConfig.runtime],
       description: 'Sharp Lambda Layer'
     })
