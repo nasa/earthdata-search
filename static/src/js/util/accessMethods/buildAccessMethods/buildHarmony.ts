@@ -1,6 +1,6 @@
 import { getVariables } from '../getVariables'
 // @ts-expect-error This file does not have types
-import { getApplicationConfig, getEarthdataConfig } from '../../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
 import getDerivedHarmonyState, {
   HarmonyCapabilitiesDocument,
   UserSelections,
@@ -8,6 +8,8 @@ import getDerivedHarmonyState, {
   HarmonyVariable
 } from '../../getDerivedHarmonyState/getDerivedHarmonyState'
 import { HarmonyAccessMethod } from '../../../zustand/types'
+import useEdscStore from '../../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../../zustand/selectors/earthdataEnvironment'
 
 /**
  * Builds the Harmony access method
@@ -37,7 +39,8 @@ export const buildHarmony = (
     reproject
   } = capabilities
 
-  const { env: earthdataEnvironment } = getApplicationConfig()
+  const state = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(state)
   const { harmonyHost } = getEarthdataConfig(earthdataEnvironment)
 
   const {
