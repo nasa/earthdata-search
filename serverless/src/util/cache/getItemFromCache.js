@@ -6,9 +6,9 @@ import { getCacheConnection } from './getCacheConnection'
  * @returns {Buffer<Item>} The item associated with given cache key or null if none is found
  */
 export const getItemFromCache = async (key) => {
-  const client = await getCacheConnection()
+  const client = getCacheConnection()
 
-  return client.get(key)
+  return client.getBuffer(key)
     .then((item) => {
       if (item) {
         console.log(`Cache HIT '${key}'`)
