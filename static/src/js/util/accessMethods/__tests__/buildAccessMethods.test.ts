@@ -1,0 +1,1745 @@
+import { buildAccessMethods } from '../buildAccessMethods'
+
+// @ts-expect-error This file does not have types
+import * as buildDownload from '../buildAccessMethods/buildDownload'
+// @ts-expect-error This file does not have types
+import * as buildEcho from '../buildAccessMethods/buildEcho'
+// @ts-expect-error This file does not have types
+import * as buildEsi from '../buildAccessMethods/buildEsi'
+import * as buildHarmony from '../buildAccessMethods/buildHarmony'
+// @ts-expect-error This file does not have types
+import * as buildOpendap from '../buildAccessMethods/buildOpendap'
+// @ts-expect-error This file does not have types
+import * as buildSwodlr from '../buildAccessMethods/buildSwodlr'
+
+// @ts-expect-error This file does not have types
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import {
+  DerivedHarmonyState,
+  HarmonyCapabilitiesDocument
+} from '../../getDerivedHarmonyState/derivedHarmonyStateTypes'
+
+beforeEach(() => {
+  vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    disableOrdering: 'false',
+    disableSwodlr: 'false',
+    env: 'test'
+  }))
+})
+
+const harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
+  conceptId: 'C100000-EDSC',
+  shortName: 'MOCK_SHORT_NAME',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supportedProjections: []
+    },
+    concatenation: false,
+    outputFormats: []
+  },
+  services: [
+    {
+      name: 'giovanni-time-series-adapter',
+      capabilities: {
+        subsetting: {
+          bbox: true,
+          shape: true,
+          temporal: true,
+          variable: true
+        },
+        concatenation: false,
+        reprojection: {
+          supportedProjections: []
+        },
+        outputFormats: []
+      },
+      href: ''
+    }
+  ],
+  variables: [
+    {
+      name: 'mock_variable',
+      href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+      scienceKeywords: [],
+      longName: '',
+      units: ''
+    }
+  ]
+}
+
+const derivedHarmonyState: DerivedHarmonyState = {
+  capabilities: {
+    concatenate: {
+      disabled: true,
+      supported: false
+    },
+    outputFormats: {
+      disabled: true,
+      outputFormatAvailability: {},
+      supported: [],
+      value: ''
+    },
+    reproject: {
+      disabled: true,
+      outputProjectionAvailability: {},
+      supported: [],
+      value: ''
+    },
+    spatialSubset: {
+      disabled: false,
+      shapeDisabled: false,
+      bboxDisabled: false,
+      supported: true
+    },
+    temporalSubset: {
+      disabled: false,
+      supported: true
+    },
+    variableSubset: {
+      disabled: false,
+      supported: true
+    }
+  },
+  collectionId: 'C100000-EDSC',
+  shortName: 'MOCK_SHORT_NAME',
+  variables: [
+    {
+      name: 'mock_variable',
+      href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+      scienceKeywords: [],
+      longName: '',
+      units: ''
+    }
+  ]
+}
+
+describe('when buildAccessMethods is called', () => {
+  test('calls buildDownload access method', () => {
+    const buildDownloadMock = vi.spyOn(buildDownload, 'buildDownload')
+
+    const collectionMetadata = {
+      granules: {
+        items: [{
+          online_access_flag: true
+        }]
+      }
+    }
+    const isOpenSearch = false
+
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
+
+    expect(buildDownloadMock).toHaveBeenCalledTimes(1)
+
+    expect(buildDownloadMock).toHaveBeenCalledWith({ items: [{ online_access_flag: true }] }, false)
+  })
+
+  test('no access method is added if a non-existent service item is in the collection metadata and there is no capabilities document', () => {
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            type: 'unknown',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+
+    const isOpenSearch = false
+
+    const accessMethods = buildAccessMethods(
+      collectionMetadata,
+      isOpenSearch,
+      null
+    )
+
+    expect(accessMethods).toEqual({})
+  })
+
+  test('no harmony access method is added if harmony capabilities document contains services: [] ', () => {
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            type: 'unknown',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+
+    const noServicesHarmonyCapabilitiesDocument = {
+      ...harmonyCapabilitiesDocument,
+      services: []
+    }
+    const isOpenSearch = false
+
+    const accessMethods = buildAccessMethods(
+      collectionMetadata,
+      isOpenSearch,
+      noServicesHarmonyCapabilitiesDocument
+    )
+
+    expect(accessMethods).toEqual({})
+  })
+
+  test('calls buildEcho access method', () => {
+    const buildEchoMock = vi.spyOn(buildEcho, 'buildEcho')
+
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            type: 'ECHO ORDERS',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          },
+          {
+            type: 'ECHO ORDERS',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10001-EDSC',
+                  revisionId: 1,
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+    const isOpenSearch = false
+
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
+
+    expect(buildEchoMock).toHaveBeenCalledTimes(2)
+
+    expect(buildEchoMock).toHaveBeenNthCalledWith(
+      1,
+      {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10000-EDSC',
+              revisionId: 1,
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      }
+    )
+
+    expect(buildEchoMock).toHaveBeenNthCalledWith(
+      2,
+      {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10001-EDSC',
+              revisionId: 1,
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      }
+    )
+  })
+
+  test('calls buildEsi access method', () => {
+    const buildEsiMock = vi.spyOn(buildEsi, 'buildEsi')
+
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            type: 'ESI',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+    const isOpenSearch = false
+
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
+
+    expect(buildEsiMock).toHaveBeenCalledTimes(1)
+
+    expect(buildEsiMock).toHaveBeenCalledWith(
+      {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10000-EDSC',
+              revisionId: 1,
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ESI',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      }
+    )
+  })
+
+  test('calls buildHarmony access method', () => {
+    const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
+
+    const collectionMetadata = {}
+
+    const isOpenSearch = false
+
+    buildAccessMethods(collectionMetadata, isOpenSearch, harmonyCapabilitiesDocument)
+
+    expect(buildHarmonyMock).toHaveBeenCalledTimes(1)
+
+    expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+      1,
+      harmonyCapabilitiesDocument,
+      {}
+    )
+  })
+
+  test('calls buildOpendap access method', () => {
+    const buildOpendapMock = vi.spyOn(buildOpendap, 'buildOpendap')
+
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            conceptId: 'S100000-EDSC',
+            longName: 'Mock Service Name',
+            name: 'mock-name',
+            type: 'OPeNDAP',
+            url: {
+              description: 'Mock URL',
+              urlValue: 'https://example.com'
+            },
+            serviceOptions: {
+              supportedInputProjections: [
+                {
+                  projectionName: 'Geographic'
+                }
+              ],
+              supportedOutputProjections: [
+                {
+                  projectionName: 'Geographic'
+                }
+              ],
+              supportedReformattings: [
+                {
+                  supportedInputFormat: 'ASCII',
+                  supportedOutputFormats: [
+                    'ASCII',
+                    'BINARY',
+                    'NETCDF-4'
+                  ]
+                },
+                {
+                  supportedInputFormat: 'BINARY',
+                  supportedOutputFormats: [
+                    'ASCII',
+                    'BINARY',
+                    'NETCDF-4'
+                  ]
+                },
+                {
+                  supportedInputFormat: 'NETCDF-4',
+                  supportedOutputFormats: [
+                    'ASCII',
+                    'BINARY',
+                    'NETCDF-4'
+                  ]
+                }
+              ],
+              subset: {
+                spatialSubset: {
+                  boundingBox: {
+                    allowMultipleValues: false
+                  }
+                },
+                variableSubset: {
+                  allowMultipleValues: true
+                }
+              }
+            },
+            supportedOutputProjections: [
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedReformattings: [
+              {
+                supportedInputFormat: 'ASCII',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'BINARY',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              }
+            ],
+            orderOptions: {
+              count: 0,
+              items: null
+            },
+            variables: {
+              count: 4,
+              items: [
+                {
+                  conceptId: 'V100000-EDSC',
+                  definition: 'analysed_sst in units of kelvin',
+                  longName: 'analysed_sst',
+                  name: 'analysed_sst',
+                  nativeId: 'e2eTestVarHiRes1',
+                  scienceKeywords: [
+                    {
+                      category: 'Earth Science',
+                      topic: 'Oceans',
+                      term: 'Ocean Temperature',
+                      variableLevel1: 'Sea Surface Temperature'
+                    }
+                  ]
+                },
+                {
+                  conceptId: 'V100001-EDSC',
+                  definition: 'analysis_error in units of kelvin',
+                  longName: 'analysis_error',
+                  name: 'analysis_error',
+                  nativeId: 'e2eTestVarHiRes2',
+                  scienceKeywords: [
+                    {
+                      category: 'Earth Science',
+                      topic: 'Oceans',
+                      term: 'Ocean Temperature',
+                      variableLevel1: 'Sea Surface Temperature'
+                    }
+                  ]
+                },
+                {
+                  conceptId: 'V100002-EDSC',
+                  definition: 'mask in units of seconds since 1981-0',
+                  longName: 'mask',
+                  name: 'mask',
+                  nativeId: 'e2eTestVarHiRes4',
+                  scienceKeywords: [
+                    {
+                      category: 'Earth Science',
+                      topic: 'Oceans',
+                      term: 'Ocean Temperature',
+                      variableLevel1: 'Sea Surface Temperature'
+                    }
+                  ]
+                },
+                {
+                  conceptId: 'V100003-EDSC',
+                  definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                  longName: 'sea_ice_fraction',
+                  name: 'sea_ice_fraction',
+                  nativeId: 'e2eTestVarHiRes3',
+                  scienceKeywords: [
+                    {
+                      category: 'Earth Science',
+                      topic: 'Oceans',
+                      term: 'Ocean Temperature',
+                      variableLevel1: 'Sea Surface Temperature'
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+    const isOpenSearch = false
+
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
+
+    expect(buildOpendapMock).toHaveBeenCalledTimes(1)
+
+    expect(buildOpendapMock).toHaveBeenCalledWith(
+      {
+        conceptId: 'S100000-EDSC',
+        longName: 'Mock Service Name',
+        name: 'mock-name',
+        orderOptions: {
+          count: 0,
+          items: null
+        },
+        serviceOptions: {
+          subset: {
+            spatialSubset: {
+              boundingBox: {
+                allowMultipleValues: false
+              }
+            },
+            variableSubset: {
+              allowMultipleValues: true
+            }
+          },
+          supportedInputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedOutputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'ASCII',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'BINARY',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            }
+          ]
+        },
+        supportedOutputProjections: [
+          {
+            projectionName: 'Geographic'
+          }
+        ],
+        supportedReformattings: [
+          {
+            supportedInputFormat: 'ASCII',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          },
+          {
+            supportedInputFormat: 'BINARY',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          },
+          {
+            supportedInputFormat: 'NETCDF-4',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          }
+        ],
+        type: 'OPeNDAP',
+        url: {
+          description: 'Mock URL',
+          urlValue: 'https://example.com'
+        },
+        variables: {
+          count: 4,
+          items: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'analysed_sst in units of kelvin',
+              longName: 'analysed_sst',
+              name: 'analysed_sst',
+              nativeId: 'e2eTestVarHiRes1',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'analysis_error in units of kelvin',
+              longName: 'analysis_error',
+              name: 'analysis_error',
+              nativeId: 'e2eTestVarHiRes2',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'mask in units of seconds since 1981-0',
+              longName: 'mask',
+              name: 'mask',
+              nativeId: 'e2eTestVarHiRes4',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100003-EDSC',
+              definition: 'sea_ice_fraction in units of fraction (between 0 ',
+              longName: 'sea_ice_fraction',
+              name: 'sea_ice_fraction',
+              nativeId: 'e2eTestVarHiRes3',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        associatedVariables: {
+          count: 4,
+          items: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'analysed_sst in units of kelvin',
+              longName: 'analysed_sst',
+              name: 'analysed_sst',
+              nativeId: 'e2eTestVarHiRes1',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'analysis_error in units of kelvin',
+              longName: 'analysis_error',
+              name: 'analysis_error',
+              nativeId: 'e2eTestVarHiRes2',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'mask in units of seconds since 1981-0',
+              longName: 'mask',
+              name: 'mask',
+              nativeId: 'e2eTestVarHiRes4',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100003-EDSC',
+              definition: 'sea_ice_fraction in units of fraction (between 0 ',
+              longName: 'sea_ice_fraction',
+              name: 'sea_ice_fraction',
+              nativeId: 'e2eTestVarHiRes3',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            }
+          ]
+        }
+      }
+    )
+  })
+
+  test('calls buildSwodlr access method', () => {
+    const buildSwodlrMock = vi.spyOn(buildSwodlr, 'buildSwodlr')
+
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            conceptId: 'S100000-EDSC',
+            longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+            name: 'Mock PODAAC_SWODLR',
+            type: 'SWODLR',
+            url: {
+              description: 'Service top-level URL',
+              urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+            },
+            serviceOptions: {
+              supportedOutputProjections: [
+                {
+                  projectionName: 'Universal Transverse Mercator'
+                },
+                {
+                  projectionName: 'WGS84 - World Geodetic System 1984'
+                }
+              ]
+            },
+            supportedOutputProjections: [
+              {
+                projectionName: 'Universal Transverse Mercator'
+              },
+              {
+                projectionName: 'WGS84 - World Geodetic System 1984'
+              }
+            ],
+            supportedReformattings: null,
+            supportedInputProjections: null,
+            orderOptions: {
+              items: []
+            },
+            variables: {
+              items: []
+            }
+          }
+        ]
+      }
+    }
+    const isOpenSearch = false
+
+    buildAccessMethods(collectionMetadata, isOpenSearch, null)
+
+    expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
+
+    expect(buildSwodlrMock).toHaveBeenCalledWith(
+      {
+        conceptId: 'S100000-EDSC',
+        longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+        name: 'Mock PODAAC_SWODLR',
+        orderOptions: {
+          items: []
+        },
+        serviceOptions: {
+          supportedOutputProjections: [
+            {
+              projectionName: 'Universal Transverse Mercator'
+            },
+            {
+              projectionName: 'WGS84 - World Geodetic System 1984'
+            }
+          ]
+        },
+        supportedInputProjections: null,
+        supportedOutputProjections: [
+          {
+            projectionName: 'Universal Transverse Mercator'
+          },
+          {
+            projectionName: 'WGS84 - World Geodetic System 1984'
+          }
+        ],
+        supportedReformattings: null,
+        type: 'SWODLR',
+        url: {
+          description: 'Service top-level URL',
+          urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+        },
+        variables: {
+          items: []
+        }
+      }
+    )
+  })
+
+  describe('calls complex compilation of mutliple different access methods', () => {
+    test('calls all access methods correctly', () => {
+      const buildEchoMock = vi.spyOn(buildEcho, 'buildEcho')
+      const buildEsiMock = vi.spyOn(buildEsi, 'buildEsi')
+      const buildHarmonyMock = vi.spyOn(buildHarmony, 'buildHarmony')
+      const buildOpendapMock = vi.spyOn(buildOpendap, 'buildOpendap')
+      const buildSwodlrMock = vi.spyOn(buildSwodlr, 'buildSwodlr')
+
+      const echoOrderItem1 = {
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        },
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10000-EDSC',
+              revisionId: 1,
+              name: 'mock form',
+              form: 'mock form'
+            }
+          ]
+        }
+      }
+
+      const esiItem = {
+        type: 'ESI',
+        url: {
+          urlValue: 'https://example.com'
+        },
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10001-EDSC',
+              revisionId: 1,
+              name: 'mock form',
+              form: 'mock form'
+            }
+          ]
+        }
+      }
+
+      const echoOrderItem2 = {
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        },
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10002-EDSC',
+              revisionId: 1,
+              name: 'mock form',
+              form: 'mock form'
+            }
+          ]
+        }
+      }
+
+      const opendapItem = {
+        conceptId: 'S100003-EDSC',
+        longName: 'Mock Service Name',
+        name: 'mock-name',
+        type: 'OPeNDAP',
+        url: {
+          description: 'Mock URL',
+          urlValue: 'https://example.com'
+        },
+        serviceOptions: {
+          supportedInputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedOutputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'ASCII',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'BINARY',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            }
+          ],
+          subset: {
+            spatialSubset: {
+              boundingBox: {
+                allowMultipleValues: false
+              }
+            },
+            variableSubset: {
+              allowMultipleValues: true
+            }
+          }
+        },
+        supportedOutputProjections: [
+          {
+            projectionName: 'Geographic'
+          }
+        ],
+        supportedReformattings: [
+          {
+            supportedInputFormat: 'ASCII',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          },
+          {
+            supportedInputFormat: 'BINARY',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          },
+          {
+            supportedInputFormat: 'NETCDF-4',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          }
+        ],
+        orderOptions: {
+          count: 0,
+          items: null
+        },
+        variables: {
+          count: 4,
+          items: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'analysed_sst in units of kelvin',
+              longName: 'analysed_sst',
+              name: 'analysed_sst',
+              nativeId: 'e2eTestVarHiRes1',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  topic: 'Oceans',
+                  term: 'Ocean Temperature',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'analysis_error in units of kelvin',
+              longName: 'analysis_error',
+              name: 'analysis_error',
+              nativeId: 'e2eTestVarHiRes2',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  topic: 'Oceans',
+                  term: 'Ocean Temperature',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'mask in units of seconds since 1981-0',
+              longName: 'mask',
+              name: 'mask',
+              nativeId: 'e2eTestVarHiRes4',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  topic: 'Oceans',
+                  term: 'Ocean Temperature',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100003-EDSC',
+              definition: 'sea_ice_fraction in units of fraction (between 0 ',
+              longName: 'sea_ice_fraction',
+              name: 'sea_ice_fraction',
+              nativeId: 'e2eTestVarHiRes3',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  topic: 'Oceans',
+                  term: 'Ocean Temperature',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            }
+          ]
+        }
+      }
+
+      const swodlrItem = {
+        conceptId: 'S100004-EDSC',
+        longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+        name: 'Mock PODAAC_SWODLR',
+        type: 'SWODLR',
+        url: {
+          description: 'Service top-level URL',
+          urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+        },
+        serviceOptions: {
+          supportedOutputProjections: [
+            {
+              projectionName: 'Universal Transverse Mercator'
+            },
+            {
+              projectionName: 'WGS84 - World Geodetic System 1984'
+            }
+          ]
+        },
+        supportedOutputProjections: [
+          {
+            projectionName: 'Universal Transverse Mercator'
+          },
+          {
+            projectionName: 'WGS84 - World Geodetic System 1984'
+          }
+        ],
+        supportedReformattings: null,
+        supportedInputProjections: null,
+        orderOptions: {
+          items: []
+        },
+        variables: {
+          items: []
+        }
+      }
+
+      const collectionMetadata = {
+        services: {
+          items: [
+            echoOrderItem1,
+            esiItem,
+            echoOrderItem2,
+            opendapItem,
+            swodlrItem
+          ]
+        },
+        variables: {
+          count: 3,
+          items: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'Alpha channel value',
+              longName: 'Alpha channel ',
+              name: 'alpha_var',
+              nativeId: 'mmt_variable_3972',
+              scienceKeywords: null
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'Blue channel value',
+              longName: 'Blue channel',
+              name: 'blue_var',
+              nativeId: 'mmt_variable_3971',
+              scienceKeywords: null
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'Green channel value',
+              longName: 'Green channel',
+              name: 'green_var',
+              nativeId: 'mmt_variable_3970',
+              scienceKeywords: null
+            }
+          ]
+        }
+      }
+
+      const isOpenSearch = false
+
+      const accessMethods = buildAccessMethods(
+        collectionMetadata,
+        isOpenSearch,
+        harmonyCapabilitiesDocument
+      )
+
+      expect(buildEchoMock).toHaveBeenCalledTimes(2) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
+      expect(buildEsiMock).toHaveBeenCalledTimes(1) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
+      expect(buildHarmonyMock).toHaveBeenCalledTimes(1)
+      expect(buildOpendapMock).toHaveBeenCalledTimes(1)
+      expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
+
+      // ESI & Echo Order expected Calls
+      const echoCall1 = {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10000-EDSC',
+              revisionId: 1,
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      }
+
+      const esiCall = {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10001-EDSC',
+              revisionId: 1,
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ESI',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      }
+
+      const echoCall2 = {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10002-EDSC',
+              revisionId: 1,
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      }
+
+      expect(buildEchoMock).toHaveBeenNthCalledWith(
+        1,
+        echoCall1
+      )
+
+      expect(buildEsiMock).toHaveBeenNthCalledWith(
+        1,
+        esiCall
+      )
+
+      expect(buildEchoMock).toHaveBeenNthCalledWith(
+        2,
+        echoCall2
+      )
+
+      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+        1,
+        harmonyCapabilitiesDocument,
+        {}
+      )
+
+      expect(buildOpendapMock).toHaveBeenNthCalledWith(
+        1,
+        {
+          conceptId: 'S100003-EDSC',
+          longName: 'Mock Service Name',
+          name: 'mock-name',
+          orderOptions: {
+            count: 0,
+            items: null
+          },
+          serviceOptions: {
+            subset: {
+              spatialSubset: {
+                boundingBox: {
+                  allowMultipleValues: false
+                }
+              },
+              variableSubset: {
+                allowMultipleValues: true
+              }
+            },
+            supportedInputProjections: [
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedOutputProjections: [
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedReformattings: [
+              {
+                supportedInputFormat: 'ASCII',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'BINARY',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              }
+            ]
+          },
+          supportedOutputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'ASCII',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'BINARY',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            }
+          ],
+          type: 'OPeNDAP',
+          url: {
+            description: 'Mock URL',
+            urlValue: 'https://example.com'
+          },
+          variables: {
+            count: 4,
+            items: [
+              {
+                conceptId: 'V100000-EDSC',
+                definition: 'analysed_sst in units of kelvin',
+                longName: 'analysed_sst',
+                name: 'analysed_sst',
+                nativeId: 'e2eTestVarHiRes1',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100001-EDSC',
+                definition: 'analysis_error in units of kelvin',
+                longName: 'analysis_error',
+                name: 'analysis_error',
+                nativeId: 'e2eTestVarHiRes2',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100002-EDSC',
+                definition: 'mask in units of seconds since 1981-0',
+                longName: 'mask',
+                name: 'mask',
+                nativeId: 'e2eTestVarHiRes4',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100003-EDSC',
+                definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                longName: 'sea_ice_fraction',
+                name: 'sea_ice_fraction',
+                nativeId: 'e2eTestVarHiRes3',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          associatedVariables: {
+            count: 4,
+            items: [
+              {
+                conceptId: 'V100000-EDSC',
+                definition: 'analysed_sst in units of kelvin',
+                longName: 'analysed_sst',
+                name: 'analysed_sst',
+                nativeId: 'e2eTestVarHiRes1',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100001-EDSC',
+                definition: 'analysis_error in units of kelvin',
+                longName: 'analysis_error',
+                name: 'analysis_error',
+                nativeId: 'e2eTestVarHiRes2',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100002-EDSC',
+                definition: 'mask in units of seconds since 1981-0',
+                longName: 'mask',
+                name: 'mask',
+                nativeId: 'e2eTestVarHiRes4',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100003-EDSC',
+                definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                longName: 'sea_ice_fraction',
+                name: 'sea_ice_fraction',
+                nativeId: 'e2eTestVarHiRes3',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      )
+
+      expect(buildSwodlrMock).toHaveBeenNthCalledWith(
+        1,
+        {
+          conceptId: 'S100004-EDSC',
+          longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+          name: 'Mock PODAAC_SWODLR',
+          orderOptions: {
+            items: []
+          },
+          serviceOptions: {
+            supportedOutputProjections: [
+              {
+                projectionName: 'Universal Transverse Mercator'
+              },
+              {
+                projectionName: 'WGS84 - World Geodetic System 1984'
+              }
+            ]
+          },
+          supportedInputProjections: null,
+          supportedOutputProjections: [
+            {
+              projectionName: 'Universal Transverse Mercator'
+            },
+            {
+              projectionName: 'WGS84 - World Geodetic System 1984'
+            }
+          ],
+          supportedReformattings: null,
+          type: 'SWODLR',
+          url: {
+            description: 'Service top-level URL',
+            urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+          },
+          variables: {
+            items: []
+          }
+        }
+      )
+
+      expect(accessMethods).toEqual(
+        {
+          echoOrders0: {
+            form: 'mock form',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
+            maxItemsPerOrder: 2000,
+            optionDefinition: {
+              conceptId: 'OO10000-EDSC',
+              revisionId: 1,
+              name: 'mock form'
+            },
+            type: 'ECHO ORDERS',
+            url: 'https://example.com'
+          },
+          echoOrders1: {
+            form: 'mock form',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
+            maxItemsPerOrder: 2000,
+            optionDefinition: {
+              conceptId: 'OO10002-EDSC',
+              revisionId: 1,
+              name: 'mock form'
+            },
+            type: 'ECHO ORDERS',
+            url: 'https://example.com'
+          },
+          esi0: {
+            form: 'mock form',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
+            maxItemsPerOrder: 2000,
+            optionDefinition: {
+              conceptId: 'OO10001-EDSC',
+              revisionId: 1,
+              name: 'mock form'
+            },
+            type: 'ESI',
+            url: 'https://example.com'
+          },
+          harmony: {
+            outputFormatAvailability: {},
+            enableConcatenateDownload: false,
+            enableSpatialSubsetting: false,
+            enableTemporalSubsetting: false,
+            harmonyCapabilitiesDocument,
+            derivedHarmonyState,
+            harmonyUserSelections: {},
+            hierarchyMappings: [
+              {
+                id: 'V100000-EDSC'
+              }
+            ],
+            id: 'C100000-EDSC',
+            isConcatenationDisabled: true,
+            isSpatialSubsettingDisabled: false,
+            isTemporalSubsettingDisabled: false,
+            isValid: true,
+            isVariableSubsettingDisabled: false,
+            keywordMappings: [],
+            outputProjectionAvailability: {},
+            selectedOutputFormat: undefined,
+            selectedOutputProjection: undefined,
+            selectedVariables: [],
+            shortName: 'MOCK_SHORT_NAME',
+            supportedOutputFormats: [],
+            supportedOutputProjections: [],
+            supportsConcatenation: false,
+            supportsShapefileSubsetting: true,
+            supportsBoundingBoxSubsetting: true,
+            supportsSpatialSubsetting: true,
+            supportsTemporalSubsetting: true,
+            supportsVariableSubsetting: true,
+            type: 'Harmony',
+            url: 'https://harmony.earthdata.nasa.gov',
+            variables: {
+              'V100000-EDSC': {
+                href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+                longName: '',
+                name: 'mock_variable',
+                scienceKeywords: [],
+                units: ''
+              }
+            }
+          },
+          opendap: {
+            hierarchyMappings: [
+              {
+                id: 'V100000-EDSC'
+              },
+              {
+                id: 'V100001-EDSC'
+              },
+              {
+                id: 'V100002-EDSC'
+              },
+              {
+                id: 'V100003-EDSC'
+              }
+            ],
+            id: 'S100003-EDSC',
+            isValid: true,
+            keywordMappings: [
+              {
+                children: [
+                  {
+                    id: 'V100000-EDSC'
+                  },
+                  {
+                    id: 'V100001-EDSC'
+                  },
+                  {
+                    id: 'V100002-EDSC'
+                  },
+                  {
+                    id: 'V100003-EDSC'
+                  }
+                ],
+                label: 'Sea Surface Temperature'
+              }
+            ],
+            longName: 'Mock Service Name',
+            name: 'mock-name',
+            supportedOutputFormats: [
+              {
+                name: 'ASCII',
+                mimeType: 'ascii'
+              },
+              {
+                name: 'BINARY',
+                mimeType: 'dods'
+              },
+              {
+                name: 'NETCDF-4',
+                mimeType: 'nc4'
+              }
+            ],
+            supportsVariableSubsetting: true,
+            type: 'OPeNDAP',
+            variables: {
+              'V100000-EDSC': {
+                conceptId: 'V100000-EDSC',
+                definition: 'analysed_sst in units of kelvin',
+                longName: 'analysed_sst',
+                name: 'analysed_sst',
+                nativeId: 'e2eTestVarHiRes1',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              'V100001-EDSC': {
+                conceptId: 'V100001-EDSC',
+                definition: 'analysis_error in units of kelvin',
+                longName: 'analysis_error',
+                name: 'analysis_error',
+                nativeId: 'e2eTestVarHiRes2',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              'V100002-EDSC': {
+                conceptId: 'V100002-EDSC',
+                definition: 'mask in units of seconds since 1981-0',
+                longName: 'mask',
+                name: 'mask',
+                nativeId: 'e2eTestVarHiRes4',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              'V100003-EDSC': {
+                conceptId: 'V100003-EDSC',
+                definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                longName: 'sea_ice_fraction',
+                name: 'sea_ice_fraction',
+                nativeId: 'e2eTestVarHiRes3',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              }
+            }
+          },
+          swodlr: {
+            id: 'S100004-EDSC',
+            isValid: true,
+            longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+            name: 'Mock PODAAC_SWODLR',
+            supportsSwodlr: true,
+            type: 'SWODLR',
+            url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+          }
+        }
+      )
+    })
+  })
+})

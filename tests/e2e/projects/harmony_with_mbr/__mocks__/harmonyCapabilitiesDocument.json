@@ -1,0 +1,34 @@
+{
+  "conceptId": "C1443528505-LAADS",
+  "shortName": "mock_collection",
+  "summary": {
+    "subsetting": {
+      "bbox": true,
+      "shape": false,
+      "temporal": false,
+      "variable": false
+    },
+    "reprojection": {
+      "supportedProjections": []
+    },
+    "concatenation": false,
+    "outputFormats": []
+  },
+  "variables": [],
+  "services": [
+    {
+      "name": "service-supports-bbox-no-shape",
+      "href": "https://cmr.uat.earthdata.nasa.gov/search/concepts/S1276836870-EEDTEST",
+      "capabilities": {
+        "subsetting": {
+          "bbox": true
+        },
+        "reprojection": {
+          "supportedProjections": []
+        },
+        "concatenation": false,
+        "outputFormats": []
+      }
+    }
+  ]
+}

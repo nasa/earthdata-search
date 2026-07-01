@@ -1,3 +1,5 @@
+import { determineVariableId } from '../determineVariableId'
+
 /**
  * Returns variable ids grouped by their scienceKeywords
  * @param {Array} items Array of UMM V Objects
@@ -6,7 +8,11 @@ export const computeKeywordMappings = (items) => {
   const calculatedMappings = {}
 
   items.forEach((variable) => {
-    const { conceptId: variableId, scienceKeywords = [] } = variable
+    const variableId = determineVariableId(variable)
+
+    if (!variableId) return
+
+    const { scienceKeywords = [] } = variable
 
     // Skip this iteration of the loop if scienceKeywords is null
     if (scienceKeywords == null) return

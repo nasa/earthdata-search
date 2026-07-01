@@ -2,15 +2,24 @@ import nock from 'nock'
 import MockDate from 'mockdate'
 
 import useEdscStore from '../../useEdscStore'
-import { initialGranuleState, initialState } from '../createProjectSlice'
+import {
+  initialGranuleState,
+  initialState,
+  HARMONY_CAPABILITES_API_VERSION
+} from '../createProjectSlice'
 
 // @ts-expect-error This file does not have types
 import GranuleRequest from '../../../util/request/granuleRequest'
 
 // @ts-expect-error This file does not have types
 import * as applicationConfig from '../../../../../../sharedUtils/config'
-import { EchoOrderAccessMethod } from '../../types'
+import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
+
+import {
+  DerivedHarmonyState,
+  HarmonyCapabilitiesDocument
+} from '../../../util/getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-request-id')
@@ -25,12 +34,125 @@ vi.mock('../../../../../../sharedUtils/getClientId', () => ({
 vi.spyOn(applicationConfig, 'getEarthdataConfig').mockImplementation(() => ({
   cmrHost: 'https://cmr.example.com',
   graphQlHost: 'https://graphql.example.com',
-  opensearchRoot: 'https://cmr.example.com/opensearch'
+  opensearchRoot: 'https://cmr.example.com/opensearch',
+  harmonyHost: 'https://harmony.example.com'
 }))
 
 vi.mock('../../../util/handleAlert', () => ({
   handleAlert: vi.fn()
 }))
+
+const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
+  conceptId: 'collectionId1',
+  shortName: 'Short Name',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supportedProjections: []
+    },
+    concatenation: false,
+    outputFormats: [{
+      mimeType: 'application/x-hdf',
+      name: 'HDF'
+    }]
+  },
+  services: [
+    {
+      name: 'sds/trajectory-subsetter',
+      href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+      capabilities: {
+        subsetting: {
+          temporal: true,
+          bbox: true,
+          shape: true,
+          variable: true
+        },
+        outputFormats: [{
+          mimeType: 'application/x-hdf',
+          name: 'HDF'
+        }],
+        concatenation: false,
+        reprojection: {
+          supportedProjections: []
+        }
+      }
+    }
+  ],
+  variables: []
+}
+
+const mockNoServicesCapabilitiesDocument: HarmonyCapabilitiesDocument = {
+  conceptId: 'collectionId1',
+  shortName: 'Short Name',
+  summary: {
+    subsetting: {
+      bbox: true,
+      shape: true,
+      temporal: true,
+      variable: true
+    },
+    reprojection: {
+      supportedProjections: []
+    },
+    concatenation: false,
+    outputFormats: [{
+      mimeType: 'application/x-hdf',
+      name: 'HDF'
+    }]
+  },
+  services: [],
+  variables: []
+}
+
+const mockDerivedHarmonyState: DerivedHarmonyState = {
+  capabilities: {
+    concatenate: {
+      disabled: true,
+      supported: false
+    },
+    outputFormats: {
+      disabled: false,
+      outputFormatAvailability: {
+        HDF: true
+      },
+      supported: [
+        {
+          mimeType: 'application/x-hdf',
+          name: 'HDF'
+        }
+      ],
+      value: ''
+    },
+    reproject: {
+      disabled: true,
+      outputProjectionAvailability: {},
+      supported: [],
+      value: ''
+    },
+    spatialSubset: {
+      disabled: false,
+      shapeDisabled: false,
+      bboxDisabled: false,
+      supported: true
+    },
+    temporalSubset: {
+      disabled: false,
+      supported: true
+    },
+    variableSubset: {
+      disabled: false,
+      supported: true
+    }
+  },
+  collectionId: 'collectionId1',
+  shortName: 'Short Name',
+  variables: []
+}
 
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
@@ -66,6 +188,7 @@ describe('createProjectSlice', () => {
       submittedProject: expect.any(Function),
       toggleCollectionVisibility: expect.any(Function),
       updateAccessMethod: expect.any(Function),
+      updateHarmonySelection: expect.any(Function),
       updateProjectGranuleParams: expect.any(Function),
       updateProjectGranuleResults: expect.any(Function)
     })
@@ -313,11 +436,104 @@ describe('createProjectSlice', () => {
       })
     })
 
+    describe('when the harmony capabilities document request returns a 401', () => {
+      const originalWindowLocation = window.location
+
+      beforeEach(() => {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          enumerable: true,
+          value: new URL(window.location.href)
+        })
+      })
+
+      afterEach(() => {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          enumerable: true,
+          value: originalWindowLocation
+        })
+      })
+
+      test('returns null', async () => {
+        nock(/localhost/)
+          .post(/saved_access_configs/)
+          .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(401, {
+            message: 'Request failed with status code 401',
+            name: 'AxiosError',
+            code: 'ERR_BAD_REQUEST'
+          })
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(401, {
+            message: 'Request failed with status code 401',
+            name: 'AxiosError',
+            code: 'ERR_BAD_REQUEST'
+          })
+
+        nock(/harmony.example.com/)
+          .post(/error_logger/)
+          .reply(200)
+
+        useEdscStore.setState((state) => {
+          state.earthdataEnvironment.currentEnvironment = 'prod'
+          state.project.collections.allIds = ['collectionId1', 'collectionId2']
+          state.user.edlToken = 'mockEdlToken'
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { project } = zustandState
+
+        const result = await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+        expect(result).toBeNull()
+
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(3)
+        expect(errors.handleError).toHaveBeenNthCalledWith(1, {
+          action: 'getProjectCollections',
+          error: expect.any(Error),
+          resource: 'harmony capabilties request'
+        })
+
+        expect(errors.handleError).toHaveBeenNthCalledWith(2, {
+          action: 'getProjectCollections',
+          error: expect.any(Error),
+          resource: 'harmony capabilties request'
+        })
+
+        expect(errors.handleError).toHaveBeenNthCalledWith(3, {
+          error: expect.any(Error),
+          action: 'getProjectCollections',
+          resource: 'project collections',
+          showAlertButton: true,
+          title: 'Something went wrong fetching collection metadata'
+        })
+
+        expect(window.location.href).toEqual('http://localhost:3000/login?ee=prod&state=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dhttp%253A%252F%252Flocalhost%253A3000%252F')
+      })
+    })
+
     describe('when the user is logged in', () => {
       test('adds access methods and updates collection metadata', async () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -332,17 +548,9 @@ describe('createProjectSlice', () => {
                       onlineAccessFlag: true
                     }]
                   },
-                  tools: {
-                    items: [{
-                      name: 'SOTO'
-                    }]
-                  },
-                  services: {
-                    items: []
-                  },
-                  dataQualitySummaries: {
-                    items: []
-                  }
+                  tools: { items: [{ name: 'SOTO' }] },
+                  services: { items: [] },
+                  dataQualitySummaries: { items: [] }
                 },
                 {
                   conceptId: 'collectionId2',
@@ -352,15 +560,9 @@ describe('createProjectSlice', () => {
                       onlineAccessFlag: true
                     }]
                   },
-                  tools: {
-                    items: []
-                  },
-                  services: {
-                    items: []
-                  },
-                  dataQualitySummaries: {
-                    items: []
-                  }
+                  tools: { items: [] },
+                  services: { items: [] },
+                  dataQualitySummaries: { items: [] }
                 }]
               }
             }
@@ -580,6 +782,17 @@ describe('createProjectSlice', () => {
             }
           })
 
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionid2'
+          } as HarmonyCapabilitiesDocument)
+
         nock(/graphql/)
           .post(/api/)
           .reply(200, {
@@ -709,6 +922,111 @@ describe('createProjectSlice', () => {
       })
     })
 
+    describe('when the user requests a collection that can be customized with harmony', () => {
+      test('adds harmony access method', async () => {
+        nock(/localhost/)
+          .post(/saved_access_configs/)
+          .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockHarmonyCapabilitiesDocument)
+
+        nock(/graphql/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              collections: {
+                items: [{
+                  conceptId: 'collectionId1',
+                  granules: {
+                    items: [{
+                      id: 'granuleId1',
+                      onlineAccessFlag: true
+                    }]
+                  },
+                  tools: {
+                    items: [{ name: 'SOTO' }]
+                  },
+                  services: {
+                    items: []
+                  },
+                  dataQualitySummaries: {
+                    items: []
+                  }
+                }]
+              }
+            }
+          }, {
+            'jwt-token': 'token'
+          })
+
+        useEdscStore.setState((state) => {
+          state.project.collections.allIds = ['collectionId1']
+          state.user.edlToken = 'mockEdlToken'
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { project } = zustandState
+
+        await project.getProjectCollections()
+
+        // Loading is set to true within getProjectCollections. Check that it has been set back to false when function completes
+        expect(project.collections.isLoading).toBe(false)
+
+        const updatedState = useEdscStore.getState()
+        const { project: updatedProject } = updatedState
+        const { collections } = updatedProject
+        const { byId } = collections
+        const collection1 = byId.collectionId1
+
+        expect(collection1.accessMethods).toEqual({
+          download: {
+            isValid: true,
+            type: 'download'
+          },
+          harmony: {
+            outputFormatAvailability: { HDF: true },
+            enableConcatenateDownload: false,
+            enableSpatialSubsetting: false,
+            enableTemporalSubsetting: false,
+            harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+            harmonyUserSelections: {},
+            derivedHarmonyState: mockDerivedHarmonyState,
+            hierarchyMappings: [],
+            id: 'collectionId1',
+            isConcatenationDisabled: true,
+            isSpatialSubsettingDisabled: false,
+            isTemporalSubsettingDisabled: false,
+            isValid: true,
+            isVariableSubsettingDisabled: false,
+            keywordMappings: [],
+            outputProjectionAvailability: {},
+            selectedOutputFormat: undefined,
+            selectedOutputProjection: undefined,
+            selectedVariables: [],
+            shortName: 'Short Name',
+            supportedOutputFormats: [
+              {
+                mimeType: 'application/x-hdf',
+                name: 'HDF'
+              }
+            ],
+            supportedOutputProjections: [],
+            supportsConcatenation: false,
+            supportsShapefileSubsetting: true,
+            supportsBoundingBoxSubsetting: true,
+            supportsSpatialSubsetting: true,
+            supportsTemporalSubsetting: true,
+            supportsVariableSubsetting: true,
+            type: 'Harmony',
+            url: 'https://harmony.example.com',
+            variables: {}
+          } satisfies HarmonyAccessMethod
+        })
+      })
+    })
+
     describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
       test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
         vi.spyOn(applicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
@@ -741,9 +1059,12 @@ describe('createProjectSlice', () => {
           }
         }]
 
-        nock(/localhost/)
-          .post(/saved_access_configs/)
-          .reply(200, {})
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=C10000000000-EDSC&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'C10000000000-EDSC'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -813,6 +1134,17 @@ describe('createProjectSlice', () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -931,6 +1263,17 @@ describe('createProjectSlice', () => {
             code: 'ERR_BAD_REQUEST'
           })
 
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
+
         nock(/localhost/)
           .post(/error_logger/)
           .reply(200)
@@ -1022,6 +1365,17 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {})
 
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
+
         nock(/graphql/)
           .post(/api/)
           .reply(500, {
@@ -1064,6 +1418,17 @@ describe('createProjectSlice', () => {
         nock(/localhost/)
           .post(/saved_access_configs/)
           .reply(200, {})
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+
+        nock(/harmony.example.com/)
+          .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
+          .reply(200, {
+            ...mockNoServicesCapabilitiesDocument,
+            conceptId: 'collectionId2'
+          } as HarmonyCapabilitiesDocument)
 
         nock(/graphql/)
           .post(/api/)
@@ -1871,6 +2236,87 @@ describe('createProjectSlice', () => {
       expect(updatedProjectCollection.accessMethods?.echoOrders0).toEqual({
         ...accessMethod,
         model: '<mockModel>Updated</mockModel>'
+      })
+    })
+
+    test('updates harmony selection of temporalSubset/enableTemporalSubsetting when method type is harmony', () => {
+      const collectionId = 'collectionId'
+
+      const harmonyAccessMethod: HarmonyAccessMethod = {
+        outputFormatAvailability: { HDF: true },
+        enableConcatenateDownload: false,
+        enableSpatialSubsetting: false,
+        enableTemporalSubsetting: false,
+        id: 'C4054955340-GES_DISC',
+        isValid: true,
+        isSpatialSubsettingDisabled: false,
+        isTemporalSubsettingDisabled: false,
+        isVariableSubsettingDisabled: false,
+        isConcatenationDisabled: true,
+        shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+        selectedOutputFormat: '',
+        selectedVariables: [],
+        supportedOutputFormats: [{
+          name: 'NETCDF-4',
+          mimeType: 'application/x-netcdf4'
+        }],
+        supportedOutputProjections: [],
+        supportsConcatenation: false,
+        supportsShapefileSubsetting: true,
+        supportsBoundingBoxSubsetting: true,
+        supportsTemporalSubsetting: true,
+        supportsVariableSubsetting: true,
+        type: 'Harmony',
+        url: 'https://harmony.earthdata.nasa.gov',
+        variables: {},
+        hierarchyMappings: [],
+        keywordMappings: [],
+        harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+        harmonyUserSelections: { temporalSubset: true },
+        derivedHarmonyState: mockDerivedHarmonyState,
+        outputProjectionAvailability: {},
+        selectedOutputProjection: '',
+        supportsSpatialSubsetting: false
+      }
+
+      useEdscStore.setState((state) => {
+        state.project.collections.allIds.push(collectionId)
+        state.project.collections.byId[collectionId] = {
+          granules: initialGranuleState,
+          isVisible: true,
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            },
+            harmony: {
+              ...harmonyAccessMethod,
+              enableTemporalSubsetting: false
+            }
+          },
+          selectedAccessMethod: 'harmony'
+        }
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { project } = zustandState
+
+      project.updateAccessMethod({
+        collectionId,
+        method: {
+          harmony: {
+            enableTemporalSubsetting: true
+          }
+        }
+      })
+
+      const updatedState = useEdscStore.getState()
+      const { project: updatedProject } = updatedState
+      const updatedProjectCollection = updatedProject.collections.byId[collectionId]
+
+      expect(updatedProjectCollection.accessMethods?.harmony).toEqual({
+        ...harmonyAccessMethod,
+        enableTemporalSubsetting: true
       })
     })
   })

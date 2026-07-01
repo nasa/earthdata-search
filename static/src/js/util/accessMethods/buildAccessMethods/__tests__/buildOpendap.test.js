@@ -229,9 +229,18 @@ describe('buildOpendap', () => {
           longName: 'Mock Service Name',
           name: 'mock-name',
           supportedOutputFormats: [
-            'ASCII',
-            'BINARY',
-            'NETCDF-4'
+            {
+              name: 'ASCII',
+              mimeType: 'ascii'
+            },
+            {
+              name: 'BINARY',
+              mimeType: 'dods'
+            },
+            {
+              name: 'NETCDF-4',
+              mimeType: 'nc4'
+            }
           ],
           supportsVariableSubsetting: true,
           type: 'OPeNDAP',
@@ -567,9 +576,18 @@ describe('buildOpendap', () => {
           longName: 'Mock Service Name',
           name: 'mock-name',
           supportedOutputFormats: [
-            'ASCII',
-            'BINARY',
-            'NETCDF-4'
+            {
+              name: 'ASCII',
+              mimeType: 'ascii'
+            },
+            {
+              name: 'BINARY',
+              mimeType: 'dods'
+            },
+            {
+              name: 'NETCDF-4',
+              mimeType: 'nc4'
+            }
           ],
           supportsVariableSubsetting: true,
           type: 'OPeNDAP',
@@ -815,9 +833,18 @@ describe('buildOpendap', () => {
           longName: 'Mock Service Name',
           name: 'mock-name',
           supportedOutputFormats: [
-            'ASCII',
-            'BINARY',
-            'NETCDF-4'
+            {
+              name: 'ASCII',
+              mimeType: 'ascii'
+            },
+            {
+              name: 'BINARY',
+              mimeType: 'dods'
+            },
+            {
+              name: 'NETCDF-4',
+              mimeType: 'nc4'
+            }
           ],
           supportsVariableSubsetting: true,
           type: 'OPeNDAP',

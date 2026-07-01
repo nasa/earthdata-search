@@ -9,17 +9,16 @@ import React, {
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form'
-import * as Select from '@radix-ui/react-select'
-import * as ScrollArea from '@radix-ui/react-scroll-area'
+
+import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
-import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import Button from '../Button/Button'
-import ExternalLink from '../ExternalLink/ExternalLink'
+import EDSCAlert from '../EDSCAlert/EDSCAlert'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
@@ -73,38 +72,35 @@ const AccessMethod = ({
   const isLoading = useEdscStore((state) => state.project.collections.isLoading)
 
   const {
+    outputFormatAvailability = {},
+    outputProjectionAvailability = {},
     form,
     rawModel = null,
     selectedVariables = [],
-    selectedOutputFormat,
-    selectedOutputProjection,
+    selectedOutputFormat = '',
+    selectedOutputProjection = '',
     supportedOutputFormats = [],
     supportedOutputProjections = [],
     supportsTemporalSubsetting = false,
     supportsShapefileSubsetting = false,
     supportsBoundingBoxSubsetting = false,
+    supportsSpatialSubsetting = false,
     supportsVariableSubsetting = false,
     supportsConcatenation = false,
     supportsSwodlr = false,
-    defaultConcatenation = false,
-    enableTemporalSubsetting: propsEnableTemporalSubsetting = true,
-    enableSpatialSubsetting: propsEnableSpatialSubsetting = true
+    enableTemporalSubsetting: isTemporalSubsettingSelected = false,
+    enableSpatialSubsetting: isSpatialSubsettingSelected = false,
+    enableConcatenateDownload: isConcatenateSelected = false,
+    isTemporalSubsettingDisabled = false,
+    isSpatialSubsettingDisabled = false,
+    isVariableSubsettingDisabled = false,
+    isConcatenationDisabled = false,
+    type = '',
+    variables = []
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
 
-  // Initialize State Variables
-  const [
-    enableTemporalSubsetting,
-    setEnableTemporalSubsetting
-  ] = useState(propsEnableTemporalSubsetting)
-  const [
-    enableSpatialSubsetting,
-    setEnableSpatialSubsetting
-  ] = useState(propsEnableSpatialSubsetting)
-  const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
-  const [isHarmony, setIsHarmony] = useState(false)
-  const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
   const [granuleList, setGranuleList] = useState([])
 
   const {
@@ -119,19 +115,6 @@ const AccessMethod = ({
 
   let granulesToDisplay = []
 
-  // If a Harmony selection is made with concatenation service update to be enabled on form mount
-  useEffect(() => {
-    setEnableConcatenateDownload(defaultConcatenation)
-  }, [defaultConcatenation])
-
-  useEffect(() => {
-    setEnableTemporalSubsetting(propsEnableTemporalSubsetting)
-  }, [propsEnableTemporalSubsetting])
-
-  useEffect(() => {
-    setEnableSpatialSubsetting(propsEnableSpatialSubsetting)
-  }, [propsEnableSpatialSubsetting])
-
   useEffect(() => {
     if (addedGranuleIds.length > 0) {
       granulesToDisplay = addedGranuleIds
@@ -142,43 +125,10 @@ const AccessMethod = ({
     // Build the list of granules
     const granuleListObj = granulesToDisplay.map((id) => granulesMetadata[id])
     setGranuleList(granuleListObj)
-
-    // Disable temporal subsetting if the user has a recurring date selected
-    if (enableTemporalSubsetting && isRecurring) {
-      setEnableTemporalSubsetting(false)
-    }
-
-    if (selectedAccessMethod) {
-      setIsHarmony(selectedAccessMethod.startsWith('harmony'))
-    }
-
-    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')
-    && accessMethods[selectedAccessMethod].name
-    && selectedHarmonyMethodName === '') {
-      setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
-    }
   }, [projectCollection])
-
-  const handleHarmonyTypeAccessMethodSelection = () => {
-    setIsHarmony(true)
-
-    const { conceptId: collectionId } = metadata
-
-    onSelectAccessMethod({
-      collectionId,
-      selectedAccessMethod: null
-    })
-
-    // Clear the text for the <Select> in step 2
-    setSelectedHarmonyMethodName('')
-  }
 
   const handleAccessMethodSelection = (method) => {
     const { conceptId: collectionId } = metadata
-
-    if (!method.includes('harmony')) {
-      setIsHarmony(false)
-    }
 
     onSelectAccessMethod({
       collectionId,
@@ -224,8 +174,6 @@ const AccessMethod = ({
     const { target } = event
     const { checked } = target
 
-    setEnableConcatenateDownload(checked)
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -241,8 +189,6 @@ const AccessMethod = ({
 
     const { target } = event
     const { checked } = target
-
-    setEnableTemporalSubsetting(checked)
 
     onUpdateAccessMethod({
       collectionId,
@@ -260,8 +206,6 @@ const AccessMethod = ({
     const { target } = event
     const { checked } = target
 
-    setEnableSpatialSubsetting(checked)
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -270,15 +214,6 @@ const AccessMethod = ({
         }
       }
     })
-  }
-
-  const handleHarmonySelection = (event, harmonyMethods) => {
-    if (event) {
-      const setHarmonyMethodVar = harmonyMethods.find(({ methodKey }) => methodKey === event).name
-      setSelectedHarmonyMethodName(setHarmonyMethodVar)
-
-      handleAccessMethodSelection(event)
-    }
   }
 
   const renderRadioItem = useCallback((radioItem, onPropsChange, selected) => {
@@ -314,279 +249,140 @@ const AccessMethod = ({
     )
   }, [])
 
-  const getAccessMethodTypes = (hasHarmony, radioList, collectionId) => {
-    if (hasHarmony) {
-      const id = `${collectionId}_access-method__harmony_type`
-
-      return (
-        <>
-          <AccessMethodRadio
-            externalLink={
-              {
-                link: 'https://harmony.earthdata.nasa.gov/',
-                message: 'What is Harmony?'
-              }
-            }
-            key={id}
-            id={id}
-            value="HarmonyMethodType"
-            title="Customize with Harmony"
-            description="Select a Harmony service to customize options"
-            details="Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis."
-            onChange={() => handleHarmonyTypeAccessMethodSelection()}
-            checked={isHarmony}
-          />
-
-          <RadioList
-            defaultValue={selectedAccessMethod}
-            onChange={(methodName) => handleAccessMethodSelection(methodName)}
-            radioList={radioList}
-            renderRadio={renderRadioItem}
-          />
-        </>
-      )
-    }
-
-    return (
-      <RadioList
-        defaultValue={selectedAccessMethod}
-        onChange={(methodName) => handleAccessMethodSelection(methodName)}
-        radioList={radioList}
-        renderRadio={renderRadioItem}
-      />
-    )
-  }
-
-  const createHarmonySelectItem = (radioItem, selected) => {
-    const {
-      id,
-      methodKey,
-      title,
-      subtitle,
-      description,
-      details,
-      customizationOptions
-    } = radioItem
-
-    return (
-      <Select.Item className="harmony-select-item" key={methodKey} value={methodKey}>
-        <AccessMethodRadio
-          key={id}
-          id={id}
-          value={methodKey}
-          title={title}
-          subtitle={subtitle}
-          description={description}
-          details={details}
-          checked={selected === methodKey}
-          customizationOptions={customizationOptions}
-          onChange={() => true}
-          isHarmony
-        />
-      </Select.Item>
-    )
-  }
-
-  const createHarmonySelector = (harmonyMethods) => (
-    <Select.Root
-      name="harmony-method-selector"
-      value={selectedHarmonyMethodName}
-      onValueChange={(e) => handleHarmonySelection(e, harmonyMethods)}
-    >
-      <span>Service</span>
-      <Select.Trigger key="harmony-trigger" className="harmony-select-trigger">
-        <Select.Value placeholder="Choose a service">
-          {selectedHarmonyMethodName}
-        </Select.Value>
-        <Select.Icon className="harmony-select-icon" />
-      </Select.Trigger>
-
-      <Select.Portal>
-        <Select.Content className="harmony-select-content" position="popper">
-          <ScrollArea.Root className="harmony-scroll-area-root" type="auto">
-            <Select.Viewport key="harmony-selector-viewport" className="harmony-select-viewport" asChild>
-              <ScrollArea.Viewport className="harmony-scroll-area-viewport" style={{ overflowY: undefined }}>
-                <div id="harmony_methods">
-                  {
-                    harmonyMethods.map(
-                      (radio) => createHarmonySelectItem(radio, selectedAccessMethod)
-                    )
-                  }
-                </div>
-              </ScrollArea.Viewport>
-            </Select.Viewport>
-            <ScrollArea.Scrollbar
-              className="harmony-scroll-area-scrollbar"
-              orientation="vertical"
-            >
-              <ScrollArea.Thumb className="harmony-scroll-area-thumb" />
-            </ScrollArea.Scrollbar>
-            <Select.Arrow />
-          </ScrollArea.Root>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
-  )
-
   const { conceptId: collectionId } = metadata
 
-  const accessMethodsByType = {
-    download: [],
-    'ECHO ORDERS': [],
-    ESI: [],
-    OPeNDAP: [],
-    Harmony: [],
-    SWODLR: []
-  }
-
-  let hasHarmony = false
-
-  Object.keys(accessMethods).forEach((methodKey) => {
-    const { [methodKey]: accessMethod = {} } = accessMethods
-
-    const {
-      type,
-      name,
-      description: descriptionFromMetadata,
-      supportsBoundingBoxSubsetting: hasBBoxSubsetting,
-      supportsShapefileSubsetting: hasShapefileSubsetting,
-      supportsTemporalSubsetting: hasTemporalSubsetting,
-      supportsVariableSubsetting: hasVariables,
-      supportsConcatenation: hasCombine
-    } = accessMethod
-
-    let id = null
-    let title = null
-    let subtitle = null
-    let description = null
-    let externalLink = null
-    let details = null
-    let hasFormats = null
-    let hasProjections = null
-    let hasTransform = null
-    let hasSpatialSubsetting = null
-    let customizationOptions = null
-    let disabled = false
-    let errorMessage = ''
-
-    switch (type) {
-      case 'download': {
-        id = `${collectionId}_access-method__direct-download`
-        title = 'Download all data'
-        description = 'Direct download of all selected data'
-        details = 'The data will be available for download immediately.'
-
-        break
-      }
-
-      case 'ECHO ORDERS': {
-        id = `${collectionId}_access-method__customize_${methodKey}`
-        title = 'Stage For Delivery'
-        subtitle = 'ECHO Orders'
-        description = 'Submit a request for data to be staged for delivery.'
-        details = 'The requested data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.'
-
-        break
-      }
-
-      case 'ESI': {
-        id = `${collectionId}_access-method__customize_${methodKey}`
-        title = 'Customize'
-        subtitle = 'ESI'
-        description = 'Select options like variables, transformations, and output formats for access via the data provider.'
-        details = 'The requested data files will be made available for access after the data provider has finished processing your request. You will receive an email from the data provider when your files are ready to download.'
-
-        break
-      }
-
-      case 'OPeNDAP': {
-        id = `${collectionId}_access-method__opendap_${methodKey}`
-        title = 'Customize with OPeNDAP'
-        description = 'Select options like variables, transformations, and output formats for direct access via link or script'
-        details = 'The data will be made available for access immediately.'
-
-        break
-      }
-
-      case 'Harmony': {
-        id = `${collectionId}_access-method__harmony_${methodKey}`
-        title = name
-        description = descriptionFromMetadata
-        hasHarmony = true
-        hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
-        hasFormats = supportedOutputFormats
-          ? supportedOutputFormats.length > 0
-          : false
-
-        hasProjections = supportedOutputProjections
-          ? supportedOutputProjections.length > 1
-          : false
-
-        // TODO: include interpolation in hasTransform boolean once Harmony supports interpolation
-        hasTransform = hasProjections
-
-        customizationOptions = {
-          hasTemporalSubsetting,
-          hasVariables,
-          hasCombine,
-          hasSpatialSubsetting,
-          hasFormats,
-          hasTransform
-        }
-
-        break
-      }
-
-      case 'SWODLR': {
-        id = `${collectionId}_access-method__swodlr_${methodKey}`
-        title = 'Generate with SWODLR'
-        description = 'Set options and generate new standard products'
-        details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
-        // Update the error message if more than 10 granules are selected
-        disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
-        errorMessage = granuleList && granuleList.length > maxSwodlrGranuleCount ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
-        externalLink = {
-          link: swoldrMoreInfoPage,
-          message: 'What is SWODLR?'
-        }
-
-        break
-      }
-
-      default:
-        break
+  const radioList = useMemo(() => {
+    const accessMethodsByType = {
+      download: [],
+      'ECHO ORDERS': [],
+      ESI: [],
+      OPeNDAP: [],
+      Harmony: [],
+      SWODLR: []
     }
 
-    if (type) {
-      accessMethodsByType[type].push(
-        {
-          id,
-          methodKey,
-          title,
-          subtitle,
-          name,
-          description,
-          details,
-          customizationOptions,
-          disabled,
-          errorMessage,
-          externalLink
-        }
-      )
-    }
-  })
+    Object.keys(accessMethods).forEach((methodKey) => {
+      const { [methodKey]: accessMethod = {} } = accessMethods
 
-  const radioList = [
-    ...accessMethodsByType.OPeNDAP,
-    ...accessMethodsByType.ESI,
-    ...accessMethodsByType['ECHO ORDERS'],
-    ...accessMethodsByType.SWODLR,
-    ...accessMethodsByType.download
-  ]
+      const {
+        type: accessMethodType
+      } = accessMethod
+
+      let id = null
+      let title = null
+      let subtitle = null
+      let description = null
+      let externalLink = null
+      let details = null
+      let disabled = false
+      let errorMessage = ''
+
+      switch (accessMethodType) {
+        case 'download': {
+          id = `${collectionId}_access-method__direct-download`
+          title = 'Download all data'
+          description = 'Direct download of all selected data'
+          details = 'The data will be available for download immediately.'
+
+          break
+        }
+
+        case 'ECHO ORDERS': {
+          id = `${collectionId}_access-method__customize_${methodKey}`
+          title = 'Stage For Delivery'
+          subtitle = 'ECHO Orders'
+          description = 'Submit a request for data to be staged for delivery.'
+          details = 'The requested data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.'
+
+          break
+        }
+
+        case 'ESI': {
+          id = `${collectionId}_access-method__customize_${methodKey}`
+          title = 'Customize'
+          subtitle = 'ESI'
+          description = 'Select options like variables, transformations, and output formats for access via the data provider.'
+          details = 'The requested data files will be made available for access after the data provider has finished processing your request. You will receive an email from the data provider when your files are ready to download.'
+
+          break
+        }
+
+        case 'OPeNDAP': {
+          id = `${collectionId}_access-method__opendap_${methodKey}`
+          title = 'Customize with OPeNDAP'
+          description = 'Select options like variables, transformations, and output formats for direct access via link or script'
+          details = 'The data will be made available for access immediately.'
+          externalLink = {
+            link: 'https://harmony.earthdata.nasa.gov/',
+            message: 'What is Harmony?'
+          }
+
+          break
+        }
+
+        case 'Harmony': {
+          id = `${collectionId}_access-method__harmony_type`
+          title = 'Customize Download'
+          description = 'Select from the parameters below to customize your download'
+          details = 'Select options like variables, transformations, and output formats by applying parameters. Data will be staged in the cloud for download and analysis.'
+          externalLink = {
+            link: 'https://harmony.earthdata.nasa.gov/',
+            message: 'What is Harmony?'
+          }
+
+          break
+        }
+
+        case 'SWODLR': {
+          id = `${collectionId}_access-method__swodlr_${methodKey}`
+          title = 'Generate with SWODLR'
+          description = 'Set options and generate new standard products'
+          details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
+          // Update the error message if more than 10 granules are selected
+          disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
+          errorMessage = granuleList && granuleList.length > maxSwodlrGranuleCount ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
+          externalLink = {
+            link: swoldrMoreInfoPage,
+            message: 'What is SWODLR?'
+          }
+
+          break
+        }
+
+        default:
+          break
+      }
+
+      if (accessMethodType) {
+        accessMethodsByType[accessMethodType].push(
+          {
+            id,
+            methodKey,
+            title,
+            subtitle,
+            description,
+            details,
+            disabled,
+            errorMessage,
+            externalLink
+          }
+        )
+      }
+    })
+
+    return [
+      ...accessMethodsByType.Harmony,
+      ...accessMethodsByType.OPeNDAP,
+      ...accessMethodsByType.ESI,
+      ...accessMethodsByType['ECHO ORDERS'],
+      ...accessMethodsByType.SWODLR,
+      ...accessMethodsByType.download
+    ]
+  }, [accessMethods, collectionId, granuleList.length])
 
   // Push isLoading state from zustand to radioItems to enable skeleton loading
   // Push id and other required props for key creation
-  if (isLoading) {
+  if (isLoading && radioList.length === 0) {
     const loadingRadioProps = {
       title: '',
       description: '',
@@ -609,41 +405,47 @@ const AccessMethod = ({
   const granuleListUndefined = granuleList[0] === undefined
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
-  // Harmony access methods are postfixed with an index given that there can be more than one
-  // const { isHarmony, selectedHarmonyMethodName } = this.state
-
   // Default supportedOutputFormatOptions
   let supportedOutputFormatOptions = []
 
   if (isOpendap) {
-    // Filter the supportedOutputFormats to only those formats CMR supports
-    supportedOutputFormatOptions = supportedOutputFormats.filter(
-      (format) => ousFormatMapping[format] !== undefined
-    )
-
-    // Build options for supportedOutputFormats
-    supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
-      <option key={format} value={ousFormatMapping[format]}>{format}</option>
-    ))
+    // Map each supported format to an <option> element
+    supportedOutputFormatOptions = supportedOutputFormats
+      .map((format) => (
+        <option key={format.mimeType} value={format.mimeType}>
+          {format.name}
+        </option>
+      ))
   }
 
   // Default supportedOutputProjectionOptions
   let supportedOutputProjectionOptions = []
 
-  if (isHarmony) {
-    // Filter the supportedOutputFormats to only those formats Harmony supports
-    supportedOutputFormatOptions = supportedOutputFormats.filter(
-      (format) => harmonyFormatMapping[format] !== undefined
-    )
-
-    // Build options for supportedOutputFormats
-    supportedOutputFormatOptions = supportedOutputFormatOptions.map((format) => (
-      <option key={format} value={harmonyFormatMapping[format]}>{format}</option>
+  if (type === 'Harmony') {
+    // The derived harmony state is the source of truth.
+    // The `outputFormatAvailability` object provides a true/false value for each format's name.
+    supportedOutputFormatOptions = supportedOutputFormats.map((format) => (
+      // We disable the option if its availability is `false`.
+      <option
+        key={format.mimeType}
+        value={format.mimeType}
+        disabled={!outputFormatAvailability[format.name]}
+      >
+        {format.name}
+      </option>
     ))
 
-    // Build options for supportedOutputFormats
-    supportedOutputProjectionOptions = supportedOutputProjections.map((format) => (
-      <option key={format} value={format}>{format}</option>
+    // The derived harmony state is the source of truth.
+    // The `outputProjectionAvailability` object provides a true/false value for each format's name.
+    supportedOutputProjectionOptions = supportedOutputProjections.map((projection) => (
+      // We disable the option if its availability is `false`.
+      <option
+        key={projection.crs}
+        value={projection.crs}
+        disabled={!outputProjectionAvailability[projection.name]}
+      >
+        {`${projection.crs} | ${projection.name} `}
+      </option>
     ))
   }
 
@@ -673,22 +475,21 @@ const AccessMethod = ({
   const harmonyMbrWarning = useMemo(() => {
     let warning
 
+    // If a service supports bbox but not shape, show this warning
     if (
-      enableSpatialSubsetting
-      && supportsBoundingBoxSubsetting
+      (supportsBoundingBoxSubsetting
       && !supportsShapefileSubsetting
-      && nonBoundingBoxSpatialType
+      && nonBoundingBoxSpatialType)
     ) {
-      warning = `Only bounding boxes are supported. If this option is enabled, your ${nonBoundingBoxSpatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
+      warning = `Only bounding boxes are supported. Your ${nonBoundingBoxSpatialType} has been automatically converted into the bounding box shown above and outlined on the map.`
     }
 
     return warning
   }, [
-    enableSpatialSubsetting,
-    nonBoundingBoxSpatialType,
-    spatial,
     supportsBoundingBoxSubsetting,
-    supportsShapefileSubsetting
+    supportsShapefileSubsetting,
+    nonBoundingBoxSpatialType,
+    spatial
   ])
 
   useEffect(() => {
@@ -701,11 +502,9 @@ const AccessMethod = ({
   const selectedSpatialDisplay = createSpatialDisplay(spatial, !!harmonyMbrWarning)
 
   // Checking to see if the selectedMethod variables exists and has at least one variable
-  const hasVariables = selectedMethod.variables
-    ? Object.keys(selectedMethod.variables).length > 0
+  const hasVariables = variables
+    ? Object.keys(variables).length > 0
     : false
-
-  const harmonyMethods = accessMethodsByType.Harmony
 
   return (
     <div className="access-method">
@@ -715,33 +514,26 @@ const AccessMethod = ({
       >
         <div className="access-method__radio-list">
           {
-            radioList.length === 0 && hasHarmony === false
-              ? (
-                <Alert
-                  variant="warning"
-                >
-                  No access methods exist for this collection.
-                </Alert>
-              )
-              : getAccessMethodTypes(
-                hasHarmony,
-                radioList,
-                collectionId,
-                selectedAccessMethod
-              )
+            radioList.length === 0 ? (
+              <Alert variant="warning">
+                No access methods exist for this collection.
+              </Alert>
+            ) : (
+              <RadioList
+                defaultValue={selectedAccessMethod}
+                onChange={(methodName) => handleAccessMethodSelection(methodName)}
+                radioList={radioList}
+                renderRadio={renderRadioItem}
+              />
+            )
           }
         </div>
       </ProjectPanelSection>
       <ProjectPanelSection
-        heading="Select a service and customize options"
+        heading="Customization Options"
         step={2}
-        faded={!selectedAccessMethod && !isHarmony}
+        faded={!selectedAccessMethod}
       >
-        {
-          isHarmony && harmonyMethods.length > 0 && (
-            createHarmonySelector(harmonyMethods)
-          )
-        }
         {
           isCustomizationAvailable && (
             <>
@@ -763,46 +555,70 @@ const AccessMethod = ({
                 )
               }
               {
-                // Show Harmony method description
-                isHarmony && (
-                  <div className="access-method__harmony-method-info">
-                    <h3 className="project-panel-section__heading">{selectedHarmonyMethodName}</h3>
-                    <p>{accessMethods[selectedAccessMethod].description}</p>
-                    <ExternalLink href="https://harmony.earthdata.nasa.gov/docs#service-capabilities">
-                      Documentation
-                    </ExternalLink>
-                  </div>
-                )
+                // Relay customization limitations
+                <div className="access-method__harmony-method-info">
+                  {
+                    (type === 'Harmony') && (
+                      <>
+                        <p>
+                          Below are the customization options available to you.
+                        </p>
+                        <EDSCAlert
+                          bootstrapVariant="warning"
+                          icon={AlertMediumPriority}
+                        >
+                          Please note that selecting some customization options may lead
+                          to others becoming disabled.
+                        </EDSCAlert>
+                      </>
+                    )
+                  }
+                </div>
               }
               {
-                supportsConcatenation && (
+                supportsSpatialSubsetting && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Combine Data"
-                    intro="Select from available operations to combine the data."
+                    heading="Spatial Subsetting"
+                    intro="When enabled, spatial subsetting will trim the data to the spatial constraint range."
                     nested
+                    warning={harmonyMbrWarning}
+                    faded={isSpatialSubsettingDisabled}
                   >
-                    <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
-                      <Form.Check
-                        id="input__concatinate-subsetting"
-                        type="checkbox"
-                        label={
-                          (
-                            <div>
-                              <span className="mb-1 d-block">
-                                Enable Concatenation
-                              </span>
-                              <span className="mb-1 d-block text-muted">
-                                Data will be concatenated along a newly created dimension
-                              </span>
-                            </div>
-                          )
-                        }
-                        checked={enableConcatenateDownload}
-                        disabled={isRecurring}
-                        onChange={handleConcatenationSelection}
-                      />
-                    </Form.Group>
+                    {
+                      selectedSpatialDisplay
+                        && (
+                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
+                            <Form.Check
+                              id="input__spatial-subsetting"
+                              type="checkbox"
+                              label={
+                                (
+                                  <span className={`mb-1 d-block ${(!(isSpatialSubsettingSelected) && 'text-muted')}`}>
+                                    Trim output granules to the selected spatial constraint
+                                  </span>
+                                )
+                              }
+                              checked={isSpatialSubsettingSelected}
+                              onChange={handleToggleSpatialSubsetting}
+                              disabled={isSpatialSubsettingDisabled}
+                            />
+                            <p className="access-method__section-status mt-2 mb-0">
+                              Spatial Constraint:
+                              <br />
+                              {selectedSpatialDisplay}
+                            </p>
+                          </Form.Group>
+                        )
+                    }
+                    {
+                      !selectedSpatialDisplay && (
+                        <p className="access-method__section-status mb-0">
+                          No spatial constraint selected.
+                          Make a spatial selection to enable spatial subsetting.
+                        </p>
+                      )
+                    }
                   </ProjectPanelSection>
                 )
               }
@@ -814,6 +630,8 @@ const AccessMethod = ({
                     intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
                     warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
                     nested
+                    disabled={isTemporalSubsettingDisabled}
+                    faded={isTemporalSubsettingDisabled}
                   >
                     {
                       (startDate || endDate) && (
@@ -823,81 +641,28 @@ const AccessMethod = ({
                             type="checkbox"
                             label={
                               (
-                                <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
+                                <span className={`mb-1 d-block ${!isTemporalSubsettingSelected && 'text-muted'}`}>
                                   Trim output granules to the selected temporal constraint
                                 </span>
                               )
                             }
-                            checked={enableTemporalSubsetting}
-                            disabled={isRecurring}
+                            checked={isTemporalSubsettingSelected}
+                            disabled={isRecurring || isTemporalSubsettingDisabled}
                             onChange={handleToggleTemporalSubsetting}
                           />
-                          {
-                            enableTemporalSubsetting && (
-                              <p className="access-method__section-status mt-2 mb-0">
-                                Selected Range:
-                                <br />
-                                {selectedTemporalDisplay}
-                              </p>
-                            )
-                          }
+                          <p className="access-method__section-status mt-2 mb-0">
+                            Temporal Constraint:
+                            <br />
+                            {selectedTemporalDisplay}
+                          </p>
                         </Form.Group>
                       )
                     }
                     {
                       !(startDate || endDate) && (
                         <p className="access-method__section-status mb-0">
-                          No temporal range selected.
+                          No temporal constraint selected.
                           Make a temporal selection to enable temporal subsetting.
-                        </p>
-                      )
-                    }
-                  </ProjectPanelSection>
-                )
-              }
-              {
-                (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
-                  <ProjectPanelSection
-                    customHeadingTag="h4"
-                    heading="Spatial Subsetting"
-                    intro="When enabled, spatial subsetting will trim the data to the selected area range."
-                    nested
-                    warning={harmonyMbrWarning}
-                  >
-                    {
-                      selectedSpatialDisplay
-                        && (
-                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
-                            <Form.Check
-                              id="input__spatial-subsetting"
-                              type="checkbox"
-                              label={
-                                (
-                                  <span className={`mb-1 d-block ${(!(enableSpatialSubsetting) && 'text-muted')}`}>
-                                    Trim output granules to the selected spatial constraint
-                                  </span>
-                                )
-                              }
-                              checked={enableSpatialSubsetting}
-                              onChange={handleToggleSpatialSubsetting}
-                            />
-                            {
-                              enableSpatialSubsetting && (
-                                <p className="access-method__section-status mt-2 mb-0">
-                                  Selected Area:
-                                  <br />
-                                  {selectedSpatialDisplay}
-                                </p>
-                              )
-                            }
-                          </Form.Group>
-                        )
-                    }
-                    {
-                      !selectedSpatialDisplay && (
-                        <p className="access-method__section-status mb-0">
-                          No spatial area selected.
-                          Make a spatial selection to enable spatial subsetting.
                         </p>
                       )
                     }
@@ -908,9 +673,11 @@ const AccessMethod = ({
                 supportsVariableSubsetting && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Variables"
+                    heading="Variable Subsetting"
                     intro="Use science keywords to subset your collection granules by measurements and variables."
                     nested
+                    disabled={isVariableSubsettingDisabled}
+                    faded={isVariableSubsettingDisabled}
                   >
                     {
                       !hasVariables ? (
@@ -946,10 +713,44 @@ const AccessMethod = ({
                 )
               }
               {
-                supportedOutputFormatOptions.length > 0 && (
+                supportsConcatenation && (
                   <ProjectPanelSection
                     customHeadingTag="h4"
-                    heading="Output Format"
+                    heading="Combine Data"
+                    intro="Select from available operations to combine the data."
+                    nested
+                    faded={isConcatenationDisabled}
+                    disabled={isConcatenationDisabled}
+                  >
+                    <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
+                      <Form.Check
+                        id="input__concatinate-subsetting"
+                        type="checkbox"
+                        label={
+                          (
+                            <div>
+                              <span className="mb-1 d-block">
+                                Enable Concatenation
+                              </span>
+                              <span className="mb-1 d-block text-muted">
+                                Data will be concatenated along a newly created dimension
+                              </span>
+                            </div>
+                          )
+                        }
+                        checked={isConcatenateSelected}
+                        disabled={isRecurring}
+                        onChange={handleConcatenationSelection}
+                      />
+                    </Form.Group>
+                  </ProjectPanelSection>
+                )
+              }
+              {
+                supportedOutputFormats.length > 0 && (
+                  <ProjectPanelSection
+                    customHeadingTag="h4"
+                    heading="Output Format Conversion"
                     intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
                     nested
                   >
@@ -962,7 +763,7 @@ const AccessMethod = ({
                     >
                       {
                         [
-                          <option key="output-format-none" value="">No Data Conversion</option>,
+                          <option key="output-format-none" value="">Default Format</option>,
                           ...supportedOutputFormatOptions
                         ]
                       }
@@ -971,7 +772,7 @@ const AccessMethod = ({
                 )
               }
               {
-                supportedOutputProjectionOptions.length > 0 && (
+                supportedOutputProjections.length > 0 && (
                   <ProjectPanelSection
                     heading="Output Projection Selection"
                     intro="Choose a desired output projection from supported EPSG Codes."
@@ -986,7 +787,7 @@ const AccessMethod = ({
                     >
                       {
                         [
-                          <option key="output-projection-none" value="">None</option>,
+                          <option key="output-projection-none" value="">No Reprojection</option>,
                           ...supportedOutputProjectionOptions
                         ]
                       }

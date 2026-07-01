@@ -14,9 +14,18 @@ import VariableTreePanel from '../VariableTreePanel'
 
 import { MODAL_NAMES } from '../../../constants/modalNames'
 
-import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
 import { breadcrumbSkeleton, titleSkeleton } from '../../Panels/skeleton'
 import { changePath } from '../../../util/url/changePath'
+
+// Mocking window.getComputedStyle for jsdom which does not have the visual rendering needed for layout calculations
+const mockGetComputedStyle = vi.fn().mockImplementation(() => ({
+  // Simplebar-react calls getPropertyValue on the returned object. We mock it to prevent the test from crashing.
+  getPropertyValue: () => ''
+}))
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: mockGetComputedStyle
+})
 
 vi.mock('../../../util/url/changePath', () => ({
   changePath: vi.fn()
@@ -195,7 +204,7 @@ describe('ProjectPanels component', () => {
         }
       })
 
-      expect(Skeleton).toHaveBeenCalledTimes(10)
+      expect(Skeleton).toHaveBeenCalledTimes(4)
 
       expect(Skeleton).toHaveBeenNthCalledWith(1, expect.objectContaining({
         shapes: breadcrumbSkeleton
@@ -206,35 +215,11 @@ describe('ProjectPanels component', () => {
       }), {})
 
       expect(Skeleton).toHaveBeenNthCalledWith(3, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(5, expect.objectContaining({
         shapes: breadcrumbSkeleton
       }), {})
 
-      expect(Skeleton).toHaveBeenNthCalledWith(6, expect.objectContaining({
+      expect(Skeleton).toHaveBeenNthCalledWith(4, expect.objectContaining({
         shapes: titleSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(7, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(8, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(9, expect.objectContaining({
-        shapes: radioListItemSkeleton
-      }), {})
-
-      expect(Skeleton).toHaveBeenNthCalledWith(10, expect.objectContaining({
-        shapes: radioListItemSkeleton
       }), {})
     })
   })
@@ -678,6 +663,22 @@ describe('ProjectPanels component', () => {
 
       describe('when viewing the Harmony access method', () => {
         const harmonyState = {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                title: 'testing',
+                variables: {
+                  items: [
+                    {
+                      conceptId: 'MOCK-V00001',
+                      name: 'Grid/cloudWaterContent',
+                      definition: 'Latitudes of pixel locations'
+                    }
+                  ]
+                }
+              }
+            }
+          },
           project: {
             collections: {
               allIds: ['collectionId'],
@@ -689,23 +690,21 @@ describe('ProjectPanels component', () => {
                   },
                   accessMethods: {
                     harmony: {
-                      description: 'Harmony access method',
                       name: 'Harmony',
                       hierarchyMappings: [{
-                        id: 'variableId'
+                        id: 'MOCK-V00001'
                       }],
+                      keywordMappings: [{ id: 'MOCK-V00001' }],
                       isValid: true,
                       type: 'Harmony',
                       supportsVariableSubsetting: true,
+                      isVariableSubsettingDisabled: false,
+                      selectedVariables: [],
                       variables: {
-                        variableId: {
-                          conceptId: 'variableId',
-                          definition: 'latitude',
-                          instanceInformation: null,
-                          longName: 'Latitudes of pixel locations',
-                          name: 'latitude',
-                          nativeId: 'latitude',
-                          scienceKeywords: null
+                        'MOCK-V00001': {
+                          name: 'Grid/cloudWaterContent',
+                          href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/MOCK-V00001',
+                          scienceKeywords: []
                         }
                       }
                     }
@@ -728,7 +727,7 @@ describe('ProjectPanels component', () => {
 
             expect(screen.getByText('Variable Selection')).toBeInTheDocument()
 
-            expect(screen.getByRole('checkbox', { name: 'latitude Latitudes of pixel locations' })).toBeInTheDocument()
+            expect(screen.getByRole('checkbox', { name: 'cloudWaterContent' })).toBeInTheDocument()
           })
 
           describe('when selecting a variable', () => {
@@ -740,7 +739,7 @@ describe('ProjectPanels component', () => {
               const button = screen.getByRole('button', { name: 'Edit Variables' })
               await user.click(button)
 
-              const checkbox = screen.getByRole('checkbox', { name: 'latitude Latitudes of pixel locations' })
+              const checkbox = screen.getByRole('checkbox', { name: 'cloudWaterContent' })
               await user.click(checkbox)
 
               expect(zustandState.project.updateAccessMethod).toHaveBeenCalledTimes(1)
@@ -748,24 +747,7 @@ describe('ProjectPanels component', () => {
                 collectionId: 'collectionId',
                 method: {
                   harmony: {
-                    description: 'Harmony access method',
-                    hierarchyMappings: [{ id: 'variableId' }],
-                    isValid: true,
-                    name: 'Harmony',
-                    selectedVariables: ['variableId'],
-                    supportsVariableSubsetting: true,
-                    type: 'Harmony',
-                    variables: {
-                      variableId: {
-                        conceptId: 'variableId',
-                        definition: 'latitude',
-                        instanceInformation: null,
-                        longName: 'Latitudes of pixel locations',
-                        name: 'latitude',
-                        nativeId: 'latitude',
-                        scienceKeywords: null
-                      }
-                    }
+                    selectedVariables: ['MOCK-V00001']
                   }
                 }
               })
@@ -785,7 +767,7 @@ describe('ProjectPanels component', () => {
               await user.click(viewDetailsButton)
 
               expect(screen.getByRole('heading', {
-                name: 'latitude',
+                name: 'cloudWaterContent',
                 level: 2
               })).toBeInTheDocument()
             })

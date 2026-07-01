@@ -7,6 +7,7 @@ import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.bo
 import granulesBody from './__mocks__/granules.body.json'
 import granulesGraphQlBody from './__mocks__/granulesGraphql.body.json'
 import graphQlHeaders from './__mocks__/graphql.headers.json'
+import harmonyCapabilitiesDocument from './__mocks__/harmonyCapabilitiesDocument.json'
 import retrieval from './__mocks__/retrieval.json'
 import retrievalCollection from './__mocks__/retrievalCollection.json'
 import timeline from './__mocks__/timeline.json'
@@ -86,6 +87,12 @@ test.describe('History', () => {
       })
     })
 
+    await page.route('**/capabilities**', async (route) => {
+      await route.fulfill({
+        json: harmonyCapabilitiesDocument
+      })
+    })
+
     await login(page, context)
 
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
@@ -125,6 +132,12 @@ test.describe('History', () => {
       await page.route(/saved_access_configs/, async (route) => {
         await route.fulfill({
           json: {}
+        })
+      })
+
+      await page.route('**/capabilities**', async (route) => {
+        await route.fulfill({
+          json: harmonyCapabilitiesDocument
         })
       })
 

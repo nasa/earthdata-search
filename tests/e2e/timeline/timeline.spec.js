@@ -4,12 +4,13 @@ import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 import { setupTests } from '../../support/setupTests'
 
-import collectionsGraphJson from './__mocks__/collections_graph.json'
-import timeline from './__mocks__/timeline.json'
-import granules from './__mocks__/granules.json'
-import providers from './__mocks__/providers.json'
 import accessMethods from './__mocks__/access_methods.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
+import collectionsGraphJson from './__mocks__/collections_graph.json'
+import granules from './__mocks__/granules.json'
+import harmonyCapabilitiesDocument from './__mocks__/harmonyCapabilitiesDocument.json'
+import providers from './__mocks__/providers.json'
+import timeline from './__mocks__/timeline.json'
 
 test.describe('Timeline spec', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -66,6 +67,12 @@ test.describe('Timeline spec', () => {
     await page.route(/saved_access_configs/, async (route) => {
       await route.fulfill({
         json: {}
+      })
+    })
+
+    await page.route('**/capabilities**', async (route) => {
+      await route.fulfill({
+        json: harmonyCapabilitiesDocument
       })
     })
 
