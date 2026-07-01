@@ -1,4 +1,4 @@
-import asyncRedis from 'async-redis'
+import Redis from 'ioredis'
 
 let cacheClient
 
@@ -19,8 +19,7 @@ export const getCacheConnection = () => {
     port = '6379'
   }
 
-  cacheClient = asyncRedis.createClient({
-    return_buffers: true,
+  cacheClient = new Redis({
     host,
     port
   })
