@@ -1,8 +1,9 @@
-import getDerivedHarmonyState, {
+import getDerivedHarmonyState from '../getDerivedHarmonyState'
+import {
   DerivedHarmonyState,
   HarmonyCapabilitiesDocument,
   UserSelections
-} from '../getDerivedHarmonyState'
+} from '../derivedHarmonyStateTypes'
 import {
   mockHarmonyCapabilitiesDocument,
   mockHarmonyCapabiltiesDocumentWithReprojection,
