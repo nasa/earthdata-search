@@ -14,7 +14,7 @@
     "watch:api": "nodemon --watch serverless/src --ext js,ts,graphql --exec 'npm run build:api'",
     "prestart:api": "npm run build:api",
     "start:api": "dotenvx run nodemon -- --config api.nodemon.json bin/api.mjs cdk/earthdata-search/cdk.out/earthdata-search-dev.template.json",
-    "preinstall": "cd cdk/earthdata-search && npm ci --target_arch=x64",
+    "preinstall": "cd cdk/earthdata-search && npm ci",
     "run-synth": "cd cdk/earthdata-search && npm run cdk synth -- --quiet",
     "prestart:elasticmq": "node bin/generateQueueConfig.mjs ./cdk/earthdata-search/cdk.out/earthdata-search-dev.template.json",
     "start:elasticmq": "docker run --rm --name elasticmq -p 9324:9324 -p 9325:9325 -v `pwd`/elasticmq.conf:/opt/elasticmq.conf softwaremill/elasticmq-native",
