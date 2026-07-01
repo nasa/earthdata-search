@@ -1,4 +1,4 @@
-import { HarmonyCapabilitiesDocument } from '../../getDerivedHarmonyState'
+import { HarmonyCapabilitiesDocument } from '../../derivedHarmonyStateTypes'
 
 export const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   conceptId: 'C1234567890-EEDTEST',
