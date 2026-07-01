@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, ApolloError } from '@apollo/client'
 import { remove } from 'tiny-cookie'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,6 +9,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEdlToken, getUsername } from '../../zustand/selectors/user'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
+import RedirectingAuthState from '../RedirectingAuthState/RedirectingAuthState'
 import Spinner from '../Spinner/Spinner'
 
 import { localStorageKeys } from '../../constants/localStorageKeys'
@@ -16,6 +17,12 @@ import { localStorageKeys } from '../../constants/localStorageKeys'
 interface UserLoaderProps {
   /** The child components */
   children: React.ReactNode
+}
+interface NetworkErrorLike {
+  /** Http Status code exposed directly on the error object */
+  statusCode?: number
+  /** Error Message from the network */
+  message?: string
 }
 
 export const UserLoader: React.FC<UserLoaderProps> = ({
@@ -33,6 +40,15 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
   const navigate = useNavigate()
 
   const [preferencesLoaded, setPreferencesLoaded] = useState(false)
+  const [isRedirectingToSearch, setisRedirectingToSearch] = useState(false)
+
+  const isUnauthorizedError = (queryError: ApolloError) => {
+    const networkError = queryError?.networkError as NetworkErrorLike | undefined
+    const statusCode = networkError?.statusCode
+    const hasUnauthorizedMessage = /unauthorized| not authorized|forbidden|401|403/i.test(queryError?.message || '')
+
+    return statusCode === 401 || hasUnauthorizedMessage
+  }
 
   // When the page loads, check local storage for user information
   useEffect(() => {
@@ -62,6 +78,8 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
 
   useEffect(() => {
     if (error) {
+      const unauthorizedError = isUnauthorizedError(error)
+
       // Delete the edlToken cookie
       remove('edlToken')
 
@@ -72,12 +90,18 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
       // Clear the user information from local storage
       localStorage.removeItem(localStorageKeys.user)
 
-      // Show an error banner
-      handleError({
-        error,
-        action: 'getUser query',
-        title: 'Something went wrong while logging in'
-      })
+      // If not an unauthorized Error show the banner
+      if (!unauthorizedError) {
+        handleError({
+          error,
+          action: 'getUser query',
+          title: 'Something went wrong while logging in'
+        })
+      }
+
+      if (unauthorizedError) {
+        setisRedirectingToSearch(true)
+      }
 
       // Redirect to the search page
       navigate(`/search?ee=${earthdataEnvironment}`, { replace: true })
@@ -107,6 +131,12 @@ export const UserLoader: React.FC<UserLoaderProps> = ({
       setPreferencesLoaded(true)
     }
   }, [data])
+
+  if (isRedirectingToSearch) {
+    return (
+      <RedirectingAuthState />
+    )
+  }
 
   // If the user is logged in, but doesn't have a username and preferences from either local storage
   // or the API, show a spinner
