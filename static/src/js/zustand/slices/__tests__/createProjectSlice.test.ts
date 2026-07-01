@@ -15,10 +15,11 @@ import GranuleRequest from '../../../util/request/granuleRequest'
 import * as applicationConfig from '../../../../../../sharedUtils/config'
 import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
+
 import {
   DerivedHarmonyState,
   HarmonyCapabilitiesDocument
-} from '../../../util/getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../../../util/getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-request-id')

@@ -1,4 +1,4 @@
-import type { HarmonyVariable } from './getDerivedHarmonyState/getDerivedHarmonyState'
+import type { HarmonyVariable } from './getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 import type { VariableMetadata } from '../types/sharedTypes'
 

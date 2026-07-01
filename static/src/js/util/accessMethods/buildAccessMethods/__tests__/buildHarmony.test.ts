@@ -5,10 +5,10 @@ import { getVariables, VariablesResult } from '../../getVariables'
 import { getEarthdataConfig } from '../../../../../../../sharedUtils/config'
 import {
   DerivedHarmonyState,
-  getDerivedHarmonyState,
   HarmonyCapabilitiesDocument,
   UserSelections
-} from '../../../getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../../../getDerivedHarmonyState/derivedHarmonyStateTypes'
+import getDerivedHarmonyState from '../../../getDerivedHarmonyState/getDerivedHarmonyState'
 import { HarmonyAccessMethod } from '../../../../zustand/types'
 
 vi.mock('../../getVariables')
