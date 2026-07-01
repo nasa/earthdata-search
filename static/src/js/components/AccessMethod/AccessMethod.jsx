@@ -125,18 +125,6 @@ const AccessMethod = ({
     // Build the list of granules
     const granuleListObj = granulesToDisplay.map((id) => granulesMetadata[id])
     setGranuleList(granuleListObj)
-
-    // Disable temporal subsetting if the user has a recurring date selected
-    if (isTemporalSubsettingSelected && isRecurring) {
-      onUpdateAccessMethod({
-        collectionId: metadata.conceptId,
-        method: {
-          [selectedAccessMethod]: {
-            enableTemporalSubsetting: false
-          }
-        }
-      })
-    }
   }, [projectCollection])
 
   const handleAccessMethodSelection = (method) => {

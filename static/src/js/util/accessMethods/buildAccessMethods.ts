@@ -123,6 +123,7 @@ export const buildAccessMethods = (
     echoOrders: (serviceItem: EchoOrderAccessMethod) => buildEcho(serviceItem),
     esi: (serviceItem: EsiAccessMethod) => buildEsi(serviceItem),
     opendap: (serviceItem: OpendapAccessMethod, params: {
+      // This line is covered by the tests, but the typescript disable line here confuses v8 into thinking the line has been skipped
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       associatedVariables: any
     }) => buildOpendap(serviceItem, params),

@@ -780,11 +780,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
         const selectedMethod = accessMethods[selectedAccessMethod]
 
-        // Type guard to ensure we have the correct method type ('Harmony')
-        if (selectedMethod && selectedMethod.type !== 'Harmony') {
-          return
-        }
-
         // Map to convert UI state changes into the format expected by derived state
         const newMethodToDerivedHarmonyStateMap = {
           enableConcatenateDownload: 'concatenate',
