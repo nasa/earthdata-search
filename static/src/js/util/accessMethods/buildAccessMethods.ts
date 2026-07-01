@@ -24,7 +24,7 @@ import { CollectionMetadata, VariableMetadata } from '../../types/sharedTypes'
 import {
   HarmonyCapabilitiesDocument,
   HarmonyVariable
-} from '../getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 /** What is returned form this function */
 export type AccessMethodItems = Record<string, AccessMethodTypes>
@@ -123,16 +123,14 @@ export const buildAccessMethods = (
     echoOrders: (serviceItem: EchoOrderAccessMethod) => buildEcho(serviceItem),
     esi: (serviceItem: EsiAccessMethod) => buildEsi(serviceItem),
     opendap: (serviceItem: OpendapAccessMethod, params: {
-      // This line is covered by the tests, but the typescript disable line here confuses v8 into thinking the line has been skipped
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      associatedVariables: any
+      associatedVariables: VariableMetadata[]
     }) => buildOpendap(serviceItem, params),
     swodlr: (serviceItem: SwodlrAccessMethod) => buildSwodlr(serviceItem),
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
   const nonDownloadMethodItems = serviceItems.flatMap((serviceItem: AnyAccessMethodServiceItem) => {
-    let associatedVariables = collectionAssociatedVariables
+    let associatedVariables = collectionAssociatedVariables.items || []
     const {
       type: serviceType,
       variables: serviceAssociatedVariables = {

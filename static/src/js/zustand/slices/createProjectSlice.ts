@@ -68,10 +68,10 @@ import { getProjectCollectionsIds } from '../selectors/project'
 import { getCollectionsMetadata } from '../selectors/collection'
 import { getEdlToken, getUsername } from '../selectors/user'
 
+import { getDerivedHarmonyState } from '../../util/getDerivedHarmonyState/getDerivedHarmonyState'
 import {
-  getDerivedHarmonyState,
   HarmonyCapabilitiesDocument
-} from '../../util/getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../../util/getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 import HarmonyCapabilitiesDocumentRequest from '../../util/request/harmonyCapabilitiesDocumentRequest'
 
@@ -279,7 +279,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       // Fetch the Harmony capabilities document
       await Promise.all(
         // Purpose of function is to set the harmonyCapabiltiiesDocument
-        // eslint-disable-next-line consistent-return
         filteredIds.map(async (collectionId) => {
           const version = HARMONY_CAPABILITES_API_VERSION
           try {
@@ -312,6 +311,8 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
               return buildPromise(null)
             }
           }
+
+          return null
         })
       )
 

@@ -3,7 +3,7 @@ import { computeKeywordMappings } from './computeKeywordMappings'
 /* @ts-expect-error This file does not have types */
 import { computeHierarchyMappings } from './computeHierarchyMappings'
 import { determineVariableId } from '../determineVariableId'
-import { HarmonyVariable } from '../getDerivedHarmonyState/getDerivedHarmonyState'
+import { HarmonyVariable } from '../getDerivedHarmonyState/derivedHarmonyStateTypes'
 import { VariableMetadata } from '../../types/sharedTypes'
 import { HierarchyMapping, KeywordMapping } from '../../zustand/types'
 

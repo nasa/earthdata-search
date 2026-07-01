@@ -1,12 +1,13 @@
 import { getVariables } from '../getVariables'
 // @ts-expect-error This file does not have types
 import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
-import getDerivedHarmonyState, {
+import getDerivedHarmonyState from '../../getDerivedHarmonyState/getDerivedHarmonyState'
+import {
   HarmonyCapabilitiesDocument,
   UserSelections,
   DerivedHarmonyState,
   HarmonyVariable
-} from '../../getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../../getDerivedHarmonyState/derivedHarmonyStateTypes'
 import { HarmonyAccessMethod } from '../../../zustand/types'
 import useEdscStore from '../../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../../zustand/selectors/earthdataEnvironment'

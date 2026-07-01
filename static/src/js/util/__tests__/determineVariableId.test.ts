@@ -1,6 +1,6 @@
 import { VariableMetadata } from '../../types/sharedTypes'
 import { determineVariableId } from '../determineVariableId'
-import { HarmonyVariable } from '../getDerivedHarmonyState/getDerivedHarmonyState'
+import { HarmonyVariable } from '../getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 describe('determineVariableId', () => {
   test('returns conceptId when it exists (UMM-S variable)', () => {

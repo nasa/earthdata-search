@@ -7,7 +7,7 @@ import type { FeatureCollection, GeoJsonObject } from 'geojson'
 import type { Style } from 'ol/style'
 import type { crsProjections } from '../util/map/crs'
 import type { PreferencesData, MapLayer } from '../zustand/types'
-import type { HarmonyScienceKeyword } from '../util/getDerivedHarmonyState/getDerivedHarmonyState'
+import type { HarmonyScienceKeyword } from '../util/getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>

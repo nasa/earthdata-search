@@ -27,7 +27,7 @@ import {
   HarmonyVariable,
   SupportedProjection,
   UserSelections
-} from '../util/getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../util/getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 export type CollectionSlice = {
   /**

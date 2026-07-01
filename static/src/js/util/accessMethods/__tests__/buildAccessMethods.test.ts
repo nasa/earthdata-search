@@ -17,7 +17,7 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import {
   DerivedHarmonyState,
   HarmonyCapabilitiesDocument
-} from '../../getDerivedHarmonyState/getDerivedHarmonyState'
+} from '../../getDerivedHarmonyState/derivedHarmonyStateTypes'
 
 beforeEach(() => {
   vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
