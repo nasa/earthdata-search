@@ -2,7 +2,7 @@ import { buildHarmony } from '../buildHarmony'
 import { getVariables, VariablesResult } from '../../getVariables'
 
 // @ts-expect-error This file does not have types
-import { getEarthdataConfig, getApplicationConfig } from '../../../../../../../sharedUtils/config'
+import { getEarthdataConfig } from '../../../../../../../sharedUtils/config'
 import {
   DerivedHarmonyState,
   getDerivedHarmonyState,
@@ -14,6 +14,15 @@ import { HarmonyAccessMethod } from '../../../../zustand/types'
 vi.mock('../../getVariables')
 vi.mock('../../../../../../../sharedUtils/config')
 vi.mock('../../../../util/getDerivedHarmonyState/getDerivedHarmonyState')
+vi.mock('../../../../zustand/useEdscStore', () => ({
+  default: {
+    getState: vi.fn().mockReturnValue({})
+  }
+}))
+
+vi.mock('../../../../zustand/selectors/earthdataEnvironment', () => ({
+  getEarthdataEnvironment: vi.fn().mockReturnValue('prod')
+}))
 
 describe('buildHarmony', () => {
   const mockHarmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
@@ -106,10 +115,6 @@ describe('buildHarmony', () => {
 
     getEarthdataConfig.mockReturnValue({
       harmonyHost: 'https://harmony.example.com'
-    })
-
-    getApplicationConfig.mockReturnValue({
-      env: 'prod'
     })
 
     vi.mocked(getDerivedHarmonyState).mockReturnValue({
