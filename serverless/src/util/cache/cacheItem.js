@@ -9,7 +9,7 @@ import { getCacheConnection } from './getCacheConnection'
 export const cacheItem = async (key, item, expireSeconds) => {
   // Ignore empty cache attempts
   if (item) {
-    const cacheConnection = await getCacheConnection()
+    const cacheConnection = getCacheConnection()
     /**
      * Caching methods
      * EX      -- Set the specified expire time, in seconds.

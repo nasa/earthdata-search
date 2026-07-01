@@ -1,8 +1,12 @@
-import asyncRedis from 'async-redis'
-
 import { getCacheConnection } from '../getCacheConnection'
 
-const createClientMock = vi.spyOn(asyncRedis, 'createClient').mockReturnValue('mocked-redis-client')
+const mockClass = vi.hoisted(() => vi.fn(class {
+  mockFunction = vi.fn()
+}))
+
+vi.mock('ioredis', () => ({
+  default: mockClass
+}))
 
 describe('getCacheConnection', () => {
   const OLD_ENV = process.env
@@ -27,13 +31,14 @@ describe('getCacheConnection', () => {
 
         const connection = getCacheConnection()
 
-        expect(connection).toEqual('mocked-redis-client')
+        expect(connection).toEqual({
+          mockFunction: expect.any(Function)
+        })
 
-        expect(createClientMock).toHaveBeenCalledTimes(1)
-        expect(createClientMock).toHaveBeenCalledWith({
+        expect(mockClass).toHaveBeenCalledTimes(1)
+        expect(mockClass).toHaveBeenCalledWith({
           host: 'localhost',
-          port: '6379',
-          return_buffers: true
+          port: '6379'
         })
       })
     })
