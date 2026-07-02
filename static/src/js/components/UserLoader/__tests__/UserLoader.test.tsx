@@ -242,5 +242,34 @@ describe('UserLoader', () => {
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
       expect(mockUseNavigate).toHaveBeenCalledWith('/search?ee=prod', { replace: true })
     })
+
+    test('does not show an error message for unauthorized errors and shows the redirect message', async () => {
+      const { zustandState } = setup({
+        overrideZustandState: {
+          user: {
+            edlToken: 'test-auth-token'
+          }
+        },
+        overrideApolloClientMocks: [{
+          request: {
+            query: GET_USER
+          },
+          error: new ApolloError({ errorMessage: 'Unauthorized' })
+        }]
+      })
+
+      await waitFor(() => {
+        expect(zustandState.user.setEdlToken).toHaveBeenCalledTimes(1)
+      })
+
+      expect(zustandState.user.setEdlToken).toHaveBeenCalledWith(null)
+
+      expect(zustandState.errors.handleError).toHaveBeenCalledTimes(0)
+
+      expect(screen.getByText(/Redirecting to sign in/i)).toBeInTheDocument()
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search?ee=prod', { replace: true })
+    })
   })
 })

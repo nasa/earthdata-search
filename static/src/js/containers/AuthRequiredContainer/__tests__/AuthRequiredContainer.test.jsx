@@ -46,7 +46,7 @@ describe('AuthRequiredContainer component', () => {
 
     setup()
 
-    expect(screen.getByTestId('auth-required')).toBeInTheDocument()
+    expect(screen.getByText(/Redirecting to sign in/i)).toBeInTheDocument()
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
@@ -80,7 +80,7 @@ describe('AuthRequiredContainer component', () => {
         }
       })
 
-      expect(screen.getByTestId('auth-required')).toBeInTheDocument()
+      expect(screen.queryByText(/Redirecting to sign in/i)).not.toBeInTheDocument()
       expect(window.location.href).toEqual('http://example.com/test/path')
     })
 
@@ -109,7 +109,7 @@ describe('AuthRequiredContainer component', () => {
 
       setup()
 
-      expect(screen.getByTestId('auth-required')).toBeInTheDocument()
+      expect(screen.getByText(/Redirecting to sign in/i)).toBeInTheDocument()
       expect(window.location.href).toEqual('/search')
     })
 
