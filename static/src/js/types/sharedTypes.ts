@@ -601,6 +601,78 @@ export type SubscriptionResponse = {
 }
 
 /**
+ * Represents an ECHO Order Option returned by the GraphQL query.
+ */
+export interface OrderOptionItem {
+  /** The unique CMR concept ID for the order option. */
+  conceptId: string
+  /** The specific revision ID of the order option. */
+  revisionId?: string
+  /** The name of the order option. */
+  name: string
+  /** The ECHO Form XML associated with this order option. */
+  form: string
+}
+
+/**
+ * Represents a Variable returned by the GraphQL query.
+ */
+export interface ServiceVariableItem {
+  /** The unique CMR concept ID for the variable. */
+  conceptId: string
+  /** The definition or description of the variable. */
+  definition?: string
+  /** The expanded or long name of the variable. */
+  longName?: string
+  /** The short name of the variable. */
+  name: string
+  /** The native ID of the variable from the provider. */
+  nativeId?: string
+  /** The science keywords associated with the variable. (Generic as no subfields queried) */
+  scienceKeywords?: unknown[]
+}
+
+/**
+ * The combined Service Item representing the exact data returned by your GraphQL queries.
+ */
+export interface ServiceItem {
+  /** The unique CMR concept ID for the service record. */
+  conceptId: string
+  /** The name of the service, software, or tool. */
+  name: string
+  /** The long name of the service, software, or tool. */
+  longName?: string
+  /** The type of the service, software, or tool. */
+  type: string
+  /** A brief description of the service. */
+  description?: string
+  /** The universal resource locator (URL) for directly accessing the back-end service. */
+  url?: string
+  /** Describes service options, data transformations, and output formats. (Generic as no subfields queried) */
+  serviceOptions?: Record<string, unknown>
+  /** List of supported output projections types. (Generic as no subfields queried) */
+  supportedOutputProjections?: Record<string, unknown>[]
+  /** List of format name combinations which explicitly state which re-formatting options are available. (Generic as no subfields queried) */
+  supportedReformattings?: Record<string, unknown>[]
+  /** The maximum number of items (granules) per order allowed by this service. */
+  maxItemsPerOrder?: number
+  /** The ECHO order options associated with this service. */
+  orderOptions?: {
+    /** The total number of order options available. */
+    count: number
+    /** The array of order option items. */
+    items: OrderOptionItem[]
+  }
+  /** The variables associated with this service. */
+  variables?: {
+    /** The total number of variables associated with the service. */
+    count: number
+    /** The array of variable items. */
+    items: ServiceVariableItem[]
+  }
+}
+
+/**
  * Admin Types
  */
 

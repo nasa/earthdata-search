@@ -12,15 +12,12 @@ import { buildSwodlr } from './buildAccessMethods/buildSwodlr'
 /* @ts-expect-error This file does not have types */
 import { buildDownload } from './buildAccessMethods/buildDownload'
 
+import { AccessMethodTypes, HarmonyAccessMethod } from '../../zustand/types'
 import {
-  AccessMethodTypes,
-  EchoOrderAccessMethod,
-  EsiAccessMethod,
-  HarmonyAccessMethod,
-  OpendapAccessMethod,
-  SwodlrAccessMethod
-} from '../../zustand/types'
-import { CollectionMetadata, VariableMetadata } from '../../types/sharedTypes'
+  CollectionMetadata,
+  ServiceItem,
+  VariableMetadata
+} from '../../types/sharedTypes'
 import {
   HarmonyCapabilitiesDocument,
   HarmonyVariable
@@ -111,26 +108,24 @@ export const buildAccessMethods = (
   harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument | null
 ): AccessMethodItems => {
   const {
-    granules = {},
-    services = {},
-    variables: collectionAssociatedVariables = {}
+    granules = {
+      count: 0,
+      items: []
+    },
+    services = {
+      count: 0,
+      items: []
+    },
+    variables: collectionAssociatedVariables = {
+      count: 0,
+      items: []
+    }
   } = collectionMetadata
 
-  const { items: serviceItems = [] } = services
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const buildMethods: Record<string, (...args: any[]) => any> = {
-    echoOrders: (serviceItem: EchoOrderAccessMethod) => buildEcho(serviceItem),
-    esi: (serviceItem: EsiAccessMethod) => buildEsi(serviceItem),
-    opendap: (serviceItem: OpendapAccessMethod, params: {
-      associatedVariables: VariableMetadata[]
-    }) => buildOpendap(serviceItem, params),
-    swodlr: (serviceItem: SwodlrAccessMethod) => buildSwodlr(serviceItem),
-    downloads: () => buildDownload(granules, isOpenSearch)
-  }
+  const { items: serviceItems } = services
 
   const nonDownloadMethodItems = serviceItems.flatMap((serviceItem: AnyAccessMethodServiceItem) => {
-    let associatedVariables = collectionAssociatedVariables.items || []
+    let associatedVariables = collectionAssociatedVariables.items
     const {
       type: serviceType,
       variables: serviceAssociatedVariables = {
@@ -141,7 +136,7 @@ export const buildAccessMethods = (
 
     // Overwrite variables if there are variables associated to the service record
     if (serviceAssociatedVariables.items.length > 0) {
-      associatedVariables = serviceAssociatedVariables
+      associatedVariables = serviceAssociatedVariables.items
     }
 
     const formattedServiceType = formatServiceType(serviceType)
@@ -155,9 +150,21 @@ export const buildAccessMethods = (
       associatedVariables
     }
 
-    const items = buildMethods[formattedServiceType](serviceItem, params)
-
-    return items
+    // Use a switch statement instead of dynamic object lookup
+    switch (formattedServiceType) {
+      case ECHO_ORDERS:
+        return buildEcho(serviceItem as ServiceItem)
+      case ESI:
+        return buildEsi(serviceItem as ServiceItem)
+      case OPENDAP:
+        return buildOpendap(serviceItem as ServiceItem, params)
+      case SWODLR:
+        return buildSwodlr(serviceItem as ServiceItem)
+      default:
+        // Only process service types that EDSC supports.
+        // Excludes harmony, etc.
+        return {}
+    }
   })
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
@@ -172,7 +179,7 @@ export const buildAccessMethods = (
 
   const accessMethods: AccessMethodItems = {
     ...nonDownloadMethods,
-    ...buildMethods.downloads()
+    ...buildDownload(granules, isOpenSearch)
   }
 
   return accessMethods

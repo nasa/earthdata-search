@@ -711,71 +711,68 @@ describe('when buildAccessMethods is called', () => {
         }
       },
       {
-        associatedVariables: {
-          count: 4,
-          items: [
-            {
-              conceptId: 'V100000-EDSC',
-              definition: 'analysed_sst in units of kelvin',
-              longName: 'analysed_sst',
-              name: 'analysed_sst',
-              nativeId: 'e2eTestVarHiRes1',
-              scienceKeywords: [
-                {
-                  category: 'Earth Science',
-                  term: 'Ocean Temperature',
-                  topic: 'Oceans',
-                  variableLevel1: 'Sea Surface Temperature'
-                }
-              ]
-            },
-            {
-              conceptId: 'V100001-EDSC',
-              definition: 'analysis_error in units of kelvin',
-              longName: 'analysis_error',
-              name: 'analysis_error',
-              nativeId: 'e2eTestVarHiRes2',
-              scienceKeywords: [
-                {
-                  category: 'Earth Science',
-                  term: 'Ocean Temperature',
-                  topic: 'Oceans',
-                  variableLevel1: 'Sea Surface Temperature'
-                }
-              ]
-            },
-            {
-              conceptId: 'V100002-EDSC',
-              definition: 'mask in units of seconds since 1981-0',
-              longName: 'mask',
-              name: 'mask',
-              nativeId: 'e2eTestVarHiRes4',
-              scienceKeywords: [
-                {
-                  category: 'Earth Science',
-                  term: 'Ocean Temperature',
-                  topic: 'Oceans',
-                  variableLevel1: 'Sea Surface Temperature'
-                }
-              ]
-            },
-            {
-              conceptId: 'V100003-EDSC',
-              definition: 'sea_ice_fraction in units of fraction (between 0 ',
-              longName: 'sea_ice_fraction',
-              name: 'sea_ice_fraction',
-              nativeId: 'e2eTestVarHiRes3',
-              scienceKeywords: [
-                {
-                  category: 'Earth Science',
-                  term: 'Ocean Temperature',
-                  topic: 'Oceans',
-                  variableLevel1: 'Sea Surface Temperature'
-                }
-              ]
-            }
-          ]
-        }
+        associatedVariables: [
+          {
+            conceptId: 'V100000-EDSC',
+            definition: 'analysed_sst in units of kelvin',
+            longName: 'analysed_sst',
+            name: 'analysed_sst',
+            nativeId: 'e2eTestVarHiRes1',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          },
+          {
+            conceptId: 'V100001-EDSC',
+            definition: 'analysis_error in units of kelvin',
+            longName: 'analysis_error',
+            name: 'analysis_error',
+            nativeId: 'e2eTestVarHiRes2',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          },
+          {
+            conceptId: 'V100002-EDSC',
+            definition: 'mask in units of seconds since 1981-0',
+            longName: 'mask',
+            name: 'mask',
+            nativeId: 'e2eTestVarHiRes4',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          },
+          {
+            conceptId: 'V100003-EDSC',
+            definition: 'sea_ice_fraction in units of fraction (between 0 ',
+            longName: 'sea_ice_fraction',
+            name: 'sea_ice_fraction',
+            nativeId: 'e2eTestVarHiRes3',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          }
+        ]
       }
     )
   })
@@ -1421,71 +1418,69 @@ describe('when buildAccessMethods is called', () => {
           }
         },
         {
-          associatedVariables: {
-            count: 4,
-            items: [
-              {
-                conceptId: 'V100000-EDSC',
-                definition: 'analysed_sst in units of kelvin',
-                longName: 'analysed_sst',
-                name: 'analysed_sst',
-                nativeId: 'e2eTestVarHiRes1',
-                scienceKeywords: [
-                  {
-                    category: 'Earth Science',
-                    term: 'Ocean Temperature',
-                    topic: 'Oceans',
-                    variableLevel1: 'Sea Surface Temperature'
-                  }
-                ]
-              },
-              {
-                conceptId: 'V100001-EDSC',
-                definition: 'analysis_error in units of kelvin',
-                longName: 'analysis_error',
-                name: 'analysis_error',
-                nativeId: 'e2eTestVarHiRes2',
-                scienceKeywords: [
-                  {
-                    category: 'Earth Science',
-                    term: 'Ocean Temperature',
-                    topic: 'Oceans',
-                    variableLevel1: 'Sea Surface Temperature'
-                  }
-                ]
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                definition: 'mask in units of seconds since 1981-0',
-                longName: 'mask',
-                name: 'mask',
-                nativeId: 'e2eTestVarHiRes4',
-                scienceKeywords: [
-                  {
-                    category: 'Earth Science',
-                    term: 'Ocean Temperature',
-                    topic: 'Oceans',
-                    variableLevel1: 'Sea Surface Temperature'
-                  }
-                ]
-              },
-              {
-                conceptId: 'V100003-EDSC',
-                definition: 'sea_ice_fraction in units of fraction (between 0 ',
-                longName: 'sea_ice_fraction',
-                name: 'sea_ice_fraction',
-                nativeId: 'e2eTestVarHiRes3',
-                scienceKeywords: [
-                  {
-                    category: 'Earth Science',
-                    term: 'Ocean Temperature',
-                    topic: 'Oceans',
-                    variableLevel1: 'Sea Surface Temperature'
-                  }
-                ]
-              }
-            ]
-          }
+          associatedVariables: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'analysed_sst in units of kelvin',
+              longName: 'analysed_sst',
+              name: 'analysed_sst',
+              nativeId: 'e2eTestVarHiRes1',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'analysis_error in units of kelvin',
+              longName: 'analysis_error',
+              name: 'analysis_error',
+              nativeId: 'e2eTestVarHiRes2',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'mask in units of seconds since 1981-0',
+              longName: 'mask',
+              name: 'mask',
+              nativeId: 'e2eTestVarHiRes4',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100003-EDSC',
+              definition: 'sea_ice_fraction in units of fraction (between 0 ',
+              longName: 'sea_ice_fraction',
+              name: 'sea_ice_fraction',
+              nativeId: 'e2eTestVarHiRes3',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            }
+          ]
+
         }
       )
 
