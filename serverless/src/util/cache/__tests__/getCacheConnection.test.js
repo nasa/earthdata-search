@@ -1,8 +1,12 @@
-import asyncRedis from 'async-redis'
-
 import { getCacheConnection } from '../getCacheConnection'
 
-const createClientMock = vi.spyOn(asyncRedis, 'createClient').mockReturnValue('mocked-redis-client')
+const mockClass = vi.hoisted(() => vi.fn(class {
+  mockFunction = vi.fn()
+}))
+
+vi.mock('ioredis', () => ({
+  default: mockClass
+}))
 
 describe('getCacheConnection', () => {
   const OLD_ENV = process.env
@@ -26,23 +30,26 @@ describe('getCacheConnection', () => {
       test('returns the existing connection', async () => {
         const connection = getCacheConnection()
 
-        expect(connection).toEqual('mocked-redis-client')
+        expect(connection).toEqual({
+          mockFunction: expect.any(Function)
+        })
 
-        expect(createClientMock).toHaveBeenCalledTimes(1)
-        expect(createClientMock).toHaveBeenCalledWith({
+        expect(mockClass).toHaveBeenCalledTimes(1)
+        expect(mockClass).toHaveBeenCalledWith({
           host: 'example.com',
-          port: '1234',
-          return_buffers: true
+          port: '1234'
         })
 
         // Reset the mock so that we can determine whether or not the mock was called
-        createClientMock.mockReset()
+        mockClass.mockReset()
 
         const connection2 = getCacheConnection()
 
-        expect(connection2).toEqual('mocked-redis-client')
+        expect(connection2).toEqual({
+          mockFunction: expect.any(Function)
+        })
 
-        expect(createClientMock).toHaveBeenCalledTimes(0)
+        expect(mockClass).toHaveBeenCalledTimes(0)
       })
     })
   })

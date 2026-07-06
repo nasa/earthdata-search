@@ -2,8 +2,8 @@ import { getItemFromCache } from '../getItemFromCache'
 
 const mockGet = vi.hoisted(() => vi.fn())
 vi.mock('../getCacheConnection', () => ({
-  getCacheConnection: vi.fn().mockResolvedValue({
-    get: mockGet
+  getCacheConnection: vi.fn().mockReturnValue({
+    getBuffer: mockGet
   })
 }))
 

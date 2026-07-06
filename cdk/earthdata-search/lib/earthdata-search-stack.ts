@@ -99,9 +99,9 @@ export class EarthdataSearchStack extends cdk.Stack {
 
     const environment = {
       BEDROCK_MODEL_ID,
-      CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheEndpoint`),
+      CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheValkeyEndpoint`),
       IMAGE_CACHE_EXPIRE_SECONDS,
-      CACHE_PORT: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCachePort`),
+      CACHE_PORT: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheValkeyPort`),
       CATALOG_REST_QUEUE_URL: catalogRestOrderQueue.queueUrl,
       CMR_ORDERING_ORDER_QUEUE_URL: cmrOrderingOrderQueue.queueUrl,
       COLOR_MAP_QUEUE_URL: colorMapsProcessingQueue.queueUrl,

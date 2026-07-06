@@ -2,7 +2,7 @@ import { cacheItem } from '../cacheItem'
 
 const mockSet = vi.hoisted(() => vi.fn())
 vi.mock('../getCacheConnection', () => ({
-  getCacheConnection: vi.fn().mockResolvedValue({
+  getCacheConnection: vi.fn().mockReturnValue({
     set: mockSet
   })
 }))
