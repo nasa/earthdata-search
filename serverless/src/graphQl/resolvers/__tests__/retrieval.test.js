@@ -1223,7 +1223,6 @@ describe('Retrieval resolver', () => {
       describe('when the access method type is harmony', () => {
         test('creates a new retrieval, sends an sqs message, and returns the retrieval object', async () => {
           const accessMethod = {
-            defaultConcatenation: false,
             enableConcatenateDownload: false,
             enableSpatialSubsetting: true,
             enableTemporalSubsetting: true,

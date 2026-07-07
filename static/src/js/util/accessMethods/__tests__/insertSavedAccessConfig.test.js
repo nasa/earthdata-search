@@ -120,78 +120,90 @@ describe('insertSavedAccessConfig', () => {
         isValid: true,
         type: 'download'
       },
-      harmony0: {
-        enableTemporalSubsetting: true,
-        hierarchyMappings: [
-          {
-            id: 'V100000-EDSC'
-          },
-          {
-            id: 'V100001-EDSC'
-          },
-          {
-            id: 'V100002-EDSC'
-          },
-          {
-            id: 'V100003-EDSC'
-          }
-        ],
+      harmony: {
         id: 'S100000-EDSC',
         isValid: true,
+        shortName: 'harmony/gdal-argo Subsetter and Reformatter.',
+        outputFormatAvailability: {
+          TIFF: true,
+          PNG: true,
+          GIF: true
+        },
+        enableConcatenateDownload: false,
+        enableSpatialSubsetting: false,
+        enableTemporalSubsetting: false,
+        isSpatialSubsettingDisabled: false,
+        isTemporalSubsettingDisabled: false,
+        isVariableSubsettingDisabled: false,
+        isConcatenationDisabled: false,
+        hierarchyMappings: [],
         keywordMappings: [],
-        longName: 'Mock Service Name',
-        name: 'mock-name',
-        supportedOutputFormats: [
-          'GEOTIFF',
-          'PNG',
-          'TIFF',
-          'NETCDF-4'
-        ],
-        supportedOutputProjections: [],
+        selectedOutputFormat: undefined,
+        selectedVariables: [],
         supportsBoundingBoxSubsetting: true,
-        supportsShapefileSubsetting: false,
-        supportsTemporalSubsetting: false,
+        supportsConcatenation: false,
+        supportsShapefileSubsetting: true,
+        supportsTemporalSubsetting: true,
         supportsVariableSubsetting: true,
+        supportedOutputFormats: [
+          {
+            mimeType: 'TIFF',
+            name: 'TIFF'
+          },
+          {
+            mimeType: 'PNG',
+            name: 'PNG'
+          },
+          {
+            mimeType: 'GIF',
+            name: 'GIF'
+          }
+        ],
+        supportedOutputProjections: [
+          {
+            crs: 'EPSG:4326',
+            name: 'Geographic'
+          }
+        ],
         type: 'Harmony',
-        url: 'https://example.com',
+        url: 'https://harmony.sit.earthdata.nasa.gov',
         variables: {
           'V100000-EDSC': {
-            conceptId: 'V100000-EDSC',
-            definition: 'Alpha channel value',
-            longName: 'Alpha channel ',
-            name: 'alpha_var',
-            nativeId: 'mmt_variable_3972',
-            scienceKeywords: null
-          },
-          'V100001-EDSC': {
-            conceptId: 'V100001-EDSC',
-            definition: 'Blue channel value',
-            longName: 'Blue channel',
-            name: 'blue_var',
-            nativeId: 'mmt_variable_3971',
-            scienceKeywords: null
-          },
-          'V100002-EDSC': {
-            conceptId: 'V100002-EDSC',
-            definition: 'Green channel value',
-            longName: 'Green channel',
-            name: 'green_var',
-            nativeId: 'mmt_variable_3970',
-            scienceKeywords: null
-          },
-          'V100003-EDSC': {
-            conceptId: 'V100003-EDSC',
-            definition: 'Red channel value',
-            longName: 'Red Channel',
-            name: 'red_var',
-            nativeId: 'mmt_variable_3969',
-            scienceKeywords: null
+            href: 'https://cmr.example.com/search/concepts/V100000-EDSC',
+            longName: '',
+            name: 'mock_variable',
+            scienceKeywords: [],
+            units: ''
           }
-        }
+        },
+        harmonyUserSelections: {},
+        derivedHarmonyState: {},
+        harmonyCapabilitiesDocument: {
+          conceptId: 'C100000-EDSC',
+          shortName: 'Mock',
+          summary: {
+            subsetting: {},
+            reprojection: {
+              supportedProjections: [
+                {
+                  name: 'Geographic',
+                  crs: 'EPSG:4326'
+                }
+              ]
+            },
+            concatenation: false,
+            outputFormats: []
+          },
+          services: [],
+          variables: []
+        },
+        outputProjectionAvailability: { Geographic: true },
+        selectedOutputProjection: undefined,
+        supportsSpatialSubsetting: false
       }
     }
     const savedAccessConfig = {
-      ...methods.harmony0,
+      ...methods.harmony,
       selectedVariables: ['V1233801717-EEDTEST'],
       selectedOutputFormat: 'image/png'
     }
@@ -201,9 +213,9 @@ describe('insertSavedAccessConfig', () => {
     expect(result).toEqual({
       methods: {
         ...methods,
-        harmony0: savedAccessConfig
+        harmony: savedAccessConfig
       },
-      selectedAccessMethod: 'harmony0'
+      selectedAccessMethod: 'harmony'
     })
   })
 })

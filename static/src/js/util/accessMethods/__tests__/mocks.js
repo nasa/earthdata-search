@@ -1,4 +1,4 @@
-export const variablesResponse = {
+export const opendapVariablesResponse = {
   count: 22,
   items: [
     {
@@ -1542,7 +1542,7 @@ export const variablesResponse = {
   ]
 }
 
-export const mockKeywordMappings = [
+export const mockOpendapKeywordMappings = [
   {
     children: [
       {
@@ -2365,7 +2365,7 @@ export const mockKeywordMappings = [
   }
 ]
 
-export const mockVariables = {
+export const mockOpendapVariables = {
   'V1200279069-E2E_18_4': {
     conceptId: 'V1200279069-E2E_18_4',
     definition: 'Minimum value of 32-bit DustTest (9) Fraction of obs with each floating dust test triggered. [0.0, 1.0] point Information collected while the spacecraft is in the ascending part of its orbit. (Daytime data except near the poles.) Each field and level is individually quality controlled.',
@@ -3901,6 +3901,114 @@ export const mockVariables = {
         topic: 'ATMOSPHERE',
         term: 'ATMOSPHERIC CHEMISTRY',
         variableLevel1: 'OZONE'
+      }
+    ]
+  }
+}
+
+export const harmonyVariablesResponse = {
+  count: 2,
+  items: [
+    {
+      name: 'Dust_Score_A_min',
+      href: 'https://cmr.earthdata.nasa.gov/search/concepts/V1200279069-E2E_18_4',
+      scienceKeywords: [
+        {
+          category: 'EARTH SCIENCE',
+          topic: 'LAND SURFACE',
+          term: 'GEOMORPHIC LANDFORMS/PROCESSES',
+          variableLevel1: 'POINT BAR'
+        },
+        {
+          category: 'EARTH SCIENCE',
+          topic: 'SOLID EARTH',
+          term: 'GEOMORPHIC LANDFORMS/PROCESSES',
+          variableLevel1: 'POINT BAR'
+        }
+      ]
+    },
+    {
+      name: 'SO2_Indicator_A',
+      href: 'https://cmr.earthdata.nasa.gov/search/concepts/V1200279065-E2E_18_4',
+      scienceKeywords: [
+        {
+          category: 'EARTH SCIENCE',
+          topic: 'ATMOSPHERE',
+          term: 'ATMOSPHERIC TEMPERATURE',
+          variableLevel1: 'TEMPERATURE ANOMALIES'
+        },
+        {
+          category: 'EARTH SCIENCE',
+          topic: 'ATMOSPHERE',
+          term: 'ATMOSPHERIC TEMPERATURE',
+          variableLevel1: 'TEMPERATURE TENDENCY'
+        }
+      ]
+    }
+  ]
+}
+
+export const mockHarmonyKeywordMappings = [
+  {
+    children: [
+      {
+        id: 'V1200279069-E2E_18_4'
+      }
+    ],
+    label: 'POINT BAR'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE ANOMALIES'
+  },
+  {
+    children: [
+      {
+        id: 'V1200279065-E2E_18_4'
+      }
+    ],
+    label: 'TEMPERATURE TENDENCY'
+  }
+]
+
+export const mockHarmonyVariables = {
+  'V1200279065-E2E_18_4': {
+    href: 'https://cmr.earthdata.nasa.gov/search/concepts/V1200279065-E2E_18_4',
+    name: 'SO2_Indicator_A',
+    scienceKeywords: [
+      {
+        category: 'EARTH SCIENCE',
+        term: 'ATMOSPHERIC TEMPERATURE',
+        topic: 'ATMOSPHERE',
+        variableLevel1: 'TEMPERATURE ANOMALIES'
+      },
+      {
+        category: 'EARTH SCIENCE',
+        term: 'ATMOSPHERIC TEMPERATURE',
+        topic: 'ATMOSPHERE',
+        variableLevel1: 'TEMPERATURE TENDENCY'
+      }
+    ]
+  },
+  'V1200279069-E2E_18_4': {
+    href: 'https://cmr.earthdata.nasa.gov/search/concepts/V1200279069-E2E_18_4',
+    name: 'Dust_Score_A_min',
+    scienceKeywords: [
+      {
+        category: 'EARTH SCIENCE',
+        term: 'GEOMORPHIC LANDFORMS/PROCESSES',
+        topic: 'LAND SURFACE',
+        variableLevel1: 'POINT BAR'
+      },
+      {
+        category: 'EARTH SCIENCE',
+        term: 'GEOMORPHIC LANDFORMS/PROCESSES',
+        topic: 'SOLID EARTH',
+        variableLevel1: 'POINT BAR'
       }
     ]
   }

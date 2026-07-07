@@ -434,7 +434,6 @@ describe('OrderStatusCollection', () => {
 
   describe('when the collection\'s access method is harmony', () => {
     const accessMethod = {
-      defaultConcatenation: false,
       enableConcatenateDownload: false,
       enableSpatialSubsetting: true,
       enableTemporalSubsetting: true,

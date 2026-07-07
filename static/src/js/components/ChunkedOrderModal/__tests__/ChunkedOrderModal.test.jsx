@@ -193,7 +193,7 @@ describe('ChunkedOrderModal component', () => {
                   granules: {
                     count: 9001
                   },
-                  selectedAccessMethod: 'harmony0'
+                  selectedAccessMethod: 'harmony'
                 }
               }
             }

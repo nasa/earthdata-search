@@ -6,6 +6,7 @@ import { login } from '../../../support/login'
 
 import collectionsGraphQlBody from './__mocks__/collections_graphql_body.json'
 import granules from './__mocks__/granules.body.json'
+import harmonyCapabilitiesDocument from './__mocks__/harmonyCapabilitiesDocument.json'
 import shapefile from './__mocks__/shapefile.body.json'
 import timeline from './__mocks__/timeline.body.json'
 
@@ -28,6 +29,12 @@ test.describe('Shapefile Selection on Project Page', () => {
     await page.route(/saved_access_configs/, async (route) => {
       await route.fulfill({
         json: {}
+      })
+    })
+
+    await page.route('**/capabilities**', async (route) => {
+      await route.fulfill({
+        json: harmonyCapabilitiesDocument
       })
     })
 
