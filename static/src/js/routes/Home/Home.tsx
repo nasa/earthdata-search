@@ -21,6 +21,7 @@ import {
 
 import Button from '../../components/Button/Button'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+import NLPSearchChat from '../../components/NlpSearchChat/NlpSearchChat'
 
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -64,6 +65,7 @@ import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { current } from 'immer'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
@@ -153,9 +155,12 @@ export const Home: React.FC = () => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
+  const [activeNlpPrompt, setActiveNlpPrompt] = useState('')
+  const [nlpRequestId, setNlpRequestId] = useState(0)
+  const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
+  const [isNlpStreaming, setIsNlpStreaming] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
-  const getNlpCollections = useEdscStore((state) => state.collections.getNlpCollections)
 
   const { numberOfGranules } = getApplicationConfig()
 
@@ -206,27 +211,36 @@ export const Home: React.FC = () => {
     q: keyword
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
-    // Fetch the collections using the NLP search
     const trimmedKeyword = keyword.trim()
 
     if (isNlpEnabled) {
-      // If nlp is enabled, use NLP search to fetch collections
-      await getNlpCollections(trimmedKeyword)
-    } else {
-      // Manually update the query in the store
-      changeQuery({
-        collection: {
-          keyword: trimmedKeyword
-        }
-      })
+      if ( isNlpStreaming || !trimmedKeyword) return
+
+        setActiveNlpPrompt(trimmedKeyword)
+        setHasSubmittedNlpSearch(true)
+        setNlpRequestId((currentId) => currentId + 1)
+
+        return
     }
+
+    // Manually update the query in the store
+    changeQuery({
+      collection: {
+        keyword: trimmedKeyword
+      }
+    })
 
     // After collections are fetched, navigate to the Search route
     navigate(`${routes.SEARCH}${window.location.search}`)
   }
+
+  const onNlpSearchComplete = () => {
+    navigate(`$routes.SEARCH}${window.location.search}`)
+  }
+
+  const isSearchInputDisabled = isNlpEnabled && isNlpStreaming
 
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
@@ -283,14 +297,15 @@ export const Home: React.FC = () => {
                     ref={inputRef}
                     type="text"
                     value={keyword}
+                    disabled={isSearchInputDisabled}
                   />
                 </div>
                 {
                   !isNlpEnabled && (
-                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                      <TemporalSelectionDropdown searchParams={searchParams} />
-                      <SpatialSelectionDropdown searchParams={searchParams} />
-                    </div>
+                  <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                    <TemporalSelectionDropdown searchParams={searchParams} />
+                    <SpatialSelectionDropdown searchParams={searchParams} />
+                  </div>
                   )
                 }
                 <Button
@@ -299,11 +314,24 @@ export const Home: React.FC = () => {
                   bootstrapVariant="primary"
                   bootstrapSize="lg"
                   spinner={isLoading}
+                  disabled={isNlpEnabled && isNlpStreaming}
                 >
                   Search
                 </Button>
               </form>
             </div>
+            {
+              isNlpEnabled && hasSubmittedNlpSearch && (
+                <div className="home__nlp-chat-wrapper">
+                  <NLPSearchChat
+                    activePrompt={activeNlpPrompt}
+                    requestId={nlpRequestId}
+                    onStreamingChange={setIsNlpStreaming}
+                    onNlpSearchComplete={onNlpSearchComplete}
+                  />
+                </div>
+              )
+            }
             <div className="d-flex flex-grow-1 justify-content-center">
               <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
             </div>
