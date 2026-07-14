@@ -5,7 +5,7 @@ import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui
 
 import Button from '../Button/Button'
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
-import NlpSearchChat from '../NlpSearchChat/NlpSearchChat'
+import NlpSearchStatus from '../NlpSearchStatus/NlpSearchStatus'
 import FilterStack from '../FilterStack/FilterStack'
 import TemporalDisplay from '../TemporalDisplay/TemporalDisplay'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
@@ -43,7 +43,7 @@ const SearchForm = () => {
       <div className="search-form__primary">
         {
           isNlpEnabled && isNlpMode ? (
-            <NlpSearchChat />
+            <NlpSearchStatus />
           ) : (
             <SearchAutocomplete />
           )

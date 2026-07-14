@@ -5,14 +5,16 @@ import React, {
     useState
 } from 'react'
 import { useCompletion } from '@ai-sdk/react'
+import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
-import './NlpSearchChat.scss'
+import './NlpSearchStatus.scss'
 
-type NlpSearchChatProps = {
+type NlpSearchStatusProps = {
     activePrompt?: string
     requestId?: number
+    cancelRequestId?: number
     onStreamingChange?: (isStreaming: boolean) => void
     onNlpSearchComplete?: () => void
 }
@@ -52,7 +54,7 @@ const createMockNlpStreamResponse = (prompt: string) => {
 
                 controller.enqueue(encoder.encode(chunks[chunkIndex]))
                 chunkIndex += 1
-                setTimeout(pushChunk, 350)
+                setTimeout(pushChunk, 3800)
             }
 
             pushChunk()
@@ -119,22 +121,93 @@ const parseWktSpatial = (spatialArea: string | undefined) => {
     return {}
 }
 
-const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
+const toProgressStep = (line: string) => {
+    const normalizedLine = line.replace(/^[-*]\s*/, '').trim()
+    if (!normalizedLine) return ''
+
+    const temporalMatch = normalizedLine.match(/^Found temporal of (.*)\.?$/i)
+    if (temporalMatch?.[1]) return `Extracted temporal range of ${temporalMatch?.[1]}`
+
+    const spatialMatch = normalizedLine.match(/^Found spatial of (.*)\.?$/i)
+    if (spatialMatch?.[1]) return `Extracted Spatial area of ${spatialMatch?.[1]}`
+
+    const keywordMatch = normalizedLine.match(/^Found keyword of (.*)\.?$/i)
+    if (keywordMatch?.[1]) return `Extracted keyword of ${keywordMatch?.[1]}`
+
+    return normalizedLine
+}
+
+const extractProgressSteps = (completionText: string) => {
+    const displayText = getNLPDisplayText(completionText)
+    if (!displayText) return []
+
+    return displayText
+        .split('\n')
+        .map(toProgressStep)
+        .filter(Boolean)
+}
+
+// const OrbitLoader = ({ label }: { label: string }) => React.createElement('terra-loader', {
+//     variant: 'orbit',
+//     indeterminate: true,
+//     'aria-label': label,
+//     class: 'nlp-search-chat__step-loader'
+// })
+
+const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   activePrompt = '',
   requestId,
+  cancelRequestId,
   onStreamingChange = () => {},
   onNlpSearchComplete = () => {}
 }) => {
-    const activeNlpAssistenatMessageIdRef = useRef<string | null>(null)
-    const latestNlpPromptRef = useRef('')
-    const nlpMessageIdRef = useRef(0)
+    const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const currentStatusStepRef = useRef('')
+    const queuedStatusRef = useRef('')
 
-    const [nlpMessages, setNlpMessages] = useState<Array<{
-        id: string
-        role: 'user' | 'assistant'
-        text: string
-        isStreaming: boolean
-    }>>([])
+    const [latestNlpPrompt, setLatestNlpPrompt] = useState('')
+    const [displayStatusStep, setDisplayStatusStep] = useState('')
+    const [statusTransitionState, setStatusTransitionState] = useState<'idle' | 'fading-out' | 'fading-in'>('idle')
+
+    const setStatusStep = useCallback((nextStep: string) => {
+        if(!nextStep) return
+
+        if (
+            nextStep === currentStatusStepRef.current
+            || nextStep === queuedStatusRef.current
+        ) return
+        
+        queuedStatusRef.current = nextStep
+
+        if (transitionTimeoutRef.current) {
+            clearTimeout(transitionTimeoutRef.current)
+        }
+
+        if (!currentStatusStepRef.current) {
+            currentStatusStepRef.current = nextStep
+            setDisplayStatusStep(nextStep)
+            setStatusTransitionState('fading-in')
+
+            transitionTimeoutRef.current = setTimeout(() => {
+                setStatusTransitionState('idle')
+            }, 180)
+
+            return
+        }
+
+        setStatusTransitionState('fading-out')
+        
+        transitionTimeoutRef.current = setTimeout(() => {
+            currentStatusStepRef.current = queuedStatusRef.current
+            setDisplayStatusStep(queuedStatusRef.current)
+            queuedStatusRef.current = ''
+            setStatusTransitionState('fading-in')
+
+            transitionTimeoutRef.current = setTimeout(() => {
+                setStatusTransitionState('idle')
+            }, 180)
+        }, 150)
+    }, [])
 
     const {
         setCollectionId,
@@ -151,7 +224,7 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
         completion,
         isLoading: isNlpLoading,
         setCompletion,
-        error: nlpError
+        stop
     } = useCompletion({
         api: '/nlp',
         streamProtocol: 'text',
@@ -175,17 +248,7 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
             })
         },
         onFinish: (prompt, completionText) => {
-            const assistantText = getNLPDisplayText(completionText)
-
-            setNlpMessages((prevMessages) => prevMessages.map((message) => {
-                if (message.id !== activeNlpAssistenatMessageIdRef.current) return message
-
-                return {
-                    ...message,
-                    text: assistantText || 'Search instructions received.',
-                    isStreaming: false
-                }
-            }))
+            setStatusStep('Building final query...')
 
             const parsedResult = parsedNlpFinalResult(completionText)
 
@@ -198,8 +261,9 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
                     title: 'Something went wrong parsing NLP search results'
                 })
 
+                setStatusStep('unable to parse final result')
                 onStreamingChange(false)
-                activeNlpAssistenatMessageIdRef.current = null
+                queuedStatusRef.current = ''
 
                 return
             }
@@ -215,7 +279,7 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
             setCollectionId(null)
             changeQuery({
                 collection: {
-                    keyword: keyword || prompt || latestNlpPromptRef.current,
+                    keyword: keyword || prompt || latestNlpPrompt,
                     temporal: temporal || {},
                     spatial
                 },
@@ -224,18 +288,10 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
 
             onStreamingChange(false)
             onNlpSearchComplete()
-            activeNlpAssistenatMessageIdRef.current = null
+            queuedStatusRef.current = ''
         },
         onError: (error) => {
-            setNlpMessages((prevMessages) => prevMessages.map((message) => {
-                if(message.id !== activeNlpAssistenatMessageIdRef.current) return message
-
-                return {
-                    ...message,
-                    text: 'NLP search failed. Please try again',
-                    isStreaming: false
-                }
-            }))
+            setStatusStep('NLP Search failed. Please try again')
         
             handleError({
                 error,
@@ -246,60 +302,41 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
             })
         
             onStreamingChange(false)
-            activeNlpAssistenatMessageIdRef.current = null
+            queuedStatusRef.current = ''
         }
       })
 
       useEffect(() => {
-        if (!activeNlpAssistenatMessageIdRef.current) return
+        if (!isNlpLoading) return
 
-        const assistantText = getNLPDisplayText(completion)
+        const parsedSteps = extractProgressSteps(completion)
+        if (parsedSteps.length === 0) return
 
-        setNlpMessages((prevMessages) => prevMessages.map((message) => {
-            if (message.id !== activeNlpAssistenatMessageIdRef.current) return message
-
-            return {
-                ... message,
-                text: assistantText || 'Analyzing your query...',
-                isStreaming: isNlpLoading
-            }
-        }))
-      }, [completion, isNlpLoading])
+        const latestParsedStep = parsedSteps[parsedSteps.length - 1]
+        setStatusStep(latestParsedStep)
+      }, [completion, isNlpLoading, setStatusStep])
 
       const runPrompt = useCallback(async (prompt: string) => {
         if (!prompt || isNlpLoading) return
 
-        nlpMessageIdRef.current += 1
-        const userMessageId = `nlp-user-${nlpMessageIdRef.current}`
-
-        nlpMessageIdRef.current += 1
-        const assistantMessageId = `nlp-assistant-${nlpMessageIdRef.current}`
-
         setCompletion('')
-        latestNlpPromptRef.current = prompt
-        activeNlpAssistenatMessageIdRef.current = assistantMessageId
-
-        setNlpMessages((prevMessages) => [
-            ...prevMessages,
-            {
-                id: userMessageId,
-                role: 'user',
-                text: prompt,
-                isStreaming: false
-            },
-            {
-                id: assistantMessageId,
-                role: 'assistant',
-                text: 'Analysing your query...',
-                isStreaming: true
-            }
-        ])
+        setLatestNlpPrompt(prompt)
+        queuedStatusRef.current = ''
+        currentStatusStepRef.current = 'Analyzing your query...'
+        setDisplayStatusStep('Analyzing your query...')
+        setStatusTransitionState('idle')
 
         onStreamingChange(true)
 
         await complete(prompt)
       }, [complete, isNlpLoading, onStreamingChange, setCompletion])
     
+      useEffect(() => () => {
+        if(transitionTimeoutRef.current) {
+            clearTimeout(transitionTimeoutRef.current)
+        }
+      }, [])
+
     useEffect(() => {
         const trimmedPrompt = activePrompt.trim()
         if(!requestId || !trimmedPrompt) return
@@ -307,51 +344,48 @@ const NLPSearchChat: React.FC<NlpSearchChatProps> = ({
         runPrompt(trimmedPrompt)
     }, [activePrompt, requestId, runPrompt])
 
-    return (
-        <section className='nlp-search-chat'>
-            <div className='nlp-search-chat__messages'>
-                {
-                    nlpMessages.length === 0 && (
-                        <div className="nlp-search-chat_empty">
-                          Ask in plain language and I will translate it intos earch filters
-                        </div>
-                    )
-                }
-                {
-                  nlpMessages.map((message) => (
-                    <div
-                        key={message.id}
-                        className={`nlp-search-chat__message nlp-search-chat__message--${message.role}`}
-                    >
-                        <div className="nlp-search-chat__bubble">
-                          {message.text}
-                          {
-                            message.isStreaming && (
-                                <span className='nlp-search-chat__streaming'>...</span>
-                            )
-                          }
-                        </div>
-                    </div>
-                 ))
-                }
-                {
-                    nlpError && (
-                        <div className=" nlp-search-chat__error">
-                            NLP search failed. Please try again.
-                        </div>
-                    )
-                }
-            </div>
+    useEffect(() => {
+        if(!cancelRequestId) return
 
-            {
-              isNlpLoading && (
-                <div className="nlp-search-chat__status">
-                    Streaming response...
+        if(transitionTimeoutRef.current) {
+          clearTimeout(transitionTimeoutRef.current)
+        }
+
+        if (typeof stop === 'function') stop()
+        
+        queuedStatusRef.current = ''
+        currentStatusStepRef.current = ''
+        setDisplayStatusStep('')
+        setStatusTransitionState('idle')
+        onStreamingChange(false)
+    }, [cancelRequestId, onStreamingChange, setCompletion, stop])
+
+    const statusStepLabel = displayStatusStep || 'Waiting for NLP status updates'
+    const statusStepClassName = [
+                                'nlp-search-chat__step',
+                                displayStatusStep ? 'nlp-search-chat__step--latest' : 'nlp-search-chat__step--muted',
+                                statusTransitionState === 'fading-out' ? 'nlp-search-chat__step--fading-out' : '',
+                                statusTransitionState === 'fading-in' ? 'nlp-search-chat__step--fading-in' : '',
+                            ].filter(Boolean).join(' ')
+
+    return (
+        <section className='nlp-search-chat' aria-live="polite">
+            <div className="nlp-search-chat__panel" role="status" aria-live="polite">
+                <div className="nlp-search-chat__step-row">
+                      <Spinner
+                        type="dots"
+                        inline
+                        size="tiny"
+                        className="nlp-search-chat__step__loader"
+                        label="NLP parsing in progress"
+                    />
+                    <div className="nlp-search-chat__step-text-wrap">
+                        <p className={statusStepClassName}>{statusStepLabel}</p>
+                    </div>
                 </div>
-              )
-            }
+            </div>
         </section>
     )
 }
 
-export default NLPSearchChat
+export default NlpSearchStatus

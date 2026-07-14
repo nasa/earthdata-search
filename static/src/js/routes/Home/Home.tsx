@@ -21,7 +21,7 @@ import {
 
 import Button from '../../components/Button/Button'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
-import NLPSearchChat from '../../components/NlpSearchChat/NlpSearchChat'
+import NlpSearchStatus from '../../components/NlpSearchStatus/NlpSearchStatus'
 
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -157,6 +157,7 @@ export const Home: React.FC = () => {
   const [showAllPortals, setShowAllPortals] = useState(false)
   const [activeNlpPrompt, setActiveNlpPrompt] = useState('')
   const [nlpRequestId, setNlpRequestId] = useState(0)
+  const [nlpCancelRequestId, setNlpCancelRequestId] = useState(0)
   const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
   const [isNlpStreaming, setIsNlpStreaming] = useState(false)
 
@@ -218,6 +219,7 @@ export const Home: React.FC = () => {
     if (isNlpEnabled) {
       if ( isNlpStreaming || !trimmedKeyword) return
 
+        setIsNlpStreaming(true)
         setActiveNlpPrompt(trimmedKeyword)
         setHasSubmittedNlpSearch(true)
         setNlpRequestId((currentId) => currentId + 1)
@@ -237,7 +239,17 @@ export const Home: React.FC = () => {
   }
 
   const onNlpSearchComplete = () => {
-    navigate(`$routes.SEARCH}${window.location.search}`)
+    navigate(`${routes.SEARCH}${window.location.search}`)
+  }
+
+  const onCancelNlpSearch = () => {
+    setIsNlpStreaming(false)
+    setHasSubmittedNlpSearch(false)
+    setActiveNlpPrompt('')
+    setKeyword('')
+    setNlpCancelRequestId((currentId) => currentId + 1)
+
+    if (inputRef.current) inputRef.current.focus()
   }
 
   const isSearchInputDisabled = isNlpEnabled && isNlpStreaming
@@ -289,7 +301,8 @@ export const Home: React.FC = () => {
                 onSubmit={handleSubmit}
               >
                 <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
-                  <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px" />
+                  <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px"
+                    />
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
                     onChange={onChangeKeyword}
@@ -298,6 +311,7 @@ export const Home: React.FC = () => {
                     type="text"
                     value={keyword}
                     disabled={isSearchInputDisabled}
+                    aria-busy={isSearchInputDisabled}
                   />
                 </div>
                 {
@@ -309,23 +323,23 @@ export const Home: React.FC = () => {
                   )
                 }
                 <Button
-                  type="submit"
+                  type={isNlpStreaming ? 'button' : 'submit'}
                   className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
-                  bootstrapVariant="primary"
+                  bootstrapVariant='primary'
                   bootstrapSize="lg"
-                  spinner={isLoading}
-                  disabled={isNlpEnabled && isNlpStreaming}
+                  onClick={isNlpStreaming ? onCancelNlpSearch : undefined}
                 >
-                  Search
+                  {isNlpStreaming ? 'Cancel' : 'Search'}
                 </Button>
               </form>
             </div>
             {
-              isNlpEnabled && hasSubmittedNlpSearch && (
+              isNlpEnabled && hasSubmittedNlpSearch && !!activeNlpPrompt &&(
                 <div className="home__nlp-chat-wrapper">
-                  <NLPSearchChat
+                  <NlpSearchStatus
                     activePrompt={activeNlpPrompt}
                     requestId={nlpRequestId}
+                    cancelRequestId={nlpCancelRequestId}
                     onStreamingChange={setIsNlpStreaming}
                     onNlpSearchComplete={onNlpSearchComplete}
                   />
