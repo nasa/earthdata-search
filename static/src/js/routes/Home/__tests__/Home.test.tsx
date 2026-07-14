@@ -1,5 +1,5 @@
-import React from 'react'
-import { screen } from '@testing-library/react'
+import React, { act } from 'react'
+import { screen, waitFor } from '@testing-library/react'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -13,6 +13,21 @@ import { routes } from '../../../constants/routes'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
+
+type NlpSearhStatusMockProps = {
+  onNlpSearchComplete?: () => void
+  onStreamingChange?: (isStreaming: boolean) => void
+}
+
+const mockNlpSearchStatus = vi.fn<(props: NlpSearhStatusMockProps) => React.JSX.Element>(() => <div data-testid="nlp-search-status"> NLP Search Status</div>)
+
+vi.mock('../../../components/NlpSearchStatus/NlpSearchStatus', () => ({
+  default: (props: NlpSearhStatusMockProps) => {
+    mockNlpSearchStatus(props)
+
+    return <div data-testid="nlp-search-status"> NLP Search Status</div>
+  }
+}))
 
 vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   const mockPortalLinkContainer = vi.fn(({ children }) => (
@@ -69,6 +84,8 @@ const setup = setupTest({
 const OLD_ENV = process.env
 
 beforeEach(() => {
+  vi.clearAllMocks()
+
   process.env = { ...OLD_ENV }
 
   // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
@@ -106,32 +123,59 @@ describe('Home', () => {
       expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
     })
 
-    test('calls getNlpCollections and navigate when the search form is submitted', async () => {
-      const { user, zustandState } = setup()
+    test('starts NLP chat stream after submit and does not navigate immediately', async () => {
+      const { user } = setup()
 
       const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
 
       await user.type(searchInput, 'test')
       await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+      expect(mockNlpSearchStatus).toHaveBeenCalledTimes(1)
+      expect(mockNlpSearchStatus).toHaveBeenCalledWith(expect.objectContaining({
+        activePrompt: 'test',
+        requestId: 1
+      }))
 
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      expect(mockUseNavigate).not.toHaveBeenCalled()
     })
 
-    test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
-      const { user, zustandState } = setup()
+    test('locks search input while NLP streaming is active', (async () => {
+      const { user } = setup()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'fire events')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await waitFor(() => {
+        expect(searchInput).toBeDisabled()
+      })
+
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeEnabled()
+      expect(Spinner).not.toHaveBeenCalled()
+    }))
+
+    test('navigates when NLP stream completes', async () => {
+      const { user } = setup()
 
       const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
 
       await user.type(searchInput, 'test')
       await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onNlpSearchComplete?.()
+      })
 
+      // Await waitFor(())
       expect(mockUseNavigate).toHaveBeenCalledTimes(1)
       expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
     })

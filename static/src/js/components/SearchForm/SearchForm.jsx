@@ -57,7 +57,7 @@ const SearchForm = () => {
                 <label className="search-form__nlp-toggle" htmlFor="search-form__nlp-toggle-input">
                   <input
                     id="search-form__nlp-toggle-input"
-                    type='checkbox'
+                    type="checkbox"
                     checked={isNlpMode}
                     onChange={(event) => setIsNlpMode(event.target.checked)}
                   />

@@ -65,7 +65,6 @@ import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
-import { current } from 'immer'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
@@ -217,14 +216,14 @@ export const Home: React.FC = () => {
     const trimmedKeyword = keyword.trim()
 
     if (isNlpEnabled) {
-      if ( isNlpStreaming || !trimmedKeyword) return
+      if (isNlpStreaming || !trimmedKeyword) return
 
-        setIsNlpStreaming(true)
-        setActiveNlpPrompt(trimmedKeyword)
-        setHasSubmittedNlpSearch(true)
-        setNlpRequestId((currentId) => currentId + 1)
+      setIsNlpStreaming(true)
+      setActiveNlpPrompt(trimmedKeyword)
+      setHasSubmittedNlpSearch(true)
+      setNlpRequestId((currentId) => currentId + 1)
 
-        return
+      return
     }
 
     // Manually update the query in the store
@@ -301,8 +300,11 @@ export const Home: React.FC = () => {
                 onSubmit={handleSubmit}
               >
                 <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
-                  <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px"
-                    />
+                  <EDSCIcon
+                    className="home__hero-input-icon position-absolute"
+                    icon={Search}
+                    size="22px"
+                  />
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
                     onChange={onChangeKeyword}
@@ -316,17 +318,18 @@ export const Home: React.FC = () => {
                 </div>
                 {
                   !isNlpEnabled && (
-                  <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                    <TemporalSelectionDropdown searchParams={searchParams} />
-                    <SpatialSelectionDropdown searchParams={searchParams} />
-                  </div>
+                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                      <TemporalSelectionDropdown searchParams={searchParams} />
+                      <SpatialSelectionDropdown searchParams={searchParams} />
+                    </div>
                   )
                 }
                 <Button
                   type={isNlpStreaming ? 'button' : 'submit'}
                   className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
-                  bootstrapVariant='primary'
+                  bootstrapVariant="primary"
                   bootstrapSize="lg"
+                  spinner={!isNlpStreaming && isLoading}
                   onClick={isNlpStreaming ? onCancelNlpSearch : undefined}
                 >
                   {isNlpStreaming ? 'Cancel' : 'Search'}
@@ -334,7 +337,7 @@ export const Home: React.FC = () => {
               </form>
             </div>
             {
-              isNlpEnabled && hasSubmittedNlpSearch && !!activeNlpPrompt &&(
+              isNlpEnabled && hasSubmittedNlpSearch && !!activeNlpPrompt && (
                 <div className="home__nlp-chat-wrapper">
                   <NlpSearchStatus
                     activePrompt={activeNlpPrompt}
