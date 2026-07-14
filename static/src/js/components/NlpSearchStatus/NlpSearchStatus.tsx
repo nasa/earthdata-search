@@ -39,6 +39,7 @@ const createMockNlpStreamResponse = (prompt: string) => {
 
   const chunks = [
     'analyzing your query...\n',
+    'Found spatial of "western montana".\n',
     'Found temporal of "last april".\n',
     'Found keyword of "average temp"\n',
     `${FINAL_RESULT_MARKER}\n${JSON.stringify(finalResult)}`

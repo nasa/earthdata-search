@@ -1,0 +1,143 @@
+import { screen, waitFor } from '@testing-library/react'
+
+import setupTest from '../../../../../../vitestConfigs/setupTest'
+
+import NlpSearchStatus from '../NlpSearchStatus'
+
+const mockComplete = vi.fn(async () => undefined)
+const mockStop = vi.fn()
+const mockSetCompletion = vi.fn()
+
+const mockSetCollectionId = vi.fn()
+const mockChangeQuery = vi.fn()
+const mockHandleError = vi.fn()
+
+let capturedUseCompletionOptions: {
+    onFinish?: (prompt: string, completionText: string) => void
+    onError?: (error: Error) => void
+} = {}
+
+vi.mock('../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
+
+vi.mock('@ai-sdk/react', () => ({
+  useCompletion: vi.fn((options) => {
+    capturedUseCompletionOptions = options
+
+    return {
+      complete: mockComplete,
+      completion: '',
+      isLoading: false,
+      setCompletion: mockSetCompletion,
+      stop: mockStop
+    }
+  })
+}))
+
+vi.mock('../../zustand/useEdscStore', () => ({
+  default: vi.fn((selector) => selector({
+    collection: {
+      setCollectionId: mockSetCollectionId
+    },
+    query: {
+      changeQuery: mockChangeQuery
+    },
+    errors: {
+      handleError: mockHandleError
+    }
+  }))
+}))
+
+const setup = setupTest({
+  Component: NlpSearchStatus,
+  defaultProps: {
+    activePrompt: '',
+    requestId: 0,
+    cancelRequestId: 0,
+    onStreamingChange: vi.fn(),
+    onNlpSearchComplete: vi.fn()
+  }
+})
+
+describe('NlpSearchStatus component', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    capturedUseCompletionOptions = {}
+  })
+
+  test('renders default status text', () => {
+    setup()
+    expect(screen.getByText(/waiting for NLP status updates/i)).toBeInTheDocument()
+  })
+
+  test('starts prompt completion when requestId and prompt are provided', async () => {
+    const { props } = setup({
+      overrideProps: {
+        activePrompt: 'glaciers in montana ',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+    })
+
+    expect(mockComplete).toHaveBeenCalledWith('glaciers in montana')
+  })
+
+  test('handles cancel request by stopping stream and resetting state', () => {
+    const { props } = setup({
+      overrideProps: {
+        cancelRequestId: 1
+      }
+    })
+
+    expect(mockStop).toHaveBeenCalledTimes(1)
+    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+  })
+
+  test('applies parsed NLP result and triggers completion callback', () => {
+    const { props } = setup({
+      overrideProps: {
+        activePrompt: 'average temp in western montana last april',
+        requestId: 1
+      }
+    })
+
+    const completionText = [
+      'Found spatial of "western montana".',
+      'Found temporal of "last april".',
+      'Found keyword of "average temp".',
+      'Final Result:',
+      '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
+    ].join('\n')
+
+    capturedUseCompletionOptions.onFinish?.('average temp in western montana last april', completionText)
+
+    expect(mockSetCollectionId).toHaveBeenCalledWith(null)
+    expect(mockChangeQuery).toHaveBeenCalledWith({
+      collection: {
+        keyword: 'average temp',
+        temporal: {
+          startDate: '2026-04-01T00:00:00.000Z',
+          endDate: '2026-04-30T23:59:59.999Z'
+        },
+        spatial: {
+          polygon: ['-116.050002,44.358209,-116.050002,49.00139,-109.64514022973341,49.00139,-109.64514022973341,44.358209,-116.050002,44.358209']
+        }
+      },
+      selectedRegion: {}
+    })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+    expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
+  })
+
+  test('reports parsing errors when final result is not valid json', () => {
+    const { props } = setup()
+
+    capturedUseCompletionOptions.onFinish?.('prompt', 'Final result:\nnot-json')
+
+    expect(mockHandleError).toHaveBeenCalledTimes(1)
+    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+  })
+})
