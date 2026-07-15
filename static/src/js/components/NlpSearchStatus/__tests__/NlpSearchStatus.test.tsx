@@ -1,3 +1,4 @@
+import { act } from 'react'
 import { screen, waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
@@ -33,8 +34,9 @@ vi.mock('@ai-sdk/react', () => ({
   })
 }))
 
-vi.mock('../../zustand/useEdscStore', () => ({
-  default: vi.fn((selector) => selector({
+const setup = setupTest({
+  Component: NlpSearchStatus,
+  defaultZustandState: {
     collection: {
       setCollectionId: mockSetCollectionId
     },
@@ -44,11 +46,7 @@ vi.mock('../../zustand/useEdscStore', () => ({
     errors: {
       handleError: mockHandleError
     }
-  }))
-}))
-
-const setup = setupTest({
-  Component: NlpSearchStatus,
+  },
   defaultProps: {
     activePrompt: '',
     requestId: 0,
@@ -66,6 +64,7 @@ describe('NlpSearchStatus component', () => {
 
   test('renders default status text', () => {
     setup()
+
     expect(screen.getByText(/waiting for NLP status updates/i)).toBeInTheDocument()
   })
 
@@ -95,8 +94,8 @@ describe('NlpSearchStatus component', () => {
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
   })
 
-  test('applies parsed NLP result and triggers completion callback', () => {
-    const { props } = setup({
+  test('applies parsed NLP result and triggers completion callback', async () => {
+    const { props, zustandState } = setup({
       overrideProps: {
         activePrompt: 'average temp in western montana last april',
         requestId: 1
@@ -111,10 +110,20 @@ describe('NlpSearchStatus component', () => {
       '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
     ].join('\n')
 
-    capturedUseCompletionOptions.onFinish?.('average temp in western montana last april', completionText)
+    expect(capturedUseCompletionOptions.onFinish).toBeTypeOf('function')
 
-    expect(mockSetCollectionId).toHaveBeenCalledWith(null)
-    expect(mockChangeQuery).toHaveBeenCalledWith({
+    act(() => {
+      capturedUseCompletionOptions.onFinish!(
+        'average temp in western montana last april',
+        completionText
+      )
+    })
+
+    await waitFor(() => {
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith(null)
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         keyword: 'average temp',
         temporal: {
@@ -133,11 +142,11 @@ describe('NlpSearchStatus component', () => {
   })
 
   test('reports parsing errors when final result is not valid json', () => {
-    const { props } = setup()
+    const { props, zustandState } = setup()
 
     capturedUseCompletionOptions.onFinish?.('prompt', 'Final result:\nnot-json')
 
-    expect(mockHandleError).toHaveBeenCalledTimes(1)
+    expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
   })
 })
