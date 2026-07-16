@@ -17,6 +17,21 @@ export const createMockNlpStreamResponse = (prompt: string, signal?: AbortSignal
       let timeoutId: ReturnType<typeof setTimeout> | null = null
       let streamClosed = false
 
+      const onAbort = () => {
+        if (streamClosed) return
+
+        streamClosed = true
+
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+          timeoutId = null
+        }
+
+        if (signal) signal.removeEventListener('abort', onAbort)
+
+        controller.error(new DOMException('The operation was aborted.', 'AbortError'))
+      }
+
       const cleanupAbortListener = () => {
         if (signal) signal.removeEventListener('abort', onAbort)
       }
@@ -26,16 +41,6 @@ export const createMockNlpStreamResponse = (prompt: string, signal?: AbortSignal
           clearTimeout(timeoutId)
           timeoutId = null
         }
-      }
-
-      const onAbort = () => {
-        if (streamClosed) return
-
-        streamClosed = true
-        clearPendingTimeout()
-        cleanupAbortListener()
-
-        controller.error(new DOMException('The operation was aborted.', 'AbortError'))
       }
 
       if (signal) signal.addEventListener('abort', onAbort)

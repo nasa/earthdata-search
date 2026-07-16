@@ -199,7 +199,6 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const query = encodeURIComponent(prompt)
 
-
       if (shouldUseMockNlpStream) {
         return createMockNlpStreamResponse(prompt, init?.signal ?? undefined)
       }
