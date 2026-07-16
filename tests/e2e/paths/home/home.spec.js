@@ -8,8 +8,6 @@ import { createNlpHandlers, nlp } from '../../../support/nlpHandlers'
 import { createNlpMockStreamChunks } from '../../../../sharedConstants/nlpMockStream'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
-import { getApplicationConfig } from '../../../../sharedUtils/config'
-
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
 import keywordCollections from './__mocks__/keyword-collections.body.json'
