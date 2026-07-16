@@ -210,7 +210,7 @@ test.describe('Home Page', () => {
   })
 
   test.describe('when performing an NLP search', () => {
-    test.skip(isNlpEnabled, 'Skipping NLP search when NLP search is disabled.')
+    test.skip(!isNlpEnabled, 'Skipping NLP search when NLP search is disabled.')
     test.describe.configure({ mode: 'serial' })
 
     let nlpHandlers
