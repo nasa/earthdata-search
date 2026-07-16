@@ -68,6 +68,16 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockUseNavigate
 }))
 
+const mockRouterNavigate = vi.hoisted(() => vi.fn())
+
+vi.mock('../../../router/router', () => ({
+  default: {
+    router: {
+      navigate: mockRouterNavigate
+    }
+  }
+}))
+
 const setup = setupTest({
   Component: Home,
   defaultZustandState: {
@@ -172,12 +182,12 @@ describe('Home', () => {
 
       const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
       await act(async () => {
-        latestCallProps?.onNlpSearchComplete?.()
+        await latestCallProps?.onNlpSearchComplete?.()
       })
 
-      // Await waitFor(())
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+      expect(mockRouterNavigate).toHaveBeenCalledWith(routes.SEARCH, {})
+      expect(mockUseNavigate).not.toHaveBeenCalled()
     })
   })
 

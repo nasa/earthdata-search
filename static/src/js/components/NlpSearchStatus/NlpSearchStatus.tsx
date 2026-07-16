@@ -22,7 +22,7 @@ type NlpSearchStatusProps = {
     requestId?: number
     cancelRequestId?: number
     onStreamingChange?: (isStreaming: boolean) => void
-    onNlpSearchComplete?: () => void
+    onNlpSearchComplete?: () => void | Promise<void>
 }
 
 const getNLPDisplayText = (completionText: string) => {
@@ -85,7 +85,7 @@ const toProgressStep = (line: string) => {
   if (temporalMatch?.[1]) return `Extracted temporal range of ${temporalMatch?.[1]}`
 
   const spatialMatch = normalizedLine.match(/^Found spatial of (.*)\.?$/i)
-  if (spatialMatch?.[1]) return `Extracted Spatial area of ${spatialMatch?.[1]}`
+  if (spatialMatch?.[1]) return `Extracted spatial area of ${spatialMatch?.[1]}`
 
   const keywordMatch = normalizedLine.match(/^Found keyword of (.*)\.?$/i)
   if (keywordMatch?.[1]) return `Extracted keyword of ${keywordMatch?.[1]}`
@@ -123,6 +123,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const currentStatusStepRef = useRef('')
   const queuedStatusRef = useRef('')
+  const lastStartedRequestIdRef = useRef<number | null>(null)
+  const lastHandledCancelRequestIdRef = useRef<number>(0)
 
   const [latestNlpPrompt, setLatestNlpPrompt] = useState('')
   const [displayStatusStep, setDisplayStatusStep] = useState('')
@@ -197,7 +199,10 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const query = encodeURIComponent(prompt)
 
-      if (shouldUseMockNlpStream) return createMockNlpStreamResponse(prompt)
+
+      if (shouldUseMockNlpStream) {
+        return createMockNlpStreamResponse(prompt, init?.signal ?? undefined)
+      }
 
       return fetch(`/nlp?query=${query}`, {
         method: 'GET',
@@ -235,19 +240,25 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const spatial = parseWktSpatial(spatialArea)
 
-      setCollectionId(null)
-      changeQuery({
-        collection: {
-          keyword: keyword || prompt || latestNlpPrompt,
-          temporal: temporal || {},
-          spatial
-        },
-        selectedRegion: {}
-      })
-
       onStreamingChange(false)
-      onNlpSearchComplete()
       queuedStatusRef.current = ''
+
+      // Navigate first, then delay the Zustand update by one tick so
+      // useLocation() has time to reflect /search before URL sync runs.
+      // This avoids a race that pushed the URL back to Home.
+      Promise.resolve(onNlpSearchComplete())
+        .then(() => new Promise((resolve) => { setTimeout(resolve, 0) }))
+        .then(() => {
+          setCollectionId(null)
+          changeQuery({
+            collection: {
+              keyword: keyword || prompt || latestNlpPrompt,
+              temporal: temporal || {},
+              spatial
+            },
+            selectedRegion: {}
+          })
+        })
     },
     onError: (error) => {
       setStatusStep('NLP Search failed. Please try again')
@@ -275,9 +286,10 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     setStatusStep(latestParsedStep)
   }, [completion, isNlpLoading, setStatusStep])
 
-  const runPrompt = useCallback(async (prompt: string) => {
+  const runPrompt = useCallback(async (prompt: string, nextRequestId: number) => {
     if (!prompt || isNlpLoading) return
 
+    lastStartedRequestIdRef.current = nextRequestId
     setCompletion('')
     setLatestNlpPrompt(prompt)
     queuedStatusRef.current = ''
@@ -294,17 +306,24 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     if (transitionTimeoutRef.current) {
       clearTimeout(transitionTimeoutRef.current)
     }
+
+    // Prevent duplicate active streams during dev Strict Mode remounts.
+    if (typeof stop === 'function') stop()
   }, [])
 
   useEffect(() => {
     const trimmedPrompt = activePrompt.trim()
     if (!requestId || !trimmedPrompt) return
 
-    runPrompt(trimmedPrompt)
+    if (lastStartedRequestIdRef.current === requestId) return
+
+    runPrompt(trimmedPrompt, requestId)
   }, [activePrompt, requestId, runPrompt])
 
   useEffect(() => {
-    if (!cancelRequestId) return
+    if (!cancelRequestId || cancelRequestId <= lastHandledCancelRequestIdRef.current) return
+
+    lastHandledCancelRequestIdRef.current = cancelRequestId
 
     if (transitionTimeoutRef.current) {
       clearTimeout(transitionTimeoutRef.current)
@@ -312,6 +331,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
     if (typeof stop === 'function') stop()
 
+    lastStartedRequestIdRef.current = null
     queuedStatusRef.current = ''
     currentStatusStepRef.current = ''
     setDisplayStatusStep('')

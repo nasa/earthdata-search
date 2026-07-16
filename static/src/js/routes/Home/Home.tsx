@@ -56,6 +56,8 @@ import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
 import { routes } from '../../constants/routes'
 
+import routerHelper from '../../router/router'
+
 import type{ PortalConfig } from '../../types/sharedTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -237,9 +239,12 @@ export const Home: React.FC = () => {
     navigate(`${routes.SEARCH}${window.location.search}`)
   }
 
-  const onNlpSearchComplete = () => {
-    navigate(`${routes.SEARCH}${window.location.search}`)
-  }
+  const onNlpSearchComplete = () => (
+    // Use the shared router instance so we can await real navigation.
+    // This prevents query updates from racing navigation and pushing back
+    // to Home.
+    Promise.resolve(routerHelper.router?.navigate(routes.SEARCH, {}))
+  )
 
   const onCancelNlpSearch = () => {
     setIsNlpStreaming(false)
