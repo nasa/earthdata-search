@@ -106,7 +106,7 @@ describe('NlpSearchStatus component', () => {
       'Found spatial of "western montana".',
       'Found temporal of "last april".',
       'Found keyword of "average temp".',
-      'Final Result:',
+      'Final result:',
       '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
     ].join('\n')
 

@@ -20,7 +20,7 @@ type NlpSearchStatusProps = {
 }
 
 const FINAL_RESULT_MARKER = 'Final result:'
-const USE_MOCK_NLP_STREAM = true
+const USE_MOCK_NLP_STREAM = false
 
 const createMockNlpStreamResponse = (prompt: string) => {
   const encoder = new TextEncoder()
