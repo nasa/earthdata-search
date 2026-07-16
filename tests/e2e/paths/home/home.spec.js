@@ -6,6 +6,8 @@ import {
 } from '../../../support/interceptUnauthenticatedCollections'
 import { createNlpHandlers, nlp } from '../../../support/nlpHandlers'
 
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
 import keywordCollections from './__mocks__/keyword-collections.body.json'
@@ -17,6 +19,9 @@ import whatIsThisImageCollections from './__mocks__/what-is-this-image-collectio
 import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.body.json'
 import whatIsThisImageGranulesHeaders from './__mocks__/what-is-this-image-granules.headers.json'
 import whatIsThisImageGraphQlBody from './__mocks__/what-is-this-image-collections.graphql.body.json'
+
+const { nlpSearch } = getApplicationConfig()
+const isNlpEnabled = nlpSearch === 'true'
 
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
@@ -34,6 +39,7 @@ test.describe('Home Page', () => {
   })
 
   test.describe('when performing a keyword search', () => {
+    test.skip(isNlpEnabled, 'Skipping keyword search when NLP search is enabled.')
     test.beforeEach(async ({ page }) => {
       await interceptUnauthenticatedCollections({
         page,
@@ -204,6 +210,7 @@ test.describe('Home Page', () => {
   })
 
   test.describe('when performing an NLP search', () => {
+    test.skip(isNlpEnabled, 'Skipping NLP search when NLP search is disabled.')
     test.describe.configure({ mode: 'serial' })
 
     let nlpHandlers
