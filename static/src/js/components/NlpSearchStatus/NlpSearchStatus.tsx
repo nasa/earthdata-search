@@ -9,6 +9,8 @@ import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { createMockNlpStreamResponse } from '../../localTesting/nlp/createMockNlpStreamResponse'
+// @ts-expect-error: Types do not exist for this file
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 // @ts-expect-error: Types do not exist for this file
 import { FINAL_RESULT_MARKER } from '../../../../../sharedConstants/nlpMockStream'
@@ -22,8 +24,6 @@ type NlpSearchStatusProps = {
     onStreamingChange?: (isStreaming: boolean) => void
     onNlpSearchComplete?: () => void
 }
-
-const USE_MOCK_NLP_STREAM = false
 
 const getNLPDisplayText = (completionText: string) => {
   if (!completionText) return ''
@@ -117,6 +117,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   onStreamingChange = () => {},
   onNlpSearchComplete = () => {}
 }) => {
+  const { useMockNlpStream } = getApplicationConfig()
+  const shouldUseMockNlpStream = useMockNlpStream === 'true'
+
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const currentStatusStepRef = useRef('')
   const queuedStatusRef = useRef('')
@@ -194,7 +197,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const query = encodeURIComponent(prompt)
 
-      if (USE_MOCK_NLP_STREAM) return createMockNlpStreamResponse(prompt)
+      if (shouldUseMockNlpStream) return createMockNlpStreamResponse(prompt)
 
       return fetch(`/nlp?query=${query}`, {
         method: 'GET',

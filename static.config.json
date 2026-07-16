@@ -29,6 +29,7 @@
       "opensearch.granule.osdd"
     ],
     "nlpSearch": "false",
+    "useMockNlpStream": "false",
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
     "showInactiveCollections": "true",
