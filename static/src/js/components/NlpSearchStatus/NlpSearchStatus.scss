@@ -1,13 +1,12 @@
 @use '../../../css/utils';
 
 .nlp-search-chat {
-
     width: fit-content;
     max-width: 100%;
     padding: 0;
     text-shadow: none;
 
-    &__panel{
+    &__panel {
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -72,7 +71,7 @@
         &--muted {
             color: utils.$color__carbon--70;
             opacity: 0.9;
-        }
+    }
     }
 }
 

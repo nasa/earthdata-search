@@ -5,6 +5,8 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../support/interceptUnauthenticatedCollections'
 import { createNlpHandlers, nlp } from '../../../support/nlpHandlers'
+import { createNlpMockStreamChunks } from '../../../../sharedConstants/nlpMockStream'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
@@ -220,13 +222,7 @@ test.describe('Home Page', () => {
       nlpHandlers.nlp.use(
         nlp.get('/nlp', () => nlp.stream({
           delayMs: 1200,
-          chunks: [
-            'Found spatial of "western montana".\n',
-            'Found temporal of "last april".\n',
-            'Found keyword of "average temp".\n',
-            'Final result:\n',
-            '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
-          ]
+          chunks: createNlpMockStreamChunks()
         }))
       )
 
@@ -249,11 +245,7 @@ test.describe('Home Page', () => {
       nlpHandlers.nlp.use(
         nlp.get('/nlp', () => nlp.stream({
           delayMs: 1200,
-          chunks: [
-            'Found keyword of "average temp".\n',
-            'Final result:\n',
-            '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
-          ]
+          chunks: createNlpMockStreamChunks()
         }))
       )
 
@@ -286,11 +278,10 @@ test.describe('Home Page', () => {
       nlpHandlers.nlp.use(
         nlp.get('/nlp', () => nlp.stream({
           delayMs: 1200,
-          chunks: [
-            'Found keyword of "rainfall in dc".\n',
-            'Final result:\n',
-            '{"keyword":"rainfall in dc","query":"rainfall in dc","temporal":{},"spatialArea":""}'
-          ]
+          chunks: createNlpMockStreamChunks({
+            prompt: 'rainfall in dc',
+            progressLines: ['Found keyword of "rainfall in dc"']
+          })
         }))
       )
 

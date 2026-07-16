@@ -1,12 +1,7 @@
 import { createServer } from 'node:http'
+import { DEFAULT_NLP_MOCK_STREAM_CHUNKS } from '../../sharedConstants/nlpMockStream'
 
-const DEFAULT_CHUNKS = [
-  'Found spatial of "western montana".\n',
-  'Found temporal of "last april".\n',
-  'Found keyword of "average temp".\n',
-  'Final result:\n',
-  '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
-]
+const DEFAULT_CHUNKS = DEFAULT_NLP_MOCK_STREAM_CHUNKS
 
 const createCorsHeaders = (origin) => ({
   'Access-Control-Allow-Origin': origin,

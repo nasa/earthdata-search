@@ -27,7 +27,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(20, 9, 9, 0.4);
+      background-color: rgba(utils.$color__carbon-black, 0.4);
       mix-blend-mode: multiply;
     }
   }
@@ -46,7 +46,6 @@
     color: utils.$color__carbon--40;
     pointer-events: none;
   }
-
 
   &__hero-input-wrapper {
     max-width: 60rem;
@@ -86,18 +85,18 @@
     border: 0;
     width: 6.25rem;
 
-      &:hover,
-      &:focus,
-      &:active {
-        background-color: utils.$color__nasa-red--shade !important; // !important is needed to override the bootstrap active color
-        border: 0;
-      }
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: utils.$color__nasa-red--shade !important; // !important is needed to override the bootstrap active color
+      border: 0;
+    }
 
-      &:disabled {
-        background-color: utils.$color__nasa-red;
-        border: 0;
-        opacity: 1 !important; // !important is needed to override the bootstrap opacity
-      }
+    &:disabled {
+      background-color: utils.$color__nasa-red;
+      border: 0;
+      opacity: 1 !important; // !important is needed to override the bootstrap opacity
+    }
   }
 
   &__hero-image-link {
@@ -148,7 +147,7 @@
     border-radius: 0.25rem;
     color: white;
     font-weight: bold;
-    margin-right: 0.5rem; 
+    margin-right: 0.5rem;
     padding: 0.5rem;
   }
 }

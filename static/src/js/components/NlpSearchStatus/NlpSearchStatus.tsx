@@ -8,6 +8,10 @@ import { useCompletion } from '@ai-sdk/react'
 import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { createMockNlpStreamResponse } from '../../localTesting/nlp/createMockNlpStreamResponse'
+
+// @ts-expect-error: Types do not exist for this file
+import { FINAL_RESULT_MARKER } from '../../../../../sharedConstants/nlpMockStream'
 
 import './NlpSearchStatus.scss'
 
@@ -19,59 +23,7 @@ type NlpSearchStatusProps = {
     onNlpSearchComplete?: () => void
 }
 
-const FINAL_RESULT_MARKER = 'Final result:'
 const USE_MOCK_NLP_STREAM = false
-
-const createMockNlpStreamResponse = (prompt: string) => {
-  const encoder = new TextEncoder()
-  const effectivePrompt = prompt || 'average temp in western montana last april'
-
-  const finalResult = {
-    keyword: 'average temp',
-    query: effectivePrompt,
-    spatial: 'western montana',
-    spatialArea: 'POLYGON((-116.050002 44.358209, -109.64514022973341 44.358209, -109.64514022973341 49.00139, -116.050002 49.00139, -116.050002 44.358209))',
-    temporal: {
-      startDate: '2026-04-01T00:00:00.000Z',
-      endDate: '2026-04-30T23:59:59.999Z'
-    }
-  }
-
-  const chunks = [
-    'analyzing your query...\n',
-    'Found spatial of "western montana".\n',
-    'Found temporal of "last april".\n',
-    'Found keyword of "average temp"\n',
-    `${FINAL_RESULT_MARKER}\n${JSON.stringify(finalResult)}`
-  ]
-
-  const stream = new ReadableStream({
-    start(controller) {
-      let chunkIndex = 0
-
-      const pushChunk = () => {
-        if (chunkIndex >= chunks.length) {
-          controller.close()
-
-          return
-        }
-
-        controller.enqueue(encoder.encode(chunks[chunkIndex]))
-        chunkIndex += 1
-        setTimeout(pushChunk, 3800)
-      }
-
-      pushChunk()
-    }
-  })
-
-  return Promise.resolve(new Response(stream, {
-    headers: {
-      'Content-Type': 'text/plain; charset=utf-8'
-    },
-    status: 200
-  }))
-}
 
 const getNLPDisplayText = (completionText: string) => {
   if (!completionText) return ''
