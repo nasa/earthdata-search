@@ -59,6 +59,7 @@ export const createNlpStreamMock = ({
         'Transfer-Encoding': 'chunked',
         ...corsHeaders
       })
+
       res.flushHeaders()
       if (res.socket) res.socket.setNoDelay(true)
 
@@ -111,6 +112,7 @@ export const createNlpStreamMock = ({
       await new Promise((resolve) => {
         server.close(resolve)
       })
+
       server = undefined
     }
   }

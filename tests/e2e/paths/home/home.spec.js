@@ -222,6 +222,7 @@ test.describe('Home Page', () => {
           ]
         }))
       )
+
       await nlpHandlers.nlp.start()
 
       await interceptUnauthenticatedCollections({
@@ -258,7 +259,11 @@ test.describe('Home Page', () => {
       }).click()
 
       await expect(searchInput, 'Search input should be disabled while NLP is running').toBeDisabled()
-      await expect(page.getByRole('button', { name: 'Cancel', exact: true }), 'Cancel button should be visible while NLP is running').toBeVisible()
+      await expect(page.getByRole('button', {
+        name: 'Cancel',
+        exact: true
+      }), 'Cancel button should be visible while NLP is running').toBeVisible()
+
       await expect(page.locator('.nlp-search-chat__step'), 'NLP chat step should be visible while NLP is running').toBeVisible()
 
       // Checks that status text progresses while NLP is running.
@@ -302,14 +307,21 @@ test.describe('Home Page', () => {
         exact: true
       }).click()
 
-      const cancelButton = page.getByRole('button', { name: 'Cancel', exact: true })
+      const cancelButton = page.getByRole('button', {
+        name: 'Cancel',
+        exact: true
+      })
       await expect(cancelButton, 'Cancel button should be visible while NLP is running').toBeVisible()
 
       await cancelButton.click()
 
       await expect(searchInput, 'Search input should be re-enabled after cancelling NLP').toBeEnabled()
       await expect(searchInput, 'search input should be cleared after search cancelled').toHaveValue('')
-      await expect(page.getByRole('button', { name: 'Search', exact: true }), 'Search button should be visible after cancelling NLP').toBeVisible()
+      await expect(page.getByRole('button', {
+        name: 'Search',
+        exact: true
+      }), 'Search button should be visible after cancelling NLP').toBeVisible()
+
       await expect(page.locator('.nlp-search-chat'), 'NLP chat should be removed after cancelling NLP').toHaveCount(0)
       await expect(page, 'user should remain on the home page after cancelling NLP').toHaveURL('/')
     })
