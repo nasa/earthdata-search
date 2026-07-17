@@ -103,13 +103,6 @@ const extractProgressSteps = (completionText: string) => {
     .filter(Boolean)
 }
 
-// Const OrbitLoader = ({ label }: { label: string }) => React.createElement('terra-loader', {
-//     variant: 'orbit',
-//     indeterminate: true,
-//     'aria-label': label,
-//     class: 'nlp-search-chat__step-loader'
-// })
-
 const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   activePrompt = '',
   requestId,
@@ -336,7 +329,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     setDisplayStatusStep('')
     setStatusTransitionState('idle')
     onStreamingChange(false)
-  }, [cancelRequestId, onStreamingChange, setCompletion, stop])
+  }, [cancelRequestId, onStreamingChange, stop])
 
   const statusStepLabel = displayStatusStep || 'Waiting for NLP status updates'
   const statusStepClassName = [
@@ -354,7 +347,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
             type="dots"
             inline
             size="tiny"
-            className="nlp-search-chat__step__loader"
+            className="nlp-search-chat__step-loader"
             label="NLP parsing in progress"
           />
           <div className="nlp-search-chat__step-text-wrap">

@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { isEmpty } from 'lodash-es'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
-import NlpSearchStatus from '../NlpSearchStatus/NlpSearchStatus'
 import FilterStack from '../FilterStack/FilterStack'
 import TemporalDisplay from '../TemporalDisplay/TemporalDisplay'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
@@ -21,18 +20,12 @@ import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import { MODAL_NAMES } from '../../constants/modalNames'
 
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-
 import './SearchForm.scss'
 
 const SearchForm = () => {
   const clearFilters = useEdscStore((state) => state.query.clearFilters)
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
   const setOpenModal = useEdscStore(setOpenModalFunction)
-  const { nlpSearch } = getApplicationConfig()
-
-  const [isNlpMode, setIsNlpMode] = useState(false)
-  const isNlpEnabled = nlpSearch === 'true'
 
   let spatialDisplayIsVisible = true
 
@@ -41,29 +34,11 @@ const SearchForm = () => {
   return (
     <section className="search-form">
       <div className="search-form__primary">
-        {
-          isNlpEnabled && isNlpMode ? (
-            <NlpSearchStatus />
-          ) : (
-            <SearchAutocomplete />
-          )
-        }
+        <SearchAutocomplete />
       </div>
       <div className="search-form__secondary">
         <div className="search-form__secondary-actions d-flex justify-content-between flex-row">
           <div className="d-flex gap-1">
-            {
-              isNlpEnabled && (
-                <label className="search-form__nlp-toggle" htmlFor="search-form__nlp-toggle-input">
-                  <input
-                    id="search-form__nlp-toggle-input"
-                    type="checkbox"
-                    checked={isNlpMode}
-                    onChange={(event) => setIsNlpMode(event.target.checked)}
-                  />
-                </label>
-              )
-            }
             <TemporalSelectionDropdown />
             <SpatialSelectionDropdown />
             <PortalFeatureContainer advancedSearch>

@@ -94,7 +94,6 @@ const setup = setupTest({
 const OLD_ENV = process.env
 
 beforeEach(() => {
-  vi.clearAllMocks()
 
   process.env = { ...OLD_ENV }
 
@@ -131,6 +130,16 @@ describe('Home', () => {
       setup()
 
       expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
+    })
+
+    test('navigates directly to search when submitting an empty NLP query', async () => {
+      const { user } = setup()
+
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      expect(mockNlpSearchStatus).not.toHaveBeenCalled()
     })
 
     test('starts NLP chat stream after submit and does not navigate immediately', async () => {

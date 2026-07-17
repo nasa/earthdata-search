@@ -218,7 +218,13 @@ export const Home: React.FC = () => {
     const trimmedKeyword = keyword.trim()
 
     if (isNlpEnabled) {
-      if (isNlpStreaming || !trimmedKeyword) return
+      if (isNlpStreaming) return
+
+      if (!trimmedKeyword) {
+        navigate(`${routes.SEARCH}${window.location.search}`)
+
+        return
+      }
 
       setIsNlpStreaming(true)
       setActiveNlpPrompt(trimmedKeyword)
