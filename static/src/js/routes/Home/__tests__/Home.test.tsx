@@ -94,9 +94,7 @@ const setup = setupTest({
 const OLD_ENV = process.env
 
 beforeEach(() => {
-
   process.env = { ...OLD_ENV }
-
   // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
