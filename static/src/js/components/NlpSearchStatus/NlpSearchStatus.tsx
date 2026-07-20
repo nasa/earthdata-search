@@ -329,7 +329,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     onStreamingChange(false)
   }, [cancelRequestId, onStreamingChange, stop])
 
-  const statusStepLabel = displayStatusStep || 'Waiting for NLP status updates'
+  const statusStepLabel = displayStatusStep || 'Waiting for Query parsing status updates'
   const statusStepClassName = [
     'nlp-search-chat__step',
     displayStatusStep ? 'nlp-search-chat__step--latest' : 'nlp-search-chat__step--muted',

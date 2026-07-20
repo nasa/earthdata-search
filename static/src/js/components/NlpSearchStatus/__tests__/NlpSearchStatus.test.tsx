@@ -65,7 +65,7 @@ describe('NlpSearchStatus component', () => {
   test('renders default status text', () => {
     setup()
 
-    expect(screen.getByText(/waiting for NLP status updates/i)).toBeInTheDocument()
+    expect(screen.getByText(/waiting for Query parsing status updates/i)).toBeInTheDocument()
   })
 
   test('starts prompt completion when requestId and prompt are provided', async () => {
@@ -132,7 +132,7 @@ describe('NlpSearchStatus component', () => {
           endDate: '2026-04-30T23:59:59.999Z'
         },
         spatial: {
-          boundingBox: ['-116.05,44.35821,44.35821,-109.64514,49.00139']
+          boundingBox: ['-116.05,44.35821,-109.64514,49.00139']
         }
       },
       selectedRegion: {}
