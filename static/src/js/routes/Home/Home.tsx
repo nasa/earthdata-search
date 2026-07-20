@@ -161,6 +161,7 @@ export const Home: React.FC = () => {
   const [nlpCancelRequestId, setNlpCancelRequestId] = useState(0)
   const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
   const [isNlpStreaming, setIsNlpStreaming] = useState(false)
+  const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
 
@@ -221,6 +222,11 @@ export const Home: React.FC = () => {
       if (isNlpStreaming) return
 
       if (!trimmedKeyword) {
+        // If an NLP session has already started, treat empty submit as a no-op.
+        // This prevents cancel interactions from accidentally falling through
+        // to the empty-query redirect path.
+        if (hasSubmittedNlpSearch) return
+
         navigate(`${routes.SEARCH}${window.location.search}`)
 
         return
@@ -246,17 +252,27 @@ export const Home: React.FC = () => {
   }
 
   const onNlpSearchComplete = () => (
-    // Use the shared router instance so we can await real navigation.
-    // This prevents query updates from racing navigation and pushing back
-    // to Home.
-    Promise.resolve(routerHelper.router?.navigate(routes.SEARCH, {}))
+    // Queue navigation until collections retrieval has completed.
+    Promise.resolve(setIsNlpNavigationPending(true))
   )
+
+  useEffect(() => {
+    if (!isNlpEnabled) return
+    if (!isNlpNavigationPending || isLoading) return
+
+    Promise.resolve(routerHelper.router?.navigate(routes.SEARCH, {}))
+      .finally(() => {
+        setIsNlpStreaming(false)
+        setIsNlpNavigationPending(false)
+      })
+  }, [isLoading, isNlpEnabled, isNlpNavigationPending])
 
   const onCancelNlpSearch = () => {
     setIsNlpStreaming(false)
     setHasSubmittedNlpSearch(false)
     setActiveNlpPrompt('')
     setKeyword('')
+    setIsNlpNavigationPending(false)
     setNlpCancelRequestId((currentId) => currentId + 1)
 
     if (inputRef.current) inputRef.current.focus()

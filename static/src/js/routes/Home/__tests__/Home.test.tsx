@@ -179,6 +179,25 @@ describe('Home', () => {
       expect(Spinner).not.toHaveBeenCalled()
     }))
 
+    test('does not navigate when cancelling an in-progress NLP search', async () => {
+      const { user } = setup()
+      mockUseNavigate.mockClear()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'fire events')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+    })
+
     test('navigates when NLP stream completes', async () => {
       const { user } = setup()
 
@@ -192,7 +211,10 @@ describe('Home', () => {
         await latestCallProps?.onNlpSearchComplete?.()
       })
 
-      expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+      await waitFor(() => {
+        expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+      })
+
       expect(mockRouterNavigate).toHaveBeenCalledWith(routes.SEARCH, {})
       expect(mockUseNavigate).not.toHaveBeenCalled()
     })

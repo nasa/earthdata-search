@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash-es'
 
 import CmrRequest from './cmrRequest'
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { transformCollectionEntries } from '../collections/transformCollectionEntries'
 
 /**
@@ -17,6 +17,16 @@ export default class NlpSearchRequest extends CmrRequest {
 
   search(searchParams) {
     return this.post(this.searchPath, searchParams)
+  }
+
+  stream(prompt, options = {}) {
+    const query = encodeURIComponent(prompt || '')
+    const { apiHost } = getEnvironmentConfig()
+
+    return fetch(`${apiHost}/nlp?query=${query}`, {
+      method: 'GET',
+      ...options
+    })
   }
 
   /**

@@ -91,7 +91,7 @@ describe('NlpSearchStatus component', () => {
     })
 
     expect(mockStop).toHaveBeenCalledTimes(1)
-    expect(mockStop).toHaveBeenCalledWith([])
+    expect(mockStop).toHaveBeenCalledWith()
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
   })
 
@@ -138,7 +138,6 @@ describe('NlpSearchStatus component', () => {
       selectedRegion: {}
     })
 
-    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
     expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
   })
 

@@ -143,7 +143,12 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
       })
       .catch((error) => {
         request.log.error({ error }, 'Streaming lambda handler failed')
-        responseStream.destroy(error)
+
+        // End the stream gracefully so clients don't report
+        // ERR_INCOMPLETE_CHUNKED_ENCODING on mid-stream failures.
+        if (!responseStream.writableEnded && !responseStream.destroyed) {
+          responseStream.end('NLP stream failed. Please try again.\n')
+        }
       })
 
     return reply.send(responseStream)

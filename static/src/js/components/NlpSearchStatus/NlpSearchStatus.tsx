@@ -8,9 +8,9 @@ import { useCompletion } from '@ai-sdk/react'
 import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { createMockNlpStreamResponse } from '../../localTesting/nlp/createMockNlpStreamResponse'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 // @ts-expect-error: Types do not exist for this file
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 
 // @ts-expect-error: Types do not exist for this file
 import { FINAL_RESULT_MARKER } from '../../../../../sharedConstants/nlpMockStream'
@@ -110,9 +110,6 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   onStreamingChange = () => {},
   onNlpSearchComplete = () => {}
 }) => {
-  const { useMockNlpStream } = getApplicationConfig()
-  const shouldUseMockNlpStream = useMockNlpStream === 'true'
-
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const currentStatusStepRef = useRef('')
   const queuedStatusRef = useRef('')
@@ -166,11 +163,13 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   const {
     setCollectionId,
     changeQuery,
-    handleError
+    handleError,
+    earthdataEnvironment
   } = useEdscStore((state) => ({
     setCollectionId: state.collection.setCollectionId,
     changeQuery: state.query.changeQuery,
-    handleError: state.errors.handleError
+    handleError: state.errors.handleError,
+    earthdataEnvironment: getEarthdataEnvironment(state)
   }))
 
   const {
@@ -190,31 +189,26 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         prompt = body?.prompt || ''
       }
 
-      const query = encodeURIComponent(prompt)
+      const requestObject = new NlpSearchRequest(earthdataEnvironment)
 
-      if (shouldUseMockNlpStream) {
-        return createMockNlpStreamResponse(prompt, init?.signal ?? undefined)
-      }
-
-      return fetch(`/nlp?query=${query}`, {
-        method: 'GET',
+      return requestObject.stream(prompt, {
         headers: init?.headers,
         credentials: init?.credentials,
         signal: init?.signal
       })
     },
-    onFinish: (prompt, completionText) => {
+    onFinish: async (prompt, completionText) => {
       setStatusStep('Building final query...')
 
       const parsedResult = parsedNlpFinalResult(completionText)
 
       if (!parsedResult) {
         handleError({
-          error: new Error('Could not parse NLP response result'),
+          error: new Error('Could not parse server response of query results'),
           action: 'parseNlpResponse',
           resource: 'nlpSearch',
           showAlertButton: true,
-          title: 'Something went wrong parsing NLP search results'
+          title: 'Something went wrong parsing query'
         })
 
         setStatusStep('unable to parse final result')
@@ -232,28 +226,23 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const spatial = parseWktSpatial(spatialArea)
 
-      onStreamingChange(false)
-      queuedStatusRef.current = ''
+      setCollectionId(null)
+      setStatusStep('Retrieving collections')
 
-      // Navigate first, then delay the Zustand update by one tick so
-      // useLocation() has time to reflect /search before URL sync runs.
-      // This avoids a race that pushed the URL back to Home.
-      Promise.resolve(onNlpSearchComplete())
-        .then(() => new Promise((resolve) => { setTimeout(resolve, 0) }))
-        .then(() => {
-          setCollectionId(null)
-          changeQuery({
-            collection: {
-              keyword: keyword || prompt || latestNlpPrompt,
-              temporal: temporal || {},
-              spatial
-            },
-            selectedRegion: {}
-          })
-        })
+      changeQuery({
+        collection: {
+          keyword: keyword || prompt || latestNlpPrompt,
+          temporal: temporal || {},
+          spatial
+        },
+        selectedRegion: {}
+      })
+
+      // Trigger navigation flow in Home after collections retrieval finishes.
+      await Promise.resolve(onNlpSearchComplete())
     },
     onError: (error) => {
-      setStatusStep('NLP Search failed. Please try again')
+      setStatusStep('Query Search failed. Please try again')
 
       handleError({
         error,
