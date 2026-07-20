@@ -5,7 +5,7 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../support/interceptUnauthenticatedCollections'
 import { createNlpHandlers, nlp } from '../../../support/nlpHandlers'
-import { createNlpMockStreamChunks } from '../../../../sharedConstants/nlpMockStream'
+import { createNlpMockStreamChunks } from '../../../support/nlpStreamMock'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import commonBody from './__mocks__/common.body.json'

@@ -15,10 +15,9 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 // @ts-expect-error: Types do not exist for this file
 import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 
-// @ts-expect-error: Types do not exist for this file
-import { FINAL_RESULT_MARKER } from '../../../../../sharedConstants/nlpMockStream'
-
 import './NlpSearchStatus.scss'
+
+export const FINAL_RESULT_MARKER = 'Final result:'
 
 type NlpSearchStatusProps = {
     activePrompt?: string
