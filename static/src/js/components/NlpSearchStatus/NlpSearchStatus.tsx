@@ -5,6 +5,9 @@ import React, {
   useState
 } from 'react'
 import { useCompletion } from '@ai-sdk/react'
+import { bbox as turfbox } from '@turf/turf'
+import GeoJSON from 'ol/format/GeoJSON'
+import WKT from 'ol/format/WKT'
 import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -53,17 +56,7 @@ const parsedNlpFinalResult = (completionText: string) => {
 const parseWktSpatial = (spatialArea: string | undefined) => {
   if (!spatialArea || typeof spatialArea !== 'string') return {}
 
-  const polygonMatch = spatialArea.match(/^POLYGON\s*\(\((.*)\)\)$/i)
-  if (polygonMatch?.[1]) {
-    const polygonString = polygonMatch[1]
-      .split(',')
-      .map((pair) => pair.trim().split(/\s+/).join(','))
-      .join(',')
-
-    return {
-      polygon: [polygonString]
-    }
-  }
+  const roundCoordinate = (value: number) => Number(value.toFixed(5))
 
   const pointMatch = spatialArea.match(/^POINT\s*\((.*)\)$/i)
   if (pointMatch?.[1]) {
@@ -74,7 +67,24 @@ const parseWktSpatial = (spatialArea: string | undefined) => {
     }
   }
 
-  return {}
+  try {
+    const geometry = new WKT().readGeometry(spatialArea)
+    const geoJsonGeometry = new GeoJSON().writeGeometryObject(geometry)
+    const [minLongitude, minLatitude, maxLongitude, maxLatitude] = turfbox(geoJsonGeometry)
+
+    const boundingBox = [
+      roundCoordinate(minLongitude),
+      roundCoordinate(minLatitude),
+      roundCoordinate(maxLongitude),
+      roundCoordinate(maxLatitude)
+    ].join(',')
+
+    return {
+      boundingBox: [boundingBox]
+    }
+  } catch {
+    return {}
+  }
 }
 
 const toProgressStep = (line: string) => {
