@@ -68,19 +68,26 @@ If you decide to install via Homebrew you'll need to create the default user.
 
 Docker is used to simulate SQS locally using [ElasticMQ](https://github.com/softwaremill/elasticmq).
 
-##### Redis, Optional
+##### Valkey, Optional
 
-To use an image cache you need to have Redis installed.
+To use an image cache (for scaled images and NLP search) you need to have Valkey installed locally. 
 
 **Recommended:** Use Homebrew
 
-    brew install redis
+    brew install valkey
+    brew services start valkey
 
-Optionally you can run Redis in a Docker container with
+**Migrating from Redis:**
+If you previously had Redis installed, you must stop and uninstall it, and ensure port `6379` is clear before starting Valkey. 
+
+    brew services stop redis
+    brew uninstall redis
+
+Optionally you can run Valkey in a Docker container with:
 
     npm run start:cache
 
-To stop the Redis Docker container
+To stop the Docker container:
 
     npm run stop:cache
 
@@ -154,7 +161,7 @@ This will start everything you need to run Earthdata Search locally.
 
 By default we don't run all services locally. In order to run the application with those services you need to include the follow environment variables when you start the application.
 
-- USE_CACHE: This will use a local Redis instance to cache images from GIBS, as well as geocoder results.
+- USE_CACHE: This will use a local Valkey instance to cache images from GIBS, as well as geocoder results.
 - SKIP_SQS: When set to true this will skip adding retrievals to SQS, so your retrievals will not be submitted without a manual lambdas invocation.
 - USE_NLP_SEARCH: When set to true this will call AWS Bedrock to parse your query on the landing page.
 - USE_GEOCODER: When set to true this will enable the geocoder lambda (running in Docker) to be called from the nlpSearch lambda to provide geocoding results.

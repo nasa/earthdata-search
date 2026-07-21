@@ -1,4 +1,4 @@
-import Redis from 'ioredis'
+import Valkey from 'ioredis'
 
 let cacheClient
 
@@ -19,7 +19,7 @@ export const getCacheConnection = () => {
     port = '6379'
   }
 
-  cacheClient = new Redis({
+  cacheClient = new Valkey({
     host,
     port
   })

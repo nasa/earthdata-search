@@ -150,18 +150,6 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
       vpcId: VPC_ID
     })
 
-    // Have to leave redis in place because the outputs are still being imported by the EDSC stack. Once the EDSC stack is updated to remove the redis outputs, this can be removed.
-    // eslint-disable-next-line no-new
-    new infrastructure.Redis(this, 'EDSCRedis', {
-      appName: 'EarthdataSearch',
-      cacheName: `earthdata-search-${STAGE_NAME}`,
-      cacheNodeType: 'cache.t2.medium',
-      engineVersion: '7.0',
-      stageName: STAGE_NAME,
-      subnetIds: [SUBNET_ID_A, SUBNET_ID_B],
-      vpcId: VPC_ID
-    })
-
     // eslint-disable-next-line no-new
     new infrastructure.Valkey(this, 'EDSCValkey', {
       appName: 'EarthdataSearch',
