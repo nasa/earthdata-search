@@ -264,12 +264,11 @@ test.describe('Home Page', () => {
       await expect(page.locator('.nlp-search-chat__step'), 'NLP chat step should be visible while NLP is running').toBeVisible()
 
       // Checks that status text progresses while NLP is running.
-      await expect(page.getByText(/Analyzing your query|Waiting for Query parsing status updates/i)).toBeVisible()
       await expect(page.getByText(/Extracted keyword of "average temp"\.?/i)).toBeVisible({ timeout: 10000 })
 
       await expect(page).toHaveURL(/q=average(?:%20|\+)temp/, { timeout: 15000 })
       await expect(page).toHaveURL(/qt=2026-04-01T00%3A00%3A00\.000Z%2C2026-04-30T23%3A59%3A59\.999Z/, { timeout: 15000 })
-      await expect(page).toHaveURL(/polygon\[0\]=-116\.050002%2C44\.358209/, { timeout: 15000 })
+      await expect(page).toHaveURL(/sb\[0\]=-116\.05%2C44\.35821%2C-109\.64514%2C49\.00139/, { timeout: 15000 })
     })
 
     test('sends the expected prompt to the /nlp endpoint', async ({ page }) => {

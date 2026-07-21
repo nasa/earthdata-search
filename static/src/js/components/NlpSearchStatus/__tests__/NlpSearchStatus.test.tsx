@@ -50,9 +50,9 @@ const setup = setupTest({
   defaultProps: {
     activePrompt: '',
     requestId: 0,
-    cancelRequestId: 0,
     onStreamingChange: vi.fn(),
-    onNlpSearchComplete: vi.fn()
+    onNlpSearchComplete: vi.fn(),
+    onNlpSearchFailed: vi.fn()
   }
 })
 
@@ -81,18 +81,6 @@ describe('NlpSearchStatus component', () => {
     })
 
     expect(mockComplete).toHaveBeenCalledWith('glaciers in montana')
-  })
-
-  test('handles cancel request by stopping stream and resetting state', () => {
-    const { props } = setup({
-      overrideProps: {
-        cancelRequestId: 1
-      }
-    })
-
-    expect(mockStop).toHaveBeenCalledTimes(1)
-    expect(mockStop).toHaveBeenCalledWith()
-    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
   })
 
   test('applies parsed NLP result and triggers completion callback', async () => {
@@ -141,12 +129,47 @@ describe('NlpSearchStatus component', () => {
     expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
   })
 
-  test('reports parsing errors when final result is not valid json', () => {
-    const { props, zustandState } = setup()
+  test('reports parsing errors when final result is not valid json', async () => {
+    const { props, zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'bad payload for query',
+        requestId: 1
+      }
+    })
 
-    capturedUseCompletionOptions.onFinish?.('prompt', 'Final result:\nnot-json')
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+    })
+
+    act(() => {
+      capturedUseCompletionOptions.onFinish?.('prompt', 'Final result:\nnot-json')
+    })
 
     expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
+  })
+
+  test('resets UI and calls onNlpSearchFailed when onError fires', async () => {
+    const { props } = setup({
+      overrideProps: {
+        activePrompt: 'error',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+    })
+
+    act(() => {
+      capturedUseCompletionOptions.onError?.(new Error('NLP service unavailable'))
+    })
+
+    expect(props.onStreamingChange).toHaveBeenCalledTimes(2)
+    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
   })
 })

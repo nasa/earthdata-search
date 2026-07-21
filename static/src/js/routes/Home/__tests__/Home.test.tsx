@@ -16,6 +16,7 @@ vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <di
 
 type NlpSearhStatusMockProps = {
   onNlpSearchComplete?: () => void
+  onNlpSearchFailed?: () => void
   onStreamingChange?: (isStreaming: boolean) => void
 }
 
@@ -195,6 +196,64 @@ describe('Home', () => {
 
       await user.click(screen.getByRole('button', { name: /cancel/i }))
 
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+    })
+
+    test('does not naivage if NLP completes after cancel is clicked', async () => {
+      const { user } = setup()
+      mockUseNavigate.mockClear()
+      mockRouterNavigate.mockClear()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+      const searchButton = screen.getByRole('button', { name: /search/i })
+
+      await user.type(searchInput, 'test search')
+      await user.click(searchButton)
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+      await act(async () => {
+        latestCallProps?.onNlpSearchComplete?.()
+      })
+
+      expect(mockRouterNavigate).not.toHaveBeenCalled()
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+    })
+
+    test('resets UI when Nlp search fails', async () => {
+      const { user } = setup()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+      const searchButton = screen.getByRole('button', { name: /search/i })
+
+      await user.type(searchInput, 'test search')
+      await user.click(searchButton)
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await waitFor(() => {
+        expect(searchInput).toBeDisabled()
+      })
+
+      await act(async () => {
+        latestCallProps?.onNlpSearchFailed?.()
+      })
+
+      await waitFor(() => {
+        expect(searchInput).toBeEnabled()
+      })
+
+      expect(screen.queryByRole('button', { name: /cancel/i })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument()
+      expect(mockRouterNavigate).not.toHaveBeenCalled()
       expect(mockUseNavigate).not.toHaveBeenCalled()
     })
 

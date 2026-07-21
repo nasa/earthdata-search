@@ -22,9 +22,9 @@ export const FINAL_RESULT_MARKER = 'Final result:'
 type NlpSearchStatusProps = {
     activePrompt?: string
     requestId?: number
-    cancelRequestId?: number
     onStreamingChange?: (isStreaming: boolean) => void
     onNlpSearchComplete?: () => void | Promise<void>
+    onNlpSearchFailed?: () => void
 }
 
 const getNLPDisplayText = (completionText: string) => {
@@ -90,6 +90,10 @@ const toProgressStep = (line: string) => {
   const normalizedLine = line.replace(/^[-*]\s*/, '').trim()
   if (!normalizedLine) return ''
 
+  // Supress raw error lines from /nlp
+  // They are handled by the error callback, not displayed as steps
+  if (/^error:/i.test(normalizedLine)) return ''
+
   const temporalMatch = normalizedLine.match(/^Found temporal of (.*)\.?$/i)
   if (temporalMatch?.[1]) return `Extracted temporal range of ${temporalMatch?.[1]}`
 
@@ -115,58 +119,22 @@ const extractProgressSteps = (completionText: string) => {
 const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   activePrompt = '',
   requestId,
-  cancelRequestId,
   onStreamingChange = () => {},
-  onNlpSearchComplete = () => {}
+  onNlpSearchComplete = () => {},
+  onNlpSearchFailed = () => {}
 }) => {
-  const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const currentStatusStepRef = useRef('')
-  const queuedStatusRef = useRef('')
   const lastStartedRequestIdRef = useRef<number | null>(null)
-  const lastHandledCancelRequestIdRef = useRef<number>(0)
 
-  const [latestNlpPrompt, setLatestNlpPrompt] = useState('')
-  const [displayStatusStep, setDisplayStatusStep] = useState('')
-  const [statusTransitionState, setStatusTransitionState] = useState<'idle' | 'fading-out' | 'fading-in'>('idle')
+  const [statusSteps, setStatusSteps] = useState<string[]>([])
 
-  const setStatusStep = useCallback((nextStep: string) => {
+  const appendStatusStep = useCallback((nextStep: string) => {
     if (!nextStep) return
 
-    if (
-      nextStep === currentStatusStepRef.current
-            || nextStep === queuedStatusRef.current
-    ) return
+    setStatusSteps((previousSteps) => {
+      if (previousSteps[previousSteps.length - 1] === nextStep) return previousSteps
 
-    queuedStatusRef.current = nextStep
-
-    if (transitionTimeoutRef.current) {
-      clearTimeout(transitionTimeoutRef.current)
-    }
-
-    if (!currentStatusStepRef.current) {
-      currentStatusStepRef.current = nextStep
-      setDisplayStatusStep(nextStep)
-      setStatusTransitionState('fading-in')
-
-      transitionTimeoutRef.current = setTimeout(() => {
-        setStatusTransitionState('idle')
-      }, 180)
-
-      return
-    }
-
-    setStatusTransitionState('fading-out')
-
-    transitionTimeoutRef.current = setTimeout(() => {
-      currentStatusStepRef.current = queuedStatusRef.current
-      setDisplayStatusStep(queuedStatusRef.current)
-      queuedStatusRef.current = ''
-      setStatusTransitionState('fading-in')
-
-      transitionTimeoutRef.current = setTimeout(() => {
-        setStatusTransitionState('idle')
-      }, 180)
-    }, 150)
+      return [...previousSteps, nextStep]
+    })
   }, [])
 
   const {
@@ -207,7 +175,10 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       })
     },
     onFinish: async (prompt, completionText) => {
-      setStatusStep('Building final query...')
+      // Ignore stale completions for a request that has been cancelled.
+      if (lastStartedRequestIdRef.current == null) return
+
+      appendStatusStep('Building final query...')
 
       const parsedResult = parsedNlpFinalResult(completionText)
 
@@ -220,9 +191,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
           title: 'Something went wrong parsing query'
         })
 
-        setStatusStep('unable to parse final result')
+        appendStatusStep('Unable to parse final result')
         onStreamingChange(false)
-        queuedStatusRef.current = ''
+        onNlpSearchFailed()
 
         return
       }
@@ -236,11 +207,11 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       const spatial = parseWktSpatial(spatialArea)
 
       setCollectionId(null)
-      setStatusStep('Retrieving collections')
+      appendStatusStep('Retrieving collections')
 
       changeQuery({
         collection: {
-          keyword: keyword || prompt || latestNlpPrompt,
+          keyword: keyword || prompt,
           temporal: temporal || {},
           spatial
         },
@@ -251,18 +222,20 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       await Promise.resolve(onNlpSearchComplete())
     },
     onError: (error) => {
-      setStatusStep('Query Search failed. Please try again')
+      // Ignore stale errors for a request that has been cancelled.
+      if (lastStartedRequestIdRef.current == null) return
 
       handleError({
         error,
         action: 'fetchNlpSearch',
         resource: 'nlpSearch',
         showAlertButton: true,
-        title: 'Something went wrong fetching NLP search results'
+        title: 'Something went wrong fetching query search results'
       })
 
+      lastStartedRequestIdRef.current = null
       onStreamingChange(false)
-      queuedStatusRef.current = ''
+      onNlpSearchFailed()
     }
   })
 
@@ -272,31 +245,40 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     const parsedSteps = extractProgressSteps(completion)
     if (parsedSteps.length === 0) return
 
-    const latestParsedStep = parsedSteps[parsedSteps.length - 1]
-    setStatusStep(latestParsedStep)
-  }, [completion, isNlpLoading, setStatusStep])
+    setStatusSteps((previousSteps) => {
+      const nextSteps = previousSteps.filter((step) => step !== 'Analyzing your query...')
+
+      parsedSteps.forEach((step) => {
+        if (!nextSteps.includes(step)) nextSteps.push(step)
+      })
+
+      return nextSteps
+    })
+  }, [completion, isNlpLoading])
 
   const runPrompt = useCallback(async (prompt: string, nextRequestId: number) => {
     if (!prompt || isNlpLoading) return
 
     lastStartedRequestIdRef.current = nextRequestId
     setCompletion('')
-    setLatestNlpPrompt(prompt)
-    queuedStatusRef.current = ''
-    currentStatusStepRef.current = 'Analyzing your query...'
-    setDisplayStatusStep('Analyzing your query...')
-    setStatusTransitionState('idle')
+    setStatusSteps(['Analyzing your query...'])
 
     onStreamingChange(true)
 
-    await complete(prompt)
-  }, [complete, isNlpLoading, onStreamingChange, setCompletion])
+    try {
+      await complete(prompt)
+    } catch {
+      // Safety because complete() can throw when onError doesn't fire
+      // due to network error. Reset only if request is active
+      if (lastStartedRequestIdRef.current != null) {
+        lastStartedRequestIdRef.current = null
+        onStreamingChange(false)
+        onNlpSearchFailed()
+      }
+    }
+  }, [complete, isNlpLoading, onNlpSearchFailed, onStreamingChange, setCompletion])
 
   useEffect(() => () => {
-    if (transitionTimeoutRef.current) {
-      clearTimeout(transitionTimeoutRef.current)
-    }
-
     // Prevent duplicate active streams during dev Strict Mode remounts.
     if (typeof stop === 'function') stop()
   }, [])
@@ -310,32 +292,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     runPrompt(trimmedPrompt, requestId)
   }, [activePrompt, requestId, runPrompt])
 
-  useEffect(() => {
-    if (!cancelRequestId || cancelRequestId <= lastHandledCancelRequestIdRef.current) return
-
-    lastHandledCancelRequestIdRef.current = cancelRequestId
-
-    if (transitionTimeoutRef.current) {
-      clearTimeout(transitionTimeoutRef.current)
-    }
-
-    if (typeof stop === 'function') stop()
-
-    lastStartedRequestIdRef.current = null
-    queuedStatusRef.current = ''
-    currentStatusStepRef.current = ''
-    setDisplayStatusStep('')
-    setStatusTransitionState('idle')
-    onStreamingChange(false)
-  }, [cancelRequestId, onStreamingChange, stop])
-
-  const statusStepLabel = displayStatusStep || 'Waiting for Query parsing status updates'
-  const statusStepClassName = [
-    'nlp-search-chat__step',
-    displayStatusStep ? 'nlp-search-chat__step--latest' : 'nlp-search-chat__step--muted',
-    statusTransitionState === 'fading-out' ? 'nlp-search-chat__step--fading-out' : '',
-    statusTransitionState === 'fading-in' ? 'nlp-search-chat__step--fading-in' : ''
-  ].filter(Boolean).join(' ')
+  const latestStatusStep = statusSteps[statusSteps.length - 1] || ''
 
   return (
     <section className="nlp-search-chat" aria-live="polite">
@@ -349,7 +306,41 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
             label="NLP parsing in progress"
           />
           <div className="nlp-search-chat__step-text-wrap">
-            <p className={statusStepClassName}>{statusStepLabel}</p>
+            {
+              statusSteps.length === 0
+                ? (
+                  <p className="nlp-search-chat__step nlp-search-chat__step--muted">
+                    Waiting for Query parsing status updates
+                  </p>
+                )
+                : (
+                  <ul
+                    className="nlp-search-chat__steps"
+                    aria-label="Search query parsing updates"
+                  >
+                    {
+                      statusSteps.map((step, index) => {
+                        const key = `${step}-${index}`
+                        const isLatest = step === latestStatusStep
+                          && index === statusSteps.length - 1
+
+                        return (
+                          <li
+                            key={key}
+                            className={
+                              ['nlp-search-chat__step',
+                                isLatest ? 'nlp-search-chat__step--latest' : ''
+                              ].filter(Boolean).join(' ')
+                            }
+                          >
+                            {step}
+                          </li>
+                        )
+                      })
+                    }
+                  </ul>
+                )
+            }
           </div>
         </div>
       </div>

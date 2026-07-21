@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useRef,
   useState
@@ -155,10 +156,11 @@ const topics: HomeTopic[] = [
 export const Home: React.FC = () => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
+  const isNlpActiveRef = useRef(false)
+  const suppressNextSubmitRef = useRef(false)
   const [showAllPortals, setShowAllPortals] = useState(false)
   const [activeNlpPrompt, setActiveNlpPrompt] = useState('')
   const [nlpRequestId, setNlpRequestId] = useState(0)
-  const [nlpCancelRequestId, setNlpCancelRequestId] = useState(0)
   const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
   const [isNlpStreaming, setIsNlpStreaming] = useState(false)
   const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
@@ -214,8 +216,51 @@ export const Home: React.FC = () => {
     q: keyword
   }
 
+  const onNlpSearchComplete = React.useCallback(() => {
+    // Use ref instead of state so check is synchronous. State
+    // wouldstill see stale values of onFinish fire
+    // jj
+    //
+    //
+    if (!isNlpActiveRef.current) return undefined
+
+    // Queue navigation only while the current NLP request is still active.
+    return Promise.resolve(setIsNlpNavigationPending(true))
+  }, [])
+  //
+  //
+  //
+  //
+  //
+  const resetNlpSearchUi = useCallback(() => {
+    suppressNextSubmitRef.current = true
+    isNlpActiveRef.current = false
+    setIsNlpStreaming(false)
+    setHasSubmittedNlpSearch(false)
+    setActiveNlpPrompt('')
+    setKeyword('')
+    setIsNlpNavigationPending(false)
+
+    if (inputRef.current) inputRef.current.focus()
+  }, [])
+
+  const onNlpSearchFailed = useCallback(() => {
+    resetNlpSearchUi()
+  }, [resetNlpSearchUi])
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    // Guards against any submit event that immediately follows a cancel or
+    // failure reset (e.g. a race condition causing form submission that
+    // that clears hasSubmittedNlpSearch). Without this, the empty-keyword
+    // branch below would incorrectly redirect to /search
+    //
+    if (suppressNextSubmitRef.current) {
+      suppressNextSubmitRef.current = false
+
+      return
+    }
+
     const trimmedKeyword = keyword.trim()
 
     if (isNlpEnabled) {
@@ -232,6 +277,7 @@ export const Home: React.FC = () => {
         return
       }
 
+      isNlpActiveRef.current = true
       setIsNlpStreaming(true)
       setActiveNlpPrompt(trimmedKeyword)
       setHasSubmittedNlpSearch(true)
@@ -251,31 +297,32 @@ export const Home: React.FC = () => {
     navigate(`${routes.SEARCH}${window.location.search}`)
   }
 
-  const onNlpSearchComplete = () => (
-    // Queue navigation until collections retrieval has completed.
-    Promise.resolve(setIsNlpNavigationPending(true))
-  )
-
   useEffect(() => {
     if (!isNlpEnabled) return
+    if (!hasSubmittedNlpSearch || !isNlpStreaming) return
     if (!isNlpNavigationPending || isLoading) return
+    if (!isNlpActiveRef.current) return
 
     Promise.resolve(routerHelper.router?.navigate(routes.SEARCH, {}))
       .finally(() => {
         setIsNlpStreaming(false)
         setIsNlpNavigationPending(false)
       })
-  }, [isLoading, isNlpEnabled, isNlpNavigationPending])
+  }, [
+    hasSubmittedNlpSearch,
+    isLoading,
+    isNlpEnabled,
+    isNlpNavigationPending,
+    isNlpStreaming
+  ])
 
-  const onCancelNlpSearch = () => {
-    setIsNlpStreaming(false)
-    setHasSubmittedNlpSearch(false)
-    setActiveNlpPrompt('')
-    setKeyword('')
-    setIsNlpNavigationPending(false)
-    setNlpCancelRequestId((currentId) => currentId + 1)
+  const onCancelNlpSearch = (event?:React.SyntheticEvent) => {
+    // Syncronously mark NLP as inactive so any inflight onNlpSearchComplete
+    // sees the cancellation before React does state updates.
+    event?.preventDefault()
+    event?.stopPropagation()
 
-    if (inputRef.current) inputRef.current.focus()
+    resetNlpSearchUi()
   }
 
   const isSearchInputDisabled = isNlpEnabled && isNlpStreaming
@@ -369,9 +416,9 @@ export const Home: React.FC = () => {
                   <NlpSearchStatus
                     activePrompt={activeNlpPrompt}
                     requestId={nlpRequestId}
-                    cancelRequestId={nlpCancelRequestId}
                     onStreamingChange={setIsNlpStreaming}
                     onNlpSearchComplete={onNlpSearchComplete}
+                    onNlpSearchFailed={onNlpSearchFailed}
                   />
                 </div>
               )
