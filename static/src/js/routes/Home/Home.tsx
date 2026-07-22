@@ -219,19 +219,13 @@ export const Home: React.FC = () => {
   const onNlpSearchComplete = React.useCallback(() => {
     // Use ref instead of state so check is synchronous. State
     // wouldstill see stale values of onFinish fire
-    // jj
-    //
-    //
+
     if (!isNlpActiveRef.current) return undefined
 
     // Queue navigation only while the current NLP request is still active.
     return Promise.resolve(setIsNlpNavigationPending(true))
   }, [])
-  //
-  //
-  //
-  //
-  //
+
   const resetNlpSearchUi = useCallback(() => {
     suppressNextSubmitRef.current = true
     isNlpActiveRef.current = false
@@ -254,7 +248,6 @@ export const Home: React.FC = () => {
     // failure reset (e.g. a race condition causing form submission that
     // that clears hasSubmittedNlpSearch). Without this, the empty-keyword
     // branch below would incorrectly redirect to /search
-    //
     if (suppressNextSubmitRef.current) {
       suppressNextSubmitRef.current = false
 
@@ -326,12 +319,13 @@ export const Home: React.FC = () => {
   }
 
   const isSearchInputDisabled = isNlpEnabled && isNlpStreaming
+  const shouldShowNlpStatus = isNlpEnabled && hasSubmittedNlpSearch && !!activeNlpPrompt
 
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
         <section
-          className="home__hero position-relative w-100 d-flex px-5 flex-column justify-content-center flex-shrink-0 gap-5"
+          className={`home__hero position-relative w-100 d-flex px-5 flex-column flex-shrink-0 ${shouldShowNlpStatus ? 'gap-0' : 'gap-5'}`}
         >
           <picture className="home__hero-image position-absolute">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
@@ -341,77 +335,88 @@ export const Home: React.FC = () => {
               alt="Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra platform on March 12, 2025"
             />
           </picture>
-          <div className="text-center z-1 d-flex gap-3 flex-column">
-            <h1 className="text-white display-7">
-              Search NASA&apos;s
-              {' '}
-              {numberOfGranules}
-              {' '}
-              Earth observations
-            </h1>
+          <div className="home__hero-main d-flex flex-shrink-1 flex-column z-1">
+            <div className="home__hero-main-content d-flex flex-shrink-1 flex-column justify-content-center gap-5">
+              <div className="text-center d-flex gap-3 flex-column">
+                <h1 className="text-white display-7">
+                  Search NASA&apos;s
+                  {' '}
+                  {numberOfGranules}
+                  {' '}
+                  Earth observations
+                </h1>
+                {
+                  isNlpEnabled ? (
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Badge className="home__new-badge">
+                        NEW
+                      </Badge>
+                      <p className="text-white mb-0 lead">
+                        Describe what you&apos;re looking for to start your search
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-white mb-0 lead">
+                      Use keywords and filter by time and spatial area
+                      to search NASA&apos;s Earth science data
+                    </p>
+                  )
+                }
+              </div>
+              <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 justify-content-center align-items-center gap-3">
+                <form
+                  className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
+                    <EDSCIcon
+                      className="home__hero-input-icon position-absolute"
+                      icon={Search}
+                      size="22px"
+                    />
+                    <input
+                      className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
+                      onChange={onChangeKeyword}
+                      placeholder={isNlpEnabled ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
+                      ref={inputRef}
+                      type="text"
+                      value={keyword}
+                      disabled={isSearchInputDisabled}
+                      aria-busy={isSearchInputDisabled}
+                    />
+                  </div>
+                  {
+                    !isNlpEnabled && (
+                      <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                        <TemporalSelectionDropdown searchParams={searchParams} />
+                        <SpatialSelectionDropdown searchParams={searchParams} />
+                      </div>
+                    )
+                  }
+                  <Button
+                    type={isNlpStreaming ? 'button' : 'submit'}
+                    className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
+                    bootstrapVariant="primary"
+                    bootstrapSize="lg"
+                    spinner={!isNlpStreaming && isLoading}
+                    onClick={isNlpStreaming ? onCancelNlpSearch : undefined}
+                  >
+                    {isNlpStreaming ? 'Cancel' : 'Search'}
+                  </Button>
+                </form>
+              </div>
+            </div>
             {
-              isNlpEnabled ? (
-                <div className="d-flex justify-content-center align-items-center">
-                  <Badge className="home__new-badge">
-                    NEW
-                  </Badge>
-                  <p className="text-white mb-0 lead">
-                    Describe what you&apos;re looking for to start your search
-                  </p>
+              !shouldShowNlpStatus && (
+                <div className="home__hero-browse d-flex justify-content-center">
+                  <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
                 </div>
-              ) : (
-                <p className="text-white mb-0 lead">
-                  Use keywords and filter by time and spatial area
-                  to search NASA&apos;s Earth science data
-                </p>
               )
             }
           </div>
-          <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
-            <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
-              <form
-                className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
-                onSubmit={handleSubmit}
-              >
-                <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
-                  <EDSCIcon
-                    className="home__hero-input-icon position-absolute"
-                    icon={Search}
-                    size="22px"
-                  />
-                  <input
-                    className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
-                    onChange={onChangeKeyword}
-                    placeholder={isNlpEnabled ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
-                    ref={inputRef}
-                    type="text"
-                    value={keyword}
-                    disabled={isSearchInputDisabled}
-                    aria-busy={isSearchInputDisabled}
-                  />
-                </div>
-                {
-                  !isNlpEnabled && (
-                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                      <TemporalSelectionDropdown searchParams={searchParams} />
-                      <SpatialSelectionDropdown searchParams={searchParams} />
-                    </div>
-                  )
-                }
-                <Button
-                  type={isNlpStreaming ? 'button' : 'submit'}
-                  className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
-                  bootstrapVariant="primary"
-                  bootstrapSize="lg"
-                  spinner={!isNlpStreaming && isLoading}
-                  onClick={isNlpStreaming ? onCancelNlpSearch : undefined}
-                >
-                  {isNlpStreaming ? 'Cancel' : 'Search'}
-                </Button>
-              </form>
-            </div>
-            {
-              isNlpEnabled && hasSubmittedNlpSearch && !!activeNlpPrompt && (
+          {
+            shouldShowNlpStatus && (
+              <div className="home__hero-status-stack z-1">
                 <div className="home__nlp-chat-wrapper">
                   <NlpSearchStatus
                     activePrompt={activeNlpPrompt}
@@ -421,12 +426,12 @@ export const Home: React.FC = () => {
                     onNlpSearchFailed={onNlpSearchFailed}
                   />
                 </div>
-              )
-            }
-            <div className="d-flex flex-grow-1 justify-content-center">
-              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
-            </div>
-          </div>
+                <div className="home__hero-browse home__hero-browse--stacked d-flex justify-content-center">
+                  <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
+                </div>
+              </div>
+            )
+          }
           <OverlayTrigger
             trigger="click"
             placement="top"
