@@ -33,4 +33,5 @@ Please include relevant screenshots or files that would be helpful in reviewing 
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation
+- [ ] I have run `npm audit fix` and made note of any changes in this PR
 - [ ] My changes generate no new warnings

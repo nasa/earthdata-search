@@ -214,7 +214,6 @@
     "react-virtualized-auto-sizer": "^1.0.26",
     "react-window": "^1.8.11",
     "react-window-infinite-loader": "^1.0.10",
-    "redis": "^4.6.11",
     "regenerator-runtime": "^0.13.9",
     "reselect": "^4.1.5",
     "sanitize-html": "^2.7.0",
