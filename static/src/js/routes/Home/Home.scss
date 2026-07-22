@@ -30,7 +30,11 @@
     max-width: 60rem;
     width: 100%;
     align-self: center;
-    margin-top: -11rem;
+    // Keep status close to the input on larger screens, but avoid overlap on short viewports.
+    margin-top: 11rem;
+    @media (max-height: 760px) {
+      margin-top: -8.5rem;
+    }
   }
 
   &__hero-image {
