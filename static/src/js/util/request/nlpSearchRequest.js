@@ -23,10 +23,7 @@ export default class NlpSearchRequest extends CmrRequest {
     const query = encodeURIComponent(prompt || '')
     const { apiHost } = getEnvironmentConfig()
 
-    return fetch(`${apiHost}/nlp?query=${query}`, {
-      method: 'GET',
-      ...options
-    })
+    return super.stream(`/nlp?query=${query}`, options, apiHost)
   }
 
   /**

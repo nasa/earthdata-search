@@ -97,6 +97,24 @@ describe('Request#search', () => {
   })
 })
 
+describe('Request#stream', () => {
+  test('calls fetch with baseUrl and provided options', async () => {
+    const request = new Request(baseUrl, 'prod')
+    const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({ ok: true } as Response)
+    const { signal } = new AbortController()
+
+    await request.stream('/nlp?query=test', { signal })
+
+    expect(fetchSpy).toHaveBeenCalledWith('http://example.com/nlp?query=test', {
+      method: 'GET',
+      signal,
+      headers: new Headers()
+    })
+
+    fetchSpy.mockRestore()
+  })
+})
+
 describe('Request#handleUnauthorized', () => {
   const originalWindowLocation = window.location
 

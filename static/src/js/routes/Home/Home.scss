@@ -31,7 +31,7 @@
     width: 100%;
     align-self: center;
     // Keep status close to the input on larger screens, but avoid overlap on short viewports.
-    margin-top: 11rem;
+    margin-top: -11rem;
     @media (max-height: 760px) {
       margin-top: -8.5rem;
     }

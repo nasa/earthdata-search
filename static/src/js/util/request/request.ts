@@ -10,6 +10,14 @@ import type {
 } from '../../types/sharedTypes'
 import { routes } from '../../constants/routes'
 
+type StreamRequestCredentials = 'include' | 'omit' | 'same-origin'
+
+type StreamRequestOptions = {
+  credentials?: StreamRequestCredentials
+  headers?: Headers | Record<string, string>
+  signal?: AbortSignal
+}
+
 const defaultTransformResponse = Array.isArray(axios.defaults.transformResponse)
   ? axios.defaults.transformResponse
   : []
@@ -192,6 +200,25 @@ export default class Request {
     })
 
     return axiosObject
+  }
+
+  /**
+   * Makes a streamed GET request to the provided URL using fetch.
+   * This is used for APIs that progressively write their response body
+  /**
+   * @param {String} url URL to send the request to
+   * @param {Object} options Fetch request options
+   * @param {String} baseURL Optional baseUrl override
+   * @return {Promise<Response>} The fetch response promise
+   */
+  stream(url: string, options:StreamRequestOptions = {}, baseURL = this.baseUrl) {
+    const normalizedBaseUrl = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL
+    const normalisedUrl = url.startsWith('/') ? url : `/${url}`
+
+    return fetch(`${normalizedBaseUrl}${normalisedUrl}`, {
+      method: 'GET',
+      ...options
+    })
   }
 
   /**
