@@ -15,6 +15,7 @@ import {
   hasToolCall
 } from 'ai'
 import { z } from 'zod'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
@@ -182,9 +183,12 @@ export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
 }
 
 export const handler = async (event, originalResponseStream) => {
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const httpResponseMetadata = {
     statusCode: 200,
     headers: {
+      ...defaultResponseHeaders,
       'Content-Type': 'text/plain'
     }
   }
