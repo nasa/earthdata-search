@@ -18,6 +18,7 @@ import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 import './NlpSearchStatus.scss'
 
 export const FINAL_RESULT_MARKER = 'Final result:'
+const INTERMEDIATE_STEPS_DELAY_MS = 1000
 
 type NlpSearchStatusProps = {
     activePrompt?: string
@@ -124,8 +125,18 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   onNlpSearchFailed = () => {}
 }) => {
   const lastStartedRequestIdRef = useRef<number | null>(null)
+  const intermediateStepsTimeRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const completionTextRef = useRef('')
 
   const [statusSteps, setStatusSteps] = useState<string[]>([])
+  const [showIntermediateSteps, setShowIntermediateSteps] = useState(false)
+
+  const clearIntermediateStepsTimer = useCallback(() => {
+    if (intermediateStepsTimeRef.current) {
+      clearTimeout(intermediateStepsTimeRef.current)
+      intermediateStepsTimeRef.current = null
+    }
+  }, [])
 
   const appendStatusStep = useCallback((nextStep: string) => {
     if (!nextStep) return
@@ -134,6 +145,21 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       if (previousSteps[previousSteps.length - 1] === nextStep) return previousSteps
 
       return [...previousSteps, nextStep]
+    })
+  }, [])
+
+  const applyIntermediateSteps = useCallback((completionText:string) => {
+    const parsedSteps = extractProgressSteps(completionText)
+    if (parsedSteps.length === 0) return
+
+    setStatusSteps((previousSteps) => {
+      const nextSteps = previousSteps.filter((step) =>  step !== 'Analyzing your query...')
+
+      parsedSteps.forEach((step) => {
+        if (!nextSteps.includes(step)) nextSteps.push(step)
+      })
+
+      return nextSteps
     })
   }, [])
 
@@ -177,6 +203,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     onFinish: async (prompt, completionText) => {
       // Ignore stale completions for a request that has been cancelled.
       if (lastStartedRequestIdRef.current == null) return
+
+      clearIntermediateStepsTimer()
 
       appendStatusStep('Building final query...')
 
@@ -225,6 +253,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       // Ignore stale errors for a request that has been cancelled.
       if (lastStartedRequestIdRef.current == null) return
 
+      clearIntermediateStepsTimer()
+
       handleError({
         error,
         action: 'fetchNlpSearch',
@@ -240,28 +270,31 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   })
 
   useEffect(() => {
+    completionTextRef.current = completion
+  }, [completion])
+
+  useEffect(() => {
+    if(!showIntermediateSteps) return
     if (!isNlpLoading) return
 
-    const parsedSteps = extractProgressSteps(completion)
-    if (parsedSteps.length === 0) return
-
-    setStatusSteps((previousSteps) => {
-      const nextSteps = previousSteps.filter((step) => step !== 'Analyzing your query...')
-
-      parsedSteps.forEach((step) => {
-        if (!nextSteps.includes(step)) nextSteps.push(step)
-      })
-
-      return nextSteps
-    })
-  }, [completion, isNlpLoading])
+    applyIntermediateSteps(completion)
+  }, [applyIntermediateSteps, completion, isNlpLoading, showIntermediateSteps])
 
   const runPrompt = useCallback(async (prompt: string, nextRequestId: number) => {
     if (!prompt || isNlpLoading) return
 
     lastStartedRequestIdRef.current = nextRequestId
+    clearIntermediateStepsTimer()
+    setShowIntermediateSteps(false)
     setCompletion('')
     setStatusSteps(['Analyzing your query...'])
+
+    intermediateStepsTimeRef.current = setTimeout(() => {
+      if (lastStartedRequestIdRef.current === nextRequestId) {
+        setShowIntermediateSteps(true)
+        applyIntermediateSteps(completionTextRef.current)
+      }
+    }, INTERMEDIATE_STEPS_DELAY_MS)
 
     onStreamingChange(true)
 
@@ -271,17 +304,19 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       // Safety because complete() can throw when onError doesn't fire
       // due to network error. Reset only if request is active
       if (lastStartedRequestIdRef.current != null) {
+        clearIntermediateStepsTimer()
         lastStartedRequestIdRef.current = null
         onStreamingChange(false)
         onNlpSearchFailed()
       }
     }
-  }, [complete, isNlpLoading, onNlpSearchFailed, onStreamingChange, setCompletion])
+  }, [applyIntermediateSteps, clearIntermediateStepsTimer, complete, isNlpLoading, onNlpSearchFailed, onStreamingChange, setCompletion])
 
   useEffect(() => () => {
     // Prevent duplicate active streams during dev Strict Mode remounts.
+    clearIntermediateStepsTimer()
     if (typeof stop === 'function') stop()
-  }, [])
+  }, [clearIntermediateStepsTimer, stop])
 
   useEffect(() => {
     const trimmedPrompt = activePrompt.trim()
