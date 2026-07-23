@@ -40,8 +40,7 @@ describe('NlpSearchRequest#stream', () => {
       'http://localhost:3001/nlp?query=ice%20sheets%20in%20greenland',
       {
         method: 'GET',
-        signal,
-        headers: new Headers()
+        signal
       }
     )
 

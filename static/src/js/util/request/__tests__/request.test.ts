@@ -107,8 +107,7 @@ describe('Request#stream', () => {
 
     expect(fetchSpy).toHaveBeenCalledWith('http://example.com/nlp?query=test', {
       method: 'GET',
-      signal,
-      headers: new Headers()
+      signal
     })
 
     fetchSpy.mockRestore()
