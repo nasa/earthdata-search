@@ -407,16 +407,16 @@ export const Home: React.FC = () => {
                 {
                   shouldShowNlpStatus && (
                     <div className="home__hero-status-region">
-                    <div className="home__hero-status-inner">
-                      <div className="home__hero-status-stack">
-                        <div className="home__nlp-chat-wrapper">
-                          <NlpSearchStatus
-                            activePrompt={activeNlpPrompt}
-                            requestId={nlpRequestId}
-                            onStreamingChange={setIsNlpStreaming}
-                            onNlpSearchComplete={onNlpSearchComplete}
-                            onNlpSearchFailed={onNlpSearchFailed}
-                          />
+                      <div className="home__hero-status-inner">
+                        <div className="home__hero-status-stack">
+                          <div className="home__nlp-chat-wrapper">
+                            <NlpSearchStatus
+                              activePrompt={activeNlpPrompt}
+                              requestId={nlpRequestId}
+                              onStreamingChange={setIsNlpStreaming}
+                              onNlpSearchComplete={onNlpSearchComplete}
+                              onNlpSearchFailed={onNlpSearchFailed}
+                            />
                           </div>
                         </div>
                       </div>
