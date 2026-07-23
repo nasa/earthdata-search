@@ -37,6 +37,11 @@
     padding-top: 0;
   }
 
+  &__hero-lower--centered {
+    justify-content: center;
+    align-items: center;
+  }
+
   &__hero-browse {
     margin-top: 0.5rem;
   }

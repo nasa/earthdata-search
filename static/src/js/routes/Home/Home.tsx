@@ -404,10 +404,9 @@ export const Home: React.FC = () => {
                     {isNlpStreaming ? 'Cancel' : 'Search'}
                   </Button>
                 </form>
-              </div>
-              <div className="home__hero-status-region">
                 {
                   shouldShowNlpStatus && (
+                    <div className="home__hero-status-region">
                     <div className="home__hero-status-inner">
                       <div className="home__hero-status-stack">
                         <div className="home__nlp-chat-wrapper">
@@ -418,6 +417,7 @@ export const Home: React.FC = () => {
                             onNlpSearchComplete={onNlpSearchComplete}
                             onNlpSearchFailed={onNlpSearchFailed}
                           />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -425,7 +425,7 @@ export const Home: React.FC = () => {
                 }
               </div>
             </div>
-            <div className="home__hero-lower">
+            <div className={`home__hero-lower ${!isNlpEnabled ? 'home__hero-lower--centered' : ''}`}>
               <div className="home__hero-browse home__hero-browse d-flex justify-content-center">
                 <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
               </div>

@@ -153,7 +153,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     if (parsedSteps.length === 0) return
 
     setStatusSteps((previousSteps) => {
-      const nextSteps = previousSteps.filter((step) =>  step !== 'Analyzing your query...')
+      const nextSteps = previousSteps.filter((step) => step !== 'Analyzing your query...')
 
       parsedSteps.forEach((step) => {
         if (!nextSteps.includes(step)) nextSteps.push(step)
@@ -274,7 +274,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   }, [completion])
 
   useEffect(() => {
-    if(!showIntermediateSteps) return
+    if (!showIntermediateSteps) return
     if (!isNlpLoading) return
 
     applyIntermediateSteps(completion)
@@ -310,7 +310,15 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         onNlpSearchFailed()
       }
     }
-  }, [applyIntermediateSteps, clearIntermediateStepsTimer, complete, isNlpLoading, onNlpSearchFailed, onStreamingChange, setCompletion])
+  }, [
+    applyIntermediateSteps,
+    clearIntermediateStepsTimer,
+    complete,
+    isNlpLoading,
+    onNlpSearchFailed,
+    onStreamingChange,
+    setCompletion
+  ])
 
   useEffect(() => () => {
     // Prevent duplicate active streams during dev Strict Mode remounts.
