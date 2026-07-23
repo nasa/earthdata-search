@@ -3,6 +3,8 @@
 
 .home {
   &__hero {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
     text-shadow:
       0 0 0.5rem utils.$color__carbon-black,
       0 0 2rem utils.$color__carbon-black;
@@ -11,30 +13,61 @@
 
   &__hero-main {
     height: clamp(32rem, calc(100vh - 20rem), 54rem);
-    justify-content: center;
+    width: 100%;
+    max-width: 60rem;
+    align-self: center;
   }
 
   &__hero-main-content {
     width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 0.75rem;
+  }
+
+  &__hero-intro {
+    margin-bottom: 0.5rem;
+  }
+
+  &__hero-lower {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 0.5rem;
+    padding-top: 0;
   }
 
   &__hero-browse {
-    margin-top: 2.5rem;
+    margin-top: 0.5rem;
+  }
 
-    &--stacked {
-      margin-top: 0;
-    }
+  &__hero-status-region {
+    height: clamp(7.5rem, 22vh, 13rem);
+    min-height:7rem;
+    max-height: clamp(7.5rem, 22vh, 13rem);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+
+  &__hero-status-inner {
+    width: 100%; 
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 1.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable both-edges;
   }
 
   &__hero-status-stack {
-    max-width: 60rem;
     width: 100%;
-    align-self: center;
-    // Keep status close to the input on larger screens, but avoid overlap on short viewports.
-    margin-top: -11rem;
-    @media (max-height: 760px) {
-      margin-top: -8.5rem;
-    }
+    padding-bottom: 3rem;
   }
 
   &__hero-image {
@@ -73,14 +106,13 @@
   }
 
   &__hero-input-wrapper {
-    max-width: 60rem;
-    align-self: center;
+    width: 100%;
   }
 
   &__nlp-chat-wrapper {
     width: 100%;
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     transform-origin: top center;
     animation: home-nlp-chat-enter 220ms ease-out;
   }

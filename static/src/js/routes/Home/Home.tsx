@@ -325,7 +325,7 @@ export const Home: React.FC = () => {
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
         <section
-          className={`home__hero position-relative w-100 d-flex px-5 flex-column flex-shrink-0 ${shouldShowNlpStatus ? 'gap-0' : 'gap-5'}`}
+          className="home__hero position-relative w-100 d-flex px-5 flex-column flex-shrink-0"
         >
           <picture className="home__hero-image position-absolute">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
@@ -336,8 +336,8 @@ export const Home: React.FC = () => {
             />
           </picture>
           <div className="home__hero-main d-flex flex-shrink-1 flex-column z-1">
-            <div className="home__hero-main-content d-flex flex-shrink-1 flex-column justify-content-center gap-5">
-              <div className="text-center d-flex gap-3 flex-column">
+            <div className="home__hero-main-content d-flex flex-shrink-1 flex-column justify-content-center">
+              <div className="home__hero-intro text-center d-flex gap-3 flex-column">
                 <h1 className="text-white display-7">
                   Search NASA&apos;s
                   {' '}
@@ -405,33 +405,32 @@ export const Home: React.FC = () => {
                   </Button>
                 </form>
               </div>
-            </div>
-            {
-              !shouldShowNlpStatus && (
-                <div className="home__hero-browse d-flex justify-content-center">
-                  <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
-                </div>
-              )
-            }
-          </div>
-          {
-            shouldShowNlpStatus && (
-              <div className="home__hero-status-stack z-1">
-                <div className="home__nlp-chat-wrapper">
-                  <NlpSearchStatus
-                    activePrompt={activeNlpPrompt}
-                    requestId={nlpRequestId}
-                    onStreamingChange={setIsNlpStreaming}
-                    onNlpSearchComplete={onNlpSearchComplete}
-                    onNlpSearchFailed={onNlpSearchFailed}
-                  />
-                </div>
-                <div className="home__hero-browse home__hero-browse--stacked d-flex justify-content-center">
-                  <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
-                </div>
+              <div className="home__hero-status-region">
+                {
+                  shouldShowNlpStatus && (
+                    <div className="home__hero-status-inner">
+                      <div className="home__hero-status-stack">
+                        <div className="home__nlp-chat-wrapper">
+                          <NlpSearchStatus
+                            activePrompt={activeNlpPrompt}
+                            requestId={nlpRequestId}
+                            onStreamingChange={setIsNlpStreaming}
+                            onNlpSearchComplete={onNlpSearchComplete}
+                            onNlpSearchFailed={onNlpSearchFailed}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
               </div>
-            )
-          }
+            </div>
+            <div className="home__hero-lower">
+              <div className="home__hero-browse home__hero-browse d-flex justify-content-center">
+                <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
+              </div>
+            </div>
+          </div>
           <OverlayTrigger
             trigger="click"
             placement="top"
