@@ -1,6 +1,5 @@
-version: "3"
 services:
-  redis:
-    image: redis
+  valkey:
+    image: valkey/valkey:latest
     ports:
       - "6379:6379"
