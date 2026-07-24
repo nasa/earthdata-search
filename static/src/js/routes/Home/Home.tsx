@@ -409,6 +409,7 @@ export const Home: React.FC = () => {
                 isNlpEnabled && (
                   <div
                     className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region--inactive' : ''}`}
+                    data-testid="home-hero-status-region"
                     aria-hidden={!shouldShowNlpStatus}
                   >
                     {

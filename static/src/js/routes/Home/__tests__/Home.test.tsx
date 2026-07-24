@@ -132,9 +132,9 @@ describe('Home', () => {
     })
 
     test('reserves hidden NLP status space before submit to prevent hero layout shift', () => {
-      const { container } = setup()
+      setup()
 
-      const statusRegion = container.querySelector('.home__hero-status-region')
+      const statusRegion = screen.getByTestId('home-hero-status-region')
 
       // Keep an always-mounted inactive region so the input row does not jump when status appears.
       expect(statusRegion).toBeInTheDocument()
