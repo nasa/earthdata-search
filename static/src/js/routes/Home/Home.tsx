@@ -404,26 +404,33 @@ export const Home: React.FC = () => {
                     {isNlpStreaming ? 'Cancel' : 'Search'}
                   </Button>
                 </form>
-                {
-                  shouldShowNlpStatus && (
-                    <div className="home__hero-status-region">
-                      <div className="home__hero-status-inner">
-                        <div className="home__hero-status-stack">
-                          <div className="home__nlp-chat-wrapper">
-                            <NlpSearchStatus
-                              activePrompt={activeNlpPrompt}
-                              requestId={nlpRequestId}
-                              onStreamingChange={setIsNlpStreaming}
-                              onNlpSearchComplete={onNlpSearchComplete}
-                              onNlpSearchFailed={onNlpSearchFailed}
-                            />
+              </div>
+              {
+                isNlpEnabled && (
+                  <div
+                    className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region' : ''}`}
+                    aria-hidden={!shouldShowNlpStatus}
+                  >
+                    {
+                      shouldShowNlpStatus && (
+                        <div className="home__hero-status-inner">
+                          <div className="home__hero-status-stack">
+                            <div className="home__nlp-chat-wrapper">
+                              <NlpSearchStatus
+                                activePrompt={activeNlpPrompt}
+                                requestId={nlpRequestId}
+                                onStreamingChange={setIsNlpStreaming}
+                                onNlpSearchComplete={onNlpSearchComplete}
+                                onNlpSearchFailed={onNlpSearchFailed}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  )
-                }
-              </div>
+                      )
+                    }
+                  </div>
+                )
+              }
             </div>
             <div className={`home__hero-lower ${!isNlpEnabled ? 'home__hero-lower--centered' : ''}`}>
               <div className="home__hero-browse home__hero-browse d-flex justify-content-center">

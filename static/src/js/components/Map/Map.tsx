@@ -414,6 +414,7 @@ const Map: React.FC<MapProps> = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
   const mapElRef = useRef<HTMLDivElement>(null)
+  const previousSpatialSearchKeyRef = useRef('')
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -1035,6 +1036,59 @@ const Map: React.FC<MapProps> = ({
       projectionCode,
       spatialSearch,
       vectorSource: spatialDrawingSource
+    })
+  }, [spatialSearch])
+
+  // Keep map centering behavior consistent for all spatial query updates (manual & nlp search)
+  /// after drawSpatialSearch above updates emit MoveMap once per unique spatial payload
+  useEffect(() => {
+    const {
+      selectedRegion,
+      boundingBoxSearch,
+      circleSearch,
+      drawingNewLayer,
+      lineSearch,
+      pointSearch,
+      polygonSearch
+    } = spatialSearch
+
+    // While actively drawing avoid fitting to stale or partial featurs
+    if (drawingNewLayer !== false) {
+      previousSpatialSearchKeyRef.current = ''
+
+      return
+    }
+
+    const hasSpatialConstraints = !!(
+      selectedRegion
+      || boundingBoxSearch?.length
+      || circleSearch?.length
+      || lineSearch?.length
+      || pointSearch?.length
+      || polygonSearch?.length
+    )
+
+    if (!hasSpatialConstraints) {
+      previousSpatialSearchKeyRef.current = ''
+
+      return
+    }
+
+    const spatialSearchKey = JSON.stringify({
+      selectedRegion,
+      boundingBoxSearch,
+      circleSearch,
+      lineSearch,
+      pointSearch,
+      polygonSearch
+    })
+
+    if (previousSpatialSearchKeyRef.current === spatialSearchKey) return
+
+    previousSpatialSearchKeyRef.current = spatialSearchKey
+
+    eventEmitter.emit(mapEventTypes.MOVEMAP, {
+      source: spatialDrawingSource
     })
   }, [spatialSearch])
 
