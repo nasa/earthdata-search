@@ -14,7 +14,8 @@ export class EarthdataSearchStaticStack extends cdk.Stack {
     // eslint-disable-next-line no-new
     new staticAssets.S3Site(this, 'EarthdataSearchSite', {
       destinationBucketName: SITE_BUCKET,
-      sourceFolder: '../../static/dist'
+      sourceFolder: '../../static/dist',
+      memoryLimit: 512
     })
   }
 }
