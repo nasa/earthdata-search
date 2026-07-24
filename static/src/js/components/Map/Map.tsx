@@ -615,7 +615,7 @@ const Map: React.FC<MapProps> = ({
       /** The source to move the map to */
       source?: VectorSource
     }) => {
-      let extent: import('ol/extent').Extent | undefined
+      let extent: import('ol/extent').Extent | null | undefined
 
       // If a shape was passed, use the extent of that shape
       if (shape) {
@@ -627,7 +627,8 @@ const Map: React.FC<MapProps> = ({
         extent = shapeInProjection.getExtent()
       } else if (source) {
         // If a source was passed, use the extent of the source
-        extent = source.getExtent()
+        const sourceExtent = source.getExtent()
+        if (sourceExtent) extent = sourceExtent
       }
 
       // Fit the map to the extent
@@ -1040,7 +1041,7 @@ const Map: React.FC<MapProps> = ({
   }, [spatialSearch])
 
   // Keep map centering behavior consistent for all spatial query updates (manual & nlp search)
-  /// after drawSpatialSearch above updates emit MoveMap once per unique spatial payload
+  // After drawSpatialSearch above updates, emit MOVEMAP once per unique spatial payload.
   useEffect(() => {
     const {
       selectedRegion,
@@ -1052,7 +1053,7 @@ const Map: React.FC<MapProps> = ({
       polygonSearch
     } = spatialSearch
 
-    // While actively drawing avoid fitting to stale or partial featurs
+    // While actively drawing, avoid fitting to stale or partial features.
     if (drawingNewLayer !== false) {
       previousSpatialSearchKeyRef.current = ''
 

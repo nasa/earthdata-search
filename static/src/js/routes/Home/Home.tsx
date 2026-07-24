@@ -218,7 +218,7 @@ export const Home: React.FC = () => {
 
   const onNlpSearchComplete = React.useCallback(() => {
     // Use ref instead of state so check is synchronous. State
-    // wouldstill see stale values of onFinish fire
+    // would still see stale values when onFinish fires.
 
     if (!isNlpActiveRef.current) return undefined
 
@@ -310,7 +310,7 @@ export const Home: React.FC = () => {
   ])
 
   const onCancelNlpSearch = (event?:React.SyntheticEvent) => {
-    // Syncronously mark NLP as inactive so any inflight onNlpSearchComplete
+    // Synchronously mark NLP as inactive so any inflight onNlpSearchComplete
     // sees the cancellation before React does state updates.
     event?.preventDefault()
     event?.stopPropagation()
@@ -408,7 +408,7 @@ export const Home: React.FC = () => {
               {
                 isNlpEnabled && (
                   <div
-                    className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region' : ''}`}
+                    className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region--inactive' : ''}`}
                     aria-hidden={!shouldShowNlpStatus}
                   >
                     {

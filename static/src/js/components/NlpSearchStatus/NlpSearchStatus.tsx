@@ -91,7 +91,7 @@ const toProgressStep = (line: string) => {
   const normalizedLine = line.replace(/^[-*]\s*/, '').trim()
   if (!normalizedLine) return ''
 
-  // Supress raw error lines from /nlp
+  // Suppress raw error lines from /nlp
   // They are handled by the error callback, not displayed as steps
   if (/^error:/i.test(normalizedLine)) return ''
 

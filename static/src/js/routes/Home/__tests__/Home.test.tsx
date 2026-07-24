@@ -131,6 +131,18 @@ describe('Home', () => {
       expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
     })
 
+    test('reserves hidden NLP status space before submit to prevent hero layout shift', () => {
+      const { container } = setup()
+
+      const statusRegion = container.querySelector('.home__hero-status-region')
+
+      // Keep an always-mounted inactive region so the input row does not jump when status appears.
+      expect(statusRegion).toBeInTheDocument()
+      expect(statusRegion).toHaveClass('home__hero-status-region--inactive')
+      expect(statusRegion).toHaveAttribute('aria-hidden', 'true')
+      expect(mockNlpSearchStatus).not.toHaveBeenCalled()
+    })
+
     test('navigates directly to search when submitting an empty NLP query', async () => {
       const { user } = setup()
 
@@ -199,7 +211,7 @@ describe('Home', () => {
       expect(mockUseNavigate).not.toHaveBeenCalled()
     })
 
-    test('does not naivage if NLP completes after cancel is clicked', async () => {
+    test('does not navigate if NLP completes after cancel is clicked', async () => {
       const { user } = setup()
       mockUseNavigate.mockClear()
       mockRouterNavigate.mockClear()
