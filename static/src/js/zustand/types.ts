@@ -348,6 +348,10 @@ export type HomeSlice = {
     startDrawing: boolean | string
     /** Function to set the startDrawing value */
     setStartDrawing: (startDrawing: boolean | string) => void
+    /** Flag indicating one-typ map-auto center after NLP search */
+    nlpAutoCenterPending: boolean
+    /** Function to set  nlpAutoCenterPending flag */
+    setNlpAutoCenterPending: (isPending: boolean) => void
     /** Flag if a facet group should be opened */
     openFacetGroup: string | null
     /** Function to set the setOpenFacetGroup value */

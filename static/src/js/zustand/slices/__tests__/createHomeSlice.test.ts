@@ -8,8 +8,23 @@ describe('createHomeSlice', () => {
     expect(home).toEqual({
       startDrawing: false,
       setStartDrawing: expect.any(Function),
+      nlpMapAutCenterPending: false,
+      setNlpMapAutCenterPending: expect.any(Function),
       openFacetGroup: null,
       setOpenFacetGroup: expect.any(Function)
+    })
+  })
+
+  describe('setNlpMapAutoCenterPending', () => {
+    test('updates nlpMapAutCenterPending', () => {
+      const zustandState = useEdscStore.getState()
+      const { home } = zustandState
+      const { setNlpAutoCenterPending } = home
+      setNlpAutoCenterPending(true)
+
+      const updatedState = useEdscStore.getState()
+      const { home: updatedHome } = updatedState
+      expect(updatedHome.nlpAutoCenterPending).toBe(true)
     })
   })
 

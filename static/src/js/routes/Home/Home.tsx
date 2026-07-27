@@ -204,6 +204,7 @@ export const Home: React.FC = () => {
   const hiddenPortals = sortedPortals.slice(10)
 
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
+  const setNlpAutoCenterPending = useEdscStore((state) => state.home.setNlpAutoCenterPending)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: collectionsQueryKeyword = '' } = collectionQuery
   const [keyword, setKeyword] = useState(collectionsQueryKeyword)
@@ -222,9 +223,12 @@ export const Home: React.FC = () => {
 
     if (!isNlpActiveRef.current) return undefined
 
+    // Mark that Search map should center once for this NLP search result navigation
+    setNlpAutoCenterPending(true)
+
     // Queue navigation only while the current NLP request is still active.
     return Promise.resolve(setIsNlpNavigationPending(true))
-  }, [])
+  }, [setNlpAutoCenterPending])
 
   const resetNlpSearchUi = useCallback(() => {
     suppressNextSubmitRef.current = true
@@ -232,11 +236,12 @@ export const Home: React.FC = () => {
     setIsNlpStreaming(false)
     setHasSubmittedNlpSearch(false)
     setActiveNlpPrompt('')
+    setNlpAutoCenterPending(false)
     setKeyword('')
     setIsNlpNavigationPending(false)
 
     if (inputRef.current) inputRef.current.focus()
-  }, [])
+  }, [setNlpAutoCenterPending])
 
   const onNlpSearchFailed = useCallback(() => {
     resetNlpSearchUi()

@@ -404,9 +404,13 @@ const Map: React.FC<MapProps> = ({
   // We adjust the padding so that centering the map on a point will center the point in the
   // viewable area of the map and not behind a panel.
   const {
+    nlpAutoCenterPending,
+    setNlpAutoCenterPending,
     panelsWidth,
     sidebarWidth
   } = useEdscStore((state) => ({
+    nlpAutoCenterPending: state.home.nlpAutoCenterPending,
+    setNlpAutoCenterPending: state.home.setNlpAutoCenterPending,
     panelsWidth: state.ui.panels.panelsWidth,
     sidebarWidth: state.ui.panels.sidebarWidth
   }))
@@ -1044,6 +1048,8 @@ const Map: React.FC<MapProps> = ({
   // drawing/type-in flows (circle/line/polygon) retain their prior behavior.
   // NLP currently writes spatial query state as point or bounding box.
   useEffect(() => {
+    if (!nlpAutoCenterPending) return
+
     const {
       boundingBoxSearch,
       circleSearch,
@@ -1056,6 +1062,7 @@ const Map: React.FC<MapProps> = ({
     // While actively drawing, avoid fitting to stale or partial features.
     if (drawingNewLayer !== false) {
       previousSpatialSearchKeyRef.current = ''
+      setNlpAutoCenterPending(false)
 
       return
     }
@@ -1073,6 +1080,7 @@ const Map: React.FC<MapProps> = ({
 
     if (!hasNlpSpatialConstraints || hasManualDrawingShapes) {
       previousSpatialSearchKeyRef.current = ''
+      setNlpAutoCenterPending(false)
 
       return
     }
@@ -1082,7 +1090,11 @@ const Map: React.FC<MapProps> = ({
       pointSearch
     })
 
-    if (previousSpatialSearchKeyRef.current === spatialSearchKey) return
+    if (previousSpatialSearchKeyRef.current === spatialSearchKey) {
+      setNlpAutoCenterPending(false)
+
+      return
+    }
 
     const sourceExtent = spatialDrawingSource.getExtent()
     if (!sourceExtent) return
@@ -1092,14 +1104,21 @@ const Map: React.FC<MapProps> = ({
 
     // Regression guard: direct /search navigation can race and emit MOVEMAP before
     // spatialDrawingSource has drawable features. Skip emit for empty/invalid extents.
-    if (!hasFiniteExtent || maxX < minX || maxY < minY) return
+    if (!hasFiniteExtent || maxX < minX || maxY < minY) {
+      setNlpAutoCenterPending(false)
+
+      return
+    }
 
     previousSpatialSearchKeyRef.current = spatialSearchKey
 
     eventEmitter.emit(mapEventTypes.MOVEMAP, {
       source: spatialDrawingSource
     })
-  }, [spatialSearch])
+
+    // Mark NLP auto-center request as done
+    setNlpAutoCenterPending(false)
+  }, [nlpAutoCenterPending, setNlpAutoCenterPending, spatialSearch])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
