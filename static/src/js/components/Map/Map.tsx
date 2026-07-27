@@ -1040,11 +1040,11 @@ const Map: React.FC<MapProps> = ({
     })
   }, [spatialSearch])
 
-  // Keep map centering behavior consistent for all spatial query updates (manual & nlp search)
-  // After drawSpatialSearch above updates, emit MOVEMAP once per unique spatial payload.
+  // Keep auto-centering limited to NLP spatial updates so existing manual
+  // drawing/type-in flows (circle/line/polygon) retain their prior behavior.
+  // NLP currently writes spatial query state as point or bounding box.
   useEffect(() => {
     const {
-      selectedRegion,
       boundingBoxSearch,
       circleSearch,
       drawingNewLayer,
@@ -1060,28 +1060,26 @@ const Map: React.FC<MapProps> = ({
       return
     }
 
-    const hasSpatialConstraints = !!(
-      selectedRegion
-      || boundingBoxSearch?.length
-      || circleSearch?.length
-      || lineSearch?.length
+    const hasNlpSpatialConstraints = !!(
+      boundingBoxSearch?.length
       || pointSearch?.length
+    )
+
+    const hasManualDrawingShapes = !!(
+      circleSearch?.length
+      || lineSearch?.length
       || polygonSearch?.length
     )
 
-    if (!hasSpatialConstraints) {
+    if (!hasNlpSpatialConstraints || hasManualDrawingShapes) {
       previousSpatialSearchKeyRef.current = ''
 
       return
     }
 
     const spatialSearchKey = JSON.stringify({
-      selectedRegion,
       boundingBoxSearch,
-      circleSearch,
-      lineSearch,
-      pointSearch,
-      polygonSearch
+      pointSearch
     })
 
     if (previousSpatialSearchKeyRef.current === spatialSearchKey) return
