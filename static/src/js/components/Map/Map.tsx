@@ -1086,6 +1086,16 @@ const Map: React.FC<MapProps> = ({
 
     if (previousSpatialSearchKeyRef.current === spatialSearchKey) return
 
+    const sourceExtent = spatialDrawingSource.getExtent()
+    if (!sourceExtent) return
+
+    const [minX, minY, maxX, maxY] = sourceExtent
+    const hasFiniteExtent = [minX, minY, maxX, maxY].every((value) => Number.isFinite(value))
+
+    // Regression guard: direct /search navigation can race and emit MOVEMAP before
+    // spatialDrawingSource has drawable features. Skip emit for empty/invalid extents.
+    if (!hasFiniteExtent || maxX < minX || maxY < minY) return
+
     previousSpatialSearchKeyRef.current = spatialSearchKey
 
     eventEmitter.emit(mapEventTypes.MOVEMAP, {
