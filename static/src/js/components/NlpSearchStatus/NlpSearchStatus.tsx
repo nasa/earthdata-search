@@ -18,7 +18,6 @@ import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 import './NlpSearchStatus.scss'
 
 export const FINAL_RESULT_MARKER = 'Final result:'
-const INTERMEDIATE_STEPS_DELAY_MS = 1000
 
 type NlpSearchStatusProps = {
     activePrompt?: string
@@ -92,8 +91,10 @@ const toProgressStep = (line: string) => {
   if (!normalizedLine) return ''
 
   // Suppress raw error lines from /nlp
-  // They are handled by the error callback, not displayed as steps
   if (/^error:/i.test(normalizedLine)) return ''
+
+  // Ignore the "Analyzing" string coming from the Lambda stream
+  if (/^Analyzing your query/i.test(normalizedLine)) return ''
 
   const temporalMatch = normalizedLine.match(/^Found temporal of (.*)\.?$/i)
   if (temporalMatch?.[1]) return `Extracted temporal range of ${temporalMatch?.[1]}`
@@ -125,18 +126,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   onNlpSearchFailed = () => {}
 }) => {
   const lastStartedRequestIdRef = useRef<number | null>(null)
-  const intermediateStepsTimeRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const completionTextRef = useRef('')
 
   const [statusSteps, setStatusSteps] = useState<string[]>([])
-  const [showIntermediateSteps, setShowIntermediateSteps] = useState(false)
-
-  const clearIntermediateStepsTimer = useCallback(() => {
-    if (intermediateStepsTimeRef.current) {
-      clearTimeout(intermediateStepsTimeRef.current)
-      intermediateStepsTimeRef.current = null
-    }
-  }, [])
 
   const appendStatusStep = useCallback((nextStep: string) => {
     if (!nextStep) return
@@ -148,7 +140,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     })
   }, [])
 
-  const applyIntermediateSteps = useCallback((completionText:string) => {
+  const applyIntermediateSteps = useCallback((completionText: string) => {
     const parsedSteps = extractProgressSteps(completionText)
     if (parsedSteps.length === 0) return
 
@@ -204,10 +196,6 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       // Ignore stale completions for a request that has been cancelled.
       if (lastStartedRequestIdRef.current == null) return
 
-      clearIntermediateStepsTimer()
-
-      appendStatusStep('Building final query...')
-
       const parsedResult = parsedNlpFinalResult(completionText)
 
       if (!parsedResult) {
@@ -235,6 +223,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       const spatial = parseWktSpatial(spatialArea)
 
       setCollectionId(null)
+
+      // Step appended right as the network request for collections begins,
+      // potentially giving the user time to read the extracted values.
       appendStatusStep('Retrieving collections')
 
       changeQuery({
@@ -252,8 +243,6 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     onError: (error) => {
       // Ignore stale errors for a request that has been cancelled.
       if (lastStartedRequestIdRef.current == null) return
-
-      clearIntermediateStepsTimer()
 
       handleError({
         error,
@@ -274,28 +263,15 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   }, [completion])
 
   useEffect(() => {
-    if (!showIntermediateSteps) return
-    if (!isNlpLoading) return
-
     applyIntermediateSteps(completion)
-  }, [applyIntermediateSteps, completion, isNlpLoading, showIntermediateSteps])
+  }, [applyIntermediateSteps, completion])
 
   const runPrompt = useCallback(async (prompt: string, nextRequestId: number) => {
     if (!prompt || isNlpLoading) return
 
     lastStartedRequestIdRef.current = nextRequestId
-    clearIntermediateStepsTimer()
-    setShowIntermediateSteps(false)
     setCompletion('')
     setStatusSteps(['Analyzing your query...'])
-
-    intermediateStepsTimeRef.current = setTimeout(() => {
-      if (lastStartedRequestIdRef.current === nextRequestId) {
-        setShowIntermediateSteps(true)
-        applyIntermediateSteps(completionTextRef.current)
-      }
-    }, INTERMEDIATE_STEPS_DELAY_MS)
-
     onStreamingChange(true)
 
     try {
@@ -304,15 +280,12 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       // Safety because complete() can throw when onError doesn't fire
       // due to network error. Reset only if request is active
       if (lastStartedRequestIdRef.current != null) {
-        clearIntermediateStepsTimer()
         lastStartedRequestIdRef.current = null
         onStreamingChange(false)
         onNlpSearchFailed()
       }
     }
   }, [
-    applyIntermediateSteps,
-    clearIntermediateStepsTimer,
     complete,
     isNlpLoading,
     onNlpSearchFailed,
@@ -322,9 +295,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
   useEffect(() => () => {
     // Prevent duplicate active streams during dev Strict Mode remounts.
-    clearIntermediateStepsTimer()
     if (typeof stop === 'function') stop()
-  }, [clearIntermediateStepsTimer, stop])
+  }, [stop])
 
   useEffect(() => {
     const trimmedPrompt = activePrompt.trim()
