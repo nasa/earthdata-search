@@ -3,6 +3,7 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
+import WKT from 'ol/format/WKT'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -11,17 +12,27 @@ import NlpSearchStatus from '../NlpSearchStatus'
 const mockComplete = vi.fn(async () => undefined)
 const mockStop = vi.fn()
 const mockSetCompletion = vi.fn()
+let mockCompletion = ''
+let mockIsLoading = false
 
 const mockSetCollectionId = vi.fn()
 const mockChangeQuery = vi.fn()
 const mockHandleError = vi.fn()
+const mockNlpRequestStream = vi.fn(async () => ({ ok: true }))
 
 let capturedUseCompletionOptions: {
+  fetch?: (_: unknown, init?: unknown) => Promise<unknown>
     onFinish?: (prompt: string, completionText: string) => void
     onError?: (error: Error) => void
 } = {}
 
 vi.mock('../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
+
+vi.mock('../../../util/request/nlpSearchRequest', () => ({
+  default: vi.fn(function MockNlpSearchRequest() {
+    this.stream = mockNlpRequestStream
+  })
+}))
 
 vi.mock('@ai-sdk/react', () => ({
   useCompletion: vi.fn((options) => {
@@ -29,8 +40,8 @@ vi.mock('@ai-sdk/react', () => ({
 
     return {
       complete: mockComplete,
-      completion: '',
-      isLoading: false,
+      completion: mockCompletion,
+      isLoading: mockIsLoading,
       setCompletion: mockSetCompletion,
       stop: mockStop
     }
@@ -62,6 +73,13 @@ const setup = setupTest({
 describe('NlpSearchStatus component', () => {
   beforeEach(() => {
     capturedUseCompletionOptions = {}
+    mockCompletion = ''
+    mockIsLoading = false
+    mockComplete.mockReset()
+    mockComplete.mockImplementation(async () => undefined)
+    mockStop.mockReset()
+    mockNlpRequestStream.mockReset()
+    mockNlpRequestStream.mockImplementation(async () => ({ ok: true }))
   })
 
   test('renders default status text', () => {
@@ -105,8 +123,7 @@ describe('NlpSearchStatus component', () => {
     ].join('\n')
 
     expect(capturedUseCompletionOptions.onFinish).toBeTypeOf('function')
-
-    act(() => {
+    await act(async () => {
       capturedUseCompletionOptions.onFinish!(
         'average temp in western montana last april',
         completionText
@@ -151,7 +168,7 @@ describe('NlpSearchStatus component', () => {
 
     expect(props.onStreamingChange).toHaveBeenCalledWith(true)
 
-    act(() => {
+    await act(async () => {
       capturedUseCompletionOptions.onFinish?.('prompt', 'Final result:\nnot-json')
     })
 
@@ -185,5 +202,158 @@ describe('NlpSearchStatus component', () => {
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
     expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
     expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
+  })
+
+  test('renders progress steps from streamed completion text', () => {
+    mockCompletion = [
+      'Analyzing your query...',
+      'error: temporary server issue',
+      'Found spatial of "western montana".',
+      'Found temporal of "last april".',
+      'Found keyword of "average temp".',
+      'Final result:',
+      '{}'
+    ].join('\n')
+
+    setup()
+
+    expect(screen.getByText('Extracted spatial area of "western montana".')).toBeInTheDocument()
+    expect(screen.getByText('Extracted temporal range of "last april".')).toBeInTheDocument()
+    expect(screen.getByText('Extracted keyword of "average temp".')).toBeInTheDocument()
+    expect(screen.queryByText('Analyzing your query...')).not.toBeInTheDocument()
+  })
+
+  test('uses POINT spatial output when NLP returns a point geometry', async () => {
+    const { props, zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'find point',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
+    })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'find point',
+        'Final result:\n{"query":"find point","spatialArea":"POINT (-77.0163 38.883)", "temporal":{}}'
+      )
+    })
+
+    await waitFor(() => {
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+      collection: {
+        keyword: 'find point',
+        temporal: {},
+        spatial: {
+          point: ['-77.0163,38.883']
+        }
+      },
+      selectedRegion: {}
+    })
+  })
+
+  test('stops streaming state when complete throws before onError fires', async () => {
+    mockComplete.mockImplementation(async () => {
+      throw new Error('network down')
+    })
+
+    const { props } = setup({
+      overrideProps: {
+        activePrompt: 'throw this',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(2)
+    })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
+  })
+
+  test('calls stop on unmount to prevent duplicate active streams', () => {
+    const { unmount } = setup()
+
+    unmount()
+
+    expect(mockStop).toHaveBeenCalledTimes(1)
+    expect(mockStop).toHaveBeenCalledWith()
+  })
+
+  test('falls back to empty spatial object when WKT parsing fails', async () => {
+    vi.spyOn(WKT.prototype, 'readGeometry').mockImplementationOnce(() => {
+      throw new Error('Invalid WKT issue')
+    })
+
+    const { props, zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'invalid area',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
+    })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'invalid area',
+        'Final result:\n{"query":"invalid area","spatialArea":"POLYGON ((broken))", "temporal":{}}'
+      )
+    })
+
+    await waitFor(() => {
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+      collection: {
+        keyword: 'invalid area',
+        temporal: {},
+        spatial: {}
+      },
+      selectedRegion: {}
+    })
+  })
+
+  test('passes parsed prompt and fetch options to NLP request stream', async () => {
+    setup()
+
+    const abortController = new AbortController()
+
+    await capturedUseCompletionOptions.fetch?.(
+      '/nlp',
+      {
+        body: JSON.stringify({ prompt: 'rainfall in dc' }),
+        headers: {
+          'x-test-header': '1'
+        },
+        credentials: 'include',
+        signal: abortController.signal
+      }
+    )
+
+    expect(mockNlpRequestStream).toHaveBeenCalledTimes(1)
+    expect(mockNlpRequestStream).toHaveBeenCalledWith('rainfall in dc', {
+      headers: {
+        'x-test-header': '1'
+      },
+      credentials: 'include',
+      signal: abortController.signal
+    })
   })
 })
