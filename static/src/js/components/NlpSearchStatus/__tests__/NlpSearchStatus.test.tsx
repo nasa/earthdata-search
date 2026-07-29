@@ -29,7 +29,7 @@ let capturedUseCompletionOptions: {
 vi.mock('../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
 
 vi.mock('../../../util/request/nlpSearchRequest', () => ({
-  default: vi.fn(function MockNlpSearchRequest() {
+  default: vi.fn(function MockNlpSearchRequest(this: {stream: typeof mockNlpRequestStream}) {
     this.stream = mockNlpRequestStream
   })
 }))
