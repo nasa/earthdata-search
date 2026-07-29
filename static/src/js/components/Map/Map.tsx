@@ -405,6 +405,10 @@ const Map: React.FC<MapProps> = ({
   spatialSearch,
   zoom
 }) => {
+  // This is the width of the side panels. We need to know this so we can adjust the padding
+  // on the map view when the panels are resized.
+  // We adjust the padding so that centering the map on a point will center the point in the
+  // viewable area of the map and not behind a panel.
   const {
     panelsWidth,
     sidebarWidth
