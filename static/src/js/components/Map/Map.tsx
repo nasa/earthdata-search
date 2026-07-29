@@ -1097,7 +1097,11 @@ const Map: React.FC<MapProps> = ({
     }
 
     const sourceExtent = spatialDrawingSource.getExtent()
-    if (!sourceExtent) return
+    if (!sourceExtent) {
+      setNlpAutoCenterPending(false)
+
+      return
+    }
 
     const [minX, minY, maxX, maxY] = sourceExtent
     const hasFiniteExtent = [minX, minY, maxX, maxY].every((value) => Number.isFinite(value))

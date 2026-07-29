@@ -214,10 +214,20 @@ export default class Request {
   stream(url: string, options:StreamRequestOptions = {}, baseURL = this.baseUrl) {
     const normalizedBaseUrl = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL
     const normalisedUrl = url.startsWith('/') ? url : `/${url}`
+    const headers = new Headers(options.headers || {})
+
+    if (this.earthdataEnvironment && this.lambda) {
+      headers.set('Earthdata-ENV', this.earthdataEnvironment)
+    }
+
+    if (this.authenticated || (this.optionallyAuthenticated && this.getEdlToken())) {
+      headers.set('Authorization', `Bearer ${this.getEdlToken()}`)
+    }
 
     return fetch(`${normalizedBaseUrl}${normalisedUrl}`, {
       method: 'GET',
-      ...options
+      ...options,
+      headers
     })
   }
 

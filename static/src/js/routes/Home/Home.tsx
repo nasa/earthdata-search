@@ -157,7 +157,6 @@ export const Home: React.FC = () => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const isNlpActiveRef = useRef(false)
-  const suppressNextSubmitRef = useRef(false)
   const [showAllPortals, setShowAllPortals] = useState(false)
   const [activeNlpPrompt, setActiveNlpPrompt] = useState('')
   const [nlpRequestId, setNlpRequestId] = useState(0)
@@ -231,7 +230,6 @@ export const Home: React.FC = () => {
   }, [setNlpAutoCenterPending])
 
   const resetNlpSearchUi = useCallback(() => {
-    suppressNextSubmitRef.current = true
     isNlpActiveRef.current = false
     setIsNlpStreaming(false)
     setHasSubmittedNlpSearch(false)
@@ -249,15 +247,6 @@ export const Home: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // Guards against any submit event that immediately follows a cancel or
-    // failure reset (e.g. a race condition causing form submission that
-    // that clears hasSubmittedNlpSearch). Without this, the empty-keyword
-    // branch below would incorrectly redirect to /search
-    if (suppressNextSubmitRef.current) {
-      suppressNextSubmitRef.current = false
-
-      return
-    }
 
     const trimmedKeyword = keyword.trim()
 
@@ -269,6 +258,12 @@ export const Home: React.FC = () => {
         // This prevents cancel interactions from accidentally falling through
         // to the empty-query redirect path.
         if (hasSubmittedNlpSearch) return
+
+        changeQuery({
+          collection: {
+            keyword: trimmedKeyword
+          }
+        })
 
         navigate(`${routes.SEARCH}${window.location.search}`)
 
