@@ -95,6 +95,8 @@ export const MapContainer = () => {
     onExcludeGranule,
     onFetchShapefile,
     onUpdateShapefile,
+    nlpAutoCenterPending,
+    setNlpAutoCenterPending,
     panelsLoaded,
     projectCollections,
     setDrawingNewLayer,
@@ -117,6 +119,8 @@ export const MapContainer = () => {
     onExcludeGranule: state.query.excludeGranule,
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
+    nlpAutoCenterPending: state.map.nlpAutoCenterPending,
+    setNlpAutoCenterPending: state.map.setNlpAutoCenterPending,
     panelsLoaded: state.ui.panels.panelsLoaded,
     projectCollections: state.project.collections,
     setDrawingNewLayer: state.ui.map.setDrawingNewLayer,
@@ -152,6 +156,10 @@ export const MapContainer = () => {
   }
 
   const [mapReady, setMapReady] = useState(false)
+
+  const handleCenterMapOnLoadComplete = useCallback(() => {
+    setNlpAutoCenterPending(false)
+  }, [setNlpAutoCenterPending])
 
   useLayoutEffect(() => {
     if (startDrawing && mapReady) {
@@ -521,6 +529,8 @@ export const MapContainer = () => {
       onToggleTooManyPointsModal={() => setOpenModal(MODAL_NAMES.TOO_MANY_POINTS)}
       onUpdateShapefile={onUpdateShapefile}
       overlays={overlays}
+      centerMapOnLoad={nlpAutoCenterPending}
+      onCenterMapOnLoadComplete={handleCenterMapOnLoadComplete}
       projectionCode={projection}
       rotation={rotation}
       setGranuleId={setGranuleId}

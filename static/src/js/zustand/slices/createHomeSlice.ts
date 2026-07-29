@@ -8,12 +8,6 @@ const createHomeSlice: ImmerStateCreator<HomeSlice> = (set) => ({
         state.home.startDrawing = startDrawing
       })
     },
-    nlpAutoCenterPending: false,
-    setNlpAutoCenterPending: (isPending) => {
-      set((state) => {
-        state.home.nlpAutoCenterPending = isPending
-      })
-    },
     openFacetGroup: null,
     setOpenFacetGroup: (groupName) => {
       set((state) => {

@@ -203,7 +203,7 @@ export const Home: React.FC = () => {
   const hiddenPortals = sortedPortals.slice(10)
 
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
-  const setNlpAutoCenterPending = useEdscStore((state) => state.home.setNlpAutoCenterPending)
+  const setNlpAutoCenterPending = useEdscStore((state) => state.map.setNlpAutoCenterPending)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: collectionsQueryKeyword = '' } = collectionQuery
   const [keyword, setKeyword] = useState(collectionsQueryKeyword)

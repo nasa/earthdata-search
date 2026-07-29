@@ -313,6 +313,10 @@ interface MapProps {
   onMapReady: (isReady: boolean) => void
   /** Function to call when a new drawing layer is toggled */
   onToggleDrawingNewLayer: (state: string | boolean) => void
+  /** True when map should center on current spatial drawing source */
+  centerMapOnLoad: boolean
+  /** Callback after map center request is emitted */
+  onCenterMapOnLoadComplete: () => void
   /** Function to call when the shapefile upload modal is toggled */
   onToggleShapefileUploadModal: () => void
   /** Function to call when the too many points modal is toggled */
@@ -388,6 +392,8 @@ const Map: React.FC<MapProps> = ({
   onExcludeGranule,
   onMapReady,
   onToggleDrawingNewLayer,
+  centerMapOnLoad,
+  onCenterMapOnLoadComplete,
   onToggleShapefileUploadModal,
   onToggleTooManyPointsModal,
   onUpdateShapefile,
@@ -399,18 +405,10 @@ const Map: React.FC<MapProps> = ({
   spatialSearch,
   zoom
 }) => {
-  // This is the width of the side panels. We need to know this so we can adjust the padding
-  // on the map view when the panels are resized.
-  // We adjust the padding so that centering the map on a point will center the point in the
-  // viewable area of the map and not behind a panel.
   const {
-    nlpAutoCenterPending,
-    setNlpAutoCenterPending,
     panelsWidth,
     sidebarWidth
   } = useEdscStore((state) => ({
-    nlpAutoCenterPending: state.home.nlpAutoCenterPending,
-    setNlpAutoCenterPending: state.home.setNlpAutoCenterPending,
     panelsWidth: state.ui.panels.panelsWidth,
     sidebarWidth: state.ui.panels.sidebarWidth
   }))
@@ -418,7 +416,6 @@ const Map: React.FC<MapProps> = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
   const mapElRef = useRef<HTMLDivElement>(null)
-  const previousSpatialSearchKeyRef = useRef('')
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -1044,85 +1041,15 @@ const Map: React.FC<MapProps> = ({
     })
   }, [spatialSearch])
 
-  // Keep auto-centering limited to NLP spatial updates so existing manual
-  // drawing/type-in flows (circle/line/polygon) retain their prior behavior.
-  // NLP currently writes spatial query state as point or bounding box.
   useEffect(() => {
-    if (!nlpAutoCenterPending) return
-
-    const {
-      boundingBoxSearch,
-      circleSearch,
-      drawingNewLayer,
-      lineSearch,
-      pointSearch,
-      polygonSearch
-    } = spatialSearch
-
-    // While actively drawing, avoid fitting to stale or partial features.
-    if (drawingNewLayer !== false) {
-      previousSpatialSearchKeyRef.current = ''
-      setNlpAutoCenterPending(false)
-
-      return
-    }
-
-    const hasNlpSpatialConstraints = !!(
-      boundingBoxSearch?.length
-      || pointSearch?.length
-    )
-
-    const hasManualDrawingShapes = !!(
-      circleSearch?.length
-      || lineSearch?.length
-      || polygonSearch?.length
-    )
-
-    if (!hasNlpSpatialConstraints || hasManualDrawingShapes) {
-      previousSpatialSearchKeyRef.current = ''
-      setNlpAutoCenterPending(false)
-
-      return
-    }
-
-    const spatialSearchKey = JSON.stringify({
-      boundingBoxSearch,
-      pointSearch
-    })
-
-    if (previousSpatialSearchKeyRef.current === spatialSearchKey) {
-      setNlpAutoCenterPending(false)
-
-      return
-    }
-
-    const sourceExtent = spatialDrawingSource.getExtent()
-    if (!sourceExtent) {
-      setNlpAutoCenterPending(false)
-
-      return
-    }
-
-    const [minX, minY, maxX, maxY] = sourceExtent
-    const hasFiniteExtent = [minX, minY, maxX, maxY].every((value) => Number.isFinite(value))
-
-    // Regression guard: direct /search navigation can race and emit MOVEMAP before
-    // spatialDrawingSource has drawable features. Skip emit for empty/invalid extents.
-    if (!hasFiniteExtent || maxX < minX || maxY < minY) {
-      setNlpAutoCenterPending(false)
-
-      return
-    }
-
-    previousSpatialSearchKeyRef.current = spatialSearchKey
+    if (!centerMapOnLoad) return
 
     eventEmitter.emit(mapEventTypes.MOVEMAP, {
       source: spatialDrawingSource
     })
 
-    // Mark NLP auto-center request as done
-    setNlpAutoCenterPending(false)
-  }, [nlpAutoCenterPending, setNlpAutoCenterPending, spatialSearch])
+    onCenterMapOnLoadComplete()
+  }, [centerMapOnLoad, onCenterMapOnLoadComplete])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {

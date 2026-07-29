@@ -348,10 +348,6 @@ export type HomeSlice = {
     startDrawing: boolean | string
     /** Function to set the startDrawing value */
     setStartDrawing: (startDrawing: boolean | string) => void
-    /** Flag indicating one-typ map-auto center after NLP search */
-    nlpAutoCenterPending: boolean
-    /** Function to set  nlpAutoCenterPending flag */
-    setNlpAutoCenterPending: (isPending: boolean) => void
     /** Flag if a facet group should be opened */
     openFacetGroup: string | null
     /** Function to set the setOpenFacetGroup value */
@@ -428,6 +424,10 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+    /** Flag indicating one-time map auto-center after NLP search */
+    nlpAutoCenterPending: boolean
+    /** Function to set nlpAutoCenterPending flag */
+    setNlpAutoCenterPending: (isPending: boolean) => void
     /** Store layers for each collection */
     mapLayers: Record<string, MapLayer[]>
     /** Function to set layers for a collection */
