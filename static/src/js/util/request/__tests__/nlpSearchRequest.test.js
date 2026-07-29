@@ -24,6 +24,7 @@ describe('NlpSearchRequest#search', () => {
 
     request.search(searchParams)
 
+    expect(postSpy).toHaveBeenCalledTimes(1)
     expect(postSpy).toHaveBeenCalledWith('search/nlp/query.json', searchParams)
   })
 })
@@ -36,9 +37,11 @@ describe('NlpSearchRequest#stream', () => {
 
     await request.stream('ice sheets in greenland', { signal })
 
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
     expect(fetchSpy).toHaveBeenCalledWith(
       'http://localhost:3001/nlp?query=ice%20sheets%20in%20greenland',
       {
+        headers: expect.any(Headers),
         method: 'GET',
         signal
       }

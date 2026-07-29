@@ -5,8 +5,6 @@ import React, {
   useState
 } from 'react'
 import { useCompletion } from '@ai-sdk/react'
-import { bbox as turfbox } from '@turf/turf'
-import GeoJSON from 'ol/format/GeoJSON'
 import WKT from 'ol/format/WKT'
 import Spinner from '../Spinner/Spinner'
 
@@ -19,11 +17,19 @@ import './NlpSearchStatus.scss'
 
 export const FINAL_RESULT_MARKER = 'Final result:'
 
+/**
+ * Props accepted by the NlpSearchStatus component.
+ */
 type NlpSearchStatusProps = {
+  /** Active prompt being parsed. */
     activePrompt?: string
+  /** Request id used to prevent duplicate runs. */
     requestId?: number
+  /** Notifies the parent when NLP streaming starts or stops. */
     onStreamingChange?: (isStreaming: boolean) => void
+  /** Called after NLP parsing completes and query updates are applied. */
     onNlpSearchComplete?: () => void | Promise<void>
+  /** Called when NLP parsing or streaming fails. */
     onNlpSearchFailed?: () => void
 }
 
@@ -68,8 +74,7 @@ const parseWktSpatial = (spatialArea: string | undefined) => {
 
   try {
     const geometry = new WKT().readGeometry(spatialArea)
-    const geoJsonGeometry = new GeoJSON().writeGeometryObject(geometry)
-    const [minLongitude, minLatitude, maxLongitude, maxLatitude] = turfbox(geoJsonGeometry)
+    const [minLongitude, minLatitude, maxLongitude, maxLatitude] = geometry.getExtent()
 
     const boundingBox = [
       roundCoordinate(minLongitude),
@@ -222,6 +227,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const spatial = parseWktSpatial(spatialArea)
 
+      // Clear any previously focused collection/granule detail state so
+      // landing-page NLP searches always continue from a clean Search context.
       setCollectionId(null)
 
       // Step appended right as the network request for collections begins,

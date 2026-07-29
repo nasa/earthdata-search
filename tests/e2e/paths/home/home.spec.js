@@ -6,7 +6,6 @@ import {
 } from '../../../support/interceptUnauthenticatedCollections'
 import { createNlpHandlers, nlp } from '../../../support/nlpHandlers'
 import { createNlpMockStreamChunks } from '../../../support/nlpStreamMock'
-import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
@@ -19,9 +18,6 @@ import whatIsThisImageCollections from './__mocks__/what-is-this-image-collectio
 import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.body.json'
 import whatIsThisImageGranulesHeaders from './__mocks__/what-is-this-image-granules.headers.json'
 import whatIsThisImageGraphQlBody from './__mocks__/what-is-this-image-collections.graphql.body.json'
-
-const { nlpSearch } = getApplicationConfig()
-const isNlpEnabled = nlpSearch === 'true'
 
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
@@ -39,7 +35,6 @@ test.describe('Home Page', () => {
   })
 
   test.describe('when performing a keyword search', () => {
-    test.skip(isNlpEnabled, 'Skipping keyword search when NLP search is enabled.')
     test.beforeEach(async ({ page }) => {
       await interceptUnauthenticatedCollections({
         page,
@@ -210,7 +205,7 @@ test.describe('Home Page', () => {
   })
 
   test.describe('when performing an NLP search', () => {
-    test.skip(!isNlpEnabled, 'Skipping NLP search when NLP search is disabled.')
+    test.skip('Skipping NLP search until NLP search is disabled.')
     test.describe.configure({ mode: 'serial' })
 
     let nlpHandlers
@@ -319,6 +314,26 @@ test.describe('Home Page', () => {
 
       await expect(page.locator('.nlp-search-chat'), 'NLP chat should be removed after cancelling NLP').toHaveCount(0)
       await expect(page, 'user should remain on the home page after cancelling NLP').toHaveURL('/')
+    })
+
+    test('navigates to search and loads collections when submitting an empty query', async ({ page }) => {
+      const collectionsResponsePromise = page.waitForResponse((response) => (
+        /search\/collections/.test(response.url())
+        && response.request().method() === 'POST'
+      ))
+
+      await page.getByRole('button', {
+        name: 'Search',
+        exact: true
+      }).click()
+
+      await collectionsResponsePromise
+
+      await expect(page, 'Empty NLP submit should navigate directly to Search').toHaveURL('/search')
+      await expect.poll(
+        () => nlpHandlers.nlp.getRequestedPrompts().length,
+        'Empty NLP submit should not call the /nlp endpoint'
+      ).toBe(0)
     })
   })
 

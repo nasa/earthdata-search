@@ -1,5 +1,8 @@
-import { act } from 'react'
-import { screen, waitFor } from '@testing-library/react'
+import {
+  act,
+  screen,
+  waitFor
+} from '@testing-library/react'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -58,7 +61,6 @@ const setup = setupTest({
 
 describe('NlpSearchStatus component', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
     capturedUseCompletionOptions = {}
   })
 
@@ -77,9 +79,12 @@ describe('NlpSearchStatus component', () => {
     })
 
     await waitFor(() => {
-      expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
     })
 
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+
+    expect(mockComplete).toHaveBeenCalledTimes(1)
     expect(mockComplete).toHaveBeenCalledWith('glaciers in montana')
   })
 
@@ -109,9 +114,12 @@ describe('NlpSearchStatus component', () => {
     })
 
     await waitFor(() => {
-      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith(null)
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
     })
 
+    expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith(null)
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         keyword: 'average temp',
@@ -138,14 +146,18 @@ describe('NlpSearchStatus component', () => {
     })
 
     await waitFor(() => {
-      expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
     })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
 
     act(() => {
       capturedUseCompletionOptions.onFinish?.('prompt', 'Final result:\nnot-json')
     })
 
     expect(zustandState.errors.handleError).toHaveBeenCalledTimes(1)
+    // Streaming is toggled on when the request starts, then toggled off after parse failure.
+    expect(props.onStreamingChange).toHaveBeenCalledTimes(2)
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
     expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
     expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
@@ -160,8 +172,10 @@ describe('NlpSearchStatus component', () => {
     })
 
     await waitFor(() => {
-      expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
     })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
 
     act(() => {
       capturedUseCompletionOptions.onError?.(new Error('NLP service unavailable'))

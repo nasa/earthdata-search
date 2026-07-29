@@ -1,5 +1,9 @@
-import React, { act } from 'react'
-import { screen, waitFor } from '@testing-library/react'
+import React from 'react'
+import {
+  act,
+  screen,
+  waitFor
+} from '@testing-library/react'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -14,9 +18,15 @@ import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
+/**
+ * Props captured from the mocked NlpSearchStatus component.
+ */
 type NlpSearhStatusMockProps = {
+  /** Called when NLP flow completes successfully. */
   onNlpSearchComplete?: () => void
+  /** Called when NLP flow fails and UI should reset. */
   onNlpSearchFailed?: () => void
+  /** Called when NLP stream starts or stops. */
   onStreamingChange?: (isStreaming: boolean) => void
 }
 

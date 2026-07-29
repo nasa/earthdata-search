@@ -216,7 +216,7 @@ export const Home: React.FC = () => {
     q: keyword
   }
 
-  const onNlpSearchComplete = React.useCallback(() => {
+  const onNlpSearchComplete = useCallback(() => {
     // Use ref instead of state so check is synchronous. State
     // would still see stale values when onFinish fires.
 
