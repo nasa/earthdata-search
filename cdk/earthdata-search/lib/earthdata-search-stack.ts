@@ -5,9 +5,10 @@ import * as lambda from 'aws-cdk-lib/aws-lambda'
 
 import { application } from '@edsc/cdk-utils'
 
-import { Queues } from './earthdata-search-queues'
-import { Functions } from './earthdata-search-functions'
+import { ALB } from './earthdata-search-alb'
 import { Authorizers } from './earthdata-search-authorizers'
+import { Functions } from './earthdata-search-functions'
+import { Queues } from './earthdata-search-queues'
 import { StepFunctions } from './earthdata-search-step-functions'
 
 export interface EarthdataSearchStackProps extends cdk.StackProps {
@@ -38,10 +39,12 @@ const {
   STAGE_NAME = 'dev',
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
+  SUBNET_ID_C = 'local-subnet-c',
   USE_GEOCODER = 'false', // Used in development only
   USE_CACHE = 'false',
   USE_NLP_SEARCH = 'false',
-  VPC_ID = 'local-vpc'
+  VPC_ID = 'local-vpc',
+  VPC_ENDPOINT_ID = 'local-vpce'
 } = process.env
 const runtime = lambda.Runtime.NODEJS_22_X
 
@@ -63,10 +66,11 @@ export class EarthdataSearchStack extends cdk.Stack {
     const lambdaRole = iam.Role.fromRoleArn(this, 'EarthdataSearchLambdaRole', applicationRole)
 
     const vpc = ec2.Vpc.fromVpcAttributes(this, 'Vpc', {
-      availabilityZones: ['us-east-1a', 'us-east-1b'],
+      availabilityZones: ['us-east-1a', 'us-east-1b', 'us-east-1c'],
       privateSubnetIds: [
         SUBNET_ID_A,
-        SUBNET_ID_B
+        SUBNET_ID_B,
+        SUBNET_ID_C
       ],
       vpcId: VPC_ID
     })
@@ -77,12 +81,21 @@ export class EarthdataSearchStack extends cdk.Stack {
       apiScope: apiNestedStack,
       apiName: this.stackName,
       binaryMediaTypes: ['image/png'],
-      stageName: STAGE_NAME
+      stageName: STAGE_NAME,
+      vpcEndpointIds: [VPC_ENDPOINT_ID]
     })
     const {
       apiGatewayDeployment,
       apiGatewayRestApi
     } = apiGateway
+
+    new ALB(this, 'StreamingAlb', {
+      apiGatewayRestApi,
+      stack: this,
+      stageName: STAGE_NAME,
+      vpc,
+      vpcEndpointId: VPC_ENDPOINT_ID
+    })
 
     const queues = new Queues(this, 'Queues', {
       queueNameSuffix: logGroupSuffix
