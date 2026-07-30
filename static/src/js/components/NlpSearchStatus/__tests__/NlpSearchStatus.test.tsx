@@ -276,8 +276,7 @@ describe('NlpSearchStatus component', () => {
       expect(props.onStreamingChange).toHaveBeenCalledTimes(2)
     })
 
-    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
-    expect(props.onStreamingChange).toHaveBeenCalledWith(false)
+    expect(props.onStreamingChange).toHaveBeenNthCalledWith(2, false)
     expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
     expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
   })
