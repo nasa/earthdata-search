@@ -159,10 +159,12 @@ dockerRun() {
     -e "STAGE_NAME=$bamboo_STAGE_NAME" \
     -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
     -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
+    -e "SUBNET_ID_C=$bamboo_SUBNET_ID_C" \
     -e "USE_CACHE=$bamboo_USE_CACHE" \
     -e "USE_GEOCODER=$bamboo_USE_GEOCODER" \
     -e "USE_NLP_SEARCH=$bamboo_USE_NLP_SEARCH" \
     -e "VPC_ID=$bamboo_VPC_ID" \
+    -e "VPC_ENDPOINT_ID=$bamboo_VPC_ENDPOINT_ID" \
     $dockerTag "$@"
 }
 
