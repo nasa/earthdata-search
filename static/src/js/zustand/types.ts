@@ -70,8 +70,6 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => Promise<void>
-    /** Function to perform NLP search and process results */
-    getNlpCollections: (query: string) => Promise<void>
   }
 }
 

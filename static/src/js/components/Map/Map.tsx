@@ -162,17 +162,6 @@ const spatialDrawingLayer = new VectorLayer({
   zIndex: 4
 })
 
-// Layer for NLP spatial drawing
-// This is separate from spatialDrawingLayer to avoid interference with spatialSearch clears
-const nlpSpatialSource = new VectorSource({
-  wrapX: false
-})
-const nlpSpatialLayer = new VectorLayer({
-  source: nlpSpatialSource,
-  className: 'map__nlp-spatial-layer',
-  zIndex: 4
-})
-
 // Layer group for imagery layers
 const granuleImageryLayerGroup = new LayerGroup()
 
@@ -442,8 +431,7 @@ const Map: React.FC<MapProps> = ({
         granuleHighlightsLayer,
         focusedGranuleLayer,
         granuleImageryLayerGroup,
-        spatialDrawingLayer,
-        nlpSpatialLayer
+        spatialDrawingLayer
       ],
       target: mapElRef.current as HTMLDivElement,
       view: createView({

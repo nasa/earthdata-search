@@ -1,88 +1,75 @@
-// These tests assume that the default behavior is to utilize the nlp enpoint.
-// While the nlp endpoint is turned off, these tests will fail.
-// Unskip test once nlp endpoint is ultized again.
 import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
+import {
+  interceptUnauthenticatedCollections
+} from '../../support/interceptUnauthenticatedCollections'
+import { createNlpHandlers, nlp } from '../../support/nlpHandlers'
+import { createNlpMockStreamChunks } from '../../support/nlpStreamMock'
 
-import commonHeaders from './__mocks__/common_collections.headers.json'
-import nlpCollections from './__mocks__/nlp/nlp_collections.body.json'
-
-const screenshotClip = {
-  x: 950,
-  y: 90,
-  width: 405,
-  height: 640
-}
+import commonBody from '../paths/home/__mocks__/common.body.json'
+import commonHeaders from '../paths/home/__mocks__/common.headers.json'
 
 test.describe('Map: NLP spatial rendering', () => {
+  let nlpHandlers
+
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       context,
       page
     })
 
-    // Intercept NLP search endpoint
-    await page.route(/nlp\/query\.json/, async (route) => {
-      const request = route.request()
+    nlpHandlers = createNlpHandlers({ page })
+    nlpHandlers.nlp.use(
+      nlp.get('/nlp', () => nlp.stream({
+        delayMs: 200,
+        chunks: createNlpMockStreamChunks({
+          prompt: 'average temp in western montana last april'
+        })
+      }))
+    )
 
-      // Match the request body to ensure it's the expected NLP query
-      const requestBody = request.postData()
+    await nlpHandlers.nlp.start()
 
-      expect(requestBody).toEqual('embedding=false&q=rainfall in DC&search_params[include_facets]=v2&search_params[include_granule_counts]=true&search_params[include_has_granules]=true&search_params[include_tags]=edsc.*,opensearch.granule.osdd&search_params[options][temporal][limit_to_granules]=true&search_params[page_size]=20&search_params[sort_key][]=has_granules_or_cwic&search_params[sort_key][]=-score&search_params[sort_key][]=-create-data-date&search_params[has_granules_or_cwic]=true&search_params[page_num]=1')
-
-      await route.fulfill({
-        json: nlpCollections,
-        headers: {
-          ...commonHeaders,
-          'cmr-hits': '17'
-        }
-      })
-    })
-
-    await page.route(/shapefiles$/, async (route) => {
-      await route.fulfill({
-        json: { shapefile_id: '1' },
-        headers: { 'content-type': 'application/json; charset=utf-8' }
-      })
+    await interceptUnauthenticatedCollections({
+      page,
+      body: commonBody,
+      headers: commonHeaders
     })
 
     await page.goto('/')
   })
 
-  // TODO: EDSC-4672 when we put NLP back onto search
-  test.skip('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Wildfires in California' }).fill('rainfall in DC')
+  test.afterEach(async () => {
+    await nlpHandlers.nlp.stop()
+  })
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
+  test('applies NLP spatial output and recenters the map view', async ({ page }) => {
+    await page.getByPlaceholder('Wildfires in California during summer 2023').fill('average temp in western montana last april')
 
     await page.getByRole('button', {
       name: 'Search',
       exact: true
     }).click()
 
-    // Wait for the map to load after navigation
-    await initialMapPromise
+    await expect.poll(
+      () => nlpHandlers.nlp.getRequestedPrompts().at(-1)
+    ).toBe('average temp in western montana last april')
 
-    // Displays a modal
-    await expect(page.getByTestId('edsc-modal__title')).toHaveText('Shape file has too many points')
+    await expect(page).toHaveURL(/\/?q=average(?:%20|\+)temp/, { timeout: 30000 })
 
-    // Closes the modal
-    await page.getByLabel('Close').click()
+    await expect(page).toHaveURL(/qt=2026-04-01T00%3A00%3A00\.000Z%2C2026-04-30T23%3A59%3A59\.999Z/, { timeout: 15000 })
+    await expect(page).toHaveURL(/sb\[0\]=-116\.05%2C44\.35821%2C-109\.64514%2C49\.00139/, { timeout: 15000 })
 
-    // NLP label is shown in the Spatial section
-    await expect(page.getByTestId('spatial-display_shapefile-name')).toContainText('"DC"')
+    const mapTilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\//)
 
-    // Check collection results count
-    await expect(page.getByText('Showing 17 of 17 matching collections')).toBeVisible()
+    await page.getByRole('button', { name: 'Browse all Earth Science Data' }).click()
 
-    await expect(page).toHaveURL(/search\?q=rainfall&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-77\.\d+&zoom=10\.\d+/)
+    await mapTilesPromise
 
-    // Allow time for MOVEMAP and render
-    await page.waitForTimeout(250)
-
-    await expect(page).toHaveScreenshot('nlp-spatial-drawn.png', {
-      clip: screenshotClip
-    })
+    await expect(page).toHaveURL(/\/search\?q=average(?:%20|\+)temp/, { timeout: 15000 })
+    await expect(page).toHaveURL(/qt=2026-04-01T00%3A00%3A00\.000Z%2C2026-04-30T23%3A59%3A59\.999Z/, { timeout: 15000 })
+    await expect(page).toHaveURL(/sb\[0\]=-116\.05%2C44\.35821%2C-109\.64514%2C49\.00139/, { timeout: 15000 })
+    await expect(page).toHaveURL(/lat=|long=|zoom=/, { timeout: 15000 })
   })
 })

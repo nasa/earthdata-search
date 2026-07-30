@@ -93,8 +93,7 @@ const setup = setupTest({
   Component: Home,
   defaultZustandState: {
     collections: {
-      getCollections: vi.fn().mockResolvedValue(undefined),
-      getNlpCollections: vi.fn().mockResolvedValue(undefined)
+      getCollections: vi.fn().mockResolvedValue(undefined)
     }
   },
   withRouter: true
