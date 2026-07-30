@@ -89,6 +89,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       apiGatewayRestApi
     } = apiGateway
 
+    // eslint-disable-next-line no-new
     new ALB(this, 'StreamingAlb', {
       apiGatewayRestApi,
       stack: this,
