@@ -329,6 +329,41 @@ describe('NlpSearchStatus component', () => {
     })
   })
 
+  test('ignores missing spatialArea and temporal fields in NLP final result', async () => {
+    const { props, zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'rainfall',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
+    })
+
+    expect(props.onStreamingChange).toHaveBeenCalledWith(true)
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'rainfall',
+        'Final result:\n{"keyword":"rainfall","query":"rainfall"}'
+      )
+    })
+
+    await waitFor(() => {
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+      collection: {
+        keyword: 'rainfall',
+        temporal: {},
+        spatial: {}
+      },
+      selectedRegion: {}
+    })
+  })
+
   test('passes parsed prompt and fetch options to NLP request stream', async () => {
     setup()
 

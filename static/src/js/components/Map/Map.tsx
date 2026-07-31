@@ -251,6 +251,12 @@ const removeDrawingInteraction = (map: OlMap) => {
   })
 }
 
+const hasFiniteExtent = (extent: import('ol/extent').Extent | null | undefined): extent is import('ol/extent').Extent => {
+  if (!extent || extent.length !== 4) return false
+
+  return extent.every((coordinate) => Number.isFinite(coordinate))
+}
+
 interface MapProps {
   /** The base layers of the map */
   base: {
@@ -624,8 +630,9 @@ const Map: React.FC<MapProps> = ({
         if (sourceExtent) extent = sourceExtent
       }
 
-      // Fit the map to the extent
-      if (extent) {
+      // Fit the map only when extent values are finite.
+      // empty extent can cause Infinity bounds.
+      if (hasFiniteExtent(extent)) {
         map.getView().fit(extent, {
           duration: mapDuration,
           padding: [100, 125, 100, 100]
