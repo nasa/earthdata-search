@@ -9,6 +9,14 @@ import { createNlpMockStreamChunks } from '../../support/nlpStreamMock'
 
 import commonBody from '../paths/home/__mocks__/common.body.json'
 import commonHeaders from '../paths/home/__mocks__/common.headers.json'
+import keywordTemporalCollections from '../paths/home/__mocks__/keyword-temporal-collections.body.json'
+
+const screenshotClip = {
+  x: 950,
+  y: 90,
+  width: 405,
+  height: 640
+}
 
 test.describe('Map: NLP spatial rendering', () => {
   let nlpHandlers
@@ -34,7 +42,17 @@ test.describe('Map: NLP spatial rendering', () => {
     await interceptUnauthenticatedCollections({
       page,
       body: commonBody,
-      headers: commonHeaders
+      headers: commonHeaders,
+      additionalRequests: [{
+        body: keywordTemporalCollections,
+        headers: {
+          ...commonHeaders,
+          'cmr-hits': '805'
+        },
+        paramCheck: (parsedQuery) => parsedQuery?.keyword === 'average* temp*'
+          && parsedQuery?.temporal === '2026-04-01T00:00:00.000Z,2026-04-30T23:59:59.999Z'
+          && parsedQuery?.bounding_box?.[0] === '-116.05,44.35821,-109.64514,49.00139'
+      }]
     })
 
     await page.goto('/')
@@ -44,8 +62,10 @@ test.describe('Map: NLP spatial rendering', () => {
     await nlpHandlers.nlp.stop()
   })
 
-  test('applies NLP spatial output and recenters the map view', async ({ page }) => {
+  test('applies NLP spatial output and recenters the map view @screenshot', async ({ page }) => {
     await page.getByPlaceholder('Wildfires in California during summer 2023').fill('average temp in western montana last april')
+
+    const mapTilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
 
     await page.getByRole('button', {
       name: 'Search',
@@ -56,20 +76,12 @@ test.describe('Map: NLP spatial rendering', () => {
       () => nlpHandlers.nlp.getRequestedPrompts().at(-1)
     ).toBe('average temp in western montana last april')
 
-    await expect(page).toHaveURL(/\/?q=average(?:%20|\+)temp/, { timeout: 30000 })
-
-    await expect(page).toHaveURL(/qt=2026-04-01T00%3A00%3A00\.000Z%2C2026-04-30T23%3A59%3A59\.999Z/, { timeout: 15000 })
-    await expect(page).toHaveURL(/sb\[0\]=-116\.05%2C44\.35821%2C-109\.64514%2C49\.00139/, { timeout: 15000 })
-
-    const mapTilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\//)
-
-    await page.getByRole('button', { name: 'Browse all Earth Science Data' }).click()
-
     await mapTilesPromise
 
-    await expect(page).toHaveURL(/\/search\?q=average(?:%20|\+)temp/, { timeout: 15000 })
-    await expect(page).toHaveURL(/qt=2026-04-01T00%3A00%3A00\.000Z%2C2026-04-30T23%3A59%3A59\.999Z/, { timeout: 15000 })
-    await expect(page).toHaveURL(/sb\[0\]=-116\.05%2C44\.35821%2C-109\.64514%2C49\.00139/, { timeout: 15000 })
-    await expect(page).toHaveURL(/lat=|long=|zoom=/, { timeout: 15000 })
+    await expect(page.getByText('Showing 20 of 805 matching collections')).toBeVisible()
+
+    await expect(page).toHaveScreenshot('nlp-spatial-drawn.png', {
+      clip: screenshotClip
+    })
   })
 })
