@@ -34,6 +34,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow: hidden;
     min-height: 0.5rem;
     padding-top: 0;
   }
@@ -123,6 +124,7 @@
   &__nlp-chat-wrapper {
     width: 100%;
     margin-top: 0;
+    max-height: 0;
     margin-bottom: 0;
     transform-origin: top center;
     animation: home-nlp-chat-enter 220ms ease-out;
@@ -223,11 +225,13 @@
 @keyframes home-nlp-chat-enter {
   from {
     opacity: 0;
+    max-height: 0rem;
     transform: translateY(-0.35rem) scaleY(0.85);
   }
 
   to {
     opacity: 1;
+    max-height: 20rem;
     transform: translateY(0) scaleY(1);
   }
 }

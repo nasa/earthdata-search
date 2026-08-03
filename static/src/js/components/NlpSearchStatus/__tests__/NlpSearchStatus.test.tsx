@@ -152,6 +152,7 @@ describe('NlpSearchStatus component', () => {
     })
 
     expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
+    expect(props.onNlpSearchComplete).toHaveBeenCalledWith({ hasSpatial: true })
   })
 
   test('reports parsing errors when final result is not valid json', async () => {
@@ -329,7 +330,7 @@ describe('NlpSearchStatus component', () => {
     })
   })
 
-  test('ignores missing spatialArea and temporal fields in NLP final result', async () => {
+  test('ignores null spatialArea and temporal fields in NLP final result', async () => {
     const { props, zustandState } = setup({
       overrideProps: {
         activePrompt: 'rainfall',
@@ -346,7 +347,7 @@ describe('NlpSearchStatus component', () => {
     await act(async () => {
       capturedUseCompletionOptions.onFinish?.(
         'rainfall',
-        'Final result:\n{"keyword":"rainfall","query":"rainfall"}'
+        'Final result:\n{"keyword":"rainfall","query":"rainfall","spatial":null,"spatialArea":null,"temporal":null}'
       )
     })
 
@@ -362,6 +363,9 @@ describe('NlpSearchStatus component', () => {
       },
       selectedRegion: {}
     })
+
+    expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
+    expect(props.onNlpSearchComplete).toHaveBeenCalledWith({ hasSpatial: false })
   })
 
   test('passes parsed prompt and fetch options to NLP request stream', async () => {

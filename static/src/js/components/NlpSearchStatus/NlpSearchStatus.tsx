@@ -28,7 +28,7 @@ type NlpSearchStatusProps = {
   /** Notifies the parent when NLP streaming starts or stops. */
     onStreamingChange?: (isStreaming: boolean) => void
   /** Called after NLP parsing completes and query updates are applied. */
-    onNlpSearchComplete?: () => void | Promise<void>
+    onNlpSearchComplete?: (options: { hasSpatial: boolean }) => void | Promise<void>
   /** Called when NLP parsing or streaming fails. */
     onNlpSearchFailed?: () => void
 }
@@ -226,6 +226,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       } = parsedResult
 
       const spatial = parseWktSpatial(spatialArea)
+      const hasSpatial = Object.keys(spatial).length > 0
 
       // Clear any previously focused collection/granule detail state so
       // landing-page NLP searches always continue from a clean Search context.
@@ -245,7 +246,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       })
 
       // Trigger navigation flow in Home after collections retrieval finishes.
-      await Promise.resolve(onNlpSearchComplete())
+      await Promise.resolve(onNlpSearchComplete({ hasSpatial }))
     },
     onError: (error) => {
       // Ignore stale errors for a request that has been cancelled.

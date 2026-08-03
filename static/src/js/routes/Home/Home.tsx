@@ -216,14 +216,14 @@ export const Home: React.FC = () => {
     q: keyword
   }
 
-  const onNlpSearchComplete = useCallback(() => {
+  const onNlpSearchComplete = useCallback(({ hasSpatial }: { hasSpatial: boolean }) => {
     // Use ref instead of state so check is synchronous. State
     // would still see stale values when onFinish fires.
 
     if (!isNlpActiveRef.current) return undefined
 
-    // Mark that Search map should center once for this NLP search result navigation
-    setNlpAutoCenterPending(true)
+    // Only center map when NLP returns a parsed spatial extent.
+    setNlpAutoCenterPending(hasSpatial)
 
     // Queue navigation only while the current NLP request is still active.
     return Promise.resolve(setIsNlpNavigationPending(true))
@@ -235,7 +235,6 @@ export const Home: React.FC = () => {
     setHasSubmittedNlpSearch(false)
     setActiveNlpPrompt('')
     setNlpAutoCenterPending(false)
-    setKeyword('')
     setIsNlpNavigationPending(false)
 
     if (inputRef.current) inputRef.current.focus()
