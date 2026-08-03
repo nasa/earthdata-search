@@ -129,7 +129,8 @@ test.describe('Home Page', () => {
         exact: true
       })
 
-      await searchInput.fill('average temp in western montana last april')
+      const searchPrompt = 'average temp in western montana last april'
+      await searchInput.fill(searchPrompt)
       await searchButton.click()
 
       await expect(cancelButton, 'Cancel button should be visible while NLP is running').toBeVisible()
@@ -137,7 +138,7 @@ test.describe('Home Page', () => {
       await cancelButton.click()
 
       await expect(searchInput, 'Search input should be re-enabled after cancelling NLP').toBeEnabled()
-      await expect(searchInput, 'search input should be cleared after search cancelled').toHaveValue('')
+      await expect(searchInput, 'search input should not be cleared after search cancelled').toHaveValue('average temp in western montana last april')
       await expect(searchButton, 'Search button should be visible after cancelling NLP').toBeVisible()
 
       await expect(page.locator('.nlp-search-chat'), 'NLP chat should be removed after cancelling NLP').toHaveCount(0)
