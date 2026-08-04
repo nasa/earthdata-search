@@ -374,7 +374,7 @@ export const Home: React.FC = () => {
                       size="22px"
                     />
                     <input
-                      className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
+                      className={`home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0 ${isNlpEnabled ? 'home__hero-input--nlp' : ''}`}
                       onChange={onChangeKeyword}
                       placeholder={isNlpEnabled ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
                       ref={inputRef}

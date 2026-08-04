@@ -135,8 +135,14 @@
 
     &:focus {
       outline: 0;
-      border-color: utils.$color__nasa-blue;
-      box-shadow: 0 0 0 0 0.1rem rgba(utils.$color__nasa-blue, 0.25);
+      box-shadow: none;
+    }
+
+    &--nlp {
+      &:focus {
+        border-color: utils.$color__nasa-blue;
+        box-shadow: 0 0 0 0 0.1rem rgba(utils.$color__nasa-blue, 0.25);
+      }
     }
 
     &:disabled {
