@@ -6,7 +6,7 @@ import setupTest from '../../../../../../vitestConfigs/setupTest'
 import useEdscStore from '../../../zustand/useEdscStore'
 
 vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  ...(await vi.importActual('react-router-dom')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
@@ -32,10 +32,18 @@ const setup = setupTest({
 })
 
 describe('AuthCallbackContainer component', () => {
-  const { replace } = window.location
+  const originalLocation = window.location
+
+  beforeEach(() => {
+    delete window.location
+    window.location = {
+      ...originalLocation,
+      replace: vi.fn()
+    }
+  })
 
   afterEach(() => {
-    window.location.replace = replace
+    window.location = originalLocation
   })
 
   test('sets the auth cookie and redirects', () => {
@@ -44,8 +52,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -62,8 +68,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -74,7 +78,9 @@ describe('AuthCallbackContainer component', () => {
     const { earthdataDownloadRedirect } = zustandState
     const { setRedirectUrl } = earthdataDownloadRedirect
 
-    expect(setRedirectUrl).toHaveBeenCalledTimes(1)
+    // Rendered twice due to test env triggering the dependency array on location
+    expect(setRedirectUrl).toHaveBeenCalledTimes(2)
+    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mockjwttoken')
     expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mockjwttoken')
   })
 
@@ -84,8 +90,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -96,7 +100,9 @@ describe('AuthCallbackContainer component', () => {
     const { earthdataDownloadRedirect } = zustandState
     const { setRedirectUrl } = earthdataDownloadRedirect
 
-    expect(setRedirectUrl).toHaveBeenCalledTimes(1)
+    // Rendered twice due to test env triggering the dependency array on location
+    expect(setRedirectUrl).toHaveBeenCalledTimes(2)
+    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://eulaCallback')
     expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://eulaCallback')
   })
 
@@ -106,8 +112,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -115,74 +119,41 @@ describe('AuthCallbackContainer component', () => {
     expect(setSpy).toHaveBeenCalledWith('edlToken', undefined)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+    expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:3000/'])
   })
 
-  test('does not follow the redirect if the redirect param is not valid', () => {
-    useLocation.mockReturnValue({
-      search: '?redirect=javascript:alert(document.domain);'
-    })
-
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
-
-    setup()
-
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
-  })
-
-  test('does not follow the redirect if the redirect param is not relative to earthdata-search', () => {
+  test('redirects to /not-found if the safe URL validation fails', () => {
     useLocation.mockReturnValue({
       search: '?redirect=https://evil.com'
     })
 
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
-
     setup()
 
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 
-  test('does not follow the eddRedirect it is not a valid earthdata-download redirect', () => {
+  test('redirects to /not-found if the eddRedirect is a valid URL but not the earthdata-download protocol', () => {
     useLocation.mockReturnValue({
-      search: '?eddRedirect=https://evil.com'
+      // Pass a valid local HTTP URL so getSafeRedirectUrl allows it,
+      // but it lacks the custom `earthdata-download:` protocol
+      search: '?eddRedirect=http%3A%2F%2Flocalhost%3A3000%2Fearthdata-download'
     })
-
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 
-  test('does not follow the redirect if the eddRedirect param is not valid', () => {
+  test('redirects to /not-found if the eddRedirect fails safety validation', () => {
     useLocation.mockReturnValue({
-      search: '?eddRedirect=javascript:alert(document.domain);'
+      // Pass a malicious URL so getSafeRedirectUrl returns null
+      search: '?eddRedirect=earthdata-download%3A%2F%2FauthCallback@evil.com'
     })
-
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 })

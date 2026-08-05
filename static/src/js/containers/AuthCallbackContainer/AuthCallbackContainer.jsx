@@ -7,6 +7,8 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
 import { routes } from '../../constants/routes'
 
+import { getSafeRedirectUrl } from '../../../../../sharedUtils/getSafeRedirectUrl'
+
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
  * We get the edlToken and redirect path from the URL, store the edlToken in a cookie and redirect
@@ -32,24 +34,37 @@ export const AuthCallbackContainer = () => {
 
     let eddRedirectUrl = eddRedirect
 
-    if (redirect.includes('earthdata-download')) {
+    if (redirect && redirect.includes('earthdata-download')) {
       eddRedirectUrl = redirect
     }
 
     // Handle EDD redirects
     if (eddRedirectUrl) {
-      const validEddRedirect = eddRedirectUrl.startsWith('earthdata-download')
+      // Validate the EDD redirect against our allow-list, returns null if invalid
+      const safeEddUrl = getSafeRedirectUrl(eddRedirectUrl, edscHost)
 
-      if (validEddRedirect) {
-        if (edlToken) eddRedirectUrl += `&token=${edlToken}`
+      if (safeEddUrl) {
+        // Parse the known-safe URL to inspect its path securely
+        const parsedEdd = new URL(safeEddUrl, window.location.origin)
 
-        // Add the redirect information to the store
-        setRedirectUrl(eddRedirectUrl)
+        // Ensure the path is genuinely pointing to the earthdata-download route
+        if (parsedEdd.protocol === 'earthdata-download:') {
+          // Reconstruct the relative string expected by the Zustand store (stripping the leading slash)
+          let finalEddUrl = parsedEdd.href
 
-        // Redirect to the edd callback
-        navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
+          if (edlToken) {
+            // Append token
+            finalEddUrl += `&token=${edlToken}`
+          }
 
-        return
+          // Add the redirect information to the store
+          setRedirectUrl(finalEddUrl)
+
+          // Redirect to the edd callback
+          navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
+
+          return
+        }
       }
 
       window.location.replace('/not-found')
@@ -58,10 +73,9 @@ export const AuthCallbackContainer = () => {
     }
 
     // Handle redirects
-    const invalidRedirectUrl = redirect !== routes.HOME && !redirect.startsWith(edscHost)
+    const safeRedirectUrl = getSafeRedirectUrl(redirect, edscHost)
 
-    if (invalidRedirectUrl) {
-      // Redirect to an error page or a safe location if the URL is not a relative path
+    if (!safeRedirectUrl) {
       window.location.replace('/not-found')
 
       return
@@ -70,9 +84,9 @@ export const AuthCallbackContainer = () => {
     // Set the edlToken cookie
     set('edlToken', edlToken)
 
-    // Redirect the user to the correct location
-    window.location.replace(redirect)
-  }, [])
+    // Redirect the user to the safe, validated location
+    window.location.replace(safeRedirectUrl)
+  }, [location, navigate, edscHost, setRedirectUrl])
 
   return (
     <div className="route-wrapper" />
