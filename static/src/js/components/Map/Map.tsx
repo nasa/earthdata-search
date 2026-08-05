@@ -162,17 +162,6 @@ const spatialDrawingLayer = new VectorLayer({
   zIndex: 4
 })
 
-// Layer for NLP spatial drawing
-// This is separate from spatialDrawingLayer to avoid interference with spatialSearch clears
-const nlpSpatialSource = new VectorSource({
-  wrapX: false
-})
-const nlpSpatialLayer = new VectorLayer({
-  source: nlpSpatialSource,
-  className: 'map__nlp-spatial-layer',
-  zIndex: 4
-})
-
 // Layer group for imagery layers
 const granuleImageryLayerGroup = new LayerGroup()
 
@@ -262,6 +251,12 @@ const removeDrawingInteraction = (map: OlMap) => {
   })
 }
 
+const hasFiniteExtent = (extent: import('ol/extent').Extent | null | undefined): extent is import('ol/extent').Extent => {
+  if (!extent || extent.length !== 4) return false
+
+  return extent.every((coordinate) => Number.isFinite(coordinate))
+}
+
 interface MapProps {
   /** The base layers of the map */
   base: {
@@ -313,6 +308,10 @@ interface MapProps {
   onMapReady: (isReady: boolean) => void
   /** Function to call when a new drawing layer is toggled */
   onToggleDrawingNewLayer: (state: string | boolean) => void
+  /** True when map should center on current spatial drawing source */
+  centerMapOnLoad: boolean
+  /** Callback after map center request is emitted */
+  onCenterMapOnLoadComplete: () => void
   /** Function to call when the shapefile upload modal is toggled */
   onToggleShapefileUploadModal: () => void
   /** Function to call when the too many points modal is toggled */
@@ -388,6 +387,8 @@ const Map: React.FC<MapProps> = ({
   onExcludeGranule,
   onMapReady,
   onToggleDrawingNewLayer,
+  centerMapOnLoad,
+  onCenterMapOnLoadComplete,
   onToggleShapefileUploadModal,
   onToggleTooManyPointsModal,
   onUpdateShapefile,
@@ -436,8 +437,7 @@ const Map: React.FC<MapProps> = ({
         granuleHighlightsLayer,
         focusedGranuleLayer,
         granuleImageryLayerGroup,
-        spatialDrawingLayer,
-        nlpSpatialLayer
+        spatialDrawingLayer
       ],
       target: mapElRef.current as HTMLDivElement,
       view: createView({
@@ -614,7 +614,7 @@ const Map: React.FC<MapProps> = ({
       /** The source to move the map to */
       source?: VectorSource
     }) => {
-      let extent: import('ol/extent').Extent | undefined
+      let extent: import('ol/extent').Extent | null | undefined
 
       // If a shape was passed, use the extent of that shape
       if (shape) {
@@ -626,11 +626,13 @@ const Map: React.FC<MapProps> = ({
         extent = shapeInProjection.getExtent()
       } else if (source) {
         // If a source was passed, use the extent of the source
-        extent = source.getExtent()
+        const sourceExtent = source.getExtent()
+        if (sourceExtent) extent = sourceExtent
       }
 
-      // Fit the map to the extent
-      if (extent) {
+      // Fit the map only when extent values are finite.
+      // empty extent can cause Infinity bounds.
+      if (hasFiniteExtent(extent)) {
         map.getView().fit(extent, {
           duration: mapDuration,
           padding: [100, 125, 100, 100]
@@ -1037,6 +1039,16 @@ const Map: React.FC<MapProps> = ({
       vectorSource: spatialDrawingSource
     })
   }, [spatialSearch])
+
+  useEffect(() => {
+    if (!centerMapOnLoad) return
+
+    eventEmitter.emit(mapEventTypes.MOVEMAP, {
+      source: spatialDrawingSource
+    })
+
+    onCenterMapOnLoadComplete()
+  }, [centerMapOnLoad, onCenterMapOnLoadComplete])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {

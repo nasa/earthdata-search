@@ -31,7 +31,9 @@ describe('createMapSlice', () => {
       setMapLayersOrder: expect.any(Function),
       setLayerOpacity: expect.any(Function),
       showMbr: false,
-      setShowMbr: expect.any(Function)
+      setShowMbr: expect.any(Function),
+      nlpAutoCenterPending: false,
+      setNlpAutoCenterPending: expect.any(Function)
     })
   })
 
@@ -259,6 +261,19 @@ describe('createMapSlice', () => {
       const updatedState = useEdscStore.getState()
       const { map: updatedMap } = updatedState
       expect(updatedMap.showMbr).toBe(true)
+    })
+  })
+
+  describe('setNlpAutoCenterPending', () => {
+    test('updates nlpAutoCenterPending', () => {
+      const zustandState = useEdscStore.getState()
+      const { map } = zustandState
+      const { setNlpAutoCenterPending } = map
+      setNlpAutoCenterPending(true)
+
+      const updatedState = useEdscStore.getState()
+      const { map: updatedMap } = updatedState
+      expect(updatedMap.nlpAutoCenterPending).toBe(true)
     })
   })
 })

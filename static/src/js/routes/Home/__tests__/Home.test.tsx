@@ -1,5 +1,9 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import {
+  act,
+  screen,
+  waitFor
+} from '@testing-library/react'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -13,6 +17,28 @@ import { routes } from '../../../constants/routes'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
+
+/**
+ * Props captured from the mocked NlpSearchStatus component.
+ */
+type NlpSearhStatusMockProps = {
+  /** Called when NLP flow completes successfully. */
+  onNlpSearchComplete?: (options: { hasSpatial: boolean }) => void
+  /** Called when NLP flow fails and UI should reset. */
+  onNlpSearchFailed?: () => void
+  /** Called when NLP stream starts or stops. */
+  onStreamingChange?: (isStreaming: boolean) => void
+}
+
+const mockNlpSearchStatus = vi.fn<(props: NlpSearhStatusMockProps) => React.JSX.Element>(() => <div data-testid="nlp-search-status"> NLP Search Status</div>)
+
+vi.mock('../../../components/NlpSearchStatus/NlpSearchStatus', () => ({
+  default: (props: NlpSearhStatusMockProps) => {
+    mockNlpSearchStatus(props)
+
+    return <div data-testid="nlp-search-status"> NLP Search Status</div>
+  }
+}))
 
 vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   const mockPortalLinkContainer = vi.fn(({ children }) => (
@@ -53,12 +79,21 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockUseNavigate
 }))
 
+const mockRouterNavigate = vi.hoisted(() => vi.fn())
+
+vi.mock('../../../router/router', () => ({
+  default: {
+    router: {
+      navigate: mockRouterNavigate
+    }
+  }
+}))
+
 const setup = setupTest({
   Component: Home,
   defaultZustandState: {
     collections: {
-      getCollections: vi.fn().mockResolvedValue(undefined),
-      getNlpCollections: vi.fn().mockResolvedValue(undefined)
+      getCollections: vi.fn().mockResolvedValue(undefined)
     }
   },
   withRouter: true
@@ -70,7 +105,6 @@ const OLD_ENV = process.env
 
 beforeEach(() => {
   process.env = { ...OLD_ENV }
-
   // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
@@ -106,34 +140,192 @@ describe('Home', () => {
       expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
     })
 
-    test('calls getNlpCollections and navigate when the search form is submitted', async () => {
-      const { user, zustandState } = setup()
+    test('reserves hidden NLP status space before submit to prevent hero layout shift', () => {
+      setup()
 
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+      const statusRegion = screen.getByTestId('home-hero-status-region')
 
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
-
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      // Keep an always-mounted inactive region so the input row does not jump when status appears.
+      expect(statusRegion).toBeInTheDocument()
+      expect(statusRegion).toHaveClass('home__hero-status-region--inactive')
+      expect(statusRegion).toHaveAttribute('aria-hidden', 'true')
+      expect(mockNlpSearchStatus).not.toHaveBeenCalled()
     })
 
-    test('calls getNlpCollections and navigate when the enter key is pressed', async () => {
-      const { user, zustandState } = setup()
+    test('navigates directly to search when submitting an empty NLP query', async () => {
+      const { user } = setup()
+
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      expect(mockNlpSearchStatus).not.toHaveBeenCalled()
+    })
+
+    test('starts NLP chat stream after submit and does not navigate immediately', async () => {
+      const { user } = setup()
 
       const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
 
       await user.type(searchInput, 'test')
       await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledTimes(1)
-      expect(zustandState.collections.getNlpCollections).toHaveBeenCalledWith('test')
+      expect(mockNlpSearchStatus).toHaveBeenCalledTimes(1)
+      expect(mockNlpSearchStatus).toHaveBeenCalledWith(expect.objectContaining({
+        activePrompt: 'test',
+        requestId: 1
+      }))
 
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+    })
+
+    test('locks search input while NLP streaming is active', (async () => {
+      const { user } = setup()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'fire events')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await waitFor(() => {
+        expect(searchInput).toBeDisabled()
+      })
+
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeEnabled()
+      expect(Spinner).not.toHaveBeenCalled()
+    }))
+
+    test('does not navigate when cancelling an in-progress NLP search', async () => {
+      const { user } = setup()
+      mockUseNavigate.mockClear()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'fire events')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+      expect(searchInput).toHaveValue('fire events')
+    })
+
+    test('does not navigate if NLP completes after cancel is clicked', async () => {
+      const { user } = setup()
+      mockUseNavigate.mockClear()
+      mockRouterNavigate.mockClear()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+      const searchButton = screen.getByRole('button', { name: /search/i })
+
+      await user.type(searchInput, 'test search')
+      await user.click(searchButton)
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+      await act(async () => {
+        latestCallProps?.onNlpSearchComplete?.({ hasSpatial: true })
+      })
+
+      expect(mockRouterNavigate).not.toHaveBeenCalled()
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+    })
+
+    test('resets UI when Nlp search fails', async () => {
+      const { user } = setup()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+      const searchButton = screen.getByRole('button', { name: /search/i })
+
+      await user.type(searchInput, 'test search')
+      await user.click(searchButton)
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onStreamingChange?.(true)
+      })
+
+      await waitFor(() => {
+        expect(searchInput).toBeDisabled()
+      })
+
+      await act(async () => {
+        latestCallProps?.onNlpSearchFailed?.()
+      })
+
+      await waitFor(() => {
+        expect(searchInput).toBeEnabled()
+      })
+
+      expect(screen.queryByRole('button', { name: /cancel/i })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument()
+      expect(mockRouterNavigate).not.toHaveBeenCalled()
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+      expect(searchInput).toHaveValue('test search')
+    })
+
+    test('navigates when NLP stream completes', async () => {
+      const { user } = setup()
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'test')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onNlpSearchComplete?.({ hasSpatial: true })
+      })
+
+      await waitFor(() => {
+        expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+      })
+
+      expect(mockRouterNavigate).toHaveBeenCalledWith(routes.SEARCH, {})
+      expect(mockUseNavigate).not.toHaveBeenCalled()
+    })
+
+    test('does not request map auto-center when NLP completes without spatial', async () => {
+      const setNlpAutoCenterPending = vi.fn()
+      const { user } = setup({
+        overrideZustandState: {
+          map: {
+            setNlpAutoCenterPending
+          }
+        }
+      })
+
+      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+      await user.type(searchInput, 'rainfall')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+      await act(async () => {
+        latestCallProps?.onNlpSearchComplete?.({ hasSpatial: false })
+      })
+
+      await waitFor(() => {
+        expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+      })
+
+      expect(setNlpAutoCenterPending).toHaveBeenCalledWith(false)
     })
   })
 

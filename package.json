@@ -113,6 +113,7 @@
   },
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^4.0.105",
+    "@ai-sdk/react": "^4.0.17",
     "@apollo/client": "^3.13.8",
     "@apollo/server": "^5.5.1",
     "@as-integrations/aws-lambda": "^4.0.1",

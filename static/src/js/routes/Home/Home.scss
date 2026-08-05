@@ -3,13 +3,83 @@
 
 .home {
   &__hero {
-    height: calc(100vh - 15rem);
-    min-height: 40rem;
-    max-height: 65rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
     text-shadow:
       0 0 0.5rem utils.$color__carbon-black,
       0 0 2rem utils.$color__carbon-black;
     background-color: utils.$color__carbon-black;
+  }
+
+  &__hero-main {
+    height: clamp(32rem, calc(100vh - 20rem), 54rem);
+    width: 100%;
+    max-width: 60rem;
+    align-self: center;
+  }
+
+  &__hero-main-content {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 0.75rem;
+  }
+
+  &__hero-intro {
+    padding-top: clamp(0.75rem, 3vh, 1.75rem);
+    margin-bottom: 0.5rem;
+  }
+
+  &__hero-lower {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    min-height: 0.5rem;
+    padding-top: 0;
+  }
+
+  &__hero-lower--centered {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__hero-browse {
+    margin-top: 0.5rem;
+  }
+
+  &__hero-status-region {
+    height: clamp(7.5rem, 22vh, 13rem);
+    min-height: 7rem;
+    max-height: clamp(7.5rem, 22vh, 13rem);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+
+  &__hero-status-region--inactive {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &__hero-status-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 1.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable both-edges;
+  }
+
+  &__hero-status-stack {
+    width: 100%;
+    padding-bottom: 3rem;
   }
 
   &__hero-image {
@@ -27,7 +97,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(20, 9, 9, 0.4);
+      background-color: rgba(utils.$color__carbon-black, 0.4);
       mix-blend-mode: multiply;
     }
   }
@@ -47,10 +117,17 @@
     pointer-events: none;
   }
 
-
   &__hero-input-wrapper {
-    max-width: 60rem;
-    align-self: center;
+    width: 100%;
+  }
+
+  &__nlp-chat-wrapper {
+    width: 100%;
+    margin-top: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    transform-origin: top center;
+    animation: home-nlp-chat-enter 220ms ease-out;
   }
 
   &__hero-input {
@@ -59,6 +136,22 @@
     &:focus {
       outline: 0;
       box-shadow: none;
+    }
+
+    &--nlp {
+      &:focus {
+        border-color: utils.$color__nasa-blue;
+        box-shadow: 0 0 0 0 0.1rem rgba(utils.$color__nasa-blue, 0.25);
+      }
+    }
+
+    &:disabled {
+      background-color: rgba(rgba(utils.$color__carbon--10, 0.95), 0.96);
+      border-color: rgba(utils.$color__carbon--40, 0.8);
+      box-shadow: inset 0 0 0 1px rgba(utils.$color__carbon--50, 0.35);
+      color: utils.$color__carbon--80;
+      cursor: wait;
+      opacity: 1;
     }
   }
 
@@ -84,6 +177,7 @@
   &__hero-image-link {
     right: 0.75rem;
     bottom: 0.75rem;
+    z-index: 2;
   }
 
   &__hero-image-popover {
@@ -129,7 +223,21 @@
     border-radius: 0.25rem;
     color: white;
     font-weight: bold;
-    margin-right: 0.5rem; 
+    margin-right: 0.5rem;
     padding: 0.5rem;
+  }
+}
+
+@keyframes home-nlp-chat-enter {
+  from {
+    opacity: 0;
+    max-height: 0rem;
+    transform: translateY(-0.35rem) scaleY(0.85);
+  }
+
+  to {
+    opacity: 1;
+    max-height: 20rem;
+    transform: translateY(0) scaleY(1);
   }
 }

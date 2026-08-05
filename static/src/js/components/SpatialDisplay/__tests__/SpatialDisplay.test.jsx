@@ -342,55 +342,6 @@ describe('SpatialDisplay component', () => {
         })
       })
     })
-
-    describe('when the shapefile is nlp generated', () => {
-      test('should render without a loading spinner or spatial info', () => {
-        const newPolygon = '-77.04444122314453,38.99228142151045,'
-          + '-77.01992797851562,38.79166886339155,'
-          + '-76.89415168762207,38.902629947921575,'
-          + '-77.04444122314453,38.99228142151045'
-
-        setup({
-          overrideZustandState: {
-            query: {
-              collection: {
-                spatial: {
-                  polygon: [newPolygon]
-                }
-              }
-            },
-            shapefile: {
-              shapefileName: 'test file',
-              shapefileSize: '42 KB',
-              file: {
-                type: 'FeatureCollection',
-                features: [{
-                  type: 'Feature',
-                  geometry: [],
-                  properties: {
-                    nlpGenerated: true
-                  }
-                }]
-              },
-              isLoaded: true,
-              isLoading: false
-            }
-          }
-        })
-
-        expect(screen.queryAllByText('Spatial')).toHaveLength(2)
-        expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
-
-        expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
-        expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
-
-        expect(screen.getByText('Matched Area')).toBeVisible()
-
-        expect(screen.queryAllByTestId('spatial-display__loading')).toHaveLength(0)
-
-        expect(screen.queryAllByText('"test file"')).toHaveLength(1)
-      })
-    })
   })
 
   describe('#onSpatialRemove', () => {

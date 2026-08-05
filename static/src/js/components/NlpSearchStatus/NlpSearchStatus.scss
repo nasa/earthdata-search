@@ -1,0 +1,73 @@
+@use '../../../css/utils';
+
+.nlp-search-chat {
+    width: fit-content;
+    max-width: 100%;
+    padding: 0;
+    text-shadow: none;
+
+    &__panel {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border: 1px solid rgba(utils.$color__carbon--20, 0.9);
+        background-color: rgba(utils.$color__spacesuit-white, 0.86);
+        border-radius: 1rem;
+        padding: 0 0.875rem;
+        min-height: 2.75rem;
+        box-shadow: 0 1px 2px rgba(utils.$color__carbon-black, 0.06);
+        width: fit-content;
+        max-width: 100%;
+        overflow: hidden; 
+    }
+
+    &__step-row {
+        display: flex;
+        align-items: flex-start;
+        column-gap: 0;
+        width: fit-content;
+        max-width: 100%;
+        padding: 0.45rem 0;
+    }
+
+    &__step-loader {
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+        align-self: flex-end;
+        flex-shrink: 0;
+        color: utils.$color__carbon--50;
+    }
+
+    &__step-text-wrap {
+        min-width: 0;
+        width: fit-content;
+        max-width: 100%;
+    }
+
+    &__steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    &__step {
+        margin: 0;
+        padding: 0.5rem 0 0.5rem 1rem;
+        font-size: 0.875rem;
+        line-height: 1.2;
+        color: utils.$color__carbon--80;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &--latest {
+            font-weight: 500;
+        }
+
+        &__muted {
+            color: utils.$color__carbon--70;
+            opacity: 0.9;
+        }
+    }
+
+}

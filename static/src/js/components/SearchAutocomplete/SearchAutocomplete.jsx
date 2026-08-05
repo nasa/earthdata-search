@@ -196,8 +196,11 @@ const SearchAutocomplete = () => {
       })
     }
   }, [
+    setCollectionId,
+    initialKeyword,
     changeQuery,
-    keywordSearch
+    keywordSearch,
+    cancelAutocomplete
   ])
 
   /**

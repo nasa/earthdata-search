@@ -70,8 +70,6 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => Promise<void>
-    /** Function to perform NLP search and process results */
-    getNlpCollections: (query: string) => Promise<void>
   }
 }
 
@@ -424,6 +422,10 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+    /** Flag indicating one-time map auto-center after NLP search */
+    nlpAutoCenterPending: boolean
+    /** Function to set nlpAutoCenterPending flag */
+    setNlpAutoCenterPending: (isPending: boolean) => void
     /** Store layers for each collection */
     mapLayers: Record<string, MapLayer[]>
     /** Function to set layers for a collection */
