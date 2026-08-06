@@ -43,28 +43,18 @@ export const AuthCallbackContainer = () => {
       // Validate the EDD redirect against our allow-list, returns null if invalid
       const safeEddUrl = getSafeRedirectUrl(eddRedirectUrl, edscHost)
 
-      if (safeEddUrl) {
-        // Parse the known-safe URL to inspect its path securely
-        const parsedEdd = new URL(safeEddUrl, window.location.origin)
+      if (safeEddUrl && safeEddUrl.startsWith('earthdata-download:')) {
+        let finalEddUrl = safeEddUrl
 
-        // Ensure the path is genuinely pointing to the earthdata-download route
-        if (parsedEdd.protocol === 'earthdata-download:') {
-          // Reconstruct the relative string expected by the Zustand store (stripping the leading slash)
-          let finalEddUrl = parsedEdd.href
-
-          if (edlToken) {
-            // Append token
-            finalEddUrl += `&token=${edlToken}`
-          }
-
-          // Add the redirect information to the store
-          setRedirectUrl(finalEddUrl)
-
-          // Redirect to the edd callback
-          navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
-
-          return
+        if (edlToken) {
+          // Append token
+          finalEddUrl += `&token=${edlToken}`
         }
+
+        setRedirectUrl(finalEddUrl)
+        navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
+
+        return
       }
 
       window.location.replace('/not-found')

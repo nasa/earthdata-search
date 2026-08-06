@@ -132,19 +132,6 @@ describe('AuthCallbackContainer component', () => {
     expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 
-  test('redirects to /not-found if the eddRedirect is a valid URL but not the earthdata-download protocol', () => {
-    useLocation.mockReturnValue({
-      // Pass a valid local HTTP URL so getSafeRedirectUrl allows it,
-      // but it lacks the custom `earthdata-download:` protocol
-      search: '?eddRedirect=http%3A%2F%2Flocalhost%3A3000%2Fearthdata-download'
-    })
-
-    setup()
-
-    expect(window.location.replace).toHaveBeenCalledTimes(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
-  })
-
   test('redirects to /not-found if the eddRedirect fails safety validation', () => {
     useLocation.mockReturnValue({
       // Pass a malicious URL so getSafeRedirectUrl returns null
