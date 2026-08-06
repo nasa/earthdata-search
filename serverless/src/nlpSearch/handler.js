@@ -51,12 +51,12 @@ const callPythonLocal = async (query) => {
 /**
  * Calls the geocoder lambda to get the spatial area for a given query.
  */
-const getSpatial = async (query) => {
+const getSpatial = async (query, skipCache = false) => {
   const isCacheEnabled = process.env.USE_CACHE === 'true'
   const cacheKey = `geocoder:${query.toLowerCase()}`
   const { GEOCODE_CACHE_EXPIRE_SECONDS } = process.env
 
-  if (isCacheEnabled) {
+  if (isCacheEnabled && !skipCache) {
     const cachedResult = await getItemFromCache(cacheKey)
     if (cachedResult) {
       console.log(`Found cached geocoder result for query "${query}"`)
@@ -160,7 +160,7 @@ export const convertTemporalToolExecute = async (
   return { ok: true }
 }
 
-export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
+export const lookupSpatialToolExecute = async ({ spatial }, setResults, skipCache = false) => {
   setResults('spatial', spatial)
 
   if (process.env.USE_GEOCODER !== 'true') {
@@ -173,7 +173,7 @@ export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
   console.log(`Looking up spatial area for "${spatial}" using the geocoder lambda...`)
 
   // Fetch the spatial area from the geocoding API using the original query
-  const spatialArea = await getSpatial(spatial)
+  const spatialArea = await getSpatial(spatial, skipCache)
 
   console.log(`Geocoder lambda returned spatial area: ${spatialArea}`)
 
@@ -205,7 +205,8 @@ export const handler = async (event, originalResponseStream) => {
   }
 
   const { queryStringParameters = {} } = event
-  const { query } = queryStringParameters
+  const { query, skipCache: skipCacheParam } = queryStringParameters
+  const skipCache = skipCacheParam === 'true'
 
   responseStream.write('Analyzing your query...\n')
   console.log(`Received query: ${query}`)
@@ -286,7 +287,7 @@ Required workflow:
         inputSchema: z.object({
           spatial: z.string()
         }),
-        execute: async (input) => lookupSpatialToolExecute(input, setResults)
+        execute: async (input) => lookupSpatialToolExecute(input, setResults, skipCache)
       }),
       finalCall: tool({
         inputSchema: z.object({}),
