@@ -20,8 +20,9 @@ import { projectionConfigs } from '../../util/map/crs'
 // @ts-expect-error The file does not have types
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
-import { metricsMap } from '../../util/metrics/metricsMap'
-
+import { metricsMapButtons } from '../../util/metrics/metricsMap'
+// TODO consider adding some callbacks to hte mdap child component to handle the map events and pass them up to the parent component
+// TODO add in the event do
 import {
   backgroundGranulePointStyle,
   backgroundGranuleStyle,
@@ -95,8 +96,6 @@ export const MapContainer = () => {
     onExcludeGranule,
     onFetchShapefile,
     onUpdateShapefile,
-    nlpAutoCenterPending,
-    setNlpAutoCenterPending,
     panelsLoaded,
     projectCollections,
     setDrawingNewLayer,
@@ -119,8 +118,6 @@ export const MapContainer = () => {
     onExcludeGranule: state.query.excludeGranule,
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
-    nlpAutoCenterPending: state.map.nlpAutoCenterPending,
-    setNlpAutoCenterPending: state.map.setNlpAutoCenterPending,
     panelsLoaded: state.ui.panels.panelsLoaded,
     projectCollections: state.project.collections,
     setDrawingNewLayer: state.ui.map.setDrawingNewLayer,
@@ -156,10 +153,6 @@ export const MapContainer = () => {
   }
 
   const [mapReady, setMapReady] = useState(false)
-
-  const handleCenterMapOnLoadComplete = useCallback(() => {
-    setNlpAutoCenterPending(false)
-  }, [setNlpAutoCenterPending])
 
   useLayoutEffect(() => {
     if (startDrawing && mapReady) {
@@ -340,7 +333,7 @@ export const MapContainer = () => {
     setZoom(newZoom)
     setProjection(newProjectionCode)
 
-    metricsMap(`Set Projection: ${Projection}`)
+    metricsMapButtons(`Set Projection: ${Projection}`)
     onChangeMap({ ...newMap })
   }, [projection])
 
@@ -352,6 +345,20 @@ export const MapContainer = () => {
     setStartDrawing(false)
   }, [setStartDrawing])
 
+  let moveSessionStart: number | null = null
+  let moveSessionFrameCount = 0
+
+  const handleMoveStart = () => {
+    moveSessionStart = performance.now()
+    moveSessionFrameCount = 0
+  }
+
+  const handlePostRenderForFps = () => {
+    // Only count frames while an interaction session is active
+    if (moveSessionStart !== null) {
+      moveSessionFrameCount += 1
+    }
+  }
   // Get GIBS data to pass to the map within each granule
 
   const imageryLayers: ImageryLayers = useMemo(() => {
@@ -528,9 +535,9 @@ export const MapContainer = () => {
       onToggleShapefileUploadModal={() => setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)}
       onToggleTooManyPointsModal={() => setOpenModal(MODAL_NAMES.TOO_MANY_POINTS)}
       onUpdateShapefile={onUpdateShapefile}
+      onMoveStart={handleMoveStart}
+      onPostRender={handlePostRenderForFps}
       overlays={overlays}
-      centerMapOnLoad={nlpAutoCenterPending}
-      onCenterMapOnLoadComplete={handleCenterMapOnLoadComplete}
       projectionCode={projection}
       rotation={rotation}
       setGranuleId={setGranuleId}
