@@ -32,18 +32,17 @@ const setup = setupTest({
 })
 
 describe('AuthCallbackContainer component', () => {
-  const originalLocation = window.location
+  const { replace } = window.location
 
   beforeEach(() => {
     delete window.location
     window.location = {
-      ...originalLocation,
       replace: vi.fn()
     }
   })
 
   afterEach(() => {
-    window.location = originalLocation
+    window.location.replace = replace
   })
 
   test('sets the auth cookie and redirects', () => {
@@ -78,9 +77,7 @@ describe('AuthCallbackContainer component', () => {
     const { earthdataDownloadRedirect } = zustandState
     const { setRedirectUrl } = earthdataDownloadRedirect
 
-    // Rendered twice due to test env triggering the dependency array on location
-    expect(setRedirectUrl).toHaveBeenCalledTimes(2)
-    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mockjwttoken')
+    expect(setRedirectUrl).toHaveBeenCalledTimes(1)
     expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mockjwttoken')
   })
 
@@ -100,9 +97,7 @@ describe('AuthCallbackContainer component', () => {
     const { earthdataDownloadRedirect } = zustandState
     const { setRedirectUrl } = earthdataDownloadRedirect
 
-    // Rendered twice due to test env triggering the dependency array on location
-    expect(setRedirectUrl).toHaveBeenCalledTimes(2)
-    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://eulaCallback')
+    expect(setRedirectUrl).toHaveBeenCalledTimes(1)
     expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://eulaCallback')
   })
 
@@ -119,7 +114,7 @@ describe('AuthCallbackContainer component', () => {
     expect(setSpy).toHaveBeenCalledWith('edlToken', undefined)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:3000/'])
+    expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/'])
   })
 
   test('redirects to /not-found if the safe URL validation fails', () => {

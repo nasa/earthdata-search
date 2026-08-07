@@ -10,7 +10,8 @@ export const getSafeRedirectUrl = (inputUrl, edscHost) => {
   if (!inputUrl) return null
 
   try {
-    const parsedUrl = new URL(inputUrl, window.location.origin)
+    const parsedEdsc = new URL(edscHost)
+    const parsedUrl = new URL(inputUrl, edscHost)
 
     // Addresses Open Redirect via URL User-Information syntax
     if (parsedUrl.username !== '' || parsedUrl.password !== '') return null
@@ -19,22 +20,13 @@ export const getSafeRedirectUrl = (inputUrl, edscHost) => {
     if (parsedUrl.protocol === 'earthdata-download:') return parsedUrl.href
 
     // Addresses Cross-Site Scripting (XSS) via URI schemes
-    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') return null
-
-    const trustedHostnames = [window.location.hostname]
-
-    // Parse the configured edscHost environment variable and add it to our trusted hostnames allow-list
-    if (edscHost) {
-      try {
-        const parsedEdsc = new URL(edscHost)
-        trustedHostnames.push(parsedEdsc.hostname)
-      } catch {
-        console.error('Invalid edscHost configured:', edscHost)
-      }
+    // Strictly requires https:, unless the trusted host itself is running on http: (local development).
+    if (parsedUrl.protocol !== 'https:' && (parsedUrl.protocol !== 'http:' || parsedEdsc.protocol !== 'http:')) {
+      return null
     }
 
     // Addresses Open Redirect and Phishing
-    if (!trustedHostnames.includes(parsedUrl.hostname)) return null
+    if (parsedUrl.hostname !== parsedEdsc.hostname) return null
 
     return parsedUrl.href
   } catch {

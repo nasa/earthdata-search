@@ -7,7 +7,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
 import { routes } from '../../constants/routes'
 
-import { getSafeRedirectUrl } from '../../../../../sharedUtils/getSafeRedirectUrl'
+import { getSafeRedirectUrl } from '../../util/getSafeRedirectUrl'
 
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
@@ -76,7 +76,7 @@ export const AuthCallbackContainer = () => {
 
     // Redirect the user to the safe, validated location
     window.location.replace(safeRedirectUrl)
-  }, [location, navigate, edscHost, setRedirectUrl])
+  }, [])
 
   return (
     <div className="route-wrapper" />

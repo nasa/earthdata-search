@@ -4,11 +4,12 @@ describe('getSafeRedirectUrl', () => {
   const edscHost = 'https://search.earthdata.nasa.gov'
 
   describe('Standard Redirects (Intended Passes)', () => {
-    test('allows relative root path', () => {
+    test('allows relative root path based on edscHost', () => {
       const redirect = '/'
       const response = getSafeRedirectUrl(redirect, edscHost)
 
-      expect(response).toBe('http://localhost:3000/')
+      // Because edscHost is now the base URL, relative paths map directly to it!
+      expect(response).toBe('https://search.earthdata.nasa.gov/')
     })
 
     test('allows exact match of trusted edscHost', () => {
@@ -23,6 +24,23 @@ describe('getSafeRedirectUrl', () => {
       const response = getSafeRedirectUrl(redirect, edscHost)
 
       expect(response).toBe('https://search.earthdata.nasa.gov/projects/123')
+    })
+  })
+
+  describe('Environment Protocol Checks (HTTP vs HTTPS)', () => {
+    test('rejects http: redirects if edscHost is https: (Production protection)', () => {
+      const redirect = 'http://search.earthdata.nasa.gov/projects'
+      const response = getSafeRedirectUrl(redirect, edscHost)
+
+      expect(response).toBeNull()
+    })
+
+    test('allows http: redirects if edscHost is http: (Local Development)', () => {
+      const localHost = 'http://localhost:8080'
+      const redirect = 'http://localhost:8080/search'
+      const response = getSafeRedirectUrl(redirect, localHost)
+
+      expect(response).toBe('http://localhost:8080/search')
     })
   })
 
@@ -97,21 +115,22 @@ describe('getSafeRedirectUrl', () => {
     })
   })
 
-  describe('Error Handling and Malformed URLs', () => {
-    test('logs an error and continues safely if edscHost is malformed', () => {
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
+  describe('Error Handling and Malformed Inputs', () => {
+    test('returns null if edscHost is malformed', () => {
       const redirect = '/'
       const brokenEdscHost = 'not-a-valid-url'
 
       const response = getSafeRedirectUrl(redirect, brokenEdscHost)
 
-      expect(consoleSpy).toHaveBeenCalledWith('Invalid edscHost configured:', brokenEdscHost)
+      expect(response).toBeNull()
+    })
 
-      // Expect the function to have survived the crash and still successfully parsed the valid inputUrl
-      expect(response).toBe('http://localhost:3000/')
+    test('returns null if edscHost is missing or undefined', () => {
+      const redirect = '/'
 
-      consoleSpy.mockRestore()
+      const response = getSafeRedirectUrl(redirect, undefined)
+
+      expect(response).toBeNull()
     })
 
     test('returns null if the inputUrl is completely unparseable', () => {
@@ -125,14 +144,6 @@ describe('getSafeRedirectUrl', () => {
       const response = getSafeRedirectUrl('', edscHost)
 
       expect(response).toBeNull()
-    })
-
-    test('validates successfully using only local hostname if edscHost is missing', () => {
-      const redirect = '/'
-
-      const response = getSafeRedirectUrl(redirect, undefined)
-
-      expect(response).toBe('http://localhost:3000/')
     })
   })
 })
