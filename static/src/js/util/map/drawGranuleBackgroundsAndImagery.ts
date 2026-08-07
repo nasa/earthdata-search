@@ -80,7 +80,8 @@ const drawGranuleBackgroundsAndImagery = ({
   granulesMetadata,
   map,
   projectionCode,
-  vectorSource
+  vectorSource,
+  metricsMapRenderPerformance
 }: {
   /** GIBS layers object keyed by collection ID */
   gibsLayersByCollection: GibsLayersByCollection
@@ -351,7 +352,19 @@ const drawGranuleBackgroundsAndImagery = ({
   })
 
   // Add all the layers to the layer group
+  const drawGranuleIImageryStart = performance.now()
   granuleImageryLayerGroup.setLayers(new Collection(granuleImageryLayers.reverse()))
+
+  map?.once('rendercomplete', () => {
+    const totalRenderMs = Math.round(performance.now() - drawGranuleIImageryStart)
+    // TODO should split out since this might not be the same as gran num
+    const granuleCount = granuleImageryLayers.length
+    metricsMapRenderPerformance(
+      granuleCount,
+      totalRenderMs,
+      'granule_background_render'
+    )
+  })
 }
 
 export default drawGranuleBackgroundsAndImagery
