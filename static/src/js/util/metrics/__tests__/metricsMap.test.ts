@@ -1,10 +1,10 @@
-import { metricsMap } from '../metricsMap'
+import { metricsMapButtons } from '../metricsMap'
 
 describe('metricsMap', () => {
   test('pushes the correct event to the dataLayer', () => {
     const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
-    metricsMap('Zoom')
+    metricsMapButtons('Zoom')
 
     expect(dataLayerPushSpy).toHaveBeenCalledTimes(1)
     expect(dataLayerPushSpy).toHaveBeenCalledWith({
