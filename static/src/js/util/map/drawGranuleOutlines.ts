@@ -8,7 +8,8 @@ import drawOutline from './drawOutline'
 const drawGranuleOutlines = ({
   ctx,
   granuleBackgroundsSource,
-  map
+  map,
+  metricsMapRenderPerformance
 }: {
   /** The canvas context to draw on */
   ctx: CanvasRenderingContext2D
@@ -19,6 +20,7 @@ const drawGranuleOutlines = ({
 }) => {
   // Remove existing drawings on the canvas
   ctx.reset()
+  const drawGranuleOutlinesStart = performance.now()
 
   // If the map is undefined, don't draw anything
   if (!map) return
@@ -82,6 +84,15 @@ const drawGranuleOutlines = ({
 
   // Reset the globalCompositeOperation to the default of 'source-over'
   ctx.globalCompositeOperation = 'source-over'
+  map?.once('rendercomplete', () => {
+    const totalRenderMs = Math.round(performance.now() - drawGranuleOutlinesStart)
+    // TODO should split out since this might not be the same as gran num
+    // metricsMapRenderPerformance(
+    //   1,
+    //   totalRenderMs,
+    //   'granule_outline_render'
+    // )
+  })
 }
 
 export default drawGranuleOutlines
