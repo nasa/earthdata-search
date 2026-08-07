@@ -84,6 +84,7 @@ import trueColor from '../../util/map/layers/trueColor'
 import landWaterMap from '../../util/map/layers/landWaterMap'
 
 import { eventEmitter } from '../../events/events'
+import { metricsMapRenderPerformance } from '../../util/metrics/metricsMap'
 
 import 'ol/ol.css'
 import './Map.scss'
@@ -383,6 +384,8 @@ const Map: React.FC<MapProps> = ({
   onChangeProjection,
   onChangeQuery,
   onClearShapefile,
+  onMoveStart,
+  onPostRender,
   onDrawEnd,
   onExcludeGranule,
   onMapReady,
@@ -415,6 +418,15 @@ const Map: React.FC<MapProps> = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
   const mapElRef = useRef<HTMLDivElement>(null)
+
+  let lastFrame = performance.now()
+  const frameTimes = []
+
+  mapRef.current?.on('postrender', () => {
+    const now = performance.now()
+    frameTimes.push(now - lastFrame)
+    lastFrame = now
+  })
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -537,7 +549,7 @@ const Map: React.FC<MapProps> = ({
 
       // Get the new center of the map
       const newCenter = view.getCenter() as Coordinate
-
+      console.log('🚀 ~ file: Map.tsx:543 ~ newCenter:', newCenter)
       let [newLongitude, newLatitude] = newCenter
       const newZoom = view.getZoom()
       let newRotationInDeg = 0
@@ -615,7 +627,6 @@ const Map: React.FC<MapProps> = ({
       source?: VectorSource
     }) => {
       let extent: import('ol/extent').Extent | null | undefined
-
       // If a shape was passed, use the extent of that shape
       if (shape) {
         const shapeInProjection = shape.transform(
@@ -884,6 +895,7 @@ const Map: React.FC<MapProps> = ({
 
   // Handle the map leave event
   const handleMouseLeave = () => {
+    // TODO do I want to metric this?
     // When the mouse leaves the map element, unhighlight the feature
     unhighlightGranule(granuleHighlightsSource)
     unhighlightShapefile(spatialDrawingSource)
@@ -983,6 +995,7 @@ const Map: React.FC<MapProps> = ({
   }, [panelsWidth, sidebarWidth])
 
   // When the granules change, draw the granule backgrounds
+  // TODO track how long drawing the granules actualy takes
   useEffect(() => {
     // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
     // Redraw the granule backgrounds if the product layer from the gibs tag has changed
@@ -1003,7 +1016,6 @@ const Map: React.FC<MapProps> = ({
 
     // Clear the granule imagery layers
     granuleImageryLayerGroup.getLayers().clear()
-
     // Draw the granule backgrounds
     drawGranuleBackgroundsAndImagery({
       gibsLayersByCollection,
@@ -1011,7 +1023,8 @@ const Map: React.FC<MapProps> = ({
       granulesMetadata: granules,
       map: mapRef.current as OlMap,
       projectionCode,
-      vectorSource: granuleBackgroundsSource
+      vectorSource: granuleBackgroundsSource,
+      metricsMapRenderPerformance
     })
 
     // If there is a focused granule draw it
@@ -1077,15 +1090,20 @@ const Map: React.FC<MapProps> = ({
   ])
 
   // Draw the granule outlines
-  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-    const ctx = event.context as CanvasRenderingContext2D
+  // TODO this seems like the one I actually care about
 
-    drawGranuleOutlines({
-      ctx,
-      granuleBackgroundsSource,
-      map: mapRef.current as OlMap
+  if (granules && granules.length > 0) {
+    granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
+      const ctx = event.context as CanvasRenderingContext2D
+      // TODO this is getting called a lot which is odd
+      drawGranuleOutlines({
+        ctx,
+        granuleBackgroundsSource,
+        map: mapRef.current as OlMap,
+        metricsMapRenderPerformance
+      })
     })
-  })
+  }
 
   return (
     <div ref={mapElRef} id="map" className="map" />
