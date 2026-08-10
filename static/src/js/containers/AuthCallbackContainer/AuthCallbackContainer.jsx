@@ -7,6 +7,8 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
 import { routes } from '../../constants/routes'
 
+import { getSafeRedirectUrl } from '../../util/getSafeRedirectUrl'
+
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
  * We get the edlToken and redirect path from the URL, store the edlToken in a cookie and redirect
@@ -32,21 +34,24 @@ export const AuthCallbackContainer = () => {
 
     let eddRedirectUrl = eddRedirect
 
-    if (redirect.includes('earthdata-download')) {
+    if (redirect && redirect.includes('earthdata-download')) {
       eddRedirectUrl = redirect
     }
 
     // Handle EDD redirects
     if (eddRedirectUrl) {
-      const validEddRedirect = eddRedirectUrl.startsWith('earthdata-download')
+      // Validate the EDD redirect against our allow-list, returns null if invalid
+      const safeEddUrl = getSafeRedirectUrl(eddRedirectUrl, edscHost)
 
-      if (validEddRedirect) {
-        if (edlToken) eddRedirectUrl += `&token=${edlToken}`
+      if (safeEddUrl && safeEddUrl.startsWith('earthdata-download:')) {
+        let finalEddUrl = safeEddUrl
 
-        // Add the redirect information to the store
-        setRedirectUrl(eddRedirectUrl)
+        if (edlToken) {
+          // Append token
+          finalEddUrl += `&token=${edlToken}`
+        }
 
-        // Redirect to the edd callback
+        setRedirectUrl(finalEddUrl)
         navigate(routes.EARTHDATA_DOWNLOAD_CALLBACK)
 
         return
@@ -58,10 +63,9 @@ export const AuthCallbackContainer = () => {
     }
 
     // Handle redirects
-    const invalidRedirectUrl = redirect !== routes.HOME && !redirect.startsWith(edscHost)
+    const safeRedirectUrl = getSafeRedirectUrl(redirect, edscHost)
 
-    if (invalidRedirectUrl) {
-      // Redirect to an error page or a safe location if the URL is not a relative path
+    if (!safeRedirectUrl) {
       window.location.replace('/not-found')
 
       return
@@ -70,8 +74,8 @@ export const AuthCallbackContainer = () => {
     // Set the edlToken cookie
     set('edlToken', edlToken)
 
-    // Redirect the user to the correct location
-    window.location.replace(redirect)
+    // Redirect the user to the safe, validated location
+    window.location.replace(safeRedirectUrl)
   }, [])
 
   return (
