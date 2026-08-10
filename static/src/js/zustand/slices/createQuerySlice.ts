@@ -187,8 +187,13 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
     initializeGranuleQuery: ({ collectionId, query }) => {
       set((state) => {
+        // Prevents existing query data from being overwritten.
+        const {
+          granules: existingGranuleQuery = {}
+        } = state.query.collection.byId[collectionId] || {}
         state.query.collection.byId[collectionId] = {
           granules: {
+            ...existingGranuleQuery,
             ...initialGranuleQuery,
             ...query
           }
