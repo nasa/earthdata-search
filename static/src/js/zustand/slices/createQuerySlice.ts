@@ -187,7 +187,9 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
     initializeGranuleQuery: ({ collectionId, query }) => {
       set((state) => {
-        // Prevents existing query data from being overwritten.
+        // SetCollectionId calls this every time onChangePanel fires in ProjectPanels (ie. 'Back to Edit Options), not just when a granule query is initialized
+        // ExistingGranuleQuery is needed to prevent the wiping of existing data in the case of this being called outside of initialization
+        // TODO EDSC-4714: Skip re-initalization entirely when collectionId is already focused
         const {
           granules: existingGranuleQuery = {}
         } = state.query.collection.byId[collectionId] || {}
