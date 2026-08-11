@@ -610,6 +610,38 @@ describe('createQuerySlice', () => {
         ...granuleQuery
       })
     })
+
+    test('preserves existing granule query values when re-initialized', () => {
+      const collectionId = 'collectionId'
+
+      useEdscStore.setState((state) => {
+        state.query.collection.byId.collectionId = {
+          granules: {
+            ...initialGranuleQuery,
+            readableGranuleName: ['Q2015155*']
+          }
+        }
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { initializeGranuleQuery } = query
+      initializeGranuleQuery({
+        collectionId,
+        query: { sortKey: '-start_date' }
+      })
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+        ...initialGranuleQuery,
+        readableGranuleName: ['Q2015155*'],
+        sortKey: '-start_date'
+      })
+    })
   })
 
   describe('removeSpatialFilter', () => {
