@@ -180,16 +180,14 @@ export const Home: React.FC = () => {
   const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
-
-  const { numberOfGranules } = getApplicationConfig()
-
-  // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
-  const { nlpSearch } = getApplicationConfig()
-  const isNlpEnabled = nlpSearch === 'true'
+  const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
+  const { nlpSearch: isNlpEnabled } = featureFlags
   const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<HomeSearchMode>(
     () => getPreferredHomeSearchMode(isNlpEnabled)
   )
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
+
+  const { numberOfGranules } = getApplicationConfig()
 
   useEffect(() => {
     // Focus the search input when the component mounts
