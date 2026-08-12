@@ -122,6 +122,54 @@ export class Functions extends Construct {
     })
 
     /**
+     * Cleanup Old Retrievals Run once a month on the second day of the month at 2:00 AM
+     */
+    const cleanupOldRetrievalsNestedStack = new cdk.NestedStack(scope, 'CleanupOldRetrievalsNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(cleanupOldRetrievalsNestedStack, 'CleanupOldRetrievalsLambda', {
+      ...defaultLambdaConfig,
+      description: 'Removes retrieval entries that are older than one year',
+      entry: '../../serverless/src/cleanupOldRetrievals/handler.js',
+      functionName: 'cleanupOldRetrievals',
+      functionNamePrefix,
+      schedules: [{
+        enabled: true,
+        schedule: events.Schedule.cron({
+          day: '2',
+          hour: '2',
+          minute: '0',
+          month: '*',
+          year: '*'
+        })
+      }],
+      timeout: cdk.Duration.minutes(5)
+    })
+
+    /**
+     * Cleanup Old Shapefiles Run once a month on the first day of the month at 2:00 AM
+     */
+    const cleanupOldShapefilesNestedStack = new cdk.NestedStack(scope, 'CleanupOldShapefilesNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(cleanupOldShapefilesNestedStack, 'CleanupOldShapefilesLambda', {
+      ...defaultLambdaConfig,
+      description: 'Removes shapefile entries that are older than one year',
+      entry: '../../serverless/src/cleanupOldShapefiles/handler.js',
+      functionName: 'cleanupOldShapefiles',
+      functionNamePrefix,
+      schedules: [{
+        enabled: true,
+        schedule: events.Schedule.cron({
+          day: '1',
+          hour: '2',
+          minute: '0',
+          month: '*',
+          year: '*'
+        })
+      }],
+      timeout: cdk.Duration.minutes(5)
+    })
+
+    /**
      * Cloudfront To Cloudwatch
      */
     const cloudfrontToCloudwatchNestedStack = new cdk.NestedStack(scope, 'CloudfrontToCloudwatchNestedStack')
@@ -658,30 +706,6 @@ export class Functions extends Construct {
       sqs: {
         queue: queues.userDataQueue
       },
-      timeout: cdk.Duration.minutes(5)
-    })
-
-    /**
-     * Cleanup Old Shapefiles Run once a month on the first day of the month at 2:00 AM
-     */
-    const cleanupOldShapefilesNestedStack = new cdk.NestedStack(scope, 'CleanupOldShapefilesNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(cleanupOldShapefilesNestedStack, 'CleanupOldShapefilesLambda', {
-      ...defaultLambdaConfig,
-      description: 'Removes shapefile entries that are older than one year',
-      entry: '../../serverless/src/cleanupOldShapefiles/handler.js',
-      functionName: 'cleanupOldShapefiles',
-      functionNamePrefix,
-      schedules: [{
-        enabled: true,
-        schedule: events.Schedule.cron({
-          day: '1',
-          hour: '2',
-          minute: '0',
-          month: '*',
-          year: '*'
-        })
-      }],
       timeout: cdk.Duration.minutes(5)
     })
   }
