@@ -9,8 +9,6 @@ import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
-// @ts-expect-error: Types do not exist for this file
-import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 
@@ -330,21 +328,31 @@ describe('Home', () => {
   })
 
   describe('when nlpSearch is disabled', () => {
-    beforeEach(() => {
-      getApplicationConfig.mockReturnValue({
-        nlpSearch: 'false'
-      })
-    })
-
     test('renders temporal and spatial buttons', () => {
-      setup()
+      setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: false
+            }
+          }
+        }
+      })
 
       expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
     })
 
     test('calls getCollections and navigate when the search form is submitted with no value', async () => {
-      const { user, zustandState } = setup()
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: false
+            }
+          }
+        }
+      })
 
       await user.click(screen.getByRole('button', { name: /search/i }))
 
@@ -356,7 +364,15 @@ describe('Home', () => {
     })
 
     test('calls getCollections and navigate when the search form is submitted with values', async () => {
-      const { user, zustandState } = setup()
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: false
+            }
+          }
+        }
+      })
 
       const searchInput = screen.getByPlaceholderText('Type to search for data')
 

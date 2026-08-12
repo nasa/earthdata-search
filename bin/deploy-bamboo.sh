@@ -38,8 +38,13 @@ config="`jq '.application.mapPointsSimplifyThreshold = $newValue' --arg newValue
 config="`jq '.application.nlpSearch = $newValue' --arg newValue $bamboo_NLP_SEARCH <<< $config`"
 config="`jq '.application.numberOfGranules = $newValue' --arg newValue "$bamboo_NUMBER_OF_GRANULES" <<< $config`"
 config="`jq '.application.placeLabelsStyleUrl = $newValue' --arg newValue $bamboo_PLACE_LABELS_STYLE_URL <<< $config`"
+config="`jq '.application.growthbookEnabled = $newValue' --arg newValue $bamboo_GROWTHBOOK_ENABLED <<< $config`"
+
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
+config="`jq '.environment.production.growthbookFirehoseStreamName = $newValue' --arg newValue $bamboo_GROWTHBOOK_FIREHOSE_STREAM_NAME <<< $config`"
+config="`jq '.environment.production.growthbookApiHost = $newValue' --arg newValue $bamboo_GROWTHBOOK_API_HOST <<< $config`"
+config="`jq '.environment.production.growthbookClientKey = $newValue' --arg newValue $bamboo_GROWTHBOOK_CLIENT_KEY <<< $config`"
 
 # Wrap the bamboo variable in quotes for a string value that could contain spaces
 config="`jq '.application.emergencyNotification = $newValue' --arg newValue "$bamboo_EMERGENCY_NOTIFICATION" <<< $config`"

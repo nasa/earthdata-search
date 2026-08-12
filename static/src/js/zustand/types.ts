@@ -339,6 +339,18 @@ export type GranulesSlice = {
   }
 }
 
+export type GrowthBookSlice = {
+  /** The GrowthBook Slice of the store. This saves the metadata for growthbook experiments */
+  growthbook: {
+    featureFlags: {
+      /** The metadata for the growthbook experiments */
+      [key: string]: boolean // In the future this might need to accept more types, but for now we are only using boolean flags
+    }
+    /** Function to set the growthbook feature flags */
+    setFeatureFlags: (key: string, value: boolean) => void
+  }
+}
+
 export type HomeSlice = {
   /** The Home Slice of the store */
   home: {
@@ -1308,6 +1320,7 @@ export type EdscStore =
   & FacetParamsSlice
   & GranuleSlice
   & GranulesSlice
+  & GrowthBookSlice
   & HomeSlice
   & MapSlice
   & PanelsSlice
