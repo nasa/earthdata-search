@@ -29,15 +29,25 @@ const cleanupOldRetrievals = async (event, context) => {
       .where('created_at', '<', oneYearAgo)
       .delete()
 
+    // Also remove orphaned retrieval_collections with no parent retrieval
+    const orphanedRetrievalCollectionsDeletedCount = await dbConnection('retrieval_collections')
+      .whereNull('retrieval_id')
+      .delete()
+
     console.log(deletedCount > 0
       ? `Successfully deleted ${deletedCount} retrieval(s) ${oneYearAgo.toISOString()}`
       : `No retrievals older than ${oneYearAgo.toISOString()} found exiting cleanup process`)
 
+    console.log(orphanedRetrievalCollectionsDeletedCount > 0
+      ? `Successfully deleted ${orphanedRetrievalCollectionsDeletedCount} orphaned retrieval(s)`
+      : 'No orphaned retrievals found in exiting cleanup process')
+
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: `Successfully deleted ${deletedCount} retrieval(s)`,
-        deletedCount
+        message: `Cleanup complete. Deleted ${deletedCount} retrieval(s) and ${orphanedRetrievalCollectionsDeletedCount} orphaned retrieval collection(s).`,
+        deletedRetrievals: deletedCount,
+        deletedOrphanedRetrievalCollections: orphanedRetrievalCollectionsDeletedCount
       })
     }
   } catch (error) {

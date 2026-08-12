@@ -39,8 +39,16 @@ describe('cleanupOldRetrievals', () => {
     const deletedCount = 5
     const consoleMock = vi.spyOn(console, 'log').mockImplementation()
 
-    dbTracker.on('query', (query) => {
-      query.response(deletedCount)
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        // First query: deleting old retrievals
+        query.response(deletedCount)
+      } else if (step === 2) {
+        // Second query: deleting orphaned retrieval collections
+        query.response(0)
+      } else {
+        query.response(0)
+      }
     })
 
     const result = await cleanupOldRetrievals({}, {})
@@ -55,21 +63,30 @@ describe('cleanupOldRetrievals', () => {
     expect(queries[0].bindings).toEqual([expectedDate])
 
     expect(result).toEqual({
-      body: '{"message":"Successfully deleted 5 retrieval(s)","deletedCount":5}',
+      body: '{"message":"Cleanup complete. Deleted 5 retrieval(s) and 0 orphaned retrieval collection(s).","deletedRetrievals":5,"deletedOrphanedRetrievalCollections":0}',
       statusCode: 200
     })
 
-    expect(consoleMock).toHaveBeenCalledTimes(2)
+    expect(consoleMock).toHaveBeenCalledTimes(3)
     expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up retrievals older than 2023-01-15T10:00:00.000Z')
     expect(consoleMock).toHaveBeenNthCalledWith(2, 'Successfully deleted 5 retrieval(s) 2023-01-15T10:00:00.000Z')
+    expect(consoleMock).toHaveBeenNthCalledWith(3, 'No orphaned retrievals found in exiting cleanup process')
   })
 
   test('correctly handles no retrievals found and logs a message', async () => {
     const deletedCount = 0
     const consoleMock = vi.spyOn(console, 'log').mockImplementation()
 
-    dbTracker.on('query', (query) => {
-      query.response(deletedCount)
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        // First query: deleting old retrievals
+        query.response(deletedCount)
+      } else if (step === 2) {
+        // Second query: deleting orphaned collections
+        query.response(0)
+      } else {
+        query.response(0)
+      }
     })
 
     const result = await cleanupOldRetrievals({}, {})
@@ -84,16 +101,17 @@ describe('cleanupOldRetrievals', () => {
     expect(queries[0].bindings).toEqual([expectedDate])
 
     expect(result).toEqual({
-      body: '{"message":"Successfully deleted 0 retrieval(s)","deletedCount":0}',
+      body: '{"message":"Cleanup complete. Deleted 0 retrieval(s) and 0 orphaned retrieval collection(s).","deletedRetrievals":0,"deletedOrphanedRetrievalCollections":0}',
       statusCode: 200
     })
 
-    expect(consoleMock).toHaveBeenCalledTimes(2)
+    expect(consoleMock).toHaveBeenCalledTimes(3)
     expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up retrievals older than 2023-01-15T10:00:00.000Z')
     expect(consoleMock).toHaveBeenNthCalledWith(2, 'No retrievals older than 2023-01-15T10:00:00.000Z found exiting cleanup process')
+    expect(consoleMock).toHaveBeenNthCalledWith(3, 'No orphaned retrievals found in exiting cleanup process')
   })
 
-  test.only('correctly handles database errors and logs them', async () => {
+  test('correctly handles database errors and logs them', async () => {
     const consoleMock = vi.spyOn(console, 'log').mockImplementation()
     const dbError = new Error('Database connection failed')
 
