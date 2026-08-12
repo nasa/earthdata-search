@@ -136,10 +136,14 @@ export const convertTemporalToolExecute = async (
   - For "last year", use Jan 1 to Dec 31 of the year before the current year.
   - For "this year", use Jan 1 to Dec 31 of the current year.
   - For specific years, use Jan 1 to Dec 31 of that year.
+  - For decades (e.g., "1990s"), use Jan 1 of the first year to Dec 31 of the last year (e.g., 1990-1999).
   - For "last month", use the first to the last day of the previous month.
   - For "this month", use the first to the last day of the current month.
-  - For seasons, use their typical date ranges within the current year unless a specific year is mentioned.
-  - For relative terms like "past 5 years", calculate based on the current date.
+  - For seasons, use their most recent meteorological date ranges unless a specific year is provided. (Note: Invert these months if the spatial query is in the Southern Hemisphere).
+  - For Winter: Because Northern Hemisphere winter crosses calendar years, default to Dec 1st of the previous year through the last day of February of the current year (accounting for leap years). Spring, Summer, and Fall remain entirely within the current year.
+  - For relative terms like "past 5 years", calculate the start date exactly that many years prior to the current date, and use the current date as the end date.
+  - For relative terms like "since [Year]", use Jan 1st of that year as the start date, and the current date as the end date.
+  - For relative terms like "since [Month]", use the first day of of that month as the start date, and the current date as the end date.
   - Always use the current date of ${new Date().toISOString()} as the reference point for relative time expressions.
 
   Input: "${temporal}"`,
