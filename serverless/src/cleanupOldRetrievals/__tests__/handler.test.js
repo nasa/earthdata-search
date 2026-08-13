@@ -36,16 +36,17 @@ afterEach(() => {
 
 describe('cleanupOldRetrievals', () => {
   test('successfully executes the correct SQL query and returns response', async () => {
-    const deletedCount = 5
+    const deletedRetrieval = 5
+    const deletedOrphanedRetrievalCollections = 3
     const consoleMock = vi.spyOn(console, 'log').mockImplementation()
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         // First query: deleting old retrievals
-        query.response(deletedCount)
+        query.response(deletedRetrieval)
       } else if (step === 2) {
         // Second query: deleting orphaned retrieval collections
-        query.response(0)
+        query.response(deletedOrphanedRetrievalCollections)
       } else {
         query.response(0)
       }
@@ -63,14 +64,14 @@ describe('cleanupOldRetrievals', () => {
     expect(queries[0].bindings).toEqual([expectedDate])
 
     expect(result).toEqual({
-      body: '{"message":"Cleanup complete. Deleted 5 retrieval(s) and 0 orphaned retrieval collection(s).","deletedRetrievals":5,"deletedOrphanedRetrievalCollections":0}',
+      body: '{"message":"Cleanup complete. Deleted 5 retrieval(s) and 3 orphaned retrieval collection(s).","deletedRetrievals":5,"deletedOrphanedRetrievalCollections":3}',
       statusCode: 200
     })
 
     expect(consoleMock).toHaveBeenCalledTimes(3)
     expect(consoleMock).toHaveBeenNthCalledWith(1, 'Cleaning up retrievals older than 2023-01-15T10:00:00.000Z')
     expect(consoleMock).toHaveBeenNthCalledWith(2, 'Successfully deleted 5 retrieval(s) 2023-01-15T10:00:00.000Z')
-    expect(consoleMock).toHaveBeenNthCalledWith(3, 'No orphaned retrievals found in exiting cleanup process')
+    expect(consoleMock).toHaveBeenNthCalledWith(3, 'Successfully deleted 3 orphaned retrieval(s)')
   })
 
   test('correctly handles no retrievals found and logs a message', async () => {
