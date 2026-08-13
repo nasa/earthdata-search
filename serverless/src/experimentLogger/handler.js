@@ -13,19 +13,12 @@ const experimentLogger = async (event) => {
   const { params = {} } = JSON.parse(body)
   const { eventData } = params
 
-  const {
-    eventType,
-    userId
-  } = eventData
-
   if (!firehoseClient) {
     firehoseClient = new FirehoseClient({ region: 'us-east-1' })
   }
 
   const payload = {
     event_id: crypto.randomUUID(),
-    user_id: userId || 'anonymous',
-    event_type: eventType,
     timestamp: new Date().toISOString(),
     ...eventData
   }

@@ -1,19 +1,22 @@
 // @ts-expect-error This file does not have types
 import LoggerRequest from '../../request/loggerRequest'
+// @ts-expect-error This file does not have types
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
 import useEdscStore from '../../../zustand/useEdscStore'
 
-const logEvent = async (eventType: string, eventData: string) => {
+const logEvent = async (eventKey: string, eventType: string, eventData: string) => {
   try {
-    const { growthbook } = useEdscStore.getState()
-    const { featureFlags } = growthbook
-    const { nlpSearch: nlpSearchValue } = featureFlags
-
-    if (!nlpSearchValue) {
-      console.log('Experiment nlpSearch is not enabled. Event will not be logged.')
+    const { growthbookEnabled } = getApplicationConfig()
+    if (growthbookEnabled !== 'true') {
+      console.log('GrowthBook is not enabled. Event will not be logged.')
 
       return
     }
+
+    const { growthbook } = useEdscStore.getState()
+    const { featureFlags } = growthbook
+    const { [eventKey]: eventValue } = featureFlags
 
     const gbUserId = window.localStorage.getItem('gbUserId') || 'unknown-user-id'
     const gbSessionId = window.sessionStorage.getItem('gbSessionId') || 'unknown-session-id'
@@ -22,8 +25,8 @@ const logEvent = async (eventType: string, eventData: string) => {
 
     const params = {
       eventData: {
-        experiment_id: 'nlpSearch',
-        variation_id: nlpSearchValue,
+        experiment_id: eventKey,
+        variation_id: eventValue,
         event_type: eventType,
         event_data: eventData,
         session_id: gbSessionId,
