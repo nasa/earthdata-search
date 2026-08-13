@@ -55,7 +55,7 @@ describe('cleanupOldRetrievals', () => {
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].sql).toEqual('delete from "retrievals" where "created_at" < $1')
+    expect(queries[0].sql).toEqual('delete from "retrievals" where "updated_at" < $1')
 
     // Verify bindings are Date objects with the correct date (one year ago)
     const expectedDate = new Date('2023-01-15T10:00:00.000Z')
@@ -93,7 +93,7 @@ describe('cleanupOldRetrievals', () => {
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].sql).toEqual('delete from "retrievals" where "created_at" < $1')
+    expect(queries[0].sql).toEqual('delete from "retrievals" where "updated_at" < $1')
 
     // Verify bindings are Date objects with the correct date (one year ago)
     const expectedDate = new Date('2023-01-15T10:00:00.000Z')
@@ -126,7 +126,7 @@ describe('cleanupOldRetrievals', () => {
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].sql).toEqual('delete from "retrievals" where "created_at" < $1')
+    expect(queries[0].sql).toEqual('delete from "retrievals" where "updated_at" < $1')
 
     // Verify bindings are Date objects with the correct date (one year ago)
     const expectedDate = new Date('2023-01-15T10:00:00.000Z')

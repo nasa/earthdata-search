@@ -26,7 +26,7 @@ const cleanupOldRetrievals = async (event, context) => {
     // Delete retrievals older than one year. Foreign keys on retrieval_collections and
     // retrieval_orders are ON DELETE CASCADE, so their related rows are removed automatically
     const deletedCount = await dbConnection('retrievals')
-      .where('created_at', '<', oneYearAgo)
+      .where('updated_at', '<', oneYearAgo)
       .delete()
 
     // Also remove orphaned retrieval_collections with no parent retrieval
