@@ -213,6 +213,10 @@ export const SubscriptionsBody = ({
     subscriptionType
   ).length
 
+  const emptyStateMessage = subscriptionType === 'collection'
+    ? 'You have not created any dataset search subscriptions. Use filters to define your dataset query and '
+    : 'You have not created any subscriptions for this collection. Use filters to define your query for this collection and '
+
   return (
     <div className="subscriptions-body">
       <div className="subscriptions-body__content">
@@ -348,7 +352,7 @@ export const SubscriptionsBody = ({
             {
               subscriptionItems.length === 0 && (
                 <EmptyListItem>
-                  {'No subscriptions exist for this collection. Use filters to define your query and '}
+                  {emptyStateMessage}
                   <Button
                     className="subscriptions-body__empty-list-item"
                     disabled={displayWarning}

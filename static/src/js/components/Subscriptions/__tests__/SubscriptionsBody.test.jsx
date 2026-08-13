@@ -59,6 +59,50 @@ describe('SubscriptionsBody component', () => {
     expect(screen.getByText('Subscribe to be notified by email when new data matching your search query becomes available.')).toBeInTheDocument()
   })
 
+  describe('when no subscritptions exist', () => {
+    test('shows dataset search empty-state message for collection subscriptions', () => {
+      setup()
+
+      expect(screen.getByText(/You have not created any dataset search subscriptions/i)).toBeInTheDocument()
+      expect(screen.getByText(/Use filters to define your dataset query/i)).toBeInTheDocument()
+    })
+
+    test('shows collection specific empty-state message for granuale subscriptions', () => {
+      setup({
+        overrideProps: {
+          subscriptionType: 'granule'
+        },
+        overrideZustandState: {
+          collection: {
+            collectionId: 'C123-PROV'
+          }
+        },
+        overrideApolloClientMocks: [{
+          request: {
+            query: SUBSCRIPTIONS,
+            variables: {
+              params: {
+                collectionConceptId: 'C123-PROV',
+                subscriberId: 'testuser',
+                type: 'granule'
+              }
+            }
+          },
+          result: {
+            data: {
+              subscriptions: {
+                items: []
+              }
+            }
+          }
+        }]
+      })
+
+      expect(screen.getByText(/You have not created any subscriptions for this collection/i)).toBeInTheDocument()
+      expect(screen.getByText(/Use filters to define your query for this collection/i)).toBeInTheDocument()
+    })
+  })
+
   describe('when creating a subscription', () => {
     test('calls addToast', async () => {
       const { user } = setup({
