@@ -9,9 +9,7 @@ interface GrowthBookLoaderProps {
 }
 
 const GrowthBookLoader = ({ children }: GrowthBookLoaderProps) => {
-  const { setFeatureFlags } = useEdscStore((state) => ({
-    setFeatureFlags: state.growthbook.setFeatureFlags
-  }))
+  const setFeatureFlags = useEdscStore((state) => state.growthbook.setFeatureFlags)
 
   const nlpSearchValue = useFeatureIsOn('nlpSearch')
 

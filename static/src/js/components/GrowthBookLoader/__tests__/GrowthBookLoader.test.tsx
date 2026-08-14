@@ -1,6 +1,10 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
-import { GrowthBookProvider, useFeatureIsOn } from '@growthbook/growthbook-react'
+import { act, screen } from '@testing-library/react'
+import {
+  GrowthBook,
+  GrowthBookProvider,
+  useFeatureIsOn
+} from '@growthbook/growthbook-react'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -17,13 +21,21 @@ vi.mock('@growthbook/growthbook-react', async () => {
   }
 })
 
-const TestComponent = () => (
-  <GrowthBookProvider growthbook={{} as never}>
-    <GrowthBookLoader>
-      <div>Test Children</div>
-    </GrowthBookLoader>
-  </GrowthBookProvider>
-)
+const TestComponent = () => {
+  const growthbook = new GrowthBook({
+    apiHost: 'http://localhost:4100',
+    clientKey: 'mock-client-key'
+  })
+  growthbook.init({})
+
+  return (
+    <GrowthBookProvider growthbook={growthbook}>
+      <GrowthBookLoader>
+        <div>Test Children</div>
+      </GrowthBookLoader>
+    </GrowthBookProvider>
+  )
+}
 
 const setup = setupTest({
   Component: TestComponent,
@@ -41,7 +53,10 @@ describe('GrowthBookLoader', () => {
     expect(useFeatureIsOn).toHaveBeenCalledTimes(1)
     expect(useFeatureIsOn).toHaveBeenCalledWith('nlpSearch')
 
-    expect(zustandState.growthbook.setFeatureFlags).toHaveBeenCalledTimes(1)
+    await act(async () => {
+      expect(zustandState.growthbook.setFeatureFlags).toHaveBeenCalledTimes(1)
+    })
+
     expect(zustandState.growthbook.setFeatureFlags).toHaveBeenCalledWith('nlpSearch', true)
   })
 
@@ -51,7 +66,10 @@ describe('GrowthBookLoader', () => {
 
     setup()
 
-    expect(localStorageGetItemSpy).toHaveBeenCalledTimes(2)
+    await act(async () => {
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(2)
+    })
+
     expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(1, 'gbUserId')
     expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(2, 'gbSessionId')
 
@@ -67,7 +85,10 @@ describe('GrowthBookLoader', () => {
 
       setup()
 
-      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(2)
+      await act(async () => {
+        expect(localStorageGetItemSpy).toHaveBeenCalledTimes(2)
+      })
+
       expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(1, 'gbUserId')
       expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(2, 'gbSessionId')
 
@@ -84,6 +105,7 @@ describe('GrowthBookLoader', () => {
       className: 'root__spinner spinner spinner--dots spinner--small'
     }, {})
 
-    expect(screen.queryByText('Test Children')).not.toBeInTheDocument()
+    // Wait for the children to be rendered after the spinner
+    expect(await screen.findByText('Test Children')).toBeInTheDocument()
   })
 })
