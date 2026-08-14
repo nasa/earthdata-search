@@ -24,10 +24,12 @@ const GrowthBookWrapper = ({ children }: GrowthBookWrapperProps) => {
     growthbookClientKey
   } = getEnvironmentConfig()
 
+  const { NODE_ENV } = process.env
+
   const growthbook = new GrowthBook({
     apiHost: growthbookApiHost,
     clientKey: growthbookClientKey,
-    enableDevMode: true,
+    enableDevMode: NODE_ENV === 'development',
     // Only required for A/B testing
     // Called every time a user is put into an experiment
     trackingCallback: (experiment, result) => {
