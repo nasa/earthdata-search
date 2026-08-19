@@ -20,8 +20,6 @@ const drawGranuleOutlines = ({
 }) => {
   // Remove existing drawings on the canvas
   ctx.reset()
-  const drawGranuleOutlinesStart = performance.now()
-
   // If the map is undefined, don't draw anything
   if (!map) return
 
@@ -32,7 +30,21 @@ const drawGranuleOutlines = ({
 
   // Only get the features that intersect the view extent
   const features = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
+  // We need to dig in further to get the vertex counts
 
+  //  const vertexCount = granuleBackgroundsSource.getFeatures().reduce((total, feature: Feature) => {
+  //   const geometry = feature.getGeometry() as SimpleGeometry | undefined
+  //   console.log('🚀 ~ file: Map.tsx:189 ~ geometry:', geometry)
+  //   if (!geometry) return total
+
+  //   const flatCoords = geometry.getFlatCoordinates()
+  //   console.log('🚀 ~ file: drawGranuleOutlines.ts:41 ~ flatCoords:', flatCoords)
+  //   const { stride } = geometry
+
+  //   return total + (flatCoords.length / stride)
+  // }, 0)
+  // console.log('the total granule features:', granuleBackgroundsSource.getFeatures())
+  // console.log('the total granule vertex count:', vertexCount)
   // Sort features by the index property
   const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
 
@@ -84,15 +96,15 @@ const drawGranuleOutlines = ({
 
   // Reset the globalCompositeOperation to the default of 'source-over'
   ctx.globalCompositeOperation = 'source-over'
-  map?.once('rendercomplete', () => {
-    const totalRenderMs = Math.round(performance.now() - drawGranuleOutlinesStart)
-    // TODO should split out since this might not be the same as gran num
-    // metricsMapRenderPerformance(
-    //   1,
-    //   totalRenderMs,
-    //   'granule_outline_render'
-    // )
-  })
+  // Map?.once('rendercomplete', () => {
+  //   const totalRenderMs = Math.round(performance.now() - drawGranuleOutlinesStart)
+  //   // TODO should split out since this might not be the same as gran num
+  //   metricsMapRenderPerformance(
+  //     1,
+  //     totalRenderMs,
+  //     'granule_outline_render'
+  //   )
+  // })
 }
 
 export default drawGranuleOutlines
