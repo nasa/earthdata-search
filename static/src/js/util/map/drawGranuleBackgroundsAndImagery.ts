@@ -355,16 +355,16 @@ const drawGranuleBackgroundsAndImagery = ({
   const drawGranuleIImageryStart = performance.now()
   granuleImageryLayerGroup.setLayers(new Collection(granuleImageryLayers.reverse()))
 
-  map?.once('rendercomplete', () => {
-    const totalRenderMs = Math.round(performance.now() - drawGranuleIImageryStart)
-    // TODO should split out since this might not be the same as gran num
-    const granuleCount = granuleImageryLayers.length
-    metricsMapRenderPerformance(
-      granuleCount,
-      totalRenderMs,
-      'granule_background_render'
-    )
-  })
+  // map?.once('rendercomplete', () => {
+  //   const totalRenderMs = Math.round(performance.now() - drawGranuleIImageryStart)
+  //   // TODO should split out since this might not be the same as gran num
+  //   const granuleCount = granuleImageryLayers.length
+  //   metricsMapRenderPerformance(
+  //     granuleCount,
+  //     totalRenderMs,
+  //     'granule_background_render'
+  //   )
+  // })
 }
 
 export default drawGranuleBackgroundsAndImagery
