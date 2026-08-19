@@ -15,11 +15,12 @@ import {
 } from 'ol/interaction'
 import { Coordinate } from 'ol/coordinate'
 import { Fill } from 'ol/style'
-import { Geometry } from 'ol/geom'
+import { Geometry, SimpleGeometry } from 'ol/geom'
 import { GeometryFunction } from 'ol/interaction/Draw'
 import {
   MapBrowserEvent,
   MapEvent,
+  Feature,
   View
 } from 'ol'
 import { transform } from 'ol/proj'
@@ -31,6 +32,8 @@ import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import VectorTileLayer from 'ol/layer/VectorTile'
+import { unByKey } from 'ol/Observable'
+import { EventsKey } from 'ol/events'
 
 import {
   FaCircle,
@@ -45,6 +48,7 @@ import {
   Map as MapIcon
   // @ts-expect-error The file does not have types
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { metricsMapRenderPerformance } from '../../util/metrics/metricsMap'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -84,7 +88,6 @@ import trueColor from '../../util/map/layers/trueColor'
 import landWaterMap from '../../util/map/layers/landWaterMap'
 
 import { eventEmitter } from '../../events/events'
-import { metricsMapRenderPerformance } from '../../util/metrics/metricsMap'
 
 import 'ol/ol.css'
 import './Map.scss'
@@ -176,6 +179,47 @@ const overlayLayers: Record<string, TileLayer | VectorTileLayer | null> = {
   [mapLayers.bordersRoads]: null,
   [mapLayers.coastlines]: null,
   [mapLayers.placeLabels]: null
+}
+
+// Sums vertex count across all features in a source. Works across
+// Point/LineString/Polygon/Multi* uniformly via flat coordinates + stride.
+export const countSourceVertices = (source: VectorSource): number => (
+  source.getFeatures().reduce((total, feature: Feature) => {
+    const geometry = feature.getGeometry() as SimpleGeometry | undefined
+    console.log('🚀 ~ file: Map.tsx:189 ~ geometry:', geometry)
+    if (!geometry) return total
+
+    const flatCoords = geometry.getFlatCoordinates()
+    const { stride } = geometry
+
+    return total + (flatCoords.length / stride)
+  }, 0)
+)
+
+// Times a single prerender → postrender pass for a layer using .once(),
+// so it only fires for the very next render triggered after this is called.
+const timeLayerRenderOnce = (
+  layer: VectorLayer<VectorSource>,
+  label: string,
+  granuleCount: number,
+  collectionId: string
+): EventsKey[] => {
+  let start = 0
+
+  const preKey = layer.once(RenderEventType.PRERENDER as LayerRenderEventTypes, () => {
+    start = performance.now()
+    performance.mark(`${label}-prerender`)
+  })
+
+  const postKey = layer.once(RenderEventType.POSTRENDER as LayerRenderEventTypes, () => {
+    const duration = performance.now() - start
+    performance.mark(`${label}-postrender`)
+    performance.measure(label, `${label}-prerender`, `${label}-postrender`)
+
+    metricsMapRenderPerformance(granuleCount, duration, label, collectionId)
+  })
+
+  return [preKey, postKey]
 }
 
 // Create a view for the map. This will change when the padding needs to be updated
@@ -384,8 +428,6 @@ const Map: React.FC<MapProps> = ({
   onChangeProjection,
   onChangeQuery,
   onClearShapefile,
-  onMoveStart,
-  onPostRender,
   onDrawEnd,
   onExcludeGranule,
   onMapReady,
@@ -418,15 +460,6 @@ const Map: React.FC<MapProps> = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
   const mapElRef = useRef<HTMLDivElement>(null)
-
-  let lastFrame = performance.now()
-  const frameTimes = []
-
-  mapRef.current?.on('postrender', () => {
-    const now = performance.now()
-    frameTimes.push(now - lastFrame)
-    lastFrame = now
-  })
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -549,7 +582,7 @@ const Map: React.FC<MapProps> = ({
 
       // Get the new center of the map
       const newCenter = view.getCenter() as Coordinate
-      console.log('🚀 ~ file: Map.tsx:543 ~ newCenter:', newCenter)
+
       let [newLongitude, newLatitude] = newCenter
       const newZoom = view.getZoom()
       let newRotationInDeg = 0
@@ -627,6 +660,7 @@ const Map: React.FC<MapProps> = ({
       source?: VectorSource
     }) => {
       let extent: import('ol/extent').Extent | null | undefined
+
       // If a shape was passed, use the extent of that shape
       if (shape) {
         const shapeInProjection = shape.transform(
@@ -895,7 +929,6 @@ const Map: React.FC<MapProps> = ({
 
   // Handle the map leave event
   const handleMouseLeave = () => {
-    // TODO do I want to metric this?
     // When the mouse leaves the map element, unhighlight the feature
     unhighlightGranule(granuleHighlightsSource)
     unhighlightShapefile(spatialDrawingSource)
@@ -995,7 +1028,6 @@ const Map: React.FC<MapProps> = ({
   }, [panelsWidth, sidebarWidth])
 
   // When the granules change, draw the granule backgrounds
-  // TODO track how long drawing the granules actualy takes
   useEffect(() => {
     // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
     // Redraw the granule backgrounds if the product layer from the gibs tag has changed
@@ -1007,7 +1039,7 @@ const Map: React.FC<MapProps> = ({
 
     // Clear the existing granule backgrounds
     granuleBackgroundsSource.clear()
-
+    console.count(`granules updating for ${granulesKey} in ${projectionCode}`)
     // Clear any existing granule highlights
     unhighlightGranule(granuleHighlightsSource)
 
@@ -1016,6 +1048,12 @@ const Map: React.FC<MapProps> = ({
 
     // Clear the granule imagery layers
     granuleImageryLayerGroup.getLayers().clear()
+    // Time this specific update's render pass for both layers
+    const timingKeys = [
+      ...timeLayerRenderOnce(granuleBackgroundsLayer, 'granule-backgrounds', granules.length, focusedCollectionId),
+      ...timeLayerRenderOnce(granuleOutlinesLayer, 'granule-outlines', granules.length, focusedCollectionId)
+    ]
+
     // Draw the granule backgrounds
     drawGranuleBackgroundsAndImagery({
       gibsLayersByCollection,
@@ -1023,8 +1061,7 @@ const Map: React.FC<MapProps> = ({
       granulesMetadata: granules,
       map: mapRef.current as OlMap,
       projectionCode,
-      vectorSource: granuleBackgroundsSource,
-      metricsMapRenderPerformance
+      vectorSource: granuleBackgroundsSource
     })
 
     // If there is a focused granule draw it
@@ -1041,6 +1078,11 @@ const Map: React.FC<MapProps> = ({
         shouldMoveMap: false,
         timesIconSvg
       })
+    }
+
+    // Clean up the timing listeners if this effect reruns/unmounts before they fire
+    return () => {
+      timingKeys.forEach((key) => unByKey(key))
     }
   }, [granules, granulesKey, projectionCode])
 
@@ -1090,20 +1132,15 @@ const Map: React.FC<MapProps> = ({
   ])
 
   // Draw the granule outlines
-  // TODO this seems like the one I actually care about
+  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
+    const ctx = event.context as CanvasRenderingContext2D
 
-  if (granules && granules.length > 0) {
-    granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-      const ctx = event.context as CanvasRenderingContext2D
-      // TODO this is getting called a lot which is odd
-      drawGranuleOutlines({
-        ctx,
-        granuleBackgroundsSource,
-        map: mapRef.current as OlMap,
-        metricsMapRenderPerformance
-      })
+    drawGranuleOutlines({
+      ctx,
+      granuleBackgroundsSource,
+      map: mapRef.current as OlMap
     })
-  }
+  })
 
   return (
     <div ref={mapElRef} id="map" className="map" />
