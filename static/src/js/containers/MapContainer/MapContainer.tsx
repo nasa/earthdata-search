@@ -345,20 +345,6 @@ export const MapContainer = () => {
     setStartDrawing(false)
   }, [setStartDrawing])
 
-  let moveSessionStart: number | null = null
-  let moveSessionFrameCount = 0
-
-  const handleMoveStart = () => {
-    moveSessionStart = performance.now()
-    moveSessionFrameCount = 0
-  }
-
-  const handlePostRenderForFps = () => {
-    // Only count frames while an interaction session is active
-    if (moveSessionStart !== null) {
-      moveSessionFrameCount += 1
-    }
-  }
   // Get GIBS data to pass to the map within each granule
 
   const imageryLayers: ImageryLayers = useMemo(() => {
@@ -535,8 +521,6 @@ export const MapContainer = () => {
       onToggleShapefileUploadModal={() => setOpenModal(MODAL_NAMES.SHAPEFILE_UPLOAD)}
       onToggleTooManyPointsModal={() => setOpenModal(MODAL_NAMES.TOO_MANY_POINTS)}
       onUpdateShapefile={onUpdateShapefile}
-      onMoveStart={handleMoveStart}
-      onPostRender={handlePostRenderForFps}
       overlays={overlays}
       projectionCode={projection}
       rotation={rotation}
