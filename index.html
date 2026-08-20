@@ -36,7 +36,8 @@
       .th-wrapper {
         width: 100%;
         z-index: 1000;
-        height: 34px;
+        height: 33px;
+        flex-shrink: 0;
       }
 
       .root {
@@ -273,7 +274,7 @@
         }
     </script>
     <% if (showTophat) { %>
-    <div id="earthdata-tophat2" class="th-wrapper" style="height: 34px; background: #000;"></div>
+    <div id="earthdata-tophat2" class="th-wrapper" style="background: #000;"></div>
     <% } %>
     <div id="root" class="root root--loading">
         <div class="root__loading">
