@@ -182,3 +182,12 @@ export const getPerformanceTier = (p90FrameMs: number) => {
 
   return 'poor'
 }
+
+export const percentile = (renderTimes: number[], quantile: number) => {
+  const index = Math.min(
+    Math.ceil(renderTimes.length * quantile) - 1,
+    renderTimes.length - 1
+  )
+
+  return Math.round(renderTimes[index])
+}
