@@ -1,7 +1,8 @@
 import React, {
   useEffect,
   useRef,
-  useState
+  useState,
+  RefObject
 } from 'react'
 import { renderToString } from 'react-dom/server'
 
@@ -15,12 +16,12 @@ import {
 } from 'ol/interaction'
 import { Coordinate } from 'ol/coordinate'
 import { Fill } from 'ol/style'
-import { Geometry, SimpleGeometry } from 'ol/geom'
+import { Geometry } from 'ol/geom'
 import { GeometryFunction } from 'ol/interaction/Draw'
+import RenderEvent from 'ol/render/Event'
 import {
   MapBrowserEvent,
   MapEvent,
-  Feature,
   View
 } from 'ol'
 import { transform } from 'ol/proj'
@@ -48,7 +49,12 @@ import {
   Map as MapIcon
   // @ts-expect-error The file does not have types
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import { metricsMapRenderPerformance } from '../../util/metrics/metricsMap'
+import {
+  metricsMapFramePerformance,
+  metricsMapRenderPerformance
+} from '../../util/metrics/metricsMap'
+
+import { percentile } from '../../util/metrics/helpers'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -103,9 +109,41 @@ import {
 } from '../../types/sharedTypes'
 import { MapView, ShapefileSlice } from '../../zustand/types'
 
+interface MapPerformanceWindow {
+  windowStart: number
+
+  frames: number
+  slowFrames: number
+  verySlowFrames: number
+
+  renderTimes: number[]
+  maxRenderTimeMs: number
+
+  totalGranules: number
+  maxGranules: number
+
+  totalVertices: number
+  maxVertices: number
+}
+
+interface MapPerformanceEvent {
+  event: 'map_performance'
+  windowDurationMs: number
+  render: {
+    frames: number
+    p50RenderTimeMs: number
+    p95RenderTimeMs: number
+    p99RenderTimeMs: number
+    maxRenderTimeMs: number
+    slowFrames: number
+    verySlowFrames: number
+  }
+}
+
 let previousGranulesKey: string
 let previousProjectionCode: ProjectionCode
 let layersAdded = false
+const PERFORMANCE_WINDOW_MS = 10000
 
 // Render the times icon to an SVG string for use in the focused granule overlay
 // Disable a testing-library rule because this isn't a test
@@ -181,25 +219,10 @@ const overlayLayers: Record<string, TileLayer | VectorTileLayer | null> = {
   [mapLayers.placeLabels]: null
 }
 
-// Sums vertex count across all features in a source. Works across
-// Point/LineString/Polygon/Multi* uniformly via flat coordinates + stride.
-export const countSourceVertices = (source: VectorSource): number => (
-  source.getFeatures().reduce((total, feature: Feature) => {
-    const geometry = feature.getGeometry() as SimpleGeometry | undefined
-    console.log('🚀 ~ file: Map.tsx:189 ~ geometry:', geometry)
-    if (!geometry) return total
-
-    const flatCoords = geometry.getFlatCoordinates()
-    const { stride } = geometry
-
-    return total + (flatCoords.length / stride)
-  }, 0)
-)
-
 // Times a single prerender → postrender pass for a layer using .once(),
 // so it only fires for the very next render triggered after this is called.
-const timeLayerRenderOnce = (
-  layer: VectorLayer<VectorSource>,
+export const timeLayerRenderOnce = (
+  layer: VectorLayer,
   label: string,
   granuleCount: number,
   collectionId: string
@@ -287,6 +310,7 @@ const clearFocusedGranuleSource = (map: OlMap) => {
 }
 
 // Remove the drawing interaction from the map
+// TODO double check all drawings go through this otherwise it might be a listener leak
 const removeDrawingInteraction = (map: OlMap) => {
   map.getInteractions().getArray().forEach((interaction) => {
     if (interaction.get('id') === 'spatial-drawing-interaction') {
@@ -300,6 +324,58 @@ const hasFiniteExtent = (extent: import('ol/extent').Extent | null | undefined):
   if (!extent || extent.length !== 4) return false
 
   return extent.every((coordinate) => Number.isFinite(coordinate))
+}
+
+const flushMapPerformanceMetrics = (performanceWindowRef: RefObject<MapPerformanceWindow>) => {
+  const metrics = performanceWindowRef.current
+
+  if (metrics.frames === 0) {
+    metrics.windowStart = performance.now()
+
+    return
+  }
+
+  const sortedRenderTimes = [...metrics.renderTimes].sort(
+    (a, b) => a - b
+  )
+
+  const event = {
+    event: 'map_performance',
+
+    windowDurationMs:
+      performance.now() - metrics.windowStart,
+
+    render: {
+      frames: metrics.frames,
+      p50RenderTimeMs: percentile(sortedRenderTimes, 0.5),
+      p95RenderTimeMs: percentile(sortedRenderTimes, 0.95),
+      p99RenderTimeMs: percentile(sortedRenderTimes, 0.99),
+      maxRenderTimeMs: metrics.maxRenderTimeMs,
+      slowFrames: metrics.slowFrames,
+      verySlowFrames: metrics.verySlowFrames
+    }
+  }
+
+  metricsMapFramePerformance(event)
+  // Clear the metrics for the next window
+  // TODO really make sure it makes sense to disable this rule
+  // eslint-disable-next-line no-param-reassign
+  performanceWindowRef.current = {
+    windowStart: performance.now(),
+
+    frames: 0,
+    slowFrames: 0,
+    verySlowFrames: 0,
+
+    renderTimes: [],
+    maxRenderTimeMs: 0,
+
+    totalGranules: 0,
+    maxGranules: 0,
+
+    totalVertices: 0,
+    maxVertices: 0
+  }
 }
 
 interface MapProps {
@@ -460,6 +536,23 @@ const Map: React.FC<MapProps> = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
   const mapElRef = useRef<HTMLDivElement>(null)
+  const lastFrameRef = useRef<number>(performance.now())
+  const frameTimesRef = useRef<number[]>([])
+  const isTrackingFrameRef = useRef(false)
+
+  const performanceWindowRef = useRef({
+    windowStart: performance.now(),
+
+    frames: 0,
+    slowFrames: 0,
+    verySlowFrames: 0,
+
+    renderTimes: [] as number[],
+    maxRenderTimeMs: 0,
+
+    totalGranules: 0,
+    collectionid: ''
+  })
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -494,6 +587,66 @@ const Map: React.FC<MapProps> = ({
       })
     })
     mapRef.current = map
+
+    // --- Pan/zoom frame performance tracking ---
+    // Only accumulate frame deltas while an interaction (pan or zoom) is in
+    // progress, so idle frames don't dilute the stats. On moveend we roll the
+    // collected frame times up into a single summary and hand it off to the
+    // metrics helper, rather than reporting one event per frame.
+    const handlePostRenderPerf = () => {
+      if (!isTrackingFrameRef.current) return
+
+      const now = performance.now()
+      frameTimesRef.current.push(now - lastFrameRef.current)
+      lastFrameRef.current = now
+    }
+
+    const handleMoveStartPerf = () => {
+      isTrackingFrameRef.current = true
+      frameTimesRef.current = []
+      lastFrameRef.current = performance.now()
+    }
+
+    const handleMoveEndPerf = () => {
+      if (!isTrackingFrameRef.current) return
+
+      isTrackingFrameRef.current = false
+
+      const frameTimes = frameTimesRef.current
+      if (frameTimes.length === 0) return
+
+      const metrics = performanceWindowRef.current
+
+      metrics.frames += frameTimes.length
+
+      metrics.renderTimes.push(...frameTimes)
+
+      metrics.slowFrames += frameTimes.filter(
+        (time) => time > 33
+      ).length
+
+      metrics.verySlowFrames += frameTimes.filter(
+        (time) => time > 100
+      ).length
+
+      metrics.maxRenderTimeMs = Math.max(
+        metrics.maxRenderTimeMs,
+        ...frameTimes
+      )
+
+      // Check whether our 5-minute window has elapsed
+      if (
+        performance.now() - metrics.windowStart
+    >= PERFORMANCE_WINDOW_MS
+      ) {
+        flushMapPerformanceMetrics(performanceWindowRef)
+      }
+    }
+
+    map.on('postrender', handlePostRenderPerf)
+    map.on('movestart', handleMoveStartPerf)
+    map.on('moveend', handleMoveEndPerf)
+    // --- end frame performance tracking ---
 
     // Handle the map draw start event
     const handleDrawingStart = (spatialType: string) => {
@@ -724,6 +877,9 @@ const Map: React.FC<MapProps> = ({
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
+      map.on('postrender', handlePostRenderPerf)
+      map.on('movestart', handleMoveStartPerf)
+      map.on('moveend', handleMoveEndPerf)
 
       eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
       eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
@@ -1029,61 +1185,83 @@ const Map: React.FC<MapProps> = ({
 
   // When the granules change, draw the granule backgrounds
   useEffect(() => {
+    if (granules && granules.length > 0) {
     // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
     // Redraw the granule backgrounds if the product layer from the gibs tag has changed
-    if (granulesKey === previousGranulesKey && projectionCode === previousProjectionCode) return
+      if (granulesKey === previousGranulesKey
+        && projectionCode === previousProjectionCode) return undefined
 
-    // Update the previous values
-    previousGranulesKey = granulesKey
-    previousProjectionCode = projectionCode
+      console.log('🚀 ~ file: Map.tsx:1197 ~ previousGranulesKey:', previousGranulesKey)
+      console.log('🚀 ~ file: Map.tsx:1197 ~ granulesKey:', granulesKey)
+      // Update the previous values
+      previousGranulesKey = granulesKey
+      previousProjectionCode = projectionCode
 
+      // Clear the existing granule backgrounds
+      granuleBackgroundsSource.clear()
+      // Clear any existing granule highlights
+      unhighlightGranule(granuleHighlightsSource)
+
+      // Clear any existing focused granules
+      clearFocusedGranuleSource(mapRef.current as OlMap)
+
+      // Clear the granule imagery layers
+      granuleImageryLayerGroup.getLayers().clear()
+
+      // Draw the granule backgrounds
+      drawGranuleBackgroundsAndImagery({
+        gibsLayersByCollection,
+        granuleImageryLayerGroup,
+        granulesMetadata: granules,
+        map: mapRef.current as OlMap,
+        projectionCode,
+        vectorSource: granuleBackgroundsSource
+      })
+
+      // If there is a focused granule draw it
+      if (focusedGranuleId) {
+        drawFocusedGranule({
+          collectionId: focusedCollectionId,
+          focusedGranuleSource,
+          granuleBackgroundsSource,
+          granuleId: focusedGranuleId,
+          isProjectPage,
+          map: (mapRef.current as OlMap),
+          onExcludeGranule,
+          setGranuleId,
+          shouldMoveMap: false,
+          timesIconSvg
+        })
+      }
+
+      // Time this specific update's render pass for all layers
+      const timingKeys = [
+        ...timeLayerRenderOnce(granuleBackgroundsLayer, 'granule-backgrounds', granules.length, focusedCollectionId),
+        ...timeLayerRenderOnce(granuleOutlinesLayer, 'granule-outlines', granules.length, focusedCollectionId)
+      ]
+
+      // Clean up the timing listeners if this effect reruns/unmounts before they fire
+      return () => {
+        timingKeys.forEach((key) => {
+          unByKey(key)
+        })
+      }
+    }
+
+    // eslint-disable-next-line no-else-return
     // Clear the existing granule backgrounds
     granuleBackgroundsSource.clear()
     console.count(`granules updating for ${granulesKey} in ${projectionCode}`)
     // Clear any existing granule highlights
     unhighlightGranule(granuleHighlightsSource)
 
+    // Clear the granule imagery layers
+    granuleImageryLayerGroup.getLayers().clear()
+
     // Clear any existing focused granules
     clearFocusedGranuleSource(mapRef.current as OlMap)
 
-    // Clear the granule imagery layers
-    granuleImageryLayerGroup.getLayers().clear()
-    // Time this specific update's render pass for both layers
-    const timingKeys = [
-      ...timeLayerRenderOnce(granuleBackgroundsLayer, 'granule-backgrounds', granules.length, focusedCollectionId),
-      ...timeLayerRenderOnce(granuleOutlinesLayer, 'granule-outlines', granules.length, focusedCollectionId)
-    ]
-
-    // Draw the granule backgrounds
-    drawGranuleBackgroundsAndImagery({
-      gibsLayersByCollection,
-      granuleImageryLayerGroup,
-      granulesMetadata: granules,
-      map: mapRef.current as OlMap,
-      projectionCode,
-      vectorSource: granuleBackgroundsSource
-    })
-
-    // If there is a focused granule draw it
-    if (focusedGranuleId) {
-      drawFocusedGranule({
-        collectionId: focusedCollectionId,
-        focusedGranuleSource,
-        granuleBackgroundsSource,
-        granuleId: focusedGranuleId,
-        isProjectPage,
-        map: (mapRef.current as OlMap),
-        onExcludeGranule,
-        setGranuleId,
-        shouldMoveMap: false,
-        timesIconSvg
-      })
-    }
-
-    // Clean up the timing listeners if this effect reruns/unmounts before they fire
-    return () => {
-      timingKeys.forEach((key) => unByKey(key))
-    }
+    return undefined
   }, [granules, granulesKey, projectionCode])
 
   // When the spatial search changes, draw the spatial search
@@ -1131,16 +1309,25 @@ const Map: React.FC<MapProps> = ({
     projectionCode
   ])
 
-  // Draw the granule outlines
-  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-    const ctx = event.context as CanvasRenderingContext2D
+  useEffect(() => {
+    const handlePostRender = (event: RenderEvent) => {
+      const ctx = event.context as CanvasRenderingContext2D
 
-    drawGranuleOutlines({
-      ctx,
-      granuleBackgroundsSource,
-      map: mapRef.current as OlMap
-    })
-  })
+      if (mapRef.current) {
+        drawGranuleOutlines({
+          ctx,
+          granuleBackgroundsSource,
+          map: mapRef.current
+        })
+      }
+    }
+
+    granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, handlePostRender)
+
+    return () => {
+      granuleOutlinesLayer.un(RenderEventType.POSTRENDER as LayerRenderEventTypes, handlePostRender)
+    }
+  }, [])
 
   return (
     <div ref={mapElRef} id="map" className="map" />

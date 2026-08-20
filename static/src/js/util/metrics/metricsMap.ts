@@ -47,12 +47,24 @@ export const metricsMapRenderPerformance = (
   })
 }
 
-export const metricsMapFps = (fps: number) => {
-  dataLayer.push({
-    event: 'map',
-    mapEventCategory: 'performance',
-    mapEventAction: 'fps',
-    mapEventLabel: `Map FPS`,
-    mapEventValue: fps
-  })
+interface MapPerformanceEvent {
+  event: 'map_performance'
+  windowDurationMs: number
+  render: {
+    frames: number
+    p50RenderTimeMs: number
+    p95RenderTimeMs: number
+    p99RenderTimeMs: number
+    maxRenderTimeMs: number
+    slowFrames: number
+    verySlowFrames: number
+  }
+}
+
+export const metricsMapFramePerformance = (event: MapPerformanceEvent) => {
+  console.log(
+    event
+  )
+
+  dataLayer.push(event)
 }
