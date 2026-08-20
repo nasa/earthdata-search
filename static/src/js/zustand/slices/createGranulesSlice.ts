@@ -84,8 +84,8 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         // TODO This is causing a double fetch for OpenSearch granules (both to the same OpenSearch endpoint)
         // TODO when loaded from the search results. The first request gets cancelled, but it would be nice to avoid that
         if (
-          collectionId === zustandState.granules.granules.collectionConceptId
-          && !isOpenSearch
+          !collectionId
+          || (collectionId === zustandState.granules.granules.collectionConceptId && !isOpenSearch)
         ) {
           return
         }
