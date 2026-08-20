@@ -13,6 +13,7 @@ import TileLayer from 'ol/layer/Tile'
 import RenderEvent from 'ol/render/Event'
 import LayerGroup from 'ol/layer/Group'
 import VectorSource from 'ol/source/Vector'
+
 import {
   Feature,
   GeoJsonProperties,
@@ -80,8 +81,7 @@ const drawGranuleBackgroundsAndImagery = ({
   granulesMetadata,
   map,
   projectionCode,
-  vectorSource,
-  metricsMapRenderPerformance
+  vectorSource
 }: {
   /** GIBS layers object keyed by collection ID */
   gibsLayersByCollection: GibsLayersByCollection
@@ -351,20 +351,9 @@ const drawGranuleBackgroundsAndImagery = ({
     })
   })
 
+  if (granuleImageryLayers.length === 0) return
   // Add all the layers to the layer group
-  const drawGranuleIImageryStart = performance.now()
   granuleImageryLayerGroup.setLayers(new Collection(granuleImageryLayers.reverse()))
-
-  // map?.once('rendercomplete', () => {
-  //   const totalRenderMs = Math.round(performance.now() - drawGranuleIImageryStart)
-  //   // TODO should split out since this might not be the same as gran num
-  //   const granuleCount = granuleImageryLayers.length
-  //   metricsMapRenderPerformance(
-  //     granuleCount,
-  //     totalRenderMs,
-  //     'granule_background_render'
-  //   )
-  // })
 }
 
 export default drawGranuleBackgroundsAndImagery
