@@ -225,6 +225,8 @@ const drawShapefile = ({
     onUpdateShapefile({ selectedFeatures: [edscId] })
   }
 
+  let projectionChanged = false
+
   // If the map should be moved and onChangeProjection is defined, determine of we need to
   // change the map projection
   if (shapefileAdded && onChangeProjection) {
@@ -263,6 +265,7 @@ const drawShapefile = ({
     // If there is a new projection, update the map projection
     if (newProjection) {
       onChangeProjection(newProjection)
+      projectionChanged = true
     }
   }
 
@@ -271,13 +274,15 @@ const drawShapefile = ({
     // Create the metrics event
     metricsMap('Added Shapefile')
 
+    // When the projection changes we need to wait longer to ensure the map is ready to be moved to the shapefile.
+    const timeoutValue = projectionChanged ? 200 : 0
+
     // SetTimeout is needed here because the map needs to be rendered before the map can be moved
     setTimeout(() => {
       eventEmitter.emit(mapEventTypes.MOVEMAP, {
         source: vectorSource
       })
-      // Adding a slight delay here to ensure the map is ready before moving (like when the projection changed from a shapefile upload)
-    }, 50)
+    }, timeoutValue)
   }
 
   // If the spatial polygon warning is enabled, add an MBR around the shape
