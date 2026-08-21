@@ -1,4 +1,4 @@
-import { bucketGranuleCount } from './helpers'
+import { computeBucketGranuleCount } from './helpers'
 
 const { dataLayer = [] } = window
 
@@ -39,7 +39,7 @@ export const metricsMapRenderPerformance = (
     event: 'map',
     mapEventCategory: 'performance',
     mapEventAction,
-    mapEventLabel: `Map Granule Render ${bucketGranuleCount(granuleCount)}`,
+    mapEventLabel: `Map Granule Render ${computeBucketGranuleCount(granuleCount)}`,
     mapEventValue: totalRenderMs,
     // Keep the exact count as a separate field for real analysis outside GA's UI bucketing
     granuleCount,
@@ -47,24 +47,30 @@ export const metricsMapRenderPerformance = (
   })
 }
 
-interface MapPerformanceEvent {
-  event: 'map_performance'
+export interface MapRenderStats {
+  frames: number
+  p50RenderTimeMs: number
+  p95RenderTimeMs: number
+  p99RenderTimeMs: number
+  maxRenderTimeMs: number
+  slowFrames: number
+  verySlowFrames: number
+}
+
+export interface MapPerformanceEvent {
+  collectionId: string,
+  render: MapRenderStats,
   windowDurationMs: number
-  render: {
-    frames: number
-    p50RenderTimeMs: number
-    p95RenderTimeMs: number
-    p99RenderTimeMs: number
-    maxRenderTimeMs: number
-    slowFrames: number
-    verySlowFrames: number
-  }
 }
 
 export const metricsMapFramePerformance = (event: MapPerformanceEvent) => {
-  console.log(
-    event
-  )
-
-  dataLayer.push(event)
+  const x = {
+    event: 'MapFramePerformance',
+    ...event
+  }
+  console.log('the map MapFramePerformance event', x)
+  dataLayer.push({
+    event: 'MapFramePerformance',
+    ...event
+  })
 }
