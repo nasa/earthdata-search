@@ -51,7 +51,8 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
   metricsMapFramePerformance,
-  metricsMapRenderPerformance
+  metricsMapRenderPerformance,
+  MapPerformanceEvent
 } from '../../util/metrics/metricsMap'
 
 import { percentile } from '../../util/metrics/helpers'
@@ -111,34 +112,21 @@ import { MapView, ShapefileSlice } from '../../zustand/types'
 
 interface MapPerformanceWindow {
   windowStart: number
-
   frames: number
   slowFrames: number
   verySlowFrames: number
-
   renderTimes: number[]
   maxRenderTimeMs: number
-
-  totalGranules: number
-  maxGranules: number
-
-  totalVertices: number
-  maxVertices: number
 }
 
-interface MapPerformanceEvent {
-  event: 'map_performance'
-  windowDurationMs: number
-  render: {
-    frames: number
-    p50RenderTimeMs: number
-    p95RenderTimeMs: number
-    p99RenderTimeMs: number
-    maxRenderTimeMs: number
-    slowFrames: number
-    verySlowFrames: number
-  }
-}
+const createEmptyPerformanceWindow = (): MapPerformanceWindow => ({
+  windowStart: performance.now(),
+  frames: 0,
+  slowFrames: 0,
+  verySlowFrames: 0,
+  renderTimes: [],
+  maxRenderTimeMs: 0
+})
 
 let previousGranulesKey: string
 let previousProjectionCode: ProjectionCode
@@ -326,9 +314,12 @@ const hasFiniteExtent = (extent: import('ol/extent').Extent | null | undefined):
   return extent.every((coordinate) => Number.isFinite(coordinate))
 }
 
-const flushMapPerformanceMetrics = (performanceWindowRef: RefObject<MapPerformanceWindow>) => {
+const flushMapPerformanceMetrics = (
+  performanceWindowRef: RefObject<MapPerformanceWindow>,
+  collectionId: string
+) => {
+  if (!collectionId) return
   const metrics = performanceWindowRef.current
-
   if (metrics.frames === 0) {
     metrics.windowStart = performance.now()
 
@@ -339,9 +330,7 @@ const flushMapPerformanceMetrics = (performanceWindowRef: RefObject<MapPerforman
     (a, b) => a - b
   )
 
-  const event = {
-    event: 'map_performance',
-
+  const event: MapPerformanceEvent = {
     windowDurationMs:
       performance.now() - metrics.windowStart,
 
@@ -353,29 +342,15 @@ const flushMapPerformanceMetrics = (performanceWindowRef: RefObject<MapPerforman
       maxRenderTimeMs: metrics.maxRenderTimeMs,
       slowFrames: metrics.slowFrames,
       verySlowFrames: metrics.verySlowFrames
-    }
+    },
+    collectionId
   }
-
   metricsMapFramePerformance(event)
   // Clear the metrics for the next window
+  // Reinitialize performance window ref to default state
   // TODO really make sure it makes sense to disable this rule
   // eslint-disable-next-line no-param-reassign
-  performanceWindowRef.current = {
-    windowStart: performance.now(),
-
-    frames: 0,
-    slowFrames: 0,
-    verySlowFrames: 0,
-
-    renderTimes: [],
-    maxRenderTimeMs: 0,
-
-    totalGranules: 0,
-    maxGranules: 0,
-
-    totalVertices: 0,
-    maxVertices: 0
-  }
+  performanceWindowRef.current = createEmptyPerformanceWindow()
 }
 
 interface MapProps {
@@ -539,20 +514,8 @@ const Map: React.FC<MapProps> = ({
   const lastFrameRef = useRef<number>(performance.now())
   const frameTimesRef = useRef<number[]>([])
   const isTrackingFrameRef = useRef(false)
-
-  const performanceWindowRef = useRef({
-    windowStart: performance.now(),
-
-    frames: 0,
-    slowFrames: 0,
-    verySlowFrames: 0,
-
-    renderTimes: [] as number[],
-    maxRenderTimeMs: 0,
-
-    totalGranules: 0,
-    collectionid: ''
-  })
+  const performanceWindowRef = useRef<MapPerformanceWindow>(createEmptyPerformanceWindow())
+  // Mirror the latest granules/collection into refs so the long-lived
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -639,7 +602,7 @@ const Map: React.FC<MapProps> = ({
         performance.now() - metrics.windowStart
     >= PERFORMANCE_WINDOW_MS
       ) {
-        flushMapPerformanceMetrics(performanceWindowRef)
+        flushMapPerformanceMetrics(performanceWindowRef, focusedCollectionId)
       }
     }
 
@@ -877,9 +840,6 @@ const Map: React.FC<MapProps> = ({
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
-      map.on('postrender', handlePostRenderPerf)
-      map.on('movestart', handleMoveStartPerf)
-      map.on('moveend', handleMoveEndPerf)
 
       eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
       eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
@@ -1248,10 +1208,8 @@ const Map: React.FC<MapProps> = ({
       }
     }
 
-    // eslint-disable-next-line no-else-return
     // Clear the existing granule backgrounds
     granuleBackgroundsSource.clear()
-    console.count(`granules updating for ${granulesKey} in ${projectionCode}`)
     // Clear any existing granule highlights
     unhighlightGranule(granuleHighlightsSource)
 
@@ -1309,6 +1267,7 @@ const Map: React.FC<MapProps> = ({
     projectionCode
   ])
 
+  // Clear listeners for the granule outlines layer so they do not accumulate
   useEffect(() => {
     const handlePostRender = (event: RenderEvent) => {
       const ctx = event.context as CanvasRenderingContext2D
