@@ -46,7 +46,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
       const collectionMetadata = getFocusedCollectionMetadata(zustandState)
       const collections = getCollectionsById(zustandState)
       const collectionById = collections[collectionId]
-      if (!collectionId) return
+
       // Extract granule search parameters from the store specific to the focused collection
       const extractedGranuleParams = extractGranuleSearchParams(collectionId)
 

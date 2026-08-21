@@ -55,7 +55,7 @@ import {
   MapPerformanceEvent
 } from '../../util/metrics/metricsMap'
 
-import { percentile } from '../../util/metrics/helpers'
+import { computePercentile } from '../../util/metrics/helpers'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -131,7 +131,7 @@ const createEmptyPerformanceWindow = (): MapPerformanceWindow => ({
 let previousGranulesKey: string
 let previousProjectionCode: ProjectionCode
 let layersAdded = false
-const PERFORMANCE_WINDOW_MS = 10000
+const PERFORMANCE_WINDOW_MS = 3000
 
 // Render the times icon to an SVG string for use in the focused granule overlay
 // Disable a testing-library rule because this isn't a test
@@ -318,7 +318,10 @@ const flushMapPerformanceMetrics = (
   performanceWindowRef: RefObject<MapPerformanceWindow>,
   collectionId: string
 ) => {
-  if (!collectionId) return
+  if (!collectionId) {
+    return
+  }
+
   const metrics = performanceWindowRef.current
   if (metrics.frames === 0) {
     metrics.windowStart = performance.now()
@@ -336,9 +339,9 @@ const flushMapPerformanceMetrics = (
 
     render: {
       frames: metrics.frames,
-      p50RenderTimeMs: percentile(sortedRenderTimes, 0.5),
-      p95RenderTimeMs: percentile(sortedRenderTimes, 0.95),
-      p99RenderTimeMs: percentile(sortedRenderTimes, 0.99),
+      p50RenderTimeMs: computePercentile(sortedRenderTimes, 0.5),
+      p95RenderTimeMs: computePercentile(sortedRenderTimes, 0.95),
+      p99RenderTimeMs: computePercentile(sortedRenderTimes, 0.99),
       maxRenderTimeMs: metrics.maxRenderTimeMs,
       slowFrames: metrics.slowFrames,
       verySlowFrames: metrics.verySlowFrames
@@ -515,7 +518,11 @@ const Map: React.FC<MapProps> = ({
   const frameTimesRef = useRef<number[]>([])
   const isTrackingFrameRef = useRef(false)
   const performanceWindowRef = useRef<MapPerformanceWindow>(createEmptyPerformanceWindow())
-  // Mirror the latest granules/collection into refs so the long-lived
+  // Mirror the latest collection into refs so the long-lived
+  const focusedCollectionIdRef = useRef(focusedCollectionId)
+  useEffect(() => {
+    focusedCollectionIdRef.current = focusedCollectionId
+  }, [focusedCollectionId])
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -602,7 +609,7 @@ const Map: React.FC<MapProps> = ({
         performance.now() - metrics.windowStart
     >= PERFORMANCE_WINDOW_MS
       ) {
-        flushMapPerformanceMetrics(performanceWindowRef, focusedCollectionId)
+        flushMapPerformanceMetrics(performanceWindowRef, focusedCollectionIdRef.current)
       }
     }
 
@@ -840,6 +847,11 @@ const Map: React.FC<MapProps> = ({
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
+
+      // Cleanup the performance tracking event listeners
+      map.un('postrender', handlePostRenderPerf)
+      map.un('movestart', handleMoveStartPerf)
+      map.un('moveend', handleMoveEndPerf)
 
       eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
       eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)

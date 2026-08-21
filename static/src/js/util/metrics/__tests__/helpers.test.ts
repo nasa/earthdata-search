@@ -7,7 +7,8 @@ import {
   computeTemporalType,
   computeCollectionsViewed,
   computeCollectionsAdded,
-  computeFacets
+  computeFacets,
+  computePercentile
 } from '../helpers'
 
 const emptySpatial = {}
@@ -381,6 +382,27 @@ describe('helpers', () => {
       test('returns "100+" when the count is greater than 100', () => {
         expect(computeBucketGranuleCount(101)).toEqual('100+')
         expect(computeBucketGranuleCount(50000)).toEqual('100+')
+      })
+    })
+
+    describe('computePercentile', () => {
+      test('returns the value at the requested quantile', () => {
+        const renderTimes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+        expect(computePercentile(renderTimes, 0.5)).toEqual(50)
+        expect(computePercentile(renderTimes, 0.95)).toEqual(100)
+      })
+
+      test('does not exceed the last element for the max quantile', () => {
+        const renderTimes = [10, 20, 30]
+
+        expect(computePercentile(renderTimes, 1)).toEqual(30)
+      })
+
+      test('rounds the returned value', () => {
+        const renderTimes = [10.4, 20.6]
+
+        expect(computePercentile(renderTimes, 1)).toEqual(21)
       })
     })
   })
