@@ -243,7 +243,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       }
 
       // If no collection was provided and the project has no collections return null
-      if (filteredIds.length === 0 && filteredIds.length === 0) {
+      if (filteredIds.length === 0) {
         return buildPromise(null)
       }
 
