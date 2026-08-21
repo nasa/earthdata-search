@@ -13,6 +13,7 @@ import TileLayer from 'ol/layer/Tile'
 import RenderEvent from 'ol/render/Event'
 import LayerGroup from 'ol/layer/Group'
 import VectorSource from 'ol/source/Vector'
+
 import {
   Feature,
   GeoJsonProperties,
@@ -350,6 +351,7 @@ const drawGranuleBackgroundsAndImagery = ({
     })
   })
 
+  if (granuleImageryLayers.length === 0) return
   // Add all the layers to the layer group
   granuleImageryLayerGroup.setLayers(new Collection(granuleImageryLayers.reverse()))
 }

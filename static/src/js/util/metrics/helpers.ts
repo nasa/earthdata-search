@@ -160,3 +160,48 @@ export const computeFacets = () => {
 
   return null
 }
+
+// Bucket counts for granules for GA/GTM events
+
+/**
+ * Buckets a granule count into a coarse range string for GA/GTM analytics events.
+ *
+ * Grouping counts into ranges (rather than sending exact values) keeps event
+ * cardinality low while still conveying rough scale.
+ *
+ * @param count - The number of granules to bucket.
+ * @returns A string representing the bucket range, e.g. '0', '1-20', '21-40',
+ *          '41-60', '61-100', or '100+'.
+ */
+export const computeBucketGranuleCount = (count: number): string => {
+  if (count === 0) return '0'
+  if (count <= 20) return '1-20'
+  // Do the first few pages as bucket
+  if (count <= 40) return '21-40'
+  if (count <= 60) return '41-60'
+  if (count <= 100) return '61-100'
+
+  return '100+'
+}
+
+/**
+ * Computes the value at a given quantile (percentile) from an array of render times.
+ *
+ * Uses the nearest-rank method: sorts are assumed to already be applied by the
+ * caller (the array is used in its given order), and the index is computed by
+ * rounding up `length * quantile` to the nearest rank, then clamped to the
+ * last valid index.
+ *
+ * @param renderTimes - Array of render time values (expected to be sorted ascending).
+ * @param quantile - The quantile to compute, expressed as a fraction between 0 and 1
+ *                    (e.g. 0.95 for the 95th percentile).
+ * @returns The render time value at the computed quantile, rounded to the nearest integer.
+ */
+export const computePercentile = (renderTimes: number[], quantile: number) => {
+  const index = Math.min(
+    Math.ceil(renderTimes.length * quantile) - 1,
+    renderTimes.length - 1
+  )
+
+  return Math.round(renderTimes[index])
+}
