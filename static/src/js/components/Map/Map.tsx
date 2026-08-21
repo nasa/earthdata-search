@@ -558,7 +558,6 @@ const Map: React.FC<MapProps> = ({
     })
     mapRef.current = map
 
-    // --- Pan/zoom frame performance tracking ---
     // Only accumulate frame deltas while an interaction (pan or zoom) is in
     // progress, so idle frames don't dilute the stats. On moveend we roll the
     // collected frame times up into a single summary and hand it off to the
@@ -604,7 +603,7 @@ const Map: React.FC<MapProps> = ({
         ...frameTimes
       )
 
-      // Check whether our 5-minute window has elapsed
+      //  Real time elapsed since the window opened, until the moveend that happened to trigger a flush check that passed."
       if (
         performance.now() - metrics.windowStart
     >= PERFORMANCE_WINDOW_MS
@@ -616,7 +615,6 @@ const Map: React.FC<MapProps> = ({
     map.on('postrender', handlePostRenderPerf)
     map.on('movestart', handleMoveStartPerf)
     map.on('moveend', handleMoveEndPerf)
-    // --- end frame performance tracking ---
 
     // Handle the map draw start event
     const handleDrawingStart = (spatialType: string) => {
@@ -1162,9 +1160,6 @@ const Map: React.FC<MapProps> = ({
     // Redraw the granule backgrounds if the product layer from the gibs tag has changed
       if (granulesKey === previousGranulesKey
         && projectionCode === previousProjectionCode) return undefined
-
-      console.log('🚀 ~ file: Map.tsx:1197 ~ previousGranulesKey:', previousGranulesKey)
-      console.log('🚀 ~ file: Map.tsx:1197 ~ granulesKey:', granulesKey)
       // Update the previous values
       previousGranulesKey = granulesKey
       previousProjectionCode = projectionCode
