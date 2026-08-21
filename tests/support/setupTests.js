@@ -111,6 +111,7 @@ export const setupTests = async ({
   await page.route('**googletagmanager**', (route) => route.abort())
   await page.route('**google-analytics**', (route) => route.abort())
   await page.route('**digitalgov**', (route) => route.abort())
+  await page.route('**tophat**', (route) => route.abort())
 
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)
