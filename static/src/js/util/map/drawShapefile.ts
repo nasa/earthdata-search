@@ -276,7 +276,8 @@ const drawShapefile = ({
       eventEmitter.emit(mapEventTypes.MOVEMAP, {
         source: vectorSource
       })
-    }, 0)
+      // Adding a slight delay here to ensure the map is ready before moving (like when the projection changed from a shapefile upload)
+    }, 50)
   }
 
   // If the spatial polygon warning is enabled, add an MBR around the shape
