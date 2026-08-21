@@ -161,33 +161,14 @@ export const computeFacets = () => {
   return null
 }
 
-// Bucket counts so GA/GTM label cardinality stays sane — you still get exact
-// counts in the `granuleCount` custom field for real percentile analysis
-export const bucketGranuleCount = (count: number): string => {
+// Bucket counts for granules for GA/GTM events
+export const computeBucketGranuleCount = (count: number): string => {
   if (count === 0) return '0'
   if (count <= 20) return '1-20'
   // Do the first few pages as bucket
-  if (count <= 100) return '21-100'
-  if (count <= 500) return '101-500'
+  if (count <= 40) return '21-40'
+  if (count <= 60) return '41-60'
+  if (count <= 100) return '61-100'
 
-  return '500+'
-}
-
-// 1000ms ÷ 60 frames = 16.67ms per frame
-const FRAME_BUDGET_MS = 16.7 // 60fps target
-
-export const getPerformanceTier = (p90FrameMs: number) => {
-  if (p90FrameMs <= FRAME_BUDGET_MS * 1.5) return 'smooth'
-  if (p90FrameMs <= FRAME_BUDGET_MS * 3) return 'degraded'
-
-  return 'poor'
-}
-
-export const percentile = (renderTimes: number[], quantile: number) => {
-  const index = Math.min(
-    Math.ceil(renderTimes.length * quantile) - 1,
-    renderTimes.length - 1
-  )
-
-  return Math.round(renderTimes[index])
+  return '100+'
 }
