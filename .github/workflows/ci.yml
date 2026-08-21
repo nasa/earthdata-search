@@ -7,7 +7,7 @@ on:
 
 jobs:
   eslint:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     strategy:
         matrix:
           node-version: ['lts/jod']
@@ -22,7 +22,7 @@ jobs:
       run: npm run lint
   vitest:
     needs: [eslint]
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     strategy:
         matrix:
           node-version: ['lts/jod']
@@ -43,7 +43,7 @@ jobs:
 
   runBuild:
     needs: [eslint]
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     strategy:
         matrix:
           node-version: ['lts/jod']
@@ -67,7 +67,7 @@ jobs:
 
   playwright:
     needs: [runBuild]
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     strategy:
         fail-fast: false
         matrix:
@@ -107,7 +107,7 @@ jobs:
 
   tests-passed:
     needs: ['vitest', 'playwright']
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     steps:
     - name: All Tests Have Passed
       run: 'echo true'
@@ -115,7 +115,7 @@ jobs:
   deploy:
     if: success() && github.ref == 'refs/heads/main' # only run on main success
     needs: [tests-passed] # only run after all test jobs complete
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v7
