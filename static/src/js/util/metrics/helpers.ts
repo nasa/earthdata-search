@@ -172,3 +172,12 @@ export const computeBucketGranuleCount = (count: number): string => {
 
   return '100+'
 }
+
+export const computePercentile = (renderTimes: number[], quantile: number) => {
+  const index = Math.min(
+    Math.ceil(renderTimes.length * quantile) - 1,
+    renderTimes.length - 1
+  )
+
+  return Math.round(renderTimes[index])
+}
