@@ -1,6 +1,7 @@
 import spatialTypes from '../../../constants/spatialTypes'
 import useEdscStore from '../../../zustand/useEdscStore'
 import {
+  computeBucketGranuleCount,
   computeKeyword,
   computeSpatialType,
   computeTemporalType,
@@ -349,6 +350,37 @@ describe('helpers', () => {
 
         const value = computeFacets()
         expect(value).toEqual('latency/1+to+3+hours ')
+      })
+    })
+
+    describe('computeBucketGranuleCount', () => {
+      test('returns "0" when the count is 0', () => {
+        expect(computeBucketGranuleCount(0)).toEqual('0')
+      })
+
+      test('returns "1-20" when the count is between 1 and 20', () => {
+        expect(computeBucketGranuleCount(1)).toEqual('1-20')
+        expect(computeBucketGranuleCount(20)).toEqual('1-20')
+      })
+
+      test('returns "21-40" when the count is between 21 and 40', () => {
+        expect(computeBucketGranuleCount(21)).toEqual('21-40')
+        expect(computeBucketGranuleCount(40)).toEqual('21-40')
+      })
+
+      test('returns "41-60" when the count is between 41 and 60', () => {
+        expect(computeBucketGranuleCount(41)).toEqual('41-60')
+        expect(computeBucketGranuleCount(60)).toEqual('41-60')
+      })
+
+      test('returns "61-100" when the count is between 61 and 100', () => {
+        expect(computeBucketGranuleCount(61)).toEqual('61-100')
+        expect(computeBucketGranuleCount(100)).toEqual('61-100')
+      })
+
+      test('returns "100+" when the count is greater than 100', () => {
+        expect(computeBucketGranuleCount(101)).toEqual('100+')
+        expect(computeBucketGranuleCount(50000)).toEqual('100+')
       })
     })
   })
