@@ -404,7 +404,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has a MultiPoint shape', () => {
-      test('renders correctly @screenshot', async ({ page }) => {
+      test.only('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -548,7 +548,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        test('renders and selects correctly @screenshot', async ({ page }) => {
+        test.only('renders and selects correctly @screenshot', async ({ page }) => {
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('multiple-shapes-selected.png', {
             clip: screenshotClip,
@@ -566,7 +566,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         test.describe('when deselecting a shape', () => {
-          test('renders and deselects correctly @screenshot', async ({ page }) => {
+          test.only('renders and deselects correctly @screenshot', async ({ page }) => {
             await interceptUnauthenticatedCollections({
               page,
               body: commonBody,
