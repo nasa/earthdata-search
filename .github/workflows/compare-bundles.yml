@@ -5,7 +5,7 @@ on:
 
 jobs:
   generate-main-bundle-size:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
     - name: Checkout code
       uses: actions/checkout@v7
@@ -44,7 +44,7 @@ jobs:
         path: main-build-output.txt
 
   generate-branch-bundle-size:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
     - name: Checkout code
       uses: actions/checkout@v7
@@ -81,7 +81,7 @@ jobs:
         path: branch-build-output.txt
 
   compare-bundle-size:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     needs: [
       generate-main-bundle-size,
       generate-branch-bundle-size
