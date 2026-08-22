@@ -22,4 +22,8 @@ export default class LoggerRequest extends Request {
   logRelevancy(params) {
     return this.post('relevancy_logger', params)
   }
+
+  logExperiment(params) {
+    return this.post('experiment_logger', params)
+  }
 }
