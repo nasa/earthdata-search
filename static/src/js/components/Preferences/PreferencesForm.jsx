@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
+import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import PreferencesRadioField from './PreferencesRadioField'
@@ -28,6 +31,8 @@ const PreferencesForm = () => {
   const sitePreferences = useEdscStore(getSitePreferences)
   const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
   const handleError = useEdscStore((state) => state.errors.handleError)
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+  const { edlHost } = getEarthdataConfig(earthdataEnvironment)
 
   const [formData, setFormData] = useState(sitePreferences)
 
@@ -88,6 +93,17 @@ const PreferencesForm = () => {
 
   return (
     <div className="preferences-form">
+      <Button
+        className="preferences-form__edl-link"
+        bootstrapVariant="link"
+        href={`${edlHost}/profile/edit`}
+        label="Edit Profile in Earthdata Login"
+        target="_blank"
+        icon={ArrowLineDiagonal}
+        iconPosition="right"
+      >
+        Edit Profile in Earthdata Login
+      </Button>
       <Form
         idPrefix="preferences-form"
         fields={fields}
@@ -100,7 +116,7 @@ const PreferencesForm = () => {
         uiSchema={uiSchema}
         validator={validator}
       >
-        <div>
+        <div className="preferences-form__actions">
           <Button
             className="preferences-form__submit"
             label="Submit"

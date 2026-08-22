@@ -124,7 +124,11 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
 
   // Streaming handlers generally use (event, responseStream, context).
   // If that shape is detected, forward chunks directly to Fastify.
-  if (method.lambdaFunction.functionName.startsWith('NlpSearchLambdaFunction')) {
+  // TODO idk why this is weird
+  if (
+    method.lambdaFunction.functionName.startsWith('NlpSearchLambdaFunction')
+  || method.lambdaFunction.functionName.startsWith('GeotiffStreamLambdaFunction8965CB8C')
+  ) {
     const responseStream = new PassThrough()
     responseStream.setContentType = (contentType) => {
       reply.header('content-type', contentType)

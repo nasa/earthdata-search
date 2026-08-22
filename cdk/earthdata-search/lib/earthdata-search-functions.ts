@@ -556,6 +556,26 @@ export class Functions extends Construct {
     })
 
     /**
+     * Geotiff stream
+     */
+    const geotiffStreamNestedStack = new cdk.NestedStack(scope, 'geotiffStreamNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(geotiffStreamNestedStack, 'geotiffStreamLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        methods: ['GET'],
+        path: 'geotiffStream',
+        responseTransferMode: apigateway.ResponseTransferMode.STREAM
+      },
+      entry: '../../serverless/src/geotiffStream/handler.js',
+      functionName: 'geotiffStream',
+      functionNamePrefix,
+      memorySize: 512
+    })
+
+    /**
      * OpenSearch Granule Search
      */
     const openSearchGranuleSearchNestedStack = new cdk.NestedStack(scope, 'OpenSearchGranuleSearchNestedStack')

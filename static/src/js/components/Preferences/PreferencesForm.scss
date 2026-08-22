@@ -1,6 +1,27 @@
 @use '../../../css/vendor/bootstrap/configuration' as bootstrap;
 
 .preferences-form {
+    &__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  &__edl-link {
+    border: 1px solid bootstrap.$gray-400;
+    border-radius: bootstrap.$border-radius;
+    padding: 0.375rem 0.75rem;
+    transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &:hover,
+    &:focus {
+      border-color: bootstrap.$primary;
+      background-color: bootstrap.$gray-100;
+    }
+  }
+  
   &__submit {
     width: 5rem;
     height: 2.375rem;

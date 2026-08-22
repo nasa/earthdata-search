@@ -50,11 +50,11 @@ window.reactToastProvider = React.createRef()
 const AboutCSDAModal = lazy(() => import('./components/AboutCSDAModal/AboutCSDAModal'))
 const AboutCwicModal = lazy(() => import('./components/AboutCwicModal/AboutCwicModal'))
 const ChunkedOrderModal = lazy(() => import('./components/ChunkedOrderModal/ChunkedOrderModal'))
-const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const DeprecatedParameterModal = lazy(() => import('./components/DeprecatedParameterModal/DeprecatedParameterModal'))
 const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
 const EditSubscriptionModal = lazy(() => import('./components/EditSubscriptionModal/EditSubscriptionModal'))
+const GeoTiffInspector = lazy(() => import('./routes/GeoTiffInspector/GeoTiffInspector'))
 const KeyboardShortcutsModal = lazy(() => import('./components/KeyboardShortcutsModal/KeyboardShortcutsModal'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
@@ -154,14 +154,36 @@ const browserRouter = createBrowserRouter([
         ]
       },
       {
-        path: routes.CONTACT_INFO,
+        path: routes.SCIENCE,
         element: (
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-              <ContactInfo />
+              <DownloadsLayout />
             </Suspense>
           </AuthRequiredContainer>
-        )
+        ),
+        children: [
+          {
+            index: true,
+            async lazy() {
+              const DownloadHistory = await import('./components/DownloadHistory/DownloadHistory')
+
+              return {
+                Component: DownloadHistory.default
+              }
+            }
+          },
+          {
+            path: `${routes.DOWNLOADS}/:id`,
+            async lazy() {
+              const OrderStatus = await import('./components/OrderStatus/OrderStatus')
+
+              return {
+                Component: OrderStatus.default
+              }
+            }
+          }
+        ]
       },
       {
         path: routes.PREFERENCES,
@@ -169,6 +191,16 @@ const browserRouter = createBrowserRouter([
           <AuthRequiredContainer>
             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
               <Preferences />
+            </Suspense>
+          </AuthRequiredContainer>
+        )
+      },
+      {
+        path: routes.GEOTIFF_INSPECTOR,
+        element: (
+          <AuthRequiredContainer>
+            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+              <GeoTiffInspector />
             </Suspense>
           </AuthRequiredContainer>
         )

@@ -5,6 +5,7 @@ import {
   ArrowLineDiagonal,
   Copy,
   Download,
+  Data,
   Expand
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
@@ -12,6 +13,8 @@ import { FaSave } from 'react-icons/fa'
 import Alert from 'react-bootstrap/Alert'
 
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import { routes } from '../../constants/routes'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
@@ -60,6 +63,23 @@ const TextWindowActions = ({
   const [showLinksModal, setShowLinksModal] = useState(false)
   const [showEddModal, setShowEddModal] = useState(false)
 
+  const gotoGeotiffInspector = (
+    <PortalLinkContainer
+      type="button"
+      bootstrapVariant="red"
+      label="GeoTiffEditor"
+      to={
+        {
+          pathname: routes.GEOTIFF_INSPECTOR
+        }
+      }
+      updatePath
+      icon={Data}
+    >
+      Plot Data
+    </PortalLinkContainer>
+  )
+
   const handleLinksModalOpen = () => {
     setShowLinksModal(true)
   }
@@ -88,6 +108,7 @@ const TextWindowActions = ({
   }
 
   let eddTooltipMessage = 'Download files with Earthdata Download'
+  const plotDataTooltipMessage = 'Plot data in the Web'
   if (disableEddInProgress) {
     // If the EDD button is disabled when a job is still in progress, add a note to the tooltip
     eddTooltipMessage += ' when the job is complete'
@@ -114,6 +135,9 @@ const TextWindowActions = ({
             </Button>
           )
         }
+        <nav>
+          {gotoGeotiffInspector}
+        </nav>
         {
           (!disableCopy && supportsClipboard) && (
             <Button

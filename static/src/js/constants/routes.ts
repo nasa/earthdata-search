@@ -17,6 +17,7 @@ export const routes = {
   HOME: '/',
   PREFERENCES: '/preferences',
   PROJECT: '/project',
+  GEOTIFF_INSPECTOR: '/geotiffinspector',
   PROJECTS: '/projects',
   SEARCH: '/search',
   SUBSCRIPTIONS: '/subscriptions',

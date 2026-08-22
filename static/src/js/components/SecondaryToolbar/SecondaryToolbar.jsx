@@ -279,16 +279,6 @@ const SecondaryToolbar = () => {
           </Dropdown.Item>
         </LinkContainer>
         <LinkContainer
-          to={routes.CONTACT_INFO}
-        >
-          <Dropdown.Item
-            className="secondary-toolbar__contact-info"
-            active={false}
-          >
-            Contact Information
-          </Dropdown.Item>
-        </LinkContainer>
-        <LinkContainer
           to={
             {
               pathname: routes.DOWNLOADS,

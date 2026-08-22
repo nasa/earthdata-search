@@ -81,8 +81,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       apiScope: apiNestedStack,
       apiName: this.stackName,
       binaryMediaTypes: ['image/png'],
-      stageName: STAGE_NAME,
-      vpcEndpointIds: [VPC_ENDPOINT_ID]
+      stageName: STAGE_NAME
     })
     const {
       apiGatewayDeployment,

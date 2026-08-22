@@ -120,7 +120,7 @@ export class ALB extends Construct {
           field: 'path-pattern',
           pathPatternConfig: {
             // Only match routes that start with /nlp
-            values: ['/nlp']
+            values: ['/nlp', '/geotiffStream']
           }
         }
       ],
@@ -146,8 +146,8 @@ export class ALB extends Construct {
           urlRewriteConfig: {
             // Rewrite the path to include the stage name for the current stage. This allows the frontend to call /nlp and the ALB will rewrite it to /<stage>/nlp to match the API Gateway.
             rewrites: [{
-              regex: '^/nlp(.*)$',
-              replace: `/${stageName}/nlp$1`
+              regex: '^/geotiffStream(.*)$',
+              replace: `/${stageName}/geotiffStream$1`
             }]
           }
         }
