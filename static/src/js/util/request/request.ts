@@ -228,6 +228,8 @@ export default class Request {
     if (this.authenticated || (this.optionallyAuthenticated && this.getEdlToken())) {
       headers.set('Authorization', `Bearer ${this.getEdlToken()}`)
     }
+    const foobar = headers
+    console.log('🚀 ~ file: request.ts:232 ~ Request ~ foobar:', this.getEdlToken())
 
     return fetch(`${normalizedBaseUrl}${normalizedUrl}`, {
       method: 'GET',

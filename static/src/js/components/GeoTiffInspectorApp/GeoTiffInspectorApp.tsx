@@ -159,14 +159,16 @@ const GeoTiffInspector: React.FC<GeoTiffInspectorProps> = ({
     abortControllerRef.current = controller
 
     try {
-      const requestObject = new GeoTiffRequest()
+      console.log('🚀 ~ file: GeoTiffInspectorApp.tsx:163 ~ edlToken:', edlToken)
+
+      const requestObject = new GeoTiffRequest(edlToken)
       console.log('🚀 ~ file: GeoTiffInspectorApp.tsx:163 ~ requestObject:', requestObject)
 
       // `.stream()` hits `/geotiffStream?query=<encoded targetUrl>` on our own API host (which
       // in turn talks to the Lambda proxy), and — same as `NlpSearchRequest.stream()` above —
       // returns a fetch-compatible Response, so `.arrayBuffer()` below works directly on it.
-      
-      const response = await requestObject.stream('foobar', {
+      const prompt = ''
+      const response = await requestObject.stream(prompt, {
       })
       // Ignore a stale response for a request that's been cancelled/superseded.
       if (lastStartedRequestIdRef.current !== nextRequestId) return

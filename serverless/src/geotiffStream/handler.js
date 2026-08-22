@@ -9,11 +9,11 @@ const PATH_PREFIX = '/tif-proxy/'
  * Fetches a (possibly range-limited) file from LP DAAC's protected bucket using our
  * server-side Earthdata Login token, so the browser never sees the credential.
  */
-export const fetchUpstream = async (upstreamPath, rangeHeader) => {
+export const fetchUpstream = async (upstreamPath, rangeHeader, appHeaders) => {
   const upstreamUrl = `${UPSTREAM_BASE}`
-
+  const token = appHeaders.authorization
   const upstreamHeaders = {
-    Authorization: 'Bearer '
+    Authorization: token
   }
 
   if (rangeHeader) upstreamHeaders.Range = rangeHeader
@@ -52,6 +52,7 @@ export const handler = async (event, originalResponseStream) => {
     rawPath = '',
     headers = {}
   } = event
+  console.log('🚀 ~ file: handler.js:54 ~ headers:', headers)
   const method = requestContext?.http?.method ?? 'GET'
   console.log('originalResponseStream:', originalResponseStream)
   console.log('has write?', typeof originalResponseStream?.write)
@@ -76,7 +77,7 @@ export const handler = async (event, originalResponseStream) => {
 
   let upstreamRes
   try {
-    upstreamRes = await fetchUpstream(upstreamPath, rangeHeader)
+    upstreamRes = await fetchUpstream(upstreamPath, rangeHeader, headers)
     console.log('🚀 ~ file: handler.js:82 ~ upstreamRes:', upstreamRes)
   } catch (error) {
     console.log('Upstream fetch failed:', error)

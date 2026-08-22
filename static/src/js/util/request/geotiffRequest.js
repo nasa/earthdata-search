@@ -6,9 +6,14 @@ import Request from './request'
  * Calls CMR NLP endpoint directly
  */
 export default class GeoTiffRequest extends Request {
-  constructor(earthdataEnvironment) {
+  constructor(edlToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
+    console.log('🚀 ~ file: geotiffRequest.js:13 ~ GeoTiffRequest ~ edlToken:', edlToken)
     this.lambda = true
+    if (edlToken) {
+      this.authenticated = true
+      this.edlToken = edlToken
+    }
   }
 
   stream(prompt, options = {}) {
