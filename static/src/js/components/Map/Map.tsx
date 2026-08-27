@@ -18,7 +18,6 @@ import { Coordinate } from 'ol/coordinate'
 import { Fill } from 'ol/style'
 import { Geometry } from 'ol/geom'
 import { GeometryFunction } from 'ol/interaction/Draw'
-import RenderEvent from 'ol/render/Event'
 import {
   MapBrowserEvent,
   MapEvent,
