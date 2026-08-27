@@ -1274,26 +1274,16 @@ const Map: React.FC<MapProps> = ({
     projectionCode
   ])
 
-  // Clear listeners for the granule outlines layer so they do not accumulate
-  useEffect(() => {
-    const handlePostRender = (event: RenderEvent) => {
-      const ctx = event.context as CanvasRenderingContext2D
+  // Draw the granule outlines
+  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
+    const ctx = event.context as CanvasRenderingContext2D
 
-      if (mapRef.current) {
-        drawGranuleOutlines({
-          ctx,
-          granuleBackgroundsSource,
-          map: mapRef.current
-        })
-      }
-    }
-
-    granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, handlePostRender)
-
-    return () => {
-      granuleOutlinesLayer.un(RenderEventType.POSTRENDER as LayerRenderEventTypes, handlePostRender)
-    }
-  }, [])
+    drawGranuleOutlines({
+      ctx,
+      granuleBackgroundsSource,
+      map: mapRef.current as OlMap
+    })
+  })
 
   return (
     <div ref={mapElRef} id="map" className="map" />
