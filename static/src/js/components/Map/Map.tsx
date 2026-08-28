@@ -297,7 +297,6 @@ const clearFocusedGranuleSource = (map: OlMap) => {
 }
 
 // Remove the drawing interaction from the map
-// TODO double check all drawings go through this otherwise it might be a listener leak
 const removeDrawingInteraction = (map: OlMap) => {
   map.getInteractions().getArray().forEach((interaction) => {
     if (interaction.get('id') === 'spatial-drawing-interaction') {
@@ -350,7 +349,6 @@ const flushMapPerformanceMetrics = (
   metricsMapFramePerformance(event)
   // Clear the metrics for the next window
   // Reinitialize performance window ref to default state
-  // TODO really make sure it makes sense to disable this rule
   // eslint-disable-next-line no-param-reassign
   performanceWindowRef.current = createEmptyPerformanceWindow()
 }
