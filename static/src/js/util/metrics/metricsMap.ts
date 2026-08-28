@@ -30,11 +30,6 @@ export const metricsMapRenderPerformance = (
   mapEventAction: string,
   collectionId: string
 ) => {
-  console.count('metricsMapRenderPerformance')
-  console.log(
-    `[map] once ${mapEventAction} for the collection ${collectionId} that has ${granuleCount} granules it took: ${totalRenderMs.toFixed(2)}ms`
-  )
-
   dataLayer.push({
     event: 'map',
     mapEventCategory: 'performance',
@@ -64,11 +59,6 @@ export interface MapPerformanceEvent {
 }
 
 export const metricsMapFramePerformance = (event: MapPerformanceEvent) => {
-  const x = {
-    event: 'MapFramePerformance',
-    ...event
-  }
-  console.log('the map MapFramePerformance event', x)
   dataLayer.push({
     event: 'MapFramePerformance',
     ...event
