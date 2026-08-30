@@ -517,6 +517,7 @@ export const MapContainer = () => {
       imageryLayers={imageryLayers}
       isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
+      projectCollections={projectCollections}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}
