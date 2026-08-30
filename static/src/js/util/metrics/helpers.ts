@@ -176,7 +176,6 @@ export const computeFacets = () => {
 export const computeBucketGranuleCount = (count: number): string => {
   if (count === 0) return '0'
   if (count <= 20) return '1-20'
-  // Do the first few pages as bucket
   if (count <= 40) return '21-40'
   if (count <= 60) return '41-60'
   if (count <= 100) return '61-100'

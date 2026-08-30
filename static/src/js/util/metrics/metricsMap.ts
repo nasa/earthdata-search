@@ -23,13 +23,32 @@ export const metricsMapButtons = (eventLabel: string) => {
 * @param {number} granuleCount - The number of granules rendered.
 * @param {number} totalRenderMs - The total render time in milliseconds.
 */
-
-export const metricsMapRenderPerformance = (
-  granuleCount: number,
-  totalRenderMs: number,
-  mapEventAction: string,
+interface MetricsMapRenderPerformanceParams {
+  /** Number of granules being rendered */
+  granuleCount: number
+  /** Total render duration in milliseconds (prerender → postrender) */
+  totalRenderMs: number
+  /** The map event action label (e.g. 'granule-backgrounds', 'granule-outlines') */
+  mapEventAction: string
+  /** ID of the collection being rendered */
   collectionId: string
-) => {
+  /** Map center at the time this render was triggered */
+  center: {
+    latitude: number
+    longitude: number
+  }
+  /** Map zoom level at the time this render was triggered */
+  zoomLevel: number
+}
+
+export const metricsMapRenderPerformance = ({
+  granuleCount,
+  totalRenderMs,
+  mapEventAction,
+  collectionId,
+  center,
+  zoomLevel
+}: MetricsMapRenderPerformanceParams) => {
   dataLayer.push({
     event: 'map',
     mapEventCategory: 'performance',
@@ -38,7 +57,9 @@ export const metricsMapRenderPerformance = (
     mapEventValue: totalRenderMs,
     // Keep the exact count as a separate field for real analysis outside GA's UI bucketing
     granuleCount,
-    collectionId
+    collectionId,
+    center,
+    zoomLevel
   })
 }
 
@@ -53,14 +74,14 @@ export interface MapRenderStats {
 }
 
 export interface MapPerformanceEvent {
-  collectionId: string,
+  collectionIds: string[],
   render: MapRenderStats,
   windowDurationMs: number
 }
 
 export const metricsMapFramePerformance = (event: MapPerformanceEvent) => {
   dataLayer.push({
-    event: 'MapFramePerformance',
+    event: 'mapFramePerformance (ms)',
     ...event
   })
 }
