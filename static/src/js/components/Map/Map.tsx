@@ -112,7 +112,10 @@ import { MapView, ShapefileSlice } from '../../zustand/types'
 interface MapPerformanceWindow {
   /** Timestamp (from performance.now()) marking when the current metrics window started */
   windowStart: number
-  /** Total number of frames recorded during a pan/zoom interaction in this window */
+  /** Total number of frames recorded during a pan/zoom interaction in this window
+   *  this is the cumulative count of postrender events collected across possibly multiple separate pan/zoom gestures,
+   *  accumulated until the (`PERFORMANCE_WINDOW_MS`) window is flushed.
+  */
   frames: number
   /** Count of frames that took longer than 33ms to render (i.e. dropped below ~30fps) */
   slowFrames: number
@@ -351,7 +354,8 @@ const hasFiniteExtent = (extent: import('ol/extent').Extent | null | undefined):
 
 const flushMapPerformanceMetrics = (
   performanceWindowRef: RefObject<MapPerformanceWindow>,
-  collectionIds: string[]
+  collectionIds: string[],
+  granuleCount: number
 ) => {
   if (!collectionIds || collectionIds.length === 0) {
     return
@@ -379,7 +383,8 @@ const flushMapPerformanceMetrics = (
       slowFrames: metrics.slowFrames,
       verySlowFrames: metrics.verySlowFrames
     },
-    collectionIds
+    collectionIds,
+    granuleCount
   }
   metricsMapFramePerformance(event)
 
@@ -569,6 +574,15 @@ const Map: React.FC<MapProps> = ({
       : [focusedCollectionId]
   }, [focusedCollectionId, isProjectPage, projectCollections])
 
+  // Mirror the latest granule count into a ref so the long-lived
+  // map event listeners always read the current value without needing
+  // to be re-registered.
+  const granuleCountRef = useRef<number>(granules.length)
+
+  useEffect(() => {
+    granuleCountRef.current = granules.length
+  }, [granules])
+
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
   useEffect(() => {
@@ -653,7 +667,11 @@ const Map: React.FC<MapProps> = ({
         performance.now() - metrics.windowStart
     >= PERFORMANCE_WINDOW_MS
       ) {
-        flushMapPerformanceMetrics(performanceWindowRef, focusedCollectionIdRef.current)
+        flushMapPerformanceMetrics(
+          performanceWindowRef,
+          focusedCollectionIdRef.current,
+          granuleCountRef.current
+        )
       }
     }
 
