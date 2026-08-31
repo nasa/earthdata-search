@@ -33,7 +33,17 @@ describe('metricsMap', () => {
     test('pushes the correct event to the dataLayer', () => {
       const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
-      metricsMapRenderPerformance(1500, 123.456, 'initial-render', 'C1000000001-EDSC')
+      metricsMapRenderPerformance({
+        granuleCount: 1500,
+        totalRenderMs: 123.456,
+        mapEventAction: 'initial-render',
+        collectionId: 'C1000000001-EDSC',
+        center: {
+          latitude: 39.5,
+          longitude: -98.35
+        },
+        zoomLevel: 4
+      })
 
       expect(computeBucketGranuleCount).toHaveBeenCalledTimes(1)
       expect(computeBucketGranuleCount).toHaveBeenCalledWith(1500)
@@ -46,7 +56,12 @@ describe('metricsMap', () => {
         mapEventLabel: 'Map Granule Render 20-40',
         mapEventValue: 123.456,
         granuleCount: 1500,
-        collectionId: 'C1000000001-EDSC'
+        collectionId: 'C1000000001-EDSC',
+        center: {
+          latitude: 39.5,
+          longitude: -98.35
+        },
+        zoomLevel: 4
       })
     })
   })
@@ -56,7 +71,8 @@ describe('metricsMap', () => {
       const dataLayerPushSpy = vi.spyOn(window.dataLayer, 'push')
 
       const event: MapPerformanceEvent = {
-        collectionId: 'C1000000001-EDSC',
+        collectionIds: ['C1000000001-EDSC'],
+        granuleCount: 1500,
         render: {
           frames: 120,
           p50RenderTimeMs: 8.2,
@@ -73,8 +89,9 @@ describe('metricsMap', () => {
 
       expect(dataLayerPushSpy).toHaveBeenCalledTimes(1)
       expect(dataLayerPushSpy).toHaveBeenCalledWith({
-        event: 'MapFramePerformance',
-        collectionId: 'C1000000001-EDSC',
+        event: 'mapFramePerformance (ms)',
+        collectionIds: ['C1000000001-EDSC'],
+        granuleCount: 1500,
         render: {
           frames: 120,
           p50RenderTimeMs: 8.2,
