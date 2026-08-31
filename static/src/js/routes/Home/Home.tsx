@@ -68,12 +68,26 @@ import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { localStorageKeys } from '../../constants/localStorageKeys'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
 )
 
 let preloaded = false
+
+type HomeSearchMode = 'nlp' | 'traditional'
+
+const nlpSearchMode: HomeSearchMode = 'nlp'
+const traditionalSearchMode: HomeSearchMode = 'traditional'
+
+const getPreferredHomeSearchMode = (isNlpEnabled: boolean): HomeSearchMode => {
+  if (!isNlpEnabled) return traditionalSearchMode
+
+  const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
+
+  return storedSearchMode === traditionalSearchMode ? traditionalSearchMode : nlpSearchMode
+}
 
 const preloadRoutes = () => {
   const { NODE_ENV } = process.env
@@ -171,6 +185,10 @@ export const Home: React.FC = () => {
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const { nlpSearch } = getApplicationConfig()
   const isNlpEnabled = nlpSearch === 'true'
+  const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<HomeSearchMode>(
+    () => getPreferredHomeSearchMode(isNlpEnabled)
+  )
+  const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -244,12 +262,21 @@ export const Home: React.FC = () => {
     resetNlpSearchUi()
   }, [resetNlpSearchUi])
 
+  const onSearchModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const nextSearchMode = event.target.value as HomeSearchMode
+
+    localStorage.setItem(localStorageKeys.homeSearchMode, nextSearchMode)
+    setPreferredHomeSearchMode(nextSearchMode)
+
+    if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const trimmedKeyword = keyword.trim()
 
-    if (isNlpEnabled) {
+    if (isNlpSearchActive) {
       if (isNlpStreaming) return
 
       if (!trimmedKeyword) {
@@ -290,7 +317,7 @@ export const Home: React.FC = () => {
   }
 
   useEffect(() => {
-    if (!isNlpEnabled) return
+    if (!isNlpSearchActive) return
     if (!hasSubmittedNlpSearch || !isNlpStreaming) return
     if (!isNlpNavigationPending || isLoading) return
     if (!isNlpActiveRef.current) return
@@ -303,7 +330,7 @@ export const Home: React.FC = () => {
   }, [
     hasSubmittedNlpSearch,
     isLoading,
-    isNlpEnabled,
+    isNlpSearchActive,
     isNlpNavigationPending,
     isNlpStreaming
   ])
@@ -317,8 +344,8 @@ export const Home: React.FC = () => {
     resetNlpSearchUi()
   }
 
-  const isSearchInputDisabled = isNlpEnabled && isNlpStreaming
-  const shouldShowNlpStatus = isNlpEnabled && hasSubmittedNlpSearch && !!activeNlpPrompt
+  const isSearchInputDisabled = isNlpSearchActive && isNlpStreaming
+  const shouldShowNlpStatus = isNlpSearchActive && hasSubmittedNlpSearch && !!activeNlpPrompt
 
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
@@ -345,7 +372,7 @@ export const Home: React.FC = () => {
                   Earth observations
                 </h1>
                 {
-                  isNlpEnabled ? (
+                  isNlpSearchActive ? (
                     <div className="d-flex justify-content-center align-items-center">
                       <Badge className="home__new-badge">
                         NEW
@@ -362,6 +389,37 @@ export const Home: React.FC = () => {
                   )
                 }
               </div>
+              {
+                isNlpEnabled && (
+                  <fieldset className="home__search-mode-toggle" aria-label="Search mode">
+                    <legend className="visually-hidden">Search mode</legend>
+                    <input
+                      className="btn-check"
+                      type="radio"
+                      name="home-search-mode"
+                      id="home-search-mode-nlp"
+                      value={nlpSearchMode}
+                      checked={preferredHomeSearchMode === nlpSearchMode}
+                      onChange={onSearchModeChange}
+                    />
+                    <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
+                      AI Enhanced Search
+                    </label>
+                    <input
+                      className="btn-check"
+                      type="radio"
+                      name="home-search-mode"
+                      id="home-search-mode-traditional"
+                      value={traditionalSearchMode}
+                      checked={preferredHomeSearchMode === traditionalSearchMode}
+                      onChange={onSearchModeChange}
+                    />
+                    <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
+                      Traditional Search
+                    </label>
+                  </fieldset>
+                )
+              }
               <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 justify-content-center align-items-center gap-3">
                 <form
                   className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
@@ -374,9 +432,9 @@ export const Home: React.FC = () => {
                       size="22px"
                     />
                     <input
-                      className={`home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0 ${isNlpEnabled ? 'home__hero-input--nlp' : ''}`}
+                      className={`home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0 ${isNlpSearchActive ? 'home__hero-input--nlp' : ''}`}
                       onChange={onChangeKeyword}
-                      placeholder={isNlpEnabled ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
+                      placeholder={isNlpSearchActive ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
                       ref={inputRef}
                       type="text"
                       value={keyword}
@@ -385,7 +443,7 @@ export const Home: React.FC = () => {
                     />
                   </div>
                   {
-                    !isNlpEnabled && (
+                    !isNlpSearchActive && (
                       <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
                         <TemporalSelectionDropdown searchParams={searchParams} />
                         <SpatialSelectionDropdown searchParams={searchParams} />

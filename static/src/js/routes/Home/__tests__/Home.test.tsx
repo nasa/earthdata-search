@@ -13,6 +13,7 @@ import { Home } from '../Home'
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
+import { localStorageKeys } from '../../../constants/localStorageKeys'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -108,6 +109,7 @@ beforeEach(() => {
   // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
+  localStorage.removeItem(localStorageKeys.homeSearchMode)
 })
 
 afterEach(() => {
@@ -134,6 +136,41 @@ describe('Home', () => {
   })
 
   describe('when nlpSearch is enabled', () => {
+    test('defaults to NLP search mode when no preference is saved', () => {
+      setup()
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('uses the saved traditional search preference', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+
+      setup()
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
+      expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
+    })
+
+    test('saves the selected search mode preference', async () => {
+      const { user } = setup()
+
+      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
+
+      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('traditional')
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+
+      await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
+
+      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
     test('renders the NEW badge for NLP feature', () => {
       setup()
 
@@ -339,6 +376,8 @@ describe('Home', () => {
     test('renders temporal and spatial buttons', () => {
       setup()
 
+      expect(screen.queryByRole('radio', { name: 'AI Enhanced Search' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('radio', { name: 'Traditional Search' })).not.toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
     })
