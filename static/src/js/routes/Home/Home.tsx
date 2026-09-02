@@ -56,6 +56,7 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
 import { routes } from '../../constants/routes'
+import renderTooltip from '../../util/renderTooltip'
 
 import routerHelper from '../../router/router'
 
@@ -371,53 +372,66 @@ export const Home: React.FC = () => {
                   {' '}
                   Earth observations
                 </h1>
-                {
-                  isNlpSearchActive ? (
-                    <div className="d-flex justify-content-center align-items-center">
-                      <Badge className="home__new-badge">
-                        NEW
-                      </Badge>
-                      <p className="text-white mb-0 lead">
-                        Describe what you&apos;re looking for to start your search
-                      </p>
-                    </div>
-                  ) : (
-                    <p className="text-white mb-0 lead">
-                      Use keywords and filter by time and spatial area
-                      to search NASA&apos;s Earth science data
-                    </p>
-                  )
-                }
+                <p className="text-white mb-0 lead">
+                  {
+                    isNlpEnabled
+                      ? 'Search NASA\'s Earth science data'
+                      : 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
+                  }
+                </p>
               </div>
               {
                 isNlpEnabled && (
-                  <fieldset className="home__search-mode-toggle" aria-label="Search mode">
-                    <legend className="visually-hidden">Search mode</legend>
-                    <input
-                      className="btn-check"
-                      type="radio"
-                      name="home-search-mode"
-                      id="home-search-mode-nlp"
-                      value={nlpSearchMode}
-                      checked={preferredHomeSearchMode === nlpSearchMode}
-                      onChange={onSearchModeChange}
-                    />
-                    <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
-                      AI Enhanced Search
-                    </label>
-                    <input
-                      className="btn-check"
-                      type="radio"
-                      name="home-search-mode"
-                      id="home-search-mode-traditional"
-                      value={traditionalSearchMode}
-                      checked={preferredHomeSearchMode === traditionalSearchMode}
-                      onChange={onSearchModeChange}
-                    />
-                    <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
-                      Traditional Search
-                    </label>
-                  </fieldset>
+                  <div className="home__search-mode-control d-flex align-items-center">
+                    <Badge className="home__new-badge">
+                      NEW
+                    </Badge>
+                    <fieldset className="home__search-mode-toggle" aria-label="Search mode">
+                      <legend className="visually-hidden">Search mode</legend>
+                      <input
+                        className="btn-check"
+                        type="radio"
+                        name="home-search-mode"
+                        id="home-search-mode-nlp"
+                        value={nlpSearchMode}
+                        checked={preferredHomeSearchMode === nlpSearchMode}
+                        onChange={onSearchModeChange}
+                      />
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={(tooltipProps) => renderTooltip({
+                          ...tooltipProps,
+                          className: 'tooltip--wide',
+                          children: 'Describe what you are looking for to start your search'
+                        })}
+                      >
+                        <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
+                          AI Enhanced Search
+                        </label>
+                      </OverlayTrigger>
+                      <input
+                        className="btn-check"
+                        type="radio"
+                        name="home-search-mode"
+                        id="home-search-mode-traditional"
+                        value={traditionalSearchMode}
+                        checked={preferredHomeSearchMode === traditionalSearchMode}
+                        onChange={onSearchModeChange}
+                      />
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={(tooltipProps) => renderTooltip({
+                          ...tooltipProps,
+                          className: 'tooltip--wide',
+                          children: 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
+                        })}
+                      >
+                        <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
+                          Traditional Search
+                        </label>
+                      </OverlayTrigger>
+                    </fieldset>
+                  </div>
                 )
               }
               <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 justify-content-center align-items-center gap-3">
@@ -461,37 +475,37 @@ export const Home: React.FC = () => {
                     {isNlpStreaming ? 'Cancel' : 'Search'}
                   </Button>
                 </form>
-              </div>
-              {
-                isNlpEnabled && (
-                  <div
-                    className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region--inactive' : ''}`}
-                    data-testid="home-hero-status-region"
-                    aria-hidden={!shouldShowNlpStatus}
-                  >
-                    {
-                      shouldShowNlpStatus && (
-                        <div className="home__hero-status-inner">
-                          <div className="home__hero-status-stack">
-                            <div className="home__nlp-chat-wrapper">
-                              <NlpSearchStatus
-                                activePrompt={activeNlpPrompt}
-                                requestId={nlpRequestId}
-                                onStreamingChange={setIsNlpStreaming}
-                                onNlpSearchComplete={onNlpSearchComplete}
-                                onNlpSearchFailed={onNlpSearchFailed}
-                              />
+                {
+                  isNlpEnabled && (
+                    <div
+                      className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region--inactive' : ''}`}
+                      data-testid="home-hero-status-region"
+                      aria-hidden={!shouldShowNlpStatus}
+                    >
+                      {
+                        shouldShowNlpStatus && (
+                          <div className="home__hero-status-inner">
+                            <div className="home__hero-status-stack">
+                              <div className="home__nlp-chat-wrapper">
+                                <NlpSearchStatus
+                                  activePrompt={activeNlpPrompt}
+                                  requestId={nlpRequestId}
+                                  onStreamingChange={setIsNlpStreaming}
+                                  onNlpSearchComplete={onNlpSearchComplete}
+                                  onNlpSearchFailed={onNlpSearchFailed}
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )
-                    }
-                  </div>
-                )
-              }
+                        )
+                      }
+                    </div>
+                  )
+                }
+              </div>
             </div>
-            <div className={`home__hero-lower ${!isNlpEnabled ? 'home__hero-lower--centered' : ''}`}>
-              <div className="home__hero-browse home__hero-browse d-flex justify-content-center">
+            <div className="home__hero-lower">
+              <div className="home__hero-browse d-flex justify-content-center">
                 <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
               </div>
             </div>

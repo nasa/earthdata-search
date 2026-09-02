@@ -121,7 +121,7 @@ describe('Home', () => {
     setup()
 
     expect(screen.getByText("Search NASA's 42 Earth observations")).toBeInTheDocument()
-    expect(screen.getByText("Describe what you're looking for to start your search")).toBeInTheDocument()
+    expect(screen.getByText("Search NASA's Earth science data")).toBeInTheDocument()
   })
 
   test('renders the search input and allows typing', async () => {
