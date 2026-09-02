@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import { FeaturesReady, useFeatureIsOn } from '@growthbook/growthbook-react'
+import { useFeatureIsOn } from '@growthbook/growthbook-react'
 
-import Spinner from '../Spinner/Spinner'
 import useEdscStore from '../../zustand/useEdscStore'
 
 interface GrowthBookLoaderProps {
@@ -32,11 +31,7 @@ const GrowthBookLoader = ({ children }: GrowthBookLoaderProps) => {
     setFeatureFlags('nlpSearch', nlpSearchValue)
   }, [nlpSearchValue])
 
-  return (
-    <FeaturesReady timeout={2000} fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-      {children}
-    </FeaturesReady>
-  )
+  return children
 }
 
 export default GrowthBookLoader

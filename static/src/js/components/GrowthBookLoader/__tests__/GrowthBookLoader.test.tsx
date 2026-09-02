@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, screen } from '@testing-library/react'
+import { act } from '@testing-library/react'
 import {
   GrowthBook,
   GrowthBookProvider,
@@ -9,9 +9,7 @@ import {
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import GrowthBookLoader from '../GrowthBookLoader'
-import Spinner from '../../Spinner/Spinner'
 
-vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
 vi.mock('@growthbook/growthbook-react', async () => {
   const actual = await vi.importActual('@growthbook/growthbook-react')
 
@@ -94,18 +92,5 @@ describe('GrowthBookLoader', () => {
 
       expect(localStorageSetItemSpy).toHaveBeenCalledTimes(0)
     })
-  })
-
-  test('renders the spinner then the children', async () => {
-    setup()
-
-    expect(Spinner).toHaveBeenCalledTimes(1)
-    expect(Spinner).toHaveBeenCalledWith({
-      type: 'dots',
-      className: 'root__spinner spinner spinner--dots spinner--small'
-    }, {})
-
-    // Wait for the children to be rendered after the spinner
-    expect(await screen.findByText('Test Children')).toBeInTheDocument()
   })
 })

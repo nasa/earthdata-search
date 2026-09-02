@@ -1,9 +1,14 @@
 import React from 'react'
-import { GrowthBook, GrowthBookProvider } from '@growthbook/growthbook-react'
+import {
+  FeaturesReady,
+  GrowthBook,
+  GrowthBookProvider
+} from '@growthbook/growthbook-react'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import GrowthBookLoader from '../GrowthBookLoader/GrowthBookLoader'
+import Spinner from '../Spinner/Spinner'
 
 interface GrowthBookWrapperProps {
   children: React.ReactNode
@@ -44,9 +49,11 @@ const GrowthBookWrapper = ({ children }: GrowthBookWrapperProps) => {
 
   return (
     <GrowthBookProvider growthbook={growthbook}>
-      <GrowthBookLoader>
-        {children}
-      </GrowthBookLoader>
+      <FeaturesReady timeout={5000} fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+        <GrowthBookLoader>
+          {children}
+        </GrowthBookLoader>
+      </FeaturesReady>
     </GrowthBookProvider>
   )
 }

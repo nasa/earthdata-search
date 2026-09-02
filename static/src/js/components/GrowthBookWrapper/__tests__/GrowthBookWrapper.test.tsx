@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -8,8 +8,10 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import GrowthBookWrapper from '../GrowthBookWrapper'
 import GrowthBookLoader from '../../GrowthBookLoader/GrowthBookLoader'
+import Spinner from '../../Spinner/Spinner'
 
 vi.mock('../../GrowthBookLoader/GrowthBookLoader', () => ({ default: vi.fn(() => null) }))
+vi.mock('../../Spinner/Spinner', () => ({ default: vi.fn(() => null) }))
 
 const setup = setupTest({
   Component: GrowthBookWrapper,
@@ -25,10 +27,6 @@ describe('GrowthBookWrapper', () => {
         growthbookEnabled: 'false'
       }))
 
-      vi.spyOn(getApplicationConfig, 'getEnvironmentConfig').mockImplementation(() => ({
-        growthbookClientKey: 'mock-client-key'
-      }))
-
       setup()
 
       expect(screen.getByText('Test Children')).toBeInTheDocument()
@@ -38,14 +36,26 @@ describe('GrowthBookWrapper', () => {
   })
 
   describe('when growthbookEnabled is true', () => {
-    test('renders child components', () => {
+    test('renders the spinner then the children', async () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         growthbookEnabled: 'true'
       }))
 
+      vi.spyOn(getApplicationConfig, 'getEnvironmentConfig').mockImplementation(() => ({
+        apiHost: 'http://localhost:4100',
+        growthbookClientKey: 'mock-client-key'
+      }))
+
       setup()
 
-      expect(GrowthBookLoader).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        type: 'dots',
+        className: 'root__spinner spinner spinner--dots spinner--small'
+      }, {})
+
+      await waitFor(() => expect(GrowthBookLoader).toHaveBeenCalledTimes(1))
+
       expect(GrowthBookLoader).toHaveBeenCalledWith(expect.objectContaining({
         children: <div>Test Children</div>
       }), {})
