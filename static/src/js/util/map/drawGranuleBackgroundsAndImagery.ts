@@ -352,6 +352,7 @@ const drawGranuleBackgroundsAndImagery = ({
   })
 
   if (granuleImageryLayers.length === 0) return
+
   // Add all the layers to the layer group
   granuleImageryLayerGroup.setLayers(new Collection(granuleImageryLayers.reverse()))
 }
