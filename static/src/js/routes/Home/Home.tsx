@@ -372,13 +372,17 @@ export const Home: React.FC = () => {
                   {' '}
                   Earth observations
                 </h1>
-                <p className="text-white mb-0 lead">
                   {
-                    isNlpEnabled
-                      ? 'Search NASA\'s Earth science data'
-                      : 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
+                    isNlpEnabled ? (
+                        <p className="home__hero-subtitle text-white mb-0 lead">
+                          Describe your search or use keywords, time, and place
+                        </p>
+                      ) : (
+                        <p className="text-white mb-0 lead">
+                          'Use keywords and filter by time and spatial area to search NASA&apos;s Earth science data'
+                        </p>
+                    )
                   }
-                </p>
               </div>
               {
                 isNlpEnabled && (
