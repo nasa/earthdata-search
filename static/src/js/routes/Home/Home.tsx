@@ -372,17 +372,18 @@ export const Home: React.FC = () => {
                   {' '}
                   Earth observations
                 </h1>
-                  {
-                    isNlpEnabled ? (
-                        <p className="home__hero-subtitle text-white mb-0 lead">
-                          Describe your search or use keywords, time, and place
-                        </p>
-                      ) : (
-                        <p className="text-white mb-0 lead">
-                          'Use keywords and filter by time and spatial area to search NASA&apos;s Earth science data'
-                        </p>
-                    )
-                  }
+                {
+                  isNlpEnabled ? (
+                    <p className="home__hero-subtitle text-white mb-0 lead">
+                      Describe your search or use keywords, time, and place
+                    </p>
+                  ) : (
+                    <p className="text-white mb-0 lead">
+                      Use keywords and filter by time and spatial area
+                      to search NASA&apos;s Earth science data
+                    </p>
+                  )
+                }
               </div>
               {
                 isNlpEnabled && (
@@ -403,11 +404,13 @@ export const Home: React.FC = () => {
                       />
                       <OverlayTrigger
                         placement="top"
-                        overlay={(tooltipProps) => renderTooltip({
-                          ...tooltipProps,
-                          className: 'tooltip--wide',
-                          children: 'Describe what you are looking for to start your search'
-                        })}
+                        overlay={
+                          (tooltipProps) => renderTooltip({
+                            ...tooltipProps,
+                            className: 'tooltip--wide',
+                            children: 'Describe what you are looking for to start your search'
+                          })
+                        }
                       >
                         <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
                           AI Enhanced Search
@@ -424,11 +427,13 @@ export const Home: React.FC = () => {
                       />
                       <OverlayTrigger
                         placement="top"
-                        overlay={(tooltipProps) => renderTooltip({
-                          ...tooltipProps,
-                          className: 'tooltip--wide',
-                          children: 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
-                        })}
+                        overlay={
+                          (tooltipProps) => renderTooltip({
+                            ...tooltipProps,
+                            className: 'tooltip--wide',
+                            children: 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
+                          })
+                        }
                       >
                         <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
                           Traditional Search

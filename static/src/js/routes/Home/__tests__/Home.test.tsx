@@ -121,7 +121,7 @@ describe('Home', () => {
     setup()
 
     expect(screen.getByText("Search NASA's 42 Earth observations")).toBeInTheDocument()
-    expect(screen.getByText("Describe your search, or use keywords, time, and place")).toBeInTheDocument()
+    expect(screen.getByText('Describe your search, or use keywords, time, and place')).toBeInTheDocument()
   })
 
   test('renders the search input and allows typing', async () => {

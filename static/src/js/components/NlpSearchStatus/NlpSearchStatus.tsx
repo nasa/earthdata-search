@@ -6,12 +6,12 @@ import React, {
 } from 'react'
 import { useCompletion } from '@ai-sdk/react'
 import WKT from 'ol/format/WKT'
-import Spinner from '../Spinner/Spinner'
 import {
   ArrowChevronDown,
   ArrowChevronUp
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import Spinner from '../Spinner/Spinner'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import useEdscStore from '../../zustand/useEdscStore'
