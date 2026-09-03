@@ -1,8 +1,7 @@
 import React, {
   useEffect,
   useRef,
-  useState,
-  RefObject
+  useState
 } from 'react'
 import { renderToString } from 'react-dom/server'
 
@@ -33,7 +32,6 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import VectorTileLayer from 'ol/layer/VectorTile'
 import { unByKey } from 'ol/Observable'
-import { EventsKey } from 'ol/events'
 
 import {
   FaCircle,
@@ -48,13 +46,8 @@ import {
   Map as MapIcon
   // @ts-expect-error The file does not have types
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import {
-  metricsMapFramePerformance,
-  metricsMapRenderPerformance,
-  MapPerformanceEvent
-} from '../../util/metrics/metricsMap'
 
-import { computePercentile } from '../../util/metrics/helpers'
+
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -92,6 +85,12 @@ import bordersRoads from '../../util/map/layers/bordersRoads'
 import coastlines from '../../util/map/layers/coastlines'
 import trueColor from '../../util/map/layers/trueColor'
 import landWaterMap from '../../util/map/layers/landWaterMap'
+import {
+  createEmptyPerformanceWindow,
+  flushMapPerformanceMetrics,
+  timeLayerRenderOnce,
+  MAP_PERFORMANCE_WINDOW_MS
+} from '../../util/map/mapPerformanceMetrics'
 
 import { eventEmitter } from '../../events/events'
 
@@ -127,19 +126,9 @@ interface MapPerformanceWindow {
   maxRenderTimeMs: number
 }
 
-const createEmptyPerformanceWindow = (): MapPerformanceWindow => ({
-  windowStart: performance.now(),
-  frames: 0,
-  slowFrames: 0,
-  verySlowFrames: 0,
-  renderTimes: [],
-  maxRenderTimeMs: 0
-})
-
 let previousGranulesKey: string
 let previousProjectionCode: ProjectionCode
 let layersAdded = false
-const PERFORMANCE_WINDOW_MS = 3000
 
 // Render the times icon to an SVG string for use in the focused granule overlay
 // Disable a testing-library rule because this isn't a test
@@ -215,63 +204,6 @@ const overlayLayers: Record<string, TileLayer | VectorTileLayer | null> = {
   [mapLayers.placeLabels]: null
 }
 
-interface TimeLayerRenderOnceParams {
-  /** The vector layer to time a single render pass for */
-  layer: VectorLayer
-  /** Label used for the performance mark/measure names and reported as the metric's identifier */
-  label: string
-  /** Number of granules being rendered, passed through to the metrics helper */
-  granuleCount: number
-  /** IDs of the collection(s) active for this render. Usually a single ID; multiple on the project page */
-  collectionIds: string[]
-  /** Map center at the time this render was triggered */
-  center: {
-    latitude: number
-    longitude: number
-  }
-  /** Map zoom level at the time this render was triggered */
-  zoomLevel: number
-}
-
-// Times a single prerender → postrender pass for a layer using .once(),
-// so it only fires for the very next render triggered after this is called.
-export const timeLayerRenderOnce = ({
-  layer,
-  label,
-  granuleCount,
-  collectionIds,
-  center,
-  zoomLevel
-}: TimeLayerRenderOnceParams): EventsKey[] => {
-  let start = 0
-
-  const preKey = layer.once(RenderEventType.PRERENDER as LayerRenderEventTypes, () => {
-    start = performance.now()
-    performance.mark(`${label}-prerender`)
-  })
-
-  const postKey = layer.once(RenderEventType.POSTRENDER as LayerRenderEventTypes, () => {
-    const duration = performance.now() - start
-    performance.mark(`${label}-postrender`)
-    performance.measure(label, `${label}-prerender`, `${label}-postrender`)
-
-    // Fire one event per active collection so per-collection analysis
-    // stays possible; the render duration describes the same shared pass.
-    collectionIds.forEach((collectionId) => {
-      metricsMapRenderPerformance({
-        granuleCount,
-        totalRenderMs: duration,
-        mapEventAction: label,
-        collectionId,
-        center,
-        zoomLevel
-      })
-    })
-  })
-
-  return [preKey, postKey]
-}
-
 // Create a view for the map. This will change when the padding needs to be updated
 const createView = ({
   center,
@@ -310,7 +242,6 @@ const createView = ({
 
   // `rotation` is in degrees, but OpenLayers expects it in radians
   const rotationInRad = rotation * (Math.PI / 180)
-
   const view = new View({
     center: reprojectedCenter,
     constrainOnlyCenter: true,
@@ -352,47 +283,6 @@ const hasFiniteExtent = (extent: import('ol/extent').Extent | null | undefined):
   return extent.every((coordinate) => Number.isFinite(coordinate))
 }
 
-const flushMapPerformanceMetrics = (
-  performanceWindowRef: RefObject<MapPerformanceWindow>,
-  collectionIds: string[],
-  granuleCount: number
-) => {
-  if (!collectionIds || collectionIds.length === 0) {
-    return
-  }
-
-  const metrics = performanceWindowRef.current
-  if (metrics.frames === 0) {
-    metrics.windowStart = performance.now()
-
-    return
-  }
-
-  const sortedRenderTimes = [...metrics.renderTimes].sort(
-    (a, b) => a - b
-  )
-
-  const event: MapPerformanceEvent = {
-    windowDurationMs: performance.now() - metrics.windowStart,
-    render: {
-      frames: metrics.frames,
-      p50RenderTimeMs: computePercentile(sortedRenderTimes, 0.5),
-      p95RenderTimeMs: computePercentile(sortedRenderTimes, 0.95),
-      p99RenderTimeMs: computePercentile(sortedRenderTimes, 0.99),
-      maxRenderTimeMs: metrics.maxRenderTimeMs,
-      slowFrames: metrics.slowFrames,
-      verySlowFrames: metrics.verySlowFrames
-    },
-    collectionIds,
-    granuleCount
-  }
-  metricsMapFramePerformance(event)
-
-  // Clear the metrics for the next window
-  // eslint-disable-next-line no-param-reassign
-  performanceWindowRef.current = createEmptyPerformanceWindow()
-}
-
 interface MapProps {
   /** The base layers of the map */
   base: {
@@ -427,6 +317,7 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
+  /** Project collections from the store applicable if on the projects page */
   projectCollections: {
     allIds: string[]
   },
@@ -563,10 +454,22 @@ const Map: React.FC<MapProps> = ({
   // Mirror the latest focused collection(s) into a ref so the long-lived
   // map event listeners always read current values without needing to be
   // re-registered. On the project page there can be multiple focused
-  // collections; everywhere else there's exactly one.
+  // collections; everywhere else there's exactly zero or one focused collection.
   const focusedCollectionIdRef = useRef<string[]>(
     isProjectPage ? projectCollections.allIds : [focusedCollectionId]
   )
+
+  // Initailize Center and Zoom references
+  const centerRef = useRef(center)
+  const zoomRef = useRef(zoom)
+
+  useEffect(() => {
+    centerRef.current = center
+  }, [center])
+
+  useEffect(() => {
+    zoomRef.current = zoom
+  }, [zoom])
 
   useEffect(() => {
     focusedCollectionIdRef.current = isProjectPage
@@ -662,10 +565,14 @@ const Map: React.FC<MapProps> = ({
         ...frameTimes
       )
 
-      //  Real time elapsed since the window opened, until the moveend that happened to trigger a flush check that passed."
+      // HasFocusedCollection can be single or multiple colls
+      const hasFocusedCollection = focusedCollectionIdRef.current.some(Boolean)
+
+      // Real time elapsed since the window opened, until the moveend that happened to trigger a flush check that passed."
       if (
         performance.now() - metrics.windowStart
-    >= PERFORMANCE_WINDOW_MS
+    >= MAP_PERFORMANCE_WINDOW_MS
+    && (granuleCountRef.current > 0 || hasFocusedCollection)
       ) {
         flushMapPerformanceMetrics(
           performanceWindowRef,
@@ -769,6 +676,17 @@ const Map: React.FC<MapProps> = ({
 
       let [newLongitude, newLatitude] = newCenter
       const newZoom = view.getZoom()
+
+      // Synch current center and zoom to refs so that the long-lived map event
+      // listeners always read current values without needing to be re-registered.
+      centerRef.current = {
+        latitude: newLatitude,
+        longitude: newLongitude
+      }
+
+      // Falling back openlayers getZoom() can return undefined
+      zoomRef.current = newZoom ?? zoomRef.current
+
       let newRotationInDeg = 0
 
       // If the new center is 0,0 use the projection's default center
@@ -1157,6 +1075,21 @@ const Map: React.FC<MapProps> = ({
     })
   }
 
+  // Clears all granule-related layers (backgrounds, highlights, imagery, and focused overlay)
+  const clearGranuleLayers = (map: OlMap) => {
+    // Clear the existing granule backgrounds
+    granuleBackgroundsSource.clear()
+
+    // Clear any existing granule highlights
+    unhighlightGranule(granuleHighlightsSource)
+
+    // Clear the granule imagery layers
+    granuleImageryLayerGroup.getLayers().clear()
+
+    // Clear any existing focused granules
+    clearFocusedGranuleSource(map)
+  }
+
   // Update the event listeners when the focusedCollectionId changes
   useEffect(() => {
     // Call handleHoverGranule when the the event is fired
@@ -1223,20 +1156,12 @@ const Map: React.FC<MapProps> = ({
     // Redraw the granule backgrounds if the product layer from the gibs tag has changed
       if (granulesKey === previousGranulesKey
         && projectionCode === previousProjectionCode) return undefined
+
       // Update the previous values
       previousGranulesKey = granulesKey
       previousProjectionCode = projectionCode
 
-      // Clear the existing granule backgrounds
-      granuleBackgroundsSource.clear()
-      // Clear any existing granule highlights
-      unhighlightGranule(granuleHighlightsSource)
-
-      // Clear any existing focused granules
-      clearFocusedGranuleSource(mapRef.current as OlMap)
-
-      // Clear the granule imagery layers
-      granuleImageryLayerGroup.getLayers().clear()
+      clearGranuleLayers(mapRef.current as OlMap)
 
       // Draw the granule backgrounds
       drawGranuleBackgroundsAndImagery({
@@ -1266,22 +1191,24 @@ const Map: React.FC<MapProps> = ({
 
       const activeCollectionIds = isProjectPage ? projectCollections.allIds : [focusedCollectionId]
 
+      // Timing keys for the layer render functions
+      // initailizes a reference for the cleanup function
       const timingKeys = [
         ...timeLayerRenderOnce({
           layer: granuleBackgroundsLayer,
           label: 'granule-backgrounds',
           granuleCount: granules.length,
           collectionIds: activeCollectionIds,
-          center,
-          zoomLevel: zoom
+          center: centerRef.current,
+          zoomLevel: zoomRef.current
         }),
         ...timeLayerRenderOnce({
           layer: granuleOutlinesLayer,
           label: 'granule-outlines',
           granuleCount: granules.length,
           collectionIds: activeCollectionIds,
-          center,
-          zoomLevel: zoom
+          center: centerRef.current,
+          zoomLevel: zoomRef.current
         })
       ]
 
@@ -1293,16 +1220,7 @@ const Map: React.FC<MapProps> = ({
       }
     }
 
-    // Clear the existing granule backgrounds
-    granuleBackgroundsSource.clear()
-    // Clear any existing granule highlights
-    unhighlightGranule(granuleHighlightsSource)
-
-    // Clear the granule imagery layers
-    granuleImageryLayerGroup.getLayers().clear()
-
-    // Clear any existing focused granules
-    clearFocusedGranuleSource(mapRef.current as OlMap)
+    clearGranuleLayers(mapRef.current as OlMap)
 
     return undefined
   }, [granules, granulesKey, projectionCode])
