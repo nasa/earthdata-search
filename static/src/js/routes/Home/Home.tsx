@@ -375,7 +375,7 @@ export const Home: React.FC = () => {
                 {
                   isNlpEnabled ? (
                     <p className="home__hero-subtitle text-white mb-0 lead">
-                      Describe your search or use keywords, time, and place
+                      Describe your search, or use keywords, time, and place
                     </p>
                   ) : (
                     <p className="text-white mb-0 lead">
