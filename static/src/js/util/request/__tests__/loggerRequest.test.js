@@ -51,3 +51,17 @@ describe('LoggerRequest#logRelevancy', () => {
     expect(postMock).toHaveBeenCalledWith('relevancy_logger', params)
   })
 })
+
+describe('LoggerRequest#logExperiment', () => {
+  test('calls Request#post', () => {
+    const request = new LoggerRequest()
+
+    const postMock = vi.spyOn(Request.prototype, 'post').mockImplementation()
+
+    const params = { data: { mock: 'data' } }
+    request.logExperiment(params)
+
+    expect(postMock).toHaveBeenCalledTimes(1)
+    expect(postMock).toHaveBeenCalledWith('experiment_logger', params)
+  })
+})

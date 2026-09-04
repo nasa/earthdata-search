@@ -55,7 +55,8 @@
     "mapPointsSimplifyThreshold": 2000,
     "emergencyNotification": "false",
     "emergencyNotificationType": "error",
-    "numberOfGranules": "2.2 billion+"
+    "numberOfGranules": "2.2 billion+",
+    "growthbookEnabled": "false"
   },
   "environment": {
     "test": {
@@ -68,7 +69,10 @@
       "dbName": "edsc_dev",
       "databasePort": 5432,
       "apiHost": "http://localhost:3001",
-      "edscHost": "http://localhost:8080"
+      "edscHost": "http://localhost:8080",
+      "growthbookFirehoseStreamName": "mock-firehose-stream-name",
+      "growthbookApiHost": "http://localhost:4100",
+      "growthbookClientKey": "mock-client-key"
     },
     "production": {
       "apiHost": "http://localhost:3001",

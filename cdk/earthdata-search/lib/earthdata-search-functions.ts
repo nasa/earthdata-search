@@ -280,6 +280,24 @@ export class Functions extends Construct {
     })
 
     /**
+     * Experiment Logger
+     */
+    const experimentLoggerNestedStack = new cdk.NestedStack(scope, 'ExperimentLoggerNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(experimentLoggerNestedStack, 'ExperimentLoggerLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        methods: ['POST'],
+        path: 'experiment_logger'
+      },
+      entry: '../../serverless/src/experimentLogger/handler.js',
+      functionName: 'experimentLogger',
+      functionNamePrefix
+    })
+
+    /**
      * Fix Retrieval Collection Metadata
      */
     const fixRetrievalCollectionMetadataNestedStack = new cdk.NestedStack(scope, 'FixRetrievalCollectionMetadataNestedStack')

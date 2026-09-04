@@ -77,7 +77,7 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
 
 let preloaded = false
 
-type HomeSearchMode = 'nlp' | 'traditional'
+type HomeSearchMode = 'nlp' | 'traditional' | null
 
 const nlpSearchMode: HomeSearchMode = 'nlp'
 const traditionalSearchMode: HomeSearchMode = 'traditional'
@@ -87,7 +87,7 @@ const getPreferredHomeSearchMode = (isNlpEnabled: boolean): HomeSearchMode => {
 
   const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
 
-  return storedSearchMode === traditionalSearchMode ? traditionalSearchMode : nlpSearchMode
+  return storedSearchMode as HomeSearchMode
 }
 
 const preloadRoutes = () => {
@@ -180,15 +180,27 @@ export const Home: React.FC = () => {
   const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
+  const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
+  const { nlpSearch: isNlpFeatureFlagEnabled } = featureFlags
 
-  const { numberOfGranules } = getApplicationConfig()
+  const {
+    numberOfGranules,
+    nlpSearch: nlpSearchEnabled
+  } = getApplicationConfig()
 
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
-  const { nlpSearch } = getApplicationConfig()
-  const isNlpEnabled = nlpSearch === 'true'
+  const isNlpEnabled = nlpSearchEnabled === 'true'
   const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<HomeSearchMode>(
     () => getPreferredHomeSearchMode(isNlpEnabled)
   )
+
+  // If preferredHomeSearchMode is not set, default to the isNlpFeatureFlagEnabled value.
+  useEffect(() => {
+    if (preferredHomeSearchMode === null) {
+      setPreferredHomeSearchMode(isNlpFeatureFlagEnabled ? 'nlp' : 'traditional')
+    }
+  }, [preferredHomeSearchMode, isNlpFeatureFlagEnabled])
+
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
 
   useEffect(() => {
@@ -266,7 +278,7 @@ export const Home: React.FC = () => {
   const onSearchModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nextSearchMode = event.target.value as HomeSearchMode
 
-    localStorage.setItem(localStorageKeys.homeSearchMode, nextSearchMode)
+    localStorage.setItem(localStorageKeys.homeSearchMode, nextSearchMode!)
     setPreferredHomeSearchMode(nextSearchMode)
 
     if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
