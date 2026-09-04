@@ -13,6 +13,9 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
 
+// @ts-expect-error: Types do not exist for this file
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
+
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
@@ -362,19 +365,101 @@ describe('Home', () => {
 
       expect(setNlpAutoCenterPending).toHaveBeenCalledWith(false)
     })
+
+    describe('when the nlpSearch feature flag is true', () => {
+      beforeEach(() => {
+        getApplicationConfig.mockReturnValue({
+          nlpSearch: 'true'
+        })
+      })
+
+      test('shows the AI Enhanced Search form', () => {
+        setup({
+          overrideZustandState: {
+            growthbook: {
+              featureFlags: {
+                nlpSearch: true
+              }
+            }
+          }
+        })
+
+        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      })
+
+      describe('when the user has switched their preference to Traditional Search', () => {
+        test('shows the Traditional Search form as checked', () => {
+          localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+
+          setup({
+            overrideZustandState: {
+              growthbook: {
+                featureFlags: {
+                  nlpSearch: true
+                }
+              }
+            }
+          })
+
+          expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+          expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+        })
+      })
+    })
+
+    describe('when the nlpSearch feature flag is false', () => {
+      beforeEach(() => {
+        getApplicationConfig.mockReturnValue({
+          nlpSearch: 'true'
+        })
+      })
+
+      test('shows the AI Enhanced Search form', () => {
+        setup({
+          overrideZustandState: {
+            growthbook: {
+              featureFlags: {
+                nlpSearch: false
+              }
+            }
+          }
+        })
+
+        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      })
+
+      describe('when the user has switched their preference to AI Enhanced Search', () => {
+        test('shows the AI Enhanced Search form as checked', () => {
+          localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
+
+          setup({
+            overrideZustandState: {
+              growthbook: {
+                featureFlags: {
+                  nlpSearch: true
+                }
+              }
+            }
+          })
+
+          expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+          expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+        })
+      })
+    })
   })
 
   describe('when nlpSearch is disabled', () => {
-    test('renders temporal and spatial buttons', () => {
-      setup({
-        overrideZustandState: {
-          growthbook: {
-            featureFlags: {
-              nlpSearch: false
-            }
-          }
-        }
+    beforeEach(() => {
+      getApplicationConfig.mockReturnValue({
+        nlpSearch: 'false'
       })
+    })
+
+    test('renders temporal and spatial buttons', () => {
+      setup()
 
       expect(screen.queryByRole('radio', { name: 'AI Enhanced Search' })).not.toBeInTheDocument()
       expect(screen.queryByRole('radio', { name: 'Traditional Search' })).not.toBeInTheDocument()
@@ -383,15 +468,7 @@ describe('Home', () => {
     })
 
     test('calls getCollections and navigate when the search form is submitted with no value', async () => {
-      const { user, zustandState } = setup({
-        overrideZustandState: {
-          growthbook: {
-            featureFlags: {
-              nlpSearch: false
-            }
-          }
-        }
-      })
+      const { user, zustandState } = setup()
 
       await user.click(screen.getByRole('button', { name: /search/i }))
 
@@ -403,15 +480,7 @@ describe('Home', () => {
     })
 
     test('calls getCollections and navigate when the search form is submitted with values', async () => {
-      const { user, zustandState } = setup({
-        overrideZustandState: {
-          growthbook: {
-            featureFlags: {
-              nlpSearch: false
-            }
-          }
-        }
-      })
+      const { user, zustandState } = setup()
 
       const searchInput = screen.getByPlaceholderText('Type to search for data')
 
