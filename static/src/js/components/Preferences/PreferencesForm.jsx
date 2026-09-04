@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client'
 import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
 
@@ -21,10 +22,25 @@ import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationTy
 
 import './PreferencesForm.scss'
 
+const removeHomeSearchMode = (preferences) => {
+  const remainingPreferences = { ...preferences }
+  delete remainingPreferences.homeSearchMode
+
+  return remainingPreferences
+}
+
 /**
  * Renders the Preferences form
  */
 const PreferencesForm = () => {
+  const { nlpSearch } = getApplicationConfig()
+  const isNlpEnabled = nlpSearch === 'true'
+  const formSchema = isNlpEnabled ? schema : {
+    ...schema,
+    properties: removeHomeSearchMode(schema.properties)
+  }
+  const formUiSchema = isNlpEnabled ? uiSchema : removeHomeSearchMode(uiSchema)
+
   const sitePreferences = useEdscStore(getSitePreferences)
   const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
   const handleError = useEdscStore((state) => state.errors.handleError)
@@ -40,7 +56,7 @@ const PreferencesForm = () => {
   const handleSubmit = async ({ formData: newFormData }) => {
     updatePreferencesMutation({
       variables: {
-        preferences: newFormData
+        preferences: isNlpEnabled ? newFormData : removeHomeSearchMode(newFormData)
       },
       onCompleted: (data) => {
         const { updatePreferences: updatedUser } = data
@@ -91,13 +107,13 @@ const PreferencesForm = () => {
       <Form
         idPrefix="preferences-form"
         fields={fields}
-        formData={formData}
+        formData={isNlpEnabled ? formData : removeHomeSearchMode(formData)}
         liveValidate
         onChange={onChange}
         onSubmit={handleSubmit}
-        schema={schema}
+        schema={formSchema}
         transformErrors={transformErrors}
-        uiSchema={uiSchema}
+        uiSchema={formUiSchema}
         validator={validator}
       >
         <div>

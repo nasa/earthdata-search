@@ -38,6 +38,16 @@
 				"end_date"
 			]
 		},
+    "homeSearchMode": {
+      "$id": "#/properties/homeSearchMode",
+      "type": "string",
+      "title": "Preferred Home Search Mode",
+      "description": "Choose the default search mode when opening Earthdata Search.",
+      "enum": [
+        "nlp",
+        "traditional"
+      ]
+    },
 		"panelState": {
 			"$id": "#/properties/panelState",
 			"type": "string",

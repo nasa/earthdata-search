@@ -1248,6 +1248,7 @@ export type PanelState = 'default' | 'collapsed' | 'open' | 'fullWidth'
 export type ListView = 'default' | 'list' | 'table'
 export type CollectionSort = 'default' | '-score' | '-usage_score' | '-create-data-date' | 'start_date' | '-ongoing'
 export type GranuleSort = 'default' | '-start_date' | 'start_date' | '-end_date' | 'end_date'
+export type HomeSearchMode = 'nlp' | 'traditional'
 export type BaseLayer = 'worldImagery' | 'trueColor' | 'landWaterMap'
 export type OverlayLayer = 'bordersRoads' | 'coastlines' | 'placeLabels'
 
@@ -1262,6 +1263,8 @@ export type PreferencesData = {
   collectionSort: CollectionSort
   /** The sort preference for granules */
   granuleSort: GranuleSort
+  /** The preferred search mode for the Home page */
+  homeSearchMode?: HomeSearchMode
   /** The map view preferences */
   mapView: {
     /** The zoom level of the map */

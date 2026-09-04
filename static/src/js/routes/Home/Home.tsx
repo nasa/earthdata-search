@@ -61,9 +61,11 @@ import renderTooltip from '../../util/renderTooltip'
 import routerHelper from '../../router/router'
 
 import type{ PortalConfig } from '../../types/sharedTypes'
+import type { HomeSearchMode } from '../../zustand/types'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
+import { getSitePreferences } from '../../zustand/selectors/user'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
@@ -77,17 +79,27 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
 
 let preloaded = false
 
-type HomeSearchMode = 'nlp' | 'traditional' | null
+type PreferredHomeSearchMode = HomeSearchMode | null
 
 const nlpSearchMode: HomeSearchMode = 'nlp'
 const traditionalSearchMode: HomeSearchMode = 'traditional'
 
-const getPreferredHomeSearchMode = (isNlpEnabled: boolean): HomeSearchMode => {
+const getPreferredHomeSearchMode = (
+  isNlpEnabled: boolean,
+  savedSearchMode?: HomeSearchMode
+): PreferredHomeSearchMode => {
   if (!isNlpEnabled) return traditionalSearchMode
+
+  if (savedSearchMode) return savedSearchMode
 
   const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
 
-  return storedSearchMode as HomeSearchMode
+  if (
+    storedSearchMode === nlpSearchMode
+    || storedSearchMode === traditionalSearchMode
+  ) return storedSearchMode
+
+  return null
 }
 
 const preloadRoutes = () => {
@@ -182,6 +194,7 @@ export const Home: React.FC = () => {
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
   const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
   const { nlpSearch: isNlpFeatureFlagEnabled } = featureFlags
+  const { homeSearchMode } = useEdscStore(getSitePreferences)
 
   const {
     numberOfGranules,
@@ -190,8 +203,8 @@ export const Home: React.FC = () => {
 
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const isNlpEnabled = nlpSearchEnabled === 'true'
-  const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<HomeSearchMode>(
-    () => getPreferredHomeSearchMode(isNlpEnabled)
+  const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<PreferredHomeSearchMode>(
+    () => getPreferredHomeSearchMode(isNlpEnabled, homeSearchMode)
   )
 
   // If preferredHomeSearchMode is not set, default to the isNlpFeatureFlagEnabled value.
@@ -202,6 +215,10 @@ export const Home: React.FC = () => {
   }, [preferredHomeSearchMode, isNlpFeatureFlagEnabled])
 
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
+
+  useEffect(() => {
+    if (isNlpEnabled && homeSearchMode) setPreferredHomeSearchMode(homeSearchMode)
+  }, [homeSearchMode, isNlpEnabled])
 
   useEffect(() => {
     // Focus the search input when the component mounts
