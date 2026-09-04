@@ -25,7 +25,7 @@
         display: flex;
         align-items: flex-start;
         column-gap: 0;
-        width: fit-content;
+        width: 100%;
         max-width: 100%;
         padding: 0.45rem 0;
     }
@@ -40,8 +40,33 @@
 
     &__step-text-wrap {
         min-width: 0;
-        width: fit-content;
+        flex: 1 1 auto;
         max-width: 100%;
+    }
+
+    &__history-toggle {
+        display: flex;
+        align-items: center;
+        align-self: center;
+        justify-content: center;
+        flex: 0 0 1.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-left: 0.25rem;
+        padding: 0;
+        border: 0;
+        border-radius: 0.25rem;
+        background: transparent;
+        color: inherit;
+
+        &:hover {
+            background-color: rgba(utils.$color__carbon-black, 0.08);
+        }
+
+        &:focus-visible {
+            outline: 1px dashed utils.$color__nasa-blue--shade;
+            outline-offset: 0.125rem;
+        }
     }
 
     &__steps {

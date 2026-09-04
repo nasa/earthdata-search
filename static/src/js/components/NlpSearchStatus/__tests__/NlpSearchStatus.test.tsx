@@ -205,7 +205,7 @@ describe('NlpSearchStatus component', () => {
     expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
   })
 
-  test('renders progress steps from streamed completion text', () => {
+  test('renders the latest progress step and expands the previous step', async () => {
     mockCompletion = [
       'Analyzing your query...',
       'error: temporary server issue',
@@ -216,12 +216,18 @@ describe('NlpSearchStatus component', () => {
       '{}'
     ].join('\n')
 
-    setup()
+    const { user } = setup()
+
+    expect(screen.getByText('Extracted keyword of "average temp".')).toBeInTheDocument()
+    expect(screen.queryByText('Extracted spatial area of "western montana".')).not.toBeInTheDocument()
+    expect(screen.queryByText('Extracted temporal range of "last april".')).not.toBeInTheDocument()
+    expect(screen.queryByText('Analyzing your query...')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /Show previous Search updates/i }))
 
     expect(screen.getByText('Extracted spatial area of "western montana".')).toBeInTheDocument()
     expect(screen.getByText('Extracted temporal range of "last april".')).toBeInTheDocument()
-    expect(screen.getByText('Extracted keyword of "average temp".')).toBeInTheDocument()
-    expect(screen.queryByText('Analyzing your query...')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Hide previous search updates/i })).toHaveAttribute('aria-expanded')
   })
 
   test('uses POINT spatial output when NLP returns a point geometry', async () => {

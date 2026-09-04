@@ -6,7 +6,13 @@ import React, {
 } from 'react'
 import { useCompletion } from '@ai-sdk/react'
 import WKT from 'ol/format/WKT'
+import {
+  ArrowChevronDown,
+  ArrowChevronUp
+  // @ts-expect-error: Types do not exist for this file
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import Spinner from '../Spinner/Spinner'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
@@ -134,6 +140,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   const completionTextRef = useRef('')
 
   const [statusSteps, setStatusSteps] = useState<string[]>([])
+  const [isHistoryExpanded, setIsHistoryExpanded] = useState(false)
 
   const appendStatusStep = useCallback((nextStep: string) => {
     if (!nextStep) return
@@ -280,6 +287,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
     lastStartedRequestIdRef.current = nextRequestId
     setCompletion('')
     setStatusSteps(['Analyzing your query...'])
+    setIsHistoryExpanded(false)
     onStreamingChange(true)
 
     try {
@@ -316,6 +324,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   }, [activePrompt, requestId, runPrompt])
 
   const latestStatusStep = statusSteps[statusSteps.length - 1] || ''
+  const previousStatusSteps = statusSteps.slice(0, -1)
+  const hasPreviousStatusSteps = previousStatusSteps.length > 0
 
   return (
     <section className="nlp-search-chat" aria-live="polite">
@@ -338,33 +348,38 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
                 )
                 : (
                   <ul
+                    id="nlp-search-chat-history"
                     className="nlp-search-chat__steps"
                     aria-label="Search query parsing updates"
                   >
                     {
-                      statusSteps.map((step, index) => {
-                        const key = `${step}-${index}`
-                        const isLatest = step === latestStatusStep
-                          && index === statusSteps.length - 1
-
-                        return (
-                          <li
-                            key={key}
-                            className={
-                              ['nlp-search-chat__step',
-                                isLatest ? 'nlp-search-chat__step--latest' : ''
-                              ].filter(Boolean).join(' ')
-                            }
-                          >
-                            {step}
-                          </li>
-                        )
-                      })
+                      isHistoryExpanded && previousStatusSteps.map((step) => (
+                        <li key={step} className="nlp-search-chat__step">
+                          {step}
+                        </li>
+                      ))
                     }
+                    <li className="nlp-search-chat__step nlp-search-chat__step--latest">
+                      {latestStatusStep}
+                    </li>
                   </ul>
                 )
             }
           </div>
+          {
+            hasPreviousStatusSteps && (
+              <button
+                className="nlp-search-chat__history-toggle"
+                type="button"
+                aria-controls="nlp-search-chat-history"
+                aria-expanded={isHistoryExpanded}
+                aria-label={isHistoryExpanded ? 'Hide previous search updates' : 'Show previous Search updates'}
+                onClick={() => setIsHistoryExpanded((isExpanded) => (!isExpanded))}
+              >
+                <EDSCIcon icon={isHistoryExpanded ? ArrowChevronUp : ArrowChevronDown} size="16" />
+              </button>
+            )
+          }
         </div>
       </div>
     </section>
