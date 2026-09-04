@@ -158,6 +158,24 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
+    test('uses the saved user preference before local storage', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'nlp'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
     test('saves the selected search mode preference', async () => {
       const { user } = setup()
 

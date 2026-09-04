@@ -22,6 +22,14 @@
       "End Date, Oldest First"
     ]
   },
+  "homeSearchMode": {
+    "ui:widget": "radio",
+    "ui:field": "radio",
+    "ui:enumNames": [
+      "AI Enhanced Search",
+      "Traditional Search"
+    ]
+  },
   "panelState": {
     "ui:widget": "radio",
     "ui:field": "radio",
