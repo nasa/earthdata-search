@@ -42,7 +42,7 @@ export const emptyDecodedResult = {
   selectedRegion: undefined,
   shapefile: {
     selectedFeatures: undefined,
-    shapefileId: ''
+    shapefileId: undefined
   },
   timeline: undefined
 }
