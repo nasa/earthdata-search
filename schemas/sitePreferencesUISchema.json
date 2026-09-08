@@ -1,4 +1,12 @@
 {
+  "homeSearchMode": {
+    "ui:widget": "radio",
+    "ui:field": "radio",
+    "ui:enumNames": [
+      "AI Enhanced Search",
+      "Traditional Search"
+    ]
+  },
   "collectionSort": {
     "ui:widget": "radio",
     "ui:field": "radio",
@@ -20,14 +28,6 @@
       "Start Date, Oldest First",
       "End Date, Newest First",
       "End Date, Oldest First"
-    ]
-  },
-  "homeSearchMode": {
-    "ui:widget": "radio",
-    "ui:field": "radio",
-    "ui:enumNames": [
-      "AI Enhanced Search",
-      "Traditional Search"
     ]
   },
   "panelState": {
