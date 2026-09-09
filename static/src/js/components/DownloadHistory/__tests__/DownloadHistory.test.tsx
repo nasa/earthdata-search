@@ -221,7 +221,7 @@ describe('DownloadHistorys component', () => {
       }]
     })
 
-    expect(await screen.findByText('Downloads that have not been updated in over a year will be removed')).toBeInTheDocument()
+    expect(await screen.findByText('Downloads that have not been updated in over a year will be removed.')).toBeInTheDocument()
   })
 
   describe('when a retrieval is close to its removal date', () => {
@@ -264,7 +264,7 @@ describe('DownloadHistorys component', () => {
         }]
       })
 
-      const icon = await screen.findByLabelText('Download Expiring Soon')
+      const icon = await screen.findByLabelText('Download expiring soon')
 
       await user.hover(icon)
 
