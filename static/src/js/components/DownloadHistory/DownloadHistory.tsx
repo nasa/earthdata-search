@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table'
+import { OverlayTrigger } from 'react-bootstrap'
 
 import { useMutation, useQuery } from '@apollo/client'
 // @ts-expect-error This file does not have types
@@ -8,12 +9,18 @@ import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 // @ts-expect-error This file does not have types
 import { Helmet } from 'react-helmet'
+import moment from 'moment'
 
 // @ts-expect-error This file does not have types
 import { XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+// @ts-expect-error This file does not have types
+import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+// @ts-expect-error This file does not have types
+import EDSCAlert from '../EDSCAlert/EDSCAlert'
 // @ts-expect-error This file does not have types
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
@@ -33,7 +40,13 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 
 import './DownloadHistory.scss'
 import 'rc-pagination/assets/index.css'
+import renderTooltip from '../../util/renderTooltip'
 
+// Downloads that have not been updated for this number of days are removed
+const RETENTION_PERIOD_DAYS = 365
+
+// Downloads within this number of days of removal are flagged as expiring soon
+const EXPIRATION_WARNING_THRESHOLD_DAYS = 30
 export interface HistoryRetrieval {
   /** The date the retrieval was created */
   createdAt: string
@@ -45,6 +58,8 @@ export interface HistoryRetrieval {
   portalId: string
   /** The title of the retrieval */
   titles: string[]
+  //* * The date the retrieval was las updated */
+  updatedAt: string
 }
 interface HistoryRetrievalsQueryData {
   historyRetrievals: {
@@ -126,6 +141,12 @@ export const DownloadHistory = () => {
     return `${titleList[0]} and ${titleList.length - 1} more`
   }
 
+  const isExpiringSoon = (updatedAt: string): boolean => {
+    const removalDate = moment(updatedAt).add(RETENTION_PERIOD_DAYS, 'days')
+
+    return removalDate.diff(moment(), 'days') <= EXPIRATION_WARNING_THRESHOLD_DAYS
+  }
+
   return (
     <div className="download-history">
       <Helmet>
@@ -137,6 +158,13 @@ export const DownloadHistory = () => {
       <h2 className="route-wrapper__page-heading">
         Download Status & History
       </h2>
+      <EDSCAlert
+        className="download-history__retention-banner"
+        bootstrapVariant="warning"
+        icon={AlertMediumPriority}
+      >
+        Downloads that have not been updated in over a year will be removed.
+      </EDSCAlert>
       {
         loading && (
           <Spinner
@@ -161,10 +189,11 @@ export const DownloadHistory = () => {
                 {
                   historyRetrievalsList.map((retrieval) => {
                     const {
-                      id, createdAt, obfuscatedId, portalId, titles
+                      id, createdAt, obfuscatedId, portalId, titles, updatedAt
                     } = retrieval
 
                     const titleDisplay = formatTitleDisplay(titles)
+                    const expiringSoon = isExpiringSoon(updatedAt)
 
                     return (
                       <tr key={id}>
@@ -183,6 +212,27 @@ export const DownloadHistory = () => {
                         </td>
                         <td className="download-history-table__ago">
                           <TimeAgo date={createdAt} />
+                          {
+                            expiringSoon && (
+                              <OverlayTrigger
+                                placement="top"
+                                overlay={
+                                  (tooltipPros) => renderTooltip({
+                                    children: 'Download will be removed soon if not updated.',
+                                    id: `tooltip__download-history-expiration__${id}`,
+                                    ...tooltipPros
+                                  })
+                                }
+                              >
+                                <span className="download-history-table__expiration-warning">
+                                  <EDSCIcon
+                                    icon={AlertMediumPriority}
+                                    ariaLabel="Download expiring soon"
+                                  />
+                                </span>
+                              </OverlayTrigger>
+                            )
+                          }
                         </td>
                         <td className="download-history-table__actions">
                           <Button

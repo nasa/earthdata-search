@@ -1334,6 +1334,7 @@ describe('DatabaseClient', () => {
           query.response([{
             id: 1,
             created_at: '2023-01-01T00:00:00Z',
+            updated_at: '2023-01-02T00:00:00Z',
             portal_id: 'edsc',
             titles: ['title 1'],
             total: 1
@@ -1350,6 +1351,7 @@ describe('DatabaseClient', () => {
       expect(historyRetrievals).toEqual([{
         id: 1,
         created_at: '2023-01-01T00:00:00Z',
+        updated_at: '2023-01-02T00:00:00Z',
         portal_id: 'edsc',
         titles: ['title 1'],
         total: 1

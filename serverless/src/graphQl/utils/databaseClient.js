@@ -553,6 +553,7 @@ export default class DatabaseClient {
         .select(
           'retrievals.id',
           'retrievals.created_at',
+          'retrievals.updated_at',
           // Only request portal Id from the jsondata
           db.raw('(jsondata->\'portalId\') as portal_id'),
           // Aggregate all titles from related collections into an array.
