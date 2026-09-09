@@ -58,7 +58,7 @@ export interface HistoryRetrieval {
   portalId: string
   /** The title of the retrieval */
   titles: string[]
-  //** The date the retrieval was las updated */
+  //* * The date the retrieval was las updated */
   updatedAt: string
 }
 interface HistoryRetrievalsQueryData {
