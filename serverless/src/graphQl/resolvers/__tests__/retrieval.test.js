@@ -354,7 +354,7 @@ describe('Retrieval resolver', () => {
                 obfuscatedId: '4517239960',
                 portalId: 'edsc',
                 titles: ['title 1'],
-                updated_at: '2023-01-02T00:00:00Z'
+                updatedAt: '2023-01-02T00:00:00Z'
               }
             ],
             pageInfo: {
