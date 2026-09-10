@@ -221,7 +221,7 @@ describe('DownloadHistorys component', () => {
       }]
     })
 
-    expect(await screen.findByText('Downloads that have not been updated in over a year will be removed.')).toBeInTheDocument()
+    expect(await screen.findByText('Downloads older than one year are automatically removed.')).toBeInTheDocument()
   })
 
   describe('when a retrieval is close to its removal date', () => {
@@ -269,7 +269,7 @@ describe('DownloadHistorys component', () => {
       await user.hover(icon)
 
       const tooltip = await screen.findByRole('tooltip')
-      expect(tooltip).toHaveTextContent('Download will be removed soon if not updated.')
+      expect(tooltip).toHaveTextContent('Download will be removed soon.')
     })
   })
 

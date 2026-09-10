@@ -34,13 +34,13 @@ import { routes } from '../../constants/routes'
 import { stringify } from '../../util/url/url'
 // @ts-expect-error This file does not have types
 import addToast from '../../util/addToast'
+import renderTooltip from '../../util/renderTooltip'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './DownloadHistory.scss'
 import 'rc-pagination/assets/index.css'
-import renderTooltip from '../../util/renderTooltip'
 
 // Downloads that have not been updated for this number of days are removed
 const RETENTION_PERIOD_DAYS = 365
@@ -163,7 +163,7 @@ export const DownloadHistory = () => {
         bootstrapVariant="warning"
         icon={AlertMediumPriority}
       >
-        Downloads that have not been updated in over a year will be removed.
+        Downloads older than one year are automatically removed.
       </EDSCAlert>
       {
         loading && (
@@ -218,7 +218,7 @@ export const DownloadHistory = () => {
                                 placement="top"
                                 overlay={
                                   (tooltipPros) => renderTooltip({
-                                    children: 'Download will be removed soon if not updated.',
+                                    children: 'Download will be removed soon.',
                                     id: `tooltip__download-history-expiration__${id}`,
                                     ...tooltipPros
                                   })
