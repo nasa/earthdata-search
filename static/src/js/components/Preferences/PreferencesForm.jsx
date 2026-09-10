@@ -22,6 +22,7 @@ import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationTy
 
 import './PreferencesForm.scss'
 
+// Utility to hide the homeSearchMode preference until NLP search is enabled
 const removeHomeSearchMode = (preferences) => {
   const remainingPreferences = { ...preferences }
   delete remainingPreferences.homeSearchMode

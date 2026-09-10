@@ -79,6 +79,8 @@ class PreferencesRadioField extends Component {
   }
 }
 
+// FormData changed from required to optional because a user may not have a saved homeSearchMode.
+// We do not want to force them into either option via a preference setting.
 PreferencesRadioField.propTypes = {
   formData: PropTypes.string,
   name: PropTypes.string.isRequired,
