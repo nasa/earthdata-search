@@ -553,6 +553,7 @@ export default class DatabaseClient {
         .select(
           'retrievals.id',
           'retrievals.created_at',
+          'retrievals.updated_at',
           // Only request portal Id from the jsondata
           db.raw('(jsondata->\'portalId\') as portal_id'),
           // Aggregate all titles from related collections into an array.
@@ -564,9 +565,9 @@ export default class DatabaseClient {
         .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
         // Filter results to only include retrievals for the specified user
         .where({ 'retrievals.user_id': userId })
-        // Group results by retrieval ID, creation date, and JSON data
+        // Group results by retrieval ID, creation/update date, and JSON data
         // in order to aggregate collection titles
-        .groupBy('retrievals.id', 'retrievals.created_at', 'retrievals.jsondata')
+        .groupBy('retrievals.id', 'retrievals.created_at', 'retrievals.updated_at', 'retrievals.jsondata')
         // Sort by most recent
         .orderBy('retrievals.created_at', 'desc')
 

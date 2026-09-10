@@ -2,6 +2,11 @@
 @use '../../../css/utils';
 
 .download-history {
+  &__retention-banner {
+    margin-top: calc(-1 * bootstrap.$spacer * 2);
+    margin-bottom: bootstrap.$spacer;
+  }
+
   &__spinner {
     margin: 0 auto;
   }
@@ -96,6 +101,12 @@
 .download-history-table {
   &__ago {
     white-space: nowrap;
+  }
+
+  &__expiration-warning {
+    display: inline-flex;
+    margin-left: calc(bootstrap.$spacer / 4);
+    vertical-align: middle;
   }
 
   &__actions,

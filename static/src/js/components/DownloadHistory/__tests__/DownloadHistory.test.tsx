@@ -86,7 +86,8 @@ describe('DownloadHistorys component', () => {
         id: 1,
         obfuscatedId: '8069076',
         portalId: 'edsc',
-        titles: ['title 1']
+        titles: ['title 1'],
+        updatedAt: '2019-09-09T11:58:14.390Z'
       }
 
       setup({
@@ -137,7 +138,8 @@ describe('DownloadHistorys component', () => {
         id: 1,
         obfuscatedId: '8069076',
         portalId: 'edsc',
-        titles: ['title 1', 'title 2', 'title 3']
+        titles: ['title 1', 'title 2', 'title 3'],
+        updatedAt: '2019-09-09T11:58:14.390Z'
       }
 
       setup({
@@ -180,6 +182,137 @@ describe('DownloadHistorys component', () => {
         }),
         {}
       )
+    })
+  })
+
+  test('renders a banner about a download retention', async () => {
+    const historyRetrieval = {
+      createdAt: '2019-08-25T11:58:14.390Z',
+      id: 1,
+      obfuscatedId: '8069076',
+      portalId: 'edsc',
+      titles: ['title 1'],
+      updatedAt: '2019-09-09T11:58:14.390Z'
+    }
+
+    setup({
+      overrideApolloClientMocks: [{
+        request: {
+          query: HISTORY_RETRIEVALS,
+          variables: {
+            limit: 20,
+            offset: 0
+          }
+        },
+        result: {
+          data: {
+            historyRetrievals: {
+              historyRetrievals: [historyRetrieval],
+              count: 1,
+              pageInfo: {
+                currentPage: 1,
+                hasNextPage: false,
+                hasPreviousPage: false,
+                pageCount: 1
+              }
+            }
+          }
+        }
+      }]
+    })
+
+    expect(await screen.findByText('Downloads older than one year are automatically removed.')).toBeInTheDocument()
+  })
+
+  describe('when a retrieval is close to its removal date', () => {
+    test('displays a removal warning tooltip on hover', async () => {
+      const almostExipredDate = new Date()
+      almostExipredDate.setDate(almostExipredDate.getDate() - 360)
+
+      const historyRetrieval = {
+        createdAt: '2019-08-25T11:58:14.390Z',
+        id: 1,
+        obfuscatedId: '8069076',
+        portalId: 'edsc',
+        titles: ['title 1'],
+        updatedAt: almostExipredDate.toISOString()
+      }
+
+      const { user } = setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: HISTORY_RETRIEVALS,
+            variables: {
+              limit: 20,
+              offset: 0
+            }
+          },
+          result: {
+            data: {
+              historyRetrievals: {
+                historyRetrievals: [historyRetrieval],
+                count: 1,
+                pageInfo: {
+                  currentPage: 1,
+                  hasNextPage: false,
+                  hasPreviousPage: false,
+                  pageCount: 1
+                }
+              }
+            }
+          }
+        }]
+      })
+
+      const icon = await screen.findByLabelText('Download expiring soon')
+
+      await user.hover(icon)
+
+      const tooltip = await screen.findByRole('tooltip')
+      expect(tooltip).toHaveTextContent('Download will be removed soon.')
+    })
+  })
+
+  describe('when a retrieval is not close to its removal date', () => {
+    test('does not display a removal warning', async () => {
+      const historyRetrieval = {
+        createdAt: '2019-08-25T11:58:14.390Z',
+        id: 1,
+        obfuscatedId: '8069076',
+        portalId: 'edsc',
+        titles: ['title 1'],
+        updatedAt: new Date().toISOString()
+      }
+
+      setup({
+        overrideApolloClientMocks: [{
+          request: {
+            query: HISTORY_RETRIEVALS,
+            variables: {
+              limit: 20,
+              offset: 0
+            }
+          },
+          result: {
+            data: {
+              historyRetrievals: {
+                historyRetrievals: [historyRetrieval],
+                count: 1,
+                pageInfo: {
+                  currentPage: 1,
+                  hasNextPage: false,
+                  hasPreviousPage: false,
+                  pageCount: 1
+                }
+              }
+            }
+          }
+        }]
+      })
+
+      await screen.findByRole('link', { name: 'title 1' })
+
+      expect(screen.queryByLabelText('Download expiring soon')).not.toBeInTheDocument()
     })
   })
 
