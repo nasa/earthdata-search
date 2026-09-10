@@ -90,14 +90,14 @@ const getPreferredHomeSearchMode = (
 ): PreferredHomeSearchMode => {
   if (!isNlpEnabled) return traditionalSearchMode
 
-  if (savedSearchMode) return savedSearchMode
-
   const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
 
   if (
     storedSearchMode === nlpSearchMode
     || storedSearchMode === traditionalSearchMode
   ) return storedSearchMode
+
+  if (savedSearchMode) return savedSearchMode
 
   return null
 }
@@ -217,6 +217,11 @@ export const Home: React.FC = () => {
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
 
   useEffect(() => {
+    // Local storage take priority over saved user preference, so don't
+    // let homeSearchMode in preferences override existing local storage value
+    const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
+    if (storedSearchMode === nlpSearchMode || storedSearchMode === traditionalSearchMode) return
+
     if (isNlpEnabled && homeSearchMode) setPreferredHomeSearchMode(homeSearchMode)
   }, [homeSearchMode, isNlpEnabled])
 

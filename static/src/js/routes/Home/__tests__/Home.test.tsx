@@ -158,7 +158,7 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
-    test('uses the saved user preference before local storage', () => {
+    test('uses local storage before the saved user preference', () => {
       localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
 
       setup({
@@ -171,9 +171,25 @@ describe('Home', () => {
         }
       })
 
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+    })
+
+    test('uses the saved user preference when local storage has no preference', () => {
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePrefrences: {
+              homeSearchMode: 'traditional'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
     })
 
     test('saves the selected search mode preference', async () => {
