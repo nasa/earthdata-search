@@ -180,7 +180,7 @@ describe('Home', () => {
       setup({
         overrideZustandState: {
           user: {
-            sitePrefrences: {
+            sitePreferences: {
               homeSearchMode: 'traditional'
             }
           }
