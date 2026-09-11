@@ -31,7 +31,7 @@ import {
 import { ShapefileSlice } from '../../zustand/types'
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
-import { metricsMap } from '../metrics/metricsMap'
+import { metricsMapButtons } from '../metrics/metricsMap'
 
 // Simplify the shape if it has too many points
 const simplifyShape = ({
@@ -272,7 +272,7 @@ const drawShapefile = ({
   // If the shapefile was just added, move the map to the shapefile
   if (shapefileAdded) {
     // Create the metrics event
-    metricsMap('Added Shapefile')
+    metricsMapButtons('Added Shapefile')
 
     // When the projection changes we need to wait longer to ensure the map is ready to be moved to the shapefile.
     const timeoutValue = projectionChanged ? 200 : 0
