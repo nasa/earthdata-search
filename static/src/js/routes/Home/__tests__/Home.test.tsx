@@ -158,6 +158,40 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
+    test('uses local storage before the saved user preference', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'nlp'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+    })
+
+    test('uses the saved user preference when local storage has no preference', () => {
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'traditional'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+    })
+
     test('saves the selected search mode preference', async () => {
       const { user } = setup()
 

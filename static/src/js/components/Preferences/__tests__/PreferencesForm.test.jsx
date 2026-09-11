@@ -5,6 +5,7 @@ import PreferencesForm from '../PreferencesForm'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import UPDATE_PREFERENCES from '../../../operations/mutations/updatePreferences'
 import addToast from '../../../util/addToast'
+import * as config from '../../../../../../sharedUtils/config'
 
 vi.mock('../../../util/addToast')
 
@@ -51,6 +52,7 @@ describe('PreferencesForm component', () => {
     expect(screen.getByText(/Panel State/i)).toBeInTheDocument()
     expect(screen.getByText(/Collection.*Sort/i)).toBeInTheDocument()
     expect(screen.getByText(/Granule.*Sort/i)).toBeInTheDocument()
+    expect(screen.getByText(/Home Search Mode/i)).toBeInTheDocument()
     expect(screen.getByText(/Collection List View/i)).toBeInTheDocument()
     expect(screen.getByText(/Granule List View/i)).toBeInTheDocument()
     expect(screen.getByText(/Map View/i)).toBeInTheDocument()
@@ -63,6 +65,9 @@ describe('PreferencesForm component', () => {
 
     const granuleSortDefault = screen.getByLabelText('Default', { selector: '[name="granuleSort"]' })
     expect(granuleSortDefault).toBeChecked()
+
+    const aiEnhancedSearch = screen.getByLabelText('AI Enhanced Search', { selector: '[name="homeSearchMode"]' })
+    expect(aiEnhancedSearch).not.toBeChecked()
 
     const collectionListViewDefault = screen.getByLabelText('Default', { selector: '[name="collectionListView"]' })
     expect(collectionListViewDefault).toBeChecked()
@@ -90,6 +95,77 @@ describe('PreferencesForm component', () => {
     expect(screen.getByText(/Overlay Layers/i)).toBeInTheDocument()
   })
 
+  describe('when nlpSearch is disabled', () => {
+    test('does not render or submit the home search mode preference', async () => {
+      const getApplicationConfigMock = vi.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
+        nlpSearch: 'false'
+      }))
+
+      try {
+        const { user } = setup({
+          overrideApolloClientMocks: [
+            {
+              request: {
+                query: UPDATE_PREFERENCES,
+                variables: {
+                  preferences: {
+                    collectionSort: 'default',
+                    granuleSort: 'default',
+                    panelState: 'default',
+                    collectionListView: 'default',
+                    granuleListView: 'default',
+                    mapView: {
+                      latitude: 0,
+                      longitude: 0,
+                      zoom: 3,
+                      projection: 'epsg4326',
+                      baseLayer: 'worldImagery',
+                      overlayLayers: ['bordersRoads', 'placeLabels'],
+                      rotation: 0
+                    }
+                  }
+                }
+              },
+              result: {
+                data: {
+                  updatePreferences: {
+                    id: 42,
+                    sitePreferences: {
+                      ...defaultZustandState.user.sitePreferences,
+                      homeSearchMode: 'nlp'
+                    },
+                    ursId: 'testuser',
+                    ursProfile: null
+                  }
+                }
+              }
+            }
+          ],
+          overrideZustandState: {
+            user: {
+              sitePreferences: {
+                ...defaultZustandState.user.sitePreferences,
+                homeSearchMode: 'nlp'
+              }
+            }
+          }
+        })
+
+        expect(screen.queryByText(/Home Search Mode/i)).not.toBeInTheDocument()
+        expect(screen.queryByLabelText('AI Enhanced Search', { selector: '[name="homeSearchMode"]' })).not.toBeInTheDocument()
+
+        await user.click(screen.getByRole('button', { name: /submit/i }))
+
+        expect(addToast).toHaveBeenCalledWith('Preferences saved!', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      } finally {
+        getApplicationConfigMock.mockRestore()
+      }
+    })
+  })
+
   describe('when submitting the form', () => {
     test('submits the form successfully', async () => {
       const { user } = setup({
@@ -101,6 +177,7 @@ describe('PreferencesForm component', () => {
                 preferences: {
                   collectionSort: '-score',
                   granuleSort: '-start_date',
+                  homeSearchMode: 'nlp',
                   panelState: 'collapsed',
                   collectionListView: 'default',
                   granuleListView: 'default',
@@ -126,6 +203,7 @@ describe('PreferencesForm component', () => {
                     granuleListView: 'default',
                     collectionSort: '-score',
                     granuleSort: '-start_date',
+                    homeSearchMode: 'nlp',
                     mapView: {
                       baseLayer: 'worldImagery',
                       latitude: 45,
@@ -165,6 +243,10 @@ describe('PreferencesForm component', () => {
 
       await user.click(newestFirstOption)
       expect(newestFirstOption).toBeChecked()
+
+      const aiEnhancedSearch = screen.getByLabelText('AI Enhanced Search', { selector: '[name="homeSearchMode"]' })
+      await user.click(aiEnhancedSearch)
+      expect(aiEnhancedSearch).toBeChecked()
 
       const numberInputs = screen.getAllByRole('spinbutton')
       const latitudeInput = numberInputs.find((input) => input.name === 'latitude')

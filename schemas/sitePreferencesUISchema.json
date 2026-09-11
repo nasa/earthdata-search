@@ -1,4 +1,12 @@
 {
+  "homeSearchMode": {
+    "ui:widget": "radio",
+    "ui:field": "radio",
+    "ui:enumNames": [
+      "AI Enhanced Search",
+      "Traditional Search"
+    ]
+  },
   "collectionSort": {
     "ui:widget": "radio",
     "ui:field": "radio",
