@@ -146,7 +146,7 @@ const urlDefs = {
   shapefileId: {
     shortKey: 'sf',
     encode: encodeString,
-    decode: encodeString
+    decode: decodeString
   },
   selectedFeatures: {
     shortKey: 'sfs',

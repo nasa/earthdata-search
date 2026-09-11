@@ -99,7 +99,7 @@ describe('changePath', () => {
           }
         },
         shapefile: {
-          shapefileId: ''
+          shapefileId: undefined
         }
       })
     )
@@ -167,7 +167,7 @@ describe('changePath', () => {
         }
       },
       shapefile: {
-        shapefileId: ''
+        shapefileId: undefined
       }
     }), '/search')
 
