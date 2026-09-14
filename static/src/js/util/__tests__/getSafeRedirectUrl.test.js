@@ -35,12 +35,12 @@ describe('getSafeRedirectUrl', () => {
       expect(response).toBeNull()
     })
 
-    test('allows http: redirects if edscHost is http: (Local Development)', () => {
+    test('rejects http: redirects even if edscHost is http: (Strict HTTPS Enforcement)', () => {
       const localHost = 'http://localhost:8080'
       const redirect = 'http://localhost:8080/search'
       const response = getSafeRedirectUrl(redirect, localHost)
 
-      expect(response).toBe('http://localhost:8080/search')
+      expect(response).toBeNull()
     })
   })
 
