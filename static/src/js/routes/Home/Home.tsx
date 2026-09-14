@@ -322,7 +322,7 @@ export const Home: React.FC = () => {
           }
         },
         onCompleted: (data: { updatePreferences: { sitePreferences: typeof sitePreferences } }) => {
-          const {updatePreferences: updatedUser } = data
+          const { updatePreferences: updatedUser } = data
           const { sitePreferences: updatedPreferences } = updatedUser
 
           setSitePreferences(updatedPreferences)
