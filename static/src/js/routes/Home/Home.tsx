@@ -312,7 +312,7 @@ export const Home: React.FC = () => {
 
     if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
 
-    // If the user is ogged in, persist the change to their saved user preferences
+    // If the user is logged in, persist the change to their saved user preferences
     if (edlToken) {
       updatePreferencesMutation({
         variables: {

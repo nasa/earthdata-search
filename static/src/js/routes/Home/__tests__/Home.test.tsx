@@ -239,10 +239,20 @@ describe('Home', () => {
           },
           result: {
             data: {
-              updatePrferences: {
+              updatePreferences: {
                 id: 1,
                 sitePreferences: expectedPreferences,
-                ursProfile: {},
+                ursProfile: {
+                  affiliation: 'mock-affiliation',
+                  country: 'mock-country',
+                  emailAddress: 'mock@example.com',
+                  firstName: 'mock-first-name',
+                  lastName: 'mock-last-name',
+                  organization: 'mock-organization',
+                  studyArea: 'mock-study-area',
+                  uid: 'mock-uid',
+                  userType: 'mock-user-type'
+                },
                 ursId: 'mock-uid'
               }
             }
