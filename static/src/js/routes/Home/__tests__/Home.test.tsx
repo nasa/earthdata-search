@@ -250,7 +250,7 @@ describe('Home', () => {
         }]
       })
 
-      await user.clear(screen.getByRole('radio', { name: 'Traditional Search' }))
+      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
 
       await waitFor(() => {
         expect(setSitePreferences).toHaveBeenCalledWith(expectedPreferences)
