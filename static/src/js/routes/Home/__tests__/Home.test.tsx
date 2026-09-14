@@ -176,7 +176,7 @@ describe('Home', () => {
 
       expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
       expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during Summer 2023')).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
     test('uses the saved user preference when local storage has no preference', () => {
