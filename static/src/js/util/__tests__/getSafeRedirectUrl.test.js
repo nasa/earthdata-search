@@ -2,6 +2,7 @@ import { getSafeRedirectUrl } from '../getSafeRedirectUrl'
 
 describe('getSafeRedirectUrl', () => {
   const edscHost = 'https://search.earthdata.nasa.gov'
+  const edlHost = 'https://urs.earthdata.nasa.gov'
 
   describe('Standard Redirects (Intended Passes)', () => {
     test('allows relative root path based on edscHost', () => {
@@ -24,6 +25,30 @@ describe('getSafeRedirectUrl', () => {
       const response = getSafeRedirectUrl(redirect, edscHost)
 
       expect(response).toBe('https://search.earthdata.nasa.gov/projects/123')
+    })
+  })
+
+  describe('Earthdata Login (EDL) Redirects', () => {
+    test('allows exact match of trusted edlHost', () => {
+      const redirect = 'https://urs.earthdata.nasa.gov'
+      const response = getSafeRedirectUrl(redirect, edscHost, edlHost)
+
+      expect(response).toBe('https://urs.earthdata.nasa.gov/')
+    })
+
+    test('allows deep links on the trusted edlHost', () => {
+      const redirect = 'https://urs.earthdata.nasa.gov/oauth/authorize'
+      const response = getSafeRedirectUrl(redirect, edscHost, edlHost)
+
+      expect(response).toBe('https://urs.earthdata.nasa.gov/oauth/authorize')
+    })
+
+    test('gracefully ignores malformed edlHost and still allows edscHost', () => {
+      const redirect = 'https://search.earthdata.nasa.gov'
+      const brokenEdlHost = 'not-a-valid-url'
+      const response = getSafeRedirectUrl(redirect, edscHost, brokenEdlHost)
+
+      expect(response).toBe('https://search.earthdata.nasa.gov/')
     })
   })
 
@@ -93,6 +118,13 @@ describe('getSafeRedirectUrl', () => {
 
     test('rejects absolute URLs using the earthdata-download name as a username (@ trick)', () => {
       const redirect = 'https://earthdata-download@evil.com'
+      const response = getSafeRedirectUrl(redirect, edscHost)
+
+      expect(response).toBeNull()
+    })
+
+    test('rejects custom protocol URLs smuggling credentials (@ trick)', () => {
+      const redirect = 'earthdata-download://authCallback@evil.com'
       const response = getSafeRedirectUrl(redirect, edscHost)
 
       expect(response).toBeNull()
