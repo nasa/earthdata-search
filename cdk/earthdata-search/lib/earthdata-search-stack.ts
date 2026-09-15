@@ -21,6 +21,7 @@ const logGroupSuffix = ''
 const {
   BEDROCK_MODEL_ID = 'amazon.nova-pro-v1:0',
   IMAGE_CACHE_EXPIRE_SECONDS = '84000',
+  CLEANUP_RETRIEVALS_JOB_ENABLED,
   CLOUDFRONT_BUCKET_NAME = 'local-bucket',
   COLORMAP_JOB_ENABLED,
   GEOCODE_CACHE_EXPIRE_SECONDS = '2592000', // 30 days in seconds
@@ -194,6 +195,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       apiScope: apiNestedStack,
       authorizers,
       cloudfrontBucketName: CLOUDFRONT_BUCKET_NAME,
+      cleanupRetrievalsJobEnabled: CLEANUP_RETRIEVALS_JOB_ENABLED === 'true',
       colormapJobEnabled: COLORMAP_JOB_ENABLED === 'true',
       defaultLambdaConfig,
       gibsJobEnabled: GIBS_JOB_ENABLED === 'true',
