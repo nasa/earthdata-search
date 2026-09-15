@@ -37,11 +37,6 @@ export const getSafeRedirectUrl = (inputUrl, edscHost, edlHost) => {
     // defeated by exactly the payloads this function is tested against below.
     const destination = new URL(inputUrl, edscHost)
 
-    // Allows intended custom desktop application protocol scheme, example: earthdata-download://authCallback
-    // This scheme has no host/origin comparable to edscHost, so it's handled
-    // before the origin-allowlist check below rather than folded into it.
-    if (destination.protocol === 'earthdata-download:') return destination.href
-
     // Reject any credentials embedded in the authority component, e.g.
     // https://trusted.example@attacker.example/ (userinfo "trusted.example",
     // real host "attacker.example") or https://attacker.example:x@trusted.example/
@@ -49,6 +44,11 @@ export const getSafeRedirectUrl = (inputUrl, edscHost, edlHost) => {
     // Checked independently of the origin comparison below since origin doesn't
     // include userinfo, and we want to refuse *any* embedded credential outright.
     if (destination.username !== '' || destination.password !== '') return null
+
+    // Allows intended custom desktop application protocol scheme, example: earthdata-download://authCallback
+    // This scheme has no host/origin comparable to edscHost, so it's handled
+    // before the origin-allowlist check below rather than folded into it.
+    if (destination.protocol === 'earthdata-download:') return destination.href
 
     // Restrict scheme to https: only - no exception for local development.
     // The allowlist is a set of exact origins (protocol + host + port), so
