@@ -1,12 +1,14 @@
 import spatialTypes from '../../../constants/spatialTypes'
 import useEdscStore from '../../../zustand/useEdscStore'
 import {
+  computeBucketGranuleCount,
   computeKeyword,
   computeSpatialType,
   computeTemporalType,
   computeCollectionsViewed,
   computeCollectionsAdded,
-  computeFacets
+  computeFacets,
+  computePercentile
 } from '../helpers'
 
 const emptySpatial = {}
@@ -349,6 +351,58 @@ describe('helpers', () => {
 
         const value = computeFacets()
         expect(value).toEqual('latency/1+to+3+hours ')
+      })
+    })
+
+    describe('computeBucketGranuleCount', () => {
+      test('returns "0" when the count is 0', () => {
+        expect(computeBucketGranuleCount(0)).toEqual('0')
+      })
+
+      test('returns "1-20" when the count is between 1 and 20', () => {
+        expect(computeBucketGranuleCount(1)).toEqual('1-20')
+        expect(computeBucketGranuleCount(20)).toEqual('1-20')
+      })
+
+      test('returns "21-40" when the count is between 21 and 40', () => {
+        expect(computeBucketGranuleCount(21)).toEqual('21-40')
+        expect(computeBucketGranuleCount(40)).toEqual('21-40')
+      })
+
+      test('returns "41-60" when the count is between 41 and 60', () => {
+        expect(computeBucketGranuleCount(41)).toEqual('41-60')
+        expect(computeBucketGranuleCount(60)).toEqual('41-60')
+      })
+
+      test('returns "61-100" when the count is between 61 and 100', () => {
+        expect(computeBucketGranuleCount(61)).toEqual('61-100')
+        expect(computeBucketGranuleCount(100)).toEqual('61-100')
+      })
+
+      test('returns "100+" when the count is greater than 100', () => {
+        expect(computeBucketGranuleCount(101)).toEqual('100+')
+        expect(computeBucketGranuleCount(50000)).toEqual('100+')
+      })
+    })
+
+    describe('computePercentile', () => {
+      test('returns the value at the requested quantile', () => {
+        const renderTimes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+        expect(computePercentile(renderTimes, 0.5)).toEqual(50)
+        expect(computePercentile(renderTimes, 0.95)).toEqual(100)
+      })
+
+      test('does not exceed the last element for the max quantile', () => {
+        const renderTimes = [10, 20, 30]
+
+        expect(computePercentile(renderTimes, 1)).toEqual(30)
+      })
+
+      test('rounds the returned value', () => {
+        const renderTimes = [10.4, 20.6]
+
+        expect(computePercentile(renderTimes, 1)).toEqual(21)
       })
     })
   })

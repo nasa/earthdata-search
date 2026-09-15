@@ -162,7 +162,7 @@ describe('Search component', () => {
       const icons = screen.getAllByRole('graphics-symbol')
       const tooltip = icons[1]
       await user.hover(tooltip)
-      expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results')).toBeInTheDocument()
+      expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, or not provided in results')).toBeInTheDocument()
     })
 
     test('does not render the "Include inactive collections" checkbox if showInactiveCollections is false', async () => {

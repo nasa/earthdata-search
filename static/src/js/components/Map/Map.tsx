@@ -31,6 +31,7 @@ import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import VectorTileLayer from 'ol/layer/VectorTile'
+import { unByKey } from 'ol/Observable'
 
 import {
   FaCircle,
@@ -82,6 +83,12 @@ import bordersRoads from '../../util/map/layers/bordersRoads'
 import coastlines from '../../util/map/layers/coastlines'
 import trueColor from '../../util/map/layers/trueColor'
 import landWaterMap from '../../util/map/layers/landWaterMap'
+import {
+  createEmptyPerformanceWindow,
+  flushMapPerformanceMetrics,
+  timeLayerRenderOnce,
+  MAP_PERFORMANCE_WINDOW_MS
+} from '../../util/map/mapPerformanceMetrics'
 
 import { eventEmitter } from '../../events/events'
 
@@ -98,6 +105,24 @@ import {
   SpatialSearch
 } from '../../types/sharedTypes'
 import { MapView, ShapefileSlice } from '../../zustand/types'
+
+interface MapPerformanceWindow {
+  /** Timestamp (from performance.now()) marking when the current metrics window started */
+  windowStart: number
+  /** Total number of frames recorded during a pan/zoom interaction in this window
+   *  this is the cumulative count of postrender events collected across possibly multiple separate pan/zoom gestures,
+   *  accumulated until the (`PERFORMANCE_WINDOW_MS`) window is flushed.
+  */
+  frames: number
+  /** Count of frames that took longer than 33ms to render (i.e. dropped below ~30fps) */
+  slowFrames: number
+  /** Count of frames that took longer than 100ms to render (severe jank) */
+  verySlowFrames: number
+  /** Raw list of individual frame render durations (ms), used to compute percentiles (p50/p95/p99) */
+  renderTimes: number[]
+  /** The single longest frame render duration (ms) observed in this window */
+  maxRenderTimeMs: number
+}
 
 let previousGranulesKey: string
 let previousProjectionCode: ProjectionCode
@@ -215,7 +240,6 @@ const createView = ({
 
   // `rotation` is in degrees, but OpenLayers expects it in radians
   const rotationInRad = rotation * (Math.PI / 180)
-
   const view = new View({
     center: reprojectedCenter,
     constrainOnlyCenter: true,
@@ -291,6 +315,10 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
+  /** Project collections from the store applicable if on the projects page */
+  projectCollections: {
+    allIds: string[]
+  },
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -379,6 +407,7 @@ const Map: React.FC<MapProps> = ({
   imageryLayers,
   isFocusedCollectionPage,
   isProjectPage,
+  projectCollections,
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
@@ -415,6 +444,45 @@ const Map: React.FC<MapProps> = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
   const mapElRef = useRef<HTMLDivElement>(null)
+  const lastFrameRef = useRef<number>(performance.now())
+  const frameTimesRef = useRef<number[]>([])
+  const isTrackingFrameRef = useRef(false)
+  const performanceWindowRef = useRef<MapPerformanceWindow>(createEmptyPerformanceWindow())
+
+  // Mirror the latest focused collection(s) into a ref so the long-lived
+  // map event listeners always read current values without needing to be
+  // re-registered. On the project page there can be multiple focused
+  // collections; everywhere else there's exactly zero or one focused collection.
+  const focusedCollectionIdRef = useRef<string[]>(
+    isProjectPage ? projectCollections.allIds : [focusedCollectionId]
+  )
+
+  // Initailize Center and Zoom references
+  const centerRef = useRef(center)
+  const zoomRef = useRef(zoom)
+
+  useEffect(() => {
+    centerRef.current = center
+  }, [center])
+
+  useEffect(() => {
+    zoomRef.current = zoom
+  }, [zoom])
+
+  useEffect(() => {
+    focusedCollectionIdRef.current = isProjectPage
+      ? projectCollections.allIds
+      : [focusedCollectionId]
+  }, [focusedCollectionId, isProjectPage, projectCollections])
+
+  // Mirror the latest granule count into a ref so the long-lived
+  // map event listeners always read the current value without needing
+  // to be re-registered.
+  const granuleCountRef = useRef<number>(granules.length)
+
+  useEffect(() => {
+    granuleCountRef.current = granules.length
+  }, [granules])
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
@@ -449,6 +517,72 @@ const Map: React.FC<MapProps> = ({
       })
     })
     mapRef.current = map
+
+    // Only accumulate frame deltas while an interaction (pan or zoom) is in
+    // progress, so idle frames don't dilute the stats. On moveend we roll the
+    // collected frame times up into a single summary and hand it off to the
+    // metrics helper, rather than reporting one event per frame.
+    const handlePostRenderPerf = () => {
+      if (!isTrackingFrameRef.current) return
+
+      const now = performance.now()
+      frameTimesRef.current.push(now - lastFrameRef.current)
+      lastFrameRef.current = now
+    }
+
+    const handleMoveStartPerf = () => {
+      isTrackingFrameRef.current = true
+      frameTimesRef.current = []
+      lastFrameRef.current = performance.now()
+    }
+
+    const handleMoveEndPerf = () => {
+      if (!isTrackingFrameRef.current) return
+
+      isTrackingFrameRef.current = false
+
+      const frameTimes = frameTimesRef.current
+      if (frameTimes.length === 0) return
+
+      const metrics = performanceWindowRef.current
+
+      metrics.frames += frameTimes.length
+
+      metrics.renderTimes.push(...frameTimes)
+
+      metrics.slowFrames += frameTimes.filter(
+        (time) => time > 33
+      ).length
+
+      metrics.verySlowFrames += frameTimes.filter(
+        (time) => time > 100
+      ).length
+
+      metrics.maxRenderTimeMs = Math.max(
+        metrics.maxRenderTimeMs,
+        ...frameTimes
+      )
+
+      // HasFocusedCollection can be single or multiple colls
+      const hasFocusedCollection = focusedCollectionIdRef.current.some(Boolean)
+
+      // Real time elapsed since the window opened, until the moveend that happened to trigger a flush check that passed."
+      if (
+        performance.now() - metrics.windowStart
+    >= MAP_PERFORMANCE_WINDOW_MS
+    && (granuleCountRef.current > 0 || hasFocusedCollection)
+      ) {
+        flushMapPerformanceMetrics(
+          performanceWindowRef,
+          focusedCollectionIdRef.current,
+          granuleCountRef.current
+        )
+      }
+    }
+
+    map.on('postrender', handlePostRenderPerf)
+    map.on('movestart', handleMoveStartPerf)
+    map.on('moveend', handleMoveEndPerf)
 
     // Handle the map draw start event
     const handleDrawingStart = (spatialType: string) => {
@@ -540,6 +674,17 @@ const Map: React.FC<MapProps> = ({
 
       let [newLongitude, newLatitude] = newCenter
       const newZoom = view.getZoom()
+
+      // Synch current center and zoom to refs so that the long-lived map event
+      // listeners always read current values without needing to be re-registered.
+      centerRef.current = {
+        latitude: newLatitude,
+        longitude: newLongitude
+      }
+
+      // Falling back openlayers getZoom() can return undefined
+      zoomRef.current = newZoom ?? zoomRef.current
+
       let newRotationInDeg = 0
 
       // If the new center is 0,0 use the projection's default center
@@ -679,6 +824,11 @@ const Map: React.FC<MapProps> = ({
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
+
+      // Cleanup the performance tracking event listeners
+      map.un('postrender', handlePostRenderPerf)
+      map.un('movestart', handleMoveStartPerf)
+      map.un('moveend', handleMoveEndPerf)
 
       eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
       eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
@@ -923,6 +1073,21 @@ const Map: React.FC<MapProps> = ({
     })
   }
 
+  // Clears all granule-related layers (backgrounds, highlights, imagery, and focused overlay)
+  const clearGranuleLayers = (map: OlMap) => {
+    // Clear the existing granule backgrounds
+    granuleBackgroundsSource.clear()
+
+    // Clear any existing granule highlights
+    unhighlightGranule(granuleHighlightsSource)
+
+    // Clear the granule imagery layers
+    granuleImageryLayerGroup.getLayers().clear()
+
+    // Clear any existing focused granules
+    clearFocusedGranuleSource(map)
+  }
+
   // Update the event listeners when the focusedCollectionId changes
   useEffect(() => {
     // Call handleHoverGranule when the the event is fired
@@ -984,51 +1149,78 @@ const Map: React.FC<MapProps> = ({
 
   // When the granules change, draw the granule backgrounds
   useEffect(() => {
+    if (granules && granules.length > 0) {
     // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
     // Redraw the granule backgrounds if the product layer from the gibs tag has changed
-    if (granulesKey === previousGranulesKey && projectionCode === previousProjectionCode) return
+      if (granulesKey === previousGranulesKey
+        && projectionCode === previousProjectionCode) return undefined
 
-    // Update the previous values
-    previousGranulesKey = granulesKey
-    previousProjectionCode = projectionCode
+      // Update the previous values
+      previousGranulesKey = granulesKey
+      previousProjectionCode = projectionCode
 
-    // Clear the existing granule backgrounds
-    granuleBackgroundsSource.clear()
+      clearGranuleLayers(mapRef.current as OlMap)
 
-    // Clear any existing granule highlights
-    unhighlightGranule(granuleHighlightsSource)
-
-    // Clear any existing focused granules
-    clearFocusedGranuleSource(mapRef.current as OlMap)
-
-    // Clear the granule imagery layers
-    granuleImageryLayerGroup.getLayers().clear()
-
-    // Draw the granule backgrounds
-    drawGranuleBackgroundsAndImagery({
-      gibsLayersByCollection,
-      granuleImageryLayerGroup,
-      granulesMetadata: granules,
-      map: mapRef.current as OlMap,
-      projectionCode,
-      vectorSource: granuleBackgroundsSource
-    })
-
-    // If there is a focused granule draw it
-    if (focusedGranuleId) {
-      drawFocusedGranule({
-        collectionId: focusedCollectionId,
-        focusedGranuleSource,
-        granuleBackgroundsSource,
-        granuleId: focusedGranuleId,
-        isProjectPage,
-        map: (mapRef.current as OlMap),
-        onExcludeGranule,
-        setGranuleId,
-        shouldMoveMap: false,
-        timesIconSvg
+      // Draw the granule backgrounds
+      drawGranuleBackgroundsAndImagery({
+        gibsLayersByCollection,
+        granuleImageryLayerGroup,
+        granulesMetadata: granules,
+        map: mapRef.current as OlMap,
+        projectionCode,
+        vectorSource: granuleBackgroundsSource
       })
+
+      // If there is a focused granule draw it
+      if (focusedGranuleId) {
+        drawFocusedGranule({
+          collectionId: focusedCollectionId,
+          focusedGranuleSource,
+          granuleBackgroundsSource,
+          granuleId: focusedGranuleId,
+          isProjectPage,
+          map: (mapRef.current as OlMap),
+          onExcludeGranule,
+          setGranuleId,
+          shouldMoveMap: false,
+          timesIconSvg
+        })
+      }
+
+      const activeCollectionIds = isProjectPage ? projectCollections.allIds : [focusedCollectionId]
+
+      // Timing keys for the layer render functions
+      // initailizes a reference for the cleanup function
+      const timingKeys = [
+        ...timeLayerRenderOnce({
+          layer: granuleBackgroundsLayer,
+          label: 'granule-backgrounds',
+          granuleCount: granules.length,
+          collectionIds: activeCollectionIds,
+          center: centerRef.current,
+          zoomLevel: zoomRef.current
+        }),
+        ...timeLayerRenderOnce({
+          layer: granuleOutlinesLayer,
+          label: 'granule-outlines',
+          granuleCount: granules.length,
+          collectionIds: activeCollectionIds,
+          center: centerRef.current,
+          zoomLevel: zoomRef.current
+        })
+      ]
+
+      // Clean up the timing listeners if this effect reruns/unmounts before they fire
+      return () => {
+        timingKeys.forEach((key) => {
+          unByKey(key)
+        })
+      }
     }
+
+    clearGranuleLayers(mapRef.current as OlMap)
+
+    return undefined
   }, [granules, granulesKey, projectionCode])
 
   // When the spatial search changes, draw the spatial search
