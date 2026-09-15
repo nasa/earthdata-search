@@ -26,9 +26,9 @@ export interface FunctionsProps {
   };
   /** The cloudfrontBucketName */
   cloudfrontBucketName: string;
-  /** Colormap generation job enabled */
   /** Cleanup retrievals job enabled */
   cleanupRetrievalsJobEnabled: boolean;
+  /** Colormap generation job enabled */
   colormapJobEnabled: boolean;
   /** Default Lambda config options */
   defaultLambdaConfig: application.NodeJsFunctionProps;
