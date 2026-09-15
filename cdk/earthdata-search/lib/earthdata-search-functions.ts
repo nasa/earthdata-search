@@ -27,6 +27,8 @@ export interface FunctionsProps {
   /** The cloudfrontBucketName */
   cloudfrontBucketName: string;
   /** Colormap generation job enabled */
+  /** Cleanup retrievals job enabled */
+  cleanupRetrievalsJobEnabled: boolean;
   colormapJobEnabled: boolean;
   /** Default Lambda config options */
   defaultLambdaConfig: application.NodeJsFunctionProps;
@@ -63,6 +65,7 @@ export class Functions extends Construct {
       apiScope,
       authorizers,
       cloudfrontBucketName,
+      cleanupRetrievalsJobEnabled,
       colormapJobEnabled,
       defaultLambdaConfig,
       gibsJobEnabled,
@@ -133,7 +136,7 @@ export class Functions extends Construct {
       functionName: 'cleanupOldRetrievals',
       functionNamePrefix,
       schedules: [{
-        enabled: true,
+        enabled: cleanupRetrievalsJobEnabled,
         schedule: events.Schedule.cron({
           day: '2',
           hour: '2',
