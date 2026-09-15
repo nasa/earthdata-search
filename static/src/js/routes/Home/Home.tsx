@@ -20,6 +20,8 @@ import {
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import { useMutation } from '@apollo/client'
+
 import Button from '../../components/Button/Button'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import NlpSearchStatus from '../../components/NlpSearchStatus/NlpSearchStatus'
@@ -65,7 +67,10 @@ import type { HomeSearchMode } from '../../zustand/types'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
-import { getSitePreferences } from '../../zustand/selectors/user'
+import { getEdlToken, getSitePreferences } from '../../zustand/selectors/user'
+
+import UPDATE_PREFERENCES from '../../operations/mutations/updatePreferences'
+import { DISPLAY_NOTIFICATION_TYPE } from '../../constants/displayNotificationType'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
@@ -90,14 +95,15 @@ const getPreferredHomeSearchMode = (
 ): PreferredHomeSearchMode => {
   if (!isNlpEnabled) return traditionalSearchMode
 
+  // A saved user preference always takes priority over the local storage value
+  if (savedSearchMode) return savedSearchMode
+
   const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
 
   if (
     storedSearchMode === nlpSearchMode
     || storedSearchMode === traditionalSearchMode
   ) return storedSearchMode
-
-  if (savedSearchMode) return savedSearchMode
 
   return null
 }
@@ -194,7 +200,12 @@ export const Home: React.FC = () => {
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
   const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
   const { nlpSearch: isNlpFeatureFlagEnabled } = featureFlags
-  const { homeSearchMode } = useEdscStore(getSitePreferences)
+  const sitePreferences = useEdscStore(getSitePreferences)
+  const { homeSearchMode } = sitePreferences
+  const edlToken = useEdscStore(getEdlToken)
+  const setSitePreferences = useEdscStore((state) => state.user.setSitePreferences)
+  const handleError = useEdscStore((state) => state.errors.handleError)
+  const [updatePreferencesMutation] = useMutation(UPDATE_PREFERENCES)
 
   const {
     numberOfGranules,
@@ -217,11 +228,7 @@ export const Home: React.FC = () => {
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
 
   useEffect(() => {
-    // Local storage take priority over saved user preference, so don't
-    // let homeSearchMode in preferences override existing local storage value
-    const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
-    if (storedSearchMode === nlpSearchMode || storedSearchMode === traditionalSearchMode) return
-
+    // A saved user preference always takes priority over the local storage value
     if (isNlpEnabled && homeSearchMode) setPreferredHomeSearchMode(homeSearchMode)
   }, [homeSearchMode, isNlpEnabled])
 
@@ -304,6 +311,32 @@ export const Home: React.FC = () => {
     setPreferredHomeSearchMode(nextSearchMode)
 
     if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
+
+    // If the user is logged in, persist the change to their saved user preferences
+    if (edlToken) {
+      updatePreferencesMutation({
+        variables: {
+          preferences: {
+            ...sitePreferences,
+            homeSearchMode: nextSearchMode
+          }
+        },
+        onCompleted: (data: { updatePreferences: { sitePreferences: typeof sitePreferences } }) => {
+          const { updatePreferences: updatedUser } = data
+          const { sitePreferences: updatedPreferences } = updatedUser
+
+          setSitePreferences(updatedPreferences)
+        },
+        onError: (error: Error) => {
+          handleError({
+            error,
+            action: 'updatePreferences',
+            resource: 'preferences',
+            notificationType: DISPLAY_NOTIFICATION_TYPE.TOAST
+          })
+        }
+      })
+    }
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

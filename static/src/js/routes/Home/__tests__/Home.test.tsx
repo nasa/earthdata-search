@@ -12,6 +12,8 @@ import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
+import UPDATE_PREFERENCES from '../../../operations/mutations/updatePreferences'
+import { initialSitePreferences } from '../../../zustand/slices/createUserSlice'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
@@ -98,6 +100,7 @@ const setup = setupTest({
       getCollections: vi.fn().mockResolvedValue(undefined)
     }
   },
+  withApolloClient: true,
   withRouter: true
 })
 
@@ -158,7 +161,7 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
-    test('uses local storage before the saved user preference', () => {
+    test('uses the saved user preference before local storage', () => {
       localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
 
       setup({
@@ -171,9 +174,9 @@ describe('Home', () => {
         }
       })
 
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
     test('uses the saved user preference when local storage has no preference', () => {
@@ -210,6 +213,58 @@ describe('Home', () => {
       setup()
 
       expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
+    })
+
+    test('saves the selected search mode to the user preferences when logged in', async () => {
+      const setSitePreferences = vi.fn()
+
+      const expectedPreferences = {
+        ...initialSitePreferences,
+        homeSearchMode: 'traditional'
+      }
+
+      const { user } = setup({
+        overrideZustandState: {
+          user: {
+            edlToken: 'mock-edl-token',
+            setSitePreferences
+          }
+        },
+        overrideApolloClientMocks: [{
+          request: {
+            query: UPDATE_PREFERENCES,
+            variables: {
+              preferences: expectedPreferences
+            }
+          },
+          result: {
+            data: {
+              updatePreferences: {
+                id: 1,
+                sitePreferences: expectedPreferences,
+                ursProfile: {
+                  affiliation: 'mock-affiliation',
+                  country: 'mock-country',
+                  emailAddress: 'mock@example.com',
+                  firstName: 'mock-first-name',
+                  lastName: 'mock-last-name',
+                  organization: 'mock-organization',
+                  studyArea: 'mock-study-area',
+                  uid: 'mock-uid',
+                  userType: 'mock-user-type'
+                },
+                ursId: 'mock-uid'
+              }
+            }
+          }
+        }]
+      })
+
+      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
+
+      await waitFor(() => {
+        expect(setSitePreferences).toHaveBeenCalledWith(expectedPreferences)
+      })
     })
 
     test('reserves hidden NLP status space before submit to prevent hero layout shift', () => {
