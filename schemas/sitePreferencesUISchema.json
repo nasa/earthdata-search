@@ -3,6 +3,7 @@
     "ui:widget": "radio",
     "ui:field": "radio",
     "ui:enumNames": [
+      "Default",
       "AI Enhanced Search",
       "Traditional Search"
     ]

@@ -25,6 +25,7 @@ export const initialSitePreferences: PreferencesData = {
   granuleListView: 'default',
   collectionSort: 'default',
   granuleSort: 'default',
+  homeSearchMode: 'default',
   mapView: {
     zoom: 3,
     latitude: 0,

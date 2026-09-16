@@ -65,7 +65,7 @@ import type { HomeSearchMode } from '../../zustand/types'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
-import { getSitePreferences } from '../../zustand/selectors/user'
+import { getEdlToken, getSitePreferences } from '../../zustand/selectors/user'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
@@ -83,12 +83,23 @@ type PreferredHomeSearchMode = HomeSearchMode | null
 
 const nlpSearchMode: HomeSearchMode = 'nlp'
 const traditionalSearchMode: HomeSearchMode = 'traditional'
+const defaultSearchMode: HomeSearchMode = 'default'
 
 const getPreferredHomeSearchMode = (
   isNlpEnabled: boolean,
-  savedSearchMode?: HomeSearchMode
+  savedSearchMode?: HomeSearchMode,
+  hasSavedPreferences: boolean,
+  isNlpFeatureFlagEnabled?: boolean
 ): PreferredHomeSearchMode => {
   if (!isNlpEnabled) return traditionalSearchMode
+
+  if (hasSavedPreferences) {
+    if (savedSearchMode === defaultSearchMode) {
+      return isNlpFeatureFlagEnabled === false ? traditionalSearchMode : nlpSearchMode
+    }
+
+    if (savedSearchMode) return savedSearchMode
+  }
 
   const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
 
@@ -97,9 +108,7 @@ const getPreferredHomeSearchMode = (
     || storedSearchMode === traditionalSearchMode
   ) return storedSearchMode
 
-  if (savedSearchMode) return savedSearchMode
-
-  return null
+  return isNlpFeatureFlagEnabled === false ? traditionalSearchMode : nlpSearchMode
 }
 
 const preloadRoutes = () => {
@@ -194,7 +203,10 @@ export const Home: React.FC = () => {
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
   const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
   const { nlpSearch: isNlpFeatureFlagEnabled } = featureFlags
-  const { homeSearchMode } = useEdscStore(getSitePreferences)
+  const sitePreferences = useEdscStore(getSitePreferences)
+  const { homeSearchMode } = sitePreferences
+  const edlToken = useEdscStore(getEdlToken)
+  const hasSavedPreferences = !!edlToken
 
   const {
     numberOfGranules,
@@ -204,26 +216,26 @@ export const Home: React.FC = () => {
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const isNlpEnabled = nlpSearchEnabled === 'true'
   const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<PreferredHomeSearchMode>(
-    () => getPreferredHomeSearchMode(isNlpEnabled, homeSearchMode)
+    () => getPreferredHomeSearchMode(
+      isNlpEnabled,
+      homeSearchMode,
+      hasSavedPreferences,
+      isNlpFeatureFlagEnabled
+    )
   )
-
-  // If preferredHomeSearchMode is not set, default to the isNlpFeatureFlagEnabled value.
-  useEffect(() => {
-    if (preferredHomeSearchMode === null) {
-      setPreferredHomeSearchMode(isNlpFeatureFlagEnabled ? 'nlp' : 'traditional')
-    }
-  }, [preferredHomeSearchMode, isNlpFeatureFlagEnabled])
 
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
 
   useEffect(() => {
-    // Local storage take priority over saved user preference, so don't
-    // let homeSearchMode in preferences override existing local storage value
-    const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
-    if (storedSearchMode === nlpSearchMode || storedSearchMode === traditionalSearchMode) return
-
-    if (isNlpEnabled && homeSearchMode) setPreferredHomeSearchMode(homeSearchMode)
-  }, [homeSearchMode, isNlpEnabled])
+    if (isNlpEnabled) {
+      setPreferredHomeSearchMode(getPreferredHomeSearchMode(
+        isNlpEnabled,
+        homeSearchMode,
+        hasSavedPreferences,
+        isNlpFeatureFlagEnabled
+      ))
+    }
+  }, [hasSavedPreferences, homeSearchMode, isNlpEnabled, isNlpFeatureFlagEnabled])
 
   useEffect(() => {
     // Focus the search input when the component mounts

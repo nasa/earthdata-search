@@ -145,6 +145,22 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
+    test('defaults to NLP search mode when no preference or GrowthBook value is saved', () => {
+      setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: undefined
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
     test('uses the saved traditional search preference', () => {
       localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
 
@@ -158,14 +174,32 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
-    test('uses local storage before the saved user preference', () => {
+    test('uses the saved user preference before local storage when logged in', () => {
       localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
 
       setup({
         overrideZustandState: {
           user: {
+            edlToken: 'mock-edl-token',
             sitePreferences: {
               homeSearchMode: 'nlp'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('uses the saved user preference when logged in and local storage has no preference', () => {
+      setup({
+        overrideZustandState: {
+          user: {
+            edlToken: 'mock-edl-token',
+            sitePreferences: {
+              homeSearchMode: 'traditional'
             }
           }
         }
@@ -176,12 +210,39 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
     })
 
-    test('uses the saved user preference when local storage has no preference', () => {
+    test('defaults to NLP search mode when the saved user preference is default and GrowthBook is enabled', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+
       setup({
         overrideZustandState: {
           user: {
+            edlToken: 'mock-edl-token',
             sitePreferences: {
-              homeSearchMode: 'traditional'
+              homeSearchMode: 'default'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('defaults to Traditional Search when the saved user preference is default and GrowthBook is disabled', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
+
+      setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: false
+            }
+          },
+          user: {
+            edlToken: 'mock-edl-token',
+            sitePreferences: {
+              homeSearchMode: 'default'
             }
           }
         }
@@ -449,7 +510,7 @@ describe('Home', () => {
         })
       })
 
-      test('shows the AI Enhanced Search form', () => {
+      test('shows the Traditional Search form', () => {
         setup({
           overrideZustandState: {
             growthbook: {

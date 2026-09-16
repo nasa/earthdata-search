@@ -14,7 +14,9 @@
       "type": "string",
       "title": "Preferred Home Search Mode",
       "description": "Choose the default search mode when opening Earthdata Search.",
+      "default": "default",
       "enum": [
+        "default",
         "nlp",
         "traditional"
       ]
