@@ -218,8 +218,8 @@ export const Home: React.FC = () => {
   const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<PreferredHomeSearchMode>(
     () => getPreferredHomeSearchMode(
       isNlpEnabled,
-      homeSearchMode,
       hasSavedPreferences,
+      homeSearchMode,
       isNlpFeatureFlagEnabled
     )
   )
@@ -230,8 +230,8 @@ export const Home: React.FC = () => {
     if (isNlpEnabled) {
       setPreferredHomeSearchMode(getPreferredHomeSearchMode(
         isNlpEnabled,
-        homeSearchMode,
         hasSavedPreferences,
+        homeSearchMode,
         isNlpFeatureFlagEnabled
       ))
     }
