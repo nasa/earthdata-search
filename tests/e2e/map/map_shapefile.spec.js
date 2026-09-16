@@ -366,7 +366,10 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/search')
+        // `overlays=none` ensures that none of the overlays are added. I'm seeing issues with
+        // loading the VectorTile overlays and the map taking a long time to come into focus in
+        // these tests. Without the vector layers it is working better
+        await page.goto('/search?overlays=none')
 
         // Wait for the map to load
         await initialMapPromise
@@ -386,6 +389,9 @@ test.describe('Map: Shapefile interactions', () => {
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
         await page.waitForURL(/zoom=21/, { timeout: 3000 })
+
+        // Wait for map animation to complete
+        await page.waitForTimeout(500)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('point.png', {
