@@ -83,7 +83,10 @@ const createUserSlice: ImmerStateCreator<UserSlice> = (set, get) => ({
       } = sitePreferences
 
       set((state) => {
-        state.user.sitePreferences = sitePreferences
+        state.user.sitePreferences = {
+          ...initialSitePreferences,
+          ...sitePreferences
+        }
 
         // If there is a collectionSort preference, update the query slice
         if (collectionSort !== 'default') state.query.collection.sortKey = collectionSort

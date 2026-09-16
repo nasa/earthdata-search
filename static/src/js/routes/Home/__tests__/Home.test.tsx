@@ -162,9 +162,15 @@ describe('Home', () => {
     })
 
     test('uses the saved traditional search preference', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
-
-      setup()
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'traditional'
+            }
+          }
+        }
+      })
 
       expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
       expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
@@ -485,13 +491,16 @@ describe('Home', () => {
 
       describe('when the user has switched their preference to Traditional Search', () => {
         test('shows the Traditional Search form as checked', () => {
-          localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
-
           setup({
             overrideZustandState: {
               growthbook: {
                 featureFlags: {
                   nlpSearch: true
+                }
+              },
+              user: {
+                sitePreferences: {
+                  homeSearchMode: 'traditional'
                 }
               }
             }
@@ -527,13 +536,16 @@ describe('Home', () => {
 
       describe('when the user has switched their preference to AI Enhanced Search', () => {
         test('shows the AI Enhanced Search form as checked', () => {
-          localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
-
           setup({
             overrideZustandState: {
               growthbook: {
                 featureFlags: {
                   nlpSearch: true
+                }
+              },
+              user: {
+                sitePreferences: {
+                  homeSearchMode: 'nlp'
                 }
               }
             }
