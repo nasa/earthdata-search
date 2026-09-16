@@ -89,7 +89,7 @@ describe('metricsMap', () => {
 
       expect(dataLayerPushSpy).toHaveBeenCalledTimes(1)
       expect(dataLayerPushSpy).toHaveBeenCalledWith({
-        event: 'mapFramePerformance (ms)',
+        event: 'mapFramePerformance',
         collectionIds: ['C1000000001-EDSC'],
         granuleCount: 1500,
         render: {
