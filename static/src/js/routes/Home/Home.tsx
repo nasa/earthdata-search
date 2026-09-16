@@ -87,8 +87,8 @@ const defaultSearchMode: HomeSearchMode = 'default'
 
 const getPreferredHomeSearchMode = (
   isNlpEnabled: boolean,
-  savedSearchMode?: HomeSearchMode,
   hasSavedPreferences: boolean,
+  savedSearchMode?: HomeSearchMode,
   isNlpFeatureFlagEnabled?: boolean
 ): PreferredHomeSearchMode => {
   if (!isNlpEnabled) return traditionalSearchMode
