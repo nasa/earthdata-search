@@ -470,7 +470,7 @@ test.describe('Map: Control interactions', () => {
       })
     })
 
-    test.describe('When changing the Borders and Roads overlay layer', () => {
+    test.describe('When changing the International Boundaries overlay layer', () => {
       test('updates the URL with the new map parameter', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
@@ -491,10 +491,10 @@ test.describe('Map: Control interactions', () => {
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')
         // Wait for the correct layer to load
-        const responsePromise = page.waitForResponse(/Reference_Features_15m/)
+        const responsePromise = page.waitForResponse(/DoS_International_Boundaries/)
 
-        // Click the checkbox for Borders and Roads by its label
-        await page.getByLabel('Borders and Roads *').click()
+        // Click the checkbox for International Boundaries by its label
+        await page.getByLabel('International Boundaries').click()
 
         // Wait for the correct layer to load
         await responsePromise

@@ -89,7 +89,7 @@
     "overlayLayers": {
       "ui:field": "multiSelect",
       "ui:enumNames": [
-        "Borders and Roads",
+        "International Boundaries",
         "Coastlines",
         "Place Labels"
       ]
