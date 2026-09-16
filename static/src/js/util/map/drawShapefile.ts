@@ -233,6 +233,8 @@ const drawShapefile = ({
     // The vector source extent is the bounding box of all shapes
     const sourceExtent = vectorSource.getExtent()
 
+    if (!sourceExtent) return
+
     let geographicExtent = sourceExtent
     // If the current projection is not geographic, we need to transform the extent to geographic coordinates
     if (projectionCode !== projectionCodes.geographic) {
