@@ -11,7 +11,6 @@ import HomePortalCard from '../HomePortalCard'
 import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
-import { localStorageKeys } from '../../../constants/localStorageKeys'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
@@ -110,7 +109,6 @@ beforeEach(() => {
   // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
-  localStorage.removeItem(localStorageKeys.homeSearchMode)
 })
 
 afterEach(() => {
@@ -180,13 +178,10 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
-    test('uses the saved user preference before local storage when logged in', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
-
+    test('uses the saved user preference', () => {
       setup({
         overrideZustandState: {
           user: {
-            edlToken: 'mock-edl-token',
             sitePreferences: {
               homeSearchMode: 'nlp'
             }
@@ -199,11 +194,10 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
-    test('uses the saved user preference when logged in and local storage has no preference', () => {
+    test('uses the saved traditional user preference', () => {
       setup({
         overrideZustandState: {
           user: {
-            edlToken: 'mock-edl-token',
             sitePreferences: {
               homeSearchMode: 'traditional'
             }
@@ -217,12 +211,9 @@ describe('Home', () => {
     })
 
     test('defaults to NLP search mode when the saved user preference is default and GrowthBook is enabled', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
-
       setup({
         overrideZustandState: {
           user: {
-            edlToken: 'mock-edl-token',
             sitePreferences: {
               homeSearchMode: 'default'
             }
@@ -236,8 +227,6 @@ describe('Home', () => {
     })
 
     test('defaults to Traditional Search when the saved user preference is default and GrowthBook is disabled', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
-
       setup({
         overrideZustandState: {
           growthbook: {
@@ -246,7 +235,6 @@ describe('Home', () => {
             }
           },
           user: {
-            edlToken: 'mock-edl-token',
             sitePreferences: {
               homeSearchMode: 'default'
             }
@@ -259,17 +247,15 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
     })
 
-    test('saves the selected search mode preference', async () => {
+    test('updates the selected search mode', async () => {
       const { user } = setup()
 
       await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
 
-      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('traditional')
       expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
 
       await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
 
-      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
