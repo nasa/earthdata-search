@@ -66,6 +66,7 @@ describe('getSitePreferences', () => {
     expect(getSitePreferences(useEdscStore.getState())).toEqual({
       collectionSort: 'default',
       granuleSort: 'default',
+      homeSearchMode: 'default',
       panelState: 'default',
       collectionListView: 'default',
       granuleListView: 'default',
