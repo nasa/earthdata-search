@@ -189,6 +189,9 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
+          // Wait for map animation to complete
+          await page.waitForTimeout(500)
+
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-point-spatial-typed.png', {
             clip: screenshotClip
