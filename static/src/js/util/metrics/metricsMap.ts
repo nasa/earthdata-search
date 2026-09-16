@@ -91,9 +91,10 @@ export interface MapPerformanceEvent {
   windowDurationMs: number
 }
 
+// This fires in Milliseconds
 export const metricsMapFramePerformance = (event: MapPerformanceEvent) => {
   dataLayer.push({
-    event: 'mapFramePerformance (ms)',
+    event: 'mapFramePerformance',
     ...event
   })
 }
