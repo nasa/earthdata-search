@@ -36,6 +36,16 @@ export interface MapPerformanceWindow {
   /** The single longest frame render duration (ms) observed in this window */
   maxRenderTimeMs: number
 }
+interface RecordInteractionFramesParams {
+  /** Rolling window accumulating frame samples across interactions */
+  performanceWindowRef: RefObject<MapPerformanceWindow>
+  /** Frame deltas (ms) collected during the interaction that just ended */
+  frameTimes: number[]
+  /** IDs of the collection(s) active for this window */
+  collectionIds: string[]
+  /** Number of granules currently rendered */
+  granuleCount: number
+}
 
 export const createEmptyPerformanceWindow = (): MapPerformanceWindow => ({
   windowStart: performance.now(),
@@ -103,6 +113,13 @@ export const timeLayerRenderOnce = ({
   return [preKey, postKey]
 }
 
+/**
+ * Emits the accumulated window as one frame-performance event and starts a fresh window.
+ * Percentiles span every gesture since the window opened, not a single interaction.
+ * @param {Object} performanceWindowRef - Ref holding the rolling window of frame samples.
+ * @param {Array} collectionIds - IDs of the collection(s) the samples are attributed to.
+ * @param {Number} granuleCount - Number of granules rendered when the window closed.
+ */
 export const flushMapPerformanceMetrics = (
   performanceWindowRef: RefObject<MapPerformanceWindow>,
   collectionIds: string[],
@@ -142,4 +159,37 @@ export const flushMapPerformanceMetrics = (
   // Clear the metrics for the next window
   // eslint-disable-next-line no-param-reassign
   performanceWindowRef.current = createEmptyPerformanceWindow()
+}
+
+/**
+ * Folds one interaction's frame deltas into the rolling window, flushing once the window has
+ * been open MAP_PERFORMANCE_WINDOW_MS. The window is anchored at map load, not at movestart.
+ * @param {Object} params - The parameters.
+ * @param {Object} params.performanceWindowRef - Ref holding the rolling window of frame samples.
+ * @param {Array} params.frameTimes - Frame deltas (ms) from the interaction that just ended.
+ * @param {Array} params.collectionIds - IDs of the collection(s) active for this window.
+ * @param {Number} params.granuleCount - Number of granules currently rendered.
+ */
+export const recordInteractionFrames = ({
+  performanceWindowRef,
+  frameTimes,
+  collectionIds,
+  granuleCount
+}: RecordInteractionFramesParams): boolean => {
+  if (frameTimes.length === 0) return false
+
+  const metrics = performanceWindowRef.current
+
+  metrics.frames += frameTimes.length
+  metrics.renderTimes.push(...frameTimes)
+  metrics.slowFrames += frameTimes.filter((time) => time > 33).length
+  metrics.verySlowFrames += frameTimes.filter((time) => time > 100).length
+  metrics.maxRenderTimeMs = Math.max(metrics.maxRenderTimeMs, ...frameTimes)
+
+  if (performance.now() - metrics.windowStart < MAP_PERFORMANCE_WINDOW_MS) return false
+  if (!collectionIds.some(Boolean)) return false
+
+  flushMapPerformanceMetrics(performanceWindowRef, collectionIds, granuleCount)
+
+  return true
 }

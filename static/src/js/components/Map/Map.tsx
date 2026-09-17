@@ -85,9 +85,8 @@ import trueColor from '../../util/map/layers/trueColor'
 import landWaterMap from '../../util/map/layers/landWaterMap'
 import {
   createEmptyPerformanceWindow,
-  flushMapPerformanceMetrics,
-  timeLayerRenderOnce,
-  MAP_PERFORMANCE_WINDOW_MS
+  recordInteractionFrames,
+  timeLayerRenderOnce
 } from '../../util/map/mapPerformanceMetrics'
 
 import { eventEmitter } from '../../events/events'
@@ -541,43 +540,12 @@ const Map: React.FC<MapProps> = ({
 
       isTrackingFrameRef.current = false
 
-      const frameTimes = frameTimesRef.current
-      if (frameTimes.length === 0) return
-
-      const metrics = performanceWindowRef.current
-
-      metrics.frames += frameTimes.length
-
-      metrics.renderTimes.push(...frameTimes)
-
-      metrics.slowFrames += frameTimes.filter(
-        (time) => time > 33
-      ).length
-
-      metrics.verySlowFrames += frameTimes.filter(
-        (time) => time > 100
-      ).length
-
-      metrics.maxRenderTimeMs = Math.max(
-        metrics.maxRenderTimeMs,
-        ...frameTimes
-      )
-
-      // HasFocusedCollection can be single or multiple colls
-      const hasFocusedCollection = focusedCollectionIdRef.current.some(Boolean)
-
-      // Real time elapsed since the window opened, until the moveend that happened to trigger a flush check that passed."
-      if (
-        performance.now() - metrics.windowStart
-    >= MAP_PERFORMANCE_WINDOW_MS
-    && (granuleCountRef.current > 0 || hasFocusedCollection)
-      ) {
-        flushMapPerformanceMetrics(
-          performanceWindowRef,
-          focusedCollectionIdRef.current,
-          granuleCountRef.current
-        )
-      }
+      recordInteractionFrames({
+        performanceWindowRef,
+        frameTimes: frameTimesRef.current,
+        collectionIds: focusedCollectionIdRef.current,
+        granuleCount: granuleCountRef.current
+      })
     }
 
     map.on('postrender', handlePostRenderPerf)
