@@ -151,7 +151,7 @@ class MapControls extends Control {
       }, {
         checked: overlays.bordersRoads,
         id: mapLayers.bordersRoads,
-        label: 'Borders and Roads *'
+        label: 'International Boundaries'
       }, {
         checked: overlays.coastlines,
         id: mapLayers.coastlines,

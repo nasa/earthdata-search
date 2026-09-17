@@ -157,12 +157,15 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,4\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-77\.\d+,38\.\d+/)
             }]
           })
 
           const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-          await page.goto('/search')
+          // `overlays=none` ensures that none of the overlays are added. I'm seeing issues with
+          // loading the VectorTile overlays and the map taking a long time to come into focus in
+          // these tests. Without the vector layers it is working better
+          await page.goto('/search?overlays=none')
 
           // Wait for the map to load
           await initialMapPromise
@@ -173,21 +176,21 @@ test.describe('Map: Spatial interactions', () => {
           await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Enter the spatial point
-          await page.getByTestId('spatial-display_point').fill('4.5297,42.1875')
+          await page.getByTestId('spatial-display_point').fill('38.87271,-77.00763')
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=42\.1875%2C4\.5297&lat=4\.5297&long=42\.\d+&zoom=21/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-77\.00763%2C38\.87271&lat=38\.87271&long=-77\.\d+&zoom=21/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.5297,42.1875')
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue('38.87271,-77.00763')
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for the map to update
-          await page.waitForTimeout(250)
+          // Wait for map animation to complete
+          await page.waitForTimeout(500)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-point-spatial-typed.png', {
