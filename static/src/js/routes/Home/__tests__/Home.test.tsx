@@ -11,6 +11,7 @@ import HomePortalCard from '../HomePortalCard'
 import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
+import { localStorageKeys } from '../../../constants/localStorageKeys'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
@@ -109,6 +110,7 @@ beforeEach(() => {
   // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
+  localStorage.removeItem(localStorageKeys.homeSearchMode)
 })
 
 afterEach(() => {
@@ -179,11 +181,31 @@ describe('Home', () => {
     })
 
     test('uses the saved user preference', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+
       setup({
         overrideZustandState: {
           user: {
             sitePreferences: {
               homeSearchMode: 'nlp'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('uses the local storage search mode when the user preference is default', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
+
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'default'
             }
           }
         }
@@ -253,10 +275,12 @@ describe('Home', () => {
       await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
 
       expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('traditional')
 
       await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
 
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
     })
 
     test('renders the NEW badge for NLP feature', () => {
