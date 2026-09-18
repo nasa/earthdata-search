@@ -29,8 +29,6 @@ export interface FunctionsProps {
   /** Cleanup retrievals job enabled */
   cleanupRetrievalsJobEnabled: boolean;
   /** Colormap generation job enabled */
-  /** Cleanup retrievals job enabled */
-  cleanupRetrievalsJobEnabled: boolean;
   colormapJobEnabled: boolean;
   /** Default Lambda config options */
   defaultLambdaConfig: application.NodeJsFunctionProps;
