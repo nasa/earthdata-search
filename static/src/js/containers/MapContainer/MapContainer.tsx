@@ -20,7 +20,7 @@ import { projectionConfigs } from '../../util/map/crs'
 // @ts-expect-error The file does not have types
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
-import { metricsMap } from '../../util/metrics/metricsMap'
+import { metricsMapButtons } from '../../util/metrics/metricsMap'
 
 import {
   backgroundGranulePointStyle,
@@ -340,7 +340,7 @@ export const MapContainer = () => {
     setZoom(newZoom)
     setProjection(newProjectionCode)
 
-    metricsMap(`Set Projection: ${Projection}`)
+    metricsMapButtons(`Set Projection: ${Projection}`)
     onChangeMap({ ...newMap })
   }, [projection])
 
@@ -517,6 +517,7 @@ export const MapContainer = () => {
       imageryLayers={imageryLayers}
       isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
+      projectCollections={projectCollections}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}

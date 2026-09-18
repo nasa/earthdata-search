@@ -2,7 +2,7 @@ import { Map } from 'ol'
 import VectorSource from 'ol/source/Vector'
 
 import drawFocusedGranule from '../drawFocusedGranule'
-import { metricsMap } from '../../metrics/metricsMap'
+import { metricsMapButtons } from '../../metrics/metricsMap'
 
 // Focused granules are shown when a user clicks on a granule in the results list, or
 // when a user clicks on a granule outline on the map
@@ -76,7 +76,7 @@ const onClickMap = ({
   }
 
   // Track the event
-  metricsMap('Selected Granule')
+  metricsMapButtons('Selected Granule')
 
   // Focus the new granule
   setGranuleId(newFocusedGranuleId)
