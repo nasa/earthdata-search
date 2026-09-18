@@ -72,6 +72,8 @@ import './Home.scss'
 import '../../components/SearchForm/SearchForm.scss'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { localStorageKeys } from '../../constants/localStorageKeys'
+// @ts-expect-error This file does not have types
+import addToast from '../../util/addToast'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
@@ -79,27 +81,31 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
 
 let preloaded = false
 
-type PreferredHomeSearchMode = HomeSearchMode | null
-
 const nlpSearchMode: HomeSearchMode = 'nlp'
 const traditionalSearchMode: HomeSearchMode = 'traditional'
+const defaultSearchMode: HomeSearchMode = 'default'
 
+// Resolve search mode from user Zustand first, then temporary local storage,
+// and finally Growthbook with NLP as the fallback.
+// If NLP feature flag is not enabled, default to traditional
 const getPreferredHomeSearchMode = (
   isNlpEnabled: boolean,
-  savedSearchMode?: HomeSearchMode
-): PreferredHomeSearchMode => {
+  homeSearchMode?: HomeSearchMode,
+  isNlpFeatureFlagEnabled?: boolean
+): HomeSearchMode => {
   if (!isNlpEnabled) return traditionalSearchMode
+
+  if (homeSearchMode === nlpSearchMode || homeSearchMode === traditionalSearchMode) {
+    return homeSearchMode
+  }
 
   const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
 
-  if (
-    storedSearchMode === nlpSearchMode
-    || storedSearchMode === traditionalSearchMode
-  ) return storedSearchMode
+  if (storedSearchMode === nlpSearchMode || storedSearchMode === traditionalSearchMode) {
+    return storedSearchMode
+  }
 
-  if (savedSearchMode) return savedSearchMode
-
-  return null
+  return isNlpFeatureFlagEnabled === false ? traditionalSearchMode : nlpSearchMode
 }
 
 const preloadRoutes = () => {
@@ -194,7 +200,8 @@ export const Home: React.FC = () => {
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
   const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
   const { nlpSearch: isNlpFeatureFlagEnabled } = featureFlags
-  const { homeSearchMode } = useEdscStore(getSitePreferences)
+  const sitePreferences = useEdscStore(getSitePreferences)
+  const { homeSearchMode } = sitePreferences
 
   const {
     numberOfGranules,
@@ -203,27 +210,24 @@ export const Home: React.FC = () => {
 
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const isNlpEnabled = nlpSearchEnabled === 'true'
-  const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<PreferredHomeSearchMode>(
-    () => getPreferredHomeSearchMode(isNlpEnabled, homeSearchMode)
+  const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<HomeSearchMode>(
+    () => getPreferredHomeSearchMode(
+      isNlpEnabled,
+      homeSearchMode,
+      isNlpFeatureFlagEnabled
+    )
   )
-
-  // If preferredHomeSearchMode is not set, default to the isNlpFeatureFlagEnabled value.
-  useEffect(() => {
-    if (preferredHomeSearchMode === null) {
-      setPreferredHomeSearchMode(isNlpFeatureFlagEnabled ? 'nlp' : 'traditional')
-    }
-  }, [preferredHomeSearchMode, isNlpFeatureFlagEnabled])
 
   const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
 
   useEffect(() => {
-    // Local storage take priority over saved user preference, so don't
-    // let homeSearchMode in preferences override existing local storage value
-    const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
-    if (storedSearchMode === nlpSearchMode || storedSearchMode === traditionalSearchMode) return
-
-    if (isNlpEnabled && homeSearchMode) setPreferredHomeSearchMode(homeSearchMode)
-  }, [homeSearchMode, isNlpEnabled])
+    // Keep the resolved search mode used by UI in sync with user's preference and NLP feature flag
+    setPreferredHomeSearchMode(getPreferredHomeSearchMode(
+      isNlpEnabled,
+      homeSearchMode,
+      isNlpFeatureFlagEnabled
+    ))
+  }, [homeSearchMode, isNlpEnabled, isNlpFeatureFlagEnabled])
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -300,8 +304,19 @@ export const Home: React.FC = () => {
   const onSearchModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nextSearchMode = event.target.value as HomeSearchMode
 
-    localStorage.setItem(localStorageKeys.homeSearchMode, nextSearchMode!)
+    localStorage.setItem(localStorageKeys.homeSearchMode, nextSearchMode)
     setPreferredHomeSearchMode(nextSearchMode)
+
+    if (
+      homeSearchMode === defaultSearchMode
+      && localStorage.getItem(localStorageKeys.dontShowNlpPopup) !== 'true'
+    ) {
+      localStorage.setItem(localStorageKeys.dontShowNlpPopup, 'true')
+      addToast('You can set your preferred search method in your User Preferences', {
+        appearance: 'info',
+        autoDismiss: true
+      })
+    }
 
     if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
   }
@@ -421,59 +436,61 @@ export const Home: React.FC = () => {
               </div>
               {
                 isNlpEnabled && (
-                  <div className="home__search-mode-control d-flex align-items-center">
+                  <div className="home__search-mode-control position-relative d-flex align-items-center">
                     <Badge className="home__new-badge">
                       NEW
                     </Badge>
-                    <fieldset className="home__search-mode-toggle" aria-label="Search mode">
-                      <legend className="visually-hidden">Search mode</legend>
-                      <input
-                        className="btn-check"
-                        type="radio"
-                        name="home-search-mode"
-                        id="home-search-mode-nlp"
-                        value={nlpSearchMode}
-                        checked={preferredHomeSearchMode === nlpSearchMode}
-                        onChange={onSearchModeChange}
-                      />
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          (tooltipProps) => renderTooltip({
-                            ...tooltipProps,
-                            className: 'tooltip--wide',
-                            children: 'Describe what you are looking for to start your search'
-                          })
-                        }
-                      >
-                        <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
-                          AI Enhanced Search
-                        </label>
-                      </OverlayTrigger>
-                      <input
-                        className="btn-check"
-                        type="radio"
-                        name="home-search-mode"
-                        id="home-search-mode-traditional"
-                        value={traditionalSearchMode}
-                        checked={preferredHomeSearchMode === traditionalSearchMode}
-                        onChange={onSearchModeChange}
-                      />
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          (tooltipProps) => renderTooltip({
-                            ...tooltipProps,
-                            className: 'tooltip--wide',
-                            children: 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
-                          })
-                        }
-                      >
-                        <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
-                          Traditional Search
-                        </label>
-                      </OverlayTrigger>
-                    </fieldset>
+                    <div className="position-relative">
+                      <fieldset className="home__search-mode-toggle" aria-label="Search mode">
+                        <legend className="visually-hidden">Search mode</legend>
+                        <input
+                          className="btn-check"
+                          type="radio"
+                          name="home-search-mode"
+                          id="home-search-mode-nlp"
+                          value={nlpSearchMode}
+                          checked={preferredHomeSearchMode === nlpSearchMode}
+                          onChange={onSearchModeChange}
+                        />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            (tooltipProps) => renderTooltip({
+                              ...tooltipProps,
+                              className: 'tooltip--wide',
+                              children: 'Describe what you are looking for to start your search'
+                            })
+                          }
+                        >
+                          <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
+                            AI Enhanced Search
+                          </label>
+                        </OverlayTrigger>
+                        <input
+                          className="btn-check"
+                          type="radio"
+                          name="home-search-mode"
+                          id="home-search-mode-traditional"
+                          value={traditionalSearchMode}
+                          checked={preferredHomeSearchMode === traditionalSearchMode}
+                          onChange={onSearchModeChange}
+                        />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            (tooltipProps) => renderTooltip({
+                              ...tooltipProps,
+                              className: 'tooltip--wide',
+                              children: 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
+                            })
+                          }
+                        >
+                          <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
+                            Traditional Search
+                          </label>
+                        </OverlayTrigger>
+                      </fieldset>
+                    </div>
                   </div>
                 )
               }
