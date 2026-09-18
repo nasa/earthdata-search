@@ -8,19 +8,15 @@
  * OAuth callback flow requires redirecting back from an external provider, but they
  * are held to the same allowlist as relative paths once parsed.
  *
- * edscHost and edlHost are both expected to be trusted, app-controlled config values
- * (e.g. from environment variables) - never pass a value derived from user input for
- * either parameter, since they define the allowlist itself rather than being checked
- * against it.
+ * edscHost is expected to be a trusted, app-controlled config value (e.g. from an
+ * environment variable) - never pass a value derived from user input, since it
+ * defines the allowlist itself rather than being checked against it.
  *
  * @param {string} inputUrl - The untrusted redirect URL provided in the query params.
  * @param {string} edscHost - The trusted EDSC host environment variable.
- * @param {string} [edlHost] - The trusted Earthdata Login host environment variable,
- *   allowed as a second valid redirect origin alongside edscHost. Optional so
- *   existing callers that only need edscHost keep working unchanged.
  * @returns {string|null} - A safely parsed absolute URL, or null if validation fails.
  */
-export const getSafeRedirectUrl = (inputUrl, edscHost, edlHost) => {
+export const getSafeRedirectUrl = (inputUrl, edscHost) => {
   if (!inputUrl) return null
 
   try {
@@ -55,23 +51,6 @@ export const getSafeRedirectUrl = (inputUrl, edscHost, edlHost) => {
     // By using .origin, this automatically enforces https:// in production environments,
     // but safely allows http:// during local development if the edscHost is configured as http://.
     const trustedOrigins = new Set([parsedEdsc.origin])
-
-    // EdlHost is trusted the same way edscHost is: parsed with the platform
-    // parser and added as its own exact origin, never string-matched or used
-    // to build the allowlist in any looser way. Parsed in its own try/catch -
-    // not the outer one - so a malformed edlHost (e.g. missing the https://
-    // protocol in an env var) only means edlHost isn't trusted, rather than
-    // aborting validation for every redirect, including ones that only ever
-    // needed edscHost and had nothing to do with edlHost.
-    if (edlHost) {
-      try {
-        const parsedEdl = new URL(edlHost)
-        trustedOrigins.add(parsedEdl.origin)
-      } catch {
-        // Malformed edlHost: edlHost simply isn't added to the allowlist.
-        // Falls through to the origin check below.
-      }
-    }
 
     // Addresses Open Redirect and Phishing by comparing the full parsed `origin`
     // against this allowlist of exact origins, rather than comparing hostname alone.
