@@ -111,6 +111,7 @@ beforeEach(() => {
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
   localStorage.removeItem(localStorageKeys.homeSearchMode)
+  localStorage.removeItem(localStorageKeys.dontShowNlpPopup)
 })
 
 afterEach(() => {
@@ -281,6 +282,31 @@ describe('Home', () => {
 
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
       expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
+    })
+
+    test('shows the preference popup only on the first toggle for a default preference', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'default'
+            }
+          }
+        }
+      })
+
+      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
+
+      expect(screen.getByText('You can set your preferred search method in your User Preferences')).toBeInTheDocument()
+      expect(localStorage.getItem(localStorageKeys.dontShowNlpPopup)).toEqual('true')
+
+      await user.click(screen.getByText("Search NASA's 42 Earth observations"))
+
+      expect(screen.queryByText('You can set your preferred search method in your User Preferences')).not.toBeInTheDocument()
+
+      await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
+
+      expect(screen.queryByText('You can set your preferred search method in your User Preferences')).not.toBeInTheDocument()
     })
 
     test('renders the NEW badge for NLP feature', () => {
