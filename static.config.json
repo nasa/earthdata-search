@@ -52,7 +52,7 @@
     "disableEddDownload": "false",
     "disableOrdering": "false",
     "disableSwodlr": "false",
-    "mapPerformanceWindowMs": 3000,
+    "mapPerformanceWindowMs": 5000,
     "mapPointsSimplifyThreshold": 2000,
     "emergencyNotification": "false",
     "emergencyNotificationType": "error",
