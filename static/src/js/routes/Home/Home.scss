@@ -158,19 +158,6 @@
     align-self: center;
   }
 
-  &__nlp-preference-tooltip {
-    max-width: none;
-
-    .tooltip-inner {
-      width: 100%;
-      max-width: none;
-    }
-  }
-
-  &__nlp-preference-tooltip-wrapper {
-    z-index: 3;
-  }
-
   &__search-mode-toggle-label {
     margin: 0;
     padding: 0.25rem 0.5rem;

@@ -13,7 +13,6 @@ import Container from 'react-bootstrap/Container'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
-import Tooltip from 'react-bootstrap/Tooltip'
 import {
   ArrowCircleDown,
   ArrowCircleUp,
@@ -73,6 +72,8 @@ import './Home.scss'
 import '../../components/SearchForm/SearchForm.scss'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { localStorageKeys } from '../../constants/localStorageKeys'
+// @ts-expect-error This file does not have types
+import addToast from '../../util/addToast'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
@@ -195,8 +196,6 @@ export const Home: React.FC = () => {
   const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
   const [isNlpStreaming, setIsNlpStreaming] = useState(false)
   const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
-  const [showNlpPreferencePopup, setShowNlpPreferencePopup] = useState(false)
-  const nlpPreferencePopupRef = useRef<HTMLDivElement>(null)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
   const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
@@ -229,23 +228,6 @@ export const Home: React.FC = () => {
       isNlpFeatureFlagEnabled
     ))
   }, [homeSearchMode, isNlpEnabled, isNlpFeatureFlagEnabled])
-
-  useEffect(() => {
-    // Dismiss the preference popup when the user clicks outside it.
-    if (!showNlpPreferencePopup) return undefined
-
-    const handleOutsidePopupClick = (event: MouseEvent) => {
-      if (!nlpPreferencePopupRef.current?.contains(event.target as Node)) {
-        setShowNlpPreferencePopup(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleOutsidePopupClick)
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsidePopupClick)
-    }
-  }, [showNlpPreferencePopup])
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -330,7 +312,10 @@ export const Home: React.FC = () => {
       && localStorage.getItem(localStorageKeys.dontShowNlpPopup) !== 'true'
     ) {
       localStorage.setItem(localStorageKeys.dontShowNlpPopup, 'true')
-      setShowNlpPreferencePopup(true)
+      addToast('You can set your preferred search method in your User Preferences', {
+        appearance: 'info',
+        autoDismiss: true
+      })
     }
 
     if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
@@ -506,19 +491,6 @@ export const Home: React.FC = () => {
                         </OverlayTrigger>
                       </fieldset>
                     </div>
-                    {
-                      showNlpPreferencePopup && (
-                        <div ref={nlpPreferencePopupRef} className="home__nlp-preference-tooltip-wrapper position-absolute top-100 start-0 mt-2 w-100">
-                          <Tooltip
-                            id="nlp-preference-popup"
-                            className="tooltip--wide home__nlp-preference-tooltip show"
-                            role="status"
-                          >
-                            You can set your preferred search method in your User Preferences
-                          </Tooltip>
-                        </div>
-                      )
-                    }
                   </div>
                 )
               }

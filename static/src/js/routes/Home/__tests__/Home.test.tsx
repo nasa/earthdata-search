@@ -12,6 +12,8 @@ import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
+// @ts-expect-error This file does not have types
+import addToast from '../../../util/addToast'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
@@ -19,6 +21,8 @@ import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
+
+vi.mock('../../../util/addToast', () => ({ default: vi.fn() }))
 
 /**
  * Props captured from the mocked NlpSearchStatus component.
@@ -284,7 +288,7 @@ describe('Home', () => {
       expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
     })
 
-    test('shows the preference popup only on the first toggle for a default preference', async () => {
+    test('shows the preference toast only on the first toggle for a default preference', async () => {
       const { user } = setup({
         overrideZustandState: {
           user: {
@@ -297,16 +301,21 @@ describe('Home', () => {
 
       await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
 
-      expect(screen.getByText('You can set your preferred search method in your User Preferences')).toBeInTheDocument()
+      expect(addToast).toHaveBeenCalledTimes(1)
+
+      expect(addToast).toHaveBeenCalledWith(
+        'You can set your preferred search method in your User Preferences',
+        {
+          appearance: 'info',
+          autoDismiss: true
+        }
+      )
+
       expect(localStorage.getItem(localStorageKeys.dontShowNlpPopup)).toEqual('true')
-
-      await user.click(screen.getByText("Search NASA's 42 Earth observations"))
-
-      expect(screen.queryByText('You can set your preferred search method in your User Preferences')).not.toBeInTheDocument()
 
       await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
 
-      expect(screen.queryByText('You can set your preferred search method in your User Preferences')).not.toBeInTheDocument()
+      expect(addToast).toHaveBeenCalledTimes(1)
     })
 
     test('renders the NEW badge for NLP feature', () => {
