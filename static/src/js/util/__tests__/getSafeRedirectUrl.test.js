@@ -97,6 +97,13 @@ describe('getSafeRedirectUrl', () => {
 
       expect(response).toBeNull()
     })
+
+    test('rejects custom protocol URLs smuggling credentials (@ trick)', () => {
+      const redirect = 'earthdata-download://authCallback@evil.com'
+      const response = getSafeRedirectUrl(redirect, edscHost)
+
+      expect(response).toBeNull()
+    })
   })
 
   describe('Additional Protocol and Credentials Protections', () => {
