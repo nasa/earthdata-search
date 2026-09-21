@@ -72,6 +72,7 @@ import './Home.scss'
 import '../../components/SearchForm/SearchForm.scss'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { localStorageKeys } from '../../constants/localStorageKeys'
+import { sessionStorageKeys } from '../../constants/sessionStorageKeys'
 // @ts-expect-error This file does not have types
 import addToast from '../../util/addToast'
 
@@ -309,9 +310,9 @@ export const Home: React.FC = () => {
 
     if (
       homeSearchMode === defaultSearchMode
-      && localStorage.getItem(localStorageKeys.dontShowNlpPopup) !== 'true'
+      && sessionStorage.getItem(sessionStorageKeys.dontShowNlpPopup) !== 'true'
     ) {
-      localStorage.setItem(localStorageKeys.dontShowNlpPopup, 'true')
+      sessionStorage.setItem(sessionStorageKeys.dontShowNlpPopup, 'true')
       addToast('You can set your preferred search method in your User Preferences', {
         appearance: 'info',
         autoDismiss: true

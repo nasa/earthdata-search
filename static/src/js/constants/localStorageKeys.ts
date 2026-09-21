@@ -6,8 +6,6 @@ export const localStorageKeys = {
   dontShowTour: 'dontShowTour',
   // `homeSearchMode` is the user's preferred home page search flow
   homeSearchMode: 'homeSearchMode',
-  // `dontShowNlpPopup` prevents the Home NLP preference notice from reappearing
-  dontShowNlpPopup: 'dontShowNlpPopup',
   // `user` is the user's data (sitePreferences and ursProfile)
   user: 'user'
 }

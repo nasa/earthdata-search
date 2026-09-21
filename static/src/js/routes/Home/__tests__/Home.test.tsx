@@ -12,6 +12,7 @@ import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
+import { sessionStorageKeys } from '../../../constants/sessionStorageKeys'
 // @ts-expect-error This file does not have types
 import addToast from '../../../util/addToast'
 
@@ -115,7 +116,7 @@ beforeEach(() => {
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
   localStorage.removeItem(localStorageKeys.homeSearchMode)
-  localStorage.removeItem(localStorageKeys.dontShowNlpPopup)
+  sessionStorage.removeItem(sessionStorageKeys.dontShowNlpPopup)
 })
 
 afterEach(() => {
@@ -311,7 +312,7 @@ describe('Home', () => {
         }
       )
 
-      expect(localStorage.getItem(localStorageKeys.dontShowNlpPopup)).toEqual('true')
+      expect(sessionStorage.getItem(sessionStorageKeys.dontShowNlpPopup)).toEqual('true')
 
       await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
 
