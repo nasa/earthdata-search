@@ -12,6 +12,9 @@ import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
+import { sessionStorageKeys } from '../../../constants/sessionStorageKeys'
+// @ts-expect-error This file does not have types
+import addToast from '../../../util/addToast'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
@@ -19,6 +22,8 @@ import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
+
+vi.mock('../../../util/addToast', () => ({ default: vi.fn() }))
 
 /**
  * Props captured from the mocked NlpSearchStatus component.
@@ -111,6 +116,7 @@ beforeEach(() => {
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
   localStorage.removeItem(localStorageKeys.homeSearchMode)
+  sessionStorage.removeItem(sessionStorageKeys.dontShowNlpPopup)
 })
 
 afterEach(() => {
@@ -145,10 +151,32 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
-    test('uses the saved traditional search preference', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
+    test('defaults to NLP search mode when no preference or GrowthBook value is saved', () => {
+      setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: undefined
+            }
+          }
+        }
+      })
 
-      setup()
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('uses the saved traditional search preference', () => {
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'traditional'
+            }
+          }
+        }
+      })
 
       expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
       expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
@@ -158,7 +186,7 @@ describe('Home', () => {
       expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
     })
 
-    test('uses local storage before the saved user preference', () => {
+    test('uses the saved user preference', () => {
       localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
 
       setup({
@@ -171,12 +199,30 @@ describe('Home', () => {
         }
       })
 
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
     })
 
-    test('uses the saved user preference when local storage has no preference', () => {
+    test('uses the local storage search mode when the user preference is default', () => {
+      localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
+
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'default'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('uses the saved traditional user preference', () => {
       setup({
         overrideZustandState: {
           user: {
@@ -192,18 +238,85 @@ describe('Home', () => {
       expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
     })
 
-    test('saves the selected search mode preference', async () => {
+    test('defaults to NLP search mode when the saved user preference is default and GrowthBook is enabled', () => {
+      setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'default'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+    })
+
+    test('defaults to Traditional Search when the saved user preference is default and GrowthBook is disabled', () => {
+      setup({
+        overrideZustandState: {
+          growthbook: {
+            featureFlags: {
+              nlpSearch: false
+            }
+          },
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'default'
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+    })
+
+    test('updates the selected search mode', async () => {
       const { user } = setup()
 
       await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
 
-      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('traditional')
       expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('traditional')
 
       await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
 
-      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
       expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
+    })
+
+    test('shows the preference toast only on the first toggle for a default preference', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          user: {
+            sitePreferences: {
+              homeSearchMode: 'default'
+            }
+          }
+        }
+      })
+
+      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
+
+      expect(addToast).toHaveBeenCalledTimes(1)
+
+      expect(addToast).toHaveBeenCalledWith(
+        'You can set your preferred search method in your User Preferences',
+        {
+          appearance: 'info',
+          autoDismiss: true
+        }
+      )
+
+      expect(sessionStorage.getItem(sessionStorageKeys.dontShowNlpPopup)).toEqual('true')
+
+      await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
+
+      expect(addToast).toHaveBeenCalledTimes(1)
     })
 
     test('renders the NEW badge for NLP feature', () => {
@@ -424,13 +537,16 @@ describe('Home', () => {
 
       describe('when the user has switched their preference to Traditional Search', () => {
         test('shows the Traditional Search form as checked', () => {
-          localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
-
           setup({
             overrideZustandState: {
               growthbook: {
                 featureFlags: {
                   nlpSearch: true
+                }
+              },
+              user: {
+                sitePreferences: {
+                  homeSearchMode: 'traditional'
                 }
               }
             }
@@ -449,7 +565,7 @@ describe('Home', () => {
         })
       })
 
-      test('shows the AI Enhanced Search form', () => {
+      test('shows the Traditional Search form', () => {
         setup({
           overrideZustandState: {
             growthbook: {
@@ -466,13 +582,16 @@ describe('Home', () => {
 
       describe('when the user has switched their preference to AI Enhanced Search', () => {
         test('shows the AI Enhanced Search form as checked', () => {
-          localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
-
           setup({
             overrideZustandState: {
               growthbook: {
                 featureFlags: {
                   nlpSearch: true
+                }
+              },
+              user: {
+                sitePreferences: {
+                  homeSearchMode: 'nlp'
                 }
               }
             }

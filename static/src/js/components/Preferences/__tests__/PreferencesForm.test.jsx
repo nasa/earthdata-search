@@ -20,6 +20,7 @@ const defaultZustandState = {
       granuleListView: 'default',
       collectionSort: 'default',
       granuleSort: 'default',
+      homeSearchMode: 'default',
       mapView: {
         baseLayer: 'worldImagery',
         latitude: 0,
@@ -65,6 +66,9 @@ describe('PreferencesForm component', () => {
 
     const granuleSortDefault = screen.getByLabelText('Default', { selector: '[name="granuleSort"]' })
     expect(granuleSortDefault).toBeChecked()
+
+    const homeSearchModeDefault = screen.getByLabelText('Default', { selector: '[name="homeSearchMode"]' })
+    expect(homeSearchModeDefault).toBeChecked()
 
     const aiEnhancedSearch = screen.getByLabelText('AI Enhanced Search', { selector: '[name="homeSearchMode"]' })
     expect(aiEnhancedSearch).not.toBeChecked()
@@ -290,6 +294,7 @@ describe('PreferencesForm component', () => {
                   preferences: {
                     collectionSort: 'default',
                     granuleSort: 'default',
+                    homeSearchMode: 'default',
                     panelState: 'default',
                     collectionListView: 'default',
                     granuleListView: 'default',

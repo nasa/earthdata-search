@@ -79,10 +79,8 @@ class PreferencesRadioField extends Component {
   }
 }
 
-// FormData changed from required to optional because a user may not have a saved homeSearchMode.
-// We do not want to force them into either option via a preference setting.
 PreferencesRadioField.propTypes = {
-  formData: PropTypes.string,
+  formData: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   schema: PropTypes.shape({
@@ -93,10 +91,6 @@ PreferencesRadioField.propTypes = {
   uiSchema: PropTypes.shape({
     'ui:enumNames': PropTypes.arrayOf(PropTypes.string)
   }).isRequired
-}
-
-PreferencesRadioField.defaultProps = {
-  formData: undefined
 }
 
 export default PreferencesRadioField
