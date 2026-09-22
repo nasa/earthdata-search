@@ -1159,6 +1159,7 @@ const Map: React.FC<MapProps> = ({
 
       // Timing keys for the layer render functions
       // initailizes a reference for the cleanup function
+      // granule-backgrounds includes imagery layers on the granule from gibs
       const timingKeys = [
         ...timeLayerRenderOnce({
           layer: granuleBackgroundsLayer,
