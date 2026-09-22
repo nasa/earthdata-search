@@ -235,7 +235,7 @@ export const Search = () => {
                                           placement="top"
                                           overlay={
                                             (tooltipProps) => renderTooltip({
-                                              children: 'Include collections labeled as planned, deprecated, preprint, in review, superseded, or not provided in results',
+                                              children: 'Include collections labeled as planned, deprecated, preprint, in review, or not provided in results',
                                               ...tooltipProps
                                             })
                                           }
