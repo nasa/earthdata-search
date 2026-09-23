@@ -339,15 +339,24 @@ export type GranulesSlice = {
   }
 }
 
+export type HomeSearchMode = 'default' | 'nlp' | 'traditional'
+
 export type GrowthBookSlice = {
   /** The GrowthBook Slice of the store. This saves the metadata for growthbook experiments */
   growthbook: {
     featureFlags: {
       /** The metadata for the growthbook experiments */
-      [key: string]: boolean // In the future this might need to accept more types, but for now we are only using boolean flags
+      nlpSearch: {
+        /** The feature flag value for the NLP search experiment */
+        featureFlagValue: boolean
+        /** The user selected value for the NLP search experiment */
+        userSelectedValue: HomeSearchMode
+      }
     }
-    /** Function to set the growthbook feature flags */
-    setFeatureFlags: (key: string, value: boolean) => void
+    /** Function to set the NLP search feature flag */
+    setNlpSearchFeatureFlag: (value: boolean) => void
+    /** Function to set the NLP search user selection */
+    setNlpSearchUserSelection: (value: HomeSearchMode) => void
   }
 }
 
@@ -1248,7 +1257,6 @@ export type PanelState = 'default' | 'collapsed' | 'open' | 'fullWidth'
 export type ListView = 'default' | 'list' | 'table'
 export type CollectionSort = 'default' | '-score' | '-usage_score' | '-create-data-date' | 'start_date' | '-ongoing'
 export type GranuleSort = 'default' | '-start_date' | 'start_date' | '-end_date' | 'end_date'
-export type HomeSearchMode = 'default' | 'nlp' | 'traditional'
 export type BaseLayer = 'worldImagery' | 'trueColor' | 'landWaterMap'
 export type OverlayLayer = 'bordersRoads' | 'coastlines' | 'placeLabels'
 

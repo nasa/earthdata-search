@@ -4,6 +4,11 @@ import { collectionRelevancyMetrics } from '../collectionRelevancyMetrics'
 // @ts-expect-error This file does not have types
 import LoggerRequest from '../../request/loggerRequest'
 import useEdscStore from '../../../zustand/useEdscStore'
+import logEvent from '../../metrics/experiments/logEvent'
+
+vi.mock('../../metrics/experiments/logEvent', () => ({
+  default: vi.fn()
+}))
 
 describe('collectionRelevancyMetrics', () => {
   test('should call LoggerRequest.logRelevancy', () => {
@@ -97,6 +102,14 @@ describe('collectionRelevancyMetrics', () => {
         selected_collection: 'collection2',
         selected_index: 1
       }
+    })
+
+    expect(logEvent).toHaveBeenCalledTimes(1)
+    expect(logEvent).toHaveBeenCalledWith({
+      eventType: 'collection_relevancy',
+      eventData: JSON.stringify({
+        selected_index: 1
+      })
     })
   })
 })
