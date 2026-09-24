@@ -26,17 +26,17 @@ describe('createGrowthBookSlice', () => {
           userSelectedValue: 'default'
         }
       },
-      setNlpSearchFeatureFlag: expect.any(Function),
+      setFeatureFlagValue: expect.any(Function),
       setNlpSearchUserSelection: expect.any(Function)
     })
   })
 
-  describe('setNlpSearchFeatureFlag', () => {
+  describe('setFeatureFlagValue', () => {
     test('updates featureFlags', () => {
       const zustandState = useEdscStore.getState()
       const { growthbook } = zustandState
-      const { setNlpSearchFeatureFlag } = growthbook
-      setNlpSearchFeatureFlag(true)
+      const { setFeatureFlagValue } = growthbook
+      setFeatureFlagValue('nlpSearch.featureFlagValue', true)
 
       const updatedState = useEdscStore.getState()
       const { growthbook: updatedGrowthbook } = updatedState

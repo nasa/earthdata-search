@@ -39,7 +39,7 @@ const setup = setupTest({
   Component: TestComponent,
   defaultZustandState: {
     growthbook: {
-      setNlpSearchFeatureFlag: vi.fn()
+      setFeatureFlagValue: vi.fn()
     }
   }
 })
@@ -52,10 +52,10 @@ describe('GrowthBookLoader', () => {
     expect(useFeatureIsOn).toHaveBeenCalledWith('nlpSearch')
 
     await act(async () => {
-      expect(zustandState.growthbook.setNlpSearchFeatureFlag).toHaveBeenCalledTimes(1)
+      expect(zustandState.growthbook.setFeatureFlagValue).toHaveBeenCalledTimes(1)
     })
 
-    expect(zustandState.growthbook.setNlpSearchFeatureFlag).toHaveBeenCalledWith(true)
+    expect(zustandState.growthbook.setFeatureFlagValue).toHaveBeenCalledWith('nlpSearch.featureFlagValue', true)
   })
 
   test('saves a user id and session id to localStorage and sessionStorage', async () => {

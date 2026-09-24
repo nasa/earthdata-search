@@ -1,3 +1,5 @@
+import { set as lodashSet } from 'lodash-es'
+
 import type {
   GrowthBookSlice,
   HomeSearchMode,
@@ -25,12 +27,12 @@ const createGrowthBookSlice: ImmerStateCreator<GrowthBookSlice> = (set, get) => 
         userSelectedValue: localStorage.getItem(localStorageKeys.homeSearchMode) as HomeSearchMode ?? 'default'
       }
     },
-    setNlpSearchFeatureFlag: (value: boolean) => {
+    setFeatureFlagValue: (keyPath, value) => {
       set((state) => {
-        state.growthbook.featureFlags.nlpSearch.featureFlagValue = value
+        lodashSet(state.growthbook.featureFlags, keyPath, value)
       })
     },
-    setNlpSearchUserSelection: (value: HomeSearchMode) => {
+    setNlpSearchUserSelection: (value) => {
       set((state) => {
         state.growthbook.featureFlags.nlpSearch.userSelectedValue = value
       })
@@ -48,6 +50,7 @@ const createGrowthBookSlice: ImmerStateCreator<GrowthBookSlice> = (set, get) => 
         && sessionStorage.getItem(sessionStorageKeys.dontShowNlpPopup) !== 'true'
       ) {
         sessionStorage.setItem(sessionStorageKeys.dontShowNlpPopup, 'true')
+
         addToast('You can set your preferred search method in your User Preferences', {
           appearance: 'info',
           autoDismiss: true

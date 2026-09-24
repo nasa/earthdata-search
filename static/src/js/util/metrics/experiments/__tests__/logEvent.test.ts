@@ -18,8 +18,10 @@ describe('logEvent', () => {
       growthbookEnabled: 'true'
     }))
 
-    const { growthbook } = useEdscStore.getState()
-    growthbook.setNlpSearchFeatureFlag(true)
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.growthbook.featureFlags.nlpSearch.featureFlagValue = true
+    })
 
     const eventType = 'test_event'
     const eventData = 'test_data'

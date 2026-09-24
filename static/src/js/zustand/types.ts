@@ -353,9 +353,9 @@ export type GrowthBookSlice = {
         userSelectedValue: HomeSearchMode
       }
     }
-    /** Function to set the NLP search feature flag */
-    setNlpSearchFeatureFlag: (value: boolean) => void
-    /** Function to set the NLP search user selection */
+    /** Function to set the a value in the feature flag key path. Example: 'nlpSearch.featureFlagValue' */
+    setFeatureFlagValue: (keyPath: string, value: boolean) => void
+    /** Function to set the NLP search user selection, updates localStorage and shows a toast if necessary */
     setNlpSearchUserSelection: (value: HomeSearchMode) => void
   }
 }

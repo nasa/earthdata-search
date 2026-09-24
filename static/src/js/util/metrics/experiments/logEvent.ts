@@ -9,13 +9,13 @@ import { localStorageKeys } from '../../../constants/localStorageKeys'
 import { sessionStorageKeys } from '../../../constants/sessionStorageKeys'
 
 interface LogEventParams {
-  /** The data associated with the event */
+  /** The data associated with the event. Not used in the `experiment_viewed` event, if applicable in other events */
   eventData?: string
   /** The type of the event */
   eventType: string
-  /** The ID of the experiment */
+  /** The ID of the experiment, only supplied during the `experiment_viewed` event */
   experimentId?: string
-  /** The ID of the variation */
+  /** The ID of the variation, only supplied during the `experiment_viewed` event */
   variationId?: string
 }
 

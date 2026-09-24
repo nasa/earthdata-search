@@ -16,7 +16,7 @@ const GrowthBookLoader = ({
   growthbook,
   children
 }: GrowthBookLoaderProps) => {
-  const setNlpSearchFeatureFlag = useEdscStore((state) => state.growthbook.setNlpSearchFeatureFlag)
+  const setFeatureFlagValue = useEdscStore((state) => state.growthbook.setFeatureFlagValue)
 
   const nlpSearchValue = useFeatureIsOn('nlpSearch')
 
@@ -41,7 +41,7 @@ const GrowthBookLoader = ({
   }, [])
 
   useEffect(() => {
-    setNlpSearchFeatureFlag(nlpSearchValue)
+    setFeatureFlagValue('nlpSearch.featureFlagValue', nlpSearchValue)
   }, [nlpSearchValue])
 
   return children

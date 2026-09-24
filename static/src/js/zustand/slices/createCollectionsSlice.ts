@@ -83,6 +83,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         // Get the difference of the two queries to find the field that changed
         const queryDiff = findQueryDiff(query, oldQuery)
         const jsonStringDiff = JSON.stringify(queryDiff, (_, value) => (value === undefined ? 'undefined' : value))
+        console.log('🚀 ~ createCollectionsSlice.ts:86 ~ createCollectionsSlice ~ jsonStringDiff:', jsonStringDiff)
 
         // Update the oldQuery
         oldQuery = query
