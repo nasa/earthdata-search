@@ -30,6 +30,12 @@ describe('aggregatedOrderStatus', () => {
         state: 'closed'
       }])).toEqual(ORDER_STATES.COMPLETE)
     })
+
+    test('returns the correct state for paused', () => {
+      expect(aggregatedOrderStatus([{
+        state: 'paused'
+      }])).toEqual(ORDER_STATES.PAUSED)
+    })
   })
 
   describe('for multi-order downloads', () => {
@@ -61,6 +67,12 @@ describe('aggregatedOrderStatus', () => {
       expect(aggregatedOrderStatus([{
         state: 'running_with_errors'
       }])).toEqual(ORDER_STATES.IN_PROGRESS)
+    })
+
+    test('returns the correct state when paused', () => {
+      expect(aggregatedOrderStatus([{
+        state: 'paused'
+      }])).toEqual(ORDER_STATES.PAUSED)
     })
   })
 })
