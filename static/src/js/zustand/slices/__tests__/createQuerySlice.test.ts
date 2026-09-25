@@ -449,6 +449,36 @@ describe('createQuerySlice', () => {
         expect(granules.getGranules).toHaveBeenCalledWith()
       })
     })
+
+    describe('when the query values change after the page num has been incremented', () => {
+      test('resets the pageNum parameter', async () => {
+        useEdscStore.setState((state) => {
+          state.query.collection.byId.collectionId = {
+            granules: {
+              ...initialGranuleQuery,
+              pageNum: 2 // The user has previously loaded in a second page of granules.
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeGranuleQuery } = query
+        await changeGranuleQuery({
+          collectionId: 'collectionId',
+          query: { browseOnly: true }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const { query: updatedQuery } = updatedState
+
+        expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+          ...initialGranuleQuery,
+          browseOnly: true,
+          pageNum: 1
+        })
+      })
+    })
   })
 
   describe('clearFilters', () => {
