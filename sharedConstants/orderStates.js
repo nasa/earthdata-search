@@ -1,7 +1,8 @@
 export const ORDER_STATES = {
-  CREATING: 'creating',
-  IN_PROGRESS: 'in_progress',
+  CANCELED: 'canceled',
   COMPLETE: 'complete',
+  CREATING: 'creating',
   FAILED: 'failed',
-  CANCELED: 'canceled'
+  IN_PROGRESS: 'in_progress',
+  PAUSED: 'paused'
 }

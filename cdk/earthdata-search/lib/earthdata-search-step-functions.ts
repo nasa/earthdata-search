@@ -169,6 +169,10 @@ export class StepFunctions extends Construct {
               Variable: '$.orderStatus',
               StringEquals: 'in_progress',
               Next: 'WaitForRetry'
+            }, {
+              Variable: '$.orderStatus',
+              StringEquals: 'paused',
+              Next: 'WaitForRetry'
             }],
             Default: 'OrderFailed'
           },

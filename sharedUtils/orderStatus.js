@@ -49,6 +49,9 @@ export const orderStates = {
   [ORDER_STATES.CREATING]: [
     'creating', // Custom EDSC status pertaining to orders before they are submitted
     'new'
+  ],
+  [ORDER_STATES.PAUSED]: [
+    'paused'
   ]
 }
 
@@ -71,6 +74,7 @@ export const getStateFromOrderStatus = (status) => {
   if (orderStates.in_progress.indexOf(status.toLowerCase()) > -1) return 'in_progress'
   if (orderStates.creating.indexOf(status.toLowerCase()) > -1) return 'creating'
   if (orderStates.canceled.indexOf(status.toLowerCase()) > -1) return 'canceled'
+  if (orderStates.paused.indexOf(status.toLowerCase()) > -1) return 'paused'
 
   return false
 }
@@ -99,6 +103,10 @@ export const aggregatedOrderStatus = (orders = []) => {
 
   if (orders.every((order) => getStateFromOrderStatus(order.state) === ORDER_STATES.CANCELED)) {
     orderStatus = ORDER_STATES.CANCELED
+  }
+
+  if (orders.every((order) => getStateFromOrderStatus(order.state) === ORDER_STATES.PAUSED)) {
+    orderStatus = ORDER_STATES.PAUSED
   }
 
   return orderStatus
