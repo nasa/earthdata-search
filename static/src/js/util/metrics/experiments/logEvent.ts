@@ -4,8 +4,27 @@ import LoggerRequest from '../../request/loggerRequest'
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
 import useEdscStore from '../../../zustand/useEdscStore'
+import { getNlpSearchMode } from '../../../zustand/selectors/growthbook'
+import { localStorageKeys } from '../../../constants/localStorageKeys'
+import { sessionStorageKeys } from '../../../constants/sessionStorageKeys'
 
-const logEvent = async (eventKey: string, eventType: string, eventData: string) => {
+interface LogEventParams {
+  /** The data associated with the event. Not used in the `experiment_viewed` event, if applicable in other events */
+  eventData?: string
+  /** The type of the event */
+  eventType: string
+  /** The ID of the experiment, only supplied during the `experiment_viewed` event */
+  experimentId?: string
+  /** The ID of the variation, only supplied during the `experiment_viewed` event */
+  variationId?: string
+}
+
+const logEvent = async ({
+  eventData,
+  eventType,
+  experimentId,
+  variationId
+}: LogEventParams) => {
   try {
     const { growthbookEnabled } = getApplicationConfig()
     if (growthbookEnabled !== 'true') {
@@ -14,23 +33,23 @@ const logEvent = async (eventKey: string, eventType: string, eventData: string) 
       return
     }
 
-    const { growthbook } = useEdscStore.getState()
-    const { featureFlags } = growthbook
-    const { [eventKey]: eventValue } = featureFlags
+    const state = useEdscStore.getState()
+    const nlpSearchMode = getNlpSearchMode(state)
 
-    const gbUserId = window.localStorage.getItem('gbUserId') || 'unknown-user-id'
-    const gbSessionId = window.sessionStorage.getItem('gbSessionId') || 'unknown-session-id'
+    const gbUserId = window.localStorage.getItem(localStorageKeys.gbUserId) || 'unknown-user-id'
+    const gbSessionId = window.sessionStorage.getItem(sessionStorageKeys.gbSessionId) || 'unknown-session-id'
 
     const loggerRequest = new LoggerRequest()
 
     const params = {
       eventData: {
-        experiment_id: eventKey,
-        variation_id: eventValue,
-        event_type: eventType,
         event_data: eventData,
+        event_type: eventType,
+        experiment_id: experimentId,
+        nlp_value: nlpSearchMode === 'nlp' ? 'true' : 'false',
         session_id: gbSessionId,
-        user_id: gbUserId
+        user_id: gbUserId,
+        variation_id: variationId
       }
     }
 

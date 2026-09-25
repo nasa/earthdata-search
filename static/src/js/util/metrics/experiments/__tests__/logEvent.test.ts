@@ -2,7 +2,6 @@ import useEdscStore from '../../../../zustand/useEdscStore'
 import logEvent from '../logEvent'
 
 // @ts-expect-error This file does not have types
-
 import * as config from '../../../../../../../sharedUtils/config'
 
 // @ts-expect-error This file does not have types
@@ -19,22 +18,25 @@ describe('logEvent', () => {
       growthbookEnabled: 'true'
     }))
 
-    const { growthbook } = useEdscStore.getState()
-    growthbook.setFeatureFlags('test_experiment', true)
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.growthbook.featureFlags.nlpSearch.featureFlagValue = true
+    })
 
-    const eventKey = 'test_experiment'
     const eventType = 'test_event'
     const eventData = 'test_data'
 
-    await logEvent(eventKey, eventType, eventData)
+    await logEvent({
+      eventData,
+      eventType
+    })
 
     expect(loggerRequestMock).toHaveBeenCalledTimes(1)
     expect(loggerRequestMock).toHaveBeenCalledWith({
       eventData: {
-        experiment_id: 'test_experiment',
-        variation_id: true,
-        event_type: eventType,
         event_data: eventData,
+        event_type: eventType,
+        nlp_value: 'true',
         session_id: expect.any(String),
         user_id: expect.any(String)
       }
@@ -50,11 +52,13 @@ describe('logEvent', () => {
         growthbookEnabled: 'false'
       }))
 
-      const eventKey = 'test_experiment'
       const eventType = 'test_event'
       const eventData = 'test_data'
 
-      await logEvent(eventKey, eventType, eventData)
+      await logEvent({
+        eventData,
+        eventType
+      })
 
       expect(loggerRequestMock).not.toHaveBeenCalled()
       expect(consoleLogMock).toHaveBeenCalledWith('GrowthBook is not enabled. Event will not be logged.')

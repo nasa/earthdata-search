@@ -28,7 +28,7 @@ const TestComponent = () => {
 
   return (
     <GrowthBookProvider growthbook={growthbook}>
-      <GrowthBookLoader>
+      <GrowthBookLoader growthbook={growthbook}>
         <div>Test Children</div>
       </GrowthBookLoader>
     </GrowthBookProvider>
@@ -39,7 +39,7 @@ const setup = setupTest({
   Component: TestComponent,
   defaultZustandState: {
     growthbook: {
-      setFeatureFlags: vi.fn()
+      setFeatureFlagValue: vi.fn()
     }
   }
 })
@@ -52,10 +52,10 @@ describe('GrowthBookLoader', () => {
     expect(useFeatureIsOn).toHaveBeenCalledWith('nlpSearch')
 
     await act(async () => {
-      expect(zustandState.growthbook.setFeatureFlags).toHaveBeenCalledTimes(1)
+      expect(zustandState.growthbook.setFeatureFlagValue).toHaveBeenCalledTimes(1)
     })
 
-    expect(zustandState.growthbook.setFeatureFlags).toHaveBeenCalledWith('nlpSearch', true)
+    expect(zustandState.growthbook.setFeatureFlagValue).toHaveBeenCalledWith('nlpSearch.featureFlagValue', true)
   })
 
   test('saves a user id and session id to localStorage and sessionStorage', async () => {
@@ -65,11 +65,12 @@ describe('GrowthBookLoader', () => {
     setup()
 
     await act(async () => {
-      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(2)
+      expect(localStorageGetItemSpy).toHaveBeenCalledTimes(3)
     })
 
     expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(1, 'gbUserId')
-    expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(2, 'gbSessionId')
+    expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(2, 'gbUserId')
+    expect(localStorageGetItemSpy).toHaveBeenNthCalledWith(3, 'gbSessionId')
 
     expect(localStorageSetItemSpy).toHaveBeenCalledTimes(2)
     expect(localStorageSetItemSpy).toHaveBeenNthCalledWith(1, 'gbUserId', expect.any(String))

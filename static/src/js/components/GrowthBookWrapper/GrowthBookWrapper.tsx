@@ -9,6 +9,7 @@ import {
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import GrowthBookLoader from '../GrowthBookLoader/GrowthBookLoader'
 import Spinner from '../Spinner/Spinner'
+import logEvent from '../../util/metrics/experiments/logEvent'
 
 interface GrowthBookWrapperProps {
   children: React.ReactNode
@@ -34,12 +35,13 @@ const GrowthBookWrapper = ({ children }: GrowthBookWrapperProps) => {
   const growthbook = new GrowthBook({
     apiHost: growthbookApiHost,
     clientKey: growthbookClientKey,
-    enableDevMode: NODE_ENV === 'development',
+    enableDevMode: NODE_ENV !== 'production',
     // Only required for A/B testing
     // Called every time a user is put into an experiment
     trackingCallback: (experiment, result) => {
-      // TODO call logEvent?
-      console.log('Experiment Viewed', {
+      // Log the experiment viewed event to GrowthBook
+      logEvent({
+        eventType: 'experiment_viewed',
         experimentId: experiment.key,
         variationId: result.key
       })
@@ -50,7 +52,7 @@ const GrowthBookWrapper = ({ children }: GrowthBookWrapperProps) => {
   return (
     <GrowthBookProvider growthbook={growthbook}>
       <FeaturesReady timeout={5000} fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-        <GrowthBookLoader>
+        <GrowthBookLoader growthbook={growthbook}>
           {children}
         </GrowthBookLoader>
       </FeaturesReady>

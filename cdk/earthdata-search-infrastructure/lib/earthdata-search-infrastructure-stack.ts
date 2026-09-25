@@ -136,6 +136,13 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                   'es:ESHttpPost'
                 ],
                 Resource: '*'
+              },
+              {
+                Effect: 'Allow',
+                Action: [
+                  'firehose:PutRecord'
+                ],
+                Resource: '*'
               }
             ]
           }

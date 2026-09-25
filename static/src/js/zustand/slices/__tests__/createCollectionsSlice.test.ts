@@ -6,6 +6,11 @@ import useEdscStore from '../../useEdscStore'
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import logEvent from '../../../util/metrics/experiments/logEvent'
+
+vi.mock('../../../util/metrics/experiments/logEvent', () => ({
+  default: vi.fn()
+}))
 
 describe('createCollectionsSlice', () => {
   test('sets the default state', () => {
@@ -84,6 +89,25 @@ describe('createCollectionsSlice', () => {
 
       expect(updatedFacets.facets.updateFacets).toHaveBeenCalledTimes(1)
       expect(updatedFacets.facets.updateFacets).toHaveBeenCalledWith([])
+
+      expect(logEvent).toHaveBeenCalledTimes(1)
+      expect(logEvent).toHaveBeenCalledWith({
+        eventType: 'initial_query',
+        eventData: JSON.stringify({
+          includeFacets: 'v2',
+          includeGranuleCounts: true,
+          includeHasGranules: true,
+          includeTags: 'edsc.*,opensearch.granule.osdd',
+          options: {},
+          pageSize: 20,
+          sortKey: ['has_granules_or_cwic', '-score', '-create-data-date'],
+          consortium: [],
+          hasGranulesOrCwic: true,
+          pageNum: 1,
+          serviceType: [],
+          tagKey: []
+        })
+      })
     })
 
     test('does not call updateCollectionResults on error', async () => {

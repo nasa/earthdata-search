@@ -8,6 +8,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import CollectionRequest from '../../util/request/collectionRequest'
 // @ts-expect-error There are no types for this file
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
+import logEvent from '../../util/metrics/experiments/logEvent'
 
 const initialState = {
   count: 0,
@@ -18,6 +19,22 @@ const initialState = {
 }
 
 let cancelToken: CancelTokenSource
+
+let oldQuery = {}
+
+const findQueryDiff = (
+  params: Record<string, unknown>,
+  oldParams: Record<string, unknown>
+) => Object.keys(params).reduce<Record<string, unknown>>((diff, key) => {
+  if (JSON.stringify(params[key]) !== JSON.stringify(oldParams[key])) {
+    return {
+      ...diff,
+      [key]: params[key]
+    }
+  }
+
+  return diff
+}, {})
 
 const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) => ({
   collections: {
@@ -59,7 +76,26 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       cancelToken = requestObject.getCancelToken()
 
       try {
-        const response = await requestObject.search(buildCollectionSearchParams(collectionParams))
+        const query = buildCollectionSearchParams(collectionParams)
+
+        const firstRequest = Object.keys(oldQuery).length === 0
+
+        // Get the difference of the two queries to find the field that changed
+        const queryDiff = findQueryDiff(query, oldQuery)
+        const jsonStringDiff = JSON.stringify(queryDiff, (_, value) => (value === undefined ? 'undefined' : value))
+        console.log('🚀 ~ createCollectionsSlice.ts:86 ~ createCollectionsSlice ~ jsonStringDiff:', jsonStringDiff)
+
+        // Update the oldQuery
+        oldQuery = query
+
+        // Log the query difference for analytics. If it is the first request, it will
+        // be marked as 'initial_query', otherwise 'query_changed'
+        logEvent({
+          eventType: firstRequest ? 'initial_query' : 'query_changed',
+          eventData: jsonStringDiff
+        })
+
+        const response = await requestObject.search(query)
 
         const { data, headers } = response
 

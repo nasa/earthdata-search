@@ -4,6 +4,7 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -13,17 +14,18 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
 import { sessionStorageKeys } from '../../../constants/sessionStorageKeys'
-// @ts-expect-error This file does not have types
-import addToast from '../../../util/addToast'
 
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
+import { getNlpSearchMode } from '../../../zustand/selectors/growthbook'
+
+vi.mock('../../../zustand/selectors/growthbook', () => ({
+  getNlpSearchMode: vi.fn().mockReturnValue('nlp')
+}))
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
-
-vi.mock('../../../util/addToast', () => ({ default: vi.fn() }))
 
 /**
  * Props captured from the mocked NlpSearchStatus component.
@@ -101,6 +103,9 @@ const setup = setupTest({
   defaultZustandState: {
     collections: {
       getCollections: vi.fn().mockResolvedValue(undefined)
+    },
+    growthbook: {
+      setNlpSearchUserSelection: vi.fn()
     }
   },
   withRouter: true
@@ -142,469 +147,7 @@ describe('Home', () => {
     expect(searchInput).toHaveValue('test keyword')
   })
 
-  describe('when nlpSearch is enabled', () => {
-    test('defaults to NLP search mode when no preference is saved', () => {
-      setup()
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
-    })
-
-    test('defaults to NLP search mode when no preference or GrowthBook value is saved', () => {
-      setup({
-        overrideZustandState: {
-          growthbook: {
-            featureFlags: {
-              nlpSearch: undefined
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
-    })
-
-    test('uses the saved traditional search preference', () => {
-      setup({
-        overrideZustandState: {
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'traditional'
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
-      expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
-    })
-
-    test('uses the saved user preference', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'traditional')
-
-      setup({
-        overrideZustandState: {
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'nlp'
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
-    })
-
-    test('uses the local storage search mode when the user preference is default', () => {
-      localStorage.setItem(localStorageKeys.homeSearchMode, 'nlp')
-
-      setup({
-        overrideZustandState: {
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'default'
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
-    })
-
-    test('uses the saved traditional user preference', () => {
-      setup({
-        overrideZustandState: {
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'traditional'
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
-    })
-
-    test('defaults to NLP search mode when the saved user preference is default and GrowthBook is enabled', () => {
-      setup({
-        overrideZustandState: {
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'default'
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
-    })
-
-    test('defaults to Traditional Search when the saved user preference is default and GrowthBook is disabled', () => {
-      setup({
-        overrideZustandState: {
-          growthbook: {
-            featureFlags: {
-              nlpSearch: false
-            }
-          },
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'default'
-            }
-          }
-        }
-      })
-
-      expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-      expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
-    })
-
-    test('updates the selected search mode', async () => {
-      const { user } = setup()
-
-      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
-
-      expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
-      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('traditional')
-
-      await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
-
-      expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
-      expect(localStorage.getItem(localStorageKeys.homeSearchMode)).toEqual('nlp')
-    })
-
-    test('shows the preference toast only on the first toggle for a default preference', async () => {
-      const { user } = setup({
-        overrideZustandState: {
-          user: {
-            sitePreferences: {
-              homeSearchMode: 'default'
-            }
-          }
-        }
-      })
-
-      await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
-
-      expect(addToast).toHaveBeenCalledTimes(1)
-
-      expect(addToast).toHaveBeenCalledWith(
-        'You can set your preferred search method in your User Preferences',
-        {
-          appearance: 'info',
-          autoDismiss: true
-        }
-      )
-
-      expect(sessionStorage.getItem(sessionStorageKeys.dontShowNlpPopup)).toEqual('true')
-
-      await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
-
-      expect(addToast).toHaveBeenCalledTimes(1)
-    })
-
-    test('renders the NEW badge for NLP feature', () => {
-      setup()
-
-      expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
-    })
-
-    test('reserves hidden NLP status space before submit to prevent hero layout shift', () => {
-      setup()
-
-      const statusRegion = screen.getByTestId('home-hero-status-region')
-
-      // Keep an always-mounted inactive region so the input row does not jump when status appears.
-      expect(statusRegion).toBeInTheDocument()
-      expect(statusRegion).toHaveClass('home__hero-status-region--inactive')
-      expect(statusRegion).toHaveAttribute('aria-hidden', 'true')
-      expect(mockNlpSearchStatus).not.toHaveBeenCalled()
-    })
-
-    test('navigates directly to search when submitting an empty NLP query', async () => {
-      const { user } = setup()
-
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
-      expect(mockNlpSearchStatus).not.toHaveBeenCalled()
-    })
-
-    test('starts NLP chat stream after submit and does not navigate immediately', async () => {
-      const { user } = setup()
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      expect(mockNlpSearchStatus).toHaveBeenCalledTimes(1)
-      expect(mockNlpSearchStatus).toHaveBeenCalledWith(expect.objectContaining({
-        activePrompt: 'test',
-        requestId: 1
-      }))
-
-      expect(mockUseNavigate).not.toHaveBeenCalled()
-    })
-
-    test('locks search input while NLP streaming is active', (async () => {
-      const { user } = setup()
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-
-      await user.type(searchInput, 'fire events')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
-      await act(async () => {
-        latestCallProps?.onStreamingChange?.(true)
-      })
-
-      await waitFor(() => {
-        expect(searchInput).toBeDisabled()
-      })
-
-      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /cancel/i })).toBeEnabled()
-      expect(Spinner).not.toHaveBeenCalled()
-    }))
-
-    test('does not navigate when cancelling an in-progress NLP search', async () => {
-      const { user } = setup()
-      mockUseNavigate.mockClear()
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-
-      await user.type(searchInput, 'fire events')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
-      await act(async () => {
-        latestCallProps?.onStreamingChange?.(true)
-      })
-
-      await user.click(screen.getByRole('button', { name: /cancel/i }))
-
-      expect(mockUseNavigate).not.toHaveBeenCalled()
-      expect(searchInput).toHaveValue('fire events')
-    })
-
-    test('does not navigate if NLP completes after cancel is clicked', async () => {
-      const { user } = setup()
-      mockUseNavigate.mockClear()
-      mockRouterNavigate.mockClear()
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-      const searchButton = screen.getByRole('button', { name: /search/i })
-
-      await user.type(searchInput, 'test search')
-      await user.click(searchButton)
-
-      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
-      await act(async () => {
-        latestCallProps?.onStreamingChange?.(true)
-      })
-
-      await user.click(screen.getByRole('button', { name: /cancel/i }))
-
-      await act(async () => {
-        latestCallProps?.onNlpSearchComplete?.({ hasSpatial: true })
-      })
-
-      expect(mockRouterNavigate).not.toHaveBeenCalled()
-      expect(mockUseNavigate).not.toHaveBeenCalled()
-    })
-
-    test('resets UI when Nlp search fails', async () => {
-      const { user } = setup()
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-      const searchButton = screen.getByRole('button', { name: /search/i })
-
-      await user.type(searchInput, 'test search')
-      await user.click(searchButton)
-
-      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
-      await act(async () => {
-        latestCallProps?.onStreamingChange?.(true)
-      })
-
-      await waitFor(() => {
-        expect(searchInput).toBeDisabled()
-      })
-
-      await act(async () => {
-        latestCallProps?.onNlpSearchFailed?.()
-      })
-
-      await waitFor(() => {
-        expect(searchInput).toBeEnabled()
-      })
-
-      expect(screen.queryByRole('button', { name: /cancel/i })).not.toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument()
-      expect(mockRouterNavigate).not.toHaveBeenCalled()
-      expect(mockUseNavigate).not.toHaveBeenCalled()
-      expect(searchInput).toHaveValue('test search')
-    })
-
-    test('navigates when NLP stream completes', async () => {
-      const { user } = setup()
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
-      await act(async () => {
-        latestCallProps?.onNlpSearchComplete?.({ hasSpatial: true })
-      })
-
-      await waitFor(() => {
-        expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
-      })
-
-      expect(mockRouterNavigate).toHaveBeenCalledWith(routes.SEARCH, {})
-      expect(mockUseNavigate).not.toHaveBeenCalled()
-    })
-
-    test('does not request map auto-center when NLP completes without spatial', async () => {
-      const setNlpAutoCenterPending = vi.fn()
-      const { user } = setup({
-        overrideZustandState: {
-          map: {
-            setNlpAutoCenterPending
-          }
-        }
-      })
-
-      const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
-
-      await user.type(searchInput, 'rainfall')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-
-      const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
-      await act(async () => {
-        latestCallProps?.onNlpSearchComplete?.({ hasSpatial: false })
-      })
-
-      await waitFor(() => {
-        expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
-      })
-
-      expect(setNlpAutoCenterPending).toHaveBeenCalledWith(false)
-    })
-
-    describe('when the nlpSearch feature flag is true', () => {
-      beforeEach(() => {
-        getApplicationConfig.mockReturnValue({
-          nlpSearch: 'true'
-        })
-      })
-
-      test('shows the AI Enhanced Search form', () => {
-        setup({
-          overrideZustandState: {
-            growthbook: {
-              featureFlags: {
-                nlpSearch: true
-              }
-            }
-          }
-        })
-
-        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-        expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-      })
-
-      describe('when the user has switched their preference to Traditional Search', () => {
-        test('shows the Traditional Search form as checked', () => {
-          setup({
-            overrideZustandState: {
-              growthbook: {
-                featureFlags: {
-                  nlpSearch: true
-                }
-              },
-              user: {
-                sitePreferences: {
-                  homeSearchMode: 'traditional'
-                }
-              }
-            }
-          })
-
-          expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-          expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-        })
-      })
-    })
-
-    describe('when the nlpSearch feature flag is false', () => {
-      beforeEach(() => {
-        getApplicationConfig.mockReturnValue({
-          nlpSearch: 'true'
-        })
-      })
-
-      test('shows the Traditional Search form', () => {
-        setup({
-          overrideZustandState: {
-            growthbook: {
-              featureFlags: {
-                nlpSearch: false
-              }
-            }
-          }
-        })
-
-        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-        expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
-      })
-
-      describe('when the user has switched their preference to AI Enhanced Search', () => {
-        test('shows the AI Enhanced Search form as checked', () => {
-          setup({
-            overrideZustandState: {
-              growthbook: {
-                featureFlags: {
-                  nlpSearch: true
-                }
-              },
-              user: {
-                sitePreferences: {
-                  homeSearchMode: 'nlp'
-                }
-              }
-            }
-          })
-
-          expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-          expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
-        })
-      })
-    })
-  })
-
-  describe('when nlpSearch is disabled', () => {
+  describe('when the nlpSearch environment variable is disabled', () => {
     beforeEach(() => {
       getApplicationConfig.mockReturnValue({
         nlpSearch: 'false'
@@ -620,31 +163,328 @@ describe('Home', () => {
       expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
     })
 
-    test('calls getCollections and navigate when the search form is submitted with no value', async () => {
-      const { user, zustandState } = setup()
+    describe('when the search form is submitted with no value', () => {
+      test('calls getCollections and navigate', async () => {
+        const { user, zustandState } = setup()
 
-      await user.click(screen.getByRole('button', { name: /search/i }))
+        await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
-      expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
+        expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
 
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+        expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      })
     })
 
-    test('calls getCollections and navigate when the search form is submitted with values', async () => {
-      const { user, zustandState } = setup()
+    describe('when the search form is submitted with a value', () => {
+      test('calls getCollections and navigate', async () => {
+        const { user, zustandState } = setup()
 
-      const searchInput = screen.getByPlaceholderText('Type to search for data')
+        const searchInput = screen.getByPlaceholderText('Type to search for data')
 
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
+        await user.type(searchInput, 'test')
+        await user.click(screen.getByRole('button', { name: /search/i }))
 
-      expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
-      expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
+        expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
 
-      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
-      expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+        expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      })
+    })
+  })
+
+  describe('when the nlpSearch environment variable is enabled', () => {
+    beforeEach(() => {
+      getApplicationConfig.mockReturnValue({
+        nlpSearch: 'true'
+      })
+    })
+
+    describe('when the search mode is nlp', () => {
+      beforeEach(() => {
+        (getNlpSearchMode as Mock).mockReturnValue('nlp')
+      })
+
+      test('renders the NLP search mode UI', () => {
+        setup()
+
+        expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
+
+        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+        expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: 'Open temporal filters' })).not.toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: 'spatial-selection-dropdown' })).not.toBeInTheDocument()
+        expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
+      })
+
+      describe('when submitting an empty query', () => {
+        test('navigates directly to search', async () => {
+          const { user } = setup()
+
+          await user.click(screen.getByRole('button', { name: /search/i }))
+
+          expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+          expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+          expect(mockNlpSearchStatus).not.toHaveBeenCalled()
+        })
+      })
+
+      describe('when submitting a non-empty query', () => {
+        test('starts NLP chat stream and does not navigate immediately', async () => {
+          const { user } = setup()
+
+          const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+          await user.type(searchInput, 'test')
+          await user.click(screen.getByRole('button', { name: /search/i }))
+
+          expect(mockNlpSearchStatus).toHaveBeenCalledTimes(1)
+          expect(mockNlpSearchStatus).toHaveBeenCalledWith(expect.objectContaining({
+            activePrompt: 'test',
+            requestId: 1
+          }))
+
+          expect(mockUseNavigate).not.toHaveBeenCalled()
+        })
+
+        describe('while NLP streaming is active', () => {
+          test('locks search input', async () => {
+            const { user } = setup()
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+            await user.type(searchInput, 'fire events')
+            await user.click(screen.getByRole('button', { name: /search/i }))
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onStreamingChange?.(true)
+            })
+
+            await waitFor(() => {
+              expect(searchInput).toBeDisabled()
+            })
+
+            expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument()
+            expect(screen.getByRole('button', { name: /cancel/i })).toBeEnabled()
+            expect(Spinner).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('when cancelling an in-progress NLP search', () => {
+          test('does not navigate', async () => {
+            const { user } = setup()
+            mockUseNavigate.mockClear()
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+            await user.type(searchInput, 'fire events')
+            await user.click(screen.getByRole('button', { name: /search/i }))
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onStreamingChange?.(true)
+            })
+
+            await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+            expect(mockUseNavigate).not.toHaveBeenCalled()
+            expect(searchInput).toHaveValue('fire events')
+          })
+        })
+
+        describe('when NLP completes after cancel is clicked', () => {
+          test('does not navigate', async () => {
+            const { user } = setup()
+            mockUseNavigate.mockClear()
+            mockRouterNavigate.mockClear()
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+            const searchButton = screen.getByRole('button', { name: /search/i })
+
+            await user.type(searchInput, 'test search')
+            await user.click(searchButton)
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onStreamingChange?.(true)
+            })
+
+            await user.click(screen.getByRole('button', { name: /cancel/i }))
+
+            await act(async () => {
+              latestCallProps?.onNlpSearchComplete?.({ hasSpatial: true })
+            })
+
+            expect(mockRouterNavigate).not.toHaveBeenCalled()
+            expect(mockUseNavigate).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('when Nlp search fails', () => {
+          test('resets UI', async () => {
+            const { user } = setup()
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+            const searchButton = screen.getByRole('button', { name: /search/i })
+
+            await user.type(searchInput, 'test search')
+            await user.click(searchButton)
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onStreamingChange?.(true)
+            })
+
+            await waitFor(() => {
+              expect(searchInput).toBeDisabled()
+            })
+
+            await act(async () => {
+              latestCallProps?.onNlpSearchFailed?.()
+            })
+
+            await waitFor(() => {
+              expect(searchInput).toBeEnabled()
+            })
+
+            expect(screen.queryByRole('button', { name: /cancel/i })).not.toBeInTheDocument()
+            expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument()
+            expect(mockRouterNavigate).not.toHaveBeenCalled()
+            expect(mockUseNavigate).not.toHaveBeenCalled()
+            expect(searchInput).toHaveValue('test search')
+          })
+        })
+
+        describe('when NLP search completes successfully', () => {
+          test('navigates to /search', async () => {
+            const { user } = setup()
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+            await user.type(searchInput, 'test')
+            await user.click(screen.getByRole('button', { name: /search/i }))
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onNlpSearchComplete?.({ hasSpatial: true })
+            })
+
+            await waitFor(() => {
+              expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+            })
+
+            expect(mockRouterNavigate).toHaveBeenCalledWith(routes.SEARCH, {})
+            expect(mockUseNavigate).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('when NLP search completes successfully without spatial', () => {
+          test('does not request map auto-center', async () => {
+            const setNlpAutoCenterPending = vi.fn()
+            const { user } = setup({
+              overrideZustandState: {
+                map: {
+                  setNlpAutoCenterPending
+                }
+              }
+            })
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+            await user.type(searchInput, 'rainfall')
+            await user.click(screen.getByRole('button', { name: /search/i }))
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onNlpSearchComplete?.({ hasSpatial: false })
+            })
+
+            await waitFor(() => {
+              expect(mockRouterNavigate).toHaveBeenCalledTimes(1)
+            })
+
+            expect(setNlpAutoCenterPending).toHaveBeenCalledWith(false)
+          })
+        })
+      })
+
+      describe('when selecting the traditional search mode', () => {
+        test('calls setNlpSearchUserSelection', async () => {
+          const { user, zustandState } = setup()
+
+          await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
+
+          const { growthbook } = zustandState
+          const { setNlpSearchUserSelection } = growthbook
+          expect(setNlpSearchUserSelection).toHaveBeenCalledTimes(1)
+          expect(setNlpSearchUserSelection).toHaveBeenCalledWith('traditional')
+        })
+      })
+    })
+
+    describe('when the search mode is traditional', () => {
+      beforeEach(() => {
+        (getNlpSearchMode as Mock).mockReturnValue('traditional')
+      })
+
+      test('renders the traditional search mode UI', () => {
+        setup()
+
+        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+        expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
+        expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
+      })
+
+      describe('when the search form is submitted with no value', () => {
+        test('calls getCollections and navigate', async () => {
+          const { user, zustandState } = setup()
+
+          await user.click(screen.getByRole('button', { name: /search/i }))
+
+          expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+          expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
+
+          expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+          expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+        })
+      })
+
+      describe('when the search form is submitted with a value', () => {
+        test('calls getCollections and navigate', async () => {
+          const { user, zustandState } = setup()
+
+          const searchInput = screen.getByPlaceholderText('Type to search for data')
+
+          await user.type(searchInput, 'test')
+          await user.click(screen.getByRole('button', { name: /search/i }))
+
+          expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+          expect(zustandState.collections.getCollections).toHaveBeenCalledWith()
+
+          expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+          expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+        })
+      })
+
+      describe('when selecting the nlp search mode', () => {
+        test('calls setNlpSearchUserSelection', async () => {
+          const { user, zustandState } = setup()
+
+          await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
+
+          const { growthbook } = zustandState
+          const { setNlpSearchUserSelection } = growthbook
+          expect(setNlpSearchUserSelection).toHaveBeenCalledTimes(1)
+          expect(setNlpSearchUserSelection).toHaveBeenCalledWith('nlp')
+        })
+      })
     })
   })
 

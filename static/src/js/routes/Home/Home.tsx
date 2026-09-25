@@ -65,16 +65,12 @@ import type { HomeSearchMode } from '../../zustand/types'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
-import { getSitePreferences } from '../../zustand/selectors/user'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getNlpSearchMode } from '../../zustand/selectors/growthbook'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
-import { getCollectionsQuery } from '../../zustand/selectors/query'
-import { localStorageKeys } from '../../constants/localStorageKeys'
-import { sessionStorageKeys } from '../../constants/sessionStorageKeys'
-// @ts-expect-error This file does not have types
-import addToast from '../../util/addToast'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
@@ -84,30 +80,6 @@ let preloaded = false
 
 const nlpSearchMode: HomeSearchMode = 'nlp'
 const traditionalSearchMode: HomeSearchMode = 'traditional'
-const defaultSearchMode: HomeSearchMode = 'default'
-
-// Resolve search mode from user Zustand first, then temporary local storage,
-// and finally Growthbook with NLP as the fallback.
-// If NLP feature flag is not enabled, default to traditional
-const getPreferredHomeSearchMode = (
-  isNlpEnabled: boolean,
-  homeSearchMode?: HomeSearchMode,
-  isNlpFeatureFlagEnabled?: boolean
-): HomeSearchMode => {
-  if (!isNlpEnabled) return traditionalSearchMode
-
-  if (homeSearchMode === nlpSearchMode || homeSearchMode === traditionalSearchMode) {
-    return homeSearchMode
-  }
-
-  const storedSearchMode = localStorage.getItem(localStorageKeys.homeSearchMode)
-
-  if (storedSearchMode === nlpSearchMode || storedSearchMode === traditionalSearchMode) {
-    return storedSearchMode
-  }
-
-  return isNlpFeatureFlagEnabled === false ? traditionalSearchMode : nlpSearchMode
-}
 
 const preloadRoutes = () => {
   const { NODE_ENV } = process.env
@@ -199,10 +171,6 @@ export const Home: React.FC = () => {
   const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
-  const featureFlags = useEdscStore((state) => state.growthbook.featureFlags)
-  const { nlpSearch: isNlpFeatureFlagEnabled } = featureFlags
-  const sitePreferences = useEdscStore(getSitePreferences)
-  const { homeSearchMode } = sitePreferences
 
   const {
     numberOfGranules,
@@ -211,24 +179,13 @@ export const Home: React.FC = () => {
 
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const isNlpEnabled = nlpSearchEnabled === 'true'
-  const [preferredHomeSearchMode, setPreferredHomeSearchMode] = useState<HomeSearchMode>(
-    () => getPreferredHomeSearchMode(
-      isNlpEnabled,
-      homeSearchMode,
-      isNlpFeatureFlagEnabled
-    )
+
+  const searchMode = useEdscStore(getNlpSearchMode)
+  const setNlpSearchUserSelection = useEdscStore(
+    (state) => state.growthbook.setNlpSearchUserSelection
   )
 
-  const isNlpSearchActive = isNlpEnabled && preferredHomeSearchMode === nlpSearchMode
-
-  useEffect(() => {
-    // Keep the resolved search mode used by UI in sync with user's preference and NLP feature flag
-    setPreferredHomeSearchMode(getPreferredHomeSearchMode(
-      isNlpEnabled,
-      homeSearchMode,
-      isNlpFeatureFlagEnabled
-    ))
-  }, [homeSearchMode, isNlpEnabled, isNlpFeatureFlagEnabled])
+  const isNlpSearchActive = isNlpEnabled && searchMode === nlpSearchMode
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -305,19 +262,7 @@ export const Home: React.FC = () => {
   const onSearchModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nextSearchMode = event.target.value as HomeSearchMode
 
-    localStorage.setItem(localStorageKeys.homeSearchMode, nextSearchMode)
-    setPreferredHomeSearchMode(nextSearchMode)
-
-    if (
-      homeSearchMode === defaultSearchMode
-      && sessionStorage.getItem(sessionStorageKeys.dontShowNlpPopup) !== 'true'
-    ) {
-      sessionStorage.setItem(sessionStorageKeys.dontShowNlpPopup, 'true')
-      addToast('You can set your preferred search method in your User Preferences', {
-        appearance: 'info',
-        autoDismiss: true
-      })
-    }
+    setNlpSearchUserSelection(nextSearchMode)
 
     if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
   }
@@ -450,7 +395,7 @@ export const Home: React.FC = () => {
                           name="home-search-mode"
                           id="home-search-mode-nlp"
                           value={nlpSearchMode}
-                          checked={preferredHomeSearchMode === nlpSearchMode}
+                          checked={searchMode === nlpSearchMode}
                           onChange={onSearchModeChange}
                         />
                         <OverlayTrigger
@@ -473,7 +418,7 @@ export const Home: React.FC = () => {
                           name="home-search-mode"
                           id="home-search-mode-traditional"
                           value={traditionalSearchMode}
-                          checked={preferredHomeSearchMode === traditionalSearchMode}
+                          checked={searchMode === traditionalSearchMode}
                           onChange={onSearchModeChange}
                         />
                         <OverlayTrigger

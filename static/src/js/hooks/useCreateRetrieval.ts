@@ -17,6 +17,7 @@ import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import { metricsDataAccess } from '../util/metrics/metricsDataAccess'
 
 import type { EchoOrderAccessMethod, EsiAccessMethod } from '../zustand/types'
+import logEvent from '../util/metrics/experiments/logEvent'
 
 export const useCreateRetrieval = () => {
   const navigate = useNavigate()
@@ -102,6 +103,14 @@ export const useCreateRetrieval = () => {
     metricsDataAccess({
       type: 'data_access_completion',
       collections: metricsCollections
+    })
+
+    // Log the data access event for GrowthBook
+    logEvent({
+      eventType: 'data_access',
+      eventData: JSON.stringify({
+        service_type: metricsCollections.map((collection) => collection?.type)
+      })
     })
 
     const orderParams = prepareRetrievalParams()

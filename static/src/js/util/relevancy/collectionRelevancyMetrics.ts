@@ -11,6 +11,7 @@ import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/sel
 import { getCollections } from '../../zustand/selectors/collections'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import useEdscStore from '../../zustand/useEdscStore'
+import logEvent from '../metrics/experiments/logEvent'
 
 /**
  * Send collection relevancy information to lambda to be logged
@@ -29,10 +30,12 @@ export const collectionRelevancyMetrics = () => {
 
   const collectionParams = buildCollectionSearchParams(prepareCollectionParams({}))
 
+  const selectedIndex = allIds.indexOf(focusedCollectionId)
+
   const data = {
     query: collectionParams,
     collections: allIds,
-    selected_index: allIds.indexOf(focusedCollectionId),
+    selected_index: selectedIndex,
     selected_collection: focusedCollectionId,
     exact_match: exactMatch(focusedCollectionMetadata, keyword)
   }
@@ -40,4 +43,12 @@ export const collectionRelevancyMetrics = () => {
   const requestObject = new LoggerRequest()
 
   requestObject.logRelevancy({ data }).then(() => {})
+
+  // Log the collection relevancy event to GrowthBook
+  logEvent({
+    eventData: JSON.stringify({
+      selected_index: selectedIndex
+    }),
+    eventType: 'collection_relevancy'
+  })
 }
