@@ -73,24 +73,26 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         state.granules.granules.collectionConceptId = null
       })
 
+      const zustandState = get()
+
       // Fetch collections with the updated query parameters
-      get().collections.getCollections()
+      zustandState.collections.getCollections()
 
       // If there is a focused collection, update it's granule search params
       // and request it's granules started with page one
-      const focusedCollectionId = getCollectionId(get())
+      const focusedCollectionId = getCollectionId(zustandState)
       if (focusedCollectionId) {
         set((state) => {
           state.query.collection.byId[focusedCollectionId].granules.pageNum = 1
         })
 
-        get().granules.getGranules()
+        zustandState.granules.getGranules()
       }
 
       // If there are collections in the project, update their respective granule results
-      const projectCollectionsIds = getProjectCollectionsIds(get())
+      const projectCollectionsIds = getProjectCollectionsIds(zustandState)
       if (projectCollectionsIds.length > 0) {
-        await get().project.getProjectGranules()
+        await zustandState.project.getProjectGranules()
       }
     },
 
@@ -114,7 +116,12 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
           const mergedQuery = {
             ...currentGranuleQuery,
-            ...query
+            ...query,
+            // If there is no pageNum it is because the query changed without scrolling.
+            // Reset the pageNum if that happens. This will remove the existing pageNum
+            // coming from `currentGranuleQuery`.
+            // The pageNum will default to 1 with `initialGranuleQuery` below.
+            pageNum: query.pageNum || undefined
           }
 
           const prunedQuery = pruneFilters(mergedQuery)
@@ -126,13 +133,14 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const focusedCollectionId = getCollectionId(get())
-      const projectCollectionsIds = getProjectCollectionsIds(get())
+      const zustandState = get()
+      const focusedCollectionId = getCollectionId(zustandState)
+      const projectCollectionsIds = getProjectCollectionsIds(zustandState)
       if (focusedCollectionId && projectCollectionsIds.includes(focusedCollectionId)) {
-        await get().project.getProjectGranules()
+        await zustandState.project.getProjectGranules()
       }
 
-      get().granules.getGranules()
+      zustandState.granules.getGranules()
     },
 
     clearFilters: async () => {
@@ -146,18 +154,18 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       }))
 
-      get().collections.getCollections()
-
-      get().project.getProjectCollections()
+      const zustandState = get()
+      zustandState.collections.getCollections()
+      zustandState.project.getProjectCollections()
 
       // Don't request granules unless we are viewing granules
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname } = location
 
       if (isPath(pathname, [routes.GRANULES])) {
-        get().granules.getGranules()
+        zustandState.granules.getGranules()
 
-        get().timeline.getTimeline()
+        zustandState.timeline.getTimeline()
       }
     },
 

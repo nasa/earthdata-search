@@ -391,7 +391,7 @@ test.describe('Map: Shapefile interactions', () => {
         await page.waitForURL(/zoom=21/, { timeout: 3000 })
 
         // Wait for map animation to complete
-        await page.waitForTimeout(500)
+        await page.waitForTimeout(1000)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('point.png', {
