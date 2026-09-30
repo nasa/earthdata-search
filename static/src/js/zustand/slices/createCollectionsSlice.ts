@@ -1,19 +1,14 @@
 import { CancelTokenSource, isCancel } from 'axios'
-import { isEmpty } from 'lodash-es'
 
 import { CollectionsSlice, ImmerStateCreator } from '../types'
 
 import { getEdlToken } from '../selectors/user'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
-import addShapefile from '../../util/addShapefile'
 import CollectionRequest from '../../util/request/collectionRequest'
 // @ts-expect-error There are no types for this file
-import NlpSearchRequest from '../../util/request/nlpSearchRequest'
-// @ts-expect-error There are no types for this file
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
-
-import type { ShapefileFile } from '../../types/sharedTypes'
+import logEvent from '../../util/metrics/experiments/logEvent'
 
 const initialState = {
   count: 0,
@@ -24,6 +19,22 @@ const initialState = {
 }
 
 let cancelToken: CancelTokenSource
+
+let oldQuery = {}
+
+const findQueryDiff = (
+  params: Record<string, unknown>,
+  oldParams: Record<string, unknown>
+) => Object.keys(params).reduce<Record<string, unknown>>((diff, key) => {
+  if (JSON.stringify(params[key]) !== JSON.stringify(oldParams[key])) {
+    return {
+      ...diff,
+      [key]: params[key]
+    }
+  }
+
+  return diff
+}, {})
 
 const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) => ({
   collections: {
@@ -65,7 +76,25 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       cancelToken = requestObject.getCancelToken()
 
       try {
-        const response = await requestObject.search(buildCollectionSearchParams(collectionParams))
+        const query = buildCollectionSearchParams(collectionParams)
+
+        const firstRequest = Object.keys(oldQuery).length === 0
+
+        // Get the difference of the two queries to find the field that changed
+        const queryDiff = findQueryDiff(query, oldQuery)
+        const jsonStringDiff = JSON.stringify(queryDiff, (_, value) => (value === undefined ? 'undefined' : value))
+
+        // Update the oldQuery
+        oldQuery = query
+
+        // Log the query difference for analytics. If it is the first request, it will
+        // be marked as 'initial_query', otherwise 'query_changed'
+        logEvent({
+          eventType: firstRequest ? 'initial_query' : 'query_changed',
+          eventData: jsonStringDiff
+        })
+
+        const response = await requestObject.search(query)
 
         const { data, headers } = response
 
@@ -105,134 +134,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           action: 'getCollections',
           resource: 'collections',
           requestObject,
-          showAlertButton: true,
-          title: 'Something went wrong fetching collection search results'
-        })
-      }
-    },
-
-    getNlpCollections: async (query) => {
-      const zustandState = get()
-      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-
-      let nlpRequest: NlpSearchRequest
-
-      const collectionParams = prepareCollectionParams({})
-      const searchParams = buildCollectionSearchParams(collectionParams)
-
-      set((state) => {
-        state.collections.collections.isLoading = true
-      })
-
-      try {
-        const timerStart = Date.now()
-        nlpRequest = new NlpSearchRequest(earthdataEnvironment)
-
-        const response = await nlpRequest.search({
-          embedding: false,
-          q: query,
-          search_params: {
-            ...searchParams,
-            options: {
-              temporal: {
-                limit_to_granules: true
-              }
-            }
-          }
-        })
-
-        const { data, headers } = response
-        const cmrHits = parseInt(headers['cmr-hits'], 10)
-
-        const {
-          metadata,
-          queryInfo
-        } = data
-
-        const { feed } = metadata
-        const { entry, facets = {} } = feed
-        const { children = [] } = facets
-
-        const { spatial } = queryInfo
-
-        if (!isEmpty(spatial)) {
-          const { geoJson, geoLocation } = spatial || {}
-
-          // Ensure the geoJson is a FeatureCollection
-          let featureCollection: ShapefileFile = geoJson
-          if (geoJson.type !== 'FeatureCollection') {
-            featureCollection = {
-              type: 'FeatureCollection',
-              features: [{
-                type: 'Feature',
-                geometry: geoJson,
-                properties: {}
-              }]
-            }
-          }
-
-          // Add nlpGenerated property to each feature
-          featureCollection.features = featureCollection.features.map((feature) => {
-            const { properties = {} } = feature
-
-            return {
-              ...feature,
-              properties: {
-                ...properties,
-                nlpGenerated: true
-              }
-            }
-          })
-
-          // Calculate the size of the geoJson
-          const { size: sizeInBytes } = new Blob([JSON.stringify(geoJson)])
-
-          const sizeInKB = sizeInBytes / 1024
-          let size = `${sizeInKB.toFixed(2)} KB`
-
-          // If the size is greater than 1 MB, convert to MB
-          if (sizeInKB > 1024) {
-            const sizeInMB = sizeInKB / 1024
-            size = `${sizeInMB.toFixed(2)} MB`
-          }
-
-          // Add the shapefile to the store
-          await addShapefile({
-            file: featureCollection,
-            filename: geoLocation,
-            size,
-            updateQuery: false
-          })
-        }
-
-        set((state) => {
-          state.query.collection = {
-            ...state.query.collection,
-            ...queryInfo
-          }
-
-          state.collections.collections.count = cmrHits
-          state.collections.collections.isLoaded = true
-          state.collections.collections.isLoading = false
-          state.collections.collections.items = entry
-          state.collections.collections.loadTime = Date.now() - timerStart
-        })
-
-        zustandState.facets.facets.updateFacets(children)
-      } catch (error) {
-        set((state) => {
-          state.collections.collections.isLoading = false
-          state.collections.collections.isLoaded = false
-
-          state.facets.facets.isLoading = false
-          state.facets.facets.isLoaded = false
-        })
-
-        zustandState.errors.handleError({
-          error: error as Error,
-          action: 'getNlpCollections',
-          resource: 'nlpSearch',
-          requestObject: nlpRequest,
           showAlertButton: true,
           title: 'Something went wrong fetching collection search results'
         })

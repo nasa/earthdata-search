@@ -188,5 +188,95 @@ describe('createGranulesSlice', () => {
         title: 'Something went wrong fetching granule search results'
       }))
     })
+
+    describe('when the collectionId matches the granules collectionConceptId', () => {
+      describe('when the collection is not OpenSearch', () => {
+        test('does not fetch granules', async () => {
+          // This test will fail if a network request is attempted.
+
+          useEdscStore.setState((state) => {
+            state.collection.collectionId = 'collectionId'
+            state.granules.granules.collectionConceptId = 'collectionId'
+            state.errors.handleError = vi.fn()
+          })
+
+          const { granules } = useEdscStore.getState()
+          await granules.getGranules()
+
+          const { errors } = useEdscStore.getState()
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
+        })
+      })
+
+      describe('when the collection is OpenSearch', () => {
+        test('fetches granules', async () => {
+          nock(/localhost/)
+            .post(/opensearch\/granules/)
+            .reply(200, `<feed>
+              <totalResults>1</totalResults>
+              <entry>
+                <mockGranuleData>goes here</mockGranuleData>
+              </entry>
+            </feed>`)
+
+          useEdscStore.setState((state) => {
+            state.collection.collectionId = 'collectionId'
+            state.collection.collectionMetadata = {
+              collectionId: {
+                links: [{
+                  rel: '/search#',
+                  href: 'https://example.com/opensearch'
+                }]
+              }
+            }
+
+            state.granules.granules.collectionConceptId = 'collectionId'
+            state.errors.handleError = vi.fn()
+          })
+
+          const { granules } = useEdscStore.getState()
+          await granules.getGranules()
+
+          const { errors } = useEdscStore.getState()
+          expect(errors.handleError).toHaveBeenCalledTimes(0)
+
+          const {
+            granules: updatedGranules
+          } = useEdscStore.getState()
+
+          expect(updatedGranules.granules).toEqual({
+            collectionConceptId: 'collectionId',
+            count: 1,
+            isLoaded: true,
+            isLoading: false,
+            items: [{
+              browseFlag: false,
+              collectionConceptId: 'collectionId',
+              isOpenSearch: true,
+              mockGranuleData: 'goes here',
+              spatial: null
+            }],
+            loadTime: expect.any(Number)
+          })
+        })
+      })
+    })
+
+    describe('when collectionId is not set', () => {
+      test('does not fetch granules', async () => {
+        // This test will fail if a network request is attempted.
+
+        useEdscStore.setState((state) => {
+          state.collection.collectionId = null
+          state.errors.handleError = vi.fn()
+        })
+
+        const { granules } = useEdscStore.getState()
+        await granules.getGranules()
+
+        const { errors } = useEdscStore.getState()
+        expect(errors.handleError).toHaveBeenCalledTimes(0)
+      })
+    })
   })
 })

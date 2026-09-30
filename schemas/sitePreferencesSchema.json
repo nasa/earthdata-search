@@ -9,6 +9,18 @@
 		"granuleListView"
   ],
 	"properties": {
+    "homeSearchMode": {
+      "$id": "#/properties/homeSearchMode",
+      "type": "string",
+      "title": "Preferred Home Search Mode",
+      "description": "Choose the default search mode when opening Earthdata Search.",
+      "default": "default",
+      "enum": [
+        "default",
+        "nlp",
+        "traditional"
+      ]
+    },
 		"collectionSort": {
 			"$id": "#/properties/collectionSort",
 			"type": "string",

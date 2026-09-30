@@ -21,6 +21,10 @@ const getImageFileName = (url) => {
     return 'reference-features-15-m-mock'
   }
 
+  if (url.includes('DoS_International_Boundaries')) {
+    return 'dos-international-boundaries-mock'
+  }
+
   if (url.includes('Coastlines_15m')) {
     return 'coastlines-15-m-mock'
   }
@@ -42,8 +46,6 @@ const saveImage = async (route, page) => {
   const filename = getImageFileName(url)
   const imagePath = path.join('./tests/fixtures/images', filename)
   fs.writeFileSync(imagePath, buffer)
-
-  await route.continue()
 }
 
 // Return the image from disk
@@ -111,6 +113,7 @@ export const setupTests = async ({
   await page.route('**googletagmanager**', (route) => route.abort())
   await page.route('**google-analytics**', (route) => route.abort())
   await page.route('**digitalgov**', (route) => route.abort())
+  await page.route('**tophat**', (route) => route.abort())
 
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)

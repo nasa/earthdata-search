@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useRef,
   useState
@@ -21,6 +22,7 @@ import {
 
 import Button from '../../components/Button/Button'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+import NlpSearchStatus from '../../components/NlpSearchStatus/NlpSearchStatus'
 
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -54,22 +56,30 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
 import { routes } from '../../constants/routes'
+import renderTooltip from '../../util/renderTooltip'
+
+import routerHelper from '../../router/router'
 
 import type{ PortalConfig } from '../../types/sharedTypes'
+import type { HomeSearchMode } from '../../zustand/types'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getNlpSearchMode } from '../../zustand/selectors/growthbook'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
-import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
 )
 
 let preloaded = false
+
+const nlpSearchMode: HomeSearchMode = 'nlp'
+const traditionalSearchMode: HomeSearchMode = 'traditional'
 
 const preloadRoutes = () => {
   const { NODE_ENV } = process.env
@@ -152,16 +162,30 @@ const topics: HomeTopic[] = [
 export const Home: React.FC = () => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
+  const isNlpActiveRef = useRef(false)
   const [showAllPortals, setShowAllPortals] = useState(false)
+  const [activeNlpPrompt, setActiveNlpPrompt] = useState('')
+  const [nlpRequestId, setNlpRequestId] = useState(0)
+  const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
+  const [isNlpStreaming, setIsNlpStreaming] = useState(false)
+  const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
-  const getNlpCollections = useEdscStore((state) => state.collections.getNlpCollections)
 
-  const { numberOfGranules } = getApplicationConfig()
+  const {
+    numberOfGranules,
+    nlpSearch: nlpSearchEnabled
+  } = getApplicationConfig()
 
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
-  const { nlpSearch } = getApplicationConfig()
-  const isNlpEnabled = nlpSearch === 'true'
+  const isNlpEnabled = nlpSearchEnabled === 'true'
+
+  const searchMode = useEdscStore(getNlpSearchMode)
+  const setNlpSearchUserSelection = useEdscStore(
+    (state) => state.growthbook.setNlpSearchUserSelection
+  )
+
+  const isNlpSearchActive = isNlpEnabled && searchMode === nlpSearchMode
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -194,6 +218,7 @@ export const Home: React.FC = () => {
   const hiddenPortals = sortedPortals.slice(10)
 
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
+  const setNlpAutoCenterPending = useEdscStore((state) => state.map.setNlpAutoCenterPending)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: collectionsQueryKeyword = '' } = collectionQuery
   const [keyword, setKeyword] = useState(collectionsQueryKeyword)
@@ -206,33 +231,123 @@ export const Home: React.FC = () => {
     q: keyword
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onNlpSearchComplete = useCallback(({ hasSpatial }: { hasSpatial: boolean }) => {
+    // Use ref instead of state so check is synchronous. State
+    // would still see stale values when onFinish fires.
+
+    if (!isNlpActiveRef.current) return undefined
+
+    // Only center map when NLP returns a parsed spatial extent.
+    setNlpAutoCenterPending(hasSpatial)
+
+    // Queue navigation only while the current NLP request is still active.
+    return Promise.resolve(setIsNlpNavigationPending(true))
+  }, [setNlpAutoCenterPending])
+
+  const resetNlpSearchUi = useCallback(() => {
+    isNlpActiveRef.current = false
+    setIsNlpStreaming(false)
+    setHasSubmittedNlpSearch(false)
+    setActiveNlpPrompt('')
+    setNlpAutoCenterPending(false)
+    setIsNlpNavigationPending(false)
+
+    if (inputRef.current) inputRef.current.focus()
+  }, [setNlpAutoCenterPending])
+
+  const onNlpSearchFailed = useCallback(() => {
+    resetNlpSearchUi()
+  }, [resetNlpSearchUi])
+
+  const onSearchModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const nextSearchMode = event.target.value as HomeSearchMode
+
+    setNlpSearchUserSelection(nextSearchMode)
+
+    if (nextSearchMode === traditionalSearchMode) resetNlpSearchUi()
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    // Fetch the collections using the NLP search
     const trimmedKeyword = keyword.trim()
 
-    if (isNlpEnabled) {
-      // If nlp is enabled, use NLP search to fetch collections
-      await getNlpCollections(trimmedKeyword)
-    } else {
-      // Manually update the query in the store
-      changeQuery({
-        collection: {
-          keyword: trimmedKeyword
-        }
-      })
+    if (isNlpSearchActive) {
+      if (isNlpStreaming) return
+
+      if (!trimmedKeyword) {
+        // If an NLP session has already started, treat empty submit as a no-op.
+        // This prevents cancel interactions from accidentally falling through
+        // to the empty-query redirect path.
+        if (hasSubmittedNlpSearch) return
+
+        changeQuery({
+          collection: {
+            keyword: trimmedKeyword
+          }
+        })
+
+        navigate(`${routes.SEARCH}${window.location.search}`)
+
+        return
+      }
+
+      isNlpActiveRef.current = true
+      setIsNlpStreaming(true)
+      setActiveNlpPrompt(trimmedKeyword)
+      setHasSubmittedNlpSearch(true)
+      setNlpRequestId((currentId) => currentId + 1)
+
+      return
     }
+
+    // Manually update the query in the store
+    changeQuery({
+      collection: {
+        keyword: trimmedKeyword
+      }
+    })
 
     // After collections are fetched, navigate to the Search route
     navigate(`${routes.SEARCH}${window.location.search}`)
   }
 
+  useEffect(() => {
+    if (!isNlpSearchActive) return
+    if (!hasSubmittedNlpSearch || !isNlpStreaming) return
+    if (!isNlpNavigationPending || isLoading) return
+    if (!isNlpActiveRef.current) return
+
+    Promise.resolve(routerHelper.router?.navigate(routes.SEARCH, {}))
+      .finally(() => {
+        setIsNlpStreaming(false)
+        setIsNlpNavigationPending(false)
+      })
+  }, [
+    hasSubmittedNlpSearch,
+    isLoading,
+    isNlpSearchActive,
+    isNlpNavigationPending,
+    isNlpStreaming
+  ])
+
+  const onCancelNlpSearch = (event?:React.SyntheticEvent) => {
+    // Synchronously mark NLP as inactive so any inflight onNlpSearchComplete
+    // sees the cancellation before React does state updates.
+    event?.preventDefault()
+    event?.stopPropagation()
+
+    resetNlpSearchUi()
+  }
+
+  const isSearchInputDisabled = isNlpSearchActive && isNlpStreaming
+  const shouldShowNlpStatus = isNlpSearchActive && hasSubmittedNlpSearch && !!activeNlpPrompt
+
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
         <section
-          className="home__hero position-relative w-100 d-flex px-5 flex-column justify-content-center flex-shrink-0 gap-5"
+          className="home__hero position-relative w-100 d-flex px-5 flex-column flex-shrink-0"
         >
           <picture className="home__hero-image position-absolute">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
@@ -242,70 +357,163 @@ export const Home: React.FC = () => {
               alt="Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra platform on March 12, 2025"
             />
           </picture>
-          <div className="text-center z-1 d-flex gap-3 flex-column">
-            <h1 className="text-white display-7">
-              Search NASA&apos;s
-              {' '}
-              {numberOfGranules}
-              {' '}
-              Earth observations
-            </h1>
-            {
-              isNlpEnabled ? (
-                <div className="d-flex justify-content-center align-items-center">
-                  <Badge className="home__new-badge">
-                    NEW
-                  </Badge>
-                  <p className="text-white mb-0 lead">
-                    Describe what you&apos;re looking for to start your search
-                  </p>
-                </div>
-              ) : (
-                <p className="text-white mb-0 lead">
-                  Use keywords and filter by time and spatial area
-                  to search NASA&apos;s Earth science data
-                </p>
-              )
-            }
-          </div>
-          <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
-            <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
-              <form
-                className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
-                onSubmit={handleSubmit}
-              >
-                <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
-                  <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px" />
-                  <input
-                    className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
-                    onChange={onChangeKeyword}
-                    placeholder={isNlpEnabled ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
-                    ref={inputRef}
-                    type="text"
-                    value={keyword}
-                  />
-                </div>
+          <div className="home__hero-main d-flex flex-shrink-1 flex-column z-1">
+            <div className="home__hero-main-content d-flex flex-shrink-1 flex-column justify-content-center">
+              <div className="home__hero-intro text-center d-flex gap-3 flex-column">
+                <h1 className="text-white display-7">
+                  Search NASA&apos;s
+                  {' '}
+                  {numberOfGranules}
+                  {' '}
+                  Earth observations
+                </h1>
                 {
-                  !isNlpEnabled && (
-                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                      <TemporalSelectionDropdown searchParams={searchParams} />
-                      <SpatialSelectionDropdown searchParams={searchParams} />
+                  isNlpEnabled ? (
+                    <p className="home__hero-subtitle text-white mb-0 lead">
+                      Describe your search, or use keywords, time, and place
+                    </p>
+                  ) : (
+                    <p className="text-white mb-0 lead">
+                      Use keywords and filter by time and spatial area
+                      to search NASA&apos;s Earth science data
+                    </p>
+                  )
+                }
+              </div>
+              {
+                isNlpEnabled && (
+                  <div className="home__search-mode-control position-relative d-flex align-items-center">
+                    <Badge className="home__new-badge">
+                      NEW
+                    </Badge>
+                    <div className="position-relative">
+                      <fieldset className="home__search-mode-toggle" aria-label="Search mode">
+                        <legend className="visually-hidden">Search mode</legend>
+                        <input
+                          className="btn-check"
+                          type="radio"
+                          name="home-search-mode"
+                          id="home-search-mode-nlp"
+                          value={nlpSearchMode}
+                          checked={searchMode === nlpSearchMode}
+                          onChange={onSearchModeChange}
+                        />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            (tooltipProps) => renderTooltip({
+                              ...tooltipProps,
+                              className: 'tooltip--wide',
+                              children: 'Describe what you are looking for to start your search'
+                            })
+                          }
+                        >
+                          <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
+                            AI Enhanced Search
+                          </label>
+                        </OverlayTrigger>
+                        <input
+                          className="btn-check"
+                          type="radio"
+                          name="home-search-mode"
+                          id="home-search-mode-traditional"
+                          value={traditionalSearchMode}
+                          checked={searchMode === traditionalSearchMode}
+                          onChange={onSearchModeChange}
+                        />
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            (tooltipProps) => renderTooltip({
+                              ...tooltipProps,
+                              className: 'tooltip--wide',
+                              children: 'Use keywords and filter by time and spatial area to search NASA\'s Earth science data'
+                            })
+                          }
+                        >
+                          <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
+                            Traditional Search
+                          </label>
+                        </OverlayTrigger>
+                      </fieldset>
+                    </div>
+                  </div>
+                )
+              }
+              <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 justify-content-center align-items-center gap-3">
+                <form
+                  className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
+                    <EDSCIcon
+                      className="home__hero-input-icon position-absolute"
+                      icon={Search}
+                      size="22px"
+                    />
+                    <input
+                      className={`home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0 ${isNlpSearchActive ? 'home__hero-input--nlp' : ''}`}
+                      onChange={onChangeKeyword}
+                      placeholder={isNlpSearchActive ? 'Wildfires in California during summer 2023' : 'Type to search for data'}
+                      ref={inputRef}
+                      type="text"
+                      value={keyword}
+                      disabled={isSearchInputDisabled}
+                      aria-busy={isSearchInputDisabled}
+                    />
+                  </div>
+                  {
+                    !isNlpSearchActive && (
+                      <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                        <TemporalSelectionDropdown searchParams={searchParams} />
+                        <SpatialSelectionDropdown searchParams={searchParams} />
+                      </div>
+                    )
+                  }
+                  <Button
+                    type={isNlpStreaming ? 'button' : 'submit'}
+                    className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
+                    bootstrapVariant="primary"
+                    bootstrapSize="lg"
+                    spinner={!isNlpStreaming && isLoading}
+                    onClick={isNlpStreaming ? onCancelNlpSearch : undefined}
+                  >
+                    {isNlpStreaming ? 'Cancel' : 'Search'}
+                  </Button>
+                </form>
+                {
+                  isNlpEnabled && (
+                    <div
+                      className={`home__hero-status-region ${!shouldShowNlpStatus ? 'home__hero-status-region--inactive' : ''}`}
+                      data-testid="home-hero-status-region"
+                      aria-hidden={!shouldShowNlpStatus}
+                    >
+                      {
+                        shouldShowNlpStatus && (
+                          <div className="home__hero-status-inner">
+                            <div className="home__hero-status-stack">
+                              <div className="home__nlp-chat-wrapper">
+                                <NlpSearchStatus
+                                  activePrompt={activeNlpPrompt}
+                                  requestId={nlpRequestId}
+                                  onStreamingChange={setIsNlpStreaming}
+                                  onNlpSearchComplete={onNlpSearchComplete}
+                                  onNlpSearchFailed={onNlpSearchFailed}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      }
                     </div>
                   )
                 }
-                <Button
-                  type="submit"
-                  className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light"
-                  bootstrapVariant="primary"
-                  bootstrapSize="lg"
-                  spinner={isLoading}
-                >
-                  Search
-                </Button>
-              </form>
+              </div>
             </div>
-            <div className="d-flex flex-grow-1 justify-content-center">
-              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
+            <div className="home__hero-lower">
+              <div className="home__hero-browse d-flex justify-content-center">
+                <PortalLinkContainer className="focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
+              </div>
             </div>
           </div>
           <OverlayTrigger

@@ -15,6 +15,7 @@ import {
   hasToolCall
 } from 'ai'
 import { z } from 'zod'
+import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
@@ -50,12 +51,12 @@ const callPythonLocal = async (query) => {
 /**
  * Calls the geocoder lambda to get the spatial area for a given query.
  */
-const getSpatial = async (query) => {
+const getSpatial = async (query, skipCache = false) => {
   const isCacheEnabled = process.env.USE_CACHE === 'true'
   const cacheKey = `geocoder:${query.toLowerCase()}`
   const { GEOCODE_CACHE_EXPIRE_SECONDS } = process.env
 
-  if (isCacheEnabled) {
+  if (isCacheEnabled && !skipCache) {
     const cachedResult = await getItemFromCache(cacheKey)
     if (cachedResult) {
       console.log(`Found cached geocoder result for query "${query}"`)
@@ -135,10 +136,14 @@ export const convertTemporalToolExecute = async (
   - For "last year", use Jan 1 to Dec 31 of the year before the current year.
   - For "this year", use Jan 1 to Dec 31 of the current year.
   - For specific years, use Jan 1 to Dec 31 of that year.
+  - For decades (e.g., "1990s"), use Jan 1 of the first year to Dec 31 of the last year (e.g., 1990-1999).
   - For "last month", use the first to the last day of the previous month.
   - For "this month", use the first to the last day of the current month.
-  - For seasons, use their typical date ranges within the current year unless a specific year is mentioned.
-  - For relative terms like "past 5 years", calculate based on the current date.
+  - For seasons, use their most recent meteorological date ranges unless a specific year is provided. (Note: Invert these months if the spatial query is in the Southern Hemisphere).
+  - For Winter: Because Northern Hemisphere winter crosses calendar years, default to Dec 1st of the previous year through the last day of February of the current year (accounting for leap years). Spring, Summer, and Fall remain entirely within the current year.
+  - For relative terms like "past 5 years", calculate the start date exactly that many years prior to the current date, and use the current date as the end date.
+  - For relative terms like "since [Year]", use Jan 1st of that year as the start date, and the current date as the end date.
+  - For relative terms like "since [Month]", use the first day of of that month as the start date, and the current date as the end date.
   - Always use the current date of ${new Date().toISOString()} as the reference point for relative time expressions.
 
   Input: "${temporal}"`,
@@ -159,7 +164,7 @@ export const convertTemporalToolExecute = async (
   return { ok: true }
 }
 
-export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
+export const lookupSpatialToolExecute = async ({ spatial }, setResults, skipCache = false) => {
   setResults('spatial', spatial)
 
   if (process.env.USE_GEOCODER !== 'true') {
@@ -172,7 +177,7 @@ export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
   console.log(`Looking up spatial area for "${spatial}" using the geocoder lambda...`)
 
   // Fetch the spatial area from the geocoding API using the original query
-  const spatialArea = await getSpatial(spatial)
+  const spatialArea = await getSpatial(spatial, skipCache)
 
   console.log(`Geocoder lambda returned spatial area: ${spatialArea}`)
 
@@ -182,9 +187,12 @@ export const lookupSpatialToolExecute = async ({ spatial }, setResults) => {
 }
 
 export const handler = async (event, originalResponseStream) => {
+  const { defaultResponseHeaders } = getApplicationConfig()
+
   const httpResponseMetadata = {
     statusCode: 200,
     headers: {
+      ...defaultResponseHeaders,
       'Content-Type': 'text/plain'
     }
   }
@@ -201,7 +209,8 @@ export const handler = async (event, originalResponseStream) => {
   }
 
   const { queryStringParameters = {} } = event
-  const { query } = queryStringParameters
+  const { query, skipCache: skipCacheParam } = queryStringParameters
+  const skipCache = skipCacheParam === 'true'
 
   responseStream.write('Analyzing your query...\n')
   console.log(`Received query: ${query}`)
@@ -256,7 +265,7 @@ ${query}
 Required workflow:
 1) Identify spatial, temporal, and keyword values from the query.
 2) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in the a single call to "reportFound.
-3) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "lookupSpatial".
+3) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "lookupSpatial". If you think you found a spatial area but it is adjacent to some numbers, like "ATL03", ignore that value as spatial.
 4) If temporal exists, call tool "convertTemporal" with the temporal value.
 5) After all tools have been called and have returned their results, call the "finalCall" tool to indicate that processing is complete.`,
     tools: {
@@ -282,7 +291,7 @@ Required workflow:
         inputSchema: z.object({
           spatial: z.string()
         }),
-        execute: async (input) => lookupSpatialToolExecute(input, setResults)
+        execute: async (input) => lookupSpatialToolExecute(input, setResults, skipCache)
       }),
       finalCall: tool({
         inputSchema: z.object({}),

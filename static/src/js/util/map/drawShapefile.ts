@@ -31,7 +31,7 @@ import {
 import { ShapefileSlice } from '../../zustand/types'
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
-import { metricsMap } from '../metrics/metricsMap'
+import { metricsMapButtons } from '../metrics/metricsMap'
 
 // Simplify the shape if it has too many points
 const simplifyShape = ({
@@ -225,11 +225,15 @@ const drawShapefile = ({
     onUpdateShapefile({ selectedFeatures: [edscId] })
   }
 
+  let projectionChanged = false
+
   // If the map should be moved and onChangeProjection is defined, determine of we need to
   // change the map projection
   if (shapefileAdded && onChangeProjection) {
     // The vector source extent is the bounding box of all shapes
     const sourceExtent = vectorSource.getExtent()
+
+    if (!sourceExtent) return
 
     let geographicExtent = sourceExtent
     // If the current projection is not geographic, we need to transform the extent to geographic coordinates
@@ -263,20 +267,24 @@ const drawShapefile = ({
     // If there is a new projection, update the map projection
     if (newProjection) {
       onChangeProjection(newProjection)
+      projectionChanged = true
     }
   }
 
   // If the shapefile was just added, move the map to the shapefile
   if (shapefileAdded) {
     // Create the metrics event
-    metricsMap('Added Shapefile')
+    metricsMapButtons('Added Shapefile')
+
+    // When the projection changes we need to wait longer to ensure the map is ready to be moved to the shapefile.
+    const timeoutValue = projectionChanged ? 200 : 0
 
     // SetTimeout is needed here because the map needs to be rendered before the map can be moved
     setTimeout(() => {
       eventEmitter.emit(mapEventTypes.MOVEMAP, {
         source: vectorSource
       })
-    }, 0)
+    }, timeoutValue)
   }
 
   // If the spatial polygon warning is enabled, add an MBR around the shape

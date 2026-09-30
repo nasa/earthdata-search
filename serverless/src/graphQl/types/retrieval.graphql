@@ -40,6 +40,9 @@ type HistoryRetrieval {
 
   "The title of the retrieval"
   titles: [String]
+
+  "Timestamp of when the retrieval was last updated"
+  updatedAt: DateTime
 }
 
 type HistoryRetrievals {

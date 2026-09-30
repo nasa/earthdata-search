@@ -384,7 +384,6 @@ const SpatialDisplay = () => {
     isErrored: shapefileError,
     isLoading: shapefileLoading,
     isLoaded: shapefileLoaded,
-    file,
     selectedFeatures = [],
     shapefileName,
     shapefileId
@@ -397,11 +396,6 @@ const SpatialDisplay = () => {
     || drawingNewLayer === 'shapefile') {
     // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
     // render the shapefile display
-    const { features = [] } = file || {}
-    const [firstFeature = {}] = features
-    const { properties = {} } = firstFeature
-    const { nlpGenerated = false } = properties
-
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
@@ -412,7 +406,7 @@ const SpatialDisplay = () => {
                   className="spatial-display__text-primary d-inline-flex"
                   data-testid="spatial-display_shapefile-name"
                 >
-                  {nlpGenerated ? `"${shapefileName}"` : shapefileName}
+                  {shapefileName}
                 </span>
                 {
                   shapefileLoading && (
@@ -449,7 +443,7 @@ const SpatialDisplay = () => {
       spatialError = message
     }
 
-    secondaryTitle = nlpGenerated ? 'Matched Area' : 'Shape File'
+    secondaryTitle = 'Shape File'
 
     contents.push((
       <FilterStackContents

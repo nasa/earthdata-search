@@ -3,13 +3,106 @@
 
 .home {
   &__hero {
-    height: calc(100vh - 15rem);
-    min-height: 40rem;
-    max-height: 65rem;
+    padding-top: 4.5rem;
+    padding-bottom: 2.5rem;
     text-shadow:
       0 0 0.5rem utils.$color__carbon-black,
       0 0 2rem utils.$color__carbon-black;
     background-color: utils.$color__carbon-black;
+  }
+
+  &__hero-main {
+    height: clamp(32rem, calc(100vh - 20rem), 54rem);
+    width: 100%;
+    max-width: 60rem;
+    align-self: center;
+  }
+
+  &__hero-main-content {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 0.75rem;
+  }
+
+  &__hero-intro {
+    padding-top: clamp(1.25rem, 4vh, 2.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  &__hero-subtitle {
+    font-size: 1.375rem;;
+  }
+
+  &__hero-lower {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 0.5rem;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  &__hero-browse {
+    margin-top: 0.5rem;
+  }
+
+  &__hero-status-region {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    width: 100%;
+    height: clamp(5.5rem, 15vh, 9rem);
+    max-height: clamp(5.5rem, 15vh, 9rem);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+
+  &__hero-status-region--inactive {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &__hero-status-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable both-edges;
+  }
+
+  &__hero-status-stack {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  
+  &__hero-status-region .nlp-search-chat,
+  &__hero-status-region .nlp-search-chat__panel {
+    width: 100%;
+  }
+
+  &__hero-status-region .nlp-search-chat__panel {
+    border: 0;
+    border-radius: 0.625rem;
+    background-color: rgba(utils.$color__carbon-black, 0.82);
+    box-shadow: none;
+  }
+
+  &__hero-status-region .nlp-search-chat__step,
+  &__hero-status-region .nlp-search-chat__step-loader,
+  &__hero-status-region .nlp-search-chat__history-toggle {
+    color: utils.$color__carbon--10;
+  }
+
+  &__hero-status-region .nlp-search-chat__step--latest {
+    color: white;
   }
 
   &__hero-image {
@@ -27,7 +120,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(20, 9, 9, 0.4);
+      background-color: rgba(utils.$color__carbon-black, 0.4);
       mix-blend-mode: multiply;
     }
   }
@@ -47,10 +140,57 @@
     pointer-events: none;
   }
 
-
   &__hero-input-wrapper {
-    max-width: 60rem;
+    position: relative;
+    width: 100%;
+  }
+
+  &__search-mode-toggle {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0.625rem;
+    background-color: utils.$color__carbon-black;
+  }
+
+  &__search-mode-control {
     align-self: center;
+  }
+
+  &__search-mode-toggle-label {
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.625rem;
+    color: utils.$color__carbon--20;
+    cursor: pointer;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.15;
+    text-shadow: none;
+    transition:
+      background-color 160ms ease-out,
+      color 160ms ease-out;
+  }
+
+  .btn-check:checked + &__search-mode-toggle-label {
+    background-color: utils.$color__carbon--60;
+    color: white;
+    font-weight: 700;
+  }
+
+  .btn-check:focus-visible + &__search-mode-toggle-label {
+    outline: 1px dashed utils.$color__nasa-blue--shade;
+    outline-offset: 0.125rem;
+  }
+
+  &__nlp-chat-wrapper {
+    width: 100%;
+    margin-top: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    transform-origin: top center;
+    animation: home-nlp-chat-enter 220ms ease-out;
   }
 
   &__hero-input {
@@ -59,6 +199,22 @@
     &:focus {
       outline: 0;
       box-shadow: none;
+    }
+
+    &--nlp {
+      &:focus {
+        border-color: utils.$color__nasa-blue;
+        box-shadow: 0 0 0 0 0.1rem rgba(utils.$color__nasa-blue, 0.25);
+      }
+    }
+
+    &:disabled {
+      background-color: rgba(rgba(utils.$color__carbon--10, 0.95), 0.96);
+      border-color: rgba(utils.$color__carbon--40, 0.8);
+      box-shadow: inset 0 0 0 1px rgba(utils.$color__carbon--50, 0.35);
+      color: utils.$color__carbon--80;
+      cursor: wait;
+      opacity: 1;
     }
   }
 
@@ -84,6 +240,7 @@
   &__hero-image-link {
     right: 0.75rem;
     bottom: 0.75rem;
+    z-index: 2;
   }
 
   &__hero-image-popover {
@@ -128,8 +285,23 @@
     background-color: utils.$color__nasa-blue;
     border-radius: 0.25rem;
     color: white;
+    font-size: 0.875rem;
     font-weight: bold;
-    margin-right: 0.5rem; 
-    padding: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.3125rem 0.5rem;
+  }
+}
+
+@keyframes home-nlp-chat-enter {
+  from {
+    opacity: 0;
+    max-height: 0rem;
+    transform: translateY(-0.35rem) scaleY(0.85);
+  }
+
+  to {
+    opacity: 1;
+    max-height: 20rem;
+    transform: translateY(0) scaleY(1);
   }
 }

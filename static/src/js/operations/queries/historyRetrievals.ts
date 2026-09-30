@@ -10,6 +10,7 @@ const HISTORY_RETRIEVALS = gql`
         obfuscatedId
         portalId
         titles
+        updatedAt
       }
       pageInfo {
         hasNextPage

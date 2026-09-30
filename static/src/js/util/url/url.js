@@ -63,11 +63,6 @@ const urlDefs = {
     encode: encodeString,
     decode: decodeString
   },
-  nlpSearch: {
-    shortKey: 'nlp',
-    encode: encodeString,
-    decode: decodeString
-  },
   pointSearch: {
     shortKey: 'sp',
     encode: encodeArray,

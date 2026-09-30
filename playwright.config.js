@@ -24,12 +24,7 @@ export default defineConfig({
     baseURL: 'http://localhost:8080',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-
-    viewport: {
-      width: 1400,
-      height: 900
-    }
+    trace: 'on-first-retry'
   },
 
   // Set maxFailures to 5 on CI to avoid running the entire test suite if there are many failures.
@@ -39,7 +34,8 @@ export default defineConfig({
 
   expect: {
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.2
+      maxDiffPixelRatio: 0.2,
+      timeout: 15000
     }
   },
 
@@ -52,7 +48,8 @@ export default defineConfig({
         viewport: {
           width: 1400,
           height: 900
-        }
+        },
+        deviceScaleFactor: 2
       }
     },
 
@@ -63,7 +60,8 @@ export default defineConfig({
         viewport: {
           width: 1400,
           height: 900
-        }
+        },
+        deviceScaleFactor: 2
       }
     },
 
@@ -74,7 +72,8 @@ export default defineConfig({
         viewport: {
           width: 1400,
           height: 900
-        }
+        },
+        deviceScaleFactor: 2
       }
     }
 

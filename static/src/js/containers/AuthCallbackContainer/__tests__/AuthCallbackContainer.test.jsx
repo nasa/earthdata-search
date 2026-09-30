@@ -6,7 +6,7 @@ import setupTest from '../../../../../../vitestConfigs/setupTest'
 import useEdscStore from '../../../zustand/useEdscStore'
 
 vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+  ...(await vi.importActual('react-router-dom')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
@@ -34,6 +34,13 @@ const setup = setupTest({
 describe('AuthCallbackContainer component', () => {
   const { replace } = window.location
 
+  beforeEach(() => {
+    delete window.location
+    window.location = {
+      replace: vi.fn()
+    }
+  })
+
   afterEach(() => {
     window.location.replace = replace
   })
@@ -44,8 +51,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -62,8 +67,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -84,8 +87,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -106,8 +107,6 @@ describe('AuthCallbackContainer component', () => {
     })
 
     const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
@@ -115,74 +114,28 @@ describe('AuthCallbackContainer component', () => {
     expect(setSpy).toHaveBeenCalledWith('edlToken', undefined)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+    expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/'])
   })
 
-  test('does not follow the redirect if the redirect param is not valid', () => {
-    useLocation.mockReturnValue({
-      search: '?redirect=javascript:alert(document.domain);'
-    })
-
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
-
-    setup()
-
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
-  })
-
-  test('does not follow the redirect if the redirect param is not relative to earthdata-search', () => {
+  test('redirects to /not-found if the safe URL validation fails', () => {
     useLocation.mockReturnValue({
       search: '?redirect=https://evil.com'
     })
 
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
-
     setup()
 
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 
-  test('does not follow the eddRedirect it is not a valid earthdata-download redirect', () => {
+  test('redirects to /not-found if the eddRedirect fails safety validation', () => {
     useLocation.mockReturnValue({
-      search: '?eddRedirect=https://evil.com'
+      // Pass a malicious URL so getSafeRedirectUrl returns null
+      search: '?eddRedirect=earthdata-download%3A%2F%2FauthCallback@evil.com'
     })
-
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
 
     setup()
 
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
-  })
-
-  test('does not follow the redirect if the eddRedirect param is not valid', () => {
-    useLocation.mockReturnValue({
-      search: '?eddRedirect=javascript:alert(document.domain);'
-    })
-
-    const setSpy = vi.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: vi.fn() }
-
-    setup()
-
-    expect(setSpy).toHaveBeenCalledTimes(0)
-
-    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 })

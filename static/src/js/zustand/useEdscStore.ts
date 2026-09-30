@@ -14,6 +14,7 @@ import createFacetsSlice from './slices/createFacetsSlice'
 import createFacetParamsSlice from './slices/createFacetParamsSlice'
 import createGranuleSlice from './slices/createGranuleSlice'
 import createGranulesSlice from './slices/createGranulesSlice'
+import createGrowthBookSlice from './slices/createGrowthBookSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
 import createPortalSlice from './slices/createPortalSlice'
@@ -41,6 +42,7 @@ const useEdscStore = create<EdscStore>()(
           ...createFacetParamsSlice(...args),
           ...createGranuleSlice(...args),
           ...createGranulesSlice(...args),
+          ...createGrowthBookSlice(...args),
           ...createHomeSlice(...args),
           ...createMapSlice(...args),
           ...createProjectPanelsSlice(...args),

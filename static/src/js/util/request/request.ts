@@ -10,6 +10,23 @@ import type {
 } from '../../types/sharedTypes'
 import { routes } from '../../constants/routes'
 
+/**
+ * Credential mode forwarded to fetch for streaming requests.
+ */
+type StreamRequestCredentials = 'include' | 'omit' | 'same-origin'
+
+/**
+ * Optional fetch configuration supported by stream requests.
+ */
+type StreamRequestOptions = {
+  /** Whether credentials should be sent with the request. */
+  credentials?: StreamRequestCredentials
+  /** Additional headers to include in the request. */
+  headers?: Headers | Record<string, string>
+  /** Abort signal used to cancel an in-flight request. */
+  signal?: AbortSignal
+}
+
 const defaultTransformResponse = Array.isArray(axios.defaults.transformResponse)
   ? axios.defaults.transformResponse
   : []
@@ -192,6 +209,31 @@ export default class Request {
     })
 
     return axiosObject
+  }
+
+  /**
+   * Makes a streamed GET request to the provided URL using fetch.
+   * This is used for APIs that progressively write their response body
+   *
+   * @param {String} url URL to send the request to
+   * @param {Object} options Fetch request options
+   * @param {String} baseURL Optional baseUrl override
+   * @return {Promise<Response>} The fetch response promise
+   */
+  stream(url: string, options:StreamRequestOptions = {}, baseURL = getEnvironmentConfig().apiHost) {
+    const normalizedBaseUrl = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL
+    const normalizedUrl = url.startsWith('/') ? url : `/${url}`
+    const headers = new Headers(options.headers || {})
+
+    if (this.authenticated || (this.optionallyAuthenticated && this.getEdlToken())) {
+      headers.set('Authorization', `Bearer ${this.getEdlToken()}`)
+    }
+
+    return fetch(`${normalizedBaseUrl}${normalizedUrl}`, {
+      method: 'GET',
+      ...options,
+      headers
+    })
   }
 
   /**

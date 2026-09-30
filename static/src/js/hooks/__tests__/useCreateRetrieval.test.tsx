@@ -6,9 +6,14 @@ import setupTest from '../../../../../vitestConfigs/setupTest'
 import { useCreateRetrieval } from '../useCreateRetrieval'
 import CREATE_RETRIEVAL from '../../operations/mutations/createRetrieval'
 import { metricsDataAccess } from '../../util/metrics/metricsDataAccess'
+import logEvent from '../../util/metrics/experiments/logEvent'
 
 vi.mock('../../util/metrics/metricsDataAccess', () => ({
   metricsDataAccess: vi.fn()
+}))
+
+vi.mock('../../util/metrics/experiments/logEvent', () => ({
+  default: vi.fn()
 }))
 
 const mockUseNavigate = vi.fn()
@@ -242,6 +247,14 @@ describe('useCreateRetrieval', () => {
             type: 'download'
           }],
           type: 'data_access_completion'
+        })
+
+        expect(logEvent).toHaveBeenCalledTimes(1)
+        expect(logEvent).toHaveBeenCalledWith({
+          eventType: 'data_access',
+          eventData: JSON.stringify({
+            service_type: ['download']
+          })
         })
 
         expect(mockUseNavigate).toHaveBeenCalledTimes(1)

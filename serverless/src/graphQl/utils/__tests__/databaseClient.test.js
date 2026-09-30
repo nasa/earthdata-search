@@ -1334,6 +1334,7 @@ describe('DatabaseClient', () => {
           query.response([{
             id: 1,
             created_at: '2023-01-01T00:00:00Z',
+            updated_at: '2023-01-02T00:00:00Z',
             portal_id: 'edsc',
             titles: ['title 1'],
             total: 1
@@ -1350,6 +1351,7 @@ describe('DatabaseClient', () => {
       expect(historyRetrievals).toEqual([{
         id: 1,
         created_at: '2023-01-01T00:00:00Z',
+        updated_at: '2023-01-02T00:00:00Z',
         portal_id: 'edsc',
         titles: ['title 1'],
         total: 1
@@ -1357,7 +1359,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."created_at", (jsondata->\'portalId\') as portal_id, array_agg(retrieval_collections.collection_metadata->\'title\') as titles, count(*) OVER() as total from "retrievals" inner join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrievals"."user_id" = $1 group by "retrievals"."id", "retrievals"."created_at", "retrievals"."jsondata" order by "retrievals"."created_at" desc limit $2')
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."created_at", "retrievals"."updated_at", (jsondata->\'portalId\') as portal_id, array_agg(retrieval_collections.collection_metadata->\'title\') as titles, count(*) OVER() as total from "retrievals" inner join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrievals"."user_id" = $1 group by "retrievals"."id", "retrievals"."created_at", "retrievals"."updated_at", "retrievals"."jsondata" order by "retrievals"."created_at" desc limit $2')
 
       // When offset is 0, it is not included in variables
       expect(queries[0].bindings).toEqual([userId, limit])
@@ -1378,7 +1380,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."created_at", (jsondata->\'portalId\') as portal_id, array_agg(retrieval_collections.collection_metadata->\'title\') as titles, count(*) OVER() as total from "retrievals" inner join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrievals"."user_id" = $1 group by "retrievals"."id", "retrievals"."created_at", "retrievals"."jsondata" order by "retrievals"."created_at" desc limit $2')
+      expect(queries[0].sql).toEqual('select "retrievals"."id", "retrievals"."created_at", "retrievals"."updated_at", (jsondata->\'portalId\') as portal_id, array_agg(retrieval_collections.collection_metadata->\'title\') as titles, count(*) OVER() as total from "retrievals" inner join "retrieval_collections" on "retrievals"."id" = "retrieval_collections"."retrieval_id" where "retrievals"."user_id" = $1 group by "retrievals"."id", "retrievals"."created_at", "retrievals"."updated_at", "retrievals"."jsondata" order by "retrievals"."created_at" desc limit $2')
       expect(queries[0].bindings).toEqual([1, 20])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)

@@ -4,13 +4,13 @@ import { setupTests } from '../../../support/setupTests'
 import {
   interceptUnauthenticatedCollections
 } from '../../../support/interceptUnauthenticatedCollections'
+import { createNlpHandlers, nlp } from '../../../support/nlpHandlers'
+import { createNlpMockStreamChunks } from '../../../support/nlpStreamMock'
 
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
-import keywordCollections from './__mocks__/keyword-collections.body.json'
 import keywordTemporalCollections from './__mocks__/keyword-temporal-collections.body.json'
 import portalCollections from './__mocks__/portal-collections.body.json'
-import temporalCollections from './__mocks__/temporal-collections.body.json'
 import topicCollections from './__mocks__/topic-collections.body.json'
 import whatIsThisImageCollections from './__mocks__/what-is-this-image-collections.body.json'
 import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.body.json'
@@ -32,173 +32,137 @@ test.describe('Home Page', () => {
     })
   })
 
-  test.describe('when performing a keyword search', () => {
+  test.describe('when performing an NLP search', () => {
+    test.describe.configure({ mode: 'serial' })
+
+    let nlpHandlers
+
     test.beforeEach(async ({ page }) => {
+      nlpHandlers = createNlpHandlers({ page })
+      nlpHandlers.nlp.use(
+        nlp.get('/nlp', () => nlp.stream({
+          delayMs: 1200,
+          chunks: createNlpMockStreamChunks()
+        }))
+      )
+
+      await nlpHandlers.nlp.start()
+
       await interceptUnauthenticatedCollections({
         page,
         body: commonBody,
         headers: commonHeaders,
         additionalRequests: [{
-          body: keywordCollections,
+          body: keywordTemporalCollections,
           headers: {
             ...commonHeaders,
-            'cmr-hits': '1564'
+            'cmr-hits': '805'
           },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword === 'MODIS*'
-        }],
-        includeDefault: false
+          paramCheck: (parsedQuery) => parsedQuery?.keyword === 'average temp'
+            && parsedQuery?.temporal?.[0] === '2026-04-01T00:00:00.000Z,2026-04-30T23:59:59.999Z'
+            && parsedQuery?.bounding_box?.[0] === '-116.05,44.35821,-109.64514,49.00139'
+        }]
       })
 
       await page.goto('/')
     })
 
-    test('should navigate to the search page with the keyword parameter', async ({ page }) => {
-      await page.getByRole('textbox', { name: 'Type to search for data' }).fill('MODIS')
+    test.afterEach(async () => {
+      await nlpHandlers.nlp.stop()
+    })
+
+    test('disables input, shows NLP status progress, and routes to search after stream completion', async ({ page }) => {
+      const searchInput = page.getByPlaceholder('Wildfires in California during summer 2023')
+      const searchButton = page.getByRole('button', {
+        name: 'Search',
+        exact: true
+      })
+      const cancelButton = page.getByRole('button', {
+        name: 'Cancel',
+        exact: true
+      })
+
+      await searchInput.fill('average temp in western montana last april')
+      await searchButton.click()
+
+      await expect(searchInput, 'Search input should be disabled while NLP is running').toBeDisabled()
+      await expect(cancelButton, 'Cancel button should be visible while NLP is running').toBeVisible()
+
+      // Checks that status text progresses while NLP is running.
+      await expect(page.getByText(/Extracted keyword of "average temp"\.?/i)).toBeVisible()
+
+      await expect(
+        page,
+        'should navigate to the search route after /nlp completes'
+      ).toHaveURL((url) => url.pathname === '/search')
+
+      await expect(
+        page,
+        'should have keyword query param matching response from /nlp'
+      ).toHaveURL((url) => (
+        url.searchParams.get('q') === 'average temp'
+      ))
+
+      await expect(
+        page,
+        'should have temporal query param matching response from /nlp'
+      ).toHaveURL((url) => (
+        url.searchParams.get('qt') === '2026-04-01T00:00:00.000Z,2026-04-30T23:59:59.999Z'
+      ))
+
+      await expect(
+        page,
+        'should have spatial query param matching response from /nlp'
+      ).toHaveURL((url) => (
+        url.searchParams.get('sb[0]') === '-116.05,44.35821,-109.64514,49.00139'
+      ))
+    })
+
+    test('cancel ends NLP streaming and restores the initial search controls', async ({ page }) => {
+      const searchInput = page.getByPlaceholder('Wildfires in California during summer 2023')
+      const searchButton = page.getByRole('button', {
+        name: 'Search',
+        exact: true
+      })
+      const cancelButton = page.getByRole('button', {
+        name: 'Cancel',
+        exact: true
+      })
+
+      const searchPrompt = 'average temp in western montana last april'
+      await searchInput.fill(searchPrompt)
+      await searchButton.click()
+
+      await expect(cancelButton, 'Cancel button should be visible while NLP is running').toBeVisible()
+
+      await cancelButton.click()
+
+      await expect(searchInput, 'Search input should be re-enabled after cancelling NLP').toBeEnabled()
+      await expect(searchInput, 'search input should not be cleared after search cancelled').toHaveValue('average temp in western montana last april')
+      await expect(searchButton, 'Search button should be visible after cancelling NLP').toBeVisible()
+
+      await expect(page.locator('.nlp-search-chat'), 'NLP chat should be removed after cancelling NLP').toHaveCount(0)
+      await expect(page, 'user should remain on the home page after cancelling NLP').toHaveURL('/')
+    })
+
+    test('navigates to search and loads collections when submitting an empty query', async ({ page }) => {
+      const collectionsResponsePromise = page.waitForResponse((response) => (
+        /search\/collections/.test(response.url())
+        && response.request().method() === 'POST'
+      ))
+
       await page.getByRole('button', {
         name: 'Search',
         exact: true
       }).click()
 
-      await expect(page).toHaveURL('search?q=MODIS')
-    })
+      await collectionsResponsePromise
 
-    test.describe('when performing a temporal search', () => {
-      test.beforeEach(async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders,
-          additionalRequests: [{
-            body: temporalCollections,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '3078'
-            },
-            paramCheck: (parsedQuery) => parsedQuery?.temporal?.[0] === '2020-01-01T00:00:00.000Z,2020-02-01T23:59:59.999Z'
-          }],
-          includeDefault: false
-        })
-
-        await page.goto('/')
-      })
-
-      test('should navigate to the search page with the temporal parameter', async ({ page }) => {
-        await page.getByRole('button', { name: 'Temporal' }).click()
-        await page.getByRole('textbox', { name: 'Start Date' }).fill('2020-01-01 00:00:00')
-        await page.getByRole('textbox', { name: 'End Date' }).fill('2020-02-01 23:59:59')
-        await page.getByRole('button', { name: 'Apply' }).click()
-
-        await expect(page).toHaveURL('/search?qt=2020-01-01T00%3A00%3A00.000Z%2C2020-02-01T23%3A59%3A59.999Z')
-      })
-    })
-
-    test.describe('when performing a keyword and temporal search', () => {
-      test.beforeEach(async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders,
-          additionalRequests: [{
-            body: keywordTemporalCollections,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '805'
-            },
-            paramCheck: (parsedQuery) => parsedQuery?.keyword === 'MODIS*'
-              && parsedQuery?.temporal?.[0] === '2020-01-01T00:00:00.000Z,2020-02-01T23:59:59.999Z'
-          }],
-          includeDefault: false
-        })
-
-        await page.goto('/')
-      })
-
-      test('should navigate to the search page with the keyword and temporal parameters', async ({ page }) => {
-        await page.getByRole('textbox', { name: 'Type to search for data' }).fill('MODIS')
-
-        await page.getByRole('button', { name: 'Temporal' }).click()
-        await page.getByRole('textbox', { name: 'Start Date' }).fill('2020-01-01 00:00:00')
-        await page.getByRole('textbox', { name: 'End Date' }).fill('2020-02-01 23:59:59')
-        await page.getByRole('button', { name: 'Apply' }).click()
-
-        await expect(page).toHaveURL('/search?q=MODIS&qt=2020-01-01T00%3A00%3A00.000Z%2C2020-02-01T23%3A59%3A59.999Z')
-      })
-    })
-
-    test.describe('when performing a spatial search', () => {
-      test.beforeEach(async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders
-        })
-
-        await page.goto('/')
-      })
-
-      test('should navigate to the search page with the spatial search enabled', async ({ page }) => {
-        await page.getByRole('button', { name: 'Spatial' }).click()
-        await page.getByRole('button', { name: 'Point' }).click()
-
-        await expect(page).toHaveURL('/search')
-
-        // Check that spatial search preview filters have been rendered
-        const spatialSearchPreview = await page.getByRole('listitem').filter({ hasText: 'SpatialSpatialPointPoint:' })
-
-        await expect(spatialSearchPreview).toBeVisible()
-
-        // Check that collections preview panel has been collapsed by checking tooltip
-        await page.hover('.panels__handle')
-        await page.waitForSelector('.panels__handle-tooltip', { state: 'visible' })
-
-        // Check the content of the tooltip
-        const tooltipText = await page.locator('.panels__handle-tooltip').textContent()
-        expect(tooltipText).toContain('Expand panel')
-      })
-    })
-
-    test.describe('when performing a keyword and spatial search', () => {
-      test.beforeEach(async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders,
-          additionalRequests: [{
-            body: keywordCollections,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '1564'
-            },
-            paramCheck: (parsedQuery) => parsedQuery?.keyword === 'MODIS*'
-          }],
-          includeDefault: false
-        })
-
-        await page.goto('/')
-      })
-
-      test('should navigate to the search page with the keyword parameter and spatial search enabled', async ({ page }) => {
-        await page.getByRole('textbox', { name: 'Type to search for data' }).fill('MODIS')
-
-        await page.getByRole('button', { name: 'Spatial' }).click()
-        await page.getByRole('button', { name: 'Point' }).click()
-
-        // Check that spatial search preview filters have been rendered
-        const spatialSearchPreview = await page.getByRole('listitem').filter({ hasText: 'SpatialSpatialPointPoint:' })
-
-        await expect(spatialSearchPreview).toBeVisible()
-
-        // Check that collections preview panel has been collapsed by checking tooltip
-        await page.hover('.panels__handle')
-        await page.waitForSelector('.panels__handle-tooltip', { state: 'visible' })
-
-        // Check the content of the tooltip
-        const tooltipText = await page.locator('.panels__handle-tooltip').textContent()
-        expect(tooltipText).toContain('Expand panel')
-
-        await expect(page).toHaveURL('/search?q=MODIS')
-        await expect(page.getByRole('heading', { name: 'Spatial' })).toBeVisible()
-      })
+      await expect(page, 'Empty NLP submit should navigate directly to Search').toHaveURL('/search')
+      await expect.poll(
+        () => nlpHandlers.nlp.getRequestedPrompts().length,
+        'Empty NLP submit should not call the /nlp endpoint'
+      ).toBe(0)
     })
   })
 

@@ -18,6 +18,7 @@ import Home from './routes/Home/Home'
 // Components
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import NotFound from './components/Errors/NotFound'
+import GrowthBookWrapper from './components/GrowthBookWrapper/GrowthBookWrapper'
 import RouterErrorBoundary from './components/Errors/RouterErrorBoundary'
 import Spinner from './components/Spinner/Spinner'
 
@@ -307,25 +308,27 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <EmergencyNotification />
-      <GraphQlProvider>
-        <ToastProvider ref={window.reactToastProvider}>
-          <Helmet
-            defaultTitle="Earthdata Search"
-            titleTemplate={`${titleEnv} %s - Earthdata Search`}
-          >
-            <meta name="description" content={description} />
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:url" content={url} />
-            <meta property="og:image" content={ogImage} />
-            <meta name="theme-color" content="#191a1b" />
-            <link rel="canonical" href={url} />
-          </Helmet>
-          <RouterProvider router={browserRouter} />
-        </ToastProvider>
-      </GraphQlProvider>
+      <GrowthBookWrapper>
+        <EmergencyNotification />
+        <GraphQlProvider>
+          <ToastProvider ref={window.reactToastProvider}>
+            <Helmet
+              defaultTitle="Earthdata Search"
+              titleTemplate={`${titleEnv} %s - Earthdata Search`}
+            >
+              <meta name="description" content={description} />
+              <meta property="og:type" content="website" />
+              <meta property="og:title" content={title} />
+              <meta property="og:description" content={description} />
+              <meta property="og:url" content={url} />
+              <meta property="og:image" content={ogImage} />
+              <meta name="theme-color" content="#191a1b" />
+              <link rel="canonical" href={url} />
+            </Helmet>
+            <RouterProvider router={browserRouter} />
+          </ToastProvider>
+        </GraphQlProvider>
+      </GrowthBookWrapper>
     </ErrorBoundary>
   )
 }

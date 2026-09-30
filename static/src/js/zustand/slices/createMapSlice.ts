@@ -97,6 +97,12 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
       set((state) => {
         state.map.showMbr = showMbr
       })
+    },
+    nlpAutoCenterPending: false,
+    setNlpAutoCenterPending: (isPending) => {
+      set((state) => {
+        state.map.nlpAutoCenterPending = isPending
+      })
     }
   }
 })

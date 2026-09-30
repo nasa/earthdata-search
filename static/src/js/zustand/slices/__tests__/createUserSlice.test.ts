@@ -124,6 +124,21 @@ describe('createUserSlice', () => {
       expect(sitePreferences).toEqual(newPreferences)
     })
 
+    test('preserves default preferences when the provided preferences are partial', () => {
+      const { setSitePreferences } = useEdscStore.getState().user
+
+      setSitePreferences({
+        panelState: 'open'
+      } as PreferencesData)
+
+      const { sitePreferences } = useEdscStore.getState().user
+
+      expect(sitePreferences.panelState).toBe('open')
+      expect(sitePreferences.homeSearchMode).toBe('default')
+      expect(sitePreferences.collectionListView).toBe('default')
+      expect(sitePreferences.mapView).toEqual(initialSitePreferences.mapView)
+    })
+
     describe('when the collectionSort value has been set', () => {
       test('sets the query sortKey in state', () => {
         const { setSitePreferences } = useEdscStore.getState().user

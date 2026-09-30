@@ -70,8 +70,6 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => Promise<void>
-    /** Function to perform NLP search and process results */
-    getNlpCollections: (query: string) => Promise<void>
   }
 }
 
@@ -341,6 +339,27 @@ export type GranulesSlice = {
   }
 }
 
+export type HomeSearchMode = 'default' | 'nlp' | 'traditional'
+
+export type GrowthBookSlice = {
+  /** The GrowthBook Slice of the store. This saves the metadata for growthbook experiments */
+  growthbook: {
+    featureFlags: {
+      /** The metadata for the growthbook experiments */
+      nlpSearch: {
+        /** The feature flag value for the NLP search experiment */
+        featureFlagValue: boolean
+        /** The user selected value for the NLP search experiment */
+        userSelectedValue: HomeSearchMode
+      }
+    }
+    /** Function to set the a value in the feature flag key path. Example: 'nlpSearch.featureFlagValue' */
+    setFeatureFlagValue: (keyPath: string, value: boolean) => void
+    /** Function to set the NLP search user selection, updates localStorage and shows a toast if necessary */
+    setNlpSearchUserSelection: (value: HomeSearchMode) => void
+  }
+}
+
 export type HomeSlice = {
   /** The Home Slice of the store */
   home: {
@@ -424,6 +443,10 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+    /** Flag indicating one-time map auto-center after NLP search */
+    nlpAutoCenterPending: boolean
+    /** Function to set nlpAutoCenterPending flag */
+    setNlpAutoCenterPending: (isPending: boolean) => void
     /** Store layers for each collection */
     mapLayers: Record<string, MapLayer[]>
     /** Function to set layers for a collection */
@@ -1248,6 +1271,8 @@ export type PreferencesData = {
   collectionSort: CollectionSort
   /** The sort preference for granules */
   granuleSort: GranuleSort
+  /** The preferred search mode for the Home page */
+  homeSearchMode: HomeSearchMode
   /** The map view preferences */
   mapView: {
     /** The zoom level of the map */
@@ -1306,6 +1331,7 @@ export type EdscStore =
   & FacetParamsSlice
   & GranuleSlice
   & GranulesSlice
+  & GrowthBookSlice
   & HomeSlice
   & MapSlice
   & PanelsSlice

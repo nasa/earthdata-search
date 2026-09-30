@@ -29,6 +29,7 @@ config="`jq '.application.openSearchGranuleLinksPageSize = $newValue' --arg newV
 config="`jq '.application.disableDatabaseComponents = $newValue' --arg newValue $bamboo_DISABLE_DATABASE_COMPONENTS <<< $config`"
 config="`jq '.application.disableEddDownload = $newValue' --arg newValue $bamboo_DISABLE_EDD_DOWNLOAD <<< $config`"
 config="`jq '.application.disableOrdering = $newValue' --arg newValue $bamboo_DISABLE_ORDERING <<< $config`"
+config="`jq '.application.mapPerformanceWindowMs = $newValue' --arg newValue $bamboo_MAP_PERFORMANCE_WINDOW_MS <<< $config`"
 config="`jq '.application.disableSwodlr = $newValue' --arg newValue $bamboo_DISABLE_SWODLR <<< $config`"
 config="`jq '.application.showInactiveCollections = $newValue' --arg newValue $bamboo_SHOW_INACTIVE_COLLECTIONS <<< $config`"
 config="`jq '.application.orderStatusRefreshTime = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME <<< $config`"
@@ -38,8 +39,13 @@ config="`jq '.application.mapPointsSimplifyThreshold = $newValue' --arg newValue
 config="`jq '.application.nlpSearch = $newValue' --arg newValue $bamboo_NLP_SEARCH <<< $config`"
 config="`jq '.application.numberOfGranules = $newValue' --arg newValue "$bamboo_NUMBER_OF_GRANULES" <<< $config`"
 config="`jq '.application.placeLabelsStyleUrl = $newValue' --arg newValue $bamboo_PLACE_LABELS_STYLE_URL <<< $config`"
+config="`jq '.application.growthbookEnabled = $newValue' --arg newValue $bamboo_GROWTHBOOK_ENABLED <<< $config`"
+
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
+config="`jq '.environment.production.growthbookFirehoseStreamName = $newValue' --arg newValue $bamboo_GROWTHBOOK_FIREHOSE_STREAM_NAME <<< $config`"
+config="`jq '.environment.production.growthbookApiHost = $newValue' --arg newValue $bamboo_GROWTHBOOK_API_HOST <<< $config`"
+config="`jq '.environment.production.growthbookClientKey = $newValue' --arg newValue $bamboo_GROWTHBOOK_CLIENT_KEY <<< $config`"
 
 # Wrap the bamboo variable in quotes for a string value that could contain spaces
 config="`jq '.application.emergencyNotification = $newValue' --arg newValue "$bamboo_EMERGENCY_NOTIFICATION" <<< $config`"
@@ -136,6 +142,7 @@ dockerRun() {
     -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
     -e "BEDROCK_MODEL_ID=$bamboo_BEDROCK_MODEL_ID" \
     -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
+    -e "CLEANUP_RETRIEVALS_JOB_ENABLED=$bamboo_CLEANUP_RETRIEVALS_JOB_ENABLED" \
     -e "COLORMAP_JOB_ENABLED=$bamboo_COLORMAP_JOB_ENABLED" \
     -e "DB_ALLOCATED_STORAGE=$bamboo_DB_ALLOCATED_STORAGE" \
     -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
@@ -159,10 +166,12 @@ dockerRun() {
     -e "STAGE_NAME=$bamboo_STAGE_NAME" \
     -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
     -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
+    -e "SUBNET_ID_C=$bamboo_SUBNET_ID_C" \
     -e "USE_CACHE=$bamboo_USE_CACHE" \
     -e "USE_GEOCODER=$bamboo_USE_GEOCODER" \
     -e "USE_NLP_SEARCH=$bamboo_USE_NLP_SEARCH" \
     -e "VPC_ID=$bamboo_VPC_ID" \
+    -e "VPC_ENDPOINT_ID=$bamboo_VPC_ENDPOINT_ID" \
     $dockerTag "$@"
 }
 

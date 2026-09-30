@@ -83,9 +83,10 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         // endpoints. This `if` ensures we don't double fetch CMR granules.
         // TODO This is causing a double fetch for OpenSearch granules (both to the same OpenSearch endpoint)
         // TODO when loaded from the search results. The first request gets cancelled, but it would be nice to avoid that
+        // When this double fetch is happening, it is possible the user has already moved to a new page and the `collectionId` no longer exists. When this happens we also need to return with no action.
         if (
-          collectionId === zustandState.granules.granules.collectionConceptId
-          && !isOpenSearch
+          !collectionId
+          || (collectionId === zustandState.granules.granules.collectionConceptId && !isOpenSearch)
         ) {
           return
         }
