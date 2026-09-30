@@ -127,11 +127,13 @@ const buildHumanizedQueryDisplay = (key, value) => {
       <div className="subscriptions-query-list__query-list-item-value">
         {
           value.map((hierarchy) => {
-            const hierarchyValue = hierarchy.join(' > ')
+            const hierarchyValue = hierarchy.map(
+              (item) => decodeURIComponent(item).replaceAll('+', ' ')
+            ).join(' > ')
 
             return (
               <div key={hierarchy} title={hierarchyValue}>
-                {hierarchy.join(' > ')}
+                {hierarchyValue}
               </div>
             )
           })
