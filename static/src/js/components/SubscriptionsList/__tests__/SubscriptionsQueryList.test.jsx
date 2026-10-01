@@ -126,6 +126,24 @@ describe('SubscriptionsQueryList component', () => {
 
       expect(screen.getByText('topic > term > variable_level_1 > variable_level_2 > variable_level_3 > detailed_variable')).toBeInTheDocument()
     })
+
+    test('should render the label decoded properly', () => {
+      setup({
+        overrideProps: {
+          query: {
+            scienceKeywordsH: [{
+              term: 'term',
+              topic: 'topic',
+              variable_level_1: 'Variable+Level+1',
+              variable_level_2: 'A%20Variable%20With%20%26%20Encoded'
+            }]
+          },
+          subscriptionType: 'collection'
+        }
+      })
+
+      expect(screen.getByText('topic > term > Variable Level 1 > A Variable With & Encoded')).toBeInTheDocument()
+    })
   })
 
   describe('when rendering a query property that does not exist in the mapping', () => {
