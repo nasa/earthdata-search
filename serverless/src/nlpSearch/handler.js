@@ -136,13 +136,14 @@ export const convertTemporalToolExecute = async (
   - For "last year", use Jan 1 to Dec 31 of the year before the current year.
   - For "this year", use Jan 1 to Dec 31 of the current year.
   - For specific years, use Jan 1 to Dec 31 of that year.
-  - For decades (e.g., "1990s"), use Jan 1 of the first year to Dec 31 of the last year (e.g., 1990-1999).
+  - A "decade" ALWAYS refers to a fixed, standard calendar block of 10 years. It must start on Jan 1 of a year ending in "0" and end on December 31 of a year ending in "9" (e.g., 1990-1999).
+  - Never interpret "decade," "last decade," or "the past decade" as a rolling 10-year period looking backward from today's date. "Last decade" or "the previous decade" means the most recently completed calendar block.
   - For "last month", use the first to the last day of the previous month.
   - For "this month", use the first to the last day of the current month.
   - For seasons, use their most recent meteorological date ranges unless a specific year is provided. If "this <season>" is mentioned, use the current year's dates for that season. If "last <season>" is mentioned, use the previous year's dates for that season. For winter use the year that it ends in ("winter 2025" has a startDate of December 2024). (Note: Invert these months if the spatial query is in the Southern Hemisphere).
-  - For relative terms like "past 5 years" or "last 5 years", calculate the start date exactly that many years prior to the current date, and use the current date as the end date.
-  - For relative terms like "since [Year]", use Jan 1st of that year as the start date, and the current date as the end date.
-  - For relative terms like "since [Month]", use the first day of of that month as the start date, and the current date as the end date.
+  - For relative terms like "past 5 years" or "last 5 years", calculate the start date exactly that many years prior to the current date, and use the current date as the end date and current minute as the end time.
+  - For relative terms like "since [Year]", use Jan 1st of that year as the start date, and the current date as the end date and current minute as the end time.
+  - For relative terms like "since [Month]", use the first day of of that month as the start date, and the current date as the end date and current minute as the end time.
   - Always use the current date of ${new Date().toISOString()} as the reference point for relative time expressions.
 
   Input: "${temporal}"`,
@@ -261,14 +262,19 @@ You are an extraction engine.
 User query:
 ${query}
 
+A user will be querying to search for data described by a "keyword" that are filtered by a temporal and spatial boundaries.
+
 Required workflow:
 1) Identify spatial, temporal, and keyword values from the query.
 2) 'daily', 'monthly', 'yearly', etc. should not be recognized as temporal values. They should be included in the keyword values. (i.e. "daily precipitation" should have "daily" as part of the keyword value rather than as a temporal value.)
-3) The keyword value should be everything left over after extracting spatial and temporal values.
-4) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in the a single call to "reportFound.
-5) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "lookupSpatial". If you think you found a spatial area but it is adjacent to some numbers, like "ATL03", ignore that value as spatial.
-6) If temporal exists, call tool "convertTemporal" with the temporal value.
-7) After all tools have been called and have returned their results, call the "finalCall" tool to indicate that processing is complete.`,
+3) Modifiers such as "around", "over", "near", and "in" should be treated as part of the adjacent spatial values.
+4) Modifiers such as "average" should be treated as part of the keyword values.
+5) Modifiers such as "during" should be treated as part of the temporal values.
+5) The keyword value should be everything left over after extracting spatial and temporal values.
+6) For every value you find, call tool "reportFound" once per field. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in the a single call to "reportFound.
+7) If spatial exists, call tool "lookupSpatial" with the spatial value. If multiple spatial values exist, include all values in the a single call to "lookupSpatial". If you think you found a spatial area but it is adjacent to some numbers, like "ATL03", ignore that value as spatial.
+8) If temporal exists, call tool "convertTemporal" with the temporal value.
+9) After all tools have been called and have returned their results, call the "finalCall" tool to indicate that processing is complete.`,
     tools: {
       reportFound: tool({
         inputSchema: z.object({
