@@ -150,6 +150,7 @@ export const processTemporalWorkflow = async (temporal, model, responseStream) =
   } catch (error) {
     console.error('Error during temporal conversion:', error)
     responseStream.write('Error during temporal conversion\n')
+
     return null
   }
 }
@@ -158,22 +159,38 @@ export const processSpatialWorkflow = async (spatial, skipCache, responseStream)
   if (!spatial) return null
 
   if (process.env.USE_GEOCODER !== 'true') {
-    // If we aren't geocoding, set a default spatial area for testing purposes. 
+    // If we aren't geocoding, set a default spatial area for testing purposes.
     // This is the bounding box for the area around Washington DC.
     return 'POLYGON((-77.119759 38.791653, -77.119759 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.119759 38.791653))'
   }
 
   console.log(`Looking up spatial area for "${spatial}" using the geocoder lambda...`)
-  
+
   try {
     const spatialArea = await getSpatial(spatial, skipCache)
     console.log(`Geocoder lambda returned spatial area: ${spatialArea}`)
+
     return spatialArea.trim()
   } catch (error) {
     console.error('Error during spatial lookup:', error)
     responseStream.write('Error during spatial lookup\n')
+
     return null
   }
+}
+
+export const reportFoundToolExecute = async ({ field, value }, responseStream, setResults) => {
+  // Ignore empty strings, whitespace, or literal "null" strings
+  if (!value || value.trim() === '' || value.trim().toLowerCase() === 'null') {
+    return { ok: true }
+  }
+
+  const cleanValue = value.trim()
+  console.log(`Found ${field} of "${cleanValue}".`)
+  responseStream.write(`Found ${field} of "${cleanValue}".\n`)
+  setResults(field, cleanValue)
+
+  return { ok: true }
 }
 
 // -----------------------------------------------------------------------------
@@ -278,12 +295,7 @@ Required workflow:
             field: z.enum(['spatial', 'temporal', 'keyword']),
             value: z.string()
           }),
-          execute: async ({ field, value }) => {
-            console.log(`Found ${field} of "${value}".`)
-            responseStream.write(`Found ${field} of "${value}".\n`)
-            setResults(field, value)
-            return { ok: true }
-          }
+          execute: async (input) => reportFoundToolExecute(input, responseStream, setResults)
         })
       }
     })
@@ -300,7 +312,7 @@ Required workflow:
 
     // STEP 3: Assign finalized values to the result payload
     extractedResults.spatialArea = spatialAreaResult
-    
+
     // Only overwrite the original temporal string if the LLM successfully formatted it to an object
     if (temporalFormatResult) {
       extractedResults.temporal = temporalFormatResult
@@ -310,7 +322,6 @@ Required workflow:
     console.log('Workflows complete. Final results:', JSON.stringify(extractedResults))
     responseStream.write('Final result:\n')
     responseStream.write(JSON.stringify(extractedResults))
-
   } catch (error) {
     console.error('Error during text generation or processing:', error)
     responseStream.write(`Error: ${error.message}\n`)
