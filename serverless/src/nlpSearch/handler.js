@@ -261,12 +261,15 @@ ${query}
 A user will be querying to search for data described by a "keyword" that are filtered by a temporal and spatial boundaries.
 
 Required workflow:
-1) Identify spatial, temporal, and keyword values from the query.
+1) Identify spatial, temporal, and keyword values from the query based on these definitions:
+   - Keyword: science topic, dataset, instrument, satellite, or other search terms.
+   - Spatial: geographic place or region.
+   - Temporal: date, year, season, or relative time.
 2) 'daily', 'monthly', 'yearly', etc. should not be recognized as temporal values. They should be included in the keyword values. (i.e. "daily precipitation" should have "daily" as part of the keyword value rather than as a temporal value.)
 3) Exclude prepositional modifiers such as "around", "over", "near", and "in" from spatial values. HOWEVER, you MUST KEEP regional or directional adjectives (such as "northern", "southern", "eastern", "western", "central"). For example, extract "northern Scotland" rather than just "Scotland" (dropping the "in"), and extract "Ecuador" rather than "in Ecuador".
 4) Modifiers such as "average" should be treated as part of the keyword values.
 5) Exclude passive prepositions such as "during", "over", or "for" from temporal values (e.g., extract "the last 5 years" rather than "over the last 5 years"). HOWEVER, you MUST KEEP relative/directional words like "since", "before", "after", "past", or "last". These are critical for date math. For example, extract "since 2000" exactly as-is; do NOT reduce it to just "2000".
-6) The keyword value should represent the core scientific subject or phenomenon being searched for. Do NOT just blindly include everything left over. You MUST completely discard any linking words or prepositions (such as "over", "in", "near", "for", "during", or "at") so they do not appear in the keyword. For example, for "vegetation index over the Amazon", the keyword must be exactly "vegetation index".
+6) The keyword value should represent the core search terms. The keyword can contain multiple words that do not need to be next to each other in the original query (you can stitch separated scientific terms together). Do NOT just blindly include everything left over. You MUST completely discard any linking words or prepositions (such as "over", "in", "near", "for", "during", "of", or "at") so they do not appear in the keyword. For example, for "vegetation index over the Amazon", the keyword must be exactly "vegetation index".
 7) For every value you find, call tool "reportFound" once per field. If a temporal or spatial value is NOT present in the query, do NOT call the reportFound tool for that field. Never report empty strings or "null" values. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in a single call to "reportFound".
 8) Do NOT attempt to convert, format, or lookup these values yourself. Just report the raw strings you found using the reportFound tool.`,
       tools: {
