@@ -159,8 +159,7 @@ export const processSpatialWorkflow = async (spatial, skipCache, responseStream)
   if (!spatial) return null
 
   if (process.env.USE_GEOCODER !== 'true') {
-    // If we aren't geocoding, set a default spatial area for testing purposes.
-    // This is the bounding box for the area around Washington DC.
+    // If we aren't geocoding, set a default spatial area for testing purposes. This is the bounding box for the area around Washington DC.
     return 'POLYGON((-77.119759 38.791653, -77.119759 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.119759 38.791653))'
   }
 

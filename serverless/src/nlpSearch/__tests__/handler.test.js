@@ -6,7 +6,7 @@ import {
   processTemporalWorkflow,
   processSpatialWorkflow,
   handler as nlpSearchHandler,
-  reportFoundToolExecute // Assumes you extracted this back to an exported function
+  reportFoundToolExecute
 } from '../handler'
 
 import * as cacheItem from '../../util/cache/cacheItem'
