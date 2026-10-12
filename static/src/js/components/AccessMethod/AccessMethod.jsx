@@ -337,7 +337,7 @@ const AccessMethod = ({
           id = `${collectionId}_access-method__swodlr_${methodKey}`
           title = 'Generate with SWODLR'
           description = 'Set options and generate new standard products'
-          details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
+          details = 'Select options and generate customized products using the SWODLR service. Data will be available for access once any necessary processing is complete.'
           // Update the error message if more than 10 granules are selected
           disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
           errorMessage = granuleList && granuleList.length > maxSwodlrGranuleCount ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
