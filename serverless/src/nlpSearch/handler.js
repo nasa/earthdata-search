@@ -18,6 +18,7 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
+import { shortNameSearch } from './shortNameSearch'
 
 let bedrock
 
@@ -219,15 +220,16 @@ export const handler = async (event, originalResponseStream) => {
   }
 
   const { queryStringParameters = {} } = event
-  const { query, skipCache: skipCacheParam } = queryStringParameters
+  const { query: originalQuery, skipCache: skipCacheParam } = queryStringParameters
   const skipCache = skipCacheParam === 'true'
 
   responseStream.write('Analyzing your query...\n')
-  console.log(`Received query: ${query}`)
+  console.log(`Received query: ${originalQuery}`)
 
   const extractedResults = {
     keyword: null,
-    query,
+    query: originalQuery,
+    shortNames: [],
     spatial: null,
     spatialArea: null,
     temporal: null
@@ -237,13 +239,33 @@ export const handler = async (event, originalResponseStream) => {
     responseStream.write('The USE_NLP_SEARCH environment variable is not set to true. Skipping NLP search.\n')
     responseStream.write('Set USE_NLP_SEARCH=true and restart the server to enable NLP search.\n')
 
-    extractedResults.keyword = query
+    extractedResults.keyword = originalQuery
 
     responseStream.write('Final result:\n')
     responseStream.write(JSON.stringify(extractedResults))
     responseStream.end()
 
     return
+  }
+
+  // Perform short name search on the query to extract relevant short names/versions
+  const shortNameResults = await shortNameSearch(originalQuery)
+  const {
+    matches: shortNameMatches = [],
+    remainingQuery: query = originalQuery
+  } = shortNameResults
+
+  if (shortNameMatches.length) {
+    // TODO When we have a short name field, return that information in extracted results
+    const shortNamesWithVersions = shortNameMatches.map((
+      { shortName, version }
+    ) => ({
+      shortName,
+      version
+    }))
+
+    responseStream.write(`Found short name matches: ${JSON.stringify(shortNamesWithVersions)}\n`)
+    extractedResults.shortNames = shortNamesWithVersions
   }
 
   const setResults = (field, value) => {
@@ -315,6 +337,14 @@ Required workflow:
     // Only overwrite the original temporal string if the LLM successfully formatted it to an object
     if (temporalFormatResult) {
       extractedResults.temporal = temporalFormatResult
+    }
+
+    // Add any found short names to the keyword field -- this is temporary until EDSC-
+    if (shortNameMatches.length > 0) {
+      const allKeywords = shortNameMatches.map((match) => [match.shortName, match.version].filter(Boolean).join(' ')).concat(
+        extractedResults.keyword ? [extractedResults.keyword] : []
+      )
+      extractedResults.keyword = allKeywords.join(' ')
     }
 
     // Output completion for the frontend
