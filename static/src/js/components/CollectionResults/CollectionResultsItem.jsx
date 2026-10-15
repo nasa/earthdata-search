@@ -23,7 +23,7 @@ import { metricsAddCollectionToProject } from '../../util/metrics/metricsAddColl
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import { retrieveThumbnail } from '../../util/retrieveThumbnail'
 import renderTooltip from '../../util/renderTooltip'
 

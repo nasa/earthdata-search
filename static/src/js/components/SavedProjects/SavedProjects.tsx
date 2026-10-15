@@ -15,7 +15,7 @@ import Pagination from 'rc-pagination'
 // @ts-expect-error This file does not have types
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 // @ts-expect-error This file does not have types
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 // @ts-expect-error This file does not have types
 import addToast from '../../util/addToast'
 

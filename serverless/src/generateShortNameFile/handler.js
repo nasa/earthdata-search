@@ -12,11 +12,16 @@ const collectionsGraphQlQuery = `
       count
       cursor
       items {
+        collectionProgress
+        hasGranules
         shortName
         version
       }
     }
   }`
+
+// CollectionProgress values that indicate the collection is non-operational
+const nonOperationalProgresses = ['PLANNED', 'DEPRECATED', 'PREPRINT', 'INREVIEW']
 
 // AWS S3 adapter
 let s3
@@ -39,6 +44,8 @@ const fetchAllShortNames = async (maxRequests) => {
 
   while (hasMoreResults && (!maxRequests || requestCount < maxRequests)) {
     requestCount += 1
+
+    console.log('Request count: ', requestCount)
     // eslint-disable-next-line no-await-in-loop
     const response = await axios({
       url: graphQlUrl,
@@ -49,6 +56,7 @@ const fetchAllShortNames = async (maxRequests) => {
           params: {
             cursor,
             includeNonOperational: true,
+            includeHasGranules: true,
             limit: 500
           }
         },
@@ -72,7 +80,14 @@ const fetchAllShortNames = async (maxRequests) => {
     if (!items || items.length === 0) {
       hasMoreResults = false
     } else {
-      collections.push(...items.map(({ shortName, version }) => ({
+      collections.push(...items.map(({
+        collectionProgress,
+        hasGranules,
+        shortName,
+        version
+      }) => ({
+        isActive: !nonOperationalProgresses.includes(collectionProgress),
+        hasGranules,
         shortName,
         version
       })))

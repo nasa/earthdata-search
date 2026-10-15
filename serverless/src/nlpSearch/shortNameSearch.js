@@ -10,10 +10,22 @@ let s3
 let shortNameCache
 
 /**
+ * Clears the in-memory cache of the indexed shortNames file
+ */
+export const clearShortNameCache = () => {
+  shortNameCache = null
+}
+
+/**
  * Normalizes a shortName (or query word) for separator-insensitive comparison by
  * lowercasing it and removing `_`, `-`, `.` and `:`, e.g. `ATL-03` => `atl03`
  */
 const normalizeShortName = (value) => value.toLowerCase().replace(/[_\-.:]/g, '')
+
+/**
+ * Builds the entry id for a collection, e.g. `ATL03_006`
+ */
+const getEntryId = ({ shortName, version }) => `${shortName}_${version}`
 
 /**
  * Adds an entry to a Map of key => array of entries
@@ -25,29 +37,29 @@ const addToIndex = (map, key, value) => {
 
 /**
  * Builds the lookup structures used to search the shortNames
- * @param {Array} collections Array of `{ shortName, version }` objects
+ * @param {Array} collections Array of `{ shortName, version, includeInactiveCollections, hasGranules }` objects
  * @returns {Object} Index containing:
  *  - `exact`: lowercased shortName => entries
  *  - `normalized`: normalized shortName (see `normalizeShortName`) => entries
- *  - `normalizedByLength`: length => array of normalized shortNames, used to limit fuzzy comparisons
+ *  - `entryIds`: lowercased entry id (`<shortName>_<version>`) => entry
  */
 const buildShortNameIndex = (collections) => {
   const exact = new Map()
   const normalized = new Map()
-  const normalizedByLength = new Map()
+  const entryIds = new Map()
 
   collections.forEach((collection) => {
-    const { shortName } = collection
+    const { shortName, version } = collection
     if (!shortName) return
 
     addToIndex(exact, shortName.toLowerCase(), collection)
 
+    if (version != null) {
+      entryIds.set(getEntryId(collection).toLowerCase(), collection)
+    }
+
     const normalizedKey = normalizeShortName(shortName)
     if (!normalizedKey) return
-
-    if (!normalized.has(normalizedKey)) {
-      addToIndex(normalizedByLength, normalizedKey.length, normalizedKey)
-    }
 
     addToIndex(normalized, normalizedKey, collection)
   })
@@ -55,7 +67,7 @@ const buildShortNameIndex = (collections) => {
   return {
     exact,
     normalized,
-    normalizedByLength
+    entryIds
   }
 }
 
@@ -106,134 +118,79 @@ const normalizeVersion = (version) => String(version)
   .join('.')
 
 /**
- * Calculates the Optimal String Alignment (restricted Damerau-Levenshtein) distance
- * between two strings. Insertions, deletions, substitutions and transpositions of
- * adjacent characters each count as a single edit, so `alt03` => `atl03` is 1.
- * Stops early and returns `maxDistance + 1` once the distance is known to exceed `maxDistance`.
+ * Compares two versions segment by segment, numerically where both segments are numbers,
+ * e.g. `007` > `006.01` > `004`, and `10` > `9`
+ * @returns {Number} Positive if `a` is greater, negative if `b` is greater, otherwise 0
  */
-const getEditDistance = (a, b, maxDistance = Infinity) => {
-  if (Math.abs(a.length - b.length) > maxDistance) return maxDistance + 1
+const compareVersions = (a, b) => {
+  const aSegments = normalizeVersion(a).split('.')
+  const bSegments = normalizeVersion(b).split('.')
 
-  let twoRowsBack = []
-  let previousRow = Array.from({ length: b.length + 1 }, (_, j) => j)
-  let previousRowMin = 0
+  for (let i = 0; i < Math.max(aSegments.length, bSegments.length); i += 1) {
+    const aSegment = aSegments[i]
+    const bSegment = bSegments[i]
 
-  for (let i = 1; i <= a.length; i += 1) {
-    const currentRow = [i]
-    let currentRowMin = i
+    // A version with more segments is greater, e.g. `6.1` > `6`
+    if (aSegment === undefined) return -1
+    if (bSegment === undefined) return 1
 
-    for (let j = 1; j <= b.length; j += 1) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1
+    const bothNumeric = /^\d+$/.test(aSegment) && /^\d+$/.test(bSegment)
+    const difference = bothNumeric
+      ? Number(aSegment) - Number(bSegment)
+      : aSegment.localeCompare(bSegment)
 
-      let distance = Math.min(
-        previousRow[j] + 1,
-        currentRow[j - 1] + 1,
-        previousRow[j - 1] + cost
-      )
-
-      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
-        distance = Math.min(distance, twoRowsBack[j - 2] + 1)
-      }
-
-      currentRow[j] = distance
-      currentRowMin = Math.min(currentRowMin, distance)
-    }
-
-    // Later rows can only build on this row (+0 or +1) or the previous row (+1 via
-    // a transposition), so once both are too large the final distance will be too
-    if (currentRowMin > maxDistance && previousRowMin >= maxDistance) {
-      return maxDistance + 1
-    }
-
-    twoRowsBack = previousRow
-    previousRow = currentRow
-    previousRowMin = currentRowMin
+    if (difference !== 0) return difference
   }
 
-  return previousRow[b.length]
+  return 0
 }
 
-// Words that look like versions or years (`v1`, `1.0`, `2014`) are never fuzzy matched
-const versionLikeRegex = /^v?\d+(\.\d+)*$/i
-
-// The minimum normalized length for a word to be fuzzy matched
-const minimumFuzzyLength = 4
-
 /**
- * Returns the maximum number of edits allowed when fuzzy matching a normalized word, or
- * 0 if the word should not be fuzzy matched. Only words that look like identifiers (they
- * contain a digit, a separator or multiple capital letters) are fuzzy matched to avoid
- * matching regular English words in the query.
+ * Returns the entry with the greatest version for each shortName in the given entries
  */
-const getMaxFuzzyDistance = (word, normalizedWord) => {
-  if (normalizedWord.length < minimumFuzzyLength) return 0
-  if (versionLikeRegex.test(word)) return 0
-  if (!/[a-z]/i.test(word)) return 0
+const getLatestVersionEntries = (entries) => {
+  const latestByShortName = new Map()
 
-  const looksLikeIdentifier = /\d/.test(word)
-    || /[_\-.:]/.test(word)
-    || /[A-Z].*[A-Z]/.test(word)
+  entries.forEach((entry) => {
+    const latest = latestByShortName.get(entry.shortName)
 
-  if (!looksLikeIdentifier) return 0
+    if (
+      !latest
+      || latest.version == null
+      || (entry.version != null && compareVersions(entry.version, latest.version) > 0)
+    ) {
+      latestByShortName.set(entry.shortName, entry)
+    }
+  })
 
-  return normalizedWord.length >= 8 ? 2 : 1
+  return [...latestByShortName.values()]
 }
 
 /**
- * Returns the entries of the closest shortNames within the allowed edit distance. If
- * multiple shortNames are tied for the closest distance, entries for all of them are returned.
+ * Returns the entry matching the given word as an entry id, as typed or with surrounding
+ * punctuation removed, e.g. `atl03_006` => the `ATL03` version `006` entry
  * @param {Object} index Index created by `buildShortNameIndex`
- * @param {String} word Word to match against the shortName index
- * @param {String} normalizedWord Normalized form of the word for fuzzy matching
- * @returns {Object|null} Matching shortName entries with `entries`, `matchType`, and `distance`, or `null` if no match is found
+ * @param {String} word Word to match against the entry id index
+ * @returns {Object|null} Matching entry, or `null` if no match is found
  */
-const findFuzzyEntries = (index, word, normalizedWord) => {
-  const maxDistance = getMaxFuzzyDistance(word, normalizedWord)
-  if (maxDistance === 0) return null
+const findEntryIdEntry = (index, word) => {
+  const candidates = [word, stripPunctuation(word)].filter(Boolean)
 
-  const { normalized, normalizedByLength } = index
+  const entry = candidates
+    .map((candidate) => index.entryIds.get(candidate.toLowerCase()))
+    .find(Boolean)
 
-  let bestDistance = maxDistance + 1
-  let bestKeys = []
-
-  for (
-    let length = normalizedWord.length - maxDistance;
-    length <= normalizedWord.length + maxDistance;
-    length += 1
-  ) {
-    const keys = normalizedByLength.get(length) || []
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key of keys) {
-      const distance = getEditDistance(normalizedWord, key, Math.min(maxDistance, bestDistance))
-
-      if (distance < bestDistance) {
-        bestDistance = distance
-        bestKeys = [key]
-      } else if (distance === bestDistance && distance <= maxDistance) {
-        bestKeys.push(key)
-      }
-    }
-  }
-
-  if (bestKeys.length === 0) return null
-
-  return {
-    entries: bestKeys.flatMap((key) => normalized.get(key)),
-    matchType: 'fuzzy',
-    distance: bestDistance
-  }
+  return entry || null
 }
 
 /**
  * Returns the shortName entries matching the given word. Matching is attempted in order of:
  *  1. `exact`: case-insensitive match of the word, as typed or with surrounding punctuation removed
- *  2. `normalized`: match ignoring `_`, `-`, `.` and `:` separators, e.g. `ATL-03` => `ATL03`
- *  3. `fuzzy`: closest shortNames within a small edit distance, e.g. `ALT03` => `ATL03`
+ *  2. `normalized`: case-insensitive match ignoring `_`, `-`, `.` and `:` separators, e.g. `ATL-03` => `ATL03`
  *
  * @param {Object} index Index created by `buildShortNameIndex`
  * @param {String} word Word to match against the shortName index
- * @returns {Object|null} Matching shortName entries with `entries`, `matchType`, and `distance`, or `null` if no match is found
+ * @returns {Array|null} Matching shortName entries, or `null` if no match is found
  */
 const findShortNameEntries = (index, word) => {
   const candidates = [word, stripPunctuation(word)].filter(Boolean)
@@ -242,13 +199,7 @@ const findShortNameEntries = (index, word) => {
     .map((candidate) => index.exact.get(candidate.toLowerCase()))
     .find((entries) => entries && entries.length > 0)
 
-  if (exactEntries) {
-    return {
-      entries: exactEntries,
-      matchType: 'exact',
-      distance: 0
-    }
-  }
+  if (exactEntries) return exactEntries
 
   const normalizedCandidates = [...new Set(candidates.map(normalizeShortName))].filter(Boolean)
 
@@ -256,98 +207,99 @@ const findShortNameEntries = (index, word) => {
     .map((candidate) => index.normalized.get(candidate))
     .find((entries) => entries && entries.length > 0)
 
-  if (normalizedEntries) {
-    return {
-      entries: normalizedEntries,
-      matchType: 'normalized',
-      distance: 0
-    }
-  }
-
-  const strippedWord = stripPunctuation(word)
-  if (!strippedWord) return null
-
-  return findFuzzyEntries(index, strippedWord, normalizeShortName(strippedWord))
+  return normalizedEntries || null
 }
 
 /**
- * Searches the user query for known collection shortNames (and optionally versions)
+ * Searches the user query for known collection shortNames (and optionally versions).
+ * A word that is an entry id (`<shortName>_<version>`), or a shortName immediately followed
+ * by one of its versions, is returned as an entry id. Otherwise it is returned as a shortName.
+ *
+ * Each match is a group of entries (every version of a matched shortName, or the single
+ * version of a matched entry id). The groups determine the returned flags:
+ *  - `includeInactiveCollections`: `true` if any match has `isActive: false` for every entry
+ *    in its group, otherwise `false`
+ *  - `hasGranulesOrCwic`: `true`, or `undefined` if any match does not have granules. For a
+ *    shortName matched without a version, only its greatest version is checked
  * @param {Object} index Index created by `buildShortNameIndex`
  * @param {String} query User query, e.g. `USGS_P-11_cells v1 in Maryland in 2014`
- * @returns {Object} Object containing `matches` and `remainingQuery`
+ * @returns {Object} Object containing `shortNames`, `entryIds`, `includeInactiveCollections`,
+ * `hasGranulesOrCwic` and `remainingQuery`
  */
 const searchShortNames = (index, query) => {
   const words = query.trim().split(/\s+/).filter(Boolean)
 
   // Indexes of the words that matched a shortName or version and should be removed
   const matchedWordIndexes = new Set()
-  const matches = []
+  const shortNames = new Set()
+  const entryIds = new Set()
+  // One array of entries per match, see above
+  const matchedGroups = []
+  // The entries whose `hasGranules` value is used for each match, see above
+  const granuleEntries = []
 
   words.forEach((word, wordIndex) => {
-    const shortNameResult = findShortNameEntries(index, word)
-    if (!shortNameResult) return
+    // Skip words already consumed as the version of the previous shortName
+    if (matchedWordIndexes.has(wordIndex)) return
 
-    const { entries, matchType, distance } = shortNameResult
+    const entryIdEntry = findEntryIdEntry(index, word)
+
+    if (entryIdEntry) {
+      matchedWordIndexes.add(wordIndex)
+      entryIds.add(getEntryId(entryIdEntry))
+      matchedGroups.push([entryIdEntry])
+      granuleEntries.push(entryIdEntry)
+
+      return
+    }
+
+    const entries = findShortNameEntries(index, word)
+    if (!entries) return
 
     matchedWordIndexes.add(wordIndex)
 
-    // Look for a version in the other words of the query
-    let versionMatch
-    words.some((otherWord, otherIndex) => {
-      if (otherIndex === wordIndex) return false
+    // A version is only matched if it is the word immediately following the shortName
+    const nextIndex = wordIndex + 1
+    const nextWord = words[nextIndex]
 
-      const normalizedWord = normalizeVersion(stripPunctuation(otherWord) || otherWord)
+    if (nextWord) {
+      const normalizedWord = normalizeVersion(stripPunctuation(nextWord) || nextWord)
       const entry = entries.find(({ version }) => (
         version != null && normalizeVersion(version) === normalizedWord
       ))
 
       if (entry) {
-        versionMatch = {
-          entry,
-          word: otherWord,
-          index: otherIndex
-        }
+        matchedWordIndexes.add(nextIndex)
+        entryIds.add(getEntryId(entry))
+        matchedGroups.push([entry])
+        granuleEntries.push(entry)
 
-        return true
+        return
       }
-
-      return false
-    })
-
-    if (versionMatch) {
-      matchedWordIndexes.add(versionMatch.index)
-
-      matches.push({
-        ...versionMatch.entry,
-        shortNameMatch: word,
-        versionMatch: versionMatch.word,
-        matchType,
-        distance
-      })
-
-      return
     }
 
-    // No version was found in the query, return each matching shortName once without a version
-    const uniqueShortNames = [...new Set(entries.map(({ shortName }) => shortName))]
-
-    uniqueShortNames.forEach((shortName) => {
-      matches.push({
-        shortName,
-        shortNameMatch: word,
-        versionMatch: null,
-        matchType,
-        distance
-      })
-    })
+    entries.forEach(({ shortName }) => shortNames.add(shortName))
+    matchedGroups.push(entries)
+    granuleEntries.push(...getLatestVersionEntries(entries))
   })
 
   const remainingQuery = words
     .filter((_, wordIndex) => !matchedWordIndexes.has(wordIndex))
     .join(' ')
 
+  const includeInactiveCollections = matchedGroups.some((group) => group.every(
+    (entry) => entry.isActive !== true
+  ))
+
+  const hasGranulesOrCwic = granuleEntries.some((entry) => entry.hasGranules === false)
+    ? undefined
+    : true
+
   return {
-    matches,
+    shortNames: [...shortNames],
+    entryIds: [...entryIds],
+    includeInactiveCollections,
+    hasGranulesOrCwic,
     remainingQuery
   }
 }
@@ -365,7 +317,10 @@ export const shortNameSearch = async (userQuery) => {
     console.error('Error performing short name search:', error)
 
     return {
-      matches: [],
+      shortNames: [],
+      entryIds: [],
+      includeInactiveCollections: false,
+      hasGranulesOrCwic: undefined,
       remainingQuery: userQuery
     }
   }
