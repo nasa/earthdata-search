@@ -18,6 +18,8 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
+import { shortNameSearch } from './shortNameSearch'
+import { pluralize } from '../../../sharedUtils/pluralize'
 
 let bedrock
 
@@ -219,15 +221,19 @@ export const handler = async (event, originalResponseStream) => {
   }
 
   const { queryStringParameters = {} } = event
-  const { query, skipCache: skipCacheParam } = queryStringParameters
+  const { query: originalQuery, skipCache: skipCacheParam } = queryStringParameters
   const skipCache = skipCacheParam === 'true'
 
   responseStream.write('Analyzing your query...\n')
-  console.log(`Received query: ${query}`)
+  console.log(`Received query: ${originalQuery}`)
 
   const extractedResults = {
+    entryIds: [],
     keyword: null,
-    query,
+    hasGranulesOrCwic: true,
+    includeInactiveCollections: false,
+    query: originalQuery,
+    shortNames: [],
     spatial: null,
     spatialArea: null,
     temporal: null
@@ -237,7 +243,7 @@ export const handler = async (event, originalResponseStream) => {
     responseStream.write('The USE_NLP_SEARCH environment variable is not set to true. Skipping NLP search.\n')
     responseStream.write('Set USE_NLP_SEARCH=true and restart the server to enable NLP search.\n')
 
-    extractedResults.keyword = query
+    extractedResults.keyword = originalQuery
 
     responseStream.write('Final result:\n')
     responseStream.write(JSON.stringify(extractedResults))
@@ -245,6 +251,28 @@ export const handler = async (event, originalResponseStream) => {
 
     return
   }
+
+  // Perform short name search on the query to extract relevant short names/versions
+  const {
+    entryIds = [],
+    shortNames = [],
+    includeInactiveCollections = false,
+    hasGranulesOrCwic,
+    remainingQuery: query = originalQuery
+  } = await shortNameSearch(originalQuery)
+
+  if (entryIds.length) {
+    responseStream.write(`Found entry ${pluralize('ID', entryIds.length)}: ${entryIds.join(', ')}\n`)
+  }
+
+  if (shortNames.length) {
+    responseStream.write(`Found short ${pluralize('name', shortNames.length)}: ${shortNames.join(', ')}\n`)
+  }
+
+  extractedResults.entryIds = entryIds
+  extractedResults.shortNames = shortNames
+  extractedResults.includeInactiveCollections = includeInactiveCollections
+  extractedResults.hasGranulesOrCwic = hasGranulesOrCwic
 
   const setResults = (field, value) => {
     extractedResults[field] = value
@@ -264,57 +292,67 @@ export const handler = async (event, originalResponseStream) => {
   const model = bedrock(process.env.BEDROCK_MODEL_ID || 'amazon.nova-pro-v1:0')
 
   try {
-    // STEP 1: Stream text extraction
-    const result = streamText({
-      model,
-      temperature: 0,
-      prompt: `
-You are an extraction engine.
+    if (query.length > 0) {
+      // STEP 1: Stream text extraction
+      const result = streamText({
+        model,
+        temperature: 0,
+        prompt: `
+  You are an extraction engine.
 
-User query:
-${query}
+  User query:
+  ${query}
 
-A user will be querying to search for data described by a "keyword" that are filtered by a temporal and spatial boundaries.
+  A user will be querying to search for data described by a "keyword" that are filtered by a temporal and spatial boundaries.
 
-Required workflow:
-1) Identify spatial, temporal, and keyword values from the query based on these definitions:
-   - Keyword: science topic, dataset, instrument, satellite, or other search terms.
-   - Spatial: geographic place or region.
-   - Temporal: date, year, season, or relative time.
-2) 'daily', 'monthly', 'yearly', etc. should not be recognized as temporal values. They should be included in the keyword values. (i.e. "daily precipitation" should have "daily" as part of the keyword value rather than as a temporal value.)
-3) Exclude prepositional modifiers such as "around", "over", "near", and "in" from spatial values. HOWEVER, you MUST KEEP regional or directional adjectives (such as "northern", "southern", "eastern", "western", "central"). For example, extract "northern Scotland" rather than just "Scotland" (dropping the "in"), and extract "Ecuador" rather than "in Ecuador".
-4) Modifiers such as "average" should be treated as part of the keyword values.
-5) Exclude passive prepositions such as "during", "over", or "for" from temporal values (e.g., extract "the last 5 years" rather than "over the last 5 years"). HOWEVER, you MUST KEEP relative/directional words like "since", "before", "after", "past", or "last". These are critical for date math. For example, extract "since 2000" exactly as-is; do NOT reduce it to just "2000".
-6) The keyword value should represent the core search terms. The keyword can contain multiple words that do not need to be next to each other in the original query (you can stitch separated scientific terms together). Do NOT just blindly include everything left over. You MUST completely discard any linking words or prepositions (such as "over", "in", "near", "for", "during", "of", or "at") so they do not appear in the keyword. For example, for "vegetation index over the Amazon", the keyword must be exactly "vegetation index".
-7) For every value you find, call tool "reportFound" once per field. If a temporal or spatial value is NOT present in the query, do NOT call the reportFound tool for that field. Never report empty strings or "null" values. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in a single call to "reportFound".
-8) Do NOT attempt to convert, format, or lookup these values yourself. Just report the raw strings you found using the reportFound tool.`,
-      tools: {
-        reportFound: tool({
-          inputSchema: z.object({
-            field: z.enum(['spatial', 'temporal', 'keyword']),
-            value: z.string()
-          }),
-          execute: async (input) => reportFoundToolExecute(input, responseStream, setResults)
-        })
+  Required workflow:
+  1) Identify spatial, temporal, and keyword values from the query based on these definitions:
+     - Keyword: science topic, dataset, instrument, satellite, or other search terms.
+     - Spatial: geographic place or region.
+     - Temporal: date, year, season, or relative time.
+  2) 'daily', 'monthly', 'yearly', etc. should not be recognized as temporal values. They should be included in the keyword values. (i.e. "daily precipitation" should have "daily" as part of the keyword value rather than as a temporal value.)
+  3) Exclude prepositional modifiers such as "around", "over", "near", and "in" from spatial values. HOWEVER, you MUST KEEP regional or directional adjectives (such as "northern", "southern", "eastern", "western", "central"). For example, extract "northern Scotland" rather than just "Scotland" (dropping the "in"), and extract "Ecuador" rather than "in Ecuador".
+  4) Modifiers such as "average" should be treated as part of the keyword values.
+  5) Exclude passive prepositions such as "during", "over", or "for" from temporal values (e.g., extract "the last 5 years" rather than "over the last 5 years"). HOWEVER, you MUST KEEP relative/directional words like "since", "before", "after", "past", or "last". These are critical for date math. For example, extract "since 2000" exactly as-is; do NOT reduce it to just "2000".
+  6) The keyword value should represent the core search terms. The keyword can contain multiple words that do not need to be next to each other in the original query (you can stitch separated scientific terms together). Do NOT just blindly include everything left over. You MUST completely discard any linking words or prepositions (such as "over", "in", "near", "for", "during", "of", or "at") so they do not appear in the keyword. For example, for "vegetation index over the Amazon", the keyword must be exactly "vegetation index".
+  7) For every value you find, call tool "reportFound" once per field. If a temporal or spatial value is NOT present in the query, do NOT call the reportFound tool for that field. Never report empty strings or "null" values. Do not wait for the results of the reportFound tool before calling other tools. If multiple spatial values exist, include all values in a single call to "reportFound".
+  8) Do NOT attempt to convert, format, or lookup these values yourself. Just report the raw strings you found using the reportFound tool.`,
+        tools: {
+          reportFound: tool({
+            inputSchema: z.object({
+              field: z.enum(['spatial', 'temporal', 'keyword']),
+              value: z.string()
+            }),
+            execute: async (input) => reportFoundToolExecute(input, responseStream, setResults)
+          })
+        }
+      })
+
+      // Force consumption of the stream
+      await result.text
+      console.log('Extraction complete. Initial results:', JSON.stringify(extractedResults))
+
+      // STEP 2: Concurrently process the Spatial and Temporal data
+      const [spatialAreaResult, temporalFormatResult] = await Promise.all([
+        processSpatialWorkflow(extractedResults.spatial, skipCache, responseStream),
+        processTemporalWorkflow(extractedResults.temporal, model, responseStream)
+      ])
+
+      // STEP 3: Assign finalized values to the result payload
+      extractedResults.spatialArea = spatialAreaResult
+
+      // Only overwrite the original temporal string if the LLM successfully formatted it to an object
+      if (temporalFormatResult) {
+        extractedResults.temporal = temporalFormatResult
       }
-    })
+    }
 
-    // Force consumption of the stream
-    await result.text
-    console.log('Extraction complete. Initial results:', JSON.stringify(extractedResults))
-
-    // STEP 2: Concurrently process the Spatial and Temporal data
-    const [spatialAreaResult, temporalFormatResult] = await Promise.all([
-      processSpatialWorkflow(extractedResults.spatial, skipCache, responseStream),
-      processTemporalWorkflow(extractedResults.temporal, model, responseStream)
-    ])
-
-    // STEP 3: Assign finalized values to the result payload
-    extractedResults.spatialArea = spatialAreaResult
-
-    // Only overwrite the original temporal string if the LLM successfully formatted it to an object
-    if (temporalFormatResult) {
-      extractedResults.temporal = temporalFormatResult
+    // Add any found short names to the keyword field -- this is temporary until EDSC-4728
+    if (shortNames.length > 0 || entryIds.length > 0) {
+      const allKeywords = [...entryIds, ...shortNames].concat(
+        extractedResults.keyword ? [extractedResults.keyword] : []
+      )
+      extractedResults.keyword = allKeywords.join(' ')
     }
 
     // Output completion for the frontend

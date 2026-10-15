@@ -11,6 +11,7 @@ import {
 
 import * as cacheItem from '../../util/cache/cacheItem'
 import * as getItemFromCache from '../../util/cache/getItemFromCache'
+import * as shortNameSearch from '../shortNameSearch'
 
 const mockBedrock = await vi.hoisted(async () => {
   const { MockLanguageModelV3: LocalMockLanguageModelV3, simulateReadableStream } = await import('ai/test')
@@ -101,8 +102,12 @@ describe('nlpSearch handler', () => {
       expect(responseStream.write).toHaveBeenNthCalledWith(3, 'Set USE_NLP_SEARCH=true and restart the server to enable NLP search.\n')
       expect(responseStream.write).toHaveBeenNthCalledWith(4, 'Final result:\n')
       expect(responseStream.write).toHaveBeenNthCalledWith(5, JSON.stringify({
+        entryIds: [],
         keyword: 'Find me rainfall data over California in 2020',
+        hasGranulesOrCwic: true,
+        includeInactiveCollections: false,
         query: 'Find me rainfall data over California in 2020',
+        shortNames: [],
         spatial: null,
         spatialArea: null,
         temporal: null
@@ -138,10 +143,114 @@ describe('nlpSearch handler', () => {
       expect(responseStream.write).toHaveBeenNthCalledWith(2, 'Final result:\n')
 
       // The actual result isn't populated because the tools are not executed by the doStream mock. Those tools are tested separately.
-      expect(responseStream.write).toHaveBeenNthCalledWith(3, '{"keyword":null,"query":"Find me rainfall data over California in 2020","spatial":null,"spatialArea":null,"temporal":null}')
+      // `hasGranulesOrCwic` is undefined (and omitted from the JSON) because the short name search
+      // is not mocked here and returns its error result
+      expect(responseStream.write).toHaveBeenNthCalledWith(3, JSON.stringify({
+        entryIds: [],
+        keyword: null,
+        includeInactiveCollections: false,
+        query: 'Find me rainfall data over California in 2020',
+        shortNames: [],
+        spatial: null,
+        spatialArea: null,
+        temporal: null
+      }))
 
       expect(responseStream.end).toHaveBeenCalledTimes(1)
       expect(responseStream.end).toHaveBeenCalledWith()
+    })
+
+    describe('short name matches', () => {
+      describe('when a short name and version are found', () => {
+        test('includes the entry id in the extracted results', async () => {
+          vi.spyOn(shortNameSearch, 'shortNameSearch').mockResolvedValue({
+            shortNames: [],
+            entryIds: ['ATL03_004'],
+            remainingQuery: 'Find me data for'
+          })
+
+          process.env.USE_NLP_SEARCH = 'true'
+          process.env.USE_GEOCODER = 'false'
+
+          const event = {
+            queryStringParameters: {
+              query: 'Find me data for atl03 v4'
+            }
+          }
+
+          const responseStream = {
+            write: vi.fn(),
+            end: vi.fn()
+          }
+
+          await nlpSearchHandler(event, responseStream)
+
+          expect(responseStream.write).toHaveBeenCalledWith('Found entry ID: ATL03_004\n')
+          expect(responseStream.write).not.toHaveBeenCalledWith(expect.stringContaining('Found short name'))
+          expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"entryIds":["ATL03_004"]'))
+          expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"shortNames":[]'))
+        })
+      })
+
+      describe('when only a short name is found', () => {
+        test('includes the short name in the extracted results', async () => {
+          vi.spyOn(shortNameSearch, 'shortNameSearch').mockResolvedValue({
+            shortNames: ['ATL03'],
+            entryIds: [],
+            remainingQuery: 'Find me data for'
+          })
+
+          process.env.USE_NLP_SEARCH = 'true'
+          process.env.USE_GEOCODER = 'false'
+
+          const event = {
+            queryStringParameters: {
+              query: 'Find me data for atl03'
+            }
+          }
+
+          const responseStream = {
+            write: vi.fn(),
+            end: vi.fn()
+          }
+
+          await nlpSearchHandler(event, responseStream)
+
+          expect(responseStream.write).toHaveBeenCalledWith('Found short name: ATL03\n')
+          expect(responseStream.write).not.toHaveBeenCalledWith(expect.stringContaining('Found entry ID'))
+          expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"entryIds":[]'))
+          expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"shortNames":["ATL03"]'))
+        })
+      })
+
+      describe('when no short name is found', () => {
+        test('does not include any short names in the extracted results', async () => {
+          vi.spyOn(shortNameSearch, 'shortNameSearch').mockResolvedValue({
+            shortNames: [],
+            entryIds: [],
+            remainingQuery: 'Find me data for wildfires'
+          })
+
+          process.env.USE_NLP_SEARCH = 'true'
+          process.env.USE_GEOCODER = 'false'
+
+          const event = {
+            queryStringParameters: {
+              query: 'Find me data for wildfires'
+            }
+          }
+
+          const responseStream = {
+            write: vi.fn(),
+            end: vi.fn()
+          }
+
+          await nlpSearchHandler(event, responseStream)
+
+          expect(responseStream.write).not.toHaveBeenCalledWith(expect.stringContaining('Found short name'))
+          expect(responseStream.write).not.toHaveBeenCalledWith(expect.stringContaining('Found entry ID'))
+        })
+      })
     })
   })
 })

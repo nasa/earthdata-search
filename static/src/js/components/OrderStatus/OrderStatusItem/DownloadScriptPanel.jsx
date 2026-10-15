@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { generateDownloadScript } from '../../../util/files/generateDownloadScript'
-import { pluralize } from '../../../util/pluralize'
+import { pluralize } from '../../../../../../sharedUtils/pluralize'
 import { commafy } from '../../../util/commafy'
 
 import TextWindowActions from '../../TextWindowActions/TextWindowActions'

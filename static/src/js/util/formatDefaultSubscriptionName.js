@@ -1,5 +1,5 @@
 import { queryToHumanizedList } from './queryToHumanizedList'
-import { pluralize } from './pluralize'
+import { pluralize } from '../../../../sharedUtils/pluralize'
 import { humanizedQueryKeysMap } from './humanizedQueryKeysMap'
 
 /**

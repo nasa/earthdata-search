@@ -1,5 +1,7 @@
 import * as cdk from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
+import * as s3 from 'aws-cdk-lib/aws-s3'
+import { RemovalPolicy } from 'aws-cdk-lib'
 
 import { infrastructure } from '@edsc/cdk-utils'
 
@@ -9,6 +11,7 @@ export interface EarthdataSearchInfrastructureStackProps extends cdk.StackProps 
 const {
   DB_ALLOCATED_STORAGE = '20',
   DB_INSTANCE_CLASS = 'db.t3.micro',
+  NLP_SHORT_NAME_FILE_BUCKET_NAME = 'earthdata-search-dev-nlp-short-name-file',
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
   STAGE_NAME = 'dev',
@@ -184,6 +187,16 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
       stageName: STAGE_NAME,
       subnetIds: [SUBNET_ID_A, SUBNET_ID_B],
       vpcId: VPC_ID
+    })
+
+    // S3 bucket for storing NLP short name file
+    // eslint-disable-next-line no-new
+    new s3.Bucket(this, 'EDSCShortNameFileBucket', {
+      bucketName: NLP_SHORT_NAME_FILE_BUCKET_NAME,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      enforceSSL: true,
+      removalPolicy: RemovalPolicy.DESTROY
     })
 
     // Outputs
