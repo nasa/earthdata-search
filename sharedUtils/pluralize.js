@@ -12,5 +12,3 @@ export const pluralize = (string, value) => {
 
   return `${string}`
 }
-
-export default pluralize

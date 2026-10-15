@@ -23,7 +23,7 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 import { collectionDetailsSkeleton } from './skeleton'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import renderTooltip from '../../util/renderTooltip'
 
 import useEdscStore from '../../zustand/useEdscStore'

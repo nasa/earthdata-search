@@ -3,10 +3,15 @@ import { mockClient } from 'aws-sdk-client-mock'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 import generateShortNameFile from '../handler'
+import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 const s3ClientMock = mockClient(S3Client)
 
 const OLD_ENV = process.env
+
+vi.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+  graphQlHost: 'https://graphql.example.com'
+}))
 
 beforeEach(() => {
   s3ClientMock.reset()
@@ -14,8 +19,7 @@ beforeEach(() => {
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 
-  process.env.GRAPHQL_HOST = 'https://graphql.example.com'
-  process.env.SHORT_NAME_FILE_BUCKET_NAME = 'test-bucket'
+  process.env.NLP_SHORT_NAME_FILE_BUCKET_NAME = 'test-bucket'
 })
 
 afterEach(() => {
@@ -34,10 +38,14 @@ describe('generateShortNameFile', () => {
             cursor: 'cursor-1',
             items: [
               {
+                collectionProgress: 'ACTIVE',
+                hasGranules: true,
                 shortName: 'SHORT_1',
                 version: '1'
               },
               {
+                collectionProgress: 'DEPRECATED',
+                hasGranules: false,
                 shortName: 'SHORT_2',
                 version: '2'
               }
@@ -55,6 +63,8 @@ describe('generateShortNameFile', () => {
             cursor: 'cursor-2',
             items: [
               {
+                collectionProgress: 'ACTIVE',
+                hasGranules: true,
                 shortName: 'SHORT_3',
                 version: '3'
               }
@@ -82,7 +92,7 @@ describe('generateShortNameFile', () => {
     expect(result.statusCode).toEqual(200)
     expect(JSON.parse(result.body)).toEqual({
       bucket: 'test-bucket',
-      key: 'shortNames.json',
+      key: 'nlpShortNamesCache.json',
       count: 3
     })
 
@@ -90,18 +100,24 @@ describe('generateShortNameFile', () => {
     expect(putCalls).toHaveLength(1)
     expect(putCalls[0].args[0].input).toEqual({
       Bucket: 'test-bucket',
-      Key: 'shortNames.json',
+      Key: 'nlpShortNamesCache.json',
       ContentType: 'application/json',
       Body: JSON.stringify([
         {
+          isActive: true,
+          hasGranules: true,
           shortName: 'SHORT_1',
           version: '1'
         },
         {
+          isActive: false,
+          hasGranules: false,
           shortName: 'SHORT_2',
           version: '2'
         },
         {
+          isActive: true,
+          hasGranules: true,
           shortName: 'SHORT_3',
           version: '3'
         }
@@ -119,6 +135,8 @@ describe('generateShortNameFile', () => {
             cursor: 'cursor-1',
             items: [
               {
+                collectionProgress: 'ACTIVE',
+                hasGranules: true,
                 shortName: 'SHORT_1',
                 version: '1'
               }
@@ -139,12 +157,12 @@ describe('generateShortNameFile', () => {
 
     const putCalls = s3ClientMock.commandCalls(PutObjectCommand)
     expect(putCalls).toHaveLength(1)
-    expect(putCalls[0].args[0].input.Body).toEqual(JSON.stringify([
-      {
-        shortName: 'SHORT_1',
-        version: '1'
-      }
-    ]))
+    expect(putCalls[0].args[0].input.Body).toEqual(JSON.stringify([{
+      isActive: true,
+      hasGranules: true,
+      shortName: 'SHORT_1',
+      version: '1'
+    }]))
   })
 
   test('returns an error when graphql returns errors', async () => {

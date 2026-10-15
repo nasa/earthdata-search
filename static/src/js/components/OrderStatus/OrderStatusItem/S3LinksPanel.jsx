@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { getFilenameFromPath } from '../../../util/getFilenameFromPath'
-import { pluralize } from '../../../util/pluralize'
+import { pluralize } from '../../../../../../sharedUtils/pluralize'
 import { commafy } from '../../../util/commafy'
 
 import CopyableText from '../../CopyableText/CopyableText'

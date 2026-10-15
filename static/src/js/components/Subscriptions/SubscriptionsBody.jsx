@@ -17,7 +17,7 @@ import { routes } from '../../constants/routes'
 
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 import { queryToHumanizedList } from '../../util/queryToHumanizedList'
-import pluralize from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import { removeDisabledFieldsFromQuery } from '../../util/subscriptions'
 import { formatDefaultSubscriptionName } from '../../util/formatDefaultSubscriptionName'
 

@@ -602,10 +602,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * NLP Short Name Search
-     */
-
-    /**
      * OpenSearch Granule Search
      */
     const openSearchGranuleSearchNestedStack = new cdk.NestedStack(scope, 'OpenSearchGranuleSearchNestedStack')
