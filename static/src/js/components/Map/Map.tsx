@@ -71,6 +71,7 @@ import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeome
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
+import { disposeGpuGranuleOutlines } from '../../util/map/gpuGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
@@ -517,6 +518,17 @@ const Map: React.FC<MapProps> = ({
     })
     mapRef.current = map
 
+    // One outline callback per map, rather than another callback on every React render.
+    const outlineKey = granuleOutlinesLayer.on(
+      RenderEventType.POSTRENDER as LayerRenderEventTypes,
+      (event) => drawGranuleOutlines({
+        ctx: event.context as CanvasRenderingContext2D,
+        coordinateToPixelTransform: event.frameState?.coordinateToPixelTransform,
+        granuleBackgroundsSource,
+        map
+      })
+    )
+
     // Only accumulate frame deltas while an interaction (pan or zoom) is in
     // progress, so idle frames don't dilute the stats. On moveend we roll the
     // collected frame times up into a single summary and hand it off to the
@@ -789,6 +801,8 @@ const Map: React.FC<MapProps> = ({
     layersAdded = false
 
     return () => {
+      unByKey(outlineKey)
+      disposeGpuGranuleOutlines(map)
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
@@ -1236,17 +1250,6 @@ const Map: React.FC<MapProps> = ({
     spatialSearch,
     projectionCode
   ])
-
-  // Draw the granule outlines
-  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-    const ctx = event.context as CanvasRenderingContext2D
-
-    drawGranuleOutlines({
-      ctx,
-      granuleBackgroundsSource,
-      map: mapRef.current as OlMap
-    })
-  })
 
   return (
     <div ref={mapElRef} id="map" className="map" />

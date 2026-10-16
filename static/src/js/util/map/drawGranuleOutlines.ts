@@ -3,12 +3,14 @@ import VectorSource from 'ol/source/Vector'
 import { Geometry } from 'ol/geom'
 
 import drawOutline from './drawOutline'
+import drawGpuGranuleOutlines, { hideGpuGranuleOutlines } from './gpuGranuleOutlines'
 
 // Draw the granule outlines
 const drawGranuleOutlines = ({
   ctx,
   granuleBackgroundsSource,
-  map
+  map,
+  coordinateToPixelTransform
 }: {
   /** The canvas context to draw on */
   ctx: CanvasRenderingContext2D
@@ -16,7 +18,25 @@ const drawGranuleOutlines = ({
   granuleBackgroundsSource: VectorSource
   /** The map to draw on */
   map: Map
+  /** The frame's coordinate-to-pixel transform, enables the GPU painter while the map moves */
+  coordinateToPixelTransform?: number[]
 }) => {
+  if (map) {
+    const view = map.getView()
+    const isMoving = view.getAnimating() || view.getInteracting()
+
+    // While panning or zooming, draw with WebGL if possible. Settled frames always
+    // use the Canvas painter below so the final image is unchanged.
+    if (isMoving && coordinateToPixelTransform && drawGpuGranuleOutlines({
+      ctx,
+      map,
+      granuleBackgroundsSource,
+      matrix: coordinateToPixelTransform
+    })) return
+
+    hideGpuGranuleOutlines(map)
+  }
+
   // Remove existing drawings on the canvas
   ctx.reset()
 
