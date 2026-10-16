@@ -522,7 +522,7 @@ export const Home: React.FC = () => {
                 <p
                   className="home__nlp-disclaimer text-white text-center mb-0"
                 >
-                  Disclaimer: Enhanced search uses a LLM to parse your query and may make mistakes
+                  Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes
                 </p>
               )
             }
