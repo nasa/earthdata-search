@@ -161,7 +161,7 @@ describe('Home', () => {
       expect(screen.queryByRole('radio', { name: 'Traditional' })).not.toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
-      expect(screen.queryByText(/Disclaimer: Enhanced search uses a LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'What is this image?' })).toBeInTheDocument()
     })
 
@@ -220,7 +220,7 @@ describe('Home', () => {
         expect(screen.queryByRole('button', { name: 'Open temporal filters' })).not.toBeInTheDocument()
         expect(screen.queryByRole('button', { name: 'spatial-selection-dropdown' })).not.toBeInTheDocument()
         expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
-        expect(screen.getByText(/Disclaimer: Enhanced search uses a LLM to parse your query and may make mistakes/)).toBeInTheDocument()
+        expect(screen.getByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).toBeInTheDocument()
       })
 
       describe('when submitting an empty query', () => {
@@ -440,7 +440,7 @@ describe('Home', () => {
         expect(screen.getByRole('radio', { name: 'Enhanced BETA' })).not.toBeChecked()
         expect(screen.getByRole('radio', { name: 'Traditional' })).toBeChecked()
         expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
-        expect(screen.queryByText(/Disclaimer: Enhanced search uses a LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
+        expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
         expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
         expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
         expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
