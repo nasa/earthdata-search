@@ -159,7 +159,7 @@ dockerRun() {
     -e "NLP_SHORT_NAME_FILE_BUCKET=$bamboo_NLP_SHORT_NAME_FILE_BUCKET" \
     -e "NLP_SHORT_NAME_FILE_KEY=$bamboo_NLP_SHORT_NAME_FILE_KEY" \
     -e "NODE_ENV=production" \
-    -e "NODE_OPTIONS=--max_old_space_size=4096" \
+    -e "NODE_OPTIONS=--max_old_space_size=$bamboo_NODE_OPTIONS_MAX_OLD_SPACE_SIZE" \
     -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
     -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
     -e "ORDER_DELAY_SECONDS=$bamboo_ORDER_DELAY_SECONDS" \
