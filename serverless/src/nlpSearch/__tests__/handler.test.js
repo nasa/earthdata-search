@@ -3,8 +3,8 @@ import { MockLanguageModelV3 } from 'ai/test'
 import { InvokeCommand, LambdaClient } from '@aws-sdk/client-lambda'
 
 import {
-  convertTemporalToolExecute,
-  lookupSpatialToolExecute,
+  processTemporalWorkflow,
+  processSpatialWorkflow,
   handler as nlpSearchHandler,
   reportFoundToolExecute
 } from '../handler'
@@ -31,7 +31,7 @@ const mockBedrock = await vi.hoisted(async () => {
  - Temporal value: '2020'
  - Keyword value: 'rainfall data'
 
- I will first report these findings using the 'reportFound' tool. Then, I will proceed with the 'lookupSpatial' and 'convertTemporal' tools for the spatial and temporal values respectively. </thinking>`
+ I will first report these findings using the 'reportFound' tool. </thinking>`
           },
           {
             type: 'text-end',
@@ -72,7 +72,6 @@ const lambdaClientMock = mockClient(LambdaClient)
 
 beforeEach(() => {
   lambdaClientMock.reset()
-
   process.env.GEOCODE_CACHE_EXPIRE_SECONDS = '2592000' // 30 days
 })
 
@@ -148,11 +147,30 @@ describe('nlpSearch handler', () => {
 })
 
 describe('reportFoundToolExecute', () => {
-  test('writes the found field to the responseStream', async () => {
-    const mockResponseStream = {
-      write: vi.fn()
-    }
+  test('ignores empty strings and "null" values to protect default null state', async () => {
+    const mockResponseStream = { write: vi.fn() }
+    const setResults = vi.fn()
 
+    const input = {
+      field: 'spatial',
+      value: '   '
+    } // Empty spaces
+    const result1 = await reportFoundToolExecute(input, mockResponseStream, setResults)
+
+    const input2 = {
+      field: 'temporal',
+      value: 'null'
+    } // Literal null string
+    const result2 = await reportFoundToolExecute(input2, mockResponseStream, setResults)
+
+    expect(result1).toEqual({ ok: true })
+    expect(result2).toEqual({ ok: true })
+    expect(mockResponseStream.write).toHaveBeenCalledTimes(0)
+    expect(setResults).toHaveBeenCalledTimes(0)
+  })
+
+  test('writes the found field to the responseStream and calls setResults', async () => {
+    const mockResponseStream = { write: vi.fn() }
     const setResults = vi.fn()
 
     const input = {
@@ -165,44 +183,14 @@ describe('reportFoundToolExecute', () => {
     expect(mockResponseStream.write).toHaveBeenCalledTimes(1)
     expect(mockResponseStream.write).toHaveBeenCalledWith('Found spatial of "California".\n')
 
-    expect(setResults).toHaveBeenCalledTimes(0)
-  })
-
-  describe('when the field is keyword', () => {
-    test('writes the found field to the response stream and calls setResults', async () => {
-      const mockResponseStream = {
-        write: vi.fn()
-      }
-
-      const setResults = vi.fn()
-
-      const input = {
-        field: 'keyword',
-        value: 'rainfall data'
-      }
-
-      await reportFoundToolExecute(input, mockResponseStream, setResults)
-
-      expect(mockResponseStream.write).toHaveBeenCalledTimes(1)
-      expect(mockResponseStream.write).toHaveBeenCalledWith('Found keyword of "rainfall data".\n')
-
-      expect(setResults).toHaveBeenCalledTimes(1)
-      expect(setResults).toHaveBeenCalledWith('keyword', 'rainfall data')
-    })
+    expect(setResults).toHaveBeenCalledTimes(1)
+    expect(setResults).toHaveBeenCalledWith('spatial', 'California')
   })
 })
 
-describe('convertTemporalToolExecute', () => {
-  test('calls generateText and setResults', async () => {
-    const mockResponseStream = {
-      write: vi.fn()
-    }
-
-    const setResults = vi.fn()
-
-    const input = {
-      temporal: '2020'
-    }
+describe('processTemporalWorkflow', () => {
+  test('calls generateText and returns the parsed object', async () => {
+    const mockResponseStream = { write: vi.fn() }
 
     const model = new MockLanguageModelV3({
       doGenerate: async () => ({
@@ -220,42 +208,31 @@ describe('convertTemporalToolExecute', () => {
         usage: {
           inputTokens: {
             total: 10,
-            noCache: 10,
-            cacheRead: undefined,
-            cacheWrite: undefined
+            noCache: 10
           },
           outputTokens: {
             total: 20,
-            text: 20,
-            reasoning: undefined
+            text: 20
           }
         },
         warnings: []
       })
     })
 
-    await convertTemporalToolExecute(input, mockResponseStream, setResults, model)
+    const result = await processTemporalWorkflow('2020', model, mockResponseStream)
 
-    expect(mockResponseStream.write).toHaveBeenCalledTimes(0)
+    expect(mockResponseStream.write).toHaveBeenCalledTimes(1)
+    expect(mockResponseStream.write).toHaveBeenCalledWith('Converting temporal data: "2020"...\n')
 
-    expect(setResults).toHaveBeenCalledTimes(1)
-    expect(setResults).toHaveBeenCalledWith('temporal', {
+    expect(result).toEqual({
       endDate: '2020-12-31T23:59:59.999Z',
       startDate: '2020-01-01T00:00:00.000Z'
     })
   })
 
-  describe('when generateText returns invalid JSON', () => {
-    test('writes an error message to the response stream', async () => {
-      const mockResponseStream = {
-        write: vi.fn()
-      }
-
-      const setResults = vi.fn()
-
-      const input = {
-        temporal: '2020'
-      }
+  describe('when generateText throws an error (invalid JSON / failed generation)', () => {
+    test('writes an error message to the response stream and returns null', async () => {
+      const mockResponseStream = { write: vi.fn() }
 
       const model = new MockLanguageModelV3({
         doGenerate: async () => ({
@@ -270,14 +247,11 @@ describe('convertTemporalToolExecute', () => {
           usage: {
             inputTokens: {
               total: 10,
-              noCache: 10,
-              cacheRead: undefined,
-              cacheWrite: undefined
+              noCache: 10
             },
             outputTokens: {
               total: 20,
-              text: 20,
-              reasoning: undefined
+              text: 20
             }
           },
           warnings: []
@@ -286,42 +260,33 @@ describe('convertTemporalToolExecute', () => {
 
       const consoleMock = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      await convertTemporalToolExecute(input, mockResponseStream, setResults, model)
+      const result = await processTemporalWorkflow('2020', model, mockResponseStream)
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Error during temporal conversion:', expect.any(Error))
 
-      expect(mockResponseStream.write).toHaveBeenCalledTimes(1)
       expect(mockResponseStream.write).toHaveBeenCalledWith('Error during temporal conversion\n')
-
-      expect(setResults).toHaveBeenCalledTimes(0)
+      expect(result).toBeNull()
     })
   })
 })
 
-describe('lookupSpatialToolExecute', () => {
+describe('processSpatialWorkflow', () => {
   describe('when USE_GEOCODER is false', () => {
-    test('returns a mock value', async () => {
+    test('returns the mock bounding box value directly', async () => {
       process.env.USE_GEOCODER = 'false'
+      const mockResponseStream = { write: vi.fn() }
 
-      const setResults = vi.fn()
+      const result = await processSpatialWorkflow('California', false, mockResponseStream)
 
-      const input = {
-        spatial: 'California'
-      }
-
-      await lookupSpatialToolExecute(input, setResults)
-
-      expect(setResults).toHaveBeenCalledTimes(2)
-      expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-      expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-77.119759 38.791653, -77.119759 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.119759 38.791653))')
+      expect(result).toBe('POLYGON((-77.119759 38.791653, -77.119759 38.99596, -76.909155 38.99596, -76.909155 38.791653, -77.119759 38.791653))')
     })
   })
 
   describe('when USE_GEOCODER is true', () => {
     describe('when in development environment', () => {
       describe('when USE_CACHE is false', () => {
-        test('calls the local python lambda and sets results and does not check the cache', async () => {
+        test('calls the local python lambda and returns the area', async () => {
           process.env.USE_GEOCODER = 'true'
           process.env.NODE_ENV = 'development'
           process.env.USE_CACHE = 'false'
@@ -333,22 +298,15 @@ describe('lookupSpatialToolExecute', () => {
             })
           }))
 
-          const setResults = vi.fn()
+          const mockResponseStream = { write: vi.fn() }
+          const result = await processSpatialWorkflow('California', false, mockResponseStream)
 
-          const input = {
-            spatial: 'California'
-          }
-
-          await lookupSpatialToolExecute(input, setResults)
-
-          expect(setResults).toHaveBeenCalledTimes(2)
-          expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-          expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+          expect(result).toBe('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
         })
       })
 
       describe('when USE_CACHE is true', () => {
-        test('calls the local python lambda and sets results and checks the cache', async () => {
+        test('calls the local python lambda, checks cache, and returns the area', async () => {
           process.env.USE_GEOCODER = 'true'
           process.env.NODE_ENV = 'development'
           process.env.USE_CACHE = 'true'
@@ -363,17 +321,10 @@ describe('lookupSpatialToolExecute', () => {
           const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache').mockResolvedValueOnce(null)
           const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
 
-          const setResults = vi.fn()
+          const mockResponseStream = { write: vi.fn() }
+          const result = await processSpatialWorkflow('California', false, mockResponseStream)
 
-          const input = {
-            spatial: 'California'
-          }
-
-          await lookupSpatialToolExecute(input, setResults)
-
-          expect(setResults).toHaveBeenCalledTimes(2)
-          expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-          expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+          expect(result).toBe('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
 
           expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
           expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
@@ -393,27 +344,15 @@ describe('lookupSpatialToolExecute', () => {
 
             const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
 
-            const setResults = vi.fn()
-
-            const input = {
-              spatial: 'California'
-            }
-
-            await lookupSpatialToolExecute(input, setResults)
+            const mockResponseStream = { write: vi.fn() }
+            const result = await processSpatialWorkflow('California', false, mockResponseStream)
 
             expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
             expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
 
             // Does not call the geocoder lambda
             expect(global.fetch).toHaveBeenCalledTimes(0)
-
-            expect(setResults).toHaveBeenCalledTimes(2)
-            expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-            expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
-
-            expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
-            expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
-
+            expect(result).toBe('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
             expect(cacheItemMock).toHaveBeenCalledTimes(0)
           })
         })
@@ -434,17 +373,11 @@ describe('lookupSpatialToolExecute', () => {
             const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
             const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
 
-            const setResults = vi.fn()
-
-            const input = { spatial: 'California' }
-
-            await lookupSpatialToolExecute(input, setResults, true)
+            const mockResponseStream = { write: vi.fn() }
+            const result = await processSpatialWorkflow('California', true, mockResponseStream)
 
             expect(getItemFromCacheMock).toHaveBeenCalledTimes(0)
-
-            expect(setResults).toHaveBeenCalledTimes(2)
-            expect(setResults).toHaveBeenNthCalledWith(1, 'spatial', 'California')
-            expect(setResults).toHaveBeenNthCalledWith(2, 'spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
+            expect(result).toBe('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
 
             expect(cacheItemMock).toHaveBeenCalledTimes(1)
             expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
@@ -454,7 +387,7 @@ describe('lookupSpatialToolExecute', () => {
     })
 
     describe('when in production environment', () => {
-      test('calls the python lambda and sets results', async () => {
+      test('calls the python lambda and returns results', async () => {
         process.env.USE_GEOCODER = 'true'
         process.env.NODE_ENV = 'production'
         process.env.STAGE_NAME = 'sit'
@@ -470,23 +403,12 @@ describe('lookupSpatialToolExecute', () => {
         const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache').mockResolvedValueOnce(null)
         const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
 
-        const setResults = vi.fn()
+        const mockResponseStream = { write: vi.fn() }
+        const result = await processSpatialWorkflow('California', false, mockResponseStream)
 
-        const input = {
-          spatial: 'California'
-        }
-
-        await lookupSpatialToolExecute(input, setResults)
-
-        expect(setResults).toHaveBeenCalledTimes(2)
-        expect(setResults).toHaveBeenCalledWith('spatial', 'California')
-        expect(setResults).toHaveBeenCalledWith('spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
-
+        expect(result).toBe('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
         expect(getItemFromCacheMock).toHaveBeenCalledTimes(1)
-        expect(getItemFromCacheMock).toHaveBeenCalledWith('geocoder:california')
-
         expect(cacheItemMock).toHaveBeenCalledTimes(1)
-        expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
       })
 
       describe('when skipCache is true', () => {
@@ -507,20 +429,12 @@ describe('lookupSpatialToolExecute', () => {
           const getItemFromCacheMock = vi.spyOn(getItemFromCache, 'getItemFromCache')
           const cacheItemMock = vi.spyOn(cacheItem, 'cacheItem').mockResolvedValueOnce(null)
 
-          const setResults = vi.fn()
-
-          const input = { spatial: 'California' }
-
-          await lookupSpatialToolExecute(input, setResults, true)
+          const mockResponseStream = { write: vi.fn() }
+          const result = await processSpatialWorkflow('California', true, mockResponseStream)
 
           expect(getItemFromCacheMock).toHaveBeenCalledTimes(0)
-
-          expect(setResults).toHaveBeenCalledTimes(2)
-          expect(setResults).toHaveBeenNthCalledWith(1, 'spatial', 'California')
-          expect(setResults).toHaveBeenNthCalledWith(2, 'spatialArea', 'POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
-
+          expect(result).toBe('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))')
           expect(cacheItemMock).toHaveBeenCalledTimes(1)
-          expect(cacheItemMock).toHaveBeenCalledWith('geocoder:california', Buffer.from('POLYGON((-124.482003 32.528832, -124.482003 42.009517, -114.131211 42.009517, -114.131211 32.528832, -124.482003 32.528832))'), '2592000')
         })
       })
     })
