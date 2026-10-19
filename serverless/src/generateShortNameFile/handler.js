@@ -57,7 +57,8 @@ const fetchAllShortNames = async (maxRequests) => {
             cursor,
             includeNonOperational: true,
             includeHasGranules: true,
-            limit: 500
+            limit: 500,
+            sortKey: 'entry_id'
           }
         },
         operationName: 'Collections'
