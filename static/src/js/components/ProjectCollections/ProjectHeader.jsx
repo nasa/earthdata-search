@@ -179,6 +179,7 @@ export const ProjectHeader = memo(() => {
             <input
               className="project-header__title"
               name="projectName"
+              aria-label="Project name"
               value={name}
               onFocus={handleOnFocus}
               onChange={onInputChange}
@@ -192,7 +193,7 @@ export const ProjectHeader = memo(() => {
             <button
               type="button"
               className="project-header__button project-header__button--submit"
-              label="Submit project name"
+              aria-label="Submit project name"
               data-testid="submit_button"
               onClick={handleNameSubmit}
             >
@@ -205,7 +206,7 @@ export const ProjectHeader = memo(() => {
             <button
               type="button"
               className="project-header__button project-header__button--edit"
-              label="Edit project name"
+              aria-label="Edit project name"
               data-testid="edit_button"
               onClick={handleEditClick}
             >
