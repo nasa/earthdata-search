@@ -403,6 +403,31 @@ export class Functions extends Construct {
     })
 
     /**
+     * Generate Short Name File
+     */
+    const generateShortNameFileNestedStack = new cdk.NestedStack(scope, 'GenerateShortNameFileNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(generateShortNameFileNestedStack, 'GenerateShortNameFileLambda', {
+      ...defaultLambdaConfig,
+      description: 'Generate short name file for CMR collections',
+      entry: '../../serverless/src/generateShortNameFile/handler.js',
+      functionName: 'generateShortNameFile',
+      functionNamePrefix,
+      memorySize: 512,
+      schedules: [{
+        schedule: events.Schedule.cron({
+          // Run Sunday at 2am
+          hour: '2',
+          minute: '0',
+          month: '*',
+          weekDay: 'SUN',
+          year: '*'
+        })
+      }],
+      timeout: cdk.Duration.minutes(15)
+    })
+
+    /**
      * Geocoder
      */
     const geocoderNestedStack = new cdk.NestedStack(scope, 'GeocoderNestedStack')

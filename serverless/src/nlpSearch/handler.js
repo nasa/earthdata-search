@@ -18,6 +18,8 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
+import { shortNameSearch } from './shortNameSearch'
+import { pluralize } from '../../../sharedUtils/pluralize'
 
 let bedrock
 
@@ -222,15 +224,18 @@ export const handler = async (event, originalResponseStream) => {
   }
 
   const { queryStringParameters = {} } = event
-  const { query, skipCache: skipCacheParam } = queryStringParameters
+  const { query: originalQuery, skipCache: skipCacheParam } = queryStringParameters
   const skipCache = skipCacheParam === 'true'
 
   // ==========================================
   // INPUT VALIDATION & LENGTH LIMIT
   // ==========================================
   const MAX_QUERY_LENGTH = 500
-  if (!query || query.trim().length === 0 || query.length > MAX_QUERY_LENGTH) {
-    console.warn(`Rejected invalid query. Length: ${query ? query.length : 0}`)
+  if (!originalQuery
+    || originalQuery.trim().length === 0
+    || originalQuery.length > MAX_QUERY_LENGTH
+  ) {
+    console.warn(`Rejected invalid query. Length: ${originalQuery ? originalQuery.length : 0}`)
     responseStream.write(`Error: Query must be between 1 and ${MAX_QUERY_LENGTH} characters.\n`)
     responseStream.end()
 
@@ -239,11 +244,15 @@ export const handler = async (event, originalResponseStream) => {
   // ==========================================
 
   responseStream.write('Analyzing your query...\n')
-  console.log(`Received query: ${query}`)
+  console.log(`Received query: ${originalQuery}`)
 
   const extractedResults = {
+    entryIds: [],
     keyword: null,
-    query,
+    hasGranulesOrCwic: true,
+    includeInactiveCollections: false,
+    query: originalQuery,
+    shortNames: [],
     spatial: null,
     spatialArea: null,
     temporal: null
@@ -253,7 +262,7 @@ export const handler = async (event, originalResponseStream) => {
     responseStream.write('The USE_NLP_SEARCH environment variable is not set to true. Skipping NLP search.\n')
     responseStream.write('Set USE_NLP_SEARCH=true and restart the server to enable NLP search.\n')
 
-    extractedResults.keyword = query
+    extractedResults.keyword = originalQuery
 
     responseStream.write('Final result:\n')
     responseStream.write(JSON.stringify(extractedResults))
@@ -261,6 +270,28 @@ export const handler = async (event, originalResponseStream) => {
 
     return
   }
+
+  // Perform short name search on the query to extract relevant short names/versions
+  const {
+    entryIds = [],
+    shortNames = [],
+    includeInactiveCollections = false,
+    hasGranulesOrCwic,
+    remainingQuery: query = originalQuery
+  } = await shortNameSearch(originalQuery)
+
+  if (entryIds.length) {
+    responseStream.write(`Found entry ${pluralize('ID', entryIds.length)}: ${entryIds.join(', ')}\n`)
+  }
+
+  if (shortNames.length) {
+    responseStream.write(`Found short ${pluralize('name', shortNames.length)}: ${shortNames.join(', ')}\n`)
+  }
+
+  extractedResults.entryIds = entryIds
+  extractedResults.shortNames = shortNames
+  extractedResults.includeInactiveCollections = includeInactiveCollections
+  extractedResults.hasGranulesOrCwic = hasGranulesOrCwic
 
   const setResults = (field, value) => {
     extractedResults[field] = value
@@ -280,12 +311,13 @@ export const handler = async (event, originalResponseStream) => {
   const model = bedrock(process.env.BEDROCK_MODEL_ID || 'amazon.nova-pro-v1:0')
 
   try {
-    // STEP 1: Stream text extraction
-    const result = streamText({
-      model,
-      temperature: 0,
-      prompt: `
-You are an extraction engine.
+    if (query.length > 0) {
+      // STEP 1: Stream text extraction
+      const result = streamText({
+        model,
+        temperature: 0,
+        prompt: `
+  You are an extraction engine.
 
 A user will be querying to search for data described by a "keyword" that are filtered by a temporal and spatial boundaries.
 
@@ -306,33 +338,42 @@ Required workflow:
 <query>
 ${query}
 </query>`,
-      tools: {
-        reportFound: tool({
-          inputSchema: z.object({
-            field: z.enum(['spatial', 'temporal', 'keyword']),
-            value: z.string()
-          }),
-          execute: async (input) => reportFoundToolExecute(input, responseStream, setResults)
-        })
+        tools: {
+          reportFound: tool({
+            inputSchema: z.object({
+              field: z.enum(['spatial', 'temporal', 'keyword']),
+              value: z.string()
+            }),
+            execute: async (input) => reportFoundToolExecute(input, responseStream, setResults)
+          })
+        }
+      })
+
+      // Force consumption of the stream
+      await result.text
+      console.log('Extraction complete. Initial results:', JSON.stringify(extractedResults))
+
+      // STEP 2: Concurrently process the Spatial and Temporal data
+      const [spatialAreaResult, temporalFormatResult] = await Promise.all([
+        processSpatialWorkflow(extractedResults.spatial, skipCache, responseStream),
+        processTemporalWorkflow(extractedResults.temporal, model, responseStream)
+      ])
+
+      // STEP 3: Assign finalized values to the result payload
+      extractedResults.spatialArea = spatialAreaResult
+
+      // Only overwrite the original temporal string if the LLM successfully formatted it to an object
+      if (temporalFormatResult) {
+        extractedResults.temporal = temporalFormatResult
       }
-    })
+    }
 
-    // Force consumption of the stream
-    await result.text
-    console.log('Extraction complete. Initial results:', JSON.stringify(extractedResults))
-
-    // STEP 2: Concurrently process the Spatial and Temporal data
-    const [spatialAreaResult, temporalFormatResult] = await Promise.all([
-      processSpatialWorkflow(extractedResults.spatial, skipCache, responseStream),
-      processTemporalWorkflow(extractedResults.temporal, model, responseStream)
-    ])
-
-    // STEP 3: Assign finalized values to the result payload
-    extractedResults.spatialArea = spatialAreaResult
-
-    // Only overwrite the original temporal string if the LLM successfully formatted it to an object
-    if (temporalFormatResult) {
-      extractedResults.temporal = temporalFormatResult
+    // Add any found short names to the keyword field -- this is temporary until EDSC-4728
+    if (shortNames.length > 0 || entryIds.length > 0) {
+      const allKeywords = [...entryIds, ...shortNames].concat(
+        extractedResults.keyword ? [extractedResults.keyword] : []
+      )
+      extractedResults.keyword = allKeywords.join(' ')
     }
 
     // Output completion for the frontend
