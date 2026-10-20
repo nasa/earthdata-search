@@ -157,10 +157,12 @@ describe('Home', () => {
     test('renders temporal and spatial buttons', () => {
       setup()
 
-      expect(screen.queryByRole('radio', { name: 'AI Enhanced Search' })).not.toBeInTheDocument()
-      expect(screen.queryByRole('radio', { name: 'Traditional Search' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('radio', { name: 'Enhanced BETA' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('radio', { name: 'Traditional' })).not.toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
+      expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'What is this image?' })).toBeInTheDocument()
     })
 
     describe('when the search form is submitted with no value', () => {
@@ -210,14 +212,15 @@ describe('Home', () => {
       test('renders the NLP search mode UI', () => {
         setup()
 
-        expect(screen.getByText('NEW')).toHaveClass('home__new-badge')
+        expect(screen.getByText('BETA')).toHaveClass('home__beta-badge')
 
-        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).toBeChecked()
-        expect(screen.getByRole('radio', { name: 'Traditional Search' })).not.toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Enhanced BETA' })).toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Traditional' })).not.toBeChecked()
         expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
         expect(screen.queryByRole('button', { name: 'Open temporal filters' })).not.toBeInTheDocument()
         expect(screen.queryByRole('button', { name: 'spatial-selection-dropdown' })).not.toBeInTheDocument()
         expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
+        expect(screen.getByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).toBeInTheDocument()
       })
 
       describe('when submitting an empty query', () => {
@@ -412,11 +415,11 @@ describe('Home', () => {
         })
       })
 
-      describe('when selecting the traditional search mode', () => {
+      describe('when selecting the Traditional mode', () => {
         test('calls setNlpSearchUserSelection', async () => {
           const { user, zustandState } = setup()
 
-          await user.click(screen.getByRole('radio', { name: 'Traditional Search' }))
+          await user.click(screen.getByRole('radio', { name: 'Traditional' }))
 
           const { growthbook } = zustandState
           const { setNlpSearchUserSelection } = growthbook
@@ -431,12 +434,13 @@ describe('Home', () => {
         (getNlpSearchMode as Mock).mockReturnValue('traditional')
       })
 
-      test('renders the traditional search mode UI', () => {
+      test('renders the Traditional mode UI', () => {
         setup()
 
-        expect(screen.getByRole('radio', { name: 'AI Enhanced Search' })).not.toBeChecked()
-        expect(screen.getByRole('radio', { name: 'Traditional Search' })).toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Enhanced BETA' })).not.toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Traditional' })).toBeChecked()
         expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+        expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
         expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
         expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
         expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
@@ -477,7 +481,7 @@ describe('Home', () => {
         test('calls setNlpSearchUserSelection', async () => {
           const { user, zustandState } = setup()
 
-          await user.click(screen.getByRole('radio', { name: 'AI Enhanced Search' }))
+          await user.click(screen.getByRole('radio', { name: 'Enhanced BETA' }))
 
           const { growthbook } = zustandState
           const { setNlpSearchUserSelection } = growthbook
