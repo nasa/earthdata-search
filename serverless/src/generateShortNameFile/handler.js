@@ -121,7 +121,7 @@ const generateShortNameFile = async (event, context) => {
   console.log('Generating short name file with maxRequests:', maxRequests ?? 'no request limit')
 
   const {
-    NLP_SHORT_NAME_FILE_BUCKET_NAME: bucketName = 'nlpShortNamesCache',
+    NLP_SHORT_NAME_FILE_BUCKET_NAME: bucketName = 'earthdata-search-dev-nlp-short-name-file',
     NLP_SHORT_NAME_FILE_KEY: key = 'nlpShortNamesCache.json'
   } = process.env
 

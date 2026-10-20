@@ -32,7 +32,7 @@ const {
   GEOCODE_INDEX_REGION = 'us-east-1',
   GIBS_JOB_ENABLED,
   LOG_DESTINATION_ARN = 'local-arn',
-  NLP_SHORT_NAME_FILE_BUCKET_NAME = '',
+  NLP_SHORT_NAME_FILE_BUCKET_NAME = 'earthdata-search-dev-nlp-short-name-file',
   NODE_ENV = 'development',
   OBFUSCATION_SPIN = '',
   OBFUSCATION_SPIN_SHAPEFILES = '',

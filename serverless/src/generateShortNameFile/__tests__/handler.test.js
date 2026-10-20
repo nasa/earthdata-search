@@ -19,7 +19,7 @@ beforeEach(() => {
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 
-  process.env.NLP_SHORT_NAME_FILE_BUCKET_NAME = 'test-bucket'
+  process.env.NLP_SHORT_NAME_FILE_BUCKET_NAME = 'earthdata-search-dev-nlp-short-name-file'
 })
 
 afterEach(() => {
@@ -91,7 +91,7 @@ describe('generateShortNameFile', () => {
 
     expect(result.statusCode).toEqual(200)
     expect(JSON.parse(result.body)).toEqual({
-      bucket: 'test-bucket',
+      bucket: 'earthdata-search-dev-nlp-short-name-file',
       key: 'nlpShortNamesCache.json',
       count: 3
     })
@@ -99,7 +99,7 @@ describe('generateShortNameFile', () => {
     const putCalls = s3ClientMock.commandCalls(PutObjectCommand)
     expect(putCalls).toHaveLength(1)
     expect(putCalls[0].args[0].input).toEqual({
-      Bucket: 'test-bucket',
+      Bucket: 'earthdata-search-dev-nlp-short-name-file',
       Key: 'nlpShortNamesCache.json',
       ContentType: 'application/json',
       Body: JSON.stringify([
