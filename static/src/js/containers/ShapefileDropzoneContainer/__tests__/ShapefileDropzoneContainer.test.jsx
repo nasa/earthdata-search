@@ -1,4 +1,5 @@
 import { act } from '@testing-library/react'
+import JSZip from 'jszip'
 
 import * as EventEmitter from '../../../events/events'
 import { ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
@@ -27,6 +28,44 @@ const setup = setupTest({
   }
 })
 
+// Builds a zip File containing the given paths, using the path as the file contents
+const createZipFile = async (paths, name = 'test-file-name.zip') => {
+  const zip = new JSZip()
+
+  paths.forEach((path) => {
+    if (path.endsWith('/')) {
+      zip.folder(path)
+    } else {
+      zip.file(path, `contents of ${path}`)
+    }
+  })
+
+  const blob = await zip.generateAsync({ type: 'blob' })
+
+  return new File([blob], name, { type: 'application/zip' })
+}
+
+// Calls transformFile and resolves with the value passed to `done`
+const runTransformFile = (file) => {
+  setup()
+
+  const { dropzoneOptions } = ShapefileDropzone.mock.calls[0][0]
+
+  return new Promise((resolve) => {
+    dropzoneOptions.transformFile(file, resolve)
+  })
+}
+
+const getZipContents = async (file) => {
+  const zip = await JSZip.loadAsync(file)
+
+  const entries = Object.values(zip.files).filter((entry) => !entry.dir)
+
+  return Object.fromEntries(await Promise.all(
+    entries.map(async (entry) => [entry.name, await entry.async('string')])
+  ))
+}
+
 describe('ShapefileDropzoneContainer component', () => {
   test('renders ShapefileDropzone with the correct props', () => {
     setup()
@@ -41,6 +80,7 @@ describe('ShapefileDropzoneContainer component', () => {
         paramName: 'upload',
         params: { targetSrs: 'crs:84' },
         previewTemplate: '<div>',
+        transformFile: expect.any(Function),
         uploadMultiple: false,
         url: 'https://ogre.adc4gis.com/convert'
       },
@@ -50,6 +90,131 @@ describe('ShapefileDropzoneContainer component', () => {
       onSending: expect.any(Function),
       onSuccess: expect.any(Function)
     }, {})
+  })
+
+  describe('when transformFile is triggered', () => {
+    beforeEach(() => {
+      vi.spyOn(console, 'log').mockImplementation(() => {})
+    })
+
+    describe('when the file is not a zip file', () => {
+      test('calls done with the original file', async () => {
+        const file = new File(['{}'], 'test-file-name.geojson', { type: 'application/geo+json' })
+
+        const result = await runTransformFile(file)
+
+        expect(result).toBe(file)
+        expect(console.log).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('when the zip file contents are at the root of the zip', () => {
+      test('calls done with the original file', async () => {
+        const file = await createZipFile([
+          'HAS_Polygon.shp',
+          'HAS_Polygon.shx',
+          'HAS_Polygon.dbf'
+        ])
+
+        const result = await runTransformFile(file)
+
+        expect(result).toBe(file)
+        expect(console.log).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('when the zip file contents are in different directories', () => {
+      test('calls done with the original file', async () => {
+        const file = await createZipFile([
+          'HAS_Polygon/HAS_Polygon.shp',
+          'HAS_Polygon/HAS_Polygon.shx',
+          'Other/HAS_Polygon.dbf'
+        ])
+
+        const result = await runTransformFile(file)
+
+        expect(result).toBe(file)
+        expect(console.log).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('when the zip file contents are all under a single directory', () => {
+      test('calls done with a new zip file with the contents moved to the root', async () => {
+        const file = await createZipFile([
+          'HAS_Polygon/',
+          'HAS_Polygon/HAS_Polygon.shp',
+          'HAS_Polygon/HAS_Polygon.shx',
+          'HAS_Polygon/HAS_Polygon.dbf'
+        ], 'HAS_Polygon.zip')
+
+        const result = await runTransformFile(file)
+
+        expect(result).not.toBe(file)
+
+        expect(await getZipContents(result)).toEqual({
+          'HAS_Polygon.shp': 'contents of HAS_Polygon/HAS_Polygon.shp',
+          'HAS_Polygon.shx': 'contents of HAS_Polygon/HAS_Polygon.shx',
+          'HAS_Polygon.dbf': 'contents of HAS_Polygon/HAS_Polygon.dbf'
+        })
+
+        expect(console.log).toHaveBeenCalledTimes(1)
+        expect(console.log).toHaveBeenCalledWith('Flattening zip file "HAS_Polygon.zip": moving files from "HAS_Polygon/" to the root of the archive')
+      })
+    })
+
+    describe('when the zip file contents are all under nested directories', () => {
+      test('removes the common directory prefix and keeps the remaining structure', async () => {
+        const file = await createZipFile([
+          'outer/inner/HAS_Polygon.shp',
+          'outer/inner/HAS_Polygon.shx',
+          'outer/inner/extra/HAS_Polygon.dbf'
+        ])
+
+        const result = await runTransformFile(file)
+
+        expect(await getZipContents(result)).toEqual({
+          'HAS_Polygon.shp': 'contents of outer/inner/HAS_Polygon.shp',
+          'HAS_Polygon.shx': 'contents of outer/inner/HAS_Polygon.shx',
+          'extra/HAS_Polygon.dbf': 'contents of outer/inner/extra/HAS_Polygon.dbf'
+        })
+
+        expect(console.log).toHaveBeenCalledTimes(1)
+        expect(console.log).toHaveBeenCalledWith('Flattening zip file "test-file-name.zip": moving files from "outer/inner/" to the root of the archive')
+      })
+    })
+
+    describe('when the zip file includes macOS metadata files', () => {
+      test('ignores the metadata files and moves the contents to the root', async () => {
+        const file = await createZipFile([
+          'HAS_Polygon/HAS_Polygon.shp',
+          'HAS_Polygon/HAS_Polygon.shx',
+          'HAS_Polygon/HAS_Polygon.dbf',
+          'HAS_Polygon/.DS_Store',
+          '__MACOSX/HAS_Polygon/._HAS_Polygon.shp'
+        ])
+
+        const result = await runTransformFile(file)
+
+        expect(await getZipContents(result)).toEqual({
+          'HAS_Polygon.shp': 'contents of HAS_Polygon/HAS_Polygon.shp',
+          'HAS_Polygon.shx': 'contents of HAS_Polygon/HAS_Polygon.shx',
+          'HAS_Polygon.dbf': 'contents of HAS_Polygon/HAS_Polygon.dbf'
+        })
+
+        expect(console.log).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when the zip file cannot be read', () => {
+      test('calls done with the original file', async () => {
+        const file = new File(['not a zip file'], 'test-file-name.zip', { type: 'application/zip' })
+
+        const result = await runTransformFile(file)
+
+        expect(result).toBe(file)
+        expect(console.log).toHaveBeenCalledTimes(0)
+      })
+    })
   })
 
   // We can't really unit test the Dropzone callbacks without manually triggering them.
