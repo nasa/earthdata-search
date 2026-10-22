@@ -1743,7 +1743,8 @@ describe('DatabaseClient', () => {
             state: 'initialized',
             updated_at: '2023-06-27T20:22:47.400Z',
             created_at: '2023-06-27T20:22:47.400Z',
-            order_information: {}
+            order_information: {},
+            error: null
           },
           {
             id: 2,
@@ -1756,7 +1757,8 @@ describe('DatabaseClient', () => {
             state: 'creating',
             updated_at: '2025-02-14T20:36:19.156Z',
             created_at: '2025-02-14T18:36:19.156Z',
-            order_information: {}
+            order_information: {},
+            error: null
           }
         ])
       })
@@ -1776,7 +1778,8 @@ describe('DatabaseClient', () => {
           state: 'initialized',
           updated_at: '2023-06-27T20:22:47.400Z',
           created_at: '2023-06-27T20:22:47.400Z',
-          order_information: {}
+          order_information: {},
+          error: null
         },
         {
           id: 2,
@@ -1789,13 +1792,14 @@ describe('DatabaseClient', () => {
           state: 'creating',
           updated_at: '2025-02-14T20:36:19.156Z',
           created_at: '2025-02-14T18:36:19.156Z',
-          order_information: {}
+          order_information: {},
+          error: null
         }
       ])
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrieval_orders"."id", "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrieval_orders"."state", "retrieval_orders"."order_information", "retrieval_orders"."order_number" from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "retrieval_orders"."error", "retrieval_orders"."id", "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrieval_orders"."state", "retrieval_orders"."order_information", "retrieval_orders"."order_number" from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
     })
 
@@ -1810,7 +1814,7 @@ describe('DatabaseClient', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "retrieval_orders"."id", "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrieval_orders"."state", "retrieval_orders"."order_information", "retrieval_orders"."order_number" from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
+      expect(queries[0].sql).toEqual('select "retrieval_orders"."error", "retrieval_orders"."id", "retrieval_orders"."retrieval_collection_id", "retrieval_orders"."type", "retrieval_orders"."state", "retrieval_orders"."order_information", "retrieval_orders"."order_number" from "retrieval_orders" where "retrieval_orders"."retrieval_collection_id" in ($1, $2)')
       expect(queries[0].bindings).toEqual([1, 2])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
