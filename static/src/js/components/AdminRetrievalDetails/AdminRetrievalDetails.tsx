@@ -214,13 +214,15 @@ const AdminRetrievalDetails = () => {
                                             <th style={{ width: '20%' }}>Order Number</th>
                                             <th style={{ width: '20%' }}>Type</th>
                                             <th style={{ width: '10%' }}>State</th>
-                                            <th style={{ width: '33%' }}>Details</th>
+                                            <th style={{ width: '17%' }}>Details</th>
+                                            <th style={{ width: '15%' }}>Errors</th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           {
                                             retrievalOrders.map((order) => {
                                               const {
+                                                error: orderError,
                                                 id: orderId,
                                                 orderInformation,
                                                 orderNumber,
@@ -256,6 +258,11 @@ const AdminRetrievalDetails = () => {
                                                   <td className="align-middle">
                                                     <pre className="fs-5 mb-0 align-middle pre-scrollable">
                                                       {JSON.stringify(orderInformation)}
+                                                    </pre>
+                                                  </td>
+                                                  <td className="align-middle">
+                                                    <pre className="fs-5 mb-0 align-middle pre-scrollable">
+                                                      {JSON.stringify(orderError)}
                                                     </pre>
                                                   </td>
                                                 </tr>
