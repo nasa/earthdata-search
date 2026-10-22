@@ -757,6 +757,7 @@ export default class DatabaseClient {
 
       const result = await db('retrieval_orders')
         .select(
+          'retrieval_orders.error',
           'retrieval_orders.id',
           'retrieval_orders.retrieval_collection_id',
           'retrieval_orders.type',

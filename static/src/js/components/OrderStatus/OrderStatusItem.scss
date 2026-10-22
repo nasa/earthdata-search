@@ -206,7 +206,7 @@ $item-height: 3rem;
 
   &__additional-info {
     max-height: 7rem;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   &__order-info {
