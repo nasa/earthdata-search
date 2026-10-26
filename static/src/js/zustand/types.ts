@@ -976,10 +976,10 @@ type RegionQuery = {
 type CollectionQuery = {
   /** The collection Entry IDs to search for, including version (e.g. 'ATL03_004') */
   entryId?: string[]
-  /** The collection Short Name to search for (e.g. 'ATL03'), optionally filtered by version */
-  shortName?: string
-  /** The optional version for the Short Name search, preserving leading zeros (e.g. '003') */
-  version?: string
+  /** Collection Short Names to search for (e.g. ['ATL03', 'ATL06']) */
+  shortName?: string[]
+  /** Optional versions for the selected Short Names, preserving leading zeros (e.g. ['003', '004']) */
+  version?: string[]
   /** The collection DOI value */
   doi?: string
   /** The collection Entry Title */

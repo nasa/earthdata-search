@@ -200,13 +200,13 @@ const urlDefs = {
   },
   shortName: {
     shortKey: 'short_name',
-    encode: encodeString,
-    decode: decodeString
+    encode: encodeArray,
+    decode: decodeArray
   },
   version: {
     shortKey: 'version',
-    encode: encodeString,
-    decode: decodeString
+    encode: encodeArray,
+    decode: decodeArray
   }
 }
 
