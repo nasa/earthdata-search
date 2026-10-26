@@ -137,11 +137,13 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'project_h',
       'provider',
       'service_type',
+      'short_name',
       'sort_key',
       'spatial_keyword',
       'tag_key',
       'tool_concept_id',
-      'two_d_coordinate_system_name'
+      'two_d_coordinate_system_name',
+      'version'
     ])
   })
 })
@@ -190,14 +192,14 @@ describe('CollectionRequest#transformRequest', () => {
       .toEqual('entry_id[]=ATL03_004&entry_id[]=ATL03_003')
   })
 
-  test('includes Short Name and Version in the POST body', () => {
+  test('includes multiple Short Names and Versions in the POST body', () => {
     const request = new CollectionRequest(null, 'prod')
 
     expect(request.transformRequest({
-      shortName: 'ATL03',
-      version: '003'
+      shortName: ['ATL03', 'ATL06'],
+      version: ['003', '004']
     }, {}))
-      .toEqual('short_name=ATL03&version=003')
+      .toEqual('short_name[]=ATL03&short_name[]=ATL06&version[]=003&version[]=004')
   })
 })
 

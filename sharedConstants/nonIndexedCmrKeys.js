@@ -22,11 +22,13 @@ export const collectionRequestNonIndexedCmrKeys = [
   'project_h',
   'provider',
   'service_type',
+  'short_name',
   'sort_key',
   'spatial_keyword',
   'tag_key',
   'tool_concept_id',
-  'two_d_coordinate_system_name'
+  'two_d_coordinate_system_name',
+  'version'
 ]
 
 export const granuleRequestNonIndexedCmrKeys = [
