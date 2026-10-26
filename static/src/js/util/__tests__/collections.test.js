@@ -2,6 +2,22 @@ import { buildCollectionSearchParams, prepareCollectionParams } from '../collect
 import useEdscStore from '../../zustand/useEdscStore'
 
 describe('#prepareCollectionParams', () => {
+  test('preserves advanced collection identifiers', () => {
+    useEdscStore.setState((state) => ({
+      query: {
+        ...state.query,
+        collection: {
+          ...state.query.collection,
+          entryId: ['ATL03_004', 'ATL06_006']
+        }
+      }
+    }))
+
+    expect(prepareCollectionParams()).toEqual(expect.objectContaining({
+      entryId: ['ATL03_004', 'ATL06_006']
+    }))
+  })
+
   describe('when the customize facet is selected', () => {
     test('includes the correct serviceType', () => {
       useEdscStore.setState({
@@ -28,6 +44,50 @@ describe('#prepareCollectionParams', () => {
 })
 
 describe('#buildCollectionSearchParams', () => {
+  test('passes advanced collection filters to CMR', () => {
+    const advancedFilters = {
+      doi: '10.5067/EXAMPLE',
+      entryTitle: 'Example Collection',
+      consortium: ['CEOS'],
+      hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
+      collectionDataType: ['SCIENCE_QUALITY'],
+      collectionProgress: ['ACTIVE', 'COMPLETE'],
+      downloadable: true,
+      browsable: true,
+      variableName: 'temperature',
+      serviceName: 'Harmony',
+      toolName: 'NASA_GISS_Panoply'
+    }
+
+    expect(buildCollectionSearchParams({
+      ...advancedFilters,
+      featureFacets: {},
+      viewAllFacets: {}
+    })).toEqual(expect.objectContaining(advancedFilters))
+  })
+
+  test('passes multiple Entry IDs to CMR', () => {
+    expect(buildCollectionSearchParams({
+      entryId: ['ATL03_004', 'ATL06_006'],
+      featureFacets: {},
+      viewAllFacets: {}
+    })).toEqual(expect.objectContaining({
+      entryId: ['ATL03_004', 'ATL06_006']
+    }))
+  })
+
+  test('preserves short name and version', () => {
+    expect(buildCollectionSearchParams({
+      shortName: 'ATL03',
+      version: '003',
+      featureFacets: {},
+      viewAllFacets: {}
+    })).toEqual(expect.objectContaining({
+      shortName: 'ATL03',
+      version: '003'
+    }))
+  })
+
   describe('when the keyword does not have a quoted string', () => {
     test('the wildcard character is added between words', () => {
       const params = buildCollectionSearchParams({

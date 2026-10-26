@@ -23,6 +23,20 @@ export const prepareCollectionParams = () => {
   const selectedRegion = getSelectedRegionQuery(zustandState)
 
   const {
+    entryId,
+    shortName,
+    version,
+    doi,
+    entryTitle,
+    consortium: selectedConsortium = [],
+    hasGranulesCreatedAt,
+    collectionDataType,
+    collectionProgress,
+    downloadable,
+    browsable,
+    variableName,
+    serviceName,
+    toolName,
     hasGranulesOrCwic,
     keyword,
     onlyEosdisCollections,
@@ -87,6 +101,19 @@ export const prepareCollectionParams = () => {
   const { consortium: portalConsortium = [] } = portalQuery
 
   const collectionParams = {
+    entryId,
+    shortName,
+    version,
+    doi,
+    entryTitle,
+    hasGranulesCreatedAt,
+    collectionDataType,
+    collectionProgress,
+    downloadable,
+    browsable,
+    variableName,
+    serviceName,
+    toolName,
     boundingBox,
     circle,
     cloudHosted,
@@ -108,7 +135,8 @@ export const prepareCollectionParams = () => {
     ...portalQuery,
     consortium: [
       ...consortium,
-      ...portalConsortium
+      ...portalConsortium,
+      ...selectedConsortium
     ]
   }
 
@@ -136,6 +164,17 @@ export const buildCollectionSearchParams = (params) => {
     consortium,
     dataCenter,
     echoCollectionId,
+    entryId,
+    doi,
+    entryTitle,
+    hasGranulesCreatedAt,
+    collectionDataType,
+    collectionProgress,
+    downloadable,
+    browsable,
+    variableName,
+    serviceName,
+    toolName,
     featureFacets,
     granuleDataFormat,
     hasGranulesOrCwic,
@@ -149,6 +188,7 @@ export const buildCollectionSearchParams = (params) => {
     project,
     provider,
     serviceType,
+    shortName,
     includeInactiveCollections,
     sortKey: selectedSortKey,
     spatialKeyword,
@@ -156,6 +196,7 @@ export const buildCollectionSearchParams = (params) => {
     tagKey,
     temporalString,
     toolConceptId,
+    version,
     viewAllFacets,
     viewAllFacetsCategory
   } = params
@@ -223,10 +264,22 @@ export const buildCollectionSearchParams = (params) => {
 
   return {
     ...defaultParams,
+    entryId,
+    shortName,
+    version,
+    doi,
+    entryTitle,
+    hasGranulesCreatedAt,
+    collectionProgress,
+    downloadable,
+    browsable,
+    variableName,
+    serviceName,
+    toolName,
     boundingBox,
     circle,
     cloudHosted,
-    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
+    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : collectionDataType,
     concept_id: conceptId,
     consortium,
     dataCenterH: facetsToSend.data_center_h,

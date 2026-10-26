@@ -32,6 +32,32 @@
     display: none;
   }
 
+  &--expanded {
+    flex-direction: row;
+
+    .sidebar__inner {
+      flex: 0 0 20.5rem;
+      min-width: 0;
+    }
+  }
+
+  &__secondary {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    background: utils.$color__spacesuit-white;
+    border-right: 1px solid utils.$color__carbon--20;
+  }
+
+  @media (max-width: 767px) {
+    &--expanded {
+      .sidebar__inner {
+        display: none;
+      }
+    }
+  }
+
   &__content {
     overflow-x: hidden;
     min-height: 0;
