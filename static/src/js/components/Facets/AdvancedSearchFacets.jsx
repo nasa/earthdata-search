@@ -19,6 +19,7 @@ import { getCollections } from '../../zustand/selectors/collections'
 import './AdvancedSearchFacets.scss'
 
 const advancedFilterKeys = advancedCollectionFilters.map(({ key }) => key)
+const toArray = (value) => (Array.isArray(value) ? value : value ? [value] : [])
 
 const AdvancedSearchFacets = ({ onClose = null }) => {
   const query = useEdscStore(getCollectionsQuery)
@@ -29,18 +30,19 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
     shortName: appliedShortName,
     version: appliedVersion
   } = query
-  const [mode, setMode] = useState((appliedShortName || appliedVersion) ? 'shortName' : 'entryId')
+  const appliedShortNames = toArray(appliedShortName)
+  const appliedVersions = toArray(appliedVersion)
+  const [mode, setMode] = useState((appliedShortNames.length || appliedVersions.length) ? 'shortName' : 'entryId')
   const [selectedIds, setSelectedIds] = useState(appliedEntryId || [])
-  const [shortName, setShortName] = useState(appliedShortName || '')
-  const [version, setVersion] = useState(appliedVersion || '')
+  const [selectedShortNames, setSelectedShortNames] = useState(appliedShortNames)
+  const [selectedVersions, setSelectedVersions] = useState(appliedVersions)
   const [advancedFilters, setAdvancedFilters] = useState(pick(query, advancedFilterKeys))
   const [collections, setCollections] = useState(items)
   const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
   const formRef = useRef(null)
   // Count the number of selected identifiers (entryId and shortName)
   const entryIdCount = appliedEntryId?.length || 0
-  const shortNameCount = entryIdCount === 0 && appliedShortName ? 1 : 0
-  const identifierSelectionCount = entryIdCount + shortNameCount
+  const identifierSelectionCount = entryIdCount + appliedShortNames.length + appliedVersions.length
   // Count the number of selected advanced filters plus identifiers
   const selectedOptionsCount = advancedCollectionFilters.reduce((count, { key }) => {
     const value = query[key]
@@ -71,9 +73,9 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
   // Sync identifier controls with the query, preserving the chosen mode when identifiers are cleared
   useEffect(() => {
     setSelectedIds(appliedEntryId || [])
-    setShortName(appliedShortName || '')
-    setVersion(appliedVersion || '')
-    if (appliedShortName || appliedVersion) setMode('shortName')
+    setSelectedShortNames(appliedShortNames)
+    setSelectedVersions(appliedVersions)
+    if (appliedShortNames.length || appliedVersions.length) setMode('shortName')
     else if (appliedEntryId?.length) setMode('entryId')
   }, [appliedEntryId, appliedShortName, appliedVersion])
 
@@ -83,31 +85,29 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
   ].filter(Boolean))].sort()
   const availableShortNames = [...new Set([
     ...collections.map((collection) => collection.shortName),
-    shortName
+    ...selectedShortNames
   ].filter(Boolean))].sort()
   const availableVersions = [...new Set([
-    ...collections.filter((collection) => collection.shortName === shortName)
+    ...collections.filter((collection) => selectedShortNames.includes(collection.shortName))
       .map((collection) => collection.versionId),
-    version
+    ...selectedVersions
   ].filter(Boolean))].sort()
 
   const changeFilters = ({
     mode: nextMode = mode,
     entryId: nextIds = selectedIds,
-    shortName: nextShortName = shortName,
-    version: nextVersion = version
+    shortName: nextShortNames = selectedShortNames,
+    version: nextVersions = selectedVersions
   }) => {
     setMode(nextMode)
     setSelectedIds(nextIds)
-    setShortName(nextShortName)
-    setVersion(nextVersion)
+    setSelectedShortNames(nextShortNames)
+    setSelectedVersions(nextVersions)
     changeQuery({
       collection: {
         entryId: nextMode === 'entryId' && nextIds.length ? nextIds : undefined,
-        shortName: nextMode === 'shortName' && nextShortName.trim()
-          ? nextShortName.trim() : undefined,
-        version: nextMode === 'shortName' && nextShortName.trim() && nextVersion.trim()
-          ? nextVersion.trim() : undefined
+        shortName: nextMode === 'shortName' && nextShortNames.length ? nextShortNames : undefined,
+        version: nextMode === 'shortName' && nextVersions.length ? nextVersions : undefined
       }
     })
   }
@@ -115,16 +115,16 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
   const clear = () => {
     changeFilters({
       entryId: [],
-      shortName: '',
-      version: ''
+      shortName: [],
+      version: []
     })
   }
 
   const changeMode = (nextMode) => changeFilters({
     mode: nextMode,
     entryId: [],
-    shortName: '',
-    version: ''
+    shortName: [],
+    version: []
   })
 
   return (
@@ -212,47 +212,57 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
               </div>
             ) : (
               <div className="mb-3">
-                <div className="row gx-2">
-                  <Form.Group controlId="advanced-search-short-name" className="col-7">
-                    <Form.Label className="visually-hidden">Short Name</Form.Label>
-                    <Form.Select
-                      size="sm"
-                      className="pe-4"
-                      disabled={mode !== 'shortName'}
-                      value={shortName}
-                      onChange={
-                        (event) => changeFilters({
-                          shortName: event.target.value,
-                          version: ''
-                        })
+                <fieldset>
+                  <legend>Short Name</legend>
+                  <div className="advanced-search-facets__identifier-options">
+                    <FacetsList
+                      facetCategory="advancedSearchShortName"
+                      optimisticSelection={false}
+                      facets={availableShortNames.map((value) => ({
+                        title: value,
+                        value,
+                        applied: selectedShortNames.includes(value)
+                      }))}
+                      changeHandler={
+                        (event, { value }) => {
+                          const nextShortNames = event.target.checked
+                            ? [...selectedShortNames, value]
+                            : selectedShortNames.filter((selected) => selected !== value)
+
+                          changeFilters({
+                            shortName: nextShortNames,
+                            version: nextShortNames.length === 1 ? selectedVersions : []
+                          })
+                        }
                       }
-                    >
-                      <option value="">Select Short Name</option>
-                      {
-                        availableShortNames.map((value) => (
-                          <option key={value} value={value}>{value}</option>
-                        ))
-                      }
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group controlId="advanced-search-version" className="col-5">
-                    <Form.Label className="visually-hidden">Version</Form.Label>
-                    <Form.Select
-                      size="sm"
-                      className="pe-4"
-                      disabled={mode !== 'shortName' || !shortName}
-                      value={version}
-                      onChange={(event) => changeFilters({ version: event.target.value })}
-                    >
-                      <option value="">All Versions</option>
-                      {
-                        availableVersions.map((value) => (
-                          <option key={value} value={value}>{value}</option>
-                        ))
-                      }
-                    </Form.Select>
-                  </Form.Group>
-                </div>
+                    />
+                  </div>
+                </fieldset>
+                {
+                  selectedShortNames.length > 0 && (
+                    <fieldset disabled={selectedShortNames.length > 1}>
+                      <legend>Version</legend>
+                      <div className="advanced-search-facets__identifier-options">
+                        <FacetsList
+                          facetCategory="advancedSearchVersion"
+                          optimisticSelection={false}
+                          facets={availableVersions.map((value) => ({
+                            title: value,
+                            value,
+                            applied: selectedVersions.includes(value)
+                          }))}
+                          changeHandler={
+                            (event, { value }) => changeFilters({
+                              version: event.target.checked
+                                ? [...selectedVersions, value]
+                                : selectedVersions.filter((selected) => selected !== value)
+                            })
+                          }
+                        />
+                      </div>
+                    </fieldset>
+                  )
+                }
               </div>
             )
           }

@@ -25,6 +25,8 @@ describe('url#encodeUrlQuery', () => {
   test('preserves advanced collection filters through a shared search URL', () => {
     const advancedFilters = {
       entryId: ['ATL03_004', 'ATL06_006'],
+      shortName: ['ATL03', 'ATL06'],
+      version: ['004', '005'],
       doi: '10.5067/EXAMPLE',
       entryTitle: 'Example Collection',
       consortium: ['CEOS', 'EOSDIS'],
