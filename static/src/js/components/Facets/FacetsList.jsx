@@ -24,6 +24,7 @@ const FacetsList = ({
   facetCategory,
   liftSelectedFacets = false,
   changeHandler,
+  optimisticSelection = true,
   sortBy = null,
   variation = ''
 }) => {
@@ -51,7 +52,7 @@ const FacetsList = ({
       // Add `applyingFacet` and `setApplyingFacet` to the facet to ensure loading state works
       const facet = {
         ...child,
-        applyingFacet,
+        applyingFacet: optimisticSelection ? applyingFacet : null,
         setApplyingFacet
       }
 
@@ -136,6 +137,7 @@ FacetsList.propTypes = {
   facetCategory: PropTypes.string.isRequired,
   liftSelectedFacets: PropTypes.bool,
   changeHandler: PropTypes.func.isRequired,
+  optimisticSelection: PropTypes.bool,
   sortBy: PropTypes.string,
   variation: PropTypes.string
 }

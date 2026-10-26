@@ -422,7 +422,7 @@ export type RequestResponseData = EmptyObject
 /** The request parameters for a collection request */
 export type CollectionRequestParams = {
   /** The collection concept id */
-  conceptId: string
+  conceptId?: string
   /** The 2D coordinate system for the search */
   twoDCoordinateSystem?: {
     /** The coordinate system type */

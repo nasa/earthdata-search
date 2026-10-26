@@ -1,16 +1,23 @@
 import React, {
   useState,
+  useRef,
   lazy,
   Suspense,
   useEffect
 } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import {
+  Route,
+  Routes,
+  useLocation
+} from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import {
   FaFilter,
   FaMap,
+  FaSlidersH,
   FaQuestionCircle
 } from 'react-icons/fa'
 
@@ -19,6 +26,7 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import Facets from '../../components/Facets/Facets'
+import AdvancedSearchFacets from '../../components/Facets/AdvancedSearchFacets'
 import FacetsModal from '../../components/Facets/FacetsModal'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
@@ -54,6 +62,14 @@ const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFilte
  */
 export const Search = () => {
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+  const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false)
+  const advancedFiltersButtonRef = useRef(null)
+  const { pathname } = useLocation()
+
+  const closeAdvancedFilters = () => {
+    setAdvancedFiltersOpen(false)
+    advancedFiltersButtonRef.current?.focus()
+  }
 
   const {
     changeQuery,
@@ -135,6 +151,10 @@ export const Search = () => {
     <>
       <div className="route-wrapper route-wrapper--search search">
         <SidebarContainer
+          secondaryChildren={
+            advancedFiltersOpen && pathname === routes.SEARCH
+              ? <AdvancedSearchFacets onClose={closeAdvancedFilters} /> : null
+          }
           headerChildren={(
             <SearchSidebarHeader />
           )}
@@ -193,6 +213,24 @@ export const Search = () => {
                           hasPadding={false}
                         >
                           <Facets />
+                        </SidebarFiltersItem>
+                        <SidebarFiltersItem>
+                          <Button
+                            ref={advancedFiltersButtonRef}
+                            size="sm"
+                            variant="outline-primary"
+                            type="button"
+                            className="w-100"
+                            aria-expanded={advancedFiltersOpen}
+                            onClick={
+                              () => {
+                                setAdvancedFiltersOpen(!advancedFiltersOpen)
+                              }
+                            }
+                          >
+                            <EDSCIcon icon={FaSlidersH} className="me-2" />
+                            {advancedFiltersOpen ? 'Collapse Advanced Filters' : 'Expand Advanced Filters'}
+                          </Button>
                         </SidebarFiltersItem>
                         <PortalFeatureContainer
                           onlyGranulesCheckbox
