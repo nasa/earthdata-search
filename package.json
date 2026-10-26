@@ -114,8 +114,8 @@
     "vi-canvas-mock": "^1.0.0"
   },
   "dependencies": {
-    "@ai-sdk/amazon-bedrock": "^4.0.105",
-    "@ai-sdk/react": "^4.0.17",
+    "@ai-sdk/amazon-bedrock": "^5.0.125",
+    "@ai-sdk/react": "^4.0.158",
     "@apollo/client": "^3.13.8",
     "@apollo/server": "^5.5.1",
     "@as-integrations/aws-lambda": "^4.0.1",
@@ -154,7 +154,7 @@
     "@turf/turf": "^7.2.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@xmldom/xmldom": "^0.8.6",
-    "ai": "^6.0.182",
+    "ai": "^7.0.154",
     "ajv": "^6.12.6",
     "array-foreach-async": "^1.0.1",
     "array-to-sentence": "^2.0.0",
@@ -243,7 +243,7 @@
     "ws": "^8.18.0",
     "xpath": "0.0.27",
     "yup": "^0.32.11",
-    "zod": "^4.4.3",
+    "zod": "^4.6.7",
     "zustand": "^4.5.7"
   },
   "engines": {
