@@ -37,6 +37,19 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
   const [collections, setCollections] = useState(items)
   const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
   const formRef = useRef(null)
+  // Count the number of selected identifiers (entryId and shortName)
+  const entryIdCount = appliedEntryId?.length || 0
+  const shortNameCount = entryIdCount === 0 && appliedShortName ? 1 : 0
+  const identifierSelectionCount = entryIdCount + shortNameCount
+  // Count the number of selected advanced filters plus identifiers
+  const selectedOptionsCount = advancedCollectionFilters.reduce((count, { key }) => {
+    const value = query[key]
+    const selectedCountForFilter = Array.isArray(value)
+      ? value.length
+      : Number(Boolean(value))
+
+    return count + selectedCountForFilter
+  }, identifierSelectionCount)
 
   // Move keyboard focus into the advanced filter column when it opens
   useEffect(() => {
@@ -129,7 +142,14 @@ const AdvancedSearchFacets = ({ onClose = null }) => {
       }
     >
       <header className="advanced-search-facets__header">
-        <h2>Advanced Filters</h2>
+        <h2>
+          Advanced Filters
+          {selectedOptionsCount > 0 && (
+            <span className="badge bg-primary ms-2">
+              {`${selectedOptionsCount} ${selectedOptionsCount === 1 ? 'Option' : 'Options'} Selected`}
+            </span>
+          )}
+        </h2>
         {
           onClose && (
             <Button

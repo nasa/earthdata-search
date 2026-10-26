@@ -44,6 +44,18 @@ const setup = setupTest({
 })
 
 describe('AdvancedSearchFacets', () => {
+  test('shows the selected filter count in the heading', async () => {
+    const { user } = setup()
+
+    expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
+    expect(screen.queryByText('Selected')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
+    await user.click(screen.getByRole('checkbox', { name: 'ATL06_006' }))
+
+    expect(screen.getByText('2 Options Selected')).toBeVisible()
+  })
+
   test('applies a checkbox filter when its label is clicked', async () => {
     const { user } = setup()
 

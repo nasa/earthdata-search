@@ -126,7 +126,7 @@ describe('Search component', () => {
   describe('when on the /search route', () => {
     test('opens the advanced filter column and restores focus when closed', async () => {
       const { user } = setup()
-      const expand = screen.getByRole('button', { name: 'Expand Advanced Filters' })
+      const expand = screen.getByRole('button', { name: /Expand Advanced Filters/ })
 
       expect(screen.queryByRole('form', { name: 'Advanced Filters' })).not.toBeInTheDocument()
       await user.click(expand)
