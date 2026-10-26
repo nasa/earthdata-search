@@ -368,14 +368,6 @@ ${query}
       }
     }
 
-    // Add any found short names to the keyword field -- this is temporary until EDSC-4728
-    if (shortNames.length > 0 || entryIds.length > 0) {
-      const allKeywords = [...entryIds, ...shortNames].concat(
-        extractedResults.keyword ? [extractedResults.keyword] : []
-      )
-      extractedResults.keyword = allKeywords.join(' ')
-    }
-
     // Output completion for the frontend
     console.log('Workflows complete. Final results:', JSON.stringify(extractedResults))
     responseStream.write('Final result:\n')

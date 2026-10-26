@@ -228,11 +228,30 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       const {
         hasGranulesOrCwic,
-        includeInactiveCollections,
         keyword,
         temporal,
-        spatialArea
+        spatialArea,
+        entryIds = [],
+        shortNames = [],
+        includeInactiveCollections = false
       } = parsedResult
+      const hasEntryIds = entryIds.length > 0
+      const hasShortNames = shortNames.length > 0
+      // If both entry_id and short_name are present, do not apply them as separate identifier filters.
+      // Keep mixed matches together in keyword search.
+      const canApplyIdentifierFilters = !(hasEntryIds && hasShortNames)
+      const applyIdentifiersAsKeyword = !canApplyIdentifierFilters
+      const queryEntryIds = canApplyIdentifierFilters ? entryIds : []
+      const queryShortNames = canApplyIdentifierFilters && hasShortNames
+        ? shortNames
+        : undefined
+      const keywordParts = [
+        ...(applyIdentifiersAsKeyword ? [...entryIds, ...shortNames] : []),
+        ...(keyword ? [keyword] : [])
+      ]
+      const queryKeyword = keywordParts.join(' ') || (
+        !hasEntryIds && !hasShortNames ? keyword || prompt : undefined
+      )
 
       const spatial = parseWktSpatial(spatialArea)
       const hasSpatial = Object.keys(spatial).length > 0
@@ -249,7 +268,10 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         collection: {
           hasGranulesOrCwic,
           includeInactiveCollections,
-          keyword: keyword || prompt,
+          entryId: queryEntryIds,
+          shortName: queryShortNames,
+          version: undefined,
+          keyword: queryKeyword,
           spatial,
           temporal: temporal || {}
         },
