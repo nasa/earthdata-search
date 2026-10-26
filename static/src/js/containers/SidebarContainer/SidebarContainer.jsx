@@ -10,6 +10,7 @@ import { routes } from '../../constants/routes'
 export const SidebarContainer = ({
   children,
   panels = null,
+  secondaryChildren = null,
   headerChildren = null
 }) => {
   const location = useLocation()
@@ -28,6 +29,7 @@ export const SidebarContainer = ({
   return (
     <Sidebar
       panels={panels}
+      secondaryChildren={secondaryChildren}
       visible={sidebarVisible}
       headerChildren={headerChildren}
     >
@@ -39,6 +41,7 @@ export const SidebarContainer = ({
 SidebarContainer.propTypes = {
   children: PropTypes.node.isRequired,
   panels: PropTypes.node,
+  secondaryChildren: PropTypes.node,
   headerChildren: PropTypes.node
 }
 

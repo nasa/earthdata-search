@@ -31,19 +31,26 @@ describe('CollectionRequest#permittedCmrKeys', () => {
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
+      'browsable',
       'circle',
       'cloud_hosted',
       'collection_data_type',
+      'collection_progress',
       'concept_id',
       'consortium',
       'data_center_h',
       'data_center',
+      'doi',
+      'downloadable',
       'echo_collection_id',
+      'entry_id',
+      'entry_title',
       'facets_size',
       'granule_data_format_h',
       'granule_data_format',
       'has_granules_or_cwic',
       'has_granules',
+      'has_granules_created_at',
       'horizontal_data_resolution_range',
       'include_facets',
       'include_granule_counts',
@@ -70,14 +77,35 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'provider',
       'science_keywords_h',
       'service_type',
+      'service_name',
+      'short_name',
       'sort_key',
       'spatial_keyword',
       'standard_product',
       'tag_key',
       'temporal',
       'tool_concept_id',
-      'two_d_coordinate_system_name'
+      'tool_name',
+      'two_d_coordinate_system_name',
+      'version',
+      'variable_name'
     ])
+  })
+})
+
+describe('CollectionRequest#filterData', () => {
+  test('preserves advanced collection identifiers in the request payload', () => {
+    const request = new CollectionRequest(null, 'prod')
+
+    expect(request.filterData({
+      entryId: ['ATL03_004', 'ATL03_003'],
+      shortName: 'ATL03',
+      version: '003'
+    })).toEqual({
+      entry_id: ['ATL03_004', 'ATL03_003'],
+      short_name: 'ATL03',
+      version: '003'
+    })
   })
 })
 
@@ -89,9 +117,11 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'bounding_box',
       'circle',
       'collection_data_type',
+      'collection_progress',
       'concept_id',
       'consortium',
       'data_center_h',
+      'entry_id',
       'granule_data_format_h',
       'granule_data_format',
       'horizontal_data_resolution_range',
@@ -113,6 +143,61 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'tool_concept_id',
       'two_d_coordinate_system_name'
     ])
+  })
+})
+
+describe('CollectionRequest#transformRequest', () => {
+  test('includes advanced filters with CMR field names in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+    const body = request.transformRequest({
+      doi: '10.5067/EXAMPLE',
+      entryTitle: 'Example Collection',
+      consortium: ['CEOS'],
+      hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
+      collectionDataType: ['SCIENCE_QUALITY'],
+      collectionProgress: ['ACTIVE', 'COMPLETE'],
+      downloadable: true,
+      browsable: true,
+      variableName: 'temperature',
+      serviceName: 'testServie',
+      toolName: 'test_tool'
+    }, {})
+    if (typeof body !== 'string') throw new TypeError('Expected a URL-encoded request body')
+
+    const params = new URLSearchParams(body)
+
+    expect(Object.fromEntries(params)).toEqual({
+      doi: '10.5067/EXAMPLE',
+      entry_title: 'Example Collection',
+      'consortium[]': 'CEOS',
+      has_granules_created_at: '2026-01-01T00:00:00Z,',
+      'collection_data_type[]': 'SCIENCE_QUALITY',
+      'collection_progress[]': 'COMPLETE',
+      downloadable: 'true',
+      browsable: 'true',
+      variable_name: 'temperature',
+      service_name: 'testServie',
+      tool_name: 'test_tool'
+    })
+
+    expect(params.getAll('collection_progress[]')).toEqual(['ACTIVE', 'COMPLETE'])
+  })
+
+  test('includes multiple Entry IDs in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+
+    expect(request.transformRequest({ entryId: ['ATL03_004', 'ATL03_003'] }, {}))
+      .toEqual('entry_id[]=ATL03_004&entry_id[]=ATL03_003')
+  })
+
+  test('includes Short Name and Version in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+
+    expect(request.transformRequest({
+      shortName: 'ATL03',
+      version: '003'
+    }, {}))
+      .toEqual('short_name=ATL03&version=003')
   })
 })
 

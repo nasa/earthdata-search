@@ -974,6 +974,34 @@ type RegionQuery = {
 
 /** Collection Query Parameters */
 type CollectionQuery = {
+  /** The collection Entry IDs to search for, including version (e.g. 'ATL03_004') */
+  entryId?: string[]
+  /** The collection Short Name to search for (e.g. 'ATL03'), optionally filtered by version */
+  shortName?: string
+  /** The optional version for the Short Name search, preserving leading zeros (e.g. '003') */
+  version?: string
+  /** The collection DOI value */
+  doi?: string
+  /** The collection Entry Title */
+  entryTitle?: string
+  /** The consortium names to match */
+  consortium?: string[]
+  /** The UTC date range for newly added granules, with an optional end bound */
+  hasGranulesCreatedAt?: string
+  /** The collection data types to match */
+  collectionDataType?: string[]
+  /** The collection progress values to match */
+  collectionProgress?: string[]
+  /** Require a collection with a GET DATA distribution URL */
+  downloadable?: boolean
+  /** Require a collection with a visualization URL */
+  browsable?: boolean
+  /** The name of an associated variable */
+  variableName?: string
+  /** The name of an associated service */
+  serviceName?: string
+  /** The name of an associated tool */
+  toolName?: string
   /** Collection specific queries by Collection ID */
   byId: CollectionQueryById
   /** Flag to indicate if the collection has granules or CWIC */
