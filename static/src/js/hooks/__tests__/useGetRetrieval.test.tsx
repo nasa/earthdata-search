@@ -6,8 +6,8 @@ import setupTest from '../../../../../vitestConfigs/setupTest'
 import { useGetRetrieval } from '../useGetRetrieval'
 import GET_RETRIEVAL from '../../operations/queries/getRetrieval'
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/downloads/123456',
     search: '',

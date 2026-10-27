@@ -106,7 +106,7 @@ export default defineConfig({
           edscUtils: ['@edsc/timeline', '@edsc/geo-utils'],
           lodash: ['lodash-es'],
           moment: ['moment'],
-          react: ['react', 'react-dom', 'react-router-dom']
+          react: ['react', 'react-dom']
         }
       }
     }

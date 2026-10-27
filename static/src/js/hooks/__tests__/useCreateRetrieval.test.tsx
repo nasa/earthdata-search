@@ -17,8 +17,8 @@ vi.mock('../../util/metrics/experiments/logEvent', () => ({
 }))
 
 const mockUseNavigate = vi.fn()
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockUseNavigate
 }))
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation, useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 import Alert from 'react-bootstrap/Alert'
 import Col from 'react-bootstrap/Col'

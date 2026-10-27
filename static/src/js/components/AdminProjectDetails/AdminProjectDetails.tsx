@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { useQuery } from '@apollo/client'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'qs'

@@ -1,5 +1,5 @@
 import { act, waitFor } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import UrlQueryContainer from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
@@ -21,8 +21,8 @@ vi.mock('../../../util/url/changeUrl', () => ({
 }))
 
 const mockUseNavigate = vi.fn()
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=C00001-EDSC',
@@ -68,7 +68,10 @@ describe('UrlQueryContainer', () => {
 
   beforeEach(() => {
     delete window.location
-    window.location = { replace: vi.fn() }
+    window.location = {
+      pathname: '/search/granules',
+      replace: vi.fn()
+    }
   })
 
   afterEach(() => {

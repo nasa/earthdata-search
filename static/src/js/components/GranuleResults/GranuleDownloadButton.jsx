@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { parse } from 'qs'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 

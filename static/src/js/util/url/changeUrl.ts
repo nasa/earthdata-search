@@ -16,14 +16,14 @@ type UpdateUrlParams = {
   newPathname: string
 }
 
-const updateUrl = ({
+const updateUrl = async ({
   options,
   oldPathname,
   newPathname
 }: UpdateUrlParams) => {
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different
-  routerHelper.router?.navigate(options, { replace: oldPathname === newPathname })
+  await routerHelper.router?.navigate(options, { replace: oldPathname === newPathname })
 }
 
 /**
@@ -39,7 +39,7 @@ const updateUrl = ({
  * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
  * changeUrl({ pathname: '/a-new-url' })
  */
-export const changeUrl = (options: string | Record<string, unknown>) => {
+export const changeUrl = async (options: string | Record<string, unknown>) => {
   const { location } = routerHelper.router?.state || {} as Router['state']
   const { pathname: oldPathname } = location
 
@@ -63,7 +63,7 @@ export const changeUrl = (options: string | Record<string, unknown>) => {
       newOptions = newPathname
     }
 
-    updateUrl({
+    await updateUrl({
       options: newOptions,
       oldPathname,
       newPathname
@@ -71,7 +71,7 @@ export const changeUrl = (options: string | Record<string, unknown>) => {
   } else {
     ({ pathname: newPathname } = options as { pathname: string })
 
-    updateUrl({
+    await updateUrl({
       options,
       oldPathname,
       newPathname

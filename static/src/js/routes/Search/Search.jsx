@@ -4,7 +4,7 @@ import React, {
   Suspense,
   useEffect
 } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router'
 import Form from 'react-bootstrap/Form'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 

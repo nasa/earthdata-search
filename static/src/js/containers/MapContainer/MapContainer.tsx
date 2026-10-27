@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { useQuery } from '@apollo/client'
 import GET_COLORMAPS from '../../operations/queries/getColorMaps'
 

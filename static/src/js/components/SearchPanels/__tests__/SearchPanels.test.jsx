@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { screen, within } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import Helmet from 'react-helmet'
 import * as tinyCookie from 'tiny-cookie'
@@ -48,8 +48,8 @@ vi.mock('../../../../../../sharedUtils/config', () => ({
   })
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',

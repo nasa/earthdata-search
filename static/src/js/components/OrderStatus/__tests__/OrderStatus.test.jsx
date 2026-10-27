@@ -14,8 +14,8 @@ import OrderStatusList from '../OrderStatusList'
 import GET_RETRIEVAL from '../../../operations/queries/getRetrieval'
 import { changePath } from '../../../util/url/changePath'
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useParams: vi.fn().mockReturnValue({
     id: '7'
   })

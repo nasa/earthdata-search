@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router'
 import { waitFor } from '@testing-library/react'
 import { ApolloError } from '@apollo/client'
 
@@ -12,8 +12,8 @@ import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalL
 
 import ADMIN_IS_AUTHORIZED from '../../../operations/queries/adminIsAuthorized'
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   Outlet: vi.fn(() => <div>Outlet</div>),
   Navigate: vi.fn(() => <div>Navigate</div>)
 }))

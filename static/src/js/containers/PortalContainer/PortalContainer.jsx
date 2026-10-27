@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { startCase } from 'lodash-es'
 import { parse, stringify } from 'qs'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router'
 
 import { changePath } from '../../util/url/changePath'
 import { changeUrl } from '../../util/url/changeUrl'
@@ -48,15 +48,15 @@ const PortalContainer = () => {
     }
 
     if (newPathname !== pathname || newSearch !== search) {
-      setTimeout(() => {
+      setTimeout(async () => {
         // Update the URL with the new value
-        changeUrl({
+        await changeUrl({
           pathname: newPathname,
           search: newSearch
         })
 
         // Reset the store based on the new URL
-        changePath(`${newPathname}${newSearch}`)
+        await changePath(`${newPathname}${newSearch}`)
       }, 0)
     }
   }, [])

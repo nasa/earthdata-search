@@ -15,8 +15,8 @@ vi.mock('../CollectionResultsList', () => ({ default: vi.fn(() => <div />) }))
 vi.mock('../CollectionResultsTable', () => ({ default: vi.fn(() => <div />) }))
 vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',

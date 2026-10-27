@@ -3,7 +3,8 @@ import React, {
   Suspense,
   useEffect
 } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
 import { ToastProvider } from 'react-toast-notifications'
 import { Helmet } from 'react-helmet'
 

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { parse } from 'qs'
 import { isEmpty } from 'lodash-es'
 import { Settings, CheckCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'

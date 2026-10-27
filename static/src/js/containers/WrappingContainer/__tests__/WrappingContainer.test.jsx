@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
@@ -7,8 +7,8 @@ import setupTest from '../../../../../../vitestConfigs/setupTest'
 import WrappingContainer from '../WrappingContainer'
 import { routes } from '../../../constants/routes'
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
