@@ -212,10 +212,10 @@ const AdminRetrievalDetails = () => {
                                             <th style={{ width: '10%' }}>Actions</th>
                                             <th style={{ width: '7%' }}>ID</th>
                                             <th style={{ width: '20%' }}>Order Number</th>
-                                            <th style={{ width: '20%' }}>Type</th>
+                                            <th style={{ width: '10%' }}>Type</th>
                                             <th style={{ width: '10%' }}>State</th>
-                                            <th style={{ width: '17%' }}>Details</th>
-                                            <th style={{ width: '15%' }}>Errors</th>
+                                            <th style={{ width: '23%' }}>Details</th>
+                                            <th style={{ width: '20%' }}>Errors</th>
                                           </tr>
                                         </thead>
                                         <tbody>
