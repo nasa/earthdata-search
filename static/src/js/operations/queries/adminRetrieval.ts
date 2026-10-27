@@ -19,6 +19,7 @@ const ADMIN_RETRIEVAL = gql`
         updatedAt
         createdAt
         retrievalOrders {
+          error
           id
           state
           orderNumber
