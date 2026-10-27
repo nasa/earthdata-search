@@ -5,7 +5,6 @@ import { Geometry } from 'ol/geom'
 import drawOutline from './drawOutline'
 import drawGpuGranuleOutlines, { hideGpuGranuleOutlines } from './gpuGranuleOutlines'
 
-// Draw the granule outlines
 const drawGranuleOutlines = ({
   ctx,
   granuleBackgroundsSource,
@@ -21,58 +20,47 @@ const drawGranuleOutlines = ({
   /** The frame's coordinate-to-pixel transform, enables the GPU painter while the map moves */
   coordinateToPixelTransform?: number[]
 }) => {
-  if (map) {
-    const view = map.getView()
-    const isMoving = view.getAnimating() || view.getInteracting()
+  if (!map) {
+    ctx.reset()
 
-    // While panning or zooming, draw with WebGL if possible. Settled frames always
-    // use the Canvas painter below so the final image is unchanged.
-    if (isMoving && coordinateToPixelTransform && drawGpuGranuleOutlines({
+    return
+  }
+
+  const view = map.getView()
+  const isMoving = view.getAnimating() || view.getInteracting()
+
+  // Accelerate interaction frames. Settled frames use Canvas for the exact final image.
+  if (isMoving && coordinateToPixelTransform) {
+    const renderedWithGpu = drawGpuGranuleOutlines({
       ctx,
       map,
       granuleBackgroundsSource,
       matrix: coordinateToPixelTransform
-    })) return
+    })
 
-    hideGpuGranuleOutlines(map)
+    if (renderedWithGpu) return
   }
 
-  // Remove existing drawings on the canvas
+  hideGpuGranuleOutlines(map)
   ctx.reset()
 
-  // If the map is undefined, don't draw anything
-  if (!map) return
+  const pixelRatio = window.devicePixelRatio || 1
+  const viewExtent = view.calculateExtent(map.getSize())
+  const visibleFeatures = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
+    .sort((a, b) => a.get('index') - b.get('index'))
 
-  // Get the device pixel ratio for use in scaling the drawing
-  const dpr = window.devicePixelRatio || 1
-
-  const viewExtent = map.getView().calculateExtent(map.getSize())
-
-  // Only get the features that intersect the view extent
-  const features = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
-
-  // Sort features by the index property
-  const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
-
-  // Loop through the features that have been drawn on the granuleBackgroundsLayer
-  sortedFeatures.forEach((feature) => {
+  visibleFeatures.forEach((feature) => {
     ctx.beginPath()
 
-    // Set the globalCompositeOperation to 'destination-over' so new granule outlines
-    // are drawn behind existing granule backgrounds. This creates a 'stack' of granules.
+    // Later granules sit behind earlier ones, preserving the feature stack.
     ctx.globalCompositeOperation = 'destination-over'
 
-    // Get the style value saved in the feature's properties
-    const properties = feature.getProperties()
-    const { granuleStyle } = properties
-
-    // If the feature has no style, return
+    const granuleStyle = feature.get('granuleStyle')
     if (!granuleStyle) return
 
     const stroke = granuleStyle.getStroke()
 
-    // If the style has no stroke, use the stroke from the image
-    // This happens for granules with point spatial
+    // Point granules carry their stroke on the image style.
     if (!stroke) {
       const image = granuleStyle.getImage()
       ctx.strokeStyle = image.getStroke().getColor()
@@ -82,25 +70,21 @@ const drawGranuleOutlines = ({
       ctx.lineWidth = stroke.getWidth()
     }
 
-    // Draw the path for the granule outline
     drawOutline({
       ctx,
       geometry: feature.getGeometry() as Geometry,
       map,
-      scale: dpr
+      scale: pixelRatio
     })
 
-    // Draw the shape on the canvas
     ctx.stroke()
 
-    // Add path around full canvas extent to clip the granule outlines
+    // The outer rectangle makes this an inverse clip: later granules cannot
+    // draw inside this granule. Each clip accumulates until the next reset.
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
-    // Clip
     ctx.clip()
   })
 
-  // Reset the globalCompositeOperation to the default of 'source-over'
   ctx.globalCompositeOperation = 'source-over'
 }
 

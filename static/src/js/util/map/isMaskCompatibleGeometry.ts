@@ -51,7 +51,7 @@ const isNormalizedPolygon = (rings: Ring[]) => {
 // The Canvas painter clips each granule out with an inverse nonzero path. That
 // equals a simple coverage mask only for normalized, non-overlapping polygons,
 // so only those use the GPU painter. Cached by geometry revision.
-const isMaskCompatibleGeometry = (geometry: Geometry): boolean => {
+const isMaskCompatibleGeometry = (geometry: Geometry): geometry is MultiPolygon => {
   if (geometry.getType() !== 'MultiPolygon') return false
 
   const revision = geometry.getRevision()

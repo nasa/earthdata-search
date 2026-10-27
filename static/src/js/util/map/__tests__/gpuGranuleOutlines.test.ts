@@ -9,8 +9,10 @@ import {
 } from 'ol/style'
 
 import drawGpuGranuleOutlines, {
+  disposeGpuGranuleOutlines,
   fillTriangles,
   geometryMesh,
+  hideGpuGranuleOutlines,
   strokeTriangles
 } from '../gpuGranuleOutlines'
 
@@ -27,7 +29,7 @@ const triangleArea = (vertices: number[]) => {
   return area
 }
 
-const setup = ({
+const createScene = ({
   count = 12,
   projection = 'EPSG:4326',
   strokeColor = 'rgb(255, 255, 255)'
@@ -60,12 +62,72 @@ const setup = ({
   canvas.height = 100
   document.body.appendChild(canvas)
 
-  return drawGpuGranuleOutlines({
+  return {
     ctx: { canvas } as unknown as CanvasRenderingContext2D,
     map,
     granuleBackgroundsSource: source,
     matrix: [1, 0, 0, -1, 50, 50]
-  })
+  }
+}
+
+const setup = (options = {}) => drawGpuGranuleOutlines(createScene(options))
+
+// Jsdom has no GPU. Stub the WebGL boundary to exercise uploads, drawing, and
+// Canvas visibility through the public renderer API.
+const mockWebGl = () => {
+  const gl = {
+    MAX_RENDERBUFFER_SIZE: 0x84E8,
+    RENDERER: 0x1F01,
+    ARRAY_BUFFER: 0x8892,
+    STATIC_DRAW: 0x88E4,
+    TRIANGLES: 0x0004,
+    getContextAttributes: vi.fn(() => ({ stencil: true })),
+    getExtension: vi.fn(() => null),
+    getParameter: vi.fn((parameter) => (parameter === 0x84E8 ? 4096 : 'Hardware renderer')),
+    createShader: vi.fn(() => ({})),
+    shaderSource: vi.fn(),
+    compileShader: vi.fn(),
+    getShaderParameter: vi.fn(() => true),
+    createProgram: vi.fn(() => ({})),
+    attachShader: vi.fn(),
+    linkProgram: vi.fn(),
+    getProgramParameter: vi.fn(() => true),
+    createBuffer: vi.fn(() => ({})),
+    getAttribLocation: vi.fn(() => 0),
+    getUniformLocation: vi.fn((_program, name) => ({ name })),
+    deleteShader: vi.fn(),
+    deleteProgram: vi.fn(),
+    deleteBuffer: vi.fn(),
+    isContextLost: vi.fn(() => false),
+    viewport: vi.fn(),
+    useProgram: vi.fn(),
+    bindBuffer: vi.fn(),
+    enableVertexAttribArray: vi.fn(),
+    vertexAttribPointer: vi.fn(),
+    bufferData: vi.fn(),
+    disable: vi.fn(),
+    enable: vi.fn(),
+    stencilMask: vi.fn(),
+    clearStencil: vi.fn(),
+    clearColor: vi.fn(),
+    colorMask: vi.fn(),
+    clear: vi.fn(),
+    uniform2f: vi.fn(),
+    uniformMatrix2fv: vi.fn(),
+    uniform1f: vi.fn(),
+    uniform4f: vi.fn(),
+    blendFuncSeparate: vi.fn(),
+    stencilFunc: vi.fn(),
+    stencilOp: vi.fn(),
+    drawArrays: vi.fn()
+  }
+  const getContext = vi.spyOn(HTMLCanvasElement.prototype, 'getContext')
+    .mockReturnValue(gl as unknown as WebGL2RenderingContext)
+
+  return {
+    gl,
+    getContext
+  }
 }
 
 describe('gpuGranuleOutlines', () => {
@@ -125,6 +187,8 @@ describe('gpuGranuleOutlines', () => {
 
   describe('drawGpuGranuleOutlines', () => {
     afterEach(() => {
+      vi.restoreAllMocks()
+      vi.unstubAllGlobals()
       document.body.innerHTML = ''
     })
 
@@ -144,6 +208,116 @@ describe('gpuGranuleOutlines', () => {
       vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
 
       expect(setup()).toBe(false)
+    })
+
+    test.each(['getShaderParameter', 'getProgramParameter'] as const)(
+      'falls back and releases shaders when %s rejects the program',
+      (statusCheck) => {
+        const { gl, getContext } = mockWebGl()
+        gl[statusCheck].mockReturnValue(false)
+        const scene = createScene()
+
+        expect(drawGpuGranuleOutlines(scene)).toBe(false)
+        expect(scene.ctx.canvas.style.visibility).toBe('')
+        expect(gl.drawArrays).not.toHaveBeenCalled()
+        expect(gl.deleteShader).toHaveBeenCalled()
+        if (statusCheck === 'getProgramParameter') {
+          expect(gl.deleteProgram).toHaveBeenCalledTimes(1)
+        }
+
+        // A failed map must keep using Canvas instead of retrying every frame.
+        expect(drawGpuGranuleOutlines(scene)).toBe(false)
+        expect(getContext).toHaveBeenCalledTimes(1)
+        disposeGpuGranuleOutlines(scene.map)
+      }
+    )
+
+    test('keeps the camera center and stroke scale correct on rotated high-DPI frames', () => {
+      const { gl } = mockWebGl()
+      const scene = createScene()
+      vi.stubGlobal('devicePixelRatio', 2)
+
+      expect(drawGpuGranuleOutlines({
+        ...scene,
+        matrix: [0, 2, 2, 0, 10, 20]
+      })).toBe(true)
+
+      expect(gl.uniform2f).toHaveBeenCalledWith({ name: 'cameraCenterHigh' }, 2.5, 7.5)
+      expect(gl.uniformMatrix2fv).toHaveBeenCalledWith({ name: 'mapToDevicePixels' }, false, [0, 4, 4, 0])
+
+      expect(gl.uniform1f).toHaveBeenCalledWith({ name: 'pixelsPerMapUnit' }, 4)
+      disposeGpuGranuleOutlines(scene.map)
+    })
+
+    test('shows a GPU canvas and restores the original Canvas when hidden or disposed', () => {
+      const { gl, getContext } = mockWebGl()
+      const scene = createScene()
+      const { canvas } = scene.ctx
+      canvas.style.visibility = 'inherit'
+
+      expect(drawGpuGranuleOutlines(scene)).toBe(true)
+      const gpuCanvas = getContext.mock.contexts[0] as HTMLCanvasElement
+      expect(canvas.style.visibility).toBe('hidden')
+      expect(gpuCanvas.style.visibility).toBe('visible')
+      expect(gpuCanvas.parentElement).toBe(canvas.parentElement)
+      expect(gl.drawArrays).toHaveBeenCalledTimes(24)
+
+      hideGpuGranuleOutlines(scene.map)
+      expect(canvas.style.visibility).toBe('inherit')
+      expect(gpuCanvas.style.visibility).toBe('hidden')
+
+      expect(drawGpuGranuleOutlines(scene)).toBe(true)
+      disposeGpuGranuleOutlines(scene.map)
+      expect(canvas.style.visibility).toBe('inherit')
+      expect(gpuCanvas.isConnected).toBe(false)
+      expect(gl.deleteBuffer).toHaveBeenCalledTimes(1)
+      expect(gl.deleteProgram).toHaveBeenCalledTimes(1)
+    })
+
+    test('reuses uploaded geometry during camera movement and rebuilds it after a shape change', () => {
+      const { gl } = mockWebGl()
+      const scene = createScene()
+
+      expect(drawGpuGranuleOutlines(scene)).toBe(true)
+      expect(gl.bufferData).toHaveBeenCalledTimes(1)
+
+      expect(drawGpuGranuleOutlines({
+        ...scene,
+        matrix: [2, 0, 0, -2, 40, 60]
+      })).toBe(true)
+
+      expect(gl.bufferData).toHaveBeenCalledTimes(1)
+      expect(gl.uniformMatrix2fv).toHaveBeenLastCalledWith(
+        { name: 'mapToDevicePixels' },
+        false,
+        [2, 0, 0, -2].map((value) => value * (window.devicePixelRatio || 1))
+      )
+
+      const geometry = scene.granuleBackgroundsSource.getFeatures()[0].getGeometry() as MultiPolygon
+      geometry.translate(1, 1)
+      expect(drawGpuGranuleOutlines(scene)).toBe(true)
+      expect(gl.bufferData).toHaveBeenCalledTimes(2)
+
+      disposeGpuGranuleOutlines(scene.map)
+    })
+
+    test('restores Canvas on context loss and reuploads geometry after restoration', () => {
+      const { gl, getContext } = mockWebGl()
+      const scene = createScene()
+      expect(drawGpuGranuleOutlines(scene)).toBe(true)
+      const gpuCanvas = getContext.mock.contexts[0] as HTMLCanvasElement
+
+      gl.isContextLost.mockReturnValue(true)
+      gpuCanvas.dispatchEvent(new Event('webglcontextlost', { cancelable: true }))
+      expect(scene.ctx.canvas.style.visibility).toBe('')
+      expect(drawGpuGranuleOutlines(scene)).toBe(false)
+
+      gl.isContextLost.mockReturnValue(false)
+      gpuCanvas.dispatchEvent(new Event('webglcontextrestored'))
+      expect(drawGpuGranuleOutlines(scene)).toBe(true)
+      expect(gl.bufferData).toHaveBeenCalledTimes(2)
+
+      disposeGpuGranuleOutlines(scene.map)
     })
   })
 })
