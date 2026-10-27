@@ -78,7 +78,7 @@ describe('ShapefileDropzoneContainer component', () => {
         headers: { 'Cache-Control': undefined },
         parallelUploads: 1,
         paramName: 'upload',
-        params: { targetSrs: 'crs:84' },
+        params: expect.any(Function),
         previewTemplate: '<div>',
         transformFile: expect.any(Function),
         uploadMultiple: false,
