@@ -71,6 +71,7 @@ import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeome
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
+import { disposeGpuGranuleOutlines } from '../../util/map/gpuGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
@@ -517,6 +518,17 @@ const Map: React.FC<MapProps> = ({
     })
     mapRef.current = map
 
+    // One outline callback per map, rather than another callback on every React render.
+    const outlineKey = granuleOutlinesLayer.on(
+      RenderEventType.POSTRENDER as LayerRenderEventTypes,
+      (event) => drawGranuleOutlines({
+        coordinateToPixelTransform: event.frameState?.coordinateToPixelTransform,
+        ctx: event.context as CanvasRenderingContext2D,
+        granuleBackgroundsSource,
+        map
+      })
+    )
+
     // Only accumulate frame deltas while an interaction (pan or zoom) is in
     // progress, so idle frames don't dilute the stats. On moveend we roll the
     // collected frame times up into a single summary and hand it off to the
@@ -789,6 +801,14 @@ const Map: React.FC<MapProps> = ({
     layersAdded = false
 
     return () => {
+      // Unregister this map's layer postrender callback before releasing its GPU
+      // renderer. Otherwise reused layers could accumulate callbacks across map
+      // recreation and recreate GPU resources for a map that was already torn down.
+      unByKey(outlineKey)
+      // Listener removal does not release the sibling canvas, context listeners,
+      // buffers or program. Dispose them before detaching the map target. This
+      // effect cleans up on unmount/projection changes; ordinary rerenders reuse it.
+      disposeGpuGranuleOutlines(map)
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
@@ -1236,17 +1256,6 @@ const Map: React.FC<MapProps> = ({
     spatialSearch,
     projectionCode
   ])
-
-  // Draw the granule outlines
-  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-    const ctx = event.context as CanvasRenderingContext2D
-
-    drawGranuleOutlines({
-      ctx,
-      granuleBackgroundsSource,
-      map: mapRef.current as OlMap
-    })
-  })
 
   return (
     <div ref={mapElRef} id="map" className="map" />
