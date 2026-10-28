@@ -38,7 +38,8 @@ export default defineConfig({
         '**/playwright-coverage/**',
         '**/playwright-report/**',
         '**/tests/**',
-        '**/test-results/**'
+        '**/test-results/**',
+        '**/serverless/**'
       ]
     }
   },
@@ -104,8 +105,11 @@ export default defineConfig({
         // These libraries are some of the largest in the app and are rarely updated
         // so the browser can cache them to further improve loading times for returning users
         manualChunks: {
+          ai: ['ai', '@ai-sdk/react'],
+          apollo: ['@apollo/client', 'graphql'],
           edscUtils: ['@edsc/timeline', '@edsc/geo-utils'],
           lodash: ['lodash-es'],
+          mapUtils: ['ol', 'proj4', '@turf/turf'],
           moment: ['moment'],
           react: ['react', 'react-dom']
         }
