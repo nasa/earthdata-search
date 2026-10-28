@@ -64,8 +64,8 @@ const createScene = ({
 
   return {
     ctx: { canvas } as unknown as CanvasRenderingContext2D,
-    map,
     granuleBackgroundsSource: source,
+    map,
     matrix: [1, 0, 0, -1, 50, 50]
   }
 }
@@ -76,6 +76,8 @@ const setup = (options = {}) => drawGpuGranuleOutlines(createScene(options))
 // Canvas visibility through the public renderer API.
 const mockWebGl = () => {
   const gl = {
+    COLOR_BUFFER_BIT: 0x4000,
+    STENCIL_BUFFER_BIT: 0x0400,
     MAX_RENDERBUFFER_SIZE: 0x84E8,
     RENDERER: 0x1F01,
     ARRAY_BUFFER: 0x8892,
@@ -145,14 +147,22 @@ describe('gpuGranuleOutlines', () => {
       const geometry = new MultiPolygon([[exterior]])
       const before = geometryMesh(geometry)
 
+      // Four segment rectangles and four miter joins, each with two triangles:
+      // (4 * 2 + 4 * 2) * 3 = 48 stroke vertices. A square fills with two triangles.
+      expect(before.strokeCount).toBe(48)
+      expect(before.fillCount).toBe(6)
       expect(geometryMesh(geometry)).toBe(before)
+      expect(triangleArea(fillTriangles(geometry))).toBeCloseTo(100, 10)
 
       geometry.setCoordinates([[exterior, hole]])
       const after = geometryMesh(geometry)
 
       expect(after).not.toBe(before)
-      expect(after.strokeCount).toBeGreaterThan(before.strokeCount)
-      expect(after.fillCount).toBeGreaterThan(before.fillCount)
+      // The hole adds another four-sided stroke ring. The interior has eight
+      // boundary vertices and one hole, giving 8 + 2 * 1 - 2 = 8 fill triangles.
+      expect(after.strokeCount).toBe(96)
+      expect(after.fillCount).toBe(24)
+      expect(geometryMesh(geometry)).toBe(after)
       expect(triangleArea(fillTriangles(geometry))).toBeCloseTo(64, 10)
     })
   })
@@ -261,6 +271,8 @@ describe('gpuGranuleOutlines', () => {
       expect(gpuCanvas.style.visibility).toBe('visible')
       expect(gpuCanvas.parentElement).toBe(canvas.parentElement)
       expect(gl.drawArrays).toHaveBeenCalledTimes(24)
+      // Both the old visible image and cumulative interior mask start empty.
+      expect(gl.clear).toHaveBeenCalledExactlyOnceWith(0x4400)
 
       hideGpuGranuleOutlines(scene.map)
       expect(canvas.style.visibility).toBe('inherit')
@@ -272,6 +284,14 @@ describe('gpuGranuleOutlines', () => {
       expect(gpuCanvas.isConnected).toBe(false)
       expect(gl.deleteBuffer).toHaveBeenCalledTimes(1)
       expect(gl.deleteProgram).toHaveBeenCalledTimes(1)
+
+      // Disposal also unregisters recovery listeners: this detached surface
+      // must never initialize a fresh program or opt into context recovery.
+      const contextLost = new Event('webglcontextlost', { cancelable: true })
+      gpuCanvas.dispatchEvent(contextLost)
+      gpuCanvas.dispatchEvent(new Event('webglcontextrestored'))
+      expect(contextLost.defaultPrevented).toBe(false)
+      expect(gl.createProgram).toHaveBeenCalledTimes(1)
     })
 
     test('reuses uploaded geometry during camera movement and rebuilds it after a shape change', () => {
@@ -308,7 +328,9 @@ describe('gpuGranuleOutlines', () => {
       const gpuCanvas = getContext.mock.contexts[0] as HTMLCanvasElement
 
       gl.isContextLost.mockReturnValue(true)
-      gpuCanvas.dispatchEvent(new Event('webglcontextlost', { cancelable: true }))
+      const contextLost = new Event('webglcontextlost', { cancelable: true })
+      gpuCanvas.dispatchEvent(contextLost)
+      expect(contextLost.defaultPrevented).toBe(true)
       expect(scene.ctx.canvas.style.visibility).toBe('')
       expect(drawGpuGranuleOutlines(scene)).toBe(false)
 

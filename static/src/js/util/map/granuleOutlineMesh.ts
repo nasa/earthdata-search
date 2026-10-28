@@ -1,39 +1,51 @@
 import { MultiPolygon } from 'ol/geom'
 import { multiPolygon, tesselate } from '@turf/turf'
 
+// Each non-indexed vertex is [highX, highY, lowX, lowY, offsetX, offsetY].
+// Keep the CPU packer, byte stride, attribute offsets and vertex shader in sync.
+// Attribute offsets count floats; vertexAttribPointer needs those offsets in bytes.
 export const VERTEX_FLOATS = 6
 export const VERTEX_STRIDE = VERTEX_FLOATS * Float32Array.BYTES_PER_ELEMENT
 export const VERTEX_ATTRIBUTES = [
   {
-    name: 'positionHigh',
     componentCount: 2,
-    floatOffset: 0
+    floatOffset: 0,
+    name: 'positionHigh'
   },
   {
-    name: 'positionLow',
     componentCount: 2,
-    floatOffset: 2
+    floatOffset: 2,
+    name: 'positionLow'
   },
   {
-    name: 'strokeOffset',
     componentCount: 2,
-    floatOffset: 4
+    floatOffset: 4,
+    name: 'strokeOffset'
   }
 ] as const
 
 const CANVAS_MITER_LIMIT = 10
 const COLLINEAR_TOLERANCE = 1e-12
+// Build offsets once at unit width; the shader applies the current pixel width.
 const UNIT_STROKE_WIDTH = 1
 
+/** XY pair in map coordinates; stroke construction uses the same plane for offsets. */
 type Point = [number, number]
+/** Emit an expanded vertex with its unexpanded ring anchor, separating position from stroke offset. */
 type EmitVertex = (point: Point, anchor: Point) => void
+/** Emit one stroke triangle with an unexpanded ring anchor corresponding to each vertex. */
 type EmitTriangle = (a: Point, b: Point, c: Point, anchors: [Point, Point, Point]) => void
 
+/** CPU mesh cached by geometry identity/revision; contains no camera or GPU-owned state. */
 interface GeometryMesh {
-  revision: number
-  vertices: Float32Array
-  strokeCount: number
+  /** Interior triangle vertex count (not floats); holes contain no triangles. */
   fillCount: number
+  /** OpenLayers geometry revision used to reject stale coordinates after mutation. */
+  revision: number
+  /** Stroke triangle vertex count; the interior range starts immediately after it. */
+  strokeCount: number
+  /** Interleaved six-float vertices: all stroke triangles, followed by interior triangles. */
+  vertices: Float32Array
 }
 
 const samePoint = (a: Point, b: Point) => a[0] === b[0] && a[1] === b[1]
@@ -123,7 +135,9 @@ const emitCornerJoin = (
   emitTriangle(corner, miter, nextEdge, anchors)
 }
 
-// Holes stay empty so they do not hide the outlines of later granules.
+// Triangulate each polygon part, respecting its exterior and hole rings. These
+// are coverage triangles, not a visible fill. Holes and gaps between disjoint
+// parts stay empty so they do not hide the outlines of later granules.
 export const fillTriangles = (geometry: MultiPolygon): number[] => (
   tesselate(multiPolygon(geometry.getCoordinates())).features
     .flatMap((feature) => feature.geometry.coordinates[0].slice(0, 3).flat())
@@ -149,6 +163,9 @@ export const strokeTriangles = (
     }
   }
 
+  // WebGL line widths vary by driver, so represent strokes as rectangles
+  // (two triangles per segment) plus explicit corner joins. Include hole rings:
+  // they have visible outlines even though their interiors remain unmasked.
   const segmentNormals = points.map((start, index) => (
     getLeftNormal(start, points[(index + 1) % points.length])
   ))
@@ -167,6 +184,8 @@ export const strokeTriangles = (
   return triangles
 }
 
+// Weak keys let removed OpenLayers geometries and their CPU meshes be collected.
+// Pan/zoom does not change geometry revisions, so it never retriangulates shapes.
 const meshesByGeometry = new WeakMap<MultiPolygon, GeometryMesh>()
 
 export const geometryMesh = (geometry: MultiPolygon): GeometryMesh => {
@@ -205,10 +224,10 @@ export const geometryMesh = (geometry: MultiPolygon): GeometryMesh => {
   }
 
   const mesh = {
+    fillCount: interiorVertices.length / 2,
     revision,
-    vertices: new Float32Array(packedVertices),
     strokeCount,
-    fillCount: interiorVertices.length / 2
+    vertices: new Float32Array(packedVertices)
   }
   meshesByGeometry.set(geometry, mesh)
 

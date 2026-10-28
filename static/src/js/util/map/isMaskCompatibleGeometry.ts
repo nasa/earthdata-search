@@ -11,8 +11,17 @@ import {
 const MAX_RING_VERTICES = 512
 const MAX_GEOMETRY_VERTICES = 1024
 
-const compatibleGeometries = new WeakMap<Geometry, { revision: number, compatible: boolean }>()
+/** Cached validation result; validity ends when OpenLayers reports a geometry change. */
+interface GeometryCompatibility {
+  /** Whether normalized rings can reproduce Canvas's inverse nonzero clip with a stencil union. */
+  compatible: boolean
+  /** Geometry revision examined; camera/style changes do not invalidate this check. */
+  revision: number
+}
 
+const compatibleGeometries = new WeakMap<Geometry, GeometryCompatibility>()
+
+/** Explicitly closed XY ring in map coordinates, including its repeated final point. */
 type Ring = number[][]
 
 const isValidRing = (ring: Ring) => {
@@ -51,6 +60,9 @@ const isNormalizedPolygon = (rings: Ring[]) => {
 // The Canvas painter clips each granule out with an inverse nonzero path. That
 // equals a simple coverage mask only for normalized, non-overlapping polygons,
 // so only those use the GPU painter. Cached by geometry revision.
+// "Non-overlapping" applies to parts within ONE granule: separate granules may
+// overlap and are handled by painter order. Reject unusual winding, touching or
+// intersecting parts/holes rather than silently changing Canvas's clip semantics.
 const isMaskCompatibleGeometry = (geometry: Geometry): geometry is MultiPolygon => {
   if (geometry.getType() !== 'MultiPolygon') return false
 
@@ -76,8 +88,8 @@ const isMaskCompatibleGeometry = (geometry: Geometry): geometry is MultiPolygon 
   }
 
   compatibleGeometries.set(geometry, {
-    revision,
-    compatible
+    compatible,
+    revision
   })
 
   return compatible

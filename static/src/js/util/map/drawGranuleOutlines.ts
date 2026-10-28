@@ -6,19 +6,19 @@ import drawOutline from './drawOutline'
 import drawGpuGranuleOutlines, { hideGpuGranuleOutlines } from './gpuGranuleOutlines'
 
 const drawGranuleOutlines = ({
+  coordinateToPixelTransform,
   ctx,
   granuleBackgroundsSource,
-  map,
-  coordinateToPixelTransform
+  map
 }: {
+  /** OpenLayers map-to-CSS-pixel affine transform; absent frames use Canvas. */
+  coordinateToPixelTransform?: number[]
   /** The canvas context to draw on */
   ctx: CanvasRenderingContext2D
   /** The granule backgrounds source */
   granuleBackgroundsSource: VectorSource
   /** The map to draw on */
   map: Map
-  /** The frame's coordinate-to-pixel transform, enables the GPU painter while the map moves */
-  coordinateToPixelTransform?: number[]
 }) => {
   if (!map) {
     ctx.reset()
@@ -29,18 +29,22 @@ const drawGranuleOutlines = ({
   const view = map.getView()
   const isMoving = view.getAnimating() || view.getInteracting()
 
-  // Accelerate interaction frames. Settled frames use Canvas for the exact final image.
+  // Repeated Canvas path construction and cumulative clipping are expensive
+  // while panning/zooming. GPU meshes avoid that work, but their antialiased edge
+  // pixels can differ. Canvas remains authoritative for the exact settled image.
   if (isMoving && coordinateToPixelTransform) {
     const renderedWithGpu = drawGpuGranuleOutlines({
       ctx,
-      map,
       granuleBackgroundsSource,
+      map,
       matrix: coordinateToPixelTransform
     })
 
     if (renderedWithGpu) return
   }
 
+  // Every rejected GPU frame returns here. Restore the borrowed Canvas surface
+  // and clear both its old drawing and cumulative clip before repainting.
   hideGpuGranuleOutlines(map)
   ctx.reset()
 

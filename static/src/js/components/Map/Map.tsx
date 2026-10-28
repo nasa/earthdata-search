@@ -522,8 +522,8 @@ const Map: React.FC<MapProps> = ({
     const outlineKey = granuleOutlinesLayer.on(
       RenderEventType.POSTRENDER as LayerRenderEventTypes,
       (event) => drawGranuleOutlines({
-        ctx: event.context as CanvasRenderingContext2D,
         coordinateToPixelTransform: event.frameState?.coordinateToPixelTransform,
+        ctx: event.context as CanvasRenderingContext2D,
         granuleBackgroundsSource,
         map
       })
@@ -801,7 +801,13 @@ const Map: React.FC<MapProps> = ({
     layersAdded = false
 
     return () => {
+      // Unregister this map's layer postrender callback before releasing its GPU
+      // renderer. Otherwise reused layers could accumulate callbacks across map
+      // recreation and recreate GPU resources for a map that was already torn down.
       unByKey(outlineKey)
+      // Listener removal does not release the sibling canvas, context listeners,
+      // buffers or program. Dispose them before detaching the map target. This
+      // effect cleans up on unmount/projection changes; ordinary rerenders reuse it.
       disposeGpuGranuleOutlines(map)
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)

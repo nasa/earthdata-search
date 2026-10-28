@@ -10,13 +10,16 @@ vi.mock('../gpuGranuleOutlines', () => ({
 }))
 
 const setup = ({
-  moving,
   accelerated,
-  hasTransform = true
+  hasTransform = true,
+  moving
 }: {
-  moving: boolean
+  /** Whether the GPU boundary reports that it drew this frame. */
   accelerated: boolean
+  /** Whether OpenLayers supplies the map-to-CSS-pixel transform. */
   hasTransform?: boolean
+  /** Whether the view is animating during this draw. */
+  moving: boolean
 }) => {
   const ctx = { reset: vi.fn() } as unknown as CanvasRenderingContext2D
   const map = {
@@ -31,10 +34,10 @@ const setup = ({
   vi.mocked(drawGpuGranuleOutlines).mockReturnValue(accelerated)
 
   drawGranuleOutlines({
+    coordinateToPixelTransform: hasTransform ? [1, 0, 0, -1, 0, 0] : undefined,
     ctx,
-    map,
     granuleBackgroundsSource: new VectorSource(),
-    coordinateToPixelTransform: hasTransform ? [1, 0, 0, -1, 0, 0] : undefined
+    map
   })
 
   return {
@@ -44,15 +47,11 @@ const setup = ({
 }
 
 describe('drawGranuleOutlines', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   describe('when the map is settled', () => {
     test('uses the Canvas painter', () => {
       const { ctx, map } = setup({
-        moving: false,
-        accelerated: true
+        accelerated: true,
+        moving: false
       })
 
       expect(drawGpuGranuleOutlines).toHaveBeenCalledTimes(0)
@@ -65,8 +64,8 @@ describe('drawGranuleOutlines', () => {
   describe('when the map is moving', () => {
     test('keeps the GPU surface without clearing the Canvas', () => {
       const { ctx } = setup({
-        moving: true,
-        accelerated: true
+        accelerated: true,
+        moving: true
       })
 
       expect(drawGpuGranuleOutlines).toHaveBeenCalledTimes(1)
@@ -76,8 +75,8 @@ describe('drawGranuleOutlines', () => {
 
     test('falls back to the Canvas painter when acceleration is unavailable', () => {
       const { ctx, map } = setup({
-        moving: true,
-        accelerated: false
+        accelerated: false,
+        moving: true
       })
 
       expect(hideGpuGranuleOutlines).toHaveBeenCalledTimes(1)
@@ -87,9 +86,9 @@ describe('drawGranuleOutlines', () => {
 
     test('uses the Canvas painter without a frame transform', () => {
       const { ctx } = setup({
-        moving: true,
         accelerated: true,
-        hasTransform: false
+        hasTransform: false,
+        moving: true
       })
 
       expect(drawGpuGranuleOutlines).toHaveBeenCalledTimes(0)
