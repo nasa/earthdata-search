@@ -55,7 +55,9 @@ export default defineConfig({
       version
     }),
     react(),
-    nodePolyfills({
+    // Node polyfills are only needed in the browser. Under Vitest they replace Node's native
+    // `Buffer` with a browser shim, which breaks Node libraries like nock that use `Buffer.isBuffer`
+    !process.env.VITEST && nodePolyfills({
       include: [
         'buffer',
         'stream',
@@ -80,7 +82,6 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        api: 'modern',
         silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import']
       }
     }

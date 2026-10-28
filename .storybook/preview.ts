@@ -1,6 +1,6 @@
 import '../static/src/css/main.scss'
 
-/** @type { import('@storybook/react').Preview } */
+/** @type { import('@storybook/react-vite').Preview } */
 const preview = {
   parameters: {
     controls: {
@@ -10,13 +10,19 @@ const preview = {
       },
     },
     backgrounds: {
-      default: "light", // Choose a default background
-      values: [
-        { name: "light", value: "#ffffff" }
-      ],
+      options: {
+        light: { name: "light", value: "#ffffff" }
+      }
     },
   },
-  tags: ['autodocs']
+
+  tags: ['autodocs'],
+
+  initialGlobals: {
+    backgrounds: {
+      value: "light"
+    }
+  }
 };
 
 export default preview;
