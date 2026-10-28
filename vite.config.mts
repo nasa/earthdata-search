@@ -111,7 +111,7 @@ export default defineConfig({
           lodash: ['lodash-es'],
           mapUtils: ['ol', 'proj4', '@turf/turf'],
           moment: ['moment'],
-          react: ['react', 'react-dom']
+          react: ['react', 'react-dom', 'react-router']
         }
       }
     }
