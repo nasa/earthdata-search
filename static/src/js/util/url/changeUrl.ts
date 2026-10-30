@@ -79,12 +79,12 @@ export const changeUrl = async (options: string | Record<string, unknown>) => {
         newPathname
       })
     }
-  } catch (error: any) {
+  } catch (error) {
     const { errors } = useEdscStore.getState()
     const { handleError } = errors
 
     handleError({
-      error,
+      error: error as Error,
       action: 'changeUrl'
     })
   }

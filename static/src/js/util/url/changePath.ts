@@ -127,12 +127,12 @@ export const changePath = async (path = '') => {
 
     const { getTimeline } = timeline
     getTimeline()
-  } catch (error: any) {
+  } catch (error) {
     const { errors } = zustandState
     const { handleError } = errors
 
     handleError({
-      error,
+      error: error as Error,
       action: 'changePath'
     })
   }
