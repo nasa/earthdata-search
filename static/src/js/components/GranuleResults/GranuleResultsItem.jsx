@@ -226,6 +226,7 @@ const GranuleResultsItem = forwardRef(({
             }
           >
             <MoreActionsDropdownItem
+              as="span"
               title="View details"
               icon={AlertInformation}
             />

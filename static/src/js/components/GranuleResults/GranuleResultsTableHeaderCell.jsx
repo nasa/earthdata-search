@@ -169,6 +169,7 @@ const GranuleResultsTableHeaderCell = (props) => {
             }
           >
             <MoreActionsDropdownItem
+              as="span"
               title="View details"
               icon={AlertInformation}
             />

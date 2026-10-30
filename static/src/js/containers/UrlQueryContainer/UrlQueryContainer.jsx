@@ -176,9 +176,8 @@ const UrlQueryContainer = ({
           }
         })
       } else {
-        // Else call changeUrl to update the URL values
-
-        // The path has already been updated here, so we only need to update the query parameters
+        // Else call changeUrl to update the URL values. The path has already been
+        // updated here, so we only need to update the query parameters
         const [, params] = encodedUrl.split('?')
         changeUrl(`${window.location.pathname}?${params || ''}`)
       }

@@ -788,7 +788,7 @@ describe('GranuleResultsItem component', () => {
       const moreActions = screen.getByRole('button', { name: 'More actions' })
       await user.click(moreActions)
 
-      await user.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
+      await user.click(screen.getByRole('link', { name: 'View details' }), { pointerEventsCheck: 0 })
 
       expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
       expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('granuleId')

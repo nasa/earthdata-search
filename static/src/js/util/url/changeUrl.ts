@@ -6,6 +6,7 @@ import {
 } from './url'
 
 import routerHelper, { type Router } from '../../router/router'
+import useEdscStore from '../../zustand/useEdscStore'
 
 type UpdateUrlParams = {
   /** Parameters for updating the URL */
@@ -45,36 +46,46 @@ export const changeUrl = async (options: string | Record<string, unknown>) => {
 
   let newPathname: string
 
-  if (typeof options === 'string') {
-    [newPathname] = options.split('?')
-    const newSearch = options.split('?')[1] || ''
+  try {
+    if (typeof options === 'string') {
+      [newPathname] = options.split('?')
+      const newSearch = options.split('?')[1] || ''
 
-    // Prevent loading from the urls that don't use URL params.
-    const stripParameters = (
-      isPath(newPathname, urlPathsWithoutUrlParams)
-      || isSavedProjectsPage({
-        pathname: newPathname,
-        search: newSearch
+      // Prevent loading from the urls that don't use URL params.
+      const stripParameters = (
+        isPath(newPathname, urlPathsWithoutUrlParams)
+        || isSavedProjectsPage({
+          pathname: newPathname,
+          search: newSearch
+        })
+      )
+
+      let newOptions = options
+      if (stripParameters) {
+        newOptions = newPathname
+      }
+
+      await updateUrl({
+        options: newOptions,
+        oldPathname,
+        newPathname
       })
-    )
+    } else {
+      ({ pathname: newPathname } = options as { pathname: string })
 
-    let newOptions = options
-    if (stripParameters) {
-      newOptions = newPathname
+      await updateUrl({
+        options,
+        oldPathname,
+        newPathname
+      })
     }
+  } catch (error: any) {
+    const { errors } = useEdscStore.getState()
+    const { handleError } = errors
 
-    await updateUrl({
-      options: newOptions,
-      oldPathname,
-      newPathname
-    })
-  } else {
-    ({ pathname: newPathname } = options as { pathname: string })
-
-    await updateUrl({
-      options,
-      oldPathname,
-      newPathname
+    handleError({
+      error,
+      action: 'changeUrl'
     })
   }
 

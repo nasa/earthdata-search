@@ -436,4 +436,33 @@ describe('changePath', () => {
       })
     })
   })
+
+  describe('when an error occurs', () => {
+    test('calls handleError with the error and action', async () => {
+      const newPath = '/portal/fakeportal/search/granules'
+
+      const mockError = new Error('Test error')
+
+      useEdscStore.setState((state) => {
+        /* eslint-disable no-param-reassign */
+        state.collection.getCollectionMetadata = vi.fn(() => {
+          throw mockError
+        })
+
+        state.collections.getCollections = vi.fn()
+        state.granule.getGranuleMetadata = vi.fn()
+        state.errors.handleError = vi.fn()
+        /* eslint-enable no-param-reassign */
+      })
+
+      await changePath(newPath)
+
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith({
+        error: mockError,
+        action: 'changePath'
+      })
+    })
+  })
 })

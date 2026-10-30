@@ -1,4 +1,5 @@
 import routerHelper from '../../../router/router'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 import { changeUrl } from '../changeUrl'
 
@@ -69,6 +70,33 @@ describe('changeUrl', () => {
 
       expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
       expect(routerHelper.router?.navigate).toHaveBeenCalledWith(newPath, { replace: false })
+    })
+  })
+
+  describe('when an error occurs', () => {
+    test('calls handleError with the error and action', async () => {
+      const newPath = '/search'
+
+      const mockError = new Error('Test error')
+
+      routerHelper.router!.navigate = vi.fn(() => {
+        throw mockError
+      })
+
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.errors.handleError = vi.fn()
+      })
+
+      await changeUrl(newPath)
+
+      // Assuming you have a way to access the error handler, for example:
+      const { errors } = useEdscStore.getState()
+      expect(errors.handleError).toHaveBeenCalledTimes(1)
+      expect(errors.handleError).toHaveBeenCalledWith({
+        error: mockError,
+        action: 'changeUrl'
+      })
     })
   })
 })
