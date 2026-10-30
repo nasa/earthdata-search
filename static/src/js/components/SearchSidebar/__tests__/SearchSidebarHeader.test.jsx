@@ -4,7 +4,7 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -33,8 +33,8 @@ vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   ))
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',

@@ -113,7 +113,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
           const { location } = routerHelper.router?.state || {} as Router['state']
           const { search } = location
 
-          changeUrl({
+          await changeUrl({
             pathname: '/search',
             search
           })

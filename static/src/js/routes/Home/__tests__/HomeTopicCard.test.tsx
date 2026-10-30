@@ -1,6 +1,6 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 import HomeTopicCard from '../HomeTopicCard'
 import useEdscStore from '../../../zustand/useEdscStore'

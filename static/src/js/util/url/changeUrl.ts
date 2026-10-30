@@ -6,6 +6,7 @@ import {
 } from './url'
 
 import routerHelper, { type Router } from '../../router/router'
+import useEdscStore from '../../zustand/useEdscStore'
 
 type UpdateUrlParams = {
   /** Parameters for updating the URL */
@@ -16,14 +17,14 @@ type UpdateUrlParams = {
   newPathname: string
 }
 
-const updateUrl = ({
+const updateUrl = async ({
   options,
   oldPathname,
   newPathname
 }: UpdateUrlParams) => {
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different
-  routerHelper.router?.navigate(options, { replace: oldPathname === newPathname })
+  await routerHelper.router?.navigate(options, { replace: oldPathname === newPathname })
 }
 
 /**
@@ -39,42 +40,52 @@ const updateUrl = ({
  * // Given the original url '/a-old-url/?some-param=false', changes url to '/a-new-url/?some-param=false'
  * changeUrl({ pathname: '/a-new-url' })
  */
-export const changeUrl = (options: string | Record<string, unknown>) => {
+export const changeUrl = async (options: string | Record<string, unknown>) => {
   const { location } = routerHelper.router?.state || {} as Router['state']
   const { pathname: oldPathname } = location
 
   let newPathname: string
 
-  if (typeof options === 'string') {
-    [newPathname] = options.split('?')
-    const newSearch = options.split('?')[1] || ''
+  try {
+    if (typeof options === 'string') {
+      [newPathname] = options.split('?')
+      const newSearch = options.split('?')[1] || ''
 
-    // Prevent loading from the urls that don't use URL params.
-    const stripParameters = (
-      isPath(newPathname, urlPathsWithoutUrlParams)
-      || isSavedProjectsPage({
-        pathname: newPathname,
-        search: newSearch
+      // Prevent loading from the urls that don't use URL params.
+      const stripParameters = (
+        isPath(newPathname, urlPathsWithoutUrlParams)
+        || isSavedProjectsPage({
+          pathname: newPathname,
+          search: newSearch
+        })
+      )
+
+      let newOptions = options
+      if (stripParameters) {
+        newOptions = newPathname
+      }
+
+      await updateUrl({
+        options: newOptions,
+        oldPathname,
+        newPathname
       })
-    )
+    } else {
+      ({ pathname: newPathname } = options as { pathname: string })
 
-    let newOptions = options
-    if (stripParameters) {
-      newOptions = newPathname
+      await updateUrl({
+        options,
+        oldPathname,
+        newPathname
+      })
     }
+  } catch (error) {
+    const { errors } = useEdscStore.getState()
+    const { handleError } = errors
 
-    updateUrl({
-      options: newOptions,
-      oldPathname,
-      newPathname
-    })
-  } else {
-    ({ pathname: newPathname } = options as { pathname: string })
-
-    updateUrl({
-      options,
-      oldPathname,
-      newPathname
+    handleError({
+      error: error as Error,
+      action: 'changeUrl'
     })
   }
 

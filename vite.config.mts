@@ -38,7 +38,8 @@ export default defineConfig({
         '**/playwright-coverage/**',
         '**/playwright-report/**',
         '**/tests/**',
-        '**/test-results/**'
+        '**/test-results/**',
+        '**/serverless/**'
       ]
     }
   },
@@ -55,7 +56,9 @@ export default defineConfig({
       version
     }),
     react(),
-    nodePolyfills({
+    // Node polyfills are only needed in the browser. Under Vitest they replace Node's native
+    // `Buffer` with a browser shim, which breaks Node libraries like nock that use `Buffer.isBuffer`
+    !process.env.VITEST && nodePolyfills({
       include: [
         'buffer',
         'stream',
@@ -80,7 +83,6 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        api: 'modern',
         silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import']
       }
     }
@@ -103,10 +105,13 @@ export default defineConfig({
         // These libraries are some of the largest in the app and are rarely updated
         // so the browser can cache them to further improve loading times for returning users
         manualChunks: {
+          ai: ['ai', '@ai-sdk/react'],
+          apollo: ['@apollo/client', 'graphql'],
           edscUtils: ['@edsc/timeline', '@edsc/geo-utils'],
           lodash: ['lodash-es'],
+          mapUtils: ['ol', 'proj4', '@turf/turf'],
           moment: ['moment'],
-          react: ['react', 'react-dom', 'react-router-dom']
+          react: ['react', 'react-dom', 'react-router']
         }
       }
     }

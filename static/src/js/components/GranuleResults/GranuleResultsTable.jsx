@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import Cell from '../EDSCTable/EDSCTableCell'
 import GranuleResultsTableHeaderCell from './GranuleResultsTableHeaderCell'

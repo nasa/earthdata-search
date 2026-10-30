@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 import { ArrowCircleRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 

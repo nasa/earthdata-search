@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router'
 import { useMutation } from '@apollo/client'
 
 import { changePath } from '../../util/url/changePath'
@@ -176,8 +176,10 @@ const UrlQueryContainer = ({
           }
         })
       } else {
-        // Else call changeUrl to update the URL values
-        changeUrl(encodedUrl)
+        // Else call changeUrl to update the URL values. The path has already been
+        // updated here, so we only need to update the query parameters
+        const [, params] = encodedUrl.split('?')
+        changeUrl(`${window.location.pathname}?${params || ''}`)
       }
     }
   }, [encodedUrl])

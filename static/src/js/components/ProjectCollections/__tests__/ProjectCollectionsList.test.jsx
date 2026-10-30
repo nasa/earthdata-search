@@ -7,8 +7,8 @@ import ProjectCollectionItem from '../ProjectCollectionItem'
 
 vi.mock('../ProjectCollectionItem', () => ({ default: vi.fn(() => <div />) }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/projects',
     search: '?p=!C1205428742-ASF&pg[1][v]=t&pg[1][m]=download&pg[1][cd]=f&tl=1574502188.065!5!!',

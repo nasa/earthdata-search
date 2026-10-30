@@ -31,7 +31,9 @@ const setupServer = ({
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    // Apollo derives this from NODE_ENV, which some tests delete
+    includeStacktraceInErrorResponses: true
   })
 
   return {

@@ -211,7 +211,10 @@ describe('Region Resolver', () => {
           const { data, errors } = response.body.singleResult
 
           expect(errors).toEqual([{
-            extensions: { code: 'INTERNAL_SERVER_ERROR' },
+            extensions: {
+              code: 'INTERNAL_SERVER_ERROR',
+              stacktrace: expect.arrayContaining(['Error: Error: 404: Results with the query two were not found.'])
+            },
             locations: expect.anything(),
             message: 'Error: 404: Results with the query two were not found.',
             path: ['regions']
@@ -243,7 +246,10 @@ describe('Region Resolver', () => {
           const { data, errors } = response.body.singleResult
 
           expect(errors).toEqual([{
-            extensions: { code: 'INTERNAL_SERVER_ERROR' },
+            extensions: {
+              code: 'INTERNAL_SERVER_ERROR',
+              stacktrace: expect.arrayContaining(['Error: AxiosError: Request failed with status code 500'])
+            },
             locations: expect.anything(),
             message: 'AxiosError: Request failed with status code 500',
             path: ['regions']

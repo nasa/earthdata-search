@@ -59,7 +59,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const username = getUsername(zustandState)
 
       if (!focusedCollectionId) {
-        changeUrl({
+        await changeUrl({
           pathname: routes.SEARCH,
           search
         })
@@ -244,7 +244,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             state.collection.collectionId = null
           })
 
-          changeUrl({
+          await changeUrl({
             pathname: routes.SEARCH,
             search
           })
@@ -282,7 +282,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         zustandState.ui.map.setDisplaySpatialMbrWarning(false)
 
         // If clearing the focused collection, redirect the user back to the search page
-        changeUrl({
+        await changeUrl({
           pathname: routes.SEARCH,
           search
         })
@@ -328,7 +328,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
-      changeUrl({
+      await changeUrl({
         pathname: routes.COLLECTION_DETAILS,
         search
       })
@@ -340,7 +340,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
-      changeUrl({
+      await changeUrl({
         pathname: routes.GRANULES,
         search
       })

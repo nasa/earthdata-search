@@ -1,12 +1,12 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import * as tinyCookie from 'tiny-cookie'
 
 import { AuthCallbackContainer } from '../AuthCallbackContainer'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import useEdscStore from '../../../zustand/useEdscStore'
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',

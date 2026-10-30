@@ -1,6 +1,6 @@
 import React from 'react'
 import { screen, within } from '@testing-library/react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
@@ -32,8 +32,8 @@ vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   }
 })
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',

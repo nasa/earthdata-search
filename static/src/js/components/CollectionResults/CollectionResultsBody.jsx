@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 import { FaDoorOpen } from 'react-icons/fa'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { formatCollectionList } from '../../util/formatCollectionList'
 import { isDefaultPortal } from '../../util/portals'

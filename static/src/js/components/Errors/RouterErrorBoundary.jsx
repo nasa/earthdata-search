@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useRouteError } from 'react-router-dom'
+import { useRouteError } from 'react-router'
 import { v4 as uuidv4 } from 'uuid'
 
 import { eventEmitter } from '../../events/events'

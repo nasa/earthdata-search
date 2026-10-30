@@ -1,8 +1,7 @@
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
-import { useLocation } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
+import { Link, useLocation } from 'react-router'
 
 import Highlighter from 'react-highlight-words'
 
@@ -217,7 +216,7 @@ const GranuleResultsItem = forwardRef(({
         <MoreActionsDropdown
           className="granule-results-item__more-actions-dropdown"
         >
-          <LinkContainer
+          <Link
             onClick={() => handleClickGranuleDetails(id)}
             to={
               {
@@ -227,10 +226,11 @@ const GranuleResultsItem = forwardRef(({
             }
           >
             <MoreActionsDropdownItem
+              as="span"
               title="View details"
               icon={AlertInformation}
             />
-          </LinkContainer>
+          </Link>
           <MoreActionsDropdownItem
             title="Filter granule"
             icon={XCircled}

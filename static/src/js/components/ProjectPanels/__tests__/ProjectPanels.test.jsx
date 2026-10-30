@@ -82,8 +82,8 @@ vi.mock('../VariableTreePanel', async () => {
   }
 })
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/project',
     search: '?p=collectionId!collectionId&pg[1][v]=t',

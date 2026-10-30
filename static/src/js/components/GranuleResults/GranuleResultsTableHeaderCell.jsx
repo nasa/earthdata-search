@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { LinkContainer } from 'react-router-bootstrap'
+import { Link } from 'react-router'
 import {
   Plus,
   Minus,
@@ -155,7 +155,7 @@ const GranuleResultsTableHeaderCell = (props) => {
         <MoreActionsDropdown
           className="granule-results-table__granule-action granule-results-table__more-actions-dropdown"
         >
-          <LinkContainer
+          <Link
             onClick={
               () => {
                 setGranuleId(id)
@@ -169,10 +169,11 @@ const GranuleResultsTableHeaderCell = (props) => {
             }
           >
             <MoreActionsDropdownItem
+              as="span"
               title="View details"
               icon={AlertInformation}
             />
-          </LinkContainer>
+          </Link>
           <MoreActionsDropdownItem
             title="Filter granule"
             icon={XCircled}

@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
-import { useRouteError } from 'react-router-dom'
+import { useRouteError } from 'react-router'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -12,8 +12,8 @@ import RouterErrorBoundary from '../RouterErrorBoundary'
 vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useRouteError: vi.fn()
 }))
 

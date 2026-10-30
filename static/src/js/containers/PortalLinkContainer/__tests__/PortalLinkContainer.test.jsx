@@ -13,8 +13,8 @@ vi.mock('../../../util/url/changePath', () => ({
 
 const mockUseNavigate = vi.fn()
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useNavigate: () => mockUseNavigate
 }))
 

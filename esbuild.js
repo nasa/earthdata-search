@@ -28,6 +28,7 @@ build({
     'oracledb',
     'pg-native',
     'pg-query-stream',
+    'sharp',
     'sqlite3',
     'tedious'
   ]
