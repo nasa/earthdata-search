@@ -46,11 +46,16 @@ export const encodeMap = (map, mapPreferences) => {
   if (overlays?.coastlines) encodedOverlays.push(mapLayers.coastlines)
   if (overlays?.placeLabels) encodedOverlays.push(mapLayers.placeLabels)
 
+  // Use 'none' as a sentinel when no overlays are active so that stringify's
+  // cleanDeep call does not strip the key (it removes empty strings). decodeMap
+  // already turns any unrecognised overlay value — including 'none' — into all-off.
+  const encodedOverlaysStr = encodedOverlays.length > 0 ? encodedOverlays.join(',') : 'none'
+
   const encodedObj = {
     base: encodedBase,
     lat: latitude,
     long: longitude,
-    overlays: encodedOverlays.join(','),
+    overlays: encodedOverlaysStr,
     projection: encodedProjection,
     rotation,
     zoom
@@ -87,7 +92,9 @@ export const encodeMap = (map, mapPreferences) => {
       base: encodedBasePreference,
       lat: latitudePreference,
       long: longitudePreference,
-      overlays: encodedOverlaysPreference.join(','),
+      // Mirror the same sentinel so the filter correctly skips the key when the
+      // preference is also all-off.
+      overlays: encodedOverlaysPreference.length > 0 ? encodedOverlaysPreference.join(',') : 'none',
       projection: encodedProjectionPreference,
       rotation: rotationPreference,
       zoom: zoomPreference
