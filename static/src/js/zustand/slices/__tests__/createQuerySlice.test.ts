@@ -25,6 +25,18 @@ describe('createQuerySlice', () => {
   })
 
   describe('changeQuery', () => {
+    test('clears versions when a second short name is applied directly', async () => {
+      useEdscStore.setState((state) => {
+        state.collections.getCollections = vi.fn()
+        state.query.collection.shortName = ['ATL03']
+        state.query.collection.version = ['004']
+      })
+
+      await useEdscStore.getState().query.changeQuery({ collection: { shortName: ['ATL03', 'ATL06'] } })
+
+      expect(useEdscStore.getState().query.collection.version).toBeUndefined()
+    })
+
     describe('when there is no focused collection', () => {
       test('updates the collection query and calls getCollections', async () => {
         useEdscStore.setState((state) => {

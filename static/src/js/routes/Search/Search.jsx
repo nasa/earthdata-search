@@ -26,7 +26,7 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import Facets from '../../components/Facets/Facets'
-import AdvancedSearchFacets from '../../components/Facets/AdvancedSearchFacets'
+import AdvancedSearchFilters from '../../components/Facets/AdvancedSearchFilters'
 import FacetsModal from '../../components/Facets/FacetsModal'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
@@ -153,7 +153,7 @@ export const Search = () => {
         <SidebarContainer
           secondaryChildren={
             advancedFiltersOpen && pathname === routes.SEARCH
-              ? <AdvancedSearchFacets onClose={closeAdvancedFilters} /> : null
+              ? <AdvancedSearchFilters onClose={closeAdvancedFilters} /> : null
           }
           headerChildren={(
             <SearchSidebarHeader />

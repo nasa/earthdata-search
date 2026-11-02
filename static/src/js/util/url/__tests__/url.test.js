@@ -13,6 +13,11 @@ beforeEach(() => {
 })
 
 describe('url#decodeUrlParams', () => {
+  test('decodes a DOI URL as a selected DOI', () => {
+    expect(decodeUrlParams('doi=10.5067/EXAMPLE').query.collection.doi)
+      .toEqual(['10.5067/EXAMPLE'])
+  })
+
   test('given no string it returns no object', () => {
     const expectedResult = {
       ...emptyDecodedResult
@@ -27,17 +32,17 @@ describe('url#encodeUrlQuery', () => {
       entryId: ['ATL03_004', 'ATL06_006'],
       shortName: ['ATL03', 'ATL06'],
       version: ['004', '005'],
-      doi: '10.5067/EXAMPLE',
-      entryTitle: 'Example Collection',
+      doi: ['10.5067/EXAMPLE', '10.5067/OTHER_DOI'],
+      entryTitle: ['Example Collection', 'Other Collection'],
       consortium: ['CEOS', 'EOSDIS'],
       hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE', 'COMPLETE'],
       downloadable: true,
       browsable: true,
-      variableName: 'temperature',
-      serviceName: 'Harmony',
-      toolName: 'NASA_GISS_Panoply'
+      variableName: ['temperature', 'pressure'],
+      serviceName: ['Harmony', 'OPeNDAP'],
+      toolName: ['NASA_GISS_Panoply', 'Other Tool']
     }
     const url = encodeUrlQuery({
       collectionsQuery: {

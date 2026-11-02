@@ -980,10 +980,10 @@ type CollectionQuery = {
   shortName?: string[]
   /** Optional versions for the selected Short Names, preserving leading zeros (e.g. ['003', '004']) */
   version?: string[]
-  /** The collection DOI value */
-  doi?: string
+  /** The collection DOI values */
+  doi?: string[]
   /** The collection Entry Title */
-  entryTitle?: string
+  entryTitle?: string[]
   /** The consortium names to match */
   consortium?: string[]
   /** The UTC date range for newly added granules, with an optional end bound */
@@ -997,11 +997,11 @@ type CollectionQuery = {
   /** Require a collection with a visualization URL */
   browsable?: boolean
   /** The name of an associated variable */
-  variableName?: string
+  variableName?: string[]
   /** The name of an associated service */
-  serviceName?: string
+  serviceName?: string[]
   /** The name of an associated tool */
-  toolName?: string
+  toolName?: string[]
   /** Collection specific queries by Collection ID */
   byId: CollectionQueryById
   /** Flag to indicate if the collection has granules or CWIC */

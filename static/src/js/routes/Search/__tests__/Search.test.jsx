@@ -132,8 +132,9 @@ describe('Search component', () => {
       await user.click(expand)
 
       expect(expand).toHaveAttribute('aria-expanded', 'true')
-      expect(screen.getByRole('form', { name: 'Advanced Filters' })).toBeVisible()
-      expect(screen.getByRole('textbox', { name: 'DOI Value' })).toBeInTheDocument()
+      const filters = screen.getByRole('form', { name: 'Advanced Filters' })
+      expect(filters).toBeVisible()
+      expect(screen.getByRole('group', { name: 'DOI Value' })).toBeInTheDocument()
       await user.click(screen.getByRole('button', { name: 'Close Advanced Filters' }))
 
       expect(screen.queryByRole('form', { name: 'Advanced Filters' })).not.toBeInTheDocument()
