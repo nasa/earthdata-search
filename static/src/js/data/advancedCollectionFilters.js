@@ -3,13 +3,13 @@ const advancedCollectionFilters = [
     key: 'doi',
     label: 'DOI Value',
     cmrKey: 'doi',
-    type: 'text'
+    type: 'array'
   },
   {
     key: 'entryTitle',
     label: 'Entry Title',
     cmrKey: 'entry_title',
-    type: 'text'
+    type: 'array'
   },
   {
     key: 'consortium',
@@ -57,19 +57,19 @@ const advancedCollectionFilters = [
     key: 'variableName',
     label: 'Variable Name',
     cmrKey: 'variable_name',
-    type: 'text'
+    type: 'array'
   },
   {
     key: 'serviceName',
     label: 'Service Name',
     cmrKey: 'service_name',
-    type: 'text'
+    type: 'array'
   },
   {
     key: 'toolName',
     label: 'Tool Name',
     cmrKey: 'tool_name',
-    type: 'text'
+    type: 'array'
   }
 ]
 

@@ -1,6 +1,6 @@
 @use '../../../css/utils';
 
-.advanced-search-facets {
+.advanced-search-filters {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -68,9 +68,34 @@
     overflow-y: auto;
   }
 
+  &__icon-button {
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+  }
+
   &__identifier-options {
     max-height: 8rem;
     overflow-y: auto;
+  }
+
+  &__selected-values {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+
+  &__selected-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 0.125rem 0.25rem 0.125rem 0;
+    border-bottom: 1px solid utils.$color__carbon--20;
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
   }
 
   &__availability {

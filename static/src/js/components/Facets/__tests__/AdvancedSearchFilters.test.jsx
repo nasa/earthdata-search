@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
-import AdvancedSearchFacets from '../AdvancedSearchFacets'
+import AdvancedSearchFilters from '../AdvancedSearchFilters'
 import useEdscStore from '../../../zustand/useEdscStore'
 
 const changeQuery = vi.fn(({ collection }) => {
@@ -21,7 +21,7 @@ const changeQuery = vi.fn(({ collection }) => {
   }))
 })
 const setup = setupTest({
-  Component: AdvancedSearchFacets,
+  Component: AdvancedSearchFilters,
   defaultZustandState: {
     query: { changeQuery },
     collections: {
@@ -33,14 +33,14 @@ const setup = setupTest({
             versionId: '004'
           },
           {
-            entryId: 'ATL06_006',
-            shortName: 'ATL06',
-            versionId: '006'
-          },
-          {
             entryId: 'ATL03_005',
             shortName: 'ATL03',
             versionId: '005'
+          },
+          {
+            entryId: 'ATL06_006',
+            shortName: 'ATL06',
+            versionId: '006'
           }
         ]
       }
@@ -48,9 +48,88 @@ const setup = setupTest({
   }
 })
 
-describe('AdvancedSearchFacets', () => {
-  test('checks Entry IDs already present in the collection query', () => {
-    setup()
+const setupLoaded = async (options) => {
+  const result = setup(options)
+  await screen.findByRole('checkbox', { name: 'ATL03_004' })
+
+  return result
+}
+
+const addValue = async (user, label, value, key = null) => {
+  const input = screen.getByRole('textbox', { name: `Add ${label}` })
+  await user.type(input, value)
+
+  if (key) {
+    await user.keyboard(key)
+  } else {
+    await user.click(screen.getByRole('button', { name: `Add ${label}` }))
+  }
+}
+
+describe('AdvancedSearchFilters', () => {
+  test('shows applied text values in their selected lists', () => {
+    setup({
+      overrideZustandState: {
+        query: {
+          collection: {
+            doi: ['10.5067/SELECTED'],
+            entryTitle: ['Selected Title']
+          }
+        }
+      }
+    })
+
+    expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
+      .toHaveTextContent('10.5067/SELECTED')
+
+    expect(screen.getByRole('list', { name: 'Selected values for Entry Title' }))
+      .toHaveTextContent('Selected Title')
+
+  })
+
+  test('adds a literal value only when requested and trims whitespace', async () => {
+    const { user } = setup()
+    const input = screen.getByRole('textbox', { name: 'Add DOI Value' })
+    const addButton = screen.getByRole('button', { name: 'Add DOI Value' })
+    expect(addButton).toHaveClass('button--icon-only', 'advanced-search-filters__icon-button')
+    expect(addButton).not.toHaveTextContent('Add')
+
+    await user.type(input, ' 10.5067/EXAMPLE ')
+    expect(changeQuery).not.toHaveBeenCalled()
+    await user.click(addButton)
+
+    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: ['10.5067/EXAMPLE'] } })
+    expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
+      .toHaveTextContent('10.5067/EXAMPLE')
+
+    expect(input).toHaveValue('')
+  })
+
+  test('adds values with Enter, rejects duplicates, and removes selected values', async () => {
+    const { user } = setup({
+      overrideZustandState: {
+        query: { collection: { doi: ['10.5067/EXAMPLE'] } }
+      }
+    })
+
+    const input = screen.getByRole('textbox', { name: 'Add DOI Value' })
+    await user.type(input, '10.5067/EXAMPLE')
+    expect(screen.getByRole('button', { name: 'Add DOI Value' })).toBeDisabled()
+
+    await user.clear(input)
+    await addValue(user, 'DOI Value', '10.5067/OTHER', '{Enter}')
+    expect(changeQuery).toHaveBeenLastCalledWith({
+      collection: { doi: ['10.5067/EXAMPLE', '10.5067/OTHER'] }
+    })
+
+    const removeButton = screen.getByRole('button', { name: 'Remove DOI Value 10.5067/EXAMPLE' })
+    expect(removeButton).toHaveClass('button--icon-only', 'advanced-search-filters__icon-button')
+    await user.click(removeButton)
+    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: ['10.5067/OTHER'] } })
+  })
+
+  test('checks Entry IDs already present in the collection query', async () => {
+    await setupLoaded()
 
     act(() => {
       useEdscStore.setState((state) => ({
@@ -67,8 +146,45 @@ describe('AdvancedSearchFacets', () => {
     expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
   })
 
+  test('populates identifier checkboxes from initial collection results', async () => {
+    const { user } = await setupLoaded()
+
+    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeVisible()
+
+    await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
+    expect(screen.getByRole('checkbox', { name: 'ATL03' })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: 'ATL06' })).toBeVisible()
+
+    await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
+    expect(screen.getByRole('checkbox', { name: '004' })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: '005' })).toBeVisible()
+  })
+
+  test('orders filter groups by search workflow', () => {
+    setup()
+    const filterGroups = screen.getAllByRole('group')
+    const filterLabels = [
+      'New Granules Since (UTC)',
+      'Collection Identifier',
+      'Consortium',
+      'Collection Data Type',
+      'Collection Progress',
+      'DOI Value',
+      'Entry Title',
+      'Variable Name',
+      'Service Name',
+      'Tool Name',
+      'Access Options'
+    ]
+
+    expect(filterGroups).toHaveLength(filterLabels.length)
+    filterLabels.forEach((label, index) => {
+      expect(filterGroups[index]).toHaveAccessibleName(label)
+    })
+  })
+
   test('shows the selected filter count in the heading', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
 
     expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
     expect(screen.queryByText('Selected')).not.toBeInTheDocument()
@@ -80,7 +196,7 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('applies a checkbox filter when its label is clicked', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
 
     await user.click(screen.getByText('CEOS'))
 
@@ -89,19 +205,20 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('applies advanced fields immediately and only clears collection identifiers', async () => {
-    const { user } = setup()
-    await user.type(screen.getByRole('textbox', { name: 'DOI Value' }), '10.5067/EXAMPLE')
-    await user.type(screen.getByRole('textbox', { name: 'Entry Title' }), 'Example Collection')
-    await user.type(screen.getByRole('textbox', { name: 'Variable Name' }), 'temperature')
-    await user.type(screen.getByRole('textbox', { name: 'Service Name' }), 'test_service')
-    await user.type(screen.getByRole('textbox', { name: 'Tool Name' }), 'test_tool')
+    const { user } = await setupLoaded()
+    await addValue(user, 'DOI Value', '10.5067/EXAMPLE')
+    await addValue(user, 'Entry Title', 'Example Collection')
+    await addValue(user, 'Variable Name', 'temperature')
+    await addValue(user, 'Service Name', 'test_service')
+    await addValue(user, 'Tool Name', 'test_tool')
     await user.click(screen.getByRole('checkbox', { name: 'CEOS' }))
     await user.click(screen.getByRole('checkbox', { name: 'SCIENCE QUALITY' }))
     await user.click(screen.getByRole('checkbox', { name: 'ACTIVE' }))
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
     await user.click(screen.getByRole('checkbox', { name: 'Browsable' }))
 
-    fireEvent.change(screen.getByLabelText('New Granules Since (UTC)'), {
+    fireEvent.change(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' }))
+      .getByLabelText('New Granules Since (UTC)'), {
       target: { value: '2026-01-01T12:34:56' }
     })
 
@@ -109,17 +226,17 @@ describe('AdvancedSearchFacets', () => {
     expect(screen.queryByRole('checkbox', { name: 'Online Only' })).not.toBeInTheDocument()
 
     expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
-      doi: '10.5067/EXAMPLE',
-      entryTitle: 'Example Collection',
+      doi: ['10.5067/EXAMPLE'],
+      entryTitle: ['Example Collection'],
       consortium: ['CEOS'],
       hasGranulesCreatedAt: '2026-01-01T12:34:56Z,',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE'],
       downloadable: true,
       browsable: true,
-      variableName: 'temperature',
-      serviceName: 'test_service',
-      toolName: 'test_tool'
+      variableName: ['temperature'],
+      serviceName: ['test_service'],
+      toolName: ['test_tool']
     }))
 
     expect(within(screen.getByRole('group', { name: 'Collection Identifier' }))
@@ -129,7 +246,9 @@ describe('AdvancedSearchFacets', () => {
 
     await user.click(screen.getByRole('button', { name: 'Clear' }))
 
-    expect(screen.getByRole('textbox', { name: 'DOI Value' })).toHaveValue('10.5067/EXAMPLE')
+    expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
+      .toHaveTextContent('10.5067/EXAMPLE')
+
     expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
     expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).not.toBeChecked()
     expect(changeQuery).toHaveBeenLastCalledWith({
@@ -140,29 +259,29 @@ describe('AdvancedSearchFacets', () => {
       }
     })
 
-    expect(useEdscStore.getState().query.collection.doi).toBe('10.5067/EXAMPLE')
+    expect(useEdscStore.getState().query.collection.doi).toEqual(['10.5067/EXAMPLE'])
     expect(useEdscStore.getState().query.collection.consortium).toEqual(['CEOS'])
   })
 
   test('removes advanced filters independently without clearing identifiers', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
     await user.click(screen.getByRole('checkbox', { name: 'CEOS' }))
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
-    await user.type(screen.getByRole('textbox', { name: 'DOI Value' }), '10.5067/EXAMPLE')
+    await addValue(user, 'DOI Value', '10.5067/EXAMPLE')
 
     await user.click(screen.getByRole('checkbox', { name: 'CEOS' }))
     expect(changeQuery).toHaveBeenLastCalledWith({ collection: { consortium: undefined } })
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
     expect(changeQuery).toHaveBeenLastCalledWith({ collection: { downloadable: undefined } })
-    await user.clear(screen.getByRole('textbox', { name: 'DOI Value' }))
+    await user.click(screen.getByRole('button', { name: 'Remove DOI Value 10.5067/EXAMPLE' }))
     expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: undefined } })
     expect(useEdscStore.getState().query.collection.entryId).toEqual(['ATL03_004'])
     expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
   })
 
   test('keeps selected identifiers checked while collection results are loading', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
 
     await act(() => {
@@ -184,7 +303,7 @@ describe('AdvancedSearchFacets', () => {
 
   test('supports closing the column with the close button and Escape', async () => {
     const onClose = vi.fn()
-    const { user } = setup({ overrideProps: { onClose } })
+    const { user } = await setupLoaded({ overrideProps: { onClose } })
 
     expect(screen.getByRole('form', { name: 'Advanced Filters' })).toHaveFocus()
     await user.keyboard('{Escape}')
@@ -194,7 +313,7 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('allows searching by short name without selecting a version', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
 
     await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
@@ -209,7 +328,7 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('only shows inputs for the selected radio option', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
 
     const entryId = screen.getByRole('checkbox', { name: 'ATL03_004' })
 
@@ -250,7 +369,7 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('supports multiple short names or multiple versions for one short name', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
 
     await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
@@ -267,8 +386,9 @@ describe('AdvancedSearchFacets', () => {
 
     await user.click(screen.getByRole('checkbox', { name: 'ATL06' }))
 
-    expect(screen.getByRole('checkbox', { name: '004' })).toBeDisabled()
-    expect(screen.getByRole('checkbox', { name: '005' })).toBeDisabled()
+    expect(screen.queryByRole('group', { name: 'Version' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('checkbox', { name: '004' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('checkbox', { name: '005' })).not.toBeInTheDocument()
     expect(changeQuery).toHaveBeenLastCalledWith({
       collection: {
         entryId: undefined,
@@ -276,10 +396,16 @@ describe('AdvancedSearchFacets', () => {
         version: undefined
       }
     })
+
+    await user.click(screen.getByRole('checkbox', { name: 'ATL06' }))
+
+    expect(screen.getByRole('group', { name: 'Version' })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: '004' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: '005' })).not.toBeChecked()
   })
 
   test('checks short names and versions already present in the collection query', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
 
     act(() => {
@@ -301,7 +427,7 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('applies Entry IDs immediately and clears them with Clear', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
 
     expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
@@ -326,7 +452,7 @@ describe('AdvancedSearchFacets', () => {
   })
 
   test('retains Entry ID choices after filtered responses and allows multiple selections', async () => {
-    const { user } = setup()
+    const { user } = await setupLoaded()
     await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
 
     await act(() => {

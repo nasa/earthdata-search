@@ -139,8 +139,6 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
-        hasGranulesOrCwic: undefined,
-        includeInactiveCollections: false,
         entryId: [],
         shortName: undefined,
         version: undefined,
@@ -162,86 +160,7 @@ describe('NlpSearchStatus component', () => {
     expect(props.onNlpSearchComplete).toHaveBeenCalledWith({ hasSpatial: true })
   })
 
-  test('applies NLP entry IDs as collection query filters', async () => {
-    const { props, zustandState } = setup({
-      overrideProps: {
-        activePrompt: 'ATL03 v004 rainfall',
-        requestId: 1
-      }
-    })
-
-    await act(async () => {
-      capturedUseCompletionOptions.onFinish?.(
-        'ATL03 v004 rainfall',
-        'Final result:\n{"keyword":"rainfall","entryIds":["ATL03_004"],"shortNames":[],"hasGranulesOrCwic":true,"includeInactiveCollections":true,"spatialArea":null,"temporal":null}'
-      )
-    })
-
-    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
-      collection: {
-        hasGranulesOrCwic: true,
-        includeInactiveCollections: true,
-        entryId: ['ATL03_004'],
-        shortName: undefined,
-        version: undefined,
-        keyword: 'rainfall',
-        spatial: {},
-        temporal: {}
-      },
-      selectedRegion: {}
-    })
-    expect(props.onNlpSearchComplete).toHaveBeenCalledWith({ hasSpatial: false })
-  })
-
-  test('applies one NLP short name as a collection query filter', async () => {
-    const { zustandState } = setup({
-      overrideProps: {
-        activePrompt: 'ATL03 rainfall',
-        requestId: 1
-      }
-    })
-
-    await act(async () => {
-      capturedUseCompletionOptions.onFinish?.(
-        'ATL03 rainfall',
-        'Final result:\n{"keyword":"rainfall","entryIds":[],"shortNames":["ATL03"],"spatialArea":null,"temporal":null}'
-      )
-    })
-
-    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
-      collection: expect.objectContaining({
-        entryId: [],
-        shortName: ['ATL03'],
-        keyword: 'rainfall'
-      })
-    }))
-  })
-
-  test('applies multiple unversioned short names as a collection query filter', async () => {
-    const { props, zustandState } = setup({
-      overrideProps: {
-        activePrompt: 'ATL03 and ATL06 rainfall',
-        requestId: 1
-      }
-    })
-
-    await act(async () => {
-      capturedUseCompletionOptions.onFinish?.(
-        'ATL03 and ATL06 rainfall',
-        'Final result:\n{"keyword":"rainfall","entryIds":[],"shortNames":["ATL03","ATL06"],"spatialArea":null,"temporal":null}'
-      )
-    })
-
-    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
-      collection: expect.objectContaining({
-        entryId: [],
-        shortName: ['ATL03', 'ATL06'],
-        keyword: 'rainfall'
-      })
-    }))
-  })
-
-  test('keeps mixed entry ID and short name matches together in the keyword', async () => {
+  test('forwards NLP identifiers into their collection query fields', async () => {
     const { zustandState } = setup({
       overrideProps: {
         activePrompt: 'ATL03_004 and ATL06 rainfall',
@@ -258,9 +177,10 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
       collection: expect.objectContaining({
-        entryId: [],
-        shortName: undefined,
-        keyword: 'ATL03_004 ATL06 rainfall'
+        entryId: ['ATL03_004'],
+        shortName: ['ATL06'],
+        version: undefined,
+        keyword: 'rainfall'
       })
     }))
   })
@@ -367,8 +287,6 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
-        hasGranulesOrCwic: undefined,
-        includeInactiveCollections: false,
         entryId: [],
         shortName: undefined,
         version: undefined,
@@ -445,8 +363,6 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
-        hasGranulesOrCwic: undefined,
-        includeInactiveCollections: false,
         entryId: [],
         shortName: undefined,
         version: undefined,
@@ -487,8 +403,6 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
-        hasGranulesOrCwic: undefined,
-        includeInactiveCollections: false,
         entryId: [],
         shortName: undefined,
         version: undefined,

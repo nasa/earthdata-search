@@ -2,6 +2,8 @@ import useEdscStore from '../../../zustand/useEdscStore'
 import { updateStore, type UpdateStoreParams } from '../updateStore'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import routerHelper from '../../../router/router'
+// @ts-expect-error This JavaScript module does not have a declaration file
+import { decodeUrlParams } from '../url'
 
 vi.mock('../../../../../portals/testPortal/styles.scss', () => ({
   unuse: vi.fn(),
@@ -9,6 +11,35 @@ vi.mock('../../../../../portals/testPortal/styles.scss', () => ({
 }))
 
 describe('updateStore', () => {
+  test('replaces advanced arrays and removes filters omitted from the restored URL', async () => {
+    useEdscStore.setState((state) => ({
+      query: {
+        ...state.query,
+        collection: {
+          ...state.query.collection,
+          shortName: ['ATL03', 'ATL06'],
+          doi: ['10.1/old'],
+          version: ['004']
+        }
+      }
+    }))
+
+    await updateStore(decodeUrlParams('short_name=ATL03'), '/search')
+    expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03'])
+    expect(useEdscStore.getState().query.collection.doi).toBeUndefined()
+    expect(useEdscStore.getState().query.collection.version).toBeUndefined()
+
+    await updateStore(decodeUrlParams(''), '/search')
+    expect(useEdscStore.getState().query.collection.shortName).toBeUndefined()
+  })
+
+  test('clears version constraints for restored multiple short names', async () => {
+    await updateStore(decodeUrlParams('short_name[0]=ATL03&short_name[1]=ATL06&version=004'), '/search')
+
+    expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03', 'ATL06'])
+    expect(useEdscStore.getState().query.collection.version).toBeUndefined()
+  })
+
   test('sets the zustand state', async () => {
     const params = {
       cmrFacets: {},
