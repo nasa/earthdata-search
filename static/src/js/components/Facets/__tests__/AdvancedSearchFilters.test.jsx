@@ -84,7 +84,6 @@ describe('AdvancedSearchFilters', () => {
 
     expect(screen.getByRole('list', { name: 'Selected values for Entry Title' }))
       .toHaveTextContent('Selected Title')
-
   })
 
   test('adds a literal value only when requested and trims whitespace', async () => {
