@@ -3,7 +3,7 @@ import React from 'react'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import ArrowTags from '../ArrowTags/ArrowTags'
 
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'

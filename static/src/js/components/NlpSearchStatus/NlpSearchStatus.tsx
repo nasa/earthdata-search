@@ -227,6 +227,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       }
 
       const {
+        hasGranulesOrCwic,
+        includeInactiveCollections,
         keyword,
         temporal,
         spatialArea
@@ -245,9 +247,11 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
 
       changeQuery({
         collection: {
+          hasGranulesOrCwic,
+          includeInactiveCollections,
           keyword: keyword || prompt,
-          temporal: temporal || {},
-          spatial
+          spatial,
+          temporal: temporal || {}
         },
         selectedRegion: {}
       })

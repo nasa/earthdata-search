@@ -56,6 +56,7 @@ const adminRetrievalMock = {
           updatedAt: '2024-08-25T11:59:14.390Z',
           retrievalOrders: [
             {
+              error: null,
               id: 42,
               state: 'initialized',
               orderInformation: {
@@ -143,6 +144,7 @@ describe('AdminRetrievalDetails component', () => {
       expect(row1Data[3]).toHaveTextContent('Harmony')
       expect(row1Data[4]).toHaveTextContent('initialized')
       expect(row1Data[5]).toHaveTextContent('{"jobId":"12341234-asdfasdf-12341234-asdfasdf"}')
+      expect(row1Data[6]).toHaveTextContent('null')
     })
   })
 

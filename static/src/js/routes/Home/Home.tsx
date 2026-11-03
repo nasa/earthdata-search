@@ -383,9 +383,6 @@ export const Home: React.FC = () => {
               {
                 isNlpEnabled && (
                   <div className="home__search-mode-control position-relative d-flex align-items-center">
-                    <Badge className="home__new-badge">
-                      NEW
-                    </Badge>
                     <div className="position-relative">
                       <fieldset className="home__search-mode-toggle" aria-label="Search mode">
                         <legend className="visually-hidden">Search mode</legend>
@@ -409,7 +406,10 @@ export const Home: React.FC = () => {
                           }
                         >
                           <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-nlp">
-                            AI Enhanced Search
+                            Enhanced
+                            <Badge className="home__beta-badge">
+                              BETA
+                            </Badge>
                           </label>
                         </OverlayTrigger>
                         <input
@@ -432,7 +432,7 @@ export const Home: React.FC = () => {
                           }
                         >
                           <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
-                            Traditional Search
+                            Traditional
                           </label>
                         </OverlayTrigger>
                       </fieldset>
@@ -516,54 +516,65 @@ export const Home: React.FC = () => {
               </div>
             </div>
           </div>
-          <OverlayTrigger
-            trigger="click"
-            placement="top"
-            rootClose
-            overlay={
-              (
-                <Popover
-                  id="hero-image-popover"
-                  className="home__hero-image-popover bg-black text-white"
-                  style={
-                    {
-                      minWidth: '19rem',
-                      maxWidth: '19rem'
-                    }
-                  }
+          <div className="home__hero-footer position-absolute align-items-center gap-3">
+            {
+              isNlpSearchActive && (
+                <p
+                  className="home__nlp-disclaimer text-white text-center mb-0"
                 >
-                  <Popover.Body className="bg-black text-white">
-                    <p>
-                      {/* eslint-disable-next-line max-len */}
-                      Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the
-                      {' '}
-                      <strong>Moderate Resolution Imaging Spectroradiometer (MODIS)</strong>
-                      {' '}
-                      aboard the
-                      {' '}
-                      <strong>Terra</strong>
-                      {' '}
-                      platform on March 12, 2025
-                    </p>
-                    <PortalLinkContainer
-                      className="focus-light"
-                      type="button"
-                      variant="hds-primary"
-                      dark
-                      to={`${routes.GRANULES}?p=C1378579425-LAADS&pg[0][v]=f&q=MOD02QKM&pg[0][gsk]=-start_date&sb[0]=-29.95172%2C11.43036%2C-16.57503%2C19.31775&qt=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z&tl=1347419148.752!5!!&lat=15.27060660&long=-22.78519821&zoom=6`}
-                      updatePath
-                    >
-                      Explore this data on the map
-                    </PortalLinkContainer>
-                  </Popover.Body>
-                </Popover>
+                  Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes
+                </p>
               )
             }
-          >
-            <div className="home__hero-image-link position-absolute">
-              <Button className="text-white focus-light" bootstrapVariant="link">What is this image?</Button>
-            </div>
-          </OverlayTrigger>
+            <OverlayTrigger
+              trigger="click"
+              placement="top"
+              rootClose
+              overlay={
+                (
+                  <Popover
+                    id="hero-image-popover"
+                    className="home__hero-image-popover bg-black text-white"
+                    style={
+                      {
+                        minWidth: '19rem',
+                        maxWidth: '19rem'
+                      }
+                    }
+                  >
+                    <Popover.Body className="bg-black text-white">
+                      <p>
+                        {/* eslint-disable-next-line max-len */}
+                        Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the
+                        {' '}
+                        <strong>Moderate Resolution Imaging Spectroradiometer (MODIS)</strong>
+                        {' '}
+                        aboard the
+                        {' '}
+                        <strong>Terra</strong>
+                        {' '}
+                        platform on March 12, 2025
+                      </p>
+                      <PortalLinkContainer
+                        className="focus-light"
+                        type="button"
+                        variant="hds-primary"
+                        dark
+                        to={`${routes.GRANULES}?p=C1378579425-LAADS&pg[0][v]=f&q=MOD02QKM&pg[0][gsk]=-start_date&sb[0]=-29.95172%2C11.43036%2C-16.57503%2C19.31775&qt=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z&tl=1347419148.752!5!!&lat=15.27060660&long=-22.78519821&zoom=6`}
+                        updatePath
+                      >
+                        Explore this data on the map
+                      </PortalLinkContainer>
+                    </Popover.Body>
+                  </Popover>
+                )
+              }
+            >
+              <div className="home__hero-image-link">
+                <Button className="text-white focus-light" bootstrapVariant="link">What is this image?</Button>
+              </div>
+            </OverlayTrigger>
+          </div>
         </section>
         <section className="py-5">
           <Container className="home__container">

@@ -17,7 +17,7 @@ import { commafy } from '../../util/commafy'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { granuleSortKeys } from '../../constants/granuleSortKeys'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import { metricsCollectionSortChange } from '../../util/metrics/metricsCollectionSortChange'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'

@@ -18,7 +18,7 @@ import { projectCollectionItemHeader, projectCollectionItemFooter } from './skel
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { convertSize } from '../../util/project'
 import { isAccessMethodValid } from '../../util/accessMethods'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 
 import Button from '../Button/Button'

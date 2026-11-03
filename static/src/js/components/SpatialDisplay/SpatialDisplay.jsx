@@ -12,7 +12,7 @@ import { Point, Polygon } from 'ol/geom'
 
 import { eventEmitter } from '../../events/events'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 
 import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'

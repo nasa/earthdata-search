@@ -146,7 +146,7 @@ describe('HarmonyStatusItem', () => {
         messageIsError: false,
         messages: [],
         opened: true,
-        orderInfo: STATUS_MESSAGES.ESI.COMPLETE,
+        orderInfo: STATUS_MESSAGES.HARMONY.COMPLETE,
         orderStatus: 'complete',
         progressPercentage: 100,
         setOpened: expect.any(Function),
@@ -392,7 +392,7 @@ describe('HarmonyStatusItem', () => {
         messageIsError: false,
         messages: [],
         opened: true,
-        orderInfo: STATUS_MESSAGES.ESI.CREATING,
+        orderInfo: STATUS_MESSAGES.HARMONY.CREATING,
         orderStatus: 'creating',
         progressPercentage: 0,
         setOpened: expect.any(Function),
@@ -517,7 +517,7 @@ describe('HarmonyStatusItem', () => {
         messageIsError: false,
         messages: [],
         opened: true,
-        orderInfo: STATUS_MESSAGES.ESI.IN_PROGRESS,
+        orderInfo: STATUS_MESSAGES.HARMONY.IN_PROGRESS,
         orderStatus: 'in_progress',
         progressPercentage: 25,
         setOpened: expect.any(Function),
@@ -598,7 +598,7 @@ describe('HarmonyStatusItem', () => {
         messageIsError: true,
         messages: ['Order Failed.'],
         opened: true,
-        orderInfo: STATUS_MESSAGES.ESI.FAILED,
+        orderInfo: STATUS_MESSAGES.HARMONY.FAILED,
         orderStatus: 'failed',
         progressPercentage: 100,
         setOpened: expect.any(Function),
@@ -608,6 +608,64 @@ describe('HarmonyStatusItem', () => {
         totalOrders: 1,
         updatedAt: '2024-01-01T00:00:00Z'
       }, {})
+    })
+
+    describe('when the order is create_failed', () => {
+      test('renders an OrderStatusItem with the error message', async () => {
+        mockUseGetRetrievalGranuleLinks.mockReturnValue({
+          granuleLinks: {
+            browse: [],
+            data: [],
+            s3: []
+          },
+          loading: false,
+          percentDone: '100'
+        })
+
+        setup({
+          overrideProps: {
+            retrievalCollection: {
+              collectionMetadata: {
+                directDistributionInformation: {},
+                title: 'Collection Title',
+                isCSDA: false
+              },
+              granuleCount: 1,
+              obfuscatedId: '12345',
+              retrievalOrders: [{
+                error: 'Mock error here',
+                id: 126,
+                orderInformation: {},
+                orderNumber: '37543d2b-c426-416c-9e44-f7fccf65d60f',
+                state: 'create_failed',
+                type: 'Harmony'
+              }],
+              updatedAt: '2024-01-01T00:00:00Z'
+            }
+          }
+        })
+
+        expect(OrderStatusItem).toHaveBeenCalledTimes(1)
+        expect(OrderStatusItem).toHaveBeenCalledWith({
+          accessMethodType: 'Harmony',
+          className: 'order-status-item order-status-item--is-opened order-status-item--failed',
+          collectionIsCSDA: false,
+          granuleCount: 1,
+          hasStatus: true,
+          messageIsError: true,
+          messages: ['Mock error here'],
+          opened: true,
+          orderInfo: STATUS_MESSAGES.HARMONY.FAILED,
+          orderStatus: 'failed',
+          progressPercentage: 0,
+          setOpened: expect.any(Function),
+          tabs: expect.any(Array),
+          title: 'Collection Title',
+          totalCompleteOrders: 0,
+          totalOrders: 1,
+          updatedAt: '2024-01-01T00:00:00Z'
+        }, {})
+      })
     })
   })
 
@@ -679,7 +737,7 @@ describe('HarmonyStatusItem', () => {
         messageIsError: false,
         messages: ['Canceled by admin.'],
         opened: true,
-        orderInfo: STATUS_MESSAGES.ESI.CANCELED,
+        orderInfo: STATUS_MESSAGES.HARMONY.CANCELED,
         orderStatus: 'canceled',
         progressPercentage: 9,
         setOpened: expect.any(Function),

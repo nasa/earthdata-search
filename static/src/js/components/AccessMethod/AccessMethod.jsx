@@ -12,7 +12,7 @@ import Form from 'react-bootstrap/Form'
 
 import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
 

@@ -10,7 +10,7 @@ import { login } from '../../../../support/login'
 import { setupTests } from '../../../../support/setupTests'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
-import { pluralize } from '../../../../../static/src/js/util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 
 import browseOnlyGranulesBody from './__mocks__/browse_only/granules.body.json'
 import browseOnlyGraphQlBody from './__mocks__/browse_only/graphql.body.json'

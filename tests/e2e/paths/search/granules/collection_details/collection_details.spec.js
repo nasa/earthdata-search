@@ -4,7 +4,7 @@ import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuer
 import { setupTests } from '../../../../../support/setupTests'
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
-import { pluralize } from '../../../../../../static/src/js/util/pluralize'
+import { pluralize } from '../../../../../../sharedUtils/pluralize'
 import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
 import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
 

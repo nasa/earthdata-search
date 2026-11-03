@@ -27,7 +27,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import { changePath } from '../../util/url/changePath'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { commafy } from '../../util/commafy'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import { stringify } from '../../util/url/url'
 import { determineVariableId } from '../../util/determineVariableId'
 

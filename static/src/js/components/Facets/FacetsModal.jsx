@@ -2,7 +2,7 @@ import React from 'react'
 
 import { changeViewAllFacet } from '../../util/facets'
 import { commafy } from '../../util/commafy'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import FacetsList from './FacetsList'

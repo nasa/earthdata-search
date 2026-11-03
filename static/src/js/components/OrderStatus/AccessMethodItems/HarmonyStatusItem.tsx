@@ -123,7 +123,10 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
   const harmonyCompletedSuccessfullyStates = ['successful', 'complete_with_errors']
 
   retrievalOrders.forEach((retrievalOrder) => {
-    const { orderInformation } = retrievalOrder
+    const {
+      error,
+      orderInformation
+    } = retrievalOrder
 
     const {
       progress = 0,
@@ -152,6 +155,12 @@ const HarmonyStatusItem: React.FC<HarmonyStatusItemProps> = ({
 
     if (status === ORDER_STATES.CANCELED && harmonyMessage) {
       messages.push(harmonyMessage)
+    }
+
+    // If the order information is empty and there is an error, push the error message and mark it as an error
+    if (Object.keys(orderInformation).length === 0 && error) {
+      messages.push(error)
+      messageIsError = true
     }
 
     downloadUrls.push(...links

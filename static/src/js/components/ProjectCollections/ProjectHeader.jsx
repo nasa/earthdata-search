@@ -13,7 +13,7 @@ import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { commafy } from '../../util/commafy'
 import { convertSizeToMB, convertSize } from '../../util/project'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import renderTooltip from '../../util/renderTooltip'
 
 import { projectHeader } from './skeleton'

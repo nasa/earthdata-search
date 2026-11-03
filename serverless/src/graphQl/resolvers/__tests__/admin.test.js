@@ -649,6 +649,7 @@ describe('Admin Resolver', () => {
           ]),
           getRetrievalOrdersByRetrievalCollectionId: vi.fn().mockResolvedValue([
             {
+              error: null,
               id: 1,
               retrieval_collection_id: 1,
               type: 'download',
@@ -711,6 +712,7 @@ describe('Admin Resolver', () => {
                 id: 1,
                 retrievalOrders: [
                   {
+                    error: null,
                     id: 1,
                     orderInformation: null,
                     orderNumber: null,

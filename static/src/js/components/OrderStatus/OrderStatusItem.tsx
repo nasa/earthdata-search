@@ -17,7 +17,7 @@ import EDSCTabs from '../EDSCTabs/EDSCTabs'
 
 import commafy from '../../util/commafy'
 // @ts-expect-error The file does not have types
-import pluralize from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 // @ts-expect-error The file does not have types
 import { formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 import { MODAL_NAMES } from '../../constants/modalNames'

@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { commafy } from '../../../../static/src/js/util/commafy'
-import { pluralize } from '../../../../static/src/js/util/pluralize'
+import { pluralize } from '../../../../sharedUtils/pluralize'
 
 import { setupTests } from '../../../support/setupTests'
 

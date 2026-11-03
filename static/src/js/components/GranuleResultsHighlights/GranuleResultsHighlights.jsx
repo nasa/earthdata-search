@@ -5,7 +5,7 @@ import { min } from 'lodash-es'
 
 import { commafy } from '../../util/commafy'
 import { granuleListItem, granuleListTotal } from './skeleton'
-import { pluralize } from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'

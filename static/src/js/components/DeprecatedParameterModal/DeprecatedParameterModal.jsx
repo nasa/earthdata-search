@@ -2,7 +2,7 @@ import React from 'react'
 import arrayToSentence from 'array-to-sentence'
 import Alert from 'react-bootstrap/Alert'
 
-import pluralize from '../../util/pluralize'
+import { pluralize } from '../../../../../sharedUtils/pluralize'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
 import ExternalLink from '../ExternalLink/ExternalLink'
