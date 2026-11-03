@@ -50,6 +50,7 @@ describe('#buildCollectionSearchParams', () => {
       entryTitle: 'Example Collection',
       consortium: ['CEOS'],
       hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
+      hasGranulesRevisedAt: '2026-02-01T00:00:00Z,',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE', 'COMPLETE'],
       downloadable: true,
