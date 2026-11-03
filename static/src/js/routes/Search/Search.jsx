@@ -39,6 +39,7 @@ import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 import Spinner from '../../components/Spinner/Spinner'
 
+import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -79,6 +80,11 @@ export const Search = () => {
     onSearchLoaded: state.ui.tour.onSearchLoaded
   }))
   const collectionQuery = useEdscStore(getCollectionsQuery)
+  const advancedFiltersSelectedCount = advancedCollectionFilters.reduce((count, { key }) => {
+    const value = collectionQuery[key]
+
+    return count + (Array.isArray(value) ? value.length : Number(Boolean(value)))
+  }, 0)
 
   useEffect(() => {
     onSearchLoaded()
@@ -220,7 +226,8 @@ export const Search = () => {
                             size="sm"
                             variant="outline-primary"
                             type="button"
-                            className="w-100"
+                            className="advanced-search-filters__toggle w-100 d-flex align-items-center justify-content-center"
+                            aria-label={`${advancedFiltersOpen ? 'Collapse' : 'Expand'} Advanced Filters${advancedFiltersSelectedCount > 0 ? `, ${advancedFiltersSelectedCount} selected` : ''}`}
                             aria-expanded={advancedFiltersOpen}
                             onClick={
                               () => {
@@ -228,8 +235,22 @@ export const Search = () => {
                               }
                             }
                           >
-                            <EDSCIcon icon={FaSlidersH} className="me-2" />
-                            {advancedFiltersOpen ? 'Collapse Advanced Filters' : 'Expand Advanced Filters'}
+                            <span className="advanced-search-filters__toggle-content">
+                              <span className="advanced-search-filters__toggle-main">
+                                <EDSCIcon icon={FaSlidersH} className="advanced-search-filters__toggle-icon" aria-hidden="true" />
+                                {advancedFiltersOpen ? 'Collapse Advanced Filters' : 'Expand Advanced Filters'}
+                              </span>
+                              {
+                                advancedFiltersSelectedCount > 0 && (
+                                  <span
+                                    className="facets-group__selected-count advanced-search-filters__toggle-count"
+                                    aria-hidden="true"
+                                  >
+                                    {advancedFiltersSelectedCount}
+                                  </span>
+                                )
+                              }
+                            </span>
                           </Button>
                         </SidebarFiltersItem>
                         <PortalFeatureContainer

@@ -4,7 +4,7 @@ import React, {
   useState
 } from 'react'
 import PropTypes from 'prop-types'
-import { pick, uniqBy } from 'lodash-es'
+import { pick } from 'lodash-es'
 import { FaTimes } from 'react-icons/fa'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -15,39 +15,27 @@ import DatepickerContainer from '../../containers/DatepickerContainer/Datepicker
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollections } from '../../zustand/selectors/collections'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 import './AdvancedSearchFilters.scss'
 
 const advancedFilterKeys = advancedCollectionFilters.map(({ key }) => key)
+const identifierFilterKeys = ['entryId', 'shortName', 'version']
 const toArray = (value) => {
   if (Array.isArray(value)) return value
 
   return value ? [value] : []
 }
 
-const textEntryFilterKeys = ['doi', 'entryTitle', 'variableName', 'serviceName', 'toolName']
+const renderSelectedCount = (value) => {
+  const count = Array.isArray(value) ? value.length : Number(Boolean(value))
 
-const renderIdentifierOptions = (field, options, selected, onChange) => {
-  const choices = [...new Set([...options, ...selected])]
+  if (!count) return null
 
   return (
-    <FacetsList
-      facetCategory={field}
-      optimisticSelection={false}
-      facets={
-        choices.map((value) => ({
-          title: value,
-          value,
-          applied: selected.includes(value)
-        }))
-      }
-      changeHandler={
-        (event, { value }) => onChange(event.target.checked
-          ? [...selected, value] : selected.filter((entry) => entry !== value))
-      }
-    />
+    <span className="facets-group__selected-count">
+      {`${count} Selected`}
+    </span>
   )
 }
 
@@ -55,37 +43,10 @@ const AdvancedSearchFilters = ({
   onClose = null
 }) => {
   const query = useEdscStore(getCollectionsQuery)
-  const { items = [] } = useEdscStore(getCollections)
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
-  const {
-    entryId: appliedEntryId,
-    shortName: appliedShortName,
-    version: appliedVersion
-  } = query
-  const appliedShortNames = toArray(appliedShortName)
-  const appliedVersions = toArray(appliedVersion)
-  const [mode, setMode] = useState((appliedShortNames.length || appliedVersions.length) ? 'shortName' : 'entryId')
-  const [selectedIds, setSelectedIds] = useState(appliedEntryId || [])
-  const [selectedShortNames, setSelectedShortNames] = useState(appliedShortNames)
-  const [selectedVersions, setSelectedVersions] = useState(appliedVersions)
-  const [knownCollections, setKnownCollections] = useState(items)
   const [advancedFilters, setAdvancedFilters] = useState(pick(query, advancedFilterKeys))
   const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
   const formRef = useRef(null)
-  const initialEntryIds = [...new Set(
-    knownCollections.map(({ entryId }) => entryId).filter(Boolean)
-  )].sort()
-  const initialShortNames = [...new Set(
-    knownCollections.map(({ shortName }) => shortName).filter(Boolean)
-  )].sort()
-  const initialVersions = [...new Set(knownCollections
-    .filter(({ shortName }) => selectedShortNames.includes(shortName))
-    .map(({ versionId }) => versionId)
-    .filter(Boolean))].sort()
-  // Count the number of selected identifiers (entryId and shortName)
-  const entryIdCount = appliedEntryId?.length || 0
-  const identifierSelectionCount = entryIdCount + appliedShortNames.length + appliedVersions.length
-  // Count the number of selected advanced filters plus identifiers
   const selectedOptionsCount = advancedCollectionFilters.reduce((count, { key }) => {
     const value = query[key]
     const selectedCountForFilter = Array.isArray(value)
@@ -93,7 +54,7 @@ const AdvancedSearchFilters = ({
       : Number(Boolean(value))
 
     return count + selectedCountForFilter
-  }, identifierSelectionCount)
+  }, 0)
 
   // Move keyboard focus into the advanced filter column when it opens
   useEffect(() => {
@@ -104,56 +65,6 @@ const AdvancedSearchFilters = ({
   useEffect(() => {
     setAdvancedFilters(JSON.parse(appliedFiltersKey))
   }, [appliedFiltersKey])
-
-  useEffect(() => {
-    setKnownCollections((current) => uniqBy([
-      ...current,
-      ...items
-    ], (collection) => collection.entryId || `${collection.shortName}_${collection.versionId}`))
-  }, [items])
-
-  // Sync identifier controls with the query, preserving the chosen mode when identifiers are cleared
-  useEffect(() => {
-    setSelectedIds(appliedEntryId || [])
-    setSelectedShortNames(appliedShortNames)
-    setSelectedVersions(appliedVersions)
-    if (appliedShortNames.length || appliedVersions.length) setMode('shortName')
-    else if (appliedEntryId?.length) setMode('entryId')
-  }, [appliedEntryId, appliedShortName, appliedVersion])
-
-  const changeFilters = ({
-    mode: nextMode = mode,
-    entryId: nextIds = selectedIds,
-    shortName: nextShortNames = selectedShortNames,
-    version: nextVersions = selectedVersions
-  }) => {
-    setMode(nextMode)
-    setSelectedIds(nextIds)
-    setSelectedShortNames(nextShortNames)
-    setSelectedVersions(nextVersions)
-    changeQuery({
-      collection: {
-        entryId: nextMode === 'entryId' && nextIds.length ? nextIds : undefined,
-        shortName: nextMode === 'shortName' && nextShortNames.length ? nextShortNames : undefined,
-        version: nextMode === 'shortName' && nextVersions.length ? nextVersions : undefined
-      }
-    })
-  }
-
-  const clear = () => {
-    changeFilters({
-      entryId: [],
-      shortName: [],
-      version: []
-    })
-  }
-
-  const changeMode = (nextMode) => changeFilters({
-    mode: nextMode,
-    entryId: [],
-    shortName: [],
-    version: []
-  })
 
   const updateAdvancedFilter = (key, nextValue) => {
     setAdvancedFilters((current) => ({
@@ -176,10 +87,13 @@ const AdvancedSearchFilters = ({
 
     if (type === 'array') {
       const selected = toArray(value)
-      if (textEntryFilterKeys.includes(key)) {
+      if (options.length === 0) {
         return (
           <fieldset key={key}>
-            <legend>{label}</legend>
+            <legend>
+              {label}
+              {renderSelectedCount(selected)}
+            </legend>
             <AdvancedFilterValueInput
               label={label}
               selected={selected}
@@ -193,7 +107,10 @@ const AdvancedSearchFilters = ({
 
       return (
         <fieldset key={key}>
-          <legend>{label}</legend>
+          <legend>
+            {label}
+            {renderSelectedCount(selected)}
+          </legend>
           <FacetsList
             facetCategory={key}
             optimisticSelection={false}
@@ -216,18 +133,14 @@ const AdvancedSearchFilters = ({
     if (type === 'boolean') {
       return (
         <div key={key} className="advanced-search-filters__availability">
-          <FacetsList
-            facetCategory={key}
-            optimisticSelection={false}
-            facets={
-              [{
-                title: label,
-                value: key,
-                applied: !!value
-              }]
-            }
-            changeHandler={(event) => updateValue(event.target.checked || undefined)}
+          <Form.Check
+            type="checkbox"
+            id={`advanced-search-${key}`}
+            label={label}
+            checked={!!value}
+            onChange={(event) => updateValue(event.target.checked || undefined)}
           />
+          {renderSelectedCount(value)}
         </div>
       )
     }
@@ -245,7 +158,10 @@ const AdvancedSearchFilters = ({
           role="group"
           aria-label={label}
         >
-          <Form.Label>{label}</Form.Label>
+          <div className="advanced-search-filters__filter-label">
+            <Form.Label>{label}</Form.Label>
+            {renderSelectedCount(value)}
+          </div>
           <DatepickerContainer
             filterType="collection"
             format="YYYY-MM-DD"
@@ -299,8 +215,9 @@ const AdvancedSearchFilters = ({
     advancedCollectionFilters.filter(({ key }) => keys.includes(key))
   )
   const granuleDateFilters = getAdvancedFilters(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])
+  const identifierFilters = getAdvancedFilters(identifierFilterKeys)
   const enumFilters = getAdvancedFilters(['consortium', 'collectionDataType', 'collectionProgress'])
-  const textEntryFilters = getAdvancedFilters(textEntryFilterKeys)
+  const textEntryFilters = getAdvancedFilters(['doi', 'entryTitle', 'variableName', 'serviceName', 'toolName'])
   const accessFilters = getAdvancedFilters(['downloadable', 'browsable'])
 
   return (
@@ -322,8 +239,8 @@ const AdvancedSearchFilters = ({
           Advanced Filters
           {
             selectedOptionsCount > 0 && (
-              <span className="badge bg-primary ms-2">
-                {`${selectedOptionsCount} ${selectedOptionsCount === 1 ? 'Option' : 'Options'} Selected`}
+              <span className="facets-group__selected-count">
+                {`${selectedOptionsCount} Selected`}
               </span>
             )
           }
@@ -344,76 +261,25 @@ const AdvancedSearchFilters = ({
         }
       </header>
       <div className="advanced-search-filters__body">
-        {granuleDateFilters.map(renderAdvancedFilter)}
-        <fieldset>
-          <legend>Collection Identifier</legend>
-          <div className="d-flex flex-wrap gap-2 mb-2 small">
-            <Form.Check
-              type="radio"
-              id="advanced-search-mode-entry-id"
-              name="advanced-search-mode"
-              label="Entry ID"
-              checked={mode === 'entryId'}
-              onChange={() => changeMode('entryId')}
-              className="mb-1"
-            />
-            <Form.Check
-              type="radio"
-              id="advanced-search-mode-short-name"
-              name="advanced-search-mode"
-              label="Short Name and Version"
-              checked={mode === 'shortName'}
-              onChange={() => changeMode('shortName')}
-              className="mb-1"
-            />
+        <fieldset className="advanced-search-filters__date-section">
+          <legend className="advanced-search-filters__section-heading">Granule Activity</legend>
+          <div className="advanced-search-filters__date-filters">
+            {granuleDateFilters.map(renderAdvancedFilter)}
           </div>
-          {
-            mode === 'entryId' ? (
-              <div className="advanced-search-filters__entry-ids mb-3">
-                {
-                  renderIdentifierOptions('entryId', initialEntryIds, selectedIds, (entryId) => (
-                    changeFilters({ entryId })
-                  ))
-                }
-              </div>
-            ) : (
-              <div className="mb-3">
-                <fieldset>
-                  <legend>Short Name</legend>
-                  <div className="advanced-search-filters__identifier-options">
-                    {
-                      renderIdentifierOptions('shortName', initialShortNames, selectedShortNames, (nextShortNames) => (
-                        changeFilters({
-                          shortName: nextShortNames,
-                          version: nextShortNames.length === 1 ? selectedVersions : []
-                        })
-                      ))
-                    }
-                  </div>
-                </fieldset>
-                {
-                  selectedShortNames.length === 1 && (
-                    <fieldset>
-                      <legend>Version</legend>
-                      <div className="advanced-search-filters__identifier-options">
-                        {
-                          renderIdentifierOptions('version', initialVersions, selectedVersions, (version) => (
-                            changeFilters({ version })
-                          ))
-                        }
-                      </div>
-                    </fieldset>
-                  )
-                }
-              </div>
-            )
-          }
-          <Button size="sm" variant="link" type="button" onClick={clear}>Clear</Button>
         </fieldset>
-        {enumFilters.map(renderAdvancedFilter)}
-        {textEntryFilters.map(renderAdvancedFilter)}
+        <fieldset className="advanced-search-filters__identifier-section">
+          <legend className="advanced-search-filters__section-heading">Collection Identifier</legend>
+          <div className="advanced-search-filters__identifier-filters">
+            {identifierFilters.map(renderAdvancedFilter)}
+          </div>
+        </fieldset>
         <fieldset>
-          <legend>Access Options</legend>
+          <legend className="advanced-search-filters__section-heading">Collection Metadata</legend>
+          {enumFilters.map(renderAdvancedFilter)}
+          {textEntryFilters.map(renderAdvancedFilter)}
+        </fieldset>
+        <fieldset>
+          <legend className="advanced-search-filters__section-heading">Access Options</legend>
           {accessFilters.map(renderAdvancedFilter)}
         </fieldset>
       </div>

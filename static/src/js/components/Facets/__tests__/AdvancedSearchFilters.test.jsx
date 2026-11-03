@@ -50,7 +50,7 @@ const setup = setupTest({
 
 const setupLoaded = async (options) => {
   const result = setup(options)
-  await screen.findByRole('checkbox', { name: 'ATL03_004' })
+  await screen.findByRole('textbox', { name: 'Add Entry ID' })
 
   return result
 }
@@ -127,60 +127,106 @@ describe('AdvancedSearchFilters', () => {
     expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: ['10.5067/OTHER'] } })
   })
 
-  test('checks Entry IDs already present in the collection query', async () => {
-    await setupLoaded()
-
-    act(() => {
-      useEdscStore.setState((state) => ({
+  test('shows applied identifier values in their selected lists', () => {
+    setup({
+      overrideZustandState: {
         query: {
-          ...state.query,
           collection: {
-            ...state.query.collection,
-            entryId: ['ATL03_004']
+            entryId: ['CUSTOM_ENTRY'],
+            shortName: ['CUSTOM_SHORT'],
+            version: ['custom-version']
           }
         }
-      }))
+      }
     })
 
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
+    expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
+      .toHaveTextContent('CUSTOM_ENTRY')
+    expect(screen.getByRole('list', { name: 'Selected values for Short Name' }))
+      .toHaveTextContent('CUSTOM_SHORT')
+    expect(screen.getByRole('list', { name: 'Selected values for Version' }))
+      .toHaveTextContent('custom-version')
   })
 
-  test('populates identifier checkboxes from initial collection results', async () => {
+  test('shows a selected count beside each advanced filter label', () => {
+    setup({
+      overrideZustandState: {
+        query: {
+          collection: {
+            entryId: ['ENTRY_001', 'ENTRY_002'],
+            collectionProgress: ['ACTIVE', 'COMPLETE'],
+            hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
+            downloadable: true
+          }
+        }
+      }
+    })
+
+    expect(within(screen.getByRole('group', { name: /Entry ID/ })).getByText('2 Selected'))
+      .toHaveClass('facets-group__selected-count')
+    expect(within(screen.getByRole('group', { name: /Collection Progress/ })).getByText('2 Selected'))
+      .toHaveClass('facets-group__selected-count')
+    expect(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' })).getByText('1 Selected'))
+      .toHaveClass('facets-group__selected-count')
+    const downloadableFilter = screen.getByRole('checkbox', { name: 'Downloadable' })
+      .closest('.advanced-search-filters__availability')
+    expect(within(downloadableFilter).getByText('1 Selected'))
+      .toHaveClass('facets-group__selected-count')
+  })
+
+  test('accepts arbitrary multiple values for each collection identifier', async () => {
     const { user } = await setupLoaded()
 
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeVisible()
+    await addValue(user, 'Entry ID', 'CUSTOM_001')
+    await addValue(user, 'Entry ID', 'CUSTOM_002')
+    await addValue(user, 'Short Name', 'CUSTOM_SHORT_A')
+    await addValue(user, 'Short Name', 'CUSTOM_SHORT_B')
+    await addValue(user, 'Version', 'vA')
+    await addValue(user, 'Version', 'vB')
 
-    await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
-    expect(screen.getByRole('checkbox', { name: 'ATL03' })).toBeVisible()
-    expect(screen.getByRole('checkbox', { name: 'ATL06' })).toBeVisible()
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
-    expect(screen.getByRole('checkbox', { name: '004' })).toBeVisible()
-    expect(screen.getByRole('checkbox', { name: '005' })).toBeVisible()
+    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
+      entryId: ['CUSTOM_001', 'CUSTOM_002'],
+      shortName: ['CUSTOM_SHORT_A', 'CUSTOM_SHORT_B'],
+      version: ['vA', 'vB']
+    }))
   })
 
-  test('orders filter groups by search workflow', () => {
+  test('groups identifier text entries in the Collection Identifier section', () => {
     setup()
-    const filterGroups = screen.getAllByRole('group')
-    const filterLabels = [
-      'New Granules Since (UTC)',
-      'Revised Granules Since (UTC)',
-      'Collection Identifier',
-      'Consortium',
-      'Collection Data Type',
-      'Collection Progress',
-      'DOI Value',
-      'Entry Title',
-      'Variable Name',
-      'Service Name',
-      'Tool Name',
-      'Access Options'
-    ]
+    const identifiersGroup = screen.getByRole('group', { name: 'Collection Identifier' })
+    const identifiers = within(identifiersGroup)
 
-    expect(filterGroups).toHaveLength(filterLabels.length)
-    filterLabels.forEach((label, index) => {
-      expect(filterGroups[index]).toHaveAccessibleName(label)
-    })
+    expect(identifiersGroup).toHaveClass('advanced-search-filters__identifier-section')
+    expect(identifiers.getByRole('textbox', { name: 'Add Entry ID' })).toBeVisible()
+    expect(identifiers.getByRole('textbox', { name: 'Add Short Name' })).toBeVisible()
+    expect(identifiers.getByRole('textbox', { name: 'Add Version' })).toBeVisible()
+    expect(identifiers.getByText('Collection Identifier'))
+      .toHaveClass('advanced-search-filters__section-heading')
+    expect(screen.queryByRole('radio')).not.toBeInTheDocument()
+  })
+
+  test('groups the granule date filters under Granule Activity', () => {
+    setup()
+    const granuleActivityGroup = screen.getByRole('group', { name: 'Granule Activity' })
+    const granuleActivity = within(granuleActivityGroup)
+
+    expect(granuleActivity.getByRole('group', { name: 'New Granules Since (UTC)' })).toBeVisible()
+    expect(granuleActivity.getByRole('group', { name: 'Revised Granules Since (UTC)' })).toBeVisible()
+    expect(granuleActivity.getByText('Granule Activity'))
+      .toHaveClass('advanced-search-filters__section-heading')
+    const collectionMetadata = within(screen.getByRole('group', { name: 'Collection Metadata' }))
+    expect(collectionMetadata.getByRole('group', { name: 'Consortium' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'Collection Data Type' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'Collection Progress' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'DOI Value' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'Entry Title' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'Variable Name' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'Service Name' })).toBeVisible()
+    expect(collectionMetadata.getByRole('group', { name: 'Tool Name' })).toBeVisible()
+    expect(collectionMetadata.getByText('Collection Metadata'))
+      .toHaveClass('advanced-search-filters__section-heading')
+    expect(screen.getByText('Access Options'))
+      .toHaveClass('advanced-search-filters__section-heading')
   })
 
   test('shows the selected filter count in the heading', async () => {
@@ -189,10 +235,12 @@ describe('AdvancedSearchFilters', () => {
     expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
     expect(screen.queryByText('Selected')).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
-    await user.click(screen.getByRole('checkbox', { name: 'ATL06_006' }))
+    await addValue(user, 'Entry ID', 'ATL03_004')
+    await addValue(user, 'Short Name', 'ATL06')
 
-    expect(screen.getByText('2 Options Selected')).toBeVisible()
+    const selectedCount = screen.getByText('2 Selected')
+    expect(selectedCount).toBeVisible()
+    expect(selectedCount).toHaveClass('facets-group__selected-count')
   })
 
   test('applies a checkbox filter when its label is clicked', async () => {
@@ -206,6 +254,9 @@ describe('AdvancedSearchFilters', () => {
 
   test('applies advanced fields immediately and only clears collection identifiers', async () => {
     const { user } = await setupLoaded()
+    await addValue(user, 'Entry ID', 'ATL03_004')
+    await addValue(user, 'Short Name', 'ATL03')
+    await addValue(user, 'Version', '004')
     await addValue(user, 'DOI Value', '10.5067/EXAMPLE')
     await addValue(user, 'Entry Title', 'Example Collection')
     await addValue(user, 'Variable Name', 'temperature')
@@ -234,6 +285,9 @@ describe('AdvancedSearchFilters', () => {
     expect(screen.queryByRole('checkbox', { name: 'Online Only' })).not.toBeInTheDocument()
 
     expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
+      entryId: ['ATL03_004'],
+      shortName: ['ATL03'],
+      version: ['004'],
       doi: ['10.5067/EXAMPLE'],
       entryTitle: ['Example Collection'],
       consortium: ['CEOS'],
@@ -249,34 +303,23 @@ describe('AdvancedSearchFilters', () => {
     }))
     expect(screen.getAllByText('YYYY-MM-DD')).toHaveLength(2)
 
-    expect(within(screen.getByRole('group', { name: 'Collection Identifier' }))
-      .getByRole('button', { name: 'Clear' })).toBeVisible()
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
-
-    await user.click(within(screen.getByRole('group', { name: 'Collection Identifier' }))
-      .getByRole('button', { name: 'Clear' }))
+    await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
 
     expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
       .toHaveTextContent('10.5067/EXAMPLE')
 
     expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).not.toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: undefined,
-        version: undefined
-      }
-    })
+    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { entryId: undefined } })
 
     expect(useEdscStore.getState().query.collection.doi).toEqual(['10.5067/EXAMPLE'])
     expect(useEdscStore.getState().query.collection.consortium).toEqual(['CEOS'])
+    expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03'])
+    expect(useEdscStore.getState().query.collection.version).toEqual(['004'])
   })
 
   test('removes advanced filters independently without clearing identifiers', async () => {
     const { user } = await setupLoaded()
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
+    await addValue(user, 'Entry ID', 'ATL03_004')
     await user.click(screen.getByRole('checkbox', { name: 'CEOS' }))
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
     await addValue(user, 'DOI Value', '10.5067/EXAMPLE')
@@ -288,12 +331,13 @@ describe('AdvancedSearchFilters', () => {
     await user.click(screen.getByRole('button', { name: 'Remove DOI Value 10.5067/EXAMPLE' }))
     expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: undefined } })
     expect(useEdscStore.getState().query.collection.entryId).toEqual(['ATL03_004'])
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
+    expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
+      .toHaveTextContent('ATL03_004')
   })
 
-  test('keeps selected identifiers checked while collection results are loading', async () => {
+  test('keeps selected identifiers when collection results change', async () => {
     const { user } = await setupLoaded()
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
+    await addValue(user, 'Entry ID', 'ATL03_004')
 
     await act(() => {
       useEdscStore.setState((state) => ({
@@ -308,8 +352,9 @@ describe('AdvancedSearchFilters', () => {
       }))
     })
 
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'ATL06_006' })).toBeInTheDocument()
+    expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
+      .toHaveTextContent('ATL03_004')
+    expect(useEdscStore.getState().query.collection.entryId).toEqual(['ATL03_004'])
   })
 
   test('supports closing the column with the close button and Escape', async () => {
@@ -323,149 +368,70 @@ describe('AdvancedSearchFilters', () => {
     expect(onClose).toHaveBeenCalledTimes(2)
   })
 
-  test('allows searching by short name without selecting a version', async () => {
+  test('allows entering a short name without a version', async () => {
     const { user } = await setupLoaded()
-    await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
+    await addValue(user, 'Short Name', 'ATL03')
 
     expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: ['ATL03'],
-        version: undefined
-      }
+      collection: { shortName: ['ATL03'] }
     })
+    expect(screen.getByRole('textbox', { name: 'Add Version' })).toBeVisible()
   })
 
-  test('only shows inputs for the selected radio option', async () => {
+  test('shows all identifier fields and updates them independently', async () => {
     const { user } = await setupLoaded()
 
-    const entryId = screen.getByRole('checkbox', { name: 'ATL03_004' })
+    await addValue(user, 'Entry ID', 'ATL03_004')
+    await addValue(user, 'Short Name', 'ATL03')
+    await addValue(user, 'Version', '004')
 
-    expect(entryId).toBeVisible()
-    expect(screen.queryByRole('checkbox', { name: 'ATL03' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('checkbox', { name: '004' })).not.toBeInTheDocument()
-    expect(screen.getByRole('radio', { name: 'Entry ID' })).toBeChecked()
-    expect(entryId).toBeEnabled()
-
-    await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
-
-    expect(screen.queryByRole('checkbox', { name: 'ATL03_004' })).not.toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: 'ATL03' })).toBeVisible()
-    expect(screen.queryByRole('checkbox', { name: '004' })).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
-    await user.click(screen.getByRole('checkbox', { name: '004' }))
-
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: ['ATL03'],
-        version: ['004']
-      }
-    })
-
-    await user.click(screen.getByRole('radio', { name: 'Entry ID' }))
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeEnabled()
-    expect(screen.queryByRole('checkbox', { name: 'ATL03' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('checkbox', { name: '004' })).not.toBeInTheDocument()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: undefined,
-        version: undefined
-      }
-    })
+    expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['ATL03_004'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(2, { collection: { shortName: ['ATL03'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(3, { collection: { version: ['004'] } })
+    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
+      entryId: ['ATL03_004'],
+      shortName: ['ATL03'],
+      version: ['004']
+    }))
   })
 
-  test('supports multiple short names or multiple versions for one short name', async () => {
+  test('supports multiple values for each identifier field', async () => {
     const { user } = await setupLoaded()
-    await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
+    await addValue(user, 'Entry ID', 'ATL03_004')
+    await addValue(user, 'Entry ID', 'ATL03_005')
+    await addValue(user, 'Short Name', 'ATL03')
+    await addValue(user, 'Short Name', 'ATL06')
+    await addValue(user, 'Version', '004')
+    await addValue(user, 'Version', '005')
 
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03' }))
-    await user.click(screen.getByRole('checkbox', { name: '004' }))
-    await user.click(screen.getByRole('checkbox', { name: '005' }))
-
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: ['ATL03'],
-        version: ['004', '005']
-      }
-    })
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL06' }))
-
-    expect(screen.queryByRole('group', { name: 'Version' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('checkbox', { name: '004' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('checkbox', { name: '005' })).not.toBeInTheDocument()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: ['ATL03', 'ATL06'],
-        version: undefined
-      }
-    })
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL06' }))
-
-    expect(screen.getByRole('group', { name: 'Version' })).toBeVisible()
-    expect(screen.getByRole('checkbox', { name: '004' })).not.toBeChecked()
-    expect(screen.getByRole('checkbox', { name: '005' })).not.toBeChecked()
+    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
+      entryId: ['ATL03_004', 'ATL03_005'],
+      shortName: ['ATL03', 'ATL06'],
+      version: ['004', '005']
+    }))
   })
 
-  test('checks short names and versions already present in the collection query', async () => {
+  test('removes an Entry ID value without clearing other identifiers', async () => {
     const { user } = await setupLoaded()
-    await user.click(screen.getByRole('radio', { name: 'Short Name and Version' }))
+    await addValue(user, 'Entry ID', 'ATL03_004')
+    await addValue(user, 'Short Name', 'ATL03')
+    await addValue(user, 'Version', '004')
 
-    act(() => {
-      useEdscStore.setState((state) => ({
-        query: {
-          ...state.query,
-          collection: {
-            ...state.query.collection,
-            shortName: ['ATL03'],
-            version: ['004', '005']
-          }
-        }
-      }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
 
-    expect(screen.getByRole('checkbox', { name: 'ATL03' })).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: '004' })).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: '005' })).toBeChecked()
+    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { entryId: undefined } })
+    expect(screen.queryByRole('list', { name: 'Selected values for Entry ID' }))
+      .not.toBeInTheDocument()
+    expect(screen.getByRole('list', { name: 'Selected values for Short Name' }))
+      .toHaveTextContent('ATL03')
+    expect(screen.getByRole('list', { name: 'Selected values for Version' }))
+      .toHaveTextContent('004')
   })
 
-  test('applies Entry IDs immediately and clears them with Clear', async () => {
+  test('retains arbitrary Entry ID values when collection results change', async () => {
     const { user } = await setupLoaded()
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
-
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: ['ATL03_004'],
-        shortName: undefined,
-        version: undefined
-      }
-    })
-
-    await user.click(within(screen.getByRole('group', { name: 'Collection Identifier' }))
-      .getByRole('button', { name: 'Clear' }))
-
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).not.toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: undefined,
-        version: undefined
-      }
-    })
-  })
-
-  test('retains Entry ID choices after filtered responses and allows multiple selections', async () => {
-    const { user } = await setupLoaded()
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
+    await addValue(user, 'Entry ID', 'CUSTOM_001')
+    await addValue(user, 'Entry ID', 'CUSTOM_002')
 
     await act(() => {
       useEdscStore.setState((state) => ({
@@ -483,38 +449,9 @@ describe('AdvancedSearchFilters', () => {
       }))
     })
 
-    await user.click(screen.getByRole('checkbox', { name: 'ATL06_006' }))
-
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'ATL06_006' })).toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: ['ATL03_004', 'ATL06_006'],
-        shortName: undefined,
-        version: undefined
-      }
-    })
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
-
-    expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).not.toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'ATL06_006' })).toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: ['ATL06_006'],
-        shortName: undefined,
-        version: undefined
-      }
-    })
-
-    await user.click(screen.getByRole('checkbox', { name: 'ATL06_006' }))
-
-    expect(changeQuery).toHaveBeenLastCalledWith({
-      collection: {
-        entryId: undefined,
-        shortName: undefined,
-        version: undefined
-      }
-    })
+    expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
+      .toHaveTextContent('CUSTOM_001')
+      .toHaveTextContent('CUSTOM_002')
+    expect(useEdscStore.getState().query.collection.entryId).toEqual(['CUSTOM_001', 'CUSTOM_002'])
   })
 })
