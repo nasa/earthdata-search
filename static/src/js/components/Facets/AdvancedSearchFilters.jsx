@@ -152,10 +152,64 @@ const AdvancedSearchFilters = ({
     }
 
     if (type === 'date') {
-      const selectedDate = value ? new Date(value.split(',')[0]) : null
-      const pickerValue = selectedDate && Number.isFinite(selectedDate.getTime())
-        ? selectedDate.toISOString()
-        : ''
+      const [startValue = '', endValue = ''] = (value || '').split(',')
+      const getPickerValue = (dateValue) => {
+        if (!dateValue) return ''
+
+        const selectedDate = new Date(dateValue)
+
+        return Number.isFinite(selectedDate.getTime()) ? selectedDate.toISOString() : ''
+      }
+
+      const updateDateRange = (bound, dateValue, shouldSubmit, action) => {
+        if (!shouldSubmit) return
+
+        const nextBounds = [startValue, endValue]
+        const boundIndex = bound === 'start' ? 0 : 1
+
+        if (action === 'Clear') {
+          nextBounds[boundIndex] = ''
+        } else if (dateValue?.isValid()) {
+          const utcDate = dateValue.clone().utc()
+          if (bound === 'start') utcDate.startOf('day')
+          else utcDate.endOf('day').millisecond(0)
+          nextBounds[boundIndex] = utcDate.toISOString().replace('.000Z', 'Z')
+        } else {
+          return
+        }
+
+        updateValue(nextBounds.some(Boolean) ? nextBounds.join(',') : undefined)
+      }
+
+      const renderDateBound = (bound, boundValue) => {
+        const boundLabel = bound === 'start' ? 'From' : 'To'
+
+        return (
+          <Form.Group
+            key={bound}
+            controlId={`advanced-search-${key}-${bound}`}
+            className="advanced-search-filters__date-bound"
+          >
+            <Form.Label>{boundLabel}</Form.Label>
+            <DatepickerContainer
+              filterType="collection"
+              format="YYYY-MM-DD"
+              id={`advanced-search-${key}-${bound}-datepicker`}
+              label={`${label} ${boundLabel.toLowerCase()} date`}
+              onSubmit={
+                (dateValue, shouldSubmit, action) => (
+                  updateDateRange(bound, dateValue, shouldSubmit, action)
+                )
+              }
+              shouldValidate={false}
+              size="sm"
+              type={bound}
+              value={getPickerValue(boundValue)}
+              viewMode="years"
+            />
+          </Form.Group>
+        )
+      }
 
       return (
         <Form.Group
@@ -168,32 +222,10 @@ const AdvancedSearchFilters = ({
             <Form.Label>{label}</Form.Label>
             {renderSelectedCount(value)}
           </div>
-          <DatepickerContainer
-            filterType="collection"
-            format="YYYY-MM-DD"
-            id={`advanced-search-${key}-datepicker`}
-            label={label}
-            onSubmit={
-              (dateValue, shouldSubmit, action) => {
-                if (!shouldSubmit) return
-                if (action === 'Clear') {
-                  updateValue(undefined)
-
-                  return
-                }
-
-                if (dateValue?.isValid()) {
-                  const utcMidnight = dateValue.clone().utc().startOf('day')
-                  updateValue(`${utcMidnight.toISOString().replace('.000Z', 'Z')},`)
-                }
-              }
-            }
-            shouldValidate={false}
-            size="sm"
-            type="start"
-            value={pickerValue}
-            viewMode="years"
-          />
+          <div className="advanced-search-filters__date-range">
+            {renderDateBound('start', startValue)}
+            {renderDateBound('end', endValue)}
+          </div>
         </Form.Group>
       )
     }

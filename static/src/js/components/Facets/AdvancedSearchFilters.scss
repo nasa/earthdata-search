@@ -134,6 +134,20 @@
     gap: 0.75rem;
   }
 
+  &__date-range {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__date-bound {
+    margin-bottom: 0;
+
+    .form-label {
+      margin-bottom: 0.25rem;
+    }
+  }
+
   &__identifier-section {
     padding-top: 0.75rem;
     border-top: 1px solid utils.$color__carbon--20;
