@@ -19,6 +19,24 @@ const advancedCollectionFilters = [
     options: ['EOSDIS', 'CEOS', 'CWIC', 'FEDEO', 'GEOSS']
   },
   {
+    key: 'entryId',
+    label: 'Entry ID',
+    cmrKey: 'entry_id',
+    type: 'array'
+  },
+  {
+    key: 'shortName',
+    label: 'Short Name',
+    cmrKey: 'short_name',
+    type: 'array'
+  },
+  {
+    key: 'version',
+    label: 'Version',
+    cmrKey: 'version',
+    type: 'array'
+  },
+  {
     key: 'hasGranulesCreatedAt',
     label: 'New Granules Since (UTC)',
     cmrKey: 'has_granules_created_at',

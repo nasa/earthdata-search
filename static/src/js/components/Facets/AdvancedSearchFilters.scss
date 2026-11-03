@@ -18,10 +18,69 @@
     border-bottom: 1px solid utils.$color__carbon--20;
 
     h2 {
+      display: flex;
+      align-items: center;
       margin: 0;
       font-size: 0.875rem;
       font-weight: 700;
     }
+  }
+
+  &__selected-count {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+    padding: 0.0625rem 0.5rem;
+    background-color: utils.$color__nasa-blue;
+    color: utils.$color__spacesuit-white;
+    font-size: 0.725rem;
+    font-weight: 400;
+    border-radius: 1rem;
+    line-height: 1.1rem;
+    white-space: nowrap;
+  }
+
+  &__toggle-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  &__toggle-main {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    line-height: 1;
+  }
+
+  &__toggle-count {
+    margin-left: 0;
+  }
+
+  &__toggle:hover &__toggle-count,
+  &__toggle:focus-visible &__toggle-count,
+  &__toggle:active &__toggle-count {
+    background-color: utils.$color__spacesuit-white;
+    color: utils.$color__nasa-blue;
+  }
+
+  &__toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    line-height: 0;
+  }
+
+  &__identifier-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   &__body {
@@ -63,9 +122,45 @@
     }
   }
 
-  &__entry-ids {
-    max-height: 12rem;
-    overflow-y: auto;
+  &__date-section {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
+
+  &__date-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__identifier-section {
+    padding-top: 0.75rem;
+    border-top: 1px solid utils.$color__carbon--20;
+  }
+
+  &__body &__section-heading {
+    color: utils.$color__carbon-black;
+    font-size: 0.925rem;
+    font-weight: 700;
+  }
+
+  &__identifier-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__filter-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    .form-label {
+      margin-bottom: 0;
+    }
   }
 
   &__icon-button {
@@ -73,11 +168,6 @@
     width: 2rem;
     height: 2rem;
     padding: 0;
-  }
-
-  &__identifier-options {
-    max-height: 8rem;
-    overflow-y: auto;
   }
 
   &__selected-values {
@@ -99,7 +189,15 @@
   }
 
   &__availability {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
     margin-bottom: 0.5rem;
+
+    .form-check {
+      margin-bottom: 0;
+    }
   }
 
   &__footer {

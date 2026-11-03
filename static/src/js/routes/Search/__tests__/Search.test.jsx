@@ -1,10 +1,11 @@
 import React from 'react'
-import { screen, within } from '@testing-library/react'
+import { act, screen, within } from '@testing-library/react'
 
 import { Search } from '../Search'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const mockClassListAdd = vi.fn()
 const mockClassListRemove = vi.fn()
@@ -140,6 +141,33 @@ describe('Search component', () => {
       expect(screen.queryByRole('form', { name: 'Advanced Filters' })).not.toBeInTheDocument()
       expect(expand).toHaveFocus()
       expect(expand).toHaveAttribute('aria-expanded', 'false')
+    })
+
+    test('shows the active advanced filter count on its toggle button', () => {
+      setup()
+
+      act(() => {
+        useEdscStore.setState((state) => ({
+          query: {
+            ...state.query,
+            collection: {
+              ...state.query.collection,
+              doi: ['10.5067/EXAMPLE'],
+              entryId: ['ATL03_004', 'ATL06_006']
+            }
+          }
+        }))
+      })
+
+      const toggle = screen.getByRole('button', { name: 'Expand Advanced Filters, 3 selected' })
+      const count = within(toggle).getByText('3')
+      const toggleContent = count.parentElement
+      const toggleMain = toggle.querySelector('.advanced-search-filters__toggle-main')
+
+      expect(count).toBeVisible()
+      expect(toggleContent).toHaveClass('advanced-search-filters__toggle-content')
+      expect(count).toHaveClass('facets-group__selected-count')
+      expect(toggleMain.parentElement).toBe(toggleContent)
     })
 
     test('should render search panels', async () => {
