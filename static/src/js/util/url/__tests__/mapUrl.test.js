@@ -56,6 +56,16 @@ describe('decodes latitude correctly', () => {
     expect(decodeUrlParams('?lat=1')).toEqual(expectedResult)
   })
 
+  test('when the result is zero', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      mapView: {
+        latitude: 0
+      }
+    }
+    expect(decodeUrlParams('?lat=0')).toEqual(expectedResult)
+  })
+
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
@@ -74,6 +84,16 @@ describe('decodes longitude correctly', () => {
       }
     }
     expect(decodeUrlParams('?long=1')).toEqual(expectedResult)
+  })
+
+  test('when the result is zero', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      mapView: {
+        longitude: 0
+      }
+    }
+    expect(decodeUrlParams('?long=0')).toEqual(expectedResult)
   })
 
   test('when the result is invalid', () => {
@@ -146,6 +166,16 @@ describe('decodes rotation correctly', () => {
     expect(decodeUrlParams('?rotation=1')).toEqual(expectedResult)
   })
 
+  test('when the result is zero', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      mapView: {
+        rotation: 0
+      }
+    }
+    expect(decodeUrlParams('?rotation=0')).toEqual(expectedResult)
+  })
+
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
@@ -164,6 +194,16 @@ describe('decodes zoom correctly', () => {
       }
     }
     expect(decodeUrlParams('?zoom=1')).toEqual(expectedResult)
+  })
+
+  test('when the result is zero', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      mapView: {
+        zoom: 0
+      }
+    }
+    expect(decodeUrlParams('?zoom=0')).toEqual(expectedResult)
   })
 
   test('when the result is invalid', () => {
