@@ -1,5 +1,9 @@
 import React from 'react'
-import { act, screen, within } from '@testing-library/react'
+import {
+  act,
+  screen,
+  within
+} from '@testing-library/react'
 
 import { Search } from '../Search'
 
@@ -160,14 +164,12 @@ describe('Search component', () => {
       })
 
       const toggle = screen.getByRole('button', { name: 'Expand Advanced Filters, 3 selected' })
-      const count = within(toggle).getByText('3')
-      const toggleContent = count.parentElement
-      const toggleMain = toggle.querySelector('.advanced-search-filters__toggle-main')
+      const toggleContent = within(toggle).getByTestId('advanced-filters-toggle-content')
 
-      expect(count).toBeVisible()
+      expect(within(toggleContent).getByText('3')).toBeVisible()
+      expect(within(toggleContent).getByText('Expand Advanced Filters')).toBeVisible()
       expect(toggleContent).toHaveClass('advanced-search-filters__toggle-content')
-      expect(count).toHaveClass('facets-group__selected-count')
-      expect(toggleMain.parentElement).toBe(toggleContent)
+      expect(within(toggleContent).getByText('3')).toHaveClass('facets-group__selected-count')
     })
 
     test('should render search panels', async () => {

@@ -111,6 +111,7 @@ const AdvancedSearchFilters = ({
             {label}
             {renderSelectedCount(selected)}
           </legend>
+          {/* This filter updates selected state before fetching; FacetsList's loading inversion would undo that display. */}
           <FacetsList
             facetCategory={key}
             optimisticSelection={false}
@@ -132,7 +133,12 @@ const AdvancedSearchFilters = ({
 
     if (type === 'boolean') {
       return (
-        <div key={key} className="advanced-search-filters__availability">
+        <div
+          key={key}
+          className="advanced-search-filters__availability"
+          role="group"
+          aria-label={label}
+        >
           <Form.Check
             type="checkbox"
             id={`advanced-search-${key}`}
@@ -167,18 +173,21 @@ const AdvancedSearchFilters = ({
             format="YYYY-MM-DD"
             id={`advanced-search-${key}-datepicker`}
             label={label}
-            onSubmit={(dateValue, shouldSubmit, action) => {
-              if (!shouldSubmit) return
-              if (action === 'Clear') {
-                updateValue(undefined)
-                return
-              }
+            onSubmit={
+              (dateValue, shouldSubmit, action) => {
+                if (!shouldSubmit) return
+                if (action === 'Clear') {
+                  updateValue(undefined)
 
-              if (dateValue?.isValid()) {
-                const utcMidnight = dateValue.clone().utc().startOf('day')
-                updateValue(`${utcMidnight.toISOString().replace('.000Z', 'Z')},`)
+                  return
+                }
+
+                if (dateValue?.isValid()) {
+                  const utcMidnight = dateValue.clone().utc().startOf('day')
+                  updateValue(`${utcMidnight.toISOString().replace('.000Z', 'Z')},`)
+                }
               }
-            }}
+            }
             shouldValidate={false}
             size="sm"
             type="start"

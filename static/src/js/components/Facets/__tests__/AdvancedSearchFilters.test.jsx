@@ -142,8 +142,10 @@ describe('AdvancedSearchFilters', () => {
 
     expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
       .toHaveTextContent('CUSTOM_ENTRY')
+
     expect(screen.getByRole('list', { name: 'Selected values for Short Name' }))
       .toHaveTextContent('CUSTOM_SHORT')
+
     expect(screen.getByRole('list', { name: 'Selected values for Version' }))
       .toHaveTextContent('custom-version')
   })
@@ -164,12 +166,14 @@ describe('AdvancedSearchFilters', () => {
 
     expect(within(screen.getByRole('group', { name: /Entry ID/ })).getByText('2 Selected'))
       .toHaveClass('facets-group__selected-count')
+
     expect(within(screen.getByRole('group', { name: /Collection Progress/ })).getByText('2 Selected'))
       .toHaveClass('facets-group__selected-count')
+
     expect(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' })).getByText('1 Selected'))
       .toHaveClass('facets-group__selected-count')
-    const downloadableFilter = screen.getByRole('checkbox', { name: 'Downloadable' })
-      .closest('.advanced-search-filters__availability')
+
+    const downloadableFilter = screen.getByRole('group', { name: 'Downloadable' })
     expect(within(downloadableFilter).getByText('1 Selected'))
       .toHaveClass('facets-group__selected-count')
   })
@@ -202,6 +206,7 @@ describe('AdvancedSearchFilters', () => {
     expect(identifiers.getByRole('textbox', { name: 'Add Version' })).toBeVisible()
     expect(identifiers.getByText('Collection Identifier'))
       .toHaveClass('advanced-search-filters__section-heading')
+
     expect(screen.queryByRole('radio')).not.toBeInTheDocument()
   })
 
@@ -214,6 +219,7 @@ describe('AdvancedSearchFilters', () => {
     expect(granuleActivity.getByRole('group', { name: 'Revised Granules Since (UTC)' })).toBeVisible()
     expect(granuleActivity.getByText('Granule Activity'))
       .toHaveClass('advanced-search-filters__section-heading')
+
     const collectionMetadata = within(screen.getByRole('group', { name: 'Collection Metadata' }))
     expect(collectionMetadata.getByRole('group', { name: 'Consortium' })).toBeVisible()
     expect(collectionMetadata.getByRole('group', { name: 'Collection Data Type' })).toBeVisible()
@@ -225,6 +231,7 @@ describe('AdvancedSearchFilters', () => {
     expect(collectionMetadata.getByRole('group', { name: 'Tool Name' })).toBeVisible()
     expect(collectionMetadata.getByText('Collection Metadata'))
       .toHaveClass('advanced-search-filters__section-heading')
+
     expect(screen.getByText('Access Options'))
       .toHaveClass('advanced-search-filters__section-heading')
   })
@@ -272,12 +279,15 @@ describe('AdvancedSearchFilters', () => {
       .getByRole('textbox'), {
       target: { value: '2026-01-01' }
     })
+
     fireEvent.blur(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' }))
       .getByRole('textbox'))
+
     fireEvent.change(within(screen.getByRole('group', { name: 'Revised Granules Since (UTC)' }))
       .getByRole('textbox'), {
       target: { value: '2026-02-01' }
     })
+
     fireEvent.blur(within(screen.getByRole('group', { name: 'Revised Granules Since (UTC)' }))
       .getByRole('textbox'))
 
@@ -301,6 +311,7 @@ describe('AdvancedSearchFilters', () => {
       serviceName: ['test_service'],
       toolName: ['test_tool']
     }))
+
     expect(screen.getAllByText('YYYY-MM-DD')).toHaveLength(2)
 
     await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
@@ -354,6 +365,7 @@ describe('AdvancedSearchFilters', () => {
 
     expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
       .toHaveTextContent('ATL03_004')
+
     expect(useEdscStore.getState().query.collection.entryId).toEqual(['ATL03_004'])
   })
 
@@ -375,6 +387,7 @@ describe('AdvancedSearchFilters', () => {
     expect(changeQuery).toHaveBeenLastCalledWith({
       collection: { shortName: ['ATL03'] }
     })
+
     expect(screen.getByRole('textbox', { name: 'Add Version' })).toBeVisible()
   })
 
@@ -422,8 +435,10 @@ describe('AdvancedSearchFilters', () => {
     expect(changeQuery).toHaveBeenLastCalledWith({ collection: { entryId: undefined } })
     expect(screen.queryByRole('list', { name: 'Selected values for Entry ID' }))
       .not.toBeInTheDocument()
+
     expect(screen.getByRole('list', { name: 'Selected values for Short Name' }))
       .toHaveTextContent('ATL03')
+
     expect(screen.getByRole('list', { name: 'Selected values for Version' }))
       .toHaveTextContent('004')
   })
@@ -452,6 +467,7 @@ describe('AdvancedSearchFilters', () => {
     expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
       .toHaveTextContent('CUSTOM_001')
       .toHaveTextContent('CUSTOM_002')
+
     expect(useEdscStore.getState().query.collection.entryId).toEqual(['CUSTOM_001', 'CUSTOM_002'])
   })
 })

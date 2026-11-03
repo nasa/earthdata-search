@@ -273,6 +273,7 @@ export const buildCollectionSearchParams = (params) => {
     doi,
     entryTitle,
     hasGranulesCreatedAt,
+    hasGranulesRevisedAt,
     collectionProgress,
     downloadable,
     browsable,
