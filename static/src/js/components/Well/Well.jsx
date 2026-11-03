@@ -13,8 +13,6 @@ import './Well.scss'
 export const Well = ({
   className = null,
   children = null,
-  heading = null,
-  introduction = null,
   variant = null
 }) => {
   const classes = classNames([
@@ -25,10 +23,6 @@ export const Well = ({
 
   return (
     <section className={classes}>
-      <header>
-        <h2 className="well__heading">{heading}</h2>
-        <div className="well__intro">{introduction}</div>
-      </header>
       <div className="well__content">
         {children}
       </div>
@@ -39,8 +33,6 @@ export const Well = ({
 Well.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  heading: PropTypes.node,
-  introduction: PropTypes.node,
   variant: PropTypes.string
 }
 
