@@ -36,6 +36,7 @@ describe('url#encodeUrlQuery', () => {
       entryTitle: ['Example Collection', 'Other Collection'],
       consortium: ['CEOS', 'EOSDIS'],
       hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
+      hasGranulesRevisedAt: '2026-02-01T00:00:00Z,',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE', 'COMPLETE'],
       downloadable: true,

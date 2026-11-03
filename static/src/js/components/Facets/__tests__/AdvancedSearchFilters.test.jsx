@@ -164,6 +164,7 @@ describe('AdvancedSearchFilters', () => {
     const filterGroups = screen.getAllByRole('group')
     const filterLabels = [
       'New Granules Since (UTC)',
+      'Revised Granules Since (UTC)',
       'Collection Identifier',
       'Consortium',
       'Collection Data Type',
@@ -217,9 +218,17 @@ describe('AdvancedSearchFilters', () => {
     await user.click(screen.getByRole('checkbox', { name: 'Browsable' }))
 
     fireEvent.change(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' }))
-      .getByLabelText('New Granules Since (UTC)'), {
-      target: { value: '2026-01-01T12:34:56' }
+      .getByRole('textbox'), {
+      target: { value: '2026-01-01' }
     })
+    fireEvent.blur(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' }))
+      .getByRole('textbox'))
+    fireEvent.change(within(screen.getByRole('group', { name: 'Revised Granules Since (UTC)' }))
+      .getByRole('textbox'), {
+      target: { value: '2026-02-01' }
+    })
+    fireEvent.blur(within(screen.getByRole('group', { name: 'Revised Granules Since (UTC)' }))
+      .getByRole('textbox'))
 
     expect(screen.queryByRole('button', { name: 'Apply' })).not.toBeInTheDocument()
     expect(screen.queryByRole('checkbox', { name: 'Online Only' })).not.toBeInTheDocument()
@@ -228,7 +237,8 @@ describe('AdvancedSearchFilters', () => {
       doi: ['10.5067/EXAMPLE'],
       entryTitle: ['Example Collection'],
       consortium: ['CEOS'],
-      hasGranulesCreatedAt: '2026-01-01T12:34:56Z,',
+      hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
+      hasGranulesRevisedAt: '2026-02-01T00:00:00Z,',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE'],
       downloadable: true,
@@ -237,13 +247,15 @@ describe('AdvancedSearchFilters', () => {
       serviceName: ['test_service'],
       toolName: ['test_tool']
     }))
+    expect(screen.getAllByText('YYYY-MM-DD')).toHaveLength(2)
 
     expect(within(screen.getByRole('group', { name: 'Collection Identifier' }))
       .getByRole('button', { name: 'Clear' })).toBeVisible()
 
     await user.click(screen.getByRole('checkbox', { name: 'ATL03_004' }))
 
-    await user.click(screen.getByRole('button', { name: 'Clear' }))
+    await user.click(within(screen.getByRole('group', { name: 'Collection Identifier' }))
+      .getByRole('button', { name: 'Clear' }))
 
     expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
       .toHaveTextContent('10.5067/EXAMPLE')
@@ -438,7 +450,8 @@ describe('AdvancedSearchFilters', () => {
       }
     })
 
-    await user.click(screen.getByRole('button', { name: 'Clear' }))
+    await user.click(within(screen.getByRole('group', { name: 'Collection Identifier' }))
+      .getByRole('button', { name: 'Clear' }))
 
     expect(screen.getByRole('checkbox', { name: 'ATL03_004' })).not.toBeChecked()
     expect(changeQuery).toHaveBeenLastCalledWith({

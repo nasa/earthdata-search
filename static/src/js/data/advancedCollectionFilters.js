@@ -22,7 +22,13 @@ const advancedCollectionFilters = [
     key: 'hasGranulesCreatedAt',
     label: 'New Granules Since (UTC)',
     cmrKey: 'has_granules_created_at',
-    type: 'datetime-local'
+    type: 'date'
+  },
+  {
+    key: 'hasGranulesRevisedAt',
+    label: 'Revised Granules Since (UTC)',
+    cmrKey: 'has_granules_revised_at',
+    type: 'date'
   },
   {
     key: 'collectionDataType',
