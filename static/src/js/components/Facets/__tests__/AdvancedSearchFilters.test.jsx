@@ -275,21 +275,24 @@ describe('AdvancedSearchFilters', () => {
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
     await user.click(screen.getByRole('checkbox', { name: 'Browsable' }))
 
-    fireEvent.change(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' }))
-      .getByRole('textbox'), {
+    const newGranulesGroup = screen.getByRole('group', { name: 'New Granules Since (UTC)' })
+    fireEvent.change(within(newGranulesGroup).getByRole('textbox', { name: 'New Granules Since (UTC) from date' }), {
       target: { value: '2026-01-01' }
     })
 
-    fireEvent.blur(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' }))
-      .getByRole('textbox'))
+    fireEvent.blur(within(newGranulesGroup).getByRole('textbox', { name: 'New Granules Since (UTC) from date' }))
 
-    fireEvent.change(within(screen.getByRole('group', { name: 'Revised Granules Since (UTC)' }))
-      .getByRole('textbox'), {
+    const revisedGranulesGroup = screen.getByRole('group', { name: 'Revised Granules Since (UTC)' })
+    fireEvent.change(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) from date' }), {
       target: { value: '2026-02-01' }
     })
 
-    fireEvent.blur(within(screen.getByRole('group', { name: 'Revised Granules Since (UTC)' }))
-      .getByRole('textbox'))
+    fireEvent.blur(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) from date' }))
+    fireEvent.change(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) to date' }), {
+      target: { value: '2026-02-10' }
+    })
+
+    fireEvent.blur(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) to date' }))
 
     expect(screen.queryByRole('button', { name: 'Apply' })).not.toBeInTheDocument()
     expect(screen.queryByRole('checkbox', { name: 'Online Only' })).not.toBeInTheDocument()
@@ -302,7 +305,7 @@ describe('AdvancedSearchFilters', () => {
       entryTitle: ['Example Collection'],
       consortium: ['CEOS'],
       hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
-      hasGranulesRevisedAt: '2026-02-01T00:00:00Z,',
+      hasGranulesRevisedAt: '2026-02-01T00:00:00Z,2026-02-10T23:59:59Z',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE'],
       downloadable: true,
@@ -312,7 +315,7 @@ describe('AdvancedSearchFilters', () => {
       toolName: ['test_tool']
     }))
 
-    expect(screen.getAllByText('YYYY-MM-DD')).toHaveLength(2)
+    expect(screen.getAllByText('YYYY-MM-DD')).toHaveLength(4)
 
     await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
 

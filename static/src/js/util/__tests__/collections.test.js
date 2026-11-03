@@ -44,6 +44,28 @@ describe('#prepareCollectionParams', () => {
 })
 
 describe('#buildCollectionSearchParams', () => {
+  test.each(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])(
+    'requests CMR v2 facets when %s is selected',
+    (dateFilter) => {
+      const params = buildCollectionSearchParams({
+        [dateFilter]: '2015-01-01T10:00:00Z,',
+        featureFacets: {},
+        viewAllFacets: {}
+      })
+
+      expect(params.includeFacets).toEqual('v2')
+    }
+  )
+
+  test('requests CMR v2 facets when no granule activity date range is selected', () => {
+    const params = buildCollectionSearchParams({
+      featureFacets: {},
+      viewAllFacets: {}
+    })
+
+    expect(params.includeFacets).toEqual('v2')
+  })
+
   test('passes advanced collection filters to CMR', () => {
     const advancedFilters = {
       doi: '10.5067/EXAMPLE',
