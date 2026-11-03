@@ -4,7 +4,7 @@ import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import arcticHucProjectBody from './__mocks__/arctic_huc_project.body.json'
 import arcticReachProjectBody from './__mocks__/arctic_reach_project.body.json'
@@ -69,11 +69,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -116,11 +115,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'Search by point' }).click()
@@ -161,14 +159,13 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           // `overlays=none` ensures that none of the overlays are added. I'm seeing issues with
           // loading the VectorTile overlays and the map taking a long time to come into focus in
           // these tests. Without the vector layers it is working better
           await page.goto('/search?overlays=none')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -189,8 +186,8 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(500)
+          // Wait for the map to finish moving to the spatial and rendering
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-point-spatial-typed.png', {
@@ -223,11 +220,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
@@ -287,11 +283,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -336,11 +331,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'Search by circle' }).click()
@@ -383,11 +377,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -410,8 +403,8 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          // Wait for the map to finish moving to the spatial and rendering
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-circle-spatial-typed.png', {
@@ -444,9 +437,8 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
@@ -512,11 +504,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -562,11 +553,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'Search by rectangle' }).click()
@@ -610,11 +600,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -637,8 +626,8 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the succesfull paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          // Wait for the map to finish moving to the spatial and rendering
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-box-spatial-typed.png', {
@@ -673,9 +662,8 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -741,11 +729,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -937,11 +924,10 @@ test.describe('Map: Spatial interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         await page.getByRole('button', { name: 'Advanced Search' }).click()
       })
@@ -980,8 +966,6 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly @screenshot', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/9/)
-
           const dialog = await page.getByRole('dialog')
 
           const select = await dialog.getByRole('combobox')
@@ -997,8 +981,9 @@ test.describe('Map: Spatial interactions', () => {
 
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
-          // Wait for map animation to complete
-          await tilesPromise
+          await page.waitForURL(/zoom=10/)
+
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-reach-spatial.png', {
@@ -1030,6 +1015,19 @@ test.describe('Map: Spatial interactions', () => {
                 headers: {}
               })
             }
+
+            if (query.includes('mutation CreateProject')) {
+              await route.fulfill({
+                json: {
+                  data: {
+                    createProject: {
+                      obfuscatedId: '123456789'
+                    }
+                  }
+                },
+                headers: {}
+              })
+            }
           })
 
           await page.route('**/projects', async (route) => {
@@ -1041,8 +1039,6 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly @screenshot', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
-
           const dialog = await page.getByRole('dialog')
 
           await dialog.getByRole('textbox', { value: 'keyword' }).type('04010101')
@@ -1055,8 +1051,9 @@ test.describe('Map: Spatial interactions', () => {
 
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
-          // Wait for map animation to complete
-          await tilesPromise
+          await page.waitForURL(/projectId=123456789/)
+
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-huc-spatial.png', {
@@ -1086,11 +1083,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1133,11 +1129,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'Search by point' }).click()
@@ -1178,11 +1173,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1204,8 +1198,8 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the succesfull paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for the map to update
-          await page.waitForTimeout(250)
+          // Wait for the map to finish moving to the spatial and rendering
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-point-spatial-typed.png', {
@@ -1232,11 +1226,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1283,11 +1276,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'Search by circle' }).click()
@@ -1330,11 +1322,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1359,8 +1350,8 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the succesfull paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          // Wait for the map to finish moving to the spatial and rendering
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-circle-spatial-typed.png', {
@@ -1388,11 +1379,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1438,11 +1428,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'Search by rectangle' }).click()
@@ -1486,11 +1475,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1513,8 +1501,8 @@ test.describe('Map: Spatial interactions', () => {
           // was fulfilled correctly with the succesfull paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          // Wait for the map to finish moving to the spatial and rendering
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-box-spatial-typed.png', {
@@ -1542,11 +1530,10 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1654,11 +1641,10 @@ test.describe('Map: Spatial interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         await page.getByRole('button', { name: 'Advanced search' }).click()
       })
@@ -1698,8 +1684,6 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly @screenshot', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
-
           const dialog = await page.getByRole('dialog')
 
           const select = await dialog.getByRole('combobox')
@@ -1715,7 +1699,9 @@ test.describe('Map: Spatial interactions', () => {
 
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
-          await tilesPromise
+          await page.waitForURL(/zoom=9/)
+
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-reach-spatial.png', {
@@ -1748,6 +1734,19 @@ test.describe('Map: Spatial interactions', () => {
                 headers: {}
               })
             }
+
+            if (query.includes('mutation CreateProject')) {
+              await route.fulfill({
+                json: {
+                  data: {
+                    createProject: {
+                      obfuscatedId: '123456789'
+                    }
+                  }
+                },
+                headers: {}
+              })
+            }
           })
 
           await page.route('**/projects', async (route) => {
@@ -1759,8 +1758,6 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly @screenshot', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
-
           const dialog = await page.getByRole('dialog')
 
           await dialog.getByRole('textbox', { value: 'keyword' }).type('04010101')
@@ -1773,7 +1770,9 @@ test.describe('Map: Spatial interactions', () => {
 
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
-          await tilesPromise
+          await page.waitForURL(/projectId=123456789/)
+
+          await waitForMapRenderComplete(page)
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-huc-spatial.png', {
@@ -1851,11 +1850,10 @@ test.describe('Map: Spatial interactions', () => {
         })
       })
 
-      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
       await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&lat=-6.300790127755789&long=45.26748690488419&zoom=5.925373594462485&tl=1622520000!3!!`)
 
       // Wait for the map to load
-      await initialMapPromise
+      await waitForMapRenderComplete(page)
     })
 
     test('displays a hint about using a bounding box instead of polygon and an MBR on the map @screenshot', async ({ page }) => {
