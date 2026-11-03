@@ -537,5 +537,27 @@ test.describe('Map: Control interactions', () => {
         await expect(page).toHaveURL('search?overlays=coastlines')
       })
     })
+ 
+    test.describe('When loading a polar projection map with zoom=0', () => {
+      test('preserves zoom=0 in URL on page reload', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
+
+        await page.goto('/search?projection=EPSG%3A3413&zoom=0')
+
+        await initialMapPromise
+
+        await expect(page).toHaveURL(/zoom=0/)
+
+        await page.reload()
+
+        await expect(page).toHaveURL(/zoom=0/)
+      })
+    })
   })
 })
