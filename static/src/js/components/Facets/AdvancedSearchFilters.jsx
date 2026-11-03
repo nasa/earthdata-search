@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button'
 
 import FacetsList from './FacetsList'
 import AdvancedFilterValueInput from './AdvancedFilterValueInput'
+import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import useEdscStore from '../../zustand/useEdscStore'
@@ -231,6 +232,47 @@ const AdvancedSearchFilters = ({
       )
     }
 
+    if (type === 'date') {
+      const selectedDate = value ? new Date(value.split(',')[0]) : null
+      const pickerValue = selectedDate && Number.isFinite(selectedDate.getTime())
+        ? selectedDate.toISOString()
+        : ''
+
+      return (
+        <Form.Group
+          key={key}
+          controlId={`advanced-search-${key}`}
+          role="group"
+          aria-label={label}
+        >
+          <Form.Label>{label}</Form.Label>
+          <DatepickerContainer
+            filterType="collection"
+            format="YYYY-MM-DD"
+            id={`advanced-search-${key}-datepicker`}
+            label={label}
+            onSubmit={(dateValue, shouldSubmit, action) => {
+              if (!shouldSubmit) return
+              if (action === 'Clear') {
+                updateValue(undefined)
+                return
+              }
+
+              if (dateValue?.isValid()) {
+                const utcMidnight = dateValue.clone().utc().startOf('day')
+                updateValue(`${utcMidnight.toISOString().replace('.000Z', 'Z')},`)
+              }
+            }}
+            shouldValidate={false}
+            size="sm"
+            type="start"
+            value={pickerValue}
+            viewMode="years"
+          />
+        </Form.Group>
+      )
+    }
+
     return (
       <Form.Group
         key={key}
@@ -242,17 +284,10 @@ const AdvancedSearchFilters = ({
         <Form.Control
           size="sm"
           type={type}
-          step={type === 'datetime-local' ? 1 : undefined}
-          value={
-            type === 'datetime-local'
-              ? (value || '').split(',')[0].replace(/Z$/, '') : value || ''
-          }
+          value={value || ''}
           onChange={
             (event) => {
-              const nextValue = event.target.value
-              updateValue(type === 'datetime-local' && nextValue
-                ? `${new Date(`${nextValue}Z`).toISOString().replace('.000Z', 'Z')},`
-                : nextValue)
+              updateValue(event.target.value)
             }
           }
         />
@@ -263,7 +298,7 @@ const AdvancedSearchFilters = ({
   const getAdvancedFilters = (keys) => (
     advancedCollectionFilters.filter(({ key }) => keys.includes(key))
   )
-  const newGranulesFilter = advancedCollectionFilters.find(({ key }) => key === 'hasGranulesCreatedAt')
+  const granuleDateFilters = getAdvancedFilters(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])
   const enumFilters = getAdvancedFilters(['consortium', 'collectionDataType', 'collectionProgress'])
   const textEntryFilters = getAdvancedFilters(textEntryFilterKeys)
   const accessFilters = getAdvancedFilters(['downloadable', 'browsable'])
@@ -309,7 +344,7 @@ const AdvancedSearchFilters = ({
         }
       </header>
       <div className="advanced-search-filters__body">
-        {renderAdvancedFilter(newGranulesFilter)}
+        {granuleDateFilters.map(renderAdvancedFilter)}
         <fieldset>
           <legend>Collection Identifier</legend>
           <div className="d-flex flex-wrap gap-2 mb-2 small">
