@@ -18,7 +18,7 @@ export const PanelSection = ({
   ])
 
   return (
-    <section className={className}>
+    <section className={className} data-testid="search-results-panel-section">
       {children}
     </section>
   )

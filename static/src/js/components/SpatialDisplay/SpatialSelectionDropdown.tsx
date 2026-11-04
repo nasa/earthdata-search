@@ -94,6 +94,7 @@ const SpatialSelectionDropdown: React.FC<SpatialSelectionDropdownProps> = (
   return (
     <Dropdown
       className="spatial-selection-dropdown"
+      data-testid="spatial-filter-dropdown"
       placement="bottom-start"
     >
       <Dropdown.Toggle

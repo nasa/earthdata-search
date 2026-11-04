@@ -73,6 +73,7 @@ class MapControls extends Control {
   constructor(options: MapControlsOptions) {
     const element = document.createElement('div')
     element.className = 'map-controls d-flex flex-column align-items-end'
+    element.dataset.testid = 'map-controls'
 
     // OpenLayers adds pointerEvents: 'auto' to the element unless we override it here
     // This ensures the user can still interact with the map under this map-controls div
