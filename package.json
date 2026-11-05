@@ -48,6 +48,8 @@
     "playwright": "NODE_ENV=playwright nyc playwright test --reporter=list",
     "vite-bundle-vis": "npx vite-bundle-visualizer --sourcemap",
     "playwright:ui": "npx playwright test --ui",
+    "playwright:docker": "bin/playwright-docker.sh",
+    "playwright:update-snapshots": "bin/playwright-docker.sh --update-snapshots --grep @screenshot --retries=2",
     "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage",
     "deploy-infrastructure": "cd cdk/earthdata-search-infrastructure && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
     "deploy-application": "cd cdk/earthdata-search && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",

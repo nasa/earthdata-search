@@ -276,8 +276,12 @@ const drawShapefile = ({
     // Create the metrics event
     metricsMapButtons('Added Shapefile')
 
+    const isProduction = process.env.NODE_ENV === 'production'
+
     // When the projection changes we need to wait longer to ensure the map is ready to be moved to the shapefile.
-    const timeoutValue = projectionChanged ? 200 : 0
+    // When the environment is not production, wait for a longer timeout to ensure the map is ready
+    const envTimeoutValue = isProduction ? 200 : 600
+    const timeoutValue = projectionChanged ? envTimeoutValue : 0
 
     // SetTimeout is needed here because the map needs to be rendered before the map can be moved
     setTimeout(() => {

@@ -12,6 +12,7 @@ const setup = setupTest({
   Component: CollectionResultsTable,
   defaultProps: {
     collectionsMetadata: collectionData,
+    isActive: true,
     isItemLoaded: vi.fn(),
     itemCount: 1,
     loadMoreItems: vi.fn(),
@@ -148,6 +149,7 @@ describe('CollectionResultsTable component', () => {
       ],
       data: collectionData,
       itemCount: 1,
+      isActive: true,
       loadMoreItems: expect.any(Function),
       isItemLoaded: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),

@@ -23,6 +23,16 @@ import GranuleResultsFocusedMeta from '../../GranuleResults/GranuleResultsFocuse
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsCollectionSortChange } from '../../../util/metrics/metricsCollectionSortChange'
 
+// Mocking window.getComputedStyle for jsdom which does not have the visual rendering needed for layout calculations
+const mockGetComputedStyle = vi.fn().mockImplementation(() => ({
+  // Simplebar-react calls getPropertyValue on the returned object. We mock it to prevent the test from crashing.
+  getPropertyValue: () => ''
+}))
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: mockGetComputedStyle
+})
+
 vi.mock('tiny-cookie', () => ({
   get: vi.fn().mockReturnValue('')
 }))

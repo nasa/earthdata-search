@@ -138,6 +138,7 @@ innerElementType.displayName = 'EDSCTableInnerElement'
  * @param {Array} props.data - The collection data.
  * @param {Array} props.focusedItem - The item in focus (granule).
  * @param {String} props.id - A unique id to pass the table.
+ * @param {Boolean} props.isActive - Whether the table is currently active.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Object} props.initialTableState - The initial state to be passed to react-table.
  * @param {Boolean} props.itemCount - The current count of rows to show.
@@ -161,6 +162,7 @@ const EDSCTable = ({
   id,
   initialRowStateAccessor = null,
   initialTableState = {},
+  isActive,
   isItemLoaded = null,
   itemCount = null,
   loadMoreItems = null,
@@ -442,13 +444,15 @@ const EDSCTable = ({
       id={id}
       className={tableClassName}
     >
-      <AutoSizer style={
-        {
-          position: 'relative',
-          height: '100%',
-          width: '100%'
+      <AutoSizer
+        key={isActive ? 'active' : 'inactive'}
+        style={
+          {
+            position: 'relative',
+            height: '100%',
+            width: '100%'
+          }
         }
-      }
       >
         {
           ({ height, width }) => (
@@ -528,6 +532,7 @@ EDSCTable.propTypes = {
   id: PropTypes.string.isRequired,
   initialRowStateAccessor: PropTypes.func,
   initialTableState: PropTypes.shape({}),
+  isActive: PropTypes.bool.isRequired,
   isItemLoaded: PropTypes.func,
   isLoading: PropTypes.bool,
   itemCount: PropTypes.number,

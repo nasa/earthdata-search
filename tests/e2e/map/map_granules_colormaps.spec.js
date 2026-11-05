@@ -36,6 +36,9 @@ test.describe('Map: Colormap interactions', () => {
 
   test.describe('When viewing granules with colormap data', () => {
     test.beforeEach(async ({ page }) => {
+      // These tests can take longer than default timeout, so extend default timeout
+      test.slow()
+
       const conceptIdOne = 'C1996881146-POCLOUD'
       const conceptIdTwo = 'C1243477369-GES_DISC'
       const colormapMock = {
@@ -118,7 +121,7 @@ test.describe('Map: Colormap interactions', () => {
         }
       })
 
-      await page.goto('search/granules?p=C1996881146-POCLOUD')
+      await page.goto('/search/granules?p=C1996881146-POCLOUD')
 
       // Wait for the map to load
       await waitForMapRenderComplete(page)

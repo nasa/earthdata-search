@@ -80,7 +80,7 @@ const PortalLinkContainer = ({
   // Build the onClick function
   const onClickWithChangePath = async (event) => {
     // If the onClick prop was provided call it
-    if (onClick) onClick(event)
+    if (onClick) await onClick(event)
 
     // If the updatePath prop was true, call changePath
     if (updatePath) {

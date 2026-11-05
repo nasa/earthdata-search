@@ -22,6 +22,7 @@ import './CollectionResultsTable.scss'
  * Renders CollectionResultsTable.
  * @param {Object} props - The props passed into the component.
  * @param {Array} props.collections - Collections passed from the store.
+ * @param {Boolean} props.isActive - Whether the collection results panel is currently active.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
@@ -30,6 +31,7 @@ import './CollectionResultsTable.scss'
  */
 export const CollectionResultsTable = ({
   collectionsMetadata,
+  isActive,
   isItemLoaded,
   itemCount,
   loadMoreItems,
@@ -300,6 +302,7 @@ export const CollectionResultsTable = ({
         visibleMiddleIndex={visibleMiddleIndex}
         columns={columns}
         data={collectionsMetadata}
+        isActive={isActive}
         itemCount={itemCount}
         loadMoreItems={loadMoreItems}
         isItemLoaded={isItemLoaded}
@@ -314,6 +317,7 @@ CollectionResultsTable.propTypes = {
   collectionsMetadata: PropTypes.arrayOf(
     collectionMetadataPropType
   ).isRequired,
+  isActive: PropTypes.bool.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

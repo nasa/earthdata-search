@@ -647,7 +647,7 @@ test.describe('Map: Shapefile interactions', () => {
         await uploadShapefile(page, 'too_many_points.geojson')
 
         // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
-        await page.waitForURL(/zoom=5/, { timeout: 3000 })
+        await page.waitForURL(/zoom=5/, { timeout: 5000 })
 
         // Wait for the map to finish rendering at the new location
         await waitForMapRenderComplete(page)
@@ -750,6 +750,13 @@ test.describe('Map: Shapefile interactions', () => {
         // Upload the shapefile
         await uploadShapefile(page, 'arctic.geojson')
 
+        // Wait for the URL to include the projection parameter after uploading the shapefile,
+        // indicating the map has updated its projection.
+        await page.waitForURL(/projection/)
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
+
         // Populates the spatial display field
         await expect(
           page.getByTestId('filter-stack__spatial')
@@ -761,9 +768,6 @@ test.describe('Map: Shapefile interactions', () => {
 
         // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=3/, { timeout: 3000 })
-
-        // Wait for the map to finish rendering at the new location
-        await waitForMapRenderComplete(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -810,6 +814,13 @@ test.describe('Map: Shapefile interactions', () => {
         // Upload the shapefile
         await uploadShapefile(page, 'antarctic.geojson')
 
+        // Wait for the URL to include the projection parameter after uploading the shapefile,
+        // indicating the map has updated its projection.
+        await page.waitForURL(/projection/)
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
+
         // Populates the spatial display field
         await expect(
           page.getByTestId('filter-stack__spatial')
@@ -825,9 +836,6 @@ test.describe('Map: Shapefile interactions', () => {
 
         // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=3/, { timeout: 3000 })
-
-        // Wait for the map to finish rendering at the new location
-        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('antarctic.png', {

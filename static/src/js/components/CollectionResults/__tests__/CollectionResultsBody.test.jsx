@@ -29,6 +29,7 @@ vi.mock('react-router', async () => ({
 const setup = setupTest({
   Component: CollectionResultsBody,
   defaultProps: {
+    isActive: true,
     loadNextPage: vi.fn(),
     panelView: 'list'
   },
@@ -104,6 +105,7 @@ describe('CollectionResultsBody component', () => {
       collectionsMetadata: [{
         ...collectionResultsBodyData
       }],
+      isActive: true,
       isItemLoaded: expect.any(Function),
       itemCount: 2,
       loadMoreItems: expect.any(Function),
@@ -124,6 +126,7 @@ describe('CollectionResultsBody component', () => {
       collectionsMetadata: [{
         ...collectionResultsBodyData
       }],
+      isActive: true,
       isItemLoaded: expect.any(Function),
       itemCount: 2,
       loadMoreItems: expect.any(Function),
@@ -148,6 +151,7 @@ describe('CollectionResultsBody component', () => {
     expect(CollectionResultsList).toHaveBeenCalledTimes(1)
     expect(CollectionResultsList).toHaveBeenCalledWith({
       collectionsMetadata: [],
+      isActive: true,
       isItemLoaded: expect.any(Function),
       itemCount: 1,
       loadMoreItems: expect.any(Function),

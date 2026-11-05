@@ -15,12 +15,18 @@ describe('changeUrl', () => {
     })
 
     test('calls replace when the pathname has not changed', () => {
-      const newPath = '/search?p=C00001-EDSC'
+      const newPath = '/search?p=C00002-EDSC'
 
       changeUrl(newPath)
 
       expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
       expect(routerHelper.router?.navigate).toHaveBeenCalledWith(newPath, { replace: true })
+    })
+
+    test('does not navigate when the URL has not changed', () => {
+      changeUrl('/search?p=C00001-EDSC')
+
+      expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(0)
     })
 
     test('calls push when the pathname has changed', () => {
@@ -70,6 +76,22 @@ describe('changeUrl', () => {
 
       expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
       expect(routerHelper.router?.navigate).toHaveBeenCalledWith(newPath, { replace: false })
+    })
+
+    test('does not navigate when the URL has not changed', () => {
+      routerHelper.router!.state = {
+        location: {
+          pathname: '/search',
+          search: '?p=C00001-EDSC'
+        }
+      }
+
+      changeUrl({
+        pathname: '/search',
+        search: '?p=C00001-EDSC'
+      })
+
+      expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(0)
     })
   })
 

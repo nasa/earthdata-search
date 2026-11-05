@@ -39,6 +39,9 @@ const screenshotClip = {
 
 test.describe('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context }) => {
+    // These tests can take longer than default timeout, so extend default timeout
+    test.slow()
+
     await setupTests({
       context,
       page

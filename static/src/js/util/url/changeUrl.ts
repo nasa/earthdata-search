@@ -11,17 +11,38 @@ import useEdscStore from '../../zustand/useEdscStore'
 type UpdateUrlParams = {
   /** Parameters for updating the URL */
   options: string | Record<string, unknown>,
-  /** The current pathname before the update */
-  oldPathname: string,
+  /** The current location before the update */
+  oldLocation: Router['state']['location'],
   /** The new pathname after the update */
-  newPathname: string
+  newPathname: string,
+  /** The new search string after the update */
+  newSearch: string
+}
+
+// Treat '', '?' and undefined as the same empty search string
+const normalizeSearch = (search?: string) => {
+  if (!search || search === '?') return ''
+
+  return search.startsWith('?') ? search : `?${search}`
 }
 
 const updateUrl = async ({
   options,
-  oldPathname,
-  newPathname
+  oldLocation,
+  newPathname,
+  newSearch
 }: UpdateUrlParams) => {
+  const { pathname: oldPathname, search: oldSearch } = oldLocation
+
+  // Navigating to the URL we're already on would push a duplicate history entry
+  // (React Router doesn't dedupe), requiring an extra Back click. Skip it.
+  if (
+    oldPathname === newPathname
+    && normalizeSearch(oldSearch) === normalizeSearch(newSearch)
+  ) {
+    return
+  }
+
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different
   await routerHelper.router?.navigate(options, { replace: oldPathname === newPathname })
@@ -42,7 +63,7 @@ const updateUrl = async ({
  */
 export const changeUrl = async (options: string | Record<string, unknown>) => {
   const { location } = routerHelper.router?.state || {} as Router['state']
-  const { pathname: oldPathname } = location
+  const { pathname: oldPathname, search: oldSearch } = location
 
   let newPathname: string
 
@@ -67,16 +88,23 @@ export const changeUrl = async (options: string | Record<string, unknown>) => {
 
       await updateUrl({
         options: newOptions,
-        oldPathname,
-        newPathname
+        oldLocation: location,
+        newPathname,
+        newSearch: stripParameters ? '' : newSearch
       })
     } else {
-      ({ pathname: newPathname } = options as { pathname: string })
+      // Missing keys keep the current value, so only the provided piece of the url changes
+      const {
+        pathname = oldPathname,
+        search = oldSearch
+      } = options as { pathname?: string, search?: string }
+      newPathname = pathname
 
       await updateUrl({
         options,
-        oldPathname,
-        newPathname
+        oldLocation: location,
+        newPathname,
+        newSearch: search
       })
     }
   } catch (error) {
