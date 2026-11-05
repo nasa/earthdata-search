@@ -10,7 +10,7 @@ Earthdata Search is actively developed and maintained by an internal team alongs
 
 1. **Search existing issues and PRs** to see if your idea or bug is already being addressed.
 2. **Open a new GitHub Issue** to propose your change, report a bug, or request a feature. There should be a 1:1 ratio of request to issue. Please do not lump requests together as that makes tracking them more difficult.
-3. **Wait for a maintainer to respond.** We will review your issue, discuss the approach, and confirm if it aligns with our roadmap. If approved, we will track it internally and give you the green light to begin development. Our team will put the ticket into our own backlog and if a solution has not been proposed by the time we are ready to work it ourselves, then we will work it.
+3. **Wait for a maintainer to respond.** Repository maintainers regularly check for issues and will flag issues as 'under review' when they're ready to bring it to the team. We will review your issue, discuss the approach, and confirm if it aligns with our roadmap within one working week. If approved, we will track it internally and give you the green light to begin development. Our team will put the ticket into our own backlog and if a solution has not been proposed by the time we are ready to work it ourselves, then we will work it.
 
 ## Making Changes
 
