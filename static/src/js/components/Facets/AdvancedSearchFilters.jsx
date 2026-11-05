@@ -255,7 +255,8 @@ const AdvancedSearchFilters = ({
   const getAdvancedFilters = (keys) => (
     advancedCollectionFilters.filter(({ key }) => keys.includes(key))
   )
-  const granuleDateFilters = getAdvancedFilters(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])
+  // TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
+  // const granuleDateFilters = getAdvancedFilters(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])
   const identifierFilters = getAdvancedFilters(identifierFilterKeys)
   const enumFilters = getAdvancedFilters(['consortium', 'collectionDataType', 'collectionProgress'])
   const textEntryFilters = getAdvancedFilters(['doi', 'entryTitle', 'variableName', 'serviceName', 'toolName'])
@@ -302,12 +303,14 @@ const AdvancedSearchFilters = ({
         }
       </header>
       <div className="advanced-search-filters__body">
+        {/* TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
         <fieldset className="advanced-search-filters__date-section">
           <legend className="advanced-search-filters__section-heading">Granule Activity</legend>
           <div className="advanced-search-filters__date-filters">
             {granuleDateFilters.map(renderAdvancedFilter)}
           </div>
         </fieldset>
+        */}
         <fieldset className="advanced-search-filters__identifier-section">
           <legend className="advanced-search-filters__section-heading">Collection Identifier</legend>
           <div className="advanced-search-filters__identifier-filters">
