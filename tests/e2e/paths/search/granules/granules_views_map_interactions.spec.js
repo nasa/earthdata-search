@@ -143,6 +143,9 @@ test.describe('When clicking on a granule on the map', () => {
 
   test.describe('When clicking on a map granule while in the granule table view', () => {
     test.beforeEach(async ({ page }) => {
+      // These tests can take longer than default timeout, so extend default timeout
+      test.slow()
+
       // Click on the view button and select table
 
       // "View: List" button
