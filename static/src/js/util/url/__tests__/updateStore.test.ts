@@ -33,11 +33,18 @@ describe('updateStore', () => {
     expect(useEdscStore.getState().query.collection.shortName).toBeUndefined()
   })
 
-  test('clears version constraints for restored multiple short names', async () => {
+  test('preserves versions for restored multiple short names', async () => {
     await updateStore(decodeUrlParams('short_name[0]=ATL03&short_name[1]=ATL06&version=004'), '/search')
 
     expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03', 'ATL06'])
-    expect(useEdscStore.getState().query.collection.version).toBeUndefined()
+    expect(useEdscStore.getState().query.collection.version).toEqual(['004'])
+  })
+
+  test('preserves restored versions without short names', async () => {
+    await updateStore(decodeUrlParams('version[0]=004&version[1]=005'), '/search')
+
+    expect(useEdscStore.getState().query.collection.shortName).toBeUndefined()
+    expect(useEdscStore.getState().query.collection.version).toEqual(['004', '005'])
   })
 
   test('sets the zustand state', async () => {
