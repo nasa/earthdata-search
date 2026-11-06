@@ -1,11 +1,24 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import Form from 'react-bootstrap/Form'
+// @ts-expect-error: This file does not have types
 import { Plus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaTimes } from 'react-icons/fa'
 import AppButton from '../Button/Button'
 
-const AdvancedFilterValueInput = ({ label, selected, onChange }) => {
+interface AdvancedFilterValueInputProps {
+  /** The filter label, used in the input and button accessible names */
+  label: string
+  /** The currently selected values */
+  selected: string[]
+  /** Callback with the full list of selected values after an add or remove */
+  onChange: (values: string[]) => void
+}
+
+const AdvancedFilterValueInput: React.FC<AdvancedFilterValueInputProps> = ({
+  label,
+  selected,
+  onChange
+}) => {
   const [value, setValue] = useState('')
   const trimmedValue = value.trim()
   const canAdd = trimmedValue.length > 0 && !selected.includes(trimmedValue)
@@ -17,7 +30,7 @@ const AdvancedFilterValueInput = ({ label, selected, onChange }) => {
     setValue('')
   }
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return
 
     event.preventDefault()
@@ -32,7 +45,7 @@ const AdvancedFilterValueInput = ({ label, selected, onChange }) => {
           type="text"
           aria-label={`Add ${label}`}
           value={value}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value)}
           onKeyDown={handleKeyDown}
         />
         <AppButton
@@ -76,12 +89,6 @@ const AdvancedFilterValueInput = ({ label, selected, onChange }) => {
       }
     </>
   )
-}
-
-AdvancedFilterValueInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onChange: PropTypes.func.isRequired
 }
 
 export default AdvancedFilterValueInput

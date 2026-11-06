@@ -3,31 +3,66 @@ import React, {
   useRef,
   useState
 } from 'react'
-import PropTypes from 'prop-types'
 import { pick } from 'lodash-es'
+import type { Moment } from 'moment'
 import { FaTimes } from 'react-icons/fa'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
+// @ts-expect-error: This file does not have types
 import FacetsList from './FacetsList'
 import AdvancedFilterValueInput from './AdvancedFilterValueInput'
+// @ts-expect-error: This file does not have types
 import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+// @ts-expect-error: This file does not have types
 import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
+import type { QuerySlice } from '../../zustand/types'
 
 import './AdvancedSearchFilters.scss'
 
-const advancedFilterKeys = advancedCollectionFilters.map(({ key }) => key)
-const identifierFilterKeys = ['entryId', 'shortName', 'version']
-const toArray = (value) => {
-  if (Array.isArray(value)) return value
+type CollectionQuery = QuerySlice['query']['collection']
 
-  return value ? [value] : []
+type AdvancedFilterKey = 'doi'
+  | 'entryTitle'
+  | 'consortium'
+  | 'entryId'
+  | 'shortName'
+  | 'version'
+  | 'hasGranulesCreatedAt'
+  | 'hasGranulesRevisedAt'
+  | 'collectionDataType'
+  | 'collectionProgress'
+  | 'downloadable'
+  | 'browsable'
+  | 'variableName'
+  | 'serviceName'
+  | 'toolName'
+
+type AdvancedFilterValues = Pick<Partial<CollectionQuery>, AdvancedFilterKey>
+type AdvancedFilterValue = AdvancedFilterValues[AdvancedFilterKey]
+
+interface AdvancedFilterDefinition {
+  key: AdvancedFilterKey
+  label: string
+  type: string
+  options?: string[]
 }
 
-const renderSelectedCount = (value) => {
+type DateBound = 'start' | 'end'
+
+const filterDefinitions = advancedCollectionFilters as AdvancedFilterDefinition[]
+const advancedFilterKeys = filterDefinitions.map(({ key }) => key)
+const identifierFilterKeys: AdvancedFilterKey[] = ['entryId', 'shortName', 'version']
+const toArray = (value: AdvancedFilterValue): string[] => {
+  if (Array.isArray(value)) return value
+
+  return typeof value === 'string' && value ? [value] : []
+}
+
+const renderSelectedCount = (value: AdvancedFilterValue) => {
   const count = Array.isArray(value) ? value.length : Number(Boolean(value))
 
   if (!count) return null
@@ -39,15 +74,23 @@ const renderSelectedCount = (value) => {
   )
 }
 
-const AdvancedSearchFilters = ({
+interface AdvancedSearchFiltersProps {
+  /** Closes the Advanced Filters column; the close button is hidden when omitted */
+  onClose?: (() => void) | null
+}
+
+const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   onClose = null
 }) => {
-  const query = useEdscStore(getCollectionsQuery)
+  const query: Partial<CollectionQuery> = useEdscStore(getCollectionsQuery)
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
-  const [advancedFilters, setAdvancedFilters] = useState(pick(query, advancedFilterKeys))
+  const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilterValues>(
+    pick(query, advancedFilterKeys)
+  )
+
   const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
-  const formRef = useRef(null)
-  const selectedOptionsCount = advancedCollectionFilters.reduce((count, { key }) => {
+  const formRef = useRef<HTMLDivElement>(null)
+  const selectedOptionsCount = filterDefinitions.reduce((count, { key }) => {
     const value = query[key]
     const selectedCountForFilter = Array.isArray(value)
       ? value.length
@@ -66,7 +109,7 @@ const AdvancedSearchFilters = ({
     setAdvancedFilters(JSON.parse(appliedFiltersKey))
   }, [appliedFiltersKey])
 
-  const updateAdvancedFilter = (key, nextValue) => {
+  const updateAdvancedFilter = (key: AdvancedFilterKey, nextValue: AdvancedFilterValue) => {
     setAdvancedFilters((current) => ({
       ...current,
       [key]: nextValue
@@ -76,14 +119,14 @@ const AdvancedSearchFilters = ({
     if (typeof queryValue === 'string') queryValue = queryValue.trim() || undefined
     if (Array.isArray(queryValue) && !queryValue.length) queryValue = undefined
 
-    changeQuery({ collection: { [key]: queryValue } })
+    changeQuery({ collection: { [key]: queryValue } as Partial<CollectionQuery> })
   }
 
   const renderAdvancedFilter = ({
     key, label, type, options = []
-  }) => {
+  }: AdvancedFilterDefinition) => {
     const value = advancedFilters[key]
-    const updateValue = (nextValue) => updateAdvancedFilter(key, nextValue)
+    const updateValue = (nextValue: AdvancedFilterValue) => updateAdvancedFilter(key, nextValue)
 
     if (type === 'array') {
       const selected = toArray(value)
@@ -117,13 +160,16 @@ const AdvancedSearchFilters = ({
             optimisticSelection={false}
             facets={
               choices.map((choice) => ({
-                title: choice.replaceAll('_', ' '),
+                title: choice.replace(/_/g, ' '),
                 value: choice,
                 applied: selected.includes(choice)
               }))
             }
             changeHandler={
-              (event, { value: choice }) => updateValue(event.target.checked
+              (
+                event: React.ChangeEvent<HTMLInputElement>,
+                { value: choice }: { value: string }
+              ) => updateValue(event.target.checked
                 ? [...selected, choice] : selected.filter((entry) => entry !== choice))
             }
           />
@@ -144,7 +190,11 @@ const AdvancedSearchFilters = ({
             id={`advanced-search-${key}`}
             label={label}
             checked={!!value}
-            onChange={(event) => updateValue(event.target.checked || undefined)}
+            onChange={
+              (event: React.ChangeEvent<HTMLInputElement>) => (
+                updateValue(event.target.checked || undefined)
+              )
+            }
           />
           {renderSelectedCount(value)}
         </div>
@@ -152,8 +202,8 @@ const AdvancedSearchFilters = ({
     }
 
     if (type === 'date') {
-      const [startValue = '', endValue = ''] = (value || '').split(',')
-      const getPickerValue = (dateValue) => {
+      const [startValue = '', endValue = ''] = (typeof value === 'string' ? value : '').split(',')
+      const getPickerValue = (dateValue: string) => {
         if (!dateValue) return ''
 
         const selectedDate = new Date(dateValue)
@@ -161,7 +211,12 @@ const AdvancedSearchFilters = ({
         return Number.isFinite(selectedDate.getTime()) ? selectedDate.toISOString() : ''
       }
 
-      const updateDateRange = (bound, dateValue, shouldSubmit, action) => {
+      const updateDateRange = (
+        bound: DateBound,
+        dateValue: Moment | undefined,
+        shouldSubmit: boolean,
+        action?: string
+      ) => {
         if (!shouldSubmit) return
 
         const nextBounds = [startValue, endValue]
@@ -181,7 +236,7 @@ const AdvancedSearchFilters = ({
         updateValue(nextBounds.some(Boolean) ? nextBounds.join(',') : undefined)
       }
 
-      const renderDateBound = (bound, boundValue) => {
+      const renderDateBound = (bound: DateBound, boundValue: string) => {
         const boundLabel = bound === 'start' ? 'From' : 'To'
 
         return (
@@ -197,7 +252,11 @@ const AdvancedSearchFilters = ({
               id={`advanced-search-${key}-${bound}-datepicker`}
               label={`${label} ${boundLabel.toLowerCase()} date`}
               onSubmit={
-                (dateValue, shouldSubmit, action) => (
+                (
+                  dateValue: Moment | undefined,
+                  shouldSubmit: boolean,
+                  action?: string
+                ) => (
                   updateDateRange(bound, dateValue, shouldSubmit, action)
                 )
               }
@@ -241,9 +300,9 @@ const AdvancedSearchFilters = ({
         <Form.Control
           size="sm"
           type={type}
-          value={value || ''}
+          value={typeof value === 'string' ? value : ''}
           onChange={
-            (event) => {
+            (event: React.ChangeEvent<HTMLInputElement>) => {
               updateValue(event.target.value)
             }
           }
@@ -252,8 +311,8 @@ const AdvancedSearchFilters = ({
     )
   }
 
-  const getAdvancedFilters = (keys) => (
-    advancedCollectionFilters.filter(({ key }) => keys.includes(key))
+  const getAdvancedFilters = (keys: AdvancedFilterKey[]) => (
+    filterDefinitions.filter(({ key }) => keys.includes(key))
   )
   // TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
   // const granuleDateFilters = getAdvancedFilters(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])
@@ -271,7 +330,7 @@ const AdvancedSearchFilters = ({
       tabIndex={-1}
       aria-label="Advanced Filters"
       onKeyDown={
-        (event) => {
+        (event: React.KeyboardEvent<HTMLFormElement>) => {
           if (event.key === 'Escape' && onClose) onClose()
         }
       }
@@ -329,10 +388,6 @@ const AdvancedSearchFilters = ({
       </div>
     </Form>
   )
-}
-
-AdvancedSearchFilters.propTypes = {
-  onClose: PropTypes.func
 }
 
 export default AdvancedSearchFilters
