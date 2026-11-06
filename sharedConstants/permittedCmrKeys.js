@@ -20,8 +20,6 @@ export const collectionRequestPermittedCmrKeys = [
   'granule_data_format',
   'has_granules_or_cwic',
   'has_granules',
-  'has_granules_created_at',
-  'has_granules_revised_at',
   'horizontal_data_resolution_range',
   'include_facets',
   'include_granule_counts',

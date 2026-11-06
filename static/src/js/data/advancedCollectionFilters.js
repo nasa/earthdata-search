@@ -37,18 +37,6 @@ const advancedCollectionFilters = [
     type: 'array'
   },
   {
-    key: 'hasGranulesCreatedAt',
-    label: 'New Granules Since (UTC)',
-    cmrKey: 'has_granules_created_at',
-    type: 'date'
-  },
-  {
-    key: 'hasGranulesRevisedAt',
-    label: 'Revised Granules Since (UTC)',
-    cmrKey: 'has_granules_revised_at',
-    type: 'date'
-  },
-  {
     key: 'collectionDataType',
     label: 'Collection Data Type',
     cmrKey: 'collection_data_type',

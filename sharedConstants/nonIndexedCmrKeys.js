@@ -10,8 +10,6 @@ export const collectionRequestNonIndexedCmrKeys = [
   'doi',
   'entry_id',
   'entry_title',
-  'has_granules_created_at',
-  'has_granules_revised_at',
   'granule_data_format_h',
   'granule_data_format',
   'horizontal_data_resolution_range',

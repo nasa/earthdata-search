@@ -122,32 +122,6 @@
     }
   }
 
-  &__date-section {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: 0;
-  }
-
-  &__date-filters {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  &__date-range {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  &__date-bound {
-    margin-bottom: 0;
-
-    .form-label {
-      margin-bottom: 0.25rem;
-    }
-  }
-
   &__identifier-section {
     padding-top: 0.75rem;
     border-top: 1px solid utils.$color__carbon--20;
@@ -163,18 +137,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-  }
-
-  &__filter-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-
-    .form-label {
-      margin-bottom: 0;
-    }
   }
 
   &__icon-button {
