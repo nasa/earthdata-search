@@ -986,10 +986,6 @@ type CollectionQuery = {
   entryTitle?: string[]
   /** The consortium names to match */
   consortium?: string[]
-  /** The UTC date range for newly added granules, with an optional end bound */
-  hasGranulesCreatedAt?: string
-  /** The UTC date range for created or updated granules, with an optional end bound */
-  hasGranulesRevisedAt?: string
   /** The collection data types to match */
   collectionDataType?: string[]
   /** The collection progress values to match */

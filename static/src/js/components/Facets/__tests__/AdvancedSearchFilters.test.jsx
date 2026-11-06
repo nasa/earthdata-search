@@ -1,5 +1,3 @@
-// TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-// import { fireEvent } from '@testing-library/react'
 import {
   act,
   screen,
@@ -158,7 +156,6 @@ describe('AdvancedSearchFilters', () => {
           collection: {
             entryId: ['ENTRY_001', 'ENTRY_002'],
             collectionProgress: ['ACTIVE', 'COMPLETE'],
-            hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
             downloadable: true
           }
         }
@@ -170,11 +167,6 @@ describe('AdvancedSearchFilters', () => {
 
     expect(within(screen.getByRole('group', { name: /Collection Progress/ })).getByText('2 Selected'))
       .toHaveClass('facets-group__selected-count')
-
-    /* TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-    expect(within(screen.getByRole('group', { name: 'New Granules Since (UTC)' })).getByText('1 Selected'))
-      .toHaveClass('facets-group__selected-count')
-    */
 
     const downloadableFilter = screen.getByRole('group', { name: 'Downloadable' })
     expect(within(downloadableFilter).getByText('1 Selected'))
@@ -212,19 +204,6 @@ describe('AdvancedSearchFilters', () => {
 
     expect(screen.queryByRole('radio')).not.toBeInTheDocument()
   })
-
-  /* TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-  test('groups the granule date filters under Granule Activity', () => {
-    setup()
-    const granuleActivityGroup = screen.getByRole('group', { name: 'Granule Activity' })
-    const granuleActivity = within(granuleActivityGroup)
-
-    expect(granuleActivity.getByRole('group', { name: 'New Granules Since (UTC)' })).toBeVisible()
-    expect(granuleActivity.getByRole('group', { name: 'Revised Granules Since (UTC)' })).toBeVisible()
-    expect(granuleActivity.getByText('Granule Activity'))
-      .toHaveClass('advanced-search-filters__section-heading')
-  })
-  */
 
   test('groups collection metadata and access filters in their sections', () => {
     setup()
@@ -283,27 +262,6 @@ describe('AdvancedSearchFilters', () => {
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
     await user.click(screen.getByRole('checkbox', { name: 'Browsable' }))
 
-    /* TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-    const newGranulesGroup = screen.getByRole('group', { name: 'New Granules Since (UTC)' })
-    fireEvent.change(within(newGranulesGroup).getByRole('textbox', { name: 'New Granules Since (UTC) from date' }), {
-      target: { value: '2026-01-01' }
-    })
-
-    fireEvent.blur(within(newGranulesGroup).getByRole('textbox', { name: 'New Granules Since (UTC) from date' }))
-
-    const revisedGranulesGroup = screen.getByRole('group', { name: 'Revised Granules Since (UTC)' })
-    fireEvent.change(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) from date' }), {
-      target: { value: '2026-02-01' }
-    })
-
-    fireEvent.blur(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) from date' }))
-    fireEvent.change(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) to date' }), {
-      target: { value: '2026-02-10' }
-    })
-
-    fireEvent.blur(within(revisedGranulesGroup).getByRole('textbox', { name: 'Revised Granules Since (UTC) to date' }))
-    */
-
     expect(screen.queryByRole('button', { name: 'Apply' })).not.toBeInTheDocument()
     expect(screen.queryByRole('checkbox', { name: 'Online Only' })).not.toBeInTheDocument()
 
@@ -314,9 +272,6 @@ describe('AdvancedSearchFilters', () => {
       doi: ['10.5067/EXAMPLE'],
       entryTitle: ['Example Collection'],
       consortium: ['CEOS'],
-      // TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-      // hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
-      // hasGranulesRevisedAt: '2026-02-01T00:00:00Z,2026-02-10T23:59:59Z',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE'],
       downloadable: true,
@@ -325,9 +280,6 @@ describe('AdvancedSearchFilters', () => {
       serviceName: ['test_service'],
       toolName: ['test_tool']
     }))
-
-    // TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-    // expect(screen.getAllByText('YYYY-MM-DD')).toHaveLength(4)
 
     await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
 

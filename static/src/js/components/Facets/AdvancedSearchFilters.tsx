@@ -4,7 +4,6 @@ import React, {
   useState
 } from 'react'
 import { pick } from 'lodash-es'
-import type { Moment } from 'moment'
 import { FaTimes } from 'react-icons/fa'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -12,8 +11,6 @@ import Button from 'react-bootstrap/Button'
 // @ts-expect-error: This file does not have types
 import FacetsList from './FacetsList'
 import AdvancedFilterValueInput from './AdvancedFilterValueInput'
-// @ts-expect-error: This file does not have types
-import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 // @ts-expect-error: This file does not have types
 import advancedCollectionFilters from '../../data/advancedCollectionFilters'
@@ -31,8 +28,6 @@ type AdvancedFilterKey = 'doi'
   | 'entryId'
   | 'shortName'
   | 'version'
-  | 'hasGranulesCreatedAt'
-  | 'hasGranulesRevisedAt'
   | 'collectionDataType'
   | 'collectionProgress'
   | 'downloadable'
@@ -47,11 +42,9 @@ type AdvancedFilterValue = AdvancedFilterValues[AdvancedFilterKey]
 interface AdvancedFilterDefinition {
   key: AdvancedFilterKey
   label: string
-  type: string
+  type: 'array' | 'boolean'
   options?: string[]
 }
-
-type DateBound = 'start' | 'end'
 
 const filterDefinitions = advancedCollectionFilters as AdvancedFilterDefinition[]
 const advancedFilterKeys = filterDefinitions.map(({ key }) => key)
@@ -116,7 +109,6 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     }))
 
     let queryValue = nextValue
-    if (typeof queryValue === 'string') queryValue = queryValue.trim() || undefined
     if (Array.isArray(queryValue) && !queryValue.length) queryValue = undefined
 
     changeQuery({ collection: { [key]: queryValue } as Partial<CollectionQuery> })
@@ -201,121 +193,12 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
       )
     }
 
-    if (type === 'date') {
-      const [startValue = '', endValue = ''] = (typeof value === 'string' ? value : '').split(',')
-      const getPickerValue = (dateValue: string) => {
-        if (!dateValue) return ''
-
-        const selectedDate = new Date(dateValue)
-
-        return Number.isFinite(selectedDate.getTime()) ? selectedDate.toISOString() : ''
-      }
-
-      const updateDateRange = (
-        bound: DateBound,
-        dateValue: Moment | undefined,
-        shouldSubmit: boolean,
-        action?: string
-      ) => {
-        if (!shouldSubmit) return
-
-        const nextBounds = [startValue, endValue]
-        const boundIndex = bound === 'start' ? 0 : 1
-
-        if (action === 'Clear') {
-          nextBounds[boundIndex] = ''
-        } else if (dateValue?.isValid()) {
-          const utcDate = dateValue.clone().utc()
-          if (bound === 'start') utcDate.startOf('day')
-          else utcDate.endOf('day').millisecond(0)
-          nextBounds[boundIndex] = utcDate.toISOString().replace('.000Z', 'Z')
-        } else {
-          return
-        }
-
-        updateValue(nextBounds.some(Boolean) ? nextBounds.join(',') : undefined)
-      }
-
-      const renderDateBound = (bound: DateBound, boundValue: string) => {
-        const boundLabel = bound === 'start' ? 'From' : 'To'
-
-        return (
-          <Form.Group
-            key={bound}
-            controlId={`advanced-search-${key}-${bound}`}
-            className="advanced-search-filters__date-bound"
-          >
-            <Form.Label>{boundLabel}</Form.Label>
-            <DatepickerContainer
-              filterType="collection"
-              format="YYYY-MM-DD"
-              id={`advanced-search-${key}-${bound}-datepicker`}
-              label={`${label} ${boundLabel.toLowerCase()} date`}
-              onSubmit={
-                (
-                  dateValue: Moment | undefined,
-                  shouldSubmit: boolean,
-                  action?: string
-                ) => (
-                  updateDateRange(bound, dateValue, shouldSubmit, action)
-                )
-              }
-              shouldValidate={false}
-              size="sm"
-              type={bound}
-              value={getPickerValue(boundValue)}
-              viewMode="years"
-            />
-          </Form.Group>
-        )
-      }
-
-      return (
-        <Form.Group
-          key={key}
-          controlId={`advanced-search-${key}`}
-          role="group"
-          aria-label={label}
-        >
-          <div className="advanced-search-filters__filter-label">
-            <Form.Label>{label}</Form.Label>
-            {renderSelectedCount(value)}
-          </div>
-          <div className="advanced-search-filters__date-range">
-            {renderDateBound('start', startValue)}
-            {renderDateBound('end', endValue)}
-          </div>
-        </Form.Group>
-      )
-    }
-
-    return (
-      <Form.Group
-        key={key}
-        controlId={`advanced-search-${key}`}
-        role="group"
-        aria-label={label}
-      >
-        <Form.Label>{label}</Form.Label>
-        <Form.Control
-          size="sm"
-          type={type}
-          value={typeof value === 'string' ? value : ''}
-          onChange={
-            (event: React.ChangeEvent<HTMLInputElement>) => {
-              updateValue(event.target.value)
-            }
-          }
-        />
-      </Form.Group>
-    )
+    return null
   }
 
   const getAdvancedFilters = (keys: AdvancedFilterKey[]) => (
     filterDefinitions.filter(({ key }) => keys.includes(key))
   )
-  // TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-  // const granuleDateFilters = getAdvancedFilters(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])
   const identifierFilters = getAdvancedFilters(identifierFilterKeys)
   const enumFilters = getAdvancedFilters(['consortium', 'collectionDataType', 'collectionProgress'])
   const textEntryFilters = getAdvancedFilters(['doi', 'entryTitle', 'variableName', 'serviceName', 'toolName'])
@@ -362,14 +245,6 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
         }
       </header>
       <div className="advanced-search-filters__body">
-        {/* TODO: Temporarly disabled because CMR returns a 500 if `includeFacets=v2` is included
-        <fieldset className="advanced-search-filters__date-section">
-          <legend className="advanced-search-filters__section-heading">Granule Activity</legend>
-          <div className="advanced-search-filters__date-filters">
-            {granuleDateFilters.map(renderAdvancedFilter)}
-          </div>
-        </fieldset>
-        */}
         <fieldset className="advanced-search-filters__identifier-section">
           <legend className="advanced-search-filters__section-heading">Collection Identifier</legend>
           <div className="advanced-search-filters__identifier-filters">

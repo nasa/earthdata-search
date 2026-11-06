@@ -44,20 +44,7 @@ describe('#prepareCollectionParams', () => {
 })
 
 describe('#buildCollectionSearchParams', () => {
-  test.each(['hasGranulesCreatedAt', 'hasGranulesRevisedAt'])(
-    'requests CMR v2 facets when %s is selected',
-    (dateFilter) => {
-      const params = buildCollectionSearchParams({
-        [dateFilter]: '2015-01-01T10:00:00Z,',
-        featureFacets: {},
-        viewAllFacets: {}
-      })
-
-      expect(params.includeFacets).toEqual('v2')
-    }
-  )
-
-  test('requests CMR v2 facets when no granule activity date range is selected', () => {
+  test('requests CMR v2 facets', () => {
     const params = buildCollectionSearchParams({
       featureFacets: {},
       viewAllFacets: {}
@@ -71,8 +58,6 @@ describe('#buildCollectionSearchParams', () => {
       doi: '10.5067/EXAMPLE',
       entryTitle: 'Example Collection',
       consortium: ['CEOS'],
-      hasGranulesCreatedAt: '2026-01-01T00:00:00Z,',
-      hasGranulesRevisedAt: '2026-02-01T00:00:00Z,',
       collectionDataType: ['SCIENCE_QUALITY'],
       collectionProgress: ['ACTIVE', 'COMPLETE'],
       downloadable: true,
