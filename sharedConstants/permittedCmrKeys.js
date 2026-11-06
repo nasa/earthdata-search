@@ -1,13 +1,20 @@
 export const collectionRequestPermittedCmrKeys = [
   'bounding_box',
+  'browsable',
   'circle',
   'cloud_hosted',
   'collection_data_type',
+  'collection_progress',
   'concept_id',
   'consortium',
   'data_center_h',
   'data_center',
+  'doi',
+  'downloadable',
   'echo_collection_id',
+  'entry_id',
+  'entry_title',
+  'created_at',
   'facets_size',
   'granule_data_format_h',
   'granule_data_format',
@@ -39,13 +46,18 @@ export const collectionRequestPermittedCmrKeys = [
   'provider',
   'science_keywords_h',
   'service_type',
+  'service_name',
+  'short_name',
   'sort_key',
   'spatial_keyword',
   'standard_product',
   'tag_key',
   'temporal',
   'tool_concept_id',
-  'two_d_coordinate_system_name'
+  'tool_name',
+  'two_d_coordinate_system_name',
+  'version',
+  'variable_name'
 ]
 
 export const granuleRequestPermittedCmrKeys = [

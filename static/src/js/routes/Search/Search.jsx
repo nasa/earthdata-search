@@ -1,16 +1,23 @@
 import React, {
   useState,
+  useRef,
   lazy,
   Suspense,
   useEffect
 } from 'react'
-import { Route, Routes } from 'react-router'
+import {
+  Route,
+  Routes,
+  useLocation
+} from 'react-router'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import {
   FaFilter,
   FaMap,
+  FaSlidersH,
   FaQuestionCircle
 } from 'react-icons/fa'
 
@@ -19,6 +26,7 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import Facets from '../../components/Facets/Facets'
+import AdvancedSearchFilters from '../../components/Facets/AdvancedSearchFilters'
 import FacetsModal from '../../components/Facets/FacetsModal'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
@@ -31,6 +39,7 @@ import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 import Spinner from '../../components/Spinner/Spinner'
 
+import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -54,6 +63,14 @@ const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFilte
  */
 export const Search = () => {
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+  const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false)
+  const advancedFiltersButtonRef = useRef(null)
+  const { pathname } = useLocation()
+
+  const closeAdvancedFilters = () => {
+    setAdvancedFiltersOpen(false)
+    advancedFiltersButtonRef.current?.focus()
+  }
 
   const {
     changeQuery,
@@ -63,6 +80,11 @@ export const Search = () => {
     onSearchLoaded: state.ui.tour.onSearchLoaded
   }))
   const collectionQuery = useEdscStore(getCollectionsQuery)
+  const advancedFiltersSelectedCount = advancedCollectionFilters.reduce((count, { key }) => {
+    const value = collectionQuery[key]
+
+    return count + (Array.isArray(value) ? value.length : Number(Boolean(value)))
+  }, 0)
 
   useEffect(() => {
     onSearchLoaded()
@@ -135,6 +157,10 @@ export const Search = () => {
     <>
       <div className="route-wrapper route-wrapper--search search">
         <SidebarContainer
+          secondaryChildren={
+            advancedFiltersOpen && pathname === routes.SEARCH
+              ? <AdvancedSearchFilters onClose={closeAdvancedFilters} /> : null
+          }
           headerChildren={(
             <SearchSidebarHeader />
           )}
@@ -183,7 +209,7 @@ export const Search = () => {
               path="/*"
               element={
                 (
-                  <div className="sidebar-section-body">
+                  <div className="sidebar-section-body" data-testid="collection-filter-section">
                     <SidebarSection
                       sectionTitle="Filter Collections"
                       titleIcon={FaFilter}
@@ -193,6 +219,42 @@ export const Search = () => {
                           hasPadding={false}
                         >
                           <Facets />
+                        </SidebarFiltersItem>
+                        <SidebarFiltersItem>
+                          <Button
+                            ref={advancedFiltersButtonRef}
+                            size="sm"
+                            variant="outline-primary"
+                            type="button"
+                            className="advanced-search-filters__toggle w-100 d-flex align-items-center justify-content-center"
+                            aria-label={`${advancedFiltersOpen ? 'Collapse' : 'Expand'} Advanced Filters${advancedFiltersSelectedCount > 0 ? `, ${advancedFiltersSelectedCount} selected` : ''}`}
+                            aria-expanded={advancedFiltersOpen}
+                            onClick={
+                              () => {
+                                setAdvancedFiltersOpen(!advancedFiltersOpen)
+                              }
+                            }
+                          >
+                            <span
+                              className="advanced-search-filters__toggle-content"
+                              data-testid="advanced-filters-toggle-content"
+                            >
+                              <span className="advanced-search-filters__toggle-main">
+                                <EDSCIcon icon={FaSlidersH} className="advanced-search-filters__toggle-icon" aria-hidden="true" />
+                                {advancedFiltersOpen ? 'Collapse Advanced Filters' : 'Expand Advanced Filters'}
+                              </span>
+                              {
+                                advancedFiltersSelectedCount > 0 && (
+                                  <span
+                                    className="facets-group__selected-count advanced-search-filters__toggle-count"
+                                    aria-hidden="true"
+                                  >
+                                    {advancedFiltersSelectedCount}
+                                  </span>
+                                )
+                              }
+                            </span>
+                          </Button>
                         </SidebarFiltersItem>
                         <PortalFeatureContainer
                           onlyGranulesCheckbox

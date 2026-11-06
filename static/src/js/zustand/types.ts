@@ -974,6 +974,32 @@ type RegionQuery = {
 
 /** Collection Query Parameters */
 type CollectionQuery = {
+  /** The collection Entry IDs to search for, including version (e.g. 'ATL03_004') */
+  entryId?: string[]
+  /** Collection Short Names to search for (e.g. ['ATL03', 'ATL06']) */
+  shortName?: string[]
+  /** Optional versions for the selected Short Names, preserving leading zeros (e.g. ['003', '004']) */
+  version?: string[]
+  /** The collection DOI values */
+  doi?: string[]
+  /** The collection Entry Title */
+  entryTitle?: string[]
+  /** The consortium names to match */
+  consortium?: string[]
+  /** The collection data types to match */
+  collectionDataType?: string[]
+  /** The collection progress values to match */
+  collectionProgress?: string[]
+  /** Require a collection with a GET DATA distribution URL */
+  downloadable?: boolean
+  /** Require a collection with a visualization URL */
+  browsable?: boolean
+  /** The name of an associated variable */
+  variableName?: string[]
+  /** The name of an associated service */
+  serviceName?: string[]
+  /** The name of an associated tool */
+  toolName?: string[]
   /** Collection specific queries by Collection ID */
   byId: CollectionQueryById
   /** Flag to indicate if the collection has granules or CWIC */

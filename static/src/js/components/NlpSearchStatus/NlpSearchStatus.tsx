@@ -231,7 +231,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         includeInactiveCollections,
         keyword,
         temporal,
-        spatialArea
+        spatialArea,
+        entryIds = [],
+        shortNames = []
       } = parsedResult
 
       const spatial = parseWktSpatial(spatialArea)
@@ -249,6 +251,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         collection: {
           hasGranulesOrCwic,
           includeInactiveCollections,
+          entryId: entryIds,
+          shortName: shortNames.length ? shortNames : undefined,
+          version: undefined,
           keyword: keyword || prompt,
           spatial,
           temporal: temporal || {}

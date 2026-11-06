@@ -1,0 +1,88 @@
+const advancedCollectionFilters = [
+  {
+    key: 'doi',
+    label: 'DOI Value',
+    cmrKey: 'doi',
+    type: 'array'
+  },
+  {
+    key: 'entryTitle',
+    label: 'Entry Title',
+    cmrKey: 'entry_title',
+    type: 'array'
+  },
+  {
+    key: 'consortium',
+    label: 'Consortium',
+    cmrKey: 'consortium',
+    type: 'array',
+    options: ['EOSDIS', 'CEOS', 'CWIC', 'FEDEO', 'GEOSS']
+  },
+  {
+    key: 'entryId',
+    label: 'Entry ID',
+    cmrKey: 'entry_id',
+    type: 'array'
+  },
+  {
+    key: 'shortName',
+    label: 'Short Name',
+    cmrKey: 'short_name',
+    type: 'array'
+  },
+  {
+    key: 'version',
+    label: 'Version',
+    cmrKey: 'version',
+    type: 'array'
+  },
+  {
+    key: 'collectionDataType',
+    label: 'Collection Data Type',
+    cmrKey: 'collection_data_type',
+    type: 'array',
+    options: ['SCIENCE_QUALITY', 'NEAR_REAL_TIME', 'OTHER']
+  },
+  {
+    key: 'collectionProgress',
+    label: 'Collection Progress',
+    cmrKey: 'collection_progress',
+    type: 'array',
+    options: [
+      'ACTIVE', 'PLANNED', 'COMPLETE', 'DEPRECATED',
+      'NOT PROVIDED', 'PREPRINT', 'INREVIEW', 'SUPERSEDED'
+    ]
+  },
+  {
+    key: 'downloadable',
+    label: 'Downloadable',
+    cmrKey: 'downloadable',
+    type: 'boolean'
+  },
+  {
+    key: 'browsable',
+    label: 'Browsable',
+    cmrKey: 'browsable',
+    type: 'boolean'
+  },
+  {
+    key: 'variableName',
+    label: 'Variable Name',
+    cmrKey: 'variable_name',
+    type: 'array'
+  },
+  {
+    key: 'serviceName',
+    label: 'Service Name',
+    cmrKey: 'service_name',
+    type: 'array'
+  },
+  {
+    key: 'toolName',
+    label: 'Tool Name',
+    cmrKey: 'tool_name',
+    type: 'array'
+  }
+]
+
+export default advancedCollectionFilters

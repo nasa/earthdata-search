@@ -139,6 +139,9 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
         keyword: 'average temp',
         temporal: {
           startDate: '2026-04-01T00:00:00.000Z',
@@ -153,6 +156,31 @@ describe('NlpSearchStatus component', () => {
 
     expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
     expect(props.onNlpSearchComplete).toHaveBeenCalledWith({ hasSpatial: true })
+  })
+
+  test('forwards NLP identifiers into their collection query fields', async () => {
+    const { zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'ATL03_004 and ATL06 rainfall',
+        requestId: 1
+      }
+    })
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'ATL03_004 and ATL06 rainfall',
+        'Final result:\n{"keyword":"rainfall","entryIds":["ATL03_004"],"shortNames":["ATL06"],"spatialArea":null,"temporal":null}'
+      )
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
+      collection: expect.objectContaining({
+        entryId: ['ATL03_004'],
+        shortName: ['ATL06'],
+        version: undefined,
+        keyword: 'rainfall'
+      })
+    }))
   })
 
   test('reports parsing errors when final result is not valid json', async () => {
@@ -257,6 +285,9 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
         keyword: 'find point',
         temporal: {},
         spatial: {
@@ -328,6 +359,9 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
         keyword: 'invalid area',
         temporal: {},
         spatial: {}
@@ -363,6 +397,9 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
         keyword: 'rainfall',
         temporal: {},
         spatial: {}
