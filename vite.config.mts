@@ -38,8 +38,7 @@ export default defineConfig({
         '**/playwright-coverage/**',
         '**/playwright-report/**',
         '**/tests/**',
-        '**/test-results/**',
-        '**/serverless/**'
+        '**/test-results/**'
       ]
     }
   },

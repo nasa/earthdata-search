@@ -113,7 +113,8 @@ export const changeUrl = async (options: string | Record<string, unknown>) => {
 
     handleError({
       error: error as Error,
-      action: 'changeUrl'
+      action: 'changeUrl',
+      title: 'Something went wrong loading the page. Refresh it to return to previous page'
     })
   }
 

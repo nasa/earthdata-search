@@ -117,7 +117,8 @@ describe('changeUrl', () => {
       expect(errors.handleError).toHaveBeenCalledTimes(1)
       expect(errors.handleError).toHaveBeenCalledWith({
         error: mockError,
-        action: 'changeUrl'
+        action: 'changeUrl',
+        title: 'Something went wrong loading the page. Refresh it to return to previous page'
       })
     })
   })
