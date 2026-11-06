@@ -234,7 +234,7 @@
     "vite-imagetools": "^10.0.1",
     "vite-plugin-ejs": "^2.0.0",
     "vite-plugin-graphql-loader": "^5.1.1",
-    "vite-plugin-istanbul": "^8.0.0",
+    "vite-plugin-istanbul": "^9.0.1",
     "vite-plugin-node-polyfills": "^0.28.0",
     "vite-plugin-svgr": "^5.2.0",
     "vitest": "^5.0.5",
