@@ -69,6 +69,7 @@ describe('GranuleResultsActionsContainer component', () => {
       },
       granuleLimit: 1000000,
       handoffLinks: [],
+      hasSmartHandoffs: false,
       initialLoading: false,
       isCollectionInProject: true,
       projectCollectionIds: ['collectionId'],
