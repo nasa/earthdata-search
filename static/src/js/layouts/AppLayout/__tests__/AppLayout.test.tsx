@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -36,8 +36,8 @@ vi.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => ({ defa
 vi.mock('../../../containers/WrappingContainer/WrappingContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 vi.mock('../../../components/UserLoader/UserLoader', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   Outlet: vi.fn(() => <div>Outlet</div>)
 }))
 

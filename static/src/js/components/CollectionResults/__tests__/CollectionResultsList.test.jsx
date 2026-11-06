@@ -44,6 +44,7 @@ const setup = setupTest({
       collectionId: 'collectionId2'
     }],
     itemCount: 2,
+    isActive: true,
     isItemLoaded: vi.fn().mockReturnValue(true),
     loadMoreItems: vi.fn(),
     setVisibleMiddleIndex: vi.fn(),

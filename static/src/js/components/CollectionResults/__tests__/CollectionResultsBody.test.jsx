@@ -15,8 +15,8 @@ vi.mock('../CollectionResultsList', () => ({ default: vi.fn(() => <div />) }))
 vi.mock('../CollectionResultsTable', () => ({ default: vi.fn(() => <div />) }))
 vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',
@@ -29,6 +29,7 @@ vi.mock('react-router-dom', async () => ({
 const setup = setupTest({
   Component: CollectionResultsBody,
   defaultProps: {
+    isActive: true,
     loadNextPage: vi.fn(),
     panelView: 'list'
   },
@@ -104,6 +105,7 @@ describe('CollectionResultsBody component', () => {
       collectionsMetadata: [{
         ...collectionResultsBodyData
       }],
+      isActive: true,
       isItemLoaded: expect.any(Function),
       itemCount: 2,
       loadMoreItems: expect.any(Function),
@@ -124,6 +126,7 @@ describe('CollectionResultsBody component', () => {
       collectionsMetadata: [{
         ...collectionResultsBodyData
       }],
+      isActive: true,
       isItemLoaded: expect.any(Function),
       itemCount: 2,
       loadMoreItems: expect.any(Function),
@@ -148,6 +151,7 @@ describe('CollectionResultsBody component', () => {
     expect(CollectionResultsList).toHaveBeenCalledTimes(1)
     expect(CollectionResultsList).toHaveBeenCalledWith({
       collectionsMetadata: [],
+      isActive: true,
       isItemLoaded: expect.any(Function),
       itemCount: 1,
       loadMoreItems: expect.any(Function),

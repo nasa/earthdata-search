@@ -230,6 +230,26 @@ To run Playwright tests in headless mode:
 
     npm run playwright
 
+#### Screenshot tests
+
+Screenshot baselines are generated on Linux inside the official Playwright Docker image, which is the same image CI uses. Screenshots taken on macOS or Windows render slightly differently and will fail in CI, so don't commit baselines created with `npm run playwright --update-snapshots`.
+
+To create or update screenshot baselines (requires Docker):
+
+    npm run playwright:update-snapshots
+
+To update a single spec or browser, pass extra Playwright arguments:
+
+    npm run playwright:update-snapshots -- tests/e2e/map/map_shapefile.spec.js --project chromium
+
+To run any Playwright tests in the CI environment:
+
+    npm run playwright:docker -- tests/e2e/map
+
+The script builds the app inside the container by default. Set `SKIP_BUILD=true` to reuse the existing `static/dist` build. On Apple Silicon the image runs under amd64 emulation to match GitHub's runners, so the first run (`npm ci` plus the build) is slow. Linux `node_modules` are cached in a Docker volume, so later runs are faster. Browsers crash under Docker's default QEMU emulation, so enable **Docker Desktop > Settings > General > Use Rosetta for x86_64/amd64 emulation on Apple Silicon**.
+
+When upgrading `@playwright/test`, also update the image tag in `.github/workflows/ci.yml`. The Docker script reads the version from `package-lock.json` automatically.
+
 ### Deployment
 
 When the time comes to deploy the application, first ensure that you have the required ENV vars set:

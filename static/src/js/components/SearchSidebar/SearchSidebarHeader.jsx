@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import { FaDoorOpen } from 'react-icons/fa'
 import classNames from 'classnames'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { usePortalLogo } from '../../hooks/usePortalLogo'

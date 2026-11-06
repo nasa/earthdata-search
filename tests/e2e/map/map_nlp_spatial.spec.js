@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -65,8 +65,6 @@ test.describe('Map: NLP spatial rendering', () => {
   test('applies NLP spatial output and recenters the map view @screenshot', async ({ page }) => {
     await page.getByPlaceholder('Wildfires in California during summer 2023').fill('average temp in western montana last april')
 
-    const mapTilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
-
     await page.getByRole('button', {
       name: 'Search',
       exact: true
@@ -76,9 +74,11 @@ test.describe('Map: NLP spatial rendering', () => {
       () => nlpHandlers.nlp.getRequestedPrompts().at(-1)
     ).toBe('average temp in western montana last april')
 
-    await mapTilesPromise
-
     await expect(page.getByText('Showing 20 of 805 matching collections')).toBeVisible()
+
+    await page.waitForURL(/zoom=5/)
+
+    await waitForMapRenderComplete(page)
 
     await expect(page).toHaveScreenshot('nlp-spatial-drawn.png', {
       clip: screenshotClip

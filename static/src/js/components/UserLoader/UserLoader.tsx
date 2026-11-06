@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery, ApolloError } from '@apollo/client'
 import { remove } from 'tiny-cookie'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import GET_USER from '../../operations/queries/getUser'
 

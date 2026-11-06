@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { difference } from 'lodash-es'
 import classNames from 'classnames'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 

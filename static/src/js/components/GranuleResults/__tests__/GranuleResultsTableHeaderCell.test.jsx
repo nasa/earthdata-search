@@ -74,7 +74,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
 
     await user.click(dropdownButton)
 
-    const detailsButton = screen.getByRole('button', {
+    const detailsButton = screen.getByRole('link', {
       name: 'View details'
     })
     await user.click(detailsButton)

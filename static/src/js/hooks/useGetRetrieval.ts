@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router'
 
 import GET_RETRIEVAL from '../operations/queries/getRetrieval'
 import isPath from '../util/isPath'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 // @ts-expect-error The file does not have types
 import EdlTokenLoader from '../../components/EdlTokenLoader/EdlTokenLoader'

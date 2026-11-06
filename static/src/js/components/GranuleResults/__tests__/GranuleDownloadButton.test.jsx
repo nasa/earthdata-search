@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -11,8 +11,8 @@ vi.mock('../../../util/url/changePath', () => ({
   changePath: vi.fn()
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=collectionId&ff=Map%20Imagery',

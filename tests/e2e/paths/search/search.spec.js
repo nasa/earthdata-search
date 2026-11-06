@@ -3,7 +3,7 @@ import { test, expect } from 'playwright-test-coverage'
 import { commafy } from '../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../sharedUtils/pluralize'
 
-import { setupTests } from '../../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../../support/setupTests'
 
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
 import commonBody from './__mocks__/common.body.json'
@@ -256,11 +256,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search?sp[0]=65.44171%2C4.33676&long=65.44171')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -299,11 +298,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&long=66')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -342,11 +340,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search?circle[0]=62.18209%2C2.22154%2C100000&long=62')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -386,11 +383,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search?sb[0]=5.02679%2C0.99949%2C32.8678%2C26.17555&long=19')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -463,11 +459,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&sfs[0]=0&long=60')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)

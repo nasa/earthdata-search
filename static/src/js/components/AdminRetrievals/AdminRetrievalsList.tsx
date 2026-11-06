@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import Table from 'react-bootstrap/Table'

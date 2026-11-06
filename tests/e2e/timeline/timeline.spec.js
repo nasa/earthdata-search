@@ -2,7 +2,7 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import accessMethods from './__mocks__/access_methods.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
@@ -93,9 +93,10 @@ test.describe('Timeline spec', () => {
     await expect(page.getByRole('button', { name: 'Download project data' })).toBeEnabled()
 
     // Click the back to search button
-    const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
     await page.getByRole('button', { name: 'Back to Search' }).click()
-    await tilesPromise
+
+    // Wait for the search page map to load
+    await waitForMapRenderComplete(page)
 
     await page.waitForSelector('[data-testid="collection-result-item_C1443528505-LAADS"]')
 

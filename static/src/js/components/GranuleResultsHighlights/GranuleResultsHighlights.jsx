@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { FaMap } from 'react-icons/fa'
 import { min } from 'lodash-es'
 

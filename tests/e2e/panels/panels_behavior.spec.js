@@ -2,7 +2,7 @@ import { test, expect } from 'playwright-test-coverage'
 
 import singleCollection from './__mocks__/single_collection.json'
 
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 const dragPanelToX = async (page, x) => {
   const handle = page.locator('[data-testid="panels__handle"]')
@@ -26,9 +26,10 @@ test.describe('Panel Behavior', () => {
       })
     })
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('/search')
-    await initialMapPromise
+
+    // Wait for the map to load
+    await waitForMapRenderComplete(page)
   })
 
   test('is present by default on page load', async ({ page }) => {

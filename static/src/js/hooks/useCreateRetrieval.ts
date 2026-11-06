@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { routes } from '../constants/routes'
 import CREATE_RETRIEVAL from '../operations/mutations/createRetrieval'

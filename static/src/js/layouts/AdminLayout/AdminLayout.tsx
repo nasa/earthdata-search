@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router'
 import { useQuery } from '@apollo/client'
 
 import ADMIN_IS_AUTHORIZED from '../../operations/queries/adminIsAuthorized'

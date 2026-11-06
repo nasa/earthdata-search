@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { set } from 'tiny-cookie'
 import { parse } from 'qs'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'

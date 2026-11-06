@@ -4,7 +4,7 @@ import { isGetGranuleQuery } from '../../support/isGetGranuleQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import commonHeaders from './__mocks__/common_collections.headers.json'
 import allProjectionsCollectionGraphql from './__mocks__/gibs/all_projections_collection_graphql.body.json'
@@ -98,11 +98,10 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           }
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
       })
 
       test('does not draw the lower granule\'s imagery through the transparent pieces of the top granule @screenshot', async ({ page }) => {
@@ -113,11 +112,11 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
       test.describe('when focusing on the lower granule', () => {
         test.beforeEach(async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
-
           await page.getByText('TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc').click()
 
-          await tilesPromise
+          await page.waitForURL(/zoom=1/)
+
+          await waitForMapRenderComplete(page)
         })
 
         test('draws the imagery of the focused granule above the previous top granule @screenshot', async ({ page }) => {
@@ -183,11 +182,10 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
       test.describe('when updating the layer visibility', () => {
         test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Close the panel to work with the map easier
           await page.keyboard.press(']')
@@ -212,11 +210,10 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
       test.describe('when updating the layer opacity', () => {
         test('updates the specified layer opacity on the map @screenshot', async ({ page }) => {
-          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
 
           // Wait for the map to load
-          await initialMapPromise
+          await waitForMapRenderComplete(page)
 
           // Find and click the settings button for the first layer to open the opacity popover
           const settingsButton = page.getByRole('button', { name: 'Adjust settings for Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' })
@@ -251,11 +248,10 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
           // These layers are somewhat similar so we are zooming in here to make the difference
           // when comparing the orders easier to see
-          const zoomedInMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
           await page.goto('/search/granules?p=C2930727817-LARC_CLOUD&pg[0][v]=f&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&tl=1724883938.647!4!!&lat=38.964887769762086&long=-114.57040117944547&zoom=7')
 
           // Wait for the map to load
-          await zoomedInMapPromise
+          await waitForMapRenderComplete(page)
 
           const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
           await layer2VisibilityButton.click()
@@ -354,10 +350,9 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/TIME=2025-01-14&layer=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/)
         await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&pg[0][id]=MYD10A1.A2025014.h22v16.061.2025016045026.hdf&lat=-74&long=155&projection=EPSG%3A3031&zoom=5')
 
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Close the layer picker to emphasize the map in the screenshot
         await page.keyboard.press('l')
@@ -411,10 +406,9 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/TIME=2025-10-28&layer=MODIS_Aqua_L3_NDSI_Snow_Cover_Daily/)
         await page.goto('/search/granules?p=C3091256524-NSIDC_CPRD&pg[0][id]=MYD10A1.A2025301.h11v02.061.2025303033037.hdf&lat=66&long=-135&projection=EPSG%3A3413&zoom=6')
 
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Close the layer picker to emphasize the map in the screenshot
         await page.keyboard.press('l')

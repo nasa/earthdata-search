@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { setupTests } from '../../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../../support/setupTests'
 import {
   interceptUnauthenticatedCollections
 } from '../../../support/interceptUnauthenticatedCollections'
@@ -229,11 +229,10 @@ test.describe('Home Page', () => {
     test('should navigate to the correct collection', async ({ page }) => {
       await page.getByRole('button', { name: 'What is this image?' }).click()
 
-      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
       await page.getByRole('button', { name: 'Explore this data on the map' }).click()
 
       // Wait for the map to load
-      await initialMapPromise
+      await waitForMapRenderComplete(page)
 
       // Wait for the timeline to be visible
       await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()

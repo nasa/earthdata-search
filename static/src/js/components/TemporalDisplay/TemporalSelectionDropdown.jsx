@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import moment from 'moment'
 
 import Dropdown from 'react-bootstrap/Dropdown'

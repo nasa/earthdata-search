@@ -9,6 +9,7 @@ import Spinner from '../Spinner/Spinner'
 import './MoreActionsDropdownItem.scss'
 
 const MoreActionsDropdownItem = ({
+  as = 'button',
   className = null,
   icon = null,
   onClick = () => {},
@@ -24,7 +25,7 @@ const MoreActionsDropdownItem = ({
 
   return (
     <Dropdown.Item
-      as="button"
+      as={as}
       className={moreActionItemClasses}
       onClick={onClick}
       disabled={inProgress}
@@ -49,6 +50,7 @@ const MoreActionsDropdownItem = ({
 }
 
 MoreActionsDropdownItem.propTypes = {
+  as: PropTypes.string,
   className: PropTypes.string,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   onClick: PropTypes.func,

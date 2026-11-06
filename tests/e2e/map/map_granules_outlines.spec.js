@@ -4,7 +4,7 @@ import { isGetGranuleQuery } from '../../support/isGetGranuleQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json'
@@ -88,11 +88,10 @@ test.describe('Map: Granule interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
         await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-5.067707&long=44.91944336437247&zoom=5.714045446675903`)
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
       })
 
       test.describe('When hovering over a granule', () => {
@@ -175,8 +174,6 @@ test.describe('Map: Granule interactions', () => {
 
         test.describe('when zooming the map', () => {
           test('does not remove the focused granule @screenshot', async ({ page }) => {
-            const zoomPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
-
             // Zoom the map
             await page.getByRole('button', { name: 'Zoom In' }).click()
 
@@ -184,7 +181,8 @@ test.describe('Map: Granule interactions', () => {
 
             // Wait for the map animation to complete
             await page.waitForURL(/zoom=6/)
-            await zoomPromise
+
+            await waitForMapRenderComplete(page)
 
             await expect(page).toHaveScreenshot('focused-granule-zoomed.png', {
               clip: screenshotClip
@@ -269,11 +267,10 @@ test.describe('Map: Granule interactions', () => {
         }
       })
 
-      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
       await page.goto('/search/granules?p=C1258816710-ASDC_DEV2&pg[0][v]=f&pg[0][id]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&pg[0][gsk]=-start_date&ee=uat&g=G1259235357-ASDC_DEV2&q=C1258816710-ASDC_DEV&tl=1731348943!3!!&lat=58.66663295801644&long=169.857421875&zoom=5')
 
       // Wait for the map to load
-      await initialMapPromise
+      await waitForMapRenderComplete(page)
     })
 
     test.describe('when hovering over the granule', () => {

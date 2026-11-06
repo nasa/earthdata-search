@@ -1,7 +1,7 @@
 import React from 'react'
 import { parse } from 'qs'
 import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { calculateGranulesPerOrder, calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'

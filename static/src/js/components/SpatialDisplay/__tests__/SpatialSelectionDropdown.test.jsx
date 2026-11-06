@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
@@ -21,9 +21,9 @@ vi.mock('../../../util/metrics/metricsSpatialSelection', () => ({
   metricsSpatialSelection: vi.fn()
 }))
 
-// Mock react react-router-dom so that the tests do not think we are on the homepage
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+// Mock react react-router so that the tests do not think we are on the homepage
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/',
     search: '',

@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { expect } from 'playwright-test-coverage'
 
 const getImageFileName = (url) => {
   let filename
@@ -135,4 +136,17 @@ export const setupTests = async ({
   await page.route(/relevancy_logger/, (route) => route.fulfill({
     status: 200
   }))
+}
+
+/**
+ * Waits for the map to finish rendering on the page.
+ * @param {Page} page - The Playwright page instance.
+ * @param {object} options - The options object.
+ * @param {number} [options.timeout=30000] - The timeout for waiting for the map render to complete.
+ */
+export const waitForMapRenderComplete = async (page, { timeout = 30000 } = {}) => {
+  await expect(page.locator('.map')).toHaveAttribute('data-render-complete', 'true', { timeout })
+
+  // Additional short wait to ensure map has finished animating
+  await page.waitForTimeout(250)
 }
