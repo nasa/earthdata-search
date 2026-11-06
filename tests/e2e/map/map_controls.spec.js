@@ -509,5 +509,34 @@ test.describe('Map: Control interactions', () => {
         await expect(page).toHaveURL('search?overlays=coastlines')
       })
     })
+ 
+    test.describe('When disabling all map overlays', () => {
+      test('updates the URL with overlays=none and preserves disabled overlays on reload', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+
+        await page.goto('/search')
+
+        await initialMapPromise
+
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
+
+        await page.waitForSelector('.layer-switcher-control--visible')
+
+        await page.getByLabel('International Boundaries *').click()
+        await page.getByLabel('Place Labels *').click()
+
+        await expect(page).toHaveURL(/overlays=none/)
+
+        await page.reload()
+
+        await expect(page).toHaveURL(/overlays=none/)
+      })
+    })
   })
 })
