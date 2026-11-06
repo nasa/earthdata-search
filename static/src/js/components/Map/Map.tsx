@@ -517,6 +517,16 @@ const Map: React.FC<MapProps> = ({
     })
     mapRef.current = map
 
+    // Register once per map so React rerenders do not accumulate drawing callbacks.
+    const outlineKey = granuleOutlinesLayer.on(
+      RenderEventType.POSTRENDER as LayerRenderEventTypes,
+      (event) => drawGranuleOutlines({
+        ctx: event.context as CanvasRenderingContext2D,
+        granuleBackgroundsSource,
+        map
+      })
+    )
+
     // Only accumulate frame deltas while an interaction (pan or zoom) is in
     // progress, so idle frames don't dilute the stats. On moveend we roll the
     // collected frame times up into a single summary and hand it off to the
@@ -789,6 +799,9 @@ const Map: React.FC<MapProps> = ({
     layersAdded = false
 
     return () => {
+      // The outline layer is reused. Remove this map's callback on unmount or
+      // projection changes so it cannot draw again after the map is detached.
+      unByKey(outlineKey)
       map.setTarget(undefined)
       map.un('moveend', handleMoveEnd)
       map.un('pointermove', handlePointerMove)
@@ -1236,17 +1249,6 @@ const Map: React.FC<MapProps> = ({
     spatialSearch,
     projectionCode
   ])
-
-  // Draw the granule outlines
-  granuleOutlinesLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, (event) => {
-    const ctx = event.context as CanvasRenderingContext2D
-
-    drawGranuleOutlines({
-      ctx,
-      granuleBackgroundsSource,
-      map: mapRef.current as OlMap
-    })
-  })
 
   return (
     <div ref={mapElRef} id="map" className="map" />
