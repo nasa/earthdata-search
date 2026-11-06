@@ -19,7 +19,6 @@ import routerHelper, { type Router } from '../../router/router'
 // @ts-expect-error This file does not have types
 import { initialGranuleQuery } from '../../util/url/collectionsEncoders'
 import { routes } from '../../constants/routes'
-import { normalizeCollectionQuery } from '../../util/normalizeCollectionQuery'
 
 const { collectionSearchResultsSortKey } = getApplicationConfig()
 
@@ -59,12 +58,12 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           ...spatialValue
         }
 
-        state.query.collection = normalizeCollectionQuery({
+        state.query.collection = {
           ...state.query.collection,
           pageNum: 1,
           ...query.collection,
           spatial: newSpatial
-        })
+        }
 
         if (query.selectedRegion) {
           state.query.selectedRegion = query.selectedRegion

@@ -12,7 +12,6 @@ import { MODAL_NAMES } from '../../constants/modalNames'
 import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { normalizeCollectionQuery } from '../normalizeCollectionQuery'
 // @ts-expect-error This file doesn't have types
 import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 
@@ -128,7 +127,7 @@ export const updateStore = async ({
         project: merge({}, zustandState.project, project),
         query: {
           ...mergedQuery,
-          collection: normalizeCollectionQuery({
+          collection: {
             ...mergedQuery.collection,
             ...Object.fromEntries([
               'entryId', 'shortName', 'version',
@@ -137,7 +136,7 @@ export const updateStore = async ({
             // If `hasGranulesOrCwic` is `undefined` from the decoded values it needs to stay `undefined` in the
             // store, not fallback to the initial state
             hasGranulesOrCwic: query.collection.hasGranulesOrCwic
-          }),
+          },
           selectedRegion: {
             ...mergedQuery.selectedRegion,
             ...selectedRegion

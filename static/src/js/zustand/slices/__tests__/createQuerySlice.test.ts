@@ -25,7 +25,7 @@ describe('createQuerySlice', () => {
   })
 
   describe('changeQuery', () => {
-    test('clears versions when a second short name is applied directly', async () => {
+    test('preserves versions when short names change', async () => {
       useEdscStore.setState((state) => {
         state.collections.getCollections = vi.fn()
         state.query.collection.shortName = ['ATL03']
@@ -34,7 +34,23 @@ describe('createQuerySlice', () => {
 
       await useEdscStore.getState().query.changeQuery({ collection: { shortName: ['ATL03', 'ATL06'] } })
 
-      expect(useEdscStore.getState().query.collection.version).toBeUndefined()
+      expect(useEdscStore.getState().query.collection.version).toEqual(['004'])
+
+      await useEdscStore.getState().query.changeQuery({ collection: { shortName: undefined } })
+
+      expect(useEdscStore.getState().query.collection.version).toEqual(['004'])
+    })
+
+    test('preserves versions entered without short names across query changes', async () => {
+      useEdscStore.setState((state) => {
+        state.collections.getCollections = vi.fn()
+        state.query.collection.shortName = undefined
+      })
+
+      await useEdscStore.getState().query.changeQuery({ collection: { version: ['004', '005'] } })
+      await useEdscStore.getState().query.changeQuery({ collection: { keyword: 'ice' } })
+
+      expect(useEdscStore.getState().query.collection.version).toEqual(['004', '005'])
     })
 
     describe('when there is no focused collection', () => {
