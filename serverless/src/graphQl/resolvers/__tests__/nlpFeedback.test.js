@@ -3,6 +3,18 @@ import setupServer from './__mocks__/setupServer'
 import CREATE_NLP_FEEDBACK from '../../../../../static/src/js/operations/mutations/createNlpFeedback'
 import UPDATE_NLP_FEEDBACK from '../../../../../static/src/js/operations/mutations/updateNlpFeedback'
 
+vi.mock('../../utils/categorizeNlpFeedback', () => ({
+  __esModule: true,
+  default: vi.fn().mockResolvedValue({
+    incomplete: false,
+    keyword: false,
+    other: true,
+    relevancy: false,
+    spatial: true,
+    temporal: false
+  })
+}))
+
 describe('NLP Feedback Resolver', () => {
   describe('Mutation', () => {
     describe('createNlpFeedback', () => {
@@ -55,7 +67,7 @@ describe('NLP Feedback Resolver', () => {
         const response = await server.executeOperation({
           query: UPDATE_NLP_FEEDBACK,
           variables: {
-            feedback: 'feedback',
+            feedback: 'the box was too large to be useful',
             incomplete: false,
             keyword: false,
             nlpRequestId: '123',
@@ -73,13 +85,13 @@ describe('NLP Feedback Resolver', () => {
         expect(errors).toBeUndefined()
 
         expect(databaseClient.updateNlpFeedback).toHaveBeenCalledWith({
-          feedback: 'feedback',
+          feedback: 'the box was too large to be useful',
           id: '123',
           incomplete: false,
           keyword: false,
-          other: false,
+          other: true, // Set from categorizeNlpFeedback mock
           relevancy: false,
-          spatial: false,
+          spatial: true, // Set from categorizeNlpFeedback mock
           temporal: false
         })
 
