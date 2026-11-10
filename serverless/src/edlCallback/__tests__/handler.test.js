@@ -1,5 +1,5 @@
-// Two classes are mocked in this test
 /* eslint-disable max-classes-per-file */
+// Two classes are mocked in this test
 
 import knex from 'knex'
 import mockKnex from 'mock-knex'

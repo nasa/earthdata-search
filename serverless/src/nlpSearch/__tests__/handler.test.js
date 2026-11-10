@@ -1,6 +1,7 @@
 import { mockClient } from 'aws-sdk-client-mock'
 import { MockLanguageModelV3 } from 'ai/test'
 import { InvokeCommand, LambdaClient } from '@aws-sdk/client-lambda'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
   processTemporalWorkflow,
@@ -12,6 +13,9 @@ import {
 import * as cacheItem from '../../util/cache/cacheItem'
 import * as getItemFromCache from '../../util/cache/getItemFromCache'
 import * as shortNameSearch from '../shortNameSearch'
+
+vi.mock('uuid')
+uuidv4.mockImplementation(() => 'mock-request-id')
 
 const mockBedrock = await vi.hoisted(async () => {
   const { MockLanguageModelV3: LocalMockLanguageModelV3, simulateReadableStream } = await import('ai/test')
@@ -106,6 +110,7 @@ describe('nlpSearch handler', () => {
         keyword: 'Find me rainfall data over California in 2020',
         hasGranulesOrCwic: true,
         includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
         query: 'Find me rainfall data over California in 2020',
         shortNames: [],
         spatial: null,
@@ -136,6 +141,8 @@ describe('nlpSearch handler', () => {
         end: vi.fn()
       }
 
+      const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => {})
+
       await nlpSearchHandler(event, responseStream)
 
       expect(responseStream.write).toHaveBeenCalledTimes(3)
@@ -149,6 +156,7 @@ describe('nlpSearch handler', () => {
         entryIds: [],
         keyword: null,
         includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
         query: 'Find me rainfall data over California in 2020',
         shortNames: [],
         spatial: null,
@@ -158,6 +166,40 @@ describe('nlpSearch handler', () => {
 
       expect(responseStream.end).toHaveBeenCalledTimes(1)
       expect(responseStream.end).toHaveBeenCalledWith()
+
+      expect(consoleMock).toHaveBeenCalledTimes(4)
+      expect(consoleMock).toHaveBeenNthCalledWith(1, 'Received query: Find me rainfall data over California in 2020')
+      expect(consoleMock).toHaveBeenNthCalledWith(2, 'Extraction complete. Initial results:', JSON.stringify({
+        entryIds: [],
+        keyword: null,
+        includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
+        query: 'Find me rainfall data over California in 2020',
+        shortNames: [],
+        spatial: null,
+        spatialArea: null,
+        temporal: null
+      }))
+
+      expect(consoleMock).toHaveBeenNthCalledWith(3, '[Bedrock Usage] NLP Search:', JSON.stringify({
+        inputTokens: 3,
+        inputTokenDetails: { noCacheTokens: 3 },
+        outputTokens: 10,
+        outputTokenDetails: { textTokens: 10 },
+        totalTokens: 13
+      }))
+
+      expect(consoleMock).toHaveBeenNthCalledWith(4, 'Workflows complete. Final results:', JSON.stringify({
+        entryIds: [],
+        keyword: null,
+        includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
+        query: 'Find me rainfall data over California in 2020',
+        shortNames: [],
+        spatial: null,
+        spatialArea: null,
+        temporal: null
+      }))
     })
 
     describe('short name matches', () => {
@@ -328,10 +370,22 @@ describe('processTemporalWorkflow', () => {
       })
     })
 
+    const consoleMock = vi.spyOn(console, 'log').mockImplementation(() => {})
+
     const result = await processTemporalWorkflow('2020', model, mockResponseStream)
 
     expect(mockResponseStream.write).toHaveBeenCalledTimes(1)
     expect(mockResponseStream.write).toHaveBeenCalledWith('Converting temporal data: "2020"...\n')
+
+    expect(consoleMock).toHaveBeenCalledTimes(2)
+    expect(consoleMock).toHaveBeenNthCalledWith(1, 'Converting temporal expression "2020" to a date range.')
+    expect(consoleMock).toHaveBeenNthCalledWith(2, '[Bedrock Usage] NLP Search Temporal Workflow:', JSON.stringify({
+      inputTokens: 10,
+      inputTokenDetails: { noCacheTokens: 10 },
+      outputTokens: 20,
+      outputTokenDetails: { textTokens: 20 },
+      totalTokens: 30
+    }))
 
     expect(result).toEqual({
       endDate: '2020-12-31T23:59:59.999Z',

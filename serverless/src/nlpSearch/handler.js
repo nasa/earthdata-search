@@ -14,6 +14,8 @@ import {
   tool
 } from 'ai'
 import { z } from 'zod'
+import { v4 as uuidv4 } from 'uuid'
+
 import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
@@ -122,7 +124,7 @@ export const processTemporalWorkflow = async (temporal, model, responseStream) =
     console.log(`Converting temporal expression "${temporal}" to a date range.`)
     responseStream.write(`Converting temporal data: "${temporal}"...\n`)
 
-    const { output } = await generateText({
+    const { output, usage } = await generateText({
       model,
       prompt: `Convert the following input to a date range.
   - Extract the start and end dates in ISO-8601 format, always include the time, and for the end date use the full day (e.g., "YYYY-12-31T23:59:59.999Z").
@@ -150,6 +152,9 @@ export const processTemporalWorkflow = async (temporal, model, responseStream) =
         })
       })
     })
+
+    // Log the usage information for the NLP search request
+    console.log('[Bedrock Usage] NLP Search Temporal Workflow:', JSON.stringify(usage))
 
     return output
   } catch (error) {
@@ -251,6 +256,7 @@ export const handler = async (event, originalResponseStream) => {
     keyword: null,
     hasGranulesOrCwic: true,
     includeInactiveCollections: false,
+    nlpRequestId: uuidv4(),
     query: originalQuery,
     shortNames: [],
     spatial: null,
@@ -352,6 +358,10 @@ ${query}
       // Force consumption of the stream
       await result.text
       console.log('Extraction complete. Initial results:', JSON.stringify(extractedResults))
+
+      // Log the usage information for the NLP search request
+      const usage = await result.usage
+      console.log('[Bedrock Usage] NLP Search:', JSON.stringify(usage))
 
       // STEP 2: Concurrently process the Spatial and Temporal data
       const [spatialAreaResult, temporalFormatResult] = await Promise.all([
