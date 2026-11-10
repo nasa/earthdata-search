@@ -141,6 +141,7 @@ describe('NlpSearchStatus component', () => {
       collection: {
         keyword: 'average temp',
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+        nlpQuery: 'average temp in Western montana last april',
         temporal: {
           startDate: '2026-04-01T00:00:00.000Z',
           endDate: '2026-04-30T23:59:59.999Z'
@@ -248,7 +249,7 @@ describe('NlpSearchStatus component', () => {
     await act(async () => {
       capturedUseCompletionOptions.onFinish?.(
         'find point',
-        'Final result:\n{"query":"find point","spatialArea":"POINT (-77.0163 38.883)", "temporal":{}}'
+        'Final result:\n{"query":"find point","spatialArea":"POINT (-77.0163 38.883)", "temporal":{},"nlpRequestId":"b65c3f7b-91f1-4df3-a61f-13a887a0dbf0"}'
       )
     })
 
@@ -259,6 +260,8 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         keyword: 'find point',
+        nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+        nlpQuery: 'find point',
         temporal: {},
         spatial: {
           point: ['-77.0163,38.883']
@@ -319,7 +322,7 @@ describe('NlpSearchStatus component', () => {
     await act(async () => {
       capturedUseCompletionOptions.onFinish?.(
         'invalid area',
-        'Final result:\n{"query":"invalid area","spatialArea":"POLYGON ((broken))", "temporal":{}}'
+        'Final result:\n{"query":"invalid area","spatialArea":"POLYGON ((broken))", "temporal":{},"nlpRequestId":"b65c3f7b-91f1-4df3-a61f-13a887a0dbf0"}'
       )
     })
 
@@ -330,6 +333,8 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         keyword: 'invalid area',
+        nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+        nlpQuery: 'invalid area',
         temporal: {},
         spatial: {}
       },
@@ -354,7 +359,7 @@ describe('NlpSearchStatus component', () => {
     await act(async () => {
       capturedUseCompletionOptions.onFinish?.(
         'rainfall',
-        'Final result:\n{"keyword":"rainfall","query":"rainfall","spatial":null,"spatialArea":null,"temporal":null}'
+        'Final result:\n{"keyword":"rainfall","query":"rainfall","spatial":null,"spatialArea":null,"temporal":null,"nlpRequestId":"b65c3f7b-91f1-4df3-a61f-13a887a0dbf0"}'
       )
     })
 
@@ -365,6 +370,8 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         keyword: 'rainfall',
+        nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+        nlpQuery: 'rainfall',
         temporal: {},
         spatial: {}
       },

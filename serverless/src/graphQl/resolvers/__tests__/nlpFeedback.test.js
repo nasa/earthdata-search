@@ -30,6 +30,7 @@ describe('NLP Feedback Resolver', () => {
         const response = await server.executeOperation({
           query: CREATE_NLP_FEEDBACK,
           variables: {
+            nlpQuery: 'Test query',
             nlpRequestId: '123',
             positive: true
           }
@@ -43,7 +44,8 @@ describe('NLP Feedback Resolver', () => {
 
         expect(databaseClient.createNlpFeedback).toHaveBeenCalledWith({
           id: '123',
-          positive: true
+          positive: true,
+          query: 'Test query'
         })
 
         expect(databaseClient.createNlpFeedback).toHaveBeenCalledTimes(1)

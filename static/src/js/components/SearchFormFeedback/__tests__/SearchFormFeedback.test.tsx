@@ -23,8 +23,8 @@ describe('SearchFormFeedback component', () => {
 
     expect(screen.getByText('Did we understand your search?')).toBeInTheDocument()
 
-    expect(screen.getByLabelText('Thumbs up')).toBeInTheDocument()
-    expect(screen.getByLabelText('Thumbs down')).toBeInTheDocument()
+    expect(screen.getByLabelText('Yes')).toBeInTheDocument()
+    expect(screen.getByLabelText('No')).toBeInTheDocument()
   })
 
   describe('when clicking the thumbs up button', () => {
@@ -48,14 +48,14 @@ describe('SearchFormFeedback component', () => {
         ]
       })
 
-      const thumbsUpButton = screen.getByLabelText('Thumbs up')
-      await user.click(thumbsUpButton)
+      const yesButton = screen.getByLabelText('Yes')
+      await user.click(yesButton)
 
       expect(await screen.findByText('Thanks for your feedback!')).toBeInTheDocument()
     })
   })
 
-  describe('when clicking the thumbs down button', () => {
+  describe('when clicking the No button', () => {
     test('calls the createNlpFeedback mutation and displays the feedback form', async () => {
       const { user } = setup({
         overrideApolloClientMocks: [
@@ -76,8 +76,8 @@ describe('SearchFormFeedback component', () => {
         ]
       })
 
-      const thumbsDownButton = screen.getByLabelText('Thumbs down')
-      await user.click(thumbsDownButton)
+      const noButton = screen.getByLabelText('No')
+      await user.click(noButton)
 
       expect(screen.getByRole('button', { name: 'Wrong keyword' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Wrong location' })).toBeInTheDocument()
@@ -113,8 +113,8 @@ describe('SearchFormFeedback component', () => {
           ]
         })
 
-        const thumbsDownButton = screen.getByLabelText('Thumbs down')
-        await user.click(thumbsDownButton)
+        const noButton = screen.getByLabelText('No')
+        await user.click(noButton)
 
         const skipButton = screen.getByRole('button', { name: 'Skip feedback' })
         await user.click(skipButton)
@@ -164,8 +164,8 @@ describe('SearchFormFeedback component', () => {
           ]
         })
 
-        const thumbsDownButton = screen.getByLabelText('Thumbs down')
-        await user.click(thumbsDownButton)
+        const noButton = screen.getByLabelText('No')
+        await user.click(noButton)
 
         const wrongKeywordButton = screen.getByRole('button', { name: 'Wrong keyword' })
         await user.click(wrongKeywordButton)

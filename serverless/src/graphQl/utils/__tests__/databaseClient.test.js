@@ -114,13 +114,15 @@ describe('DatabaseClient', () => {
       dbTracker.on('query', (query) => {
         query.response([{
           id: 1,
-          positive: true
+          positive: true,
+          query: 'Test query'
         }])
       })
 
       const nlpFeedback = await databaseClient.createNlpFeedback({
         id: 1,
-        positive: true
+        positive: true,
+        query: 'Test query'
       })
 
       expect(nlpFeedback).toBeDefined()
@@ -136,13 +138,14 @@ describe('DatabaseClient', () => {
 
       await expect(databaseClient.createNlpFeedback({
         id: 1,
-        positive: true
+        positive: true,
+        query: 'Test query'
       })).rejects.toThrow('Failed to create NLP feedback')
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('insert into "nlp_feedback" ("id", "positive") values ($1, $2) returning *')
-      expect(queries[0].bindings).toEqual([1, true])
+      expect(queries[0].sql).toEqual('insert into "nlp_feedback" ("id", "positive", "query") values ($1, $2, $3) returning *')
+      expect(queries[0].bindings).toEqual([1, true, 'Test query'])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to create NLP feedback', expect.any(Error))
