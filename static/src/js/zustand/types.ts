@@ -982,6 +982,8 @@ type CollectionQuery = {
   keyword: string
   /** The NLP request ID - used to correlate the results with NLP feedback submissions */
   nlpRequestId?: string
+  /** The NLP query */
+  nlpQuery?: string
   /** Flag to indicate if only EOSDIS collections should be included */
   onlyEosdisCollections: boolean
   /** Flag to show collections labeled as 'PLANNED', 'DEPRECATED', 'PREPRINT', 'INREVIEW', 'SUPERCEDED', 'NOT PROVIDED' a.k.a. 'inactive collections' */

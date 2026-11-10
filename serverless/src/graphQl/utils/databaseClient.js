@@ -97,11 +97,13 @@ export default class DatabaseClient {
    * @param {Object} params - Parameters object
    * @param {string} params.id - The ID of the NLP request
    * @param {boolean} params.positive - Whether the feedback is positive
+   * @param {string} params.query - The NLP query associated with this feedback
    * @returns {Promise<Object>} A promise that resolves to the created NLP feedback object
    */
   async createNlpFeedback({
     id,
-    positive
+    positive,
+    query
   }) {
     try {
       const db = await this.getDbConnection()
@@ -109,7 +111,8 @@ export default class DatabaseClient {
       const [nlpFeedback] = await db('nlp_feedback')
         .insert({
           id,
-          positive
+          positive,
+          query
         })
         .returning('*')
 

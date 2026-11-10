@@ -231,6 +231,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         includeInactiveCollections,
         keyword,
         nlpRequestId,
+        query,
         spatialArea,
         temporal
       } = parsedResult
@@ -252,6 +253,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
           includeInactiveCollections,
           keyword: keyword || prompt,
           nlpRequestId,
+          nlpQuery: query,
           spatial,
           temporal: temporal || {}
         },

@@ -12,6 +12,9 @@ exports.up = (pgm) => {
       default: false,
       notNull: true
     },
+    query: {
+      type: 'text'
+    },
     keyword: {
       type: 'boolean',
       default: false,

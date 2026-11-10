@@ -56,7 +56,10 @@ const NEGATIVE_FEEDBACK_REASONS = [
 const SearchFormFeedback: React.FC = () => {
   const collectionsQuery = useEdscStore(getCollectionsQuery)
 
-  const { nlpRequestId } = collectionsQuery
+  const {
+    nlpRequestId,
+    nlpQuery
+  } = collectionsQuery
 
   // Kept separate from `isNegativeFormOpen` so the thumbs stay disabled even if the form is closed
   const [hasVotedNegative, setHasVotedNegative] = useState(false)
@@ -69,6 +72,7 @@ const SearchFormFeedback: React.FC = () => {
   const [createNlpFeedback] = useMutation(CREATE_NLP_FEEDBACK)
   const [updateNlpFeedback] = useMutation(UPDATE_NLP_FEEDBACK)
 
+  // Automatically hide the feedback component after a thank-you message is shown
   useEffect(() => {
     if (!isSubmitted) return undefined
 
@@ -77,14 +81,17 @@ const SearchFormFeedback: React.FC = () => {
     return () => clearTimeout(hideTimeout)
   }, [isSubmitted])
 
+  // Handle the skip button by marking the feedback as submitted without sending any data
   const onSkipFeedback = () => {
     setIsSubmitted(true)
   }
 
+  // Handle the thumbs up button click by sending positive feedback
   const handleThumbsUpClick = () => {
     createNlpFeedback({
       variables: {
         nlpRequestId,
+        nlpQuery,
         positive: true
       },
       onCompleted: () => {
@@ -93,10 +100,12 @@ const SearchFormFeedback: React.FC = () => {
     })
   }
 
+  // Handle the thumbs down button click by sending negative feedback and opening the negative feedback form
   const handleThumbsDownClick = () => {
     createNlpFeedback({
       variables: {
         nlpRequestId,
+        nlpQuery,
         positive: false
       },
       onCompleted: () => {
@@ -107,6 +116,7 @@ const SearchFormFeedback: React.FC = () => {
     setIsNegativeFormOpen(true)
   }
 
+  // Handle the click on a reason by toggling its selection in the list of selected reasons
   const handleReasonClick = (reasonId: string) => {
     setSelectedReasons((previousReasons) => (
       previousReasons.includes(reasonId)
@@ -115,6 +125,7 @@ const SearchFormFeedback: React.FC = () => {
     ))
   }
 
+  // Handle the submission of the negative feedback form
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -135,6 +146,7 @@ const SearchFormFeedback: React.FC = () => {
     })
   }
 
+  // Determine if the feedback form can be submitted based on selected reasons or comment content
   const canSubmit = selectedReasons.length > 0 || comment.trim().length > 0
 
   if (isHidden) return null
@@ -159,8 +171,8 @@ const SearchFormFeedback: React.FC = () => {
           className="search-form-feedback__button search-form-feedback__button--up"
           icon={FaRegThumbsUp}
           iconSize="14"
-          ariaLabel="Thumbs up"
-          tooltip="Thumbs up"
+          ariaLabel="Yes"
+          tooltip="Yes"
           tooltipId="search-form-feedback--thumbs-up"
           onClick={handleThumbsUpClick}
           disabled={hasVotedNegative}
@@ -170,8 +182,8 @@ const SearchFormFeedback: React.FC = () => {
           className="search-form-feedback__button search-form-feedback__button--down"
           icon={hasVotedNegative ? FaThumbsDown : FaRegThumbsDown}
           iconSize="14"
-          ariaLabel={hasVotedNegative ? 'Thumbs down selected' : 'Thumbs down'}
-          tooltip="Thumbs down"
+          ariaLabel={hasVotedNegative ? 'No selected' : 'No'}
+          tooltip="No"
           tooltipId="search-form-feedback--thumbs-down"
           onClick={handleThumbsDownClick}
           disabled={hasVotedNegative}

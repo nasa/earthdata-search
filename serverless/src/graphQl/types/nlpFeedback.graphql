@@ -6,6 +6,9 @@ type Mutation {
 
     "Indicates if the feedback was positive"
     positive: Boolean!
+
+    "The NLP query associated with this feedback"
+    nlpQuery: String!
   ): Boolean
 
   "Updates an existing NLP Feedback with user feedback"

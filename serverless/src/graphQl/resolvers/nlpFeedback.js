@@ -6,13 +6,15 @@ export default {
       const { databaseClient = {} } = context
 
       const {
+        nlpQuery,
         nlpRequestId,
         positive
       } = args
 
       return databaseClient.createNlpFeedback({
         id: nlpRequestId,
-        positive
+        positive,
+        query: nlpQuery
       })
     },
 

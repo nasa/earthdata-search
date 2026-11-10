@@ -2,24 +2,26 @@ import { generateText, Output } from 'ai'
 import { z } from 'zod'
 import { createAmazonBedrock } from '@ai-sdk/amazon-bedrock'
 
+// Predefined categories for NLP feedback categorization with descriptions to
+// provide in the prompt to the AI model
 const categories = [{
   key: 'incomplete',
-  description: 'Indicates if the feedback mentions incomplete information'
+  description: 'Indicates if the feedback mentions incomplete information. Typically related to missing parts of the user\'s original query.'
 }, {
   key: 'keyword',
-  description: 'Indicates if the feedback mentions keywords'
+  description: 'Indicates if the feedback mentions keywords. Typically related to search terms used in the query.'
 }, {
   key: 'other',
-  description: 'Indicates if the feedback mentions other aspects'
+  description: 'Indicates if the feedback mentions other aspects not covered by the other categories'
 }, {
   key: 'relevancy',
-  description: 'Indicates if the feedback mentions relevancy'
+  description: 'Indicates if the feedback mentions relevancy of the data or collections returned by the query'
 }, {
   key: 'spatial',
-  description: 'Indicates if the feedback mentions spatial aspects'
+  description: 'Indicates if the feedback mentions spatial aspects. Typically related to location or geographic information.'
 }, {
   key: 'temporal',
-  description: 'Indicates if the feedback mentions temporal aspects'
+  description: 'Indicates if the feedback mentions temporal aspects. Typically related to time or date information.'
 }]
 
 const bedrockOptions = {
