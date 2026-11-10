@@ -4,6 +4,7 @@ import { screen } from '@testing-library/react'
 import SearchForm from '../SearchForm'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import { MODAL_NAMES } from '../../../constants/modalNames'
+import SearchFormFeedback from '../../SearchFormFeedback/SearchFormFeedback'
 
 vi.mock('../../TemporalDisplay/TemporalSelectionDropdown', () => ({
   default: vi.fn(() => (
@@ -32,6 +33,12 @@ vi.mock('../../SpatialDisplay/SpatialDisplay', () => ({
 vi.mock('../../TemporalDisplay/TemporalDisplay', () => ({
   default: vi.fn(() => (
     <div>Temporal Display</div>
+  ))
+}))
+
+vi.mock('../../SearchFormFeedback/SearchFormFeedback', () => ({
+  default: vi.fn(() => (
+    <div>Search Form Feedback</div>
   ))
 }))
 
@@ -66,6 +73,7 @@ describe('SearchForm component', () => {
     expect(screen.getByText('Advanced Search Display')).toBeInTheDocument()
     expect(screen.getByText('Spatial Display')).toBeInTheDocument()
     expect(screen.getByText('Temporal Display')).toBeInTheDocument()
+    expect(screen.queryByText('Search Form Feedback')).not.toBeInTheDocument()
   })
 
   test('should call onClearFilters when the Clear Button is clicked', async () => {
@@ -91,6 +99,23 @@ describe('SearchForm component', () => {
 
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(1)
       expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledWith(MODAL_NAMES.ADVANCED_SEARCH)
+    })
+  })
+
+  describe('when a nlpRequestId is present', () => {
+    test('renders the SearchFormFeedback component', () => {
+      setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0'
+            }
+          }
+        }
+      })
+
+      expect(SearchFormFeedback).toHaveBeenCalledTimes(1)
+      expect(SearchFormFeedback).toHaveBeenCalledWith({}, {})
     })
   })
 })

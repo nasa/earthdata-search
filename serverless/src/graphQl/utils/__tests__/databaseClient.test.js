@@ -109,6 +109,49 @@ describe('DatabaseClient', () => {
     })
   })
 
+  describe('createNlpFeedback', () => {
+    test('creates a new NLP feedback entry', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          positive: true,
+          query: 'Test query'
+        }])
+      })
+
+      const nlpFeedback = await databaseClient.createNlpFeedback({
+        id: 1,
+        positive: true,
+        query: 'Test query'
+      })
+
+      expect(nlpFeedback).toBeDefined()
+      expect(nlpFeedback).toEqual(true)
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = vi.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.createNlpFeedback({
+        id: 1,
+        positive: true,
+        query: 'Test query'
+      })).rejects.toThrow('Failed to create NLP feedback')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('insert into "nlp_feedback" ("id", "positive", "query") values ($1, $2, $3) returning *')
+      expect(queries[0].bindings).toEqual([1, true, 'Test query'])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to create NLP feedback', expect.any(Error))
+    })
+  })
+
   describe('createProject', () => {
     test('creates a new project', async () => {
       dbTracker.on('query', (query) => {
@@ -2173,6 +2216,65 @@ describe('DatabaseClient', () => {
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to update access configuration', expect.any(Error))
+    })
+  })
+
+  describe('updateNlpFeedback', () => {
+    test('updates the NLP feedback', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          id: 1,
+          positive: false,
+          incomplete: false,
+          keyword: false,
+          other: false,
+          relevancy: false,
+          spatial: false,
+          temporal: true,
+          feedback: 'the temporal value was wrong'
+        }])
+      })
+
+      const nlpFeedback = await databaseClient.updateNlpFeedback({
+        id: 1,
+        incomplete: false,
+        keyword: false,
+        other: false,
+        relevancy: false,
+        spatial: false,
+        temporal: true,
+        feedback: 'the temporal value was wrong'
+      })
+
+      expect(nlpFeedback).toBeDefined()
+      expect(nlpFeedback).toEqual(true)
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = vi.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.updateNlpFeedback({
+        id: 1,
+        incomplete: false,
+        keyword: false,
+        other: false,
+        relevancy: false,
+        spatial: false,
+        temporal: true,
+        feedback: 'the temporal value was wrong'
+      })).rejects.toThrow('Failed to update NLP feedback')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('update "nlp_feedback" set "incomplete" = $1, "keyword" = $2, "other" = $3, "relevancy" = $4, "spatial" = $5, "temporal" = $6, "feedback" = $7, "updated_at" = $8 where "id" = $9 returning *')
+      expect(queries[0].bindings).toEqual([false, false, false, false, false, true, 'the temporal value was wrong', new Date(mockToday), 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to update NLP feedback', expect.any(Error))
     })
   })
 

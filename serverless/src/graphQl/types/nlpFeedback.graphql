@@ -1,0 +1,40 @@
+type Mutation {
+  "Creates an initial NLP Feedback"
+  createNlpFeedback(
+    "The ID of the NLP request associated with this feedback"
+    nlpRequestId: String!
+
+    "Indicates if the feedback was positive"
+    positive: Boolean!
+
+    "The NLP query associated with this feedback"
+    nlpQuery: String!
+  ): Boolean
+
+  "Updates an existing NLP Feedback with user feedback"
+  updateNlpFeedback(
+    "The ID of the NLP request associated with this feedback"
+    nlpRequestId: String!
+
+    "Indicates if the feedback is related to the extracted keyword"
+    keyword: Boolean
+
+    "Indicates if the feedback is related to the extracted spatial"
+    spatial: Boolean
+
+    "Indicates if the feedback is related to the extracted temporal"
+    temporal: Boolean
+
+    "Indicates if the feedback is related to an incomplete result"
+    incomplete: Boolean
+
+    "Indicates if the feedback is related to the collection relevancy"
+    relevancy: Boolean
+
+    "Indicates if the feedback is related to other aspects"
+    other: Boolean
+
+    "The user feedback for this NLP request"
+    feedback: String
+  ): Boolean
+}
