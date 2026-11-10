@@ -71,6 +71,7 @@ describe('permissions', () => {
             isValidUser,
             isAdminUser
           ),
+          createNlpFeedback: allow,
           createProject: allow,
           createRetrieval: isValidUser,
           deleteProject: and(
@@ -81,6 +82,7 @@ describe('permissions', () => {
             isValidUser,
             userOwnsRetrieval
           ),
+          updateNlpFeedback: allow,
           updatePreferences: isValidUser,
           updateProject: userOwnsProjectIfProjectOwned
         }

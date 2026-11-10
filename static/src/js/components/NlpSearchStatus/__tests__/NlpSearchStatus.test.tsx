@@ -119,7 +119,7 @@ describe('NlpSearchStatus component', () => {
       'Found temporal of "last april".',
       'Found keyword of "average temp".',
       'Final result:',
-      '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"}}'
+      '{"keyword":"average temp","query":"average temp in Western montana last april","spatial":"Western montana","spatialArea":"POLYGON((-116.050002 44.358209, -116.050002 49.00139, -109.64514022973341 49.00139, -109.64514022973341 44.358209, -116.050002 44.358209))","temporal":{"startDate":"2026-04-01T00:00:00.000Z","endDate":"2026-04-30T23:59:59.999Z"},"nlpRequestId":"b65c3f7b-91f1-4df3-a61f-13a887a0dbf0"}'
     ].join('\n')
 
     expect(capturedUseCompletionOptions.onFinish).toBeTypeOf('function')
@@ -140,6 +140,7 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         keyword: 'average temp',
+        nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         temporal: {
           startDate: '2026-04-01T00:00:00.000Z',
           endDate: '2026-04-30T23:59:59.999Z'

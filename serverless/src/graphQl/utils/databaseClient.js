@@ -93,6 +93,35 @@ export default class DatabaseClient {
   }
 
   /**
+   * Creates a new NLP feedback entry in the database
+   * @param {Object} params - Parameters object
+   * @param {string} params.id - The ID of the NLP request
+   * @param {boolean} params.positive - Whether the feedback is positive
+   * @returns {Promise<Object>} A promise that resolves to the created NLP feedback object
+   */
+  async createNlpFeedback({
+    id,
+    positive
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const [nlpFeedback] = await db('nlp_feedback')
+        .insert({
+          id,
+          positive
+        })
+        .returning('*')
+
+      return !!nlpFeedback
+    } catch (error) {
+      const errorMessage = 'Failed to create NLP feedback'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Creates a new project
    * @param {Object} params - Parameters object
    * @param {string} params.name - The name of the project
@@ -957,6 +986,54 @@ export default class DatabaseClient {
       return result
     } catch (error) {
       const errorMessage = 'Failed to update access configuration'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Updates the NLP feedback for a given request ID
+   * @param {Object} params - Parameters object
+   * @param {string} params.id - The ID of the NLP request
+   * @param {boolean} params.incomplete - Whether the feedback is incomplete
+   * @param {boolean} params.keyword - The keyword associated with the feedback
+   * @param {boolean} params.other - Other feedback details
+   * @param {boolean} params.relevancy - The relevancy of the feedback
+   * @param {boolean} params.spatial - The spatial information of the feedback
+   * @param {boolean} params.temporal - The temporal information of the feedback
+   * @param {string} params.feedback - The feedback to update
+   * @returns {Promise<number>} A promise that resolves to the number of rows updated
+   */
+  async updateNlpFeedback({
+    id,
+    incomplete,
+    keyword,
+    other,
+    relevancy,
+    spatial,
+    temporal,
+    feedback
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      const [result] = await db('nlp_feedback')
+        .where({ id })
+        .update({
+          incomplete,
+          keyword,
+          other,
+          relevancy,
+          spatial,
+          temporal,
+          feedback,
+          updated_at: new Date()
+        })
+        .returning('*')
+
+      return !!result
+    } catch (error) {
+      const errorMessage = 'Failed to update NLP feedback'
       console.log(errorMessage, error)
       throw new Error(errorMessage)
     }

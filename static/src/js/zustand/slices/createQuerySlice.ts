@@ -27,6 +27,7 @@ export const initialState = {
     byId: {},
     hasGranulesOrCwic: true,
     keyword: '',
+    nlpRequestId: undefined,
     onlyEosdisCollections: false,
     overrideTemporal: {},
     pageNum: 1,

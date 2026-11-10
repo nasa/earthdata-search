@@ -8,6 +8,7 @@ import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
 import FilterStack from '../FilterStack/FilterStack'
 import TemporalDisplay from '../TemporalDisplay/TemporalDisplay'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
+import SearchFormFeedback from '../SearchFormFeedback/SearchFormFeedback'
 
 import AdvancedSearchDisplay from '../AdvancedSearchDisplay/AdvancedSearchDisplay'
 import SpatialDisplay from '../SpatialDisplay/SpatialDisplay'
@@ -15,7 +16,7 @@ import SpatialSelectionDropdown from '../SpatialDisplay/SpatialSelectionDropdown
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getSelectedRegionQuery } from '../../zustand/selectors/query'
+import { getCollectionsQuery, getSelectedRegionQuery } from '../../zustand/selectors/query'
 import { setOpenModalFunction } from '../../zustand/selectors/ui'
 
 import { MODAL_NAMES } from '../../constants/modalNames'
@@ -26,6 +27,9 @@ const SearchForm = () => {
   const clearFilters = useEdscStore((state) => state.query.clearFilters)
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
   const setOpenModal = useEdscStore(setOpenModalFunction)
+  const collectionsQuery = useEdscStore(getCollectionsQuery)
+
+  const { nlpRequestId } = collectionsQuery
 
   let spatialDisplayIsVisible = true
 
@@ -36,6 +40,13 @@ const SearchForm = () => {
       <div className="search-form__primary">
         <SearchAutocomplete />
       </div>
+      {
+        nlpRequestId && (
+          <div className="search-form__secondary">
+            <SearchFormFeedback />
+          </div>
+        )
+      }
       <div className="search-form__secondary">
         <div className="search-form__secondary-actions d-flex justify-content-between flex-row">
           <div className="d-flex gap-1">

@@ -61,6 +61,7 @@ const buildPermissions = () => shield(
         isValidUser,
         isAdminUser
       ),
+      createNlpFeedback: allow,
       createProject: allow,
       createRetrieval: isValidUser,
       deleteProject: and(
@@ -71,6 +72,7 @@ const buildPermissions = () => shield(
         isValidUser,
         userOwnsRetrieval
       ),
+      updateNlpFeedback: allow,
       updatePreferences: isValidUser,
       updateProject: userOwnsProjectIfProjectOwned
     }

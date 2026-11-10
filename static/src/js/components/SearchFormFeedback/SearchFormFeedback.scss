@@ -1,0 +1,132 @@
+@use 'sass:color';
+@use '../../../css/utils';
+
+.search-form-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem;
+  padding: 0.325rem 0.5rem;
+  border: 1px solid utils.$info;
+  border-radius: 0.25rem;
+  // A light tint keeps black text and icons readable against the info color
+  background-color: color.mix(utils.$info, utils.$color__spacesuit-white, 15%);
+  font-size: 0.875rem;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__label {
+    margin-right: auto;
+    color: utils.$color__carbon-black;
+    font-weight: 500;
+  }
+
+  // Nested for specificity over Bootstrap's `.btn` and `.button--naked` variables
+  #{&}__button {
+    --bs-btn-color: #{utils.$color__carbon-black};
+    --bs-btn-hover-color: #{utils.$color__nasa-blue};
+    --bs-btn-active-color: #{utils.$color__nasa-blue};
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-bg: transparent;
+    --bs-btn-hover-bg: transparent;
+    --bs-btn-active-bg: transparent;
+    --bs-btn-disabled-color: #{utils.$color__carbon--50};
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: transparent;
+    --bs-btn-disabled-opacity: 1;
+
+    padding: 0.25rem;
+    border: 0;
+  }
+
+  // The chosen thumb stays dark so the user can see which one they picked
+  #{&}__button--down:disabled {
+    color: utils.$color__carbon-black;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  &__legend {
+    float: none;
+    margin-bottom: 0.375rem;
+    font-size: inherit;
+    font-weight: 500;
+  }
+
+  &__reasons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  &__reason {
+    padding: 0.125rem 0.625rem;
+    border: 1px solid utils.$color__nasa-blue;
+    border-radius: 1rem;
+    background-color: utils.$color__spacesuit-white;
+    color: utils.$color__carbon-black;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+
+    &:hover {
+      border-color: utils.$color__nasa-blue--shade;
+      background-color: color.mix(utils.$color__nasa-blue, utils.$color__spacesuit-white, 10%);
+    }
+
+    &--selected,
+    &--selected:hover {
+      border-color: utils.$color__nasa-blue;
+      background-color: utils.$color__nasa-blue;
+      color: utils.$color__spacesuit-white;
+    }
+  }
+
+  // Nested for specificity over Bootstrap's `.btn` padding on link buttons
+  #{&}__tell-more {
+    align-self: flex-start;
+    font-size: inherit;
+  }
+
+  &__comment-label {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+  }
+
+  &__comment {
+    font-size: inherit;
+    resize: vertical;
+  }
+
+  &__comment-count {
+    display: block;
+    text-align: right;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.375rem;
+  }
+
+  &__thanks {
+    margin: 0;
+    color: utils.$color__carbon-black;
+  }
+}

@@ -56,7 +56,7 @@ describe('triggerKeyboardShortcut', () => {
     })
   })
 
-  describe('if the assigned to a keydown event', () => {
+  describe('if the keyup event is triggered in an textarea', () => {
     test('does not trigger the shortcut', () => {
       const callbackMock = vi.fn()
       const preventDefaultMock = vi.fn()
@@ -65,10 +65,10 @@ describe('triggerKeyboardShortcut', () => {
       triggerKeyboardShortcut({
         event: {
           target: {
-            tagName: 'body'
+            tagName: 'textarea'
           },
           key: 'a',
-          type: 'keydown',
+          type: 'keyup',
           preventDefault: preventDefaultMock,
           stopPropagation: stopPropagationMock
         },
@@ -77,6 +77,30 @@ describe('triggerKeyboardShortcut', () => {
       })
 
       expect(callbackMock).toHaveBeenCalledTimes(0)
+      expect(preventDefaultMock).toHaveBeenCalledTimes(0)
+      expect(stopPropagationMock).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('if the shortcutCallback is not a function', () => {
+    test('does not trigger the shortcut', () => {
+      const preventDefaultMock = vi.fn()
+      const stopPropagationMock = vi.fn()
+
+      triggerKeyboardShortcut({
+        event: {
+          target: {
+            tagName: 'textarea'
+          },
+          key: 'a',
+          type: 'keyup',
+          preventDefault: preventDefaultMock,
+          stopPropagation: stopPropagationMock
+        },
+        shortcutKey: 'a',
+        shortcutCallback: 'not a function'
+      })
+
       expect(preventDefaultMock).toHaveBeenCalledTimes(0)
       expect(stopPropagationMock).toHaveBeenCalledTimes(0)
     })

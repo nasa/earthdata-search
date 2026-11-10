@@ -14,6 +14,8 @@ import {
   tool
 } from 'ai'
 import { z } from 'zod'
+import { v4 as uuidv4 } from 'uuid'
+
 import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { getItemFromCache } from '../util/cache/getItemFromCache'
@@ -251,6 +253,7 @@ export const handler = async (event, originalResponseStream) => {
     keyword: null,
     hasGranulesOrCwic: true,
     includeInactiveCollections: false,
+    nlpRequestId: uuidv4(),
     query: originalQuery,
     shortNames: [],
     spatial: null,

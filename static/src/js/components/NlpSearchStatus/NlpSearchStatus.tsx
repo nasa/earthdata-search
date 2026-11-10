@@ -230,8 +230,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         hasGranulesOrCwic,
         includeInactiveCollections,
         keyword,
-        temporal,
-        spatialArea
+        nlpRequestId,
+        spatialArea,
+        temporal
       } = parsedResult
 
       const spatial = parseWktSpatial(spatialArea)
@@ -250,6 +251,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
           hasGranulesOrCwic,
           includeInactiveCollections,
           keyword: keyword || prompt,
+          nlpRequestId,
           spatial,
           temporal: temporal || {}
         },

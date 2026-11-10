@@ -23,7 +23,7 @@ export const triggerKeyboardShortcut = ({
   if (tagName) tagName = tagName.toLowerCase()
 
   // If an input is triggering the keydown, return
-  if (tagName === 'input') return
+  if (tagName === 'input' || tagName === 'textarea') return
 
   // If not triggered by a keydown event, return
   if (eventType !== 'keyup') return

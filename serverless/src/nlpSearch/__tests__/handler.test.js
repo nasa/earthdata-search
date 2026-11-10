@@ -1,6 +1,7 @@
 import { mockClient } from 'aws-sdk-client-mock'
 import { MockLanguageModelV3 } from 'ai/test'
 import { InvokeCommand, LambdaClient } from '@aws-sdk/client-lambda'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
   processTemporalWorkflow,
@@ -12,6 +13,9 @@ import {
 import * as cacheItem from '../../util/cache/cacheItem'
 import * as getItemFromCache from '../../util/cache/getItemFromCache'
 import * as shortNameSearch from '../shortNameSearch'
+
+vi.mock('uuid')
+uuidv4.mockImplementation(() => 'mock-request-id')
 
 const mockBedrock = await vi.hoisted(async () => {
   const { MockLanguageModelV3: LocalMockLanguageModelV3, simulateReadableStream } = await import('ai/test')
@@ -106,6 +110,7 @@ describe('nlpSearch handler', () => {
         keyword: 'Find me rainfall data over California in 2020',
         hasGranulesOrCwic: true,
         includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
         query: 'Find me rainfall data over California in 2020',
         shortNames: [],
         spatial: null,
@@ -149,6 +154,7 @@ describe('nlpSearch handler', () => {
         entryIds: [],
         keyword: null,
         includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
         query: 'Find me rainfall data over California in 2020',
         shortNames: [],
         spatial: null,
