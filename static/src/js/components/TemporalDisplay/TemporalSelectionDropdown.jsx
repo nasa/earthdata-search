@@ -324,7 +324,7 @@ const TemporalSelectionDropdown = ({
   }
 
   return (
-    <Dropdown show={open} className="temporal-selection-dropdown" data-testid="temporal-filter-dropdown" onToggle={onToggleOpen}>
+    <Dropdown show={open} className="temporal-selection-dropdown" onToggle={onToggleOpen}>
       <TemporalSelectionDropdownToggle onToggleClick={onToggleOpen} />
       {
         open && (

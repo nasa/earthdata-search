@@ -244,7 +244,12 @@ test.describe('When not logged in', () => {
     const spotlight = page.locator('.react-joyride__spotlight')
     await expect(spotlight).toBeVisible()
 
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('search-sidebar-inner'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.sidebar__inner').filter({
+      has: page.getByRole('heading', {
+        name: 'Filter Collections',
+        exact: true
+      })
+    }))
 
     // Testing arrow key navigation
     await page.keyboard.press('ArrowRight')
@@ -265,17 +270,32 @@ test.describe('When not logged in', () => {
 
     // Step 2: Search for collections
     await expect(page.getByRole('alertdialog', { name: 'Search for collections by topic (e.g., "Land Surface Temperature")' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('collection-search-input-area'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.search-form__primary').filter({
+      has: page.getByPlaceholder('Type to search for data', { exact: true })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 3: Temporal filters
     await expect(page.getByRole('alertdialog', { name: 'Use the temporal filters to limit search results to a specific date' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('temporal-filter-dropdown'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.temporal-selection-dropdown').filter({
+      has: page.getByRole('button', {
+        name: 'Open temporal filters',
+        exact: true
+      })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 4: Spatial filters
     await expect(page.getByRole('alertdialog', { name: 'Use the spatial filters to limit search results to the specified area of interest' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('spatial-filter-dropdown'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.spatial-selection-dropdown').filter({
+      has: page.getByRole('button', {
+        name: 'spatial-selection-dropdown',
+        exact: true
+      })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 5: Advanced Search
@@ -290,28 +310,37 @@ test.describe('When not logged in', () => {
     // Step 6: Refine Search by Category
     await expect(page.getByRole('alertdialog', { name: 'Refine your search further using categories like Features, Keywords' })).toBeVisible()
 
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('collection-filter-section'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.sidebar-section-body').filter({
+      has: page.getByRole('heading', {
+        name: 'Filter Collections',
+        exact: true
+      })
+    }))
 
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 7: High-level description for each search result
     await expect(page.getByRole('alertdialog', { name: 'A high-level description is displayed for each search result' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('search-results-panel-section').filter({ visible: true }))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('section.panel-section').filter({ visible: true }))
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 8: Resize Search Results Panel
     await expect(page.getByRole('alertdialog', { name: 'To make more room to view the map, the search results can be resized' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('panels__handle'))
+    await expectSpotlightMatchesTarget(spotlight, page.getByRole('button', {
+      name: 'Collapse panel (])',
+      exact: true
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 9: Pan and zoom the map
     await expect(page.getByRole('alertdialog', { name: 'Pan the map by clicking and dragging, and zoom by using the scroll wheel' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('search-tour-map-target'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.search-tour__target-overlay'))
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 10: Map tools
     await expect(page.getByRole('alertdialog', { name: 'Use the map tools to switch map projections, draw, edit, or remove spatial bounds' })).toBeVisible()
-    await expectSpotlightMatchesTarget(spotlight, page.getByTestId('map-controls'))
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.map-controls'))
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 11: Log in to set preferences, save projects, etc.

@@ -209,7 +209,7 @@ export const Search = () => {
               path="/*"
               element={
                 (
-                  <div className="sidebar-section-body" data-testid="collection-filter-section">
+                  <div className="sidebar-section-body">
                     <SidebarSection
                       sectionTitle="Filter Collections"
                       titleIcon={FaFilter}

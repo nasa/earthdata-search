@@ -60,7 +60,6 @@ const SearchTour = () => {
       const widthDelta = mapWidth - (panelWidth + sidebarWidth)
 
       overlayDiv = document.createElement('div')
-      overlayDiv.dataset.testid = 'search-tour-map-target'
       overlayDiv.style.width = `${widthDelta}px`
       overlayDiv.classList.add('search-tour__target-overlay')
 

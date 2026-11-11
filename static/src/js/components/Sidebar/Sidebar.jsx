@@ -48,7 +48,7 @@ const Sidebar = ({
       className={className}
       style={{ width: secondaryChildren ? 'min(43rem, 100vw)' : '20.5rem' }}
     >
-      <div className="sidebar__inner" data-testid="search-sidebar-inner">
+      <div className="sidebar__inner">
         { headerChildren }
         <SimpleBar
           className="sidebar__content"

@@ -37,7 +37,7 @@ const SearchForm = () => {
 
   return (
     <section className="search-form">
-      <div className="search-form__primary" data-testid="collection-search-input-area">
+      <div className="search-form__primary">
         <SearchAutocomplete />
       </div>
       {
