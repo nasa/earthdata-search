@@ -66,6 +66,12 @@ const addValue = async (user, label, value, key = null) => {
 }
 
 describe('AdvancedSearchFilters', () => {
+  test('focuses the Entry ID input when no close button is provided', () => {
+    setup()
+
+    expect(screen.getByRole('textbox', { name: 'Add Entry ID' })).toHaveFocus()
+  })
+
   test('shows applied text values in their selected lists', () => {
     setup({
       overrideZustandState: {
@@ -340,7 +346,7 @@ describe('AdvancedSearchFilters', () => {
     const onClose = vi.fn()
     const { user } = await setupLoaded({ overrideProps: { onClose } })
 
-    expect(screen.getByRole('form', { name: 'Advanced Filters' })).toHaveFocus()
+    expect(screen.getByRole('textbox', { name: 'Add Entry ID' })).toHaveFocus()
     await user.keyboard('{Escape}')
     expect(onClose).toHaveBeenCalledTimes(1)
     await user.click(screen.getByRole('button', { name: 'Close Advanced Filters' }))

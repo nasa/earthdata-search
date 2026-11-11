@@ -185,6 +185,29 @@ describe('NlpSearchStatus component', () => {
     }))
   })
 
+  test('leaves keyword empty for a short-name-only search', async () => {
+    const { zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'ATL06',
+        requestId: 1
+      }
+    })
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'ATL06',
+        'Final result:\n{"keyword":"","shortNames":["ATL06"]}'
+      )
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
+      collection: expect.objectContaining({
+        shortName: ['ATL06'],
+        keyword: ''
+      })
+    }))
+  })
+
   test('reports parsing errors when final result is not valid json', async () => {
     const { props, zustandState } = setup({
       overrideProps: {
@@ -290,7 +313,7 @@ describe('NlpSearchStatus component', () => {
         entryId: [],
         shortName: undefined,
         version: undefined,
-        keyword: 'find point',
+        keyword: undefined,
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         nlpQuery: 'find point',
         temporal: {},
@@ -366,7 +389,7 @@ describe('NlpSearchStatus component', () => {
         entryId: [],
         shortName: undefined,
         version: undefined,
-        keyword: 'invalid area',
+        keyword: undefined,
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         nlpQuery: 'invalid area',
         temporal: {},

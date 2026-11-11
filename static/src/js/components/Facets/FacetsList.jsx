@@ -137,6 +137,7 @@ FacetsList.propTypes = {
   facetCategory: PropTypes.string.isRequired,
   liftSelectedFacets: PropTypes.bool,
   changeHandler: PropTypes.func.isRequired,
+  // Disable for controls like Advanced Filters that already update applied state before fetching.
   optimisticSelection: PropTypes.bool,
   sortBy: PropTypes.string,
   variation: PropTypes.string

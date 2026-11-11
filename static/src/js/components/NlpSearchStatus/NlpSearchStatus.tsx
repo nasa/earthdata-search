@@ -204,7 +204,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         signal: init?.signal
       })
     },
-    onFinish: async (prompt, completionText) => {
+    onFinish: async (_prompt, completionText) => {
       // Ignore stale completions for a request that has been cancelled.
       if (lastStartedRequestIdRef.current == null) return
 
@@ -256,7 +256,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
           entryId: entryIds,
           shortName: shortNames.length ? shortNames : undefined,
           version: undefined,
-          keyword: keyword || prompt,
+          keyword,
           nlpRequestId,
           nlpQuery: query,
           spatial,

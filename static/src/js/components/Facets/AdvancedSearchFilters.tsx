@@ -20,8 +20,10 @@ import type { QuerySlice } from '../../zustand/types'
 
 import './AdvancedSearchFilters.scss'
 
+/** Collection search parameters managed by the query store. */
 type CollectionQuery = QuerySlice['query']['collection']
 
+/** Collection parameters exposed by the advanced filter controls. */
 type AdvancedFilterKey = 'doi'
   | 'entryTitle'
   | 'consortium'
@@ -36,13 +38,20 @@ type AdvancedFilterKey = 'doi'
   | 'serviceName'
   | 'toolName'
 
+/** Applied advanced filters, with unselected parameters omitted. */
 type AdvancedFilterValues = Pick<Partial<CollectionQuery>, AdvancedFilterKey>
+/** A selected value or list of values for an advanced filter. */
 type AdvancedFilterValue = AdvancedFilterValues[AdvancedFilterKey]
 
+/** Configuration used to render an advanced filter control. */
 interface AdvancedFilterDefinition {
+  /** Collection query parameter updated by the control. */
   key: AdvancedFilterKey
+  /** Display label for the filter. */
   label: string
+  /** Whether the filter accepts multiple values or a boolean selection. */
   type: 'array' | 'boolean'
+  /** Predefined choices; omitted for free-text and boolean filters. */
   options?: string[]
 }
 
@@ -92,9 +101,9 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     return count + selectedCountForFilter
   }, 0)
 
-  // Move keyboard focus into the advanced filter column when it opens
+  // Move keyboard focus to the Entry ID input when the column opens
   useEffect(() => {
-    formRef.current?.focus()
+    formRef.current?.querySelector<HTMLInputElement>('input')?.focus()
   }, [])
 
   // Sync the advanced controls when their applied query values change
@@ -115,7 +124,10 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   }
 
   const renderAdvancedFilter = ({
-    key, label, type, options = []
+    key,
+    label,
+    type,
+    options = []
   }: AdvancedFilterDefinition) => {
     const value = advancedFilters[key]
     const updateValue = (nextValue: AdvancedFilterValue) => updateAdvancedFilter(key, nextValue)
@@ -146,7 +158,6 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
             {label}
             {renderSelectedCount(selected)}
           </legend>
-          {/* This filter updates selected state before fetching; FacetsList's loading inversion would undo that display. */}
           <FacetsList
             facetCategory={key}
             optimisticSelection={false}
@@ -210,7 +221,6 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
       role="form"
       className="advanced-search-filters"
       ref={formRef}
-      tabIndex={-1}
       aria-label="Advanced Filters"
       onKeyDown={
         (event: React.KeyboardEvent<HTMLFormElement>) => {
