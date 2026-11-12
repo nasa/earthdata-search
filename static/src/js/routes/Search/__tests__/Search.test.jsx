@@ -318,7 +318,8 @@ describe('Search component', () => {
 
         await user.click(screen.getByRole('checkbox', { name: 'Include only EOSDIS collections' }))
 
-        expect(zustandState.query.changeQuery).toHaveBeenLastCalledWith({
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
             onlyEosdisCollections: undefined
           }

@@ -175,6 +175,7 @@ describe('NlpSearchStatus component', () => {
       )
     })
 
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
       collection: expect.objectContaining({
         entryId: ['ATL03_004'],
@@ -200,6 +201,7 @@ describe('NlpSearchStatus component', () => {
       )
     })
 
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
       collection: expect.objectContaining({
         shortName: ['ATL06'],

@@ -33,6 +33,7 @@ describe('SidebarContainer component', () => {
     const secondaryChildren = <div>Advanced Filters</div>
     setup({ overrideProps: { secondaryChildren } })
 
+    expect(Sidebar).toHaveBeenCalledTimes(1)
     expect(Sidebar).toHaveBeenCalledWith(
       expect.objectContaining({ secondaryChildren }),
       {}
