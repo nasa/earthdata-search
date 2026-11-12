@@ -2,6 +2,54 @@ import { buildCollectionSearchParams, prepareCollectionParams } from '../collect
 import useEdscStore from '../../zustand/useEdscStore'
 
 describe('#prepareCollectionParams', () => {
+  test('uses the portal consortium instead of user selections', () => {
+    useEdscStore.setState((state) => ({
+      portal: {
+        ...state.portal,
+        query: { consortium: ['CWIC'] }
+      },
+      query: {
+        ...state.query,
+        collection: {
+          ...state.query.collection,
+          onlyEosdisCollections: true,
+          consortium: ['CEOS']
+        }
+      }
+    }))
+
+    expect(prepareCollectionParams().consortium).toEqual(['CWIC'])
+  })
+
+  test('ignores advanced consortium selections when EOSDIS-only is selected', () => {
+    useEdscStore.setState((state) => ({
+      query: {
+        ...state.query,
+        collection: {
+          ...state.query.collection,
+          onlyEosdisCollections: true,
+          consortium: ['EOSDIS', 'CEOS']
+        }
+      }
+    }))
+
+    expect(prepareCollectionParams().consortium).toEqual(['EOSDIS'])
+  })
+
+  test('uses advanced consortium selections when EOSDIS-only is not selected', () => {
+    useEdscStore.setState((state) => ({
+      query: {
+        ...state.query,
+        collection: {
+          ...state.query.collection,
+          consortium: ['CEOS']
+        }
+      }
+    }))
+
+    expect(prepareCollectionParams().consortium).toEqual(['CEOS'])
+  })
+
   test('preserves advanced collection identifiers', () => {
     useEdscStore.setState((state) => ({
       query: {

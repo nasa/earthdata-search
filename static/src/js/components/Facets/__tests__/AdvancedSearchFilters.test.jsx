@@ -66,6 +66,68 @@ const addValue = async (user, label, value, key = null) => {
 }
 
 describe('AdvancedSearchFilters', () => {
+  test('hides consortium controls and excludes their selections from the count for a portal consortium', () => {
+    setup({
+      overrideZustandState: {
+        portal: { query: { consortium: ['CWIC'] } },
+        query: {
+          collection: {
+            consortium: ['CEOS']
+          }
+        }
+      }
+    })
+
+    expect(screen.queryByRole('group', { name: /Consortium/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('checkbox', { name: 'EOSDIS' })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
+  })
+
+  test('locks consortium to EOSDIS while EOSDIS-only is selected and unlocks it when deselected', async () => {
+    const { user } = setup({
+      overrideZustandState: {
+        query: { collection: { consortium: ['CEOS'] } }
+      }
+    })
+
+    expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
+
+    act(() => {
+      changeQuery({
+        collection: {
+          onlyEosdisCollections: true,
+          consortium: undefined
+        }
+      })
+    })
+
+    const consortium = within(screen.getByRole('group', { name: /Consortium/ }))
+    expect(consortium.getByRole('checkbox', { name: 'EOSDIS' })).toBeChecked()
+    expect(consortium.getByRole('checkbox', { name: 'CEOS' })).not.toBeChecked()
+    consortium.getAllByRole('checkbox').forEach((checkbox) => {
+      expect(checkbox).toBeDisabled()
+    })
+
+    changeQuery.mockClear()
+    await user.click(consortium.getByRole('checkbox', { name: 'CEOS' }))
+    expect(changeQuery).not.toHaveBeenCalled()
+    expect(screen.getByRole('heading', { name: 'Advanced Filters 1 Selected' })).toBeVisible()
+
+    act(() => {
+      changeQuery({ collection: { onlyEosdisCollections: undefined } })
+    })
+
+    consortium.getAllByRole('checkbox').forEach((checkbox) => {
+      expect(checkbox).toBeEnabled()
+      expect(checkbox).not.toBeChecked()
+    })
+
+    expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
+
+    await user.click(consortium.getByRole('checkbox', { name: 'CEOS' }))
+    expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
+  })
+
   test('focuses the Entry ID input when no close button is provided', () => {
     setup()
 

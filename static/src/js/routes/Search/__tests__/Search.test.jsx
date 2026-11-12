@@ -10,6 +10,7 @@ import { Search } from '../Search'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
+import { encodeUrlQuery } from '../../../util/url/url'
 
 const mockClassListAdd = vi.fn()
 const mockClassListRemove = vi.fn()
@@ -196,6 +197,45 @@ describe('Search component', () => {
       expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
     })
 
+    test('hides consortium controls when the portal defines a consortium', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          portal: { query: { consortium: ['CWIC'] } },
+          query: {
+            collection: {
+              consortium: ['CEOS']
+            }
+          }
+        }
+      })
+
+      expect(screen.queryByRole('checkbox', { name: 'Include only EOSDIS collections' })).not.toBeInTheDocument()
+      await user.click(screen.getByRole('button', { name: 'Expand Advanced Filters' }))
+      expect(screen.queryByRole('group', { name: /Consortium/ })).not.toBeInTheDocument()
+    })
+
+    test('shows only EOSDIS checked and disables advanced consortium choices when EOSDIS-only is selected', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              consortium: ['CEOS'],
+              onlyEosdisCollections: true
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('checkbox', { name: 'Include only EOSDIS collections' })).toBeChecked()
+      await user.click(screen.getByRole('button', { name: 'Expand Advanced Filters, 1 selected' }))
+      const consortium = within(screen.getByRole('group', { name: /Consortium/ }))
+      expect(consortium.getByRole('checkbox', { name: 'EOSDIS' })).toBeChecked()
+      expect(consortium.getByRole('checkbox', { name: 'CEOS' })).not.toBeChecked()
+      consortium.getAllByRole('checkbox').forEach((checkbox) => {
+        expect(checkbox).toBeDisabled()
+      })
+    })
+
     test('renders the "Include inactive collections" checkbox under PortalFeatureContainer', async () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig')
         .mockReturnValue({
@@ -240,8 +280,12 @@ describe('Search component', () => {
         })
       })
 
-      test('checking the "Include only EOSDIS collections" checkbox calls changeQuery', async () => {
-        const { user, zustandState } = setup()
+      test('checking EOSDIS-only clears the advanced consortium selection', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            query: { collection: { consortium: ['FEDEO'] } }
+          }
+        })
 
         const onlyEosdisCollectionsCheckbox = await screen.findByText('Include only EOSDIS collections')
 
@@ -250,7 +294,41 @@ describe('Search component', () => {
         expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
         expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
-            onlyEosdisCollections: true
+            onlyEosdisCollections: true,
+            consortium: undefined
+          }
+        })
+
+        const [{ collection }] = zustandState.query.changeQuery.mock.calls[0]
+        const url = encodeUrlQuery({
+          pathname: '/search',
+          collectionsQuery: {
+            ...zustandState.query.collection,
+            ...collection
+          }
+        })
+        const { searchParams } = new URL(url, 'http://localhost')
+        expect(searchParams.get('oe')).toEqual('t')
+        expect(searchParams.has('consortium[0]')).toBe(false)
+      })
+
+      test('unchecking EOSDIS-only only clears its flag', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            query: {
+              collection: {
+                onlyEosdisCollections: true,
+                consortium: ['CEOS']
+              }
+            }
+          }
+        })
+
+        await user.click(screen.getByRole('checkbox', { name: 'Include only EOSDIS collections' }))
+
+        expect(zustandState.query.changeQuery).toHaveBeenLastCalledWith({
+          collection: {
+            onlyEosdisCollections: undefined
           }
         })
       })

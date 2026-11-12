@@ -85,6 +85,11 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   onClose = null
 }) => {
   const query: Partial<CollectionQuery> = useEdscStore(getCollectionsQuery)
+  const hasPortalConsortium = useEdscStore(
+    (state) => Boolean(state.portal.query?.consortium?.length)
+  )
+  const visibleFilters = filterDefinitions.filter(({ key }) => key !== 'consortium'
+    || !hasPortalConsortium)
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilterValues>(
     pick(query, advancedFilterKeys)
@@ -92,8 +97,8 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
 
   const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
   const formRef = useRef<HTMLDivElement>(null)
-  const selectedOptionsCount = filterDefinitions.reduce((count, { key }) => {
-    const value = query[key]
+  const selectedOptionsCount = visibleFilters.reduce((count, { key }) => {
+    const value = key === 'consortium' && query.onlyEosdisCollections ? ['EOSDIS'] : query[key]
     const selectedCountForFilter = Array.isArray(value)
       ? value.length
       : Number(Boolean(value))
@@ -129,7 +134,8 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     type,
     options = []
   }: AdvancedFilterDefinition) => {
-    const value = advancedFilters[key]
+    const isEosdisOnlyConsortium = key === 'consortium' && query.onlyEosdisCollections
+    const value = isEosdisOnlyConsortium ? ['EOSDIS'] : advancedFilters[key]
     const updateValue = (nextValue: AdvancedFilterValue) => updateAdvancedFilter(key, nextValue)
 
     if (type === 'array') {
@@ -153,7 +159,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
       const choices = [...new Set([...options, ...selected])]
 
       return (
-        <fieldset key={key}>
+        <fieldset key={key} disabled={!!isEosdisOnlyConsortium}>
           <legend>
             {label}
             {renderSelectedCount(selected)}
@@ -208,7 +214,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   }
 
   const getAdvancedFilters = (keys: AdvancedFilterKey[]) => (
-    filterDefinitions.filter(({ key }) => keys.includes(key))
+    visibleFilters.filter(({ key }) => keys.includes(key))
   )
   const identifierFilters = getAdvancedFilters(identifierFilterKeys)
   const enumFilters = getAdvancedFilters(['consortium', 'collectionDataType', 'collectionProgress'])

@@ -80,7 +80,15 @@ export const Search = () => {
     onSearchLoaded: state.ui.tour.onSearchLoaded
   }))
   const collectionQuery = useEdscStore(getCollectionsQuery)
+  const hasPortalConsortium = useEdscStore(
+    (state) => Boolean(state.portal.query?.consortium?.length)
+  )
   const advancedFiltersSelectedCount = advancedCollectionFilters.reduce((count, { key }) => {
+    if (key === 'consortium') {
+      if (hasPortalConsortium) return count
+      if (collectionQuery.onlyEosdisCollections) return count + 1
+    }
+
     const value = collectionQuery[key]
 
     return count + (Array.isArray(value) ? value.length : Number(Boolean(value)))
@@ -113,7 +121,10 @@ export const Search = () => {
     const collection = {}
     if (id === 'input__non-eosdis') {
       if (!checked) collection.onlyEosdisCollections = undefined
-      if (checked) collection.onlyEosdisCollections = true
+      if (checked) {
+        collection.onlyEosdisCollections = true
+        collection.consortium = undefined
+      }
     }
 
     if (id === 'input__only-granules') {

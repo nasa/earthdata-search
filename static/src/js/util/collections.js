@@ -91,7 +91,7 @@ export const prepareCollectionParams = () => {
   let cloudHosted
   if (featureFacets.availableInEarthdataCloud) cloudHosted = true
 
-  let consortium = []
+  let consortium = selectedConsortium
   if (onlyEosdisCollections) {
     consortium = ['EOSDIS']
   }
@@ -131,11 +131,7 @@ export const prepareCollectionParams = () => {
     viewAllFacetsCategory,
     viewAllFacets,
     ...portalQuery,
-    consortium: [
-      ...consortium,
-      ...portalConsortium,
-      ...selectedConsortium
-    ]
+    consortium: portalConsortium.length ? portalConsortium : consortium
   }
 
   // Apply any overrides for advanced search

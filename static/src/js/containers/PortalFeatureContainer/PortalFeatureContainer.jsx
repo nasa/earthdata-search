@@ -46,7 +46,7 @@ export const PortalFeatureContainer = ({
     return children
   }
 
-  if (nonEosdisCheckbox && showNonEosdisCheckbox) {
+  if (nonEosdisCheckbox && showNonEosdisCheckbox && !portal.query?.consortium?.length) {
     return children
   }
 
