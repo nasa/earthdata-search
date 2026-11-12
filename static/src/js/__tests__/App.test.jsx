@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouterProvider } from 'react-router-dom'
+import { RouterProvider } from 'react-router/dom'
 import { Helmet } from 'react-helmet'
 
 import { waitFor } from '@testing-library/react'
@@ -22,8 +22,8 @@ vi.mock('../../../../sharedUtils/config', () => ({
   })
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router/dom', async () => ({
+  ...(await vi.importActual('react-router/dom')),
   RouterProvider: vi.fn(() => <div />)
 }))
 

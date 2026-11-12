@@ -105,6 +105,8 @@ import {
 } from '../../types/sharedTypes'
 import { MapView, ShapefileSlice } from '../../zustand/types'
 
+const RENDER_COMPLETE_ATTRIBUTE = 'data-render-complete'
+
 interface MapPerformanceWindow {
   /** Timestamp (from performance.now()) marking when the current metrics window started */
   windowStart: number
@@ -447,6 +449,11 @@ const Map: React.FC<MapProps> = ({
   const frameTimesRef = useRef<number[]>([])
   const isTrackingFrameRef = useRef(false)
   const performanceWindowRef = useRef<MapPerformanceWindow>(createEmptyPerformanceWindow())
+
+  // Tracks whether the base/overlay layers have been added to the current map. The map fires
+  // `rendercomplete` before the async `buildLayers` finishes, so this prevents reporting a
+  // completed render to Playwright tests before any tiles have been requested.
+  const layersReadyRef = useRef(false)
 
   // Mirror the latest focused collection(s) into a ref so the long-lived
   // map event listeners always read current values without needing to be
@@ -794,9 +801,27 @@ const Map: React.FC<MapProps> = ({
 
     eventEmitter.on(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
 
+    /** Helper functions for Playwright tests */
+    const handleMapMoveStart = () => {
+      map.getTargetElement()?.setAttribute(RENDER_COMPLETE_ATTRIBUTE, 'false')
+    }
+
+    const handleRenderComplete = () => {
+      if (!layersReadyRef.current) return
+
+      map.getTargetElement()?.setAttribute(RENDER_COMPLETE_ATTRIBUTE, 'true')
+    }
+
+    map.on('movestart', handleMapMoveStart)
+    // `loadstart` covers tiles loading without the map moving (e.g. granule imagery or layer changes)
+    map.on('loadstart', handleMapMoveStart)
+    map.on('rendercomplete', handleRenderComplete)
+    /** End of helper functions for Playwright tests */
+
     onMapReady(true)
 
     layersAdded = false
+    layersReadyRef.current = false
 
     return () => {
       // The outline layer is reused. Remove this map's callback on unmount or
@@ -810,6 +835,12 @@ const Map: React.FC<MapProps> = ({
       map.un('postrender', handlePostRenderPerf)
       map.un('movestart', handleMoveStartPerf)
       map.un('moveend', handleMoveEndPerf)
+
+      // Cleanup the helper functions for Playwright tests
+      map.un('movestart', handleMapMoveStart)
+      map.un('loadstart', handleMapMoveStart)
+      map.un('rendercomplete', handleRenderComplete)
+      mapElRef.current?.removeAttribute(RENDER_COMPLETE_ATTRIBUTE)
 
       eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
       eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
@@ -877,6 +908,10 @@ const Map: React.FC<MapProps> = ({
           mapRef.current?.addLayer(overlayLayers[layerId])
         }
       })
+
+      // Adding the layers triggers a new render, and the next `rendercomplete` will
+      // fire once their tiles have loaded
+      layersReadyRef.current = true
     }
 
     if (mapRef.current && !layersAdded) {

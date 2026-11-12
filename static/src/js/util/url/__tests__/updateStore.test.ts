@@ -3,6 +3,11 @@ import { updateStore, type UpdateStoreParams } from '../updateStore'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import routerHelper from '../../../router/router'
 
+vi.mock('../../../../../portals/testPortal/styles.scss', () => ({
+  unuse: vi.fn(),
+  use: vi.fn()
+}))
+
 describe('updateStore', () => {
   test('sets the zustand state', async () => {
     const params = {
@@ -246,11 +251,6 @@ describe('updateStore', () => {
 
   describe('when a portal parameter is provided', () => {
     test('loads the included styles', async () => {
-      vi.mock('../../../../../portals/testPortal/styles.scss', () => ({
-        unuse: vi.fn(),
-        use: vi.fn()
-      }))
-
       const params = {
         cmrFacets: {},
         deprecatedUrlParams: [],

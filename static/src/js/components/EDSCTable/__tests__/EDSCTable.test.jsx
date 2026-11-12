@@ -49,6 +49,7 @@ const setup = setupTest({
     ],
     data: collectionData,
     id: 'test-table',
+    isActive: true,
     itemCount: 1,
     rowTestId: 'row-test-id',
     isItemLoaded: vi.fn(),

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { parse, stringify } from 'qs'
 import { isObject } from 'lodash-es'
 
@@ -78,9 +78,9 @@ const PortalLinkContainer = ({
   }
 
   // Build the onClick function
-  const onClickWithChangePath = (event) => {
+  const onClickWithChangePath = async (event) => {
     // If the onClick prop was provided call it
-    if (onClick) onClick(event)
+    if (onClick) await onClick(event)
 
     // If the updatePath prop was true, call changePath
     if (updatePath) {
@@ -89,7 +89,7 @@ const PortalLinkContainer = ({
         search: newSearch
       } = newTo
 
-      changePath(`${pathname}${newSearch}`)
+      await changePath(`${pathname}${newSearch}`)
     }
   }
 
@@ -106,8 +106,8 @@ const PortalLinkContainer = ({
         updatePath={updatePath}
         {...otherProps}
         onClick={
-          (event) => {
-            onClickWithChangePath(event)
+          async (event) => {
+            await onClickWithChangePath(event)
             navigate(newTo)
           }
         }

@@ -15,8 +15,8 @@ vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   ))
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '?p=C100005-EDSC!C100005-EDSC&pg[1][v]=t',

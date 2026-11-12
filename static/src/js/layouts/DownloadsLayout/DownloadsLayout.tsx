@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 const DownloadsLayout = () => (
   <div className="route-wrapper route-wrapper--light route-wrapper--content-page">

@@ -44,12 +44,28 @@ jobs:
   runBuild:
     needs: [eslint]
     runs-on: ubuntu-latest
+    # Run in the official Playwright image so code instrumentation matches the environment used for Playwright tests.
+    # The image tag must match the @playwright/test version in package-lock.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    env:
+      # Firefox fails to launch as root unless HOME is root's home directory
+      HOME: /root
     strategy:
         matrix:
           node-version: ['lts/jod']
     steps:
+    # jq is used by bin/playwright-prepare-ci; git, curl, and gnupg are used by checkout and codecov
+    - name: Install system dependencies
+      run: apt-get update && apt-get install -y --no-install-recommends jq git curl gnupg
+
     - name: Checkout code
       uses: actions/checkout@v7
+
+    # The workspace is owned by a different user than the container's root user
+    - name: Mark workspace as a safe git directory
+      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
     - name: Setup
       uses: ./.github/actions/npm-setup
@@ -68,6 +84,14 @@ jobs:
   playwright:
     needs: [runBuild]
     runs-on: ubuntu-latest
+    # Run in the official Playwright image so screenshots render the same as `npm run playwright:docker`.
+    # The image tag must match the @playwright/test version in package-lock.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    env:
+      # Firefox fails to launch as root unless HOME is root's home directory
+      HOME: /root
     strategy:
         fail-fast: false
         matrix:
@@ -75,14 +99,20 @@ jobs:
           shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9]
           shardTotal: [9]
     steps:
+    # jq is used by bin/playwright-prepare-ci; git, curl, and gnupg are used by checkout and codecov
+    - name: Install system dependencies
+      run: apt-get update && apt-get install -y --no-install-recommends jq git curl gnupg
+
     - name: Checkout code
       uses: actions/checkout@v7
+
+    # The workspace is owned by a different user than the container's root user
+    - name: Mark workspace as a safe git directory
+      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
     - name: Setup
       uses: ./.github/actions/npm-setup
 
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
     - name: Download build
       uses: actions/download-artifact@v8
       with:

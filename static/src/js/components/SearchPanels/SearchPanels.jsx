@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router'
 import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
@@ -460,10 +460,6 @@ const SearchPanels = () => {
         [
           {
             title: `Search Results (${commafy(collectionHits)} Collections)`,
-            link: {
-              pathname: routes.SEARCH,
-              search: location.search
-            },
             onClick: () => setCollectionId(null)
           }
         ]
@@ -522,10 +518,6 @@ const SearchPanels = () => {
         [
           {
             title: `Search Results (${commafy(collectionHits)} ${pluralize('Collection', collectionHits)})`,
-            link: {
-              pathname: routes.SEARCH,
-              search: location.search
-            },
             onClick: () => setCollectionId(null)
           }
         ]
@@ -562,10 +554,6 @@ const SearchPanels = () => {
         [
           {
             title: 'Search Results',
-            link: {
-              pathname: routes.SEARCH,
-              search: location.search
-            },
             onClick: () => setCollectionId(null)
           },
           {
@@ -618,10 +606,6 @@ const SearchPanels = () => {
         [
           {
             title: 'Search Results',
-            link: {
-              pathname: routes.SEARCH,
-              search: location.search
-            },
             onClick: () => setCollectionId(null)
           },
           {
@@ -679,10 +663,6 @@ const SearchPanels = () => {
         [
           {
             title: 'Search Results',
-            link: {
-              pathname: routes.SEARCH,
-              search: location.search
-            },
             onClick: () => setCollectionId(null)
           }
         ]

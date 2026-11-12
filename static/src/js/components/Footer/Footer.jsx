@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isPath } from '../../util/isPath'

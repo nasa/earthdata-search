@@ -128,6 +128,16 @@ describe('User resolver', () => {
             query: UPDATE_PREFERENCES,
             variables: {
               preferences: {
+                collectionSort: '-score',
+                granuleSort: 'default',
+                panelState: 'default',
+                collectionListView: 'default',
+                granuleListView: 'default',
+                mapView: {
+                  zoom: 2,
+                  latitude: 0,
+                  longitude: 0
+                },
                 invalidPreference: true
               }
             }
@@ -139,7 +149,7 @@ describe('User resolver', () => {
 
           expect(data).toEqual({ updatePreferences: null })
 
-          expect(errors[0].message).toBe('Invalid preferences: [{"keyword":"additionalProperties","dataPath":"","schemaPath":"#/additionalProperties","params":{"additionalProperty":"invalidPreference"},"message":"should NOT have additional properties"}]')
+          expect(errors[0].message).toBe('Invalid preferences: [{"instancePath":"","schemaPath":"#/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"invalidPreference"},"message":"must NOT have additional properties"}]')
         })
       })
     })

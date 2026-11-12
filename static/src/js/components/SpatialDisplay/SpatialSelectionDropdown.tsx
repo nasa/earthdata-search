@@ -8,7 +8,7 @@ import { FaCircle, FaFile } from 'react-icons/fa'
 // @ts-expect-error: This file does not have types
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router'
 // @ts-expect-error: This file does not have types
 import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 

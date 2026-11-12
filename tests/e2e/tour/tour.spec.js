@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 import { login } from '../../support/login'
 
 import singleCollection from './__mocks__/single_collection.json'
@@ -34,9 +34,10 @@ test.describe('When dontShowTour is set to false', () => {
       })
     })
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('search')
-    await initialMapPromise
+
+    // Wait for the map to load
+    await waitForMapRenderComplete(page)
   })
 
   test.describe('When clicking the "Skip for now" button', () => {
@@ -103,9 +104,10 @@ test.describe('When loading the page with dontShowTour preference set to true', 
       })
     })
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('search')
-    await initialMapPromise
+
+    // Wait for the map to load
+    await waitForMapRenderComplete(page)
   })
 
   test('should not see the tour when the page loads', async ({ page }) => {
@@ -139,9 +141,10 @@ test.describe('When logged in', () => {
       })
     })
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
     await page.goto('search')
-    await initialMapPromise
+
+    // Wait for the map to load
+    await waitForMapRenderComplete(page)
   })
 
   test('should see the additional tour steps for logged in users', async ({ page }) => {
@@ -211,9 +214,10 @@ test.describe('When not logged in', () => {
       })
     })
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
     await page.goto('search')
-    await initialMapPromise
+
+    // Wait for the map to load
+    await waitForMapRenderComplete(page)
   })
 
   test('should navigate through the Joyride tour highlighting the correct parts of the page', async ({ page }) => {

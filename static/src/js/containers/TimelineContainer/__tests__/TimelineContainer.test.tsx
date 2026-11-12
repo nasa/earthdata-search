@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import type { Mock } from 'vitest'
 
 import TimelineContainer from '../TimelineContainer'
@@ -11,8 +11,8 @@ import { routes } from '../../../constants/routes'
 
 vi.mock('../../../components/Timeline/Timeline', () => ({ default: vi.fn(() => null) }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '?p=C123456-EDSC',

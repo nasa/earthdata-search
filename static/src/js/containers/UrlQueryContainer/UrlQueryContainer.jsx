@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router'
 import { useMutation } from '@apollo/client'
 
 import { changePath } from '../../util/url/changePath'
@@ -101,34 +101,66 @@ const UrlQueryContainer = ({
 
   // When the Zustand state changes, encode the values and call changeUrl to update the URL
   useEffect(() => {
-    if (encodedUrl !== '') {
-      const {
-        id: projectId,
-        path: projectPath
-      } = savedProject
+    const doAsyncWork = async () => {
+      if (encodedUrl !== '') {
+        const {
+          id: projectId,
+          path: projectPath
+        } = savedProject
 
-      const shouldSaveProject = !isPath(encodedUrl, urlPathsWithoutUrlParams)
-      // We don't want projects to use the `/projects` path, but we don't want to add it to
-      // `urlPathsWithoutUrlParams` because that would affect other functionality
-      && !isPath(encodedUrl, [routes.PROJECTS])
+        const shouldSaveProject = !isPath(encodedUrl, urlPathsWithoutUrlParams)
+        // We don't want projects to use the `/projects` path, but we don't want to add it to
+        // `urlPathsWithoutUrlParams` because that would affect other functionality
+        && !isPath(encodedUrl, [routes.PROJECTS])
 
-      if (projectId && shouldSaveProject) {
-        const updatedNextUrl = encodedUrl.replace('/projects?', '/project?')
+        if (projectId && shouldSaveProject) {
+          const updatedNextUrl = encodedUrl.replace('/projects?', '/project?')
 
-        if (projectPath !== encodedUrl) {
-          // If there is a projectId call updateProjectMutation
-          updateProjectMutation({
+          if (projectPath !== encodedUrl) {
+            // If there is a projectId call updateProjectMutation
+            updateProjectMutation({
+              variables: {
+                obfuscatedId: projectId,
+                path: updatedNextUrl
+              },
+              onCompleted: (data) => {
+                const { updateProject } = data
+                const {
+                  name,
+                  obfuscatedId,
+                  path
+                } = updateProject
+
+                setProject({
+                  id: obfuscatedId,
+                  name,
+                  path
+                })
+
+                // Update the URL with the new projectId
+                const newUrl = `${updatedNextUrl.split('?')[0]}?projectId=${obfuscatedId}`
+
+                navigate(newUrl, { replace: true })
+              }
+            })
+          } else {
+            const newUrl = `${updatedNextUrl.split('?')[0]}?projectId=${projectId}`
+
+            navigate(newUrl, { replace: true })
+          }
+        } else if (encodedUrl.length > 2000 && shouldSaveProject) {
+          // If there is more than 2000 characters in the URL, call createProjectMutation
+          createProjectMutation({
             variables: {
-              obfuscatedId: projectId,
-              path: updatedNextUrl
+              path: encodedUrl
             },
             onCompleted: (data) => {
-              const { updateProject } = data
+              const { createProject } = data
               const {
                 name,
                 obfuscatedId,
                 path
-              } = updateProject
+              } = createProject
 
               setProject({
                 id: obfuscatedId,
@@ -136,50 +168,24 @@ const UrlQueryContainer = ({
                 path
               })
 
-              // Update the URL with the new projectId
-              const newUrl = `${updatedNextUrl.split('?')[0]}?projectId=${obfuscatedId}`
+              // If the projectId has changed, update the URL
+              if (projectId !== obfuscatedId) {
+                const newUrl = `${encodedUrl.split('?')[0]}?projectId=${obfuscatedId}`
 
-              navigate(newUrl, { replace: true })
+                navigate(newUrl, { replace: true })
+              }
             }
           })
         } else {
-          const newUrl = `${updatedNextUrl.split('?')[0]}?projectId=${projectId}`
-
-          navigate(newUrl, { replace: true })
+          // Else call changeUrl to update the URL values. The path has already been
+          // updated here, so we only need to update the query parameters
+          const [, params] = encodedUrl.split('?')
+          await changeUrl(`${window.location.pathname}?${params || ''}`)
         }
-      } else if (encodedUrl.length > 2000 && shouldSaveProject) {
-        // If there is more than 2000 characters in the URL, call createProjectMutation
-        createProjectMutation({
-          variables: {
-            path: encodedUrl
-          },
-          onCompleted: (data) => {
-            const { createProject } = data
-            const {
-              name,
-              obfuscatedId,
-              path
-            } = createProject
-
-            setProject({
-              id: obfuscatedId,
-              name,
-              path
-            })
-
-            // If the projectId has changed, update the URL
-            if (projectId !== obfuscatedId) {
-              const newUrl = `${encodedUrl.split('?')[0]}?projectId=${obfuscatedId}`
-
-              navigate(newUrl, { replace: true })
-            }
-          }
-        })
-      } else {
-        // Else call changeUrl to update the URL values
-        changeUrl(encodedUrl)
       }
     }
+
+    doAsyncWork()
   }, [encodedUrl])
 
   return children

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { screen, within } from '@testing-library/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import Helmet from 'react-helmet'
 import * as tinyCookie from 'tiny-cookie'
@@ -22,6 +22,16 @@ import GranuleResultsFocusedMeta from '../../GranuleResults/GranuleResultsFocuse
 
 import { MODAL_NAMES } from '../../../constants/modalNames'
 import { metricsCollectionSortChange } from '../../../util/metrics/metricsCollectionSortChange'
+
+// Mocking window.getComputedStyle for jsdom which does not have the visual rendering needed for layout calculations
+const mockGetComputedStyle = vi.fn().mockImplementation(() => ({
+  // Simplebar-react calls getPropertyValue on the returned object. We mock it to prevent the test from crashing.
+  getPropertyValue: () => ''
+}))
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: mockGetComputedStyle
+})
 
 vi.mock('tiny-cookie', () => ({
   get: vi.fn().mockReturnValue('')
@@ -48,8 +58,8 @@ vi.mock('../../../../../../sharedUtils/config', () => ({
   })
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search',
     search: '',

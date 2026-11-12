@@ -3,7 +3,7 @@ import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json'
 import colormapCollectionOneGraphQlBody from './__mocks__/colormaps/collection_graphql_1.body.json'
@@ -36,6 +36,9 @@ test.describe('Map: Colormap interactions', () => {
 
   test.describe('When viewing granules with colormap data', () => {
     test.beforeEach(async ({ page }) => {
+      // These tests can take longer than default timeout, so extend default timeout
+      test.slow()
+
       const conceptIdOne = 'C1996881146-POCLOUD'
       const conceptIdTwo = 'C1243477369-GES_DISC'
       const colormapMock = {
@@ -118,12 +121,10 @@ test.describe('Map: Colormap interactions', () => {
         }
       })
 
-      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
-      await page.goto('search/granules?p=C1996881146-POCLOUD')
+      await page.goto('/search/granules?p=C1996881146-POCLOUD')
 
       // Wait for the map to load
-      await initialMapPromise
+      await waitForMapRenderComplete(page)
 
       // Wait for the timeline to be visible
       await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()

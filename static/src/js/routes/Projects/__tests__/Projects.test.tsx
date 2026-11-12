@@ -12,8 +12,8 @@ import SavedProjects from '../../../components/SavedProjects/SavedProjects'
 
 vi.mock('../../../components/SavedProjects/SavedProjects', () => ({ default: vi.fn(() => <div />) }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   Navigate: vi.fn(),
   useLocation: vi.fn().mockReturnValue({
     pathname: '/projects',

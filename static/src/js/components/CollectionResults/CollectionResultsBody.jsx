@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 import { FaDoorOpen } from 'react-icons/fa'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { formatCollectionList } from '../../util/formatCollectionList'
 import { isDefaultPortal } from '../../util/portals'
@@ -21,9 +21,11 @@ import './CollectionResultsBody.scss'
 /**
  * Renders CollectionResultsBody.
  * @param {Object} props - The props passed into the component.
+ * @param {Boolean} props.isActive - Whether the collection results panel is currently active.
  * @param {String} props.panelView - The current active view.
  */
 const CollectionResultsBody = ({
+  isActive = false,
   panelView
 }) => {
   const collectionQuery = useEdscStore(getCollectionsQuery)
@@ -106,12 +108,13 @@ const CollectionResultsBody = ({
         unmountOnExit
       >
         <CollectionResultsList
-          visibleMiddleIndex={visibleMiddleIndex}
           collectionsMetadata={collectionList}
-          setVisibleMiddleIndex={setVisibleMiddleIndex}
+          isActive={isActive}
+          isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          isItemLoaded={isItemLoaded}
+          setVisibleMiddleIndex={setVisibleMiddleIndex}
+          visibleMiddleIndex={visibleMiddleIndex}
         />
       </CSSTransition>
       <CSSTransition
@@ -122,6 +125,7 @@ const CollectionResultsBody = ({
       >
         <CollectionResultsTable
           collectionsMetadata={collectionList}
+          isActive={isActive}
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
@@ -160,6 +164,7 @@ const CollectionResultsBody = ({
 }
 
 CollectionResultsBody.propTypes = {
+  isActive: PropTypes.bool,
   panelView: PropTypes.string.isRequired
 }
 

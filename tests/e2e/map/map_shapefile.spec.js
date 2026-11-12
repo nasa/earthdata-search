@@ -4,7 +4,7 @@ import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
 import uploadShapefile from '../../support/uploadShapefile'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
@@ -59,16 +59,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
         await uploadShapefile(page, 'polygon.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -83,8 +80,11 @@ test.describe('Map: Shapefile interactions', () => {
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=4/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('polygon.png', {
@@ -120,16 +120,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
         await uploadShapefile(page, 'multipolygon.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -144,8 +141,11 @@ test.describe('Map: Shapefile interactions', () => {
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=12/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multipolygon.png', {
@@ -180,16 +180,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
         await uploadShapefile(page, 'line.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -199,8 +196,11 @@ test.describe('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=4/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('line.png', {
@@ -242,16 +242,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
         await uploadShapefile(page, 'multilinestring.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -261,8 +258,11 @@ test.describe('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=11/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multilinestring.png', {
@@ -304,16 +304,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
         await uploadShapefile(page, 'circle.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -323,8 +320,11 @@ test.describe('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=8/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('circle.png', {
@@ -365,19 +365,16 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         // `overlays=none` ensures that none of the overlays are added. I'm seeing issues with
         // loading the VectorTile overlays and the map taking a long time to come into focus in
         // these tests. Without the vector layers it is working better
         await page.goto('/search?overlays=none')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/20/)
         await uploadShapefile(page, 'point.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -387,11 +384,11 @@ test.describe('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=21/, { timeout: 3000 })
 
-        // Wait for map animation to complete
-        await page.waitForTimeout(1000)
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('point.png', {
@@ -434,16 +431,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
         await uploadShapefile(page, 'multipoint.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -453,8 +447,12 @@ test.describe('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=11/, { timeout: 3000 })
+        await page.waitForTimeout(1000)
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multipoint.png', {
@@ -488,16 +486,13 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await uploadShapefile(page, 'multiple_shapes.geojson')
-        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -507,8 +502,11 @@ test.describe('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=3/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multiple-shapes.png', {
@@ -640,19 +638,19 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
         await uploadShapefile(page, 'too_many_points.geojson')
-        await shapefilePromise
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=5/, { timeout: 3000 })
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
+        await page.waitForURL(/zoom=5/, { timeout: 5000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
@@ -695,19 +693,19 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
         await uploadShapefile(page, 'polygon_with_altitude.geojson')
-        await shapefilePromise
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=7/, { timeout: 3000 })
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
@@ -744,16 +742,20 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
         await uploadShapefile(page, 'arctic.geojson')
-        await shapefilePromise
+
+        // Wait for the URL to include the projection parameter after uploading the shapefile,
+        // indicating the map has updated its projection.
+        await page.waitForURL(/projection/)
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Populates the spatial display field
         await expect(
@@ -764,7 +766,7 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=3/, { timeout: 3000 })
 
         // Checking that the right number of results are loaded ensures that the route
@@ -804,16 +806,20 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
         await uploadShapefile(page, 'antarctic.geojson')
-        await shapefilePromise
+
+        // Wait for the URL to include the projection parameter after uploading the shapefile,
+        // indicating the map has updated its projection.
+        await page.waitForURL(/projection/)
+
+        // Wait for the map to finish rendering at the new location
+        await waitForMapRenderComplete(page)
 
         // Populates the spatial display field
         await expect(
@@ -828,7 +834,7 @@ test.describe('Map: Shapefile interactions', () => {
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        // Waiting for the URL to include the correct zoom level ensures the map has moved to the shapefile
         await page.waitForURL(/zoom=3/, { timeout: 3000 })
 
         // Draws the spatial on the map

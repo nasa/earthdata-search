@@ -5,7 +5,7 @@ import {
 } from '../../../../support/interceptUnauthenticatedCollections'
 import { isGetCollectionQuery } from '../../../../support/isGetCollectionQuery'
 import { isGetGranuleQuery } from '../../../../support/isGetGranuleQuery'
-import { setupTests } from '../../../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../../../support/setupTests'
 
 import commonBody from './__mocks__/cmr_granules/common_collections.body.json'
 import commonHeaders from './__mocks__/cmr_granules/common_collections.headers.json'
@@ -20,6 +20,9 @@ const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
 test.describe('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page, context }) => {
+    // These tests can take longer than default timeout, so extend default timeout
+    test.slow()
+
     const conceptId = 'C2208779826-LANCEMODIS'
 
     await setupTests({
@@ -78,18 +81,14 @@ test.describe('When clicking on a granule on the map', () => {
       }
     })
 
-    const baseTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-
     await page.goto(`/search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)
 
     // Wait for the map to load
-    await baseTilePromise
+    await waitForMapRenderComplete(page)
   })
 
   test.describe('When clicking on a map granule while in the granule list view', () => {
     test.beforeEach(async ({ page }) => {
-      const zoomedOutTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
-
       // Hide the layer picker
       await page.keyboard.press('l')
 
@@ -101,7 +100,9 @@ test.describe('When clicking on a granule on the map', () => {
         }
       })
 
-      await zoomedOutTilePromise
+      await page.waitForURL(/zoom=1/)
+
+      await waitForMapRenderComplete(page)
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {
@@ -155,12 +156,10 @@ test.describe('When clicking on a granule on the map', () => {
         exact: true
       }).click({ force: true })
 
-      // Click on the granule on the map
-      const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
-
       // Hide the layer picker
       await page.keyboard.press('l')
 
+      // Click on the granule on the map
       await page.locator('.map').click({
         force: true,
         position: {
@@ -169,7 +168,9 @@ test.describe('When clicking on a granule on the map', () => {
         }
       })
 
-      await tilesPromise
+      await page.waitForURL(/g=G3275560218-LANCEMODIS/)
+
+      await waitForMapRenderComplete(page)
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {

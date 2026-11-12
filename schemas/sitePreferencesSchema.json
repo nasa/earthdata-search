@@ -156,6 +156,7 @@
   "if": {
     "properties": {
       "mapView": {
+        "type": "object",
         "properties": {
           "projection": {
             "const": "epsg4326"
@@ -167,8 +168,10 @@
   "then": {
     "properties": {
       "mapView": {
+        "type": "object",
         "properties": {
           "zoom": {
+            "type": "number",
             "maximum": 21
           }
         }
@@ -178,8 +181,10 @@
   "else": {
     "properties": {
       "mapView": {
+        "type": "object",
         "properties": {
           "zoom": {
+            "type": "number",
             "maximum": 12
           }
         }

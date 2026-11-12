@@ -44,6 +44,7 @@ innerElementType.propTypes = {
  * Renders CollectionResultsList.
  * @param {Object} props - The props passed into the component.
  * @param {Array} props.collectionsMetadata - Collections passed from the store.
+ * @param {Boolean} props.isActive - Whether the collection results panel is currently active.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
@@ -52,6 +53,7 @@ innerElementType.propTypes = {
 */
 export const CollectionResultsList = ({
   collectionsMetadata,
+  isActive,
   isItemLoaded,
   itemCount,
   loadMoreItems,
@@ -93,13 +95,15 @@ export const CollectionResultsList = ({
 
   return (
     <div className="collection-results-list">
-      <AutoSizer style={
-        {
-          position: 'relative',
-          height: '100%',
-          width: '100%'
+      <AutoSizer
+        key={isActive ? 'active' : 'inactive'}
+        style={
+          {
+            position: 'relative',
+            height: '100%',
+            width: '100%'
+          }
         }
-      }
       >
         {
           ({ height, width }) => (
@@ -163,6 +167,7 @@ export const CollectionResultsList = ({
 
 CollectionResultsList.propTypes = {
   collectionsMetadata: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isActive: PropTypes.bool.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,

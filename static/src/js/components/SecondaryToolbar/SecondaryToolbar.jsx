@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Row from 'react-bootstrap/Row'
-import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
 import classNames from 'classnames'
 import {
@@ -16,7 +15,7 @@ import {
   FaUser,
   FaSignInAlt
 } from 'react-icons/fa'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -268,61 +267,51 @@ const SecondaryToolbar = () => {
         }
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <LinkContainer
+        <Dropdown.Item
+          as={Link}
           to={routes.PREFERENCES}
+          className="secondary-toolbar__preferences"
+          active={false}
         >
-          <Dropdown.Item
-            className="secondary-toolbar__preferences"
-            active={false}
-          >
-            Preferences
-          </Dropdown.Item>
-        </LinkContainer>
-        <LinkContainer
+          Preferences
+        </Dropdown.Item>
+        <Dropdown.Item
+          as={Link}
           to={routes.CONTACT_INFO}
+          className="secondary-toolbar__contact-info"
+          active={false}
         >
-          <Dropdown.Item
-            className="secondary-toolbar__contact-info"
-            active={false}
-          >
-            Contact Information
-          </Dropdown.Item>
-        </LinkContainer>
-        <LinkContainer
+          Contact Information
+        </Dropdown.Item>
+        <Dropdown.Item
+          as={Link}
           to={
             {
               pathname: routes.DOWNLOADS,
               search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
             }
           }
+          className="secondary-toolbar__downloads"
+          active={false}
         >
-          <Dropdown.Item
-            className="secondary-toolbar__downloads"
-            active={false}
-          >
-            Download Status &amp; History
-          </Dropdown.Item>
-        </LinkContainer>
-        <LinkContainer
+          Download Status &amp; History
+        </Dropdown.Item>
+        <Dropdown.Item
+          as={Link}
           to={routes.PROJECTS}
+          className="secondary-toolbar__saved-projects"
+          active={false}
         >
-          <Dropdown.Item
-            className="secondary-toolbar__saved-projects"
-            active={false}
-          >
-            Saved Projects
-          </Dropdown.Item>
-        </LinkContainer>
-        <LinkContainer
+          Saved Projects
+        </Dropdown.Item>
+        <Dropdown.Item
+          as={Link}
           to={routes.SUBSCRIPTIONS}
+          className="secondary-toolbar__saved-subscriptions"
+          active={false}
         >
-          <Dropdown.Item
-            className="secondary-toolbar__saved-subscriptions"
-            active={false}
-          >
-            Subscriptions
-          </Dropdown.Item>
-        </LinkContainer>
+          Subscriptions
+        </Dropdown.Item>
         <Dropdown.Item
           className="secondary-toolbar__logout"
           onClick={handleLogout}

@@ -7,7 +7,7 @@ import {
   FaFolderMinus
 } from 'react-icons/fa'
 import { IoShare } from 'react-icons/io5'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 

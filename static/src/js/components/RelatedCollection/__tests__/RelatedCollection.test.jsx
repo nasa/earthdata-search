@@ -16,8 +16,8 @@ vi.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   default: vi.fn((props) => <div {...props} />)
 }))
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')), // Preserve other exports
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')), // Preserve other exports
   useLocation: vi.fn().mockReturnValue({
     pathname: '/search/granules/collection-details',
     search: '?p=TEST_COLLECTION_0',

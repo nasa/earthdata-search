@@ -14,7 +14,7 @@ import timeline from './__mocks__/timeline.json'
 
 import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import { login } from '../../support/login'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 import { isGetProjectQuery } from '../../support/isGetProjectQuery'
 
 const conceptId = 'C1214470488-ASF'
@@ -95,9 +95,10 @@ test.describe('History', () => {
 
     await login(page, context)
 
-    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
     await page.goto('/search')
-    await initialMapPromise
+
+    // Wait for the map to load
+    await waitForMapRenderComplete(page)
   })
 
   test.describe('when pressing the back button', () => {

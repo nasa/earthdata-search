@@ -3,7 +3,7 @@ import { test, expect } from 'playwright-test-coverage'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
-import { setupTests } from '../../support/setupTests'
+import { setupTests, waitForMapRenderComplete } from '../../support/setupTests'
 
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
@@ -44,12 +44,10 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Drag the map
         await page.mouse.move(1000, 500)
@@ -72,11 +70,9 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Zoom the map
         await page.getByRole('button', { name: 'Zoom In' }).click()
@@ -95,19 +91,16 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
-        const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         // Change the projection
         await page.getByLabel('North Polar Stereographic').click()
 
         await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
-        await projectionChangePromise
+        await waitForMapRenderComplete(page)
 
         await expect(page).toHaveScreenshot('north_polar_stereographic.png', {
           clip: screenshotClip
@@ -123,12 +116,10 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-
         await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         await expect(page).toHaveScreenshot('north_polar_stereographic.png', {
           clip: screenshotClip
@@ -144,20 +135,17 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-
         await page.goto('/search?projection=EPSG%3A3413&zoom=2')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Change the projection
-        const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.getByLabel('Geographic (Equirectangular)').click()
-        await projectionChangePromise
 
         // Removes the map parameter when it is centered
         await expect(page).toHaveURL('search')
+        await waitForMapRenderComplete(page)
 
         await expect(page).toHaveScreenshot('geographic.png', {
           clip: screenshotClip
@@ -173,12 +161,10 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the image has loaded
         await page.waitForTimeout(500)
@@ -197,18 +183,15 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Change the projection
-        const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await page.getByLabel('South Polar Stereographic').click()
-        await projectionChangePromise
 
         await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=2')
+        await waitForMapRenderComplete(page)
 
         await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
           clip: screenshotClip
@@ -224,12 +207,10 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-
         await page.goto('/search?lat=-90&projection=EPSG%3A3031&zoom=2')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Ensure the image has loaded
         await page.waitForTimeout(500)
@@ -248,11 +229,9 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         // Change the projection to North Polar
         await page.getByLabel('North Polar Stereographic').click()
@@ -260,11 +239,10 @@ test.describe('Map: Control interactions', () => {
         await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Change the projection to South Polar
-        const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await page.getByLabel('South Polar Stereographic').click()
-        await projectionChangePromise
 
         await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=2')
+        await waitForMapRenderComplete(page)
 
         await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
           clip: screenshotClip
@@ -281,16 +259,15 @@ test.describe('Map: Control interactions', () => {
         headers: commonHeaders
       })
 
-      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
       await page.goto('/search')
 
-      await initialMapPromise
+      await waitForMapRenderComplete(page)
 
       // Change the projection
-      const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
       await page.getByLabel('North Polar Stereographic').click()
-      await projectionChangePromise
+
+      await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
+      await waitForMapRenderComplete(page)
 
       // Rotate the map
       await page.keyboard.down('Alt')
@@ -301,6 +278,7 @@ test.describe('Map: Control interactions', () => {
       await page.keyboard.up('Alt')
 
       await expect(page).toHaveURL(/rotation=32.\d+/)
+      await waitForMapRenderComplete(page)
 
       await expect(page).toHaveScreenshot('rotation.png', {
         clip: screenshotClip
@@ -315,12 +293,10 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-
         await page.goto('/search?lat=90&long=-45&projection=EPSG%3A3413&rotation=32.4&zoom=2')
 
         // Wait for the map to load
-        await initialMapPromise
+        await waitForMapRenderComplete(page)
 
         await expect(page).toHaveScreenshot('rotation.png', {
           clip: screenshotClip,
@@ -375,11 +351,9 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search')
 
-        await worldImageryPromise
+        await waitForMapRenderComplete(page)
 
         // Set up the response promise BEFORE interacting with the UI
         const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
@@ -409,11 +383,9 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-
         await page.goto('/search?overlays=coastlines')
 
-        await worldImageryPromise
+        await waitForMapRenderComplete(page)
 
         // Change the base layer
 
