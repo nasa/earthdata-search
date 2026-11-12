@@ -343,6 +343,117 @@ export default class DatabaseClient {
   }
 
   /**
+   * Retrieves aggregate counts of NLP feedback within a date range
+   * @param {Object} params - Parameters object
+   * @param {string} params.startDate - Start date (inclusive) for the report
+   * @param {string} params.endDate - End date (inclusive) for the report
+   * @returns {Promise<Object>} A promise that resolves to the NLP feedback counts
+   */
+  async getNlpFeedbackReport({
+    endDate,
+    startDate
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      // Postgres returns COUNT as bigint (a string in node-postgres), so cast to int
+      const data = await db('nlp_feedback')
+        .select(
+          db.raw('COUNT(*)::int AS total_count'),
+          db.raw('COUNT(*) FILTER (WHERE positive)::int AS positive_count'),
+          db.raw('COUNT(*) FILTER (WHERE NOT positive)::int AS negative_count'),
+          db.raw('COUNT(*) FILTER (WHERE keyword)::int AS keyword_count'),
+          db.raw('COUNT(*) FILTER (WHERE spatial)::int AS spatial_count'),
+          db.raw('COUNT(*) FILTER (WHERE temporal)::int AS temporal_count'),
+          db.raw('COUNT(*) FILTER (WHERE incomplete)::int AS incomplete_count'),
+          db.raw('COUNT(*) FILTER (WHERE relevancy)::int AS relevancy_count'),
+          db.raw('COUNT(*) FILTER (WHERE other)::int AS other_count'),
+          // Ignore whitespace-only comments, matching the `feedback` category in getNlpFeedbackCategory
+          db.raw('COUNT(*) FILTER (WHERE NULLIF(TRIM(feedback), \'\') IS NOT NULL)::int AS free_text_count')
+        )
+        // Dates are YYYY-MM-DD, so compare against the day after `endDate` to include the whole end day
+        .where('created_at', '>=', db.raw('?::date', [startDate]))
+        .where('created_at', '<', db.raw('?::date + interval \'1 day\'', [endDate]))
+        .first()
+
+      return data
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve NLP feedback report'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves NLP feedback entries matching a category within a date range
+   * @param {Object} params - Parameters object
+   * @param {string} params.category - The category column to filter by, or `feedback` for entries with free text
+   * @param {string} params.startDate - Start date (inclusive) for the query
+   * @param {string} params.endDate - End date (inclusive) for the query
+   * @param {number} [params.limit=20] - The maximum number of entries to retrieve
+   * @param {number} [params.offset=0] - The number of entries to skip
+   * @returns {Promise<Array>} A promise that resolves to an array of NLP feedback entries
+   */
+  async getNlpFeedbackCategory({
+    category,
+    endDate,
+    limit = 20,
+    offset = 0,
+    startDate
+  }) {
+    try {
+      const db = await this.getDbConnection()
+
+      let query = db('nlp_feedback')
+        .select(
+          'id as nlpRequestId',
+          'query as nlpQuery',
+          'positive',
+          'keyword',
+          'spatial',
+          'temporal',
+          'incomplete',
+          'relevancy',
+          'other',
+          'feedback'
+        )
+        // Total number of matching rows before limit/offset, used to build pageInfo
+        .select(db.raw('count(*) OVER() as total'))
+        // Dates are YYYY-MM-DD, so compare against the day after `endDate` to include the whole end day
+        .where('created_at', '>=', db.raw('?::date', [startDate]))
+        .where('created_at', '<', db.raw('?::date + interval \'1 day\'', [endDate]))
+        // A deterministic order is required for stable pagination
+        .orderBy([
+          {
+            column: 'created_at',
+            order: 'desc'
+          },
+          {
+            column: 'id',
+            order: 'desc'
+          }
+        ])
+
+      if (category === 'feedback') {
+        // Ignore whitespace-only comments, matching `free_text_count` in getNlpFeedbackReport
+        query = query.andWhereRaw('NULLIF(TRIM(feedback), \'\') IS NOT NULL')
+      } else {
+        query = query.andWhere(category, true)
+      }
+
+      return await this.executePaginatedQuery({
+        query,
+        limit,
+        offset
+      })
+    } catch (error) {
+      const errorMessage = 'Failed to retrieve NLP feedback category'
+      console.log(errorMessage, error)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Retrieves preferences for all users
    * @returns {Promise<Array>} A promise that resolves to an array of user preferences
    */

@@ -22,6 +22,50 @@ export default {
 
       return formatAdminPreferencesMetrics(await databaseClient.getSitePreferences())
     },
+    adminNlpFeedbackReport: async (source, args, context) => {
+      const { databaseClient } = context
+      const {
+        endDate,
+        startDate
+      } = args
+
+      const data = await databaseClient.getNlpFeedbackReport({
+        endDate,
+        startDate
+      })
+
+      return camelcaseKeys(data, { deep: true })
+    },
+    adminNlpFeedbackCategory: async (source, args, context) => {
+      const { databaseClient } = context
+      const {
+        category,
+        endDate,
+        limit = 20,
+        offset = 0,
+        startDate
+      } = args
+
+      const data = await databaseClient.getNlpFeedbackCategory({
+        startDate,
+        endDate,
+        category: category.toLowerCase(),
+        limit,
+        offset
+      })
+
+      const result = buildPaginatedResult({
+        data,
+        limit,
+        offset
+      })
+
+      return {
+        adminNlpFeedback: camelcaseKeys(result.data, { deep: true }),
+        pageInfo: result.pageInfo,
+        count: result.count
+      }
+    },
     adminProject: async (source, args, context) => {
       const { databaseClient } = context
       const { obfuscatedId } = args

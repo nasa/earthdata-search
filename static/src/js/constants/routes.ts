@@ -4,6 +4,7 @@
 export const routes = {
   ADMIN: '/admin',
   ADMIN_PREFERENCES_METRICS: '/admin/preferences-metrics',
+  ADMIN_NLP_FEEDBACK: '/admin/nlp-feedback',
   ADMIN_PROJECTS: '/admin/projects',
   ADMIN_RETRIEVAL_METRICS: '/admin/retrieval-metrics',
   ADMIN_RETRIEVALS: '/admin/retrievals',
