@@ -1,7 +1,8 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 import OlMap from 'ol/Map'
 import RenderEvent from 'ol/render/Event'
+
+import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 import Map from '../Map'
 import projectionCodes from '../../../constants/projectionCodes'
@@ -92,7 +93,10 @@ const setup = () => {
   const mapSpy = vi.spyOn(OlMap.prototype, 'getView')
   const mapCalls = mapSpy.mock.calls.length
   const props = getProps()
-  const view = render(<Map {...props} />)
+  const view = setupTest({
+    Component: Map,
+    defaultProps: { ...props }
+  })()
   const map = mapSpy.mock.contexts[mapCalls] as OlMap
   const outlineLayer = map.getLayers().getArray().find(
     (layer) => layer.getClassName() === 'map__granules-outlines-layer'
