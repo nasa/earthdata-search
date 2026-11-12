@@ -1,15 +1,10 @@
 import React from 'react'
-import {
-  act,
-  screen,
-  within
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
 import { Search } from '../Search'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
-import useEdscStore from '../../../zustand/useEdscStore'
 import { encodeUrlQuery } from '../../../util/url/url'
 
 const mockClassListAdd = vi.fn()
@@ -149,19 +144,15 @@ describe('Search component', () => {
     })
 
     test('shows the active advanced filter count on its toggle button', () => {
-      setup()
-
-      act(() => {
-        useEdscStore.setState((state) => ({
+      setup({
+        overrideZustandState: {
           query: {
-            ...state.query,
             collection: {
-              ...state.query.collection,
               doi: ['10.5067/EXAMPLE'],
               entryId: ['ATL03_004', 'ATL06_006']
             }
           }
-        }))
+        }
       })
 
       const toggle = screen.getByRole('button', { name: 'Expand Advanced Filters, 3 selected' })
@@ -214,7 +205,7 @@ describe('Search component', () => {
       expect(screen.queryByRole('group', { name: /Consortium/ })).not.toBeInTheDocument()
     })
 
-    test('shows only EOSDIS checked and disables advanced consortium choices when EOSDIS-only is selected', async () => {
+    test('disables advanced consortium choices when EOSDIS-only is selected', async () => {
       const { user } = setup({
         overrideZustandState: {
           query: {
@@ -227,13 +218,14 @@ describe('Search component', () => {
       })
 
       expect(screen.getByRole('checkbox', { name: 'Include only EOSDIS collections' })).toBeChecked()
-      await user.click(screen.getByRole('button', { name: 'Expand Advanced Filters, 1 selected' }))
+      await user.click(screen.getByRole('button', { name: 'Expand Advanced Filters' }))
       const consortium = within(screen.getByRole('group', { name: /Consortium/ }))
-      expect(consortium.getByRole('checkbox', { name: 'EOSDIS' })).toBeChecked()
-      expect(consortium.getByRole('checkbox', { name: 'CEOS' })).not.toBeChecked()
       consortium.getAllByRole('checkbox').forEach((checkbox) => {
         expect(checkbox).toBeDisabled()
+        expect(checkbox).not.toBeChecked()
       })
+
+      expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
     })
 
     test('renders the "Include inactive collections" checkbox under PortalFeatureContainer', async () => {

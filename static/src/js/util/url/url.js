@@ -192,21 +192,6 @@ const urlDefs = {
     shortKey: 'ic',
     encode: encodeBoolean,
     decode: decodeBoolean
-  },
-  entryId: {
-    shortKey: 'entry_id',
-    encode: encodeArray,
-    decode: decodeArray
-  },
-  shortName: {
-    shortKey: 'short_name',
-    encode: encodeArray,
-    decode: decodeArray
-  },
-  version: {
-    shortKey: 'version',
-    encode: encodeArray,
-    decode: decodeArray
   }
 }
 

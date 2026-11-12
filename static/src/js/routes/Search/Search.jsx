@@ -85,8 +85,7 @@ export const Search = () => {
   )
   const advancedFiltersSelectedCount = advancedCollectionFilters.reduce((count, { key }) => {
     if (key === 'consortium') {
-      if (hasPortalConsortium) return count
-      if (collectionQuery.onlyEosdisCollections) return count + 1
+      if (hasPortalConsortium || collectionQuery.onlyEosdisCollections) return count
     }
 
     const value = collectionQuery[key]

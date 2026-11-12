@@ -24,7 +24,7 @@ describe('updateStore', () => {
       }
     }))
 
-    await updateStore(decodeUrlParams('short_name=ATL03'), '/search')
+    await updateStore(decodeUrlParams('short_name[0]=ATL03'), '/search')
     expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03'])
     expect(useEdscStore.getState().query.collection.doi).toBeUndefined()
     expect(useEdscStore.getState().query.collection.version).toBeUndefined()
@@ -34,7 +34,7 @@ describe('updateStore', () => {
   })
 
   test('preserves versions for restored multiple short names', async () => {
-    await updateStore(decodeUrlParams('short_name[0]=ATL03&short_name[1]=ATL06&version=004'), '/search')
+    await updateStore(decodeUrlParams('short_name[0]=ATL03&short_name[1]=ATL06&version[0]=004'), '/search')
 
     expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03', 'ATL06'])
     expect(useEdscStore.getState().query.collection.version).toEqual(['004'])

@@ -8,19 +8,12 @@ import setupTest from '../../../../../../vitestConfigs/setupTest'
 import AdvancedSearchFilters from '../AdvancedSearchFilters'
 import useEdscStore from '../../../zustand/useEdscStore'
 
-const changeQuery = vi.fn(({ collection }) => {
-  useEdscStore.setState((state) => ({
-    query: {
-      ...state.query,
-      collection: {
-        ...state.query.collection,
-        ...collection
-      }
-    }
-  }))
-})
+const changeQuery = vi.fn()
 const setup = setupTest({
   Component: AdvancedSearchFilters,
+  defaultProps: {
+    onClose: vi.fn()
+  },
   defaultZustandState: {
     query: { changeQuery },
     collections: {
@@ -83,7 +76,7 @@ describe('AdvancedSearchFilters', () => {
     expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
   })
 
-  test('locks consortium to EOSDIS while EOSDIS-only is selected and unlocks it when deselected', async () => {
+  test('disables and clears consortium choices while EOSDIS-only is selected and unlocks them when deselected', async () => {
     const { user } = setup({
       overrideZustandState: {
         query: { collection: { consortium: ['CEOS'] } }
@@ -91,47 +84,95 @@ describe('AdvancedSearchFilters', () => {
     })
 
     expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
+    const tooltipButton = screen.getByRole('button', { name: 'Consortium filtering information' })
+    expect(tooltipButton).toBeVisible()
+    await user.hover(tooltipButton)
+    expect(await screen.findByRole('tooltip')).toHaveTextContent(
+      'Consortium filtering is disabled when only including EOSDIS collections'
+    )
+
+    await user.unhover(tooltipButton)
 
     act(() => {
-      changeQuery({
-        collection: {
-          onlyEosdisCollections: true,
-          consortium: undefined
+      useEdscStore.setState((state) => ({
+        query: {
+          ...state.query,
+          collection: {
+            ...state.query.collection,
+            onlyEosdisCollections: true,
+            consortium: undefined
+          }
         }
-      })
+      }))
     })
 
-    const consortium = within(screen.getByRole('group', { name: /Consortium/ }))
-    expect(consortium.getByRole('checkbox', { name: 'EOSDIS' })).toBeChecked()
-    expect(consortium.getByRole('checkbox', { name: 'CEOS' })).not.toBeChecked()
+    const consortiumSection = screen.getByRole('group', { name: 'Consortium' })
+    const consortium = within(consortiumSection)
     consortium.getAllByRole('checkbox').forEach((checkbox) => {
       expect(checkbox).toBeDisabled()
+      expect(checkbox).not.toBeChecked()
     })
 
-    changeQuery.mockClear()
     await user.click(consortium.getByRole('checkbox', { name: 'CEOS' }))
     expect(changeQuery).not.toHaveBeenCalled()
-    expect(screen.getByRole('heading', { name: 'Advanced Filters 1 Selected' })).toBeVisible()
+    expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
+    expect(consortium.queryByText(/Selected/)).not.toBeInTheDocument()
 
     act(() => {
-      changeQuery({ collection: { onlyEosdisCollections: undefined } })
+      useEdscStore.setState((state) => ({
+        query: {
+          ...state.query,
+          collection: {
+            ...state.query.collection,
+            onlyEosdisCollections: undefined
+          }
+        }
+      }))
     })
 
-    consortium.getAllByRole('checkbox').forEach((checkbox) => {
+    const enabledConsortium = within(screen.getByRole('group', { name: 'Consortium' }))
+
+    enabledConsortium.getAllByRole('checkbox').forEach((checkbox) => {
       expect(checkbox).toBeEnabled()
       expect(checkbox).not.toBeChecked()
     })
 
     expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
 
-    await user.click(consortium.getByRole('checkbox', { name: 'CEOS' }))
+    await user.click(enabledConsortium.getByRole('checkbox', { name: 'CEOS' }))
     expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
+    expect(changeQuery).toHaveBeenCalledTimes(1)
+    expect(changeQuery).toHaveBeenCalledWith({ collection: { consortium: ['CEOS'] } })
   })
 
-  test('focuses the Entry ID input when no close button is provided', () => {
+  test('hides the disabled consortium count without excluding other filters from the total', () => {
+    setup({
+      overrideZustandState: {
+        query: {
+          collection: {
+            onlyEosdisCollections: true,
+            consortium: ['EOSDIS', 'CEOS'],
+            doi: ['10.5067/EXAMPLE']
+          }
+        }
+      }
+    })
+
+    const consortium = within(screen.getByRole('group', { name: 'Consortium' }))
+    consortium.getAllByRole('checkbox').forEach((checkbox) => {
+      expect(checkbox).toBeDisabled()
+      expect(checkbox).not.toBeChecked()
+    })
+
+    expect(consortium.queryByText(/Selected/)).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Advanced Filters 1 Selected' })).toBeVisible()
+  })
+
+  test('focuses the Entry ID input when the column opens', () => {
     setup()
 
     expect(screen.getByRole('textbox', { name: 'Add Entry ID' })).toHaveFocus()
+    expect(screen.getByRole('button', { name: 'Close Advanced Filters' })).toBeVisible()
   })
 
   test('shows applied text values in their selected lists', () => {
@@ -164,7 +205,8 @@ describe('AdvancedSearchFilters', () => {
     expect(changeQuery).not.toHaveBeenCalled()
     await user.click(addButton)
 
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: ['10.5067/EXAMPLE'] } })
+    expect(changeQuery).toHaveBeenCalledTimes(1)
+    expect(changeQuery).toHaveBeenCalledWith({ collection: { doi: ['10.5067/EXAMPLE'] } })
     expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
       .toHaveTextContent('10.5067/EXAMPLE')
 
@@ -184,14 +226,16 @@ describe('AdvancedSearchFilters', () => {
 
     await user.clear(input)
     await addValue(user, 'DOI Value', '10.5067/OTHER', '{Enter}')
-    expect(changeQuery).toHaveBeenLastCalledWith({
+    expect(changeQuery).toHaveBeenCalledTimes(1)
+    expect(changeQuery).toHaveBeenNthCalledWith(1, {
       collection: { doi: ['10.5067/EXAMPLE', '10.5067/OTHER'] }
     })
 
     const removeButton = screen.getByRole('button', { name: 'Remove DOI Value 10.5067/EXAMPLE' })
     expect(removeButton).toHaveClass('button--icon-only', 'advanced-search-filters__icon-button')
     await user.click(removeButton)
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: ['10.5067/OTHER'] } })
+    expect(changeQuery).toHaveBeenCalledTimes(2)
+    expect(changeQuery).toHaveBeenNthCalledWith(2, { collection: { doi: ['10.5067/OTHER'] } })
   })
 
   test('shows applied identifier values in their selected lists', () => {
@@ -251,11 +295,19 @@ describe('AdvancedSearchFilters', () => {
     await addValue(user, 'Version', 'vA')
     await addValue(user, 'Version', 'vB')
 
-    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
-      entryId: ['CUSTOM_001', 'CUSTOM_002'],
-      shortName: ['CUSTOM_SHORT_A', 'CUSTOM_SHORT_B'],
-      version: ['vA', 'vB']
-    }))
+    expect(changeQuery).toHaveBeenCalledTimes(6)
+    expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['CUSTOM_001'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(2, {
+      collection: { entryId: ['CUSTOM_001', 'CUSTOM_002'] }
+    })
+
+    expect(changeQuery).toHaveBeenNthCalledWith(3, { collection: { shortName: ['CUSTOM_SHORT_A'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(4, {
+      collection: { shortName: ['CUSTOM_SHORT_A', 'CUSTOM_SHORT_B'] }
+    })
+
+    expect(changeQuery).toHaveBeenNthCalledWith(5, { collection: { version: ['vA'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(6, { collection: { version: ['vA', 'vB'] } })
   })
 
   test('groups identifier text entries in the Collection Identifier section', () => {
@@ -291,16 +343,20 @@ describe('AdvancedSearchFilters', () => {
       .toHaveClass('advanced-search-filters__section-heading')
   })
 
-  test('shows the selected filter count in the heading', async () => {
-    const { user } = await setupLoaded()
+  test('shows the selected filter count in the heading', () => {
+    setup({
+      overrideZustandState: {
+        query: {
+          collection: {
+            entryId: ['ATL03_004'],
+            shortName: ['ATL06']
+          }
+        }
+      }
+    })
 
-    expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
-    expect(screen.queryByText('Selected')).not.toBeInTheDocument()
-
-    await addValue(user, 'Entry ID', 'ATL03_004')
-    await addValue(user, 'Short Name', 'ATL06')
-
-    const selectedCount = screen.getByText('2 Selected')
+    const heading = screen.getByRole('heading', { name: 'Advanced Filters 2 Selected' })
+    const selectedCount = within(heading).getByText('2 Selected')
     expect(selectedCount).toBeVisible()
     expect(selectedCount).toHaveClass('facets-group__selected-count')
   })
@@ -311,7 +367,8 @@ describe('AdvancedSearchFilters', () => {
     await user.click(screen.getByText('CEOS'))
 
     expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { consortium: ['CEOS'] } })
+    expect(changeQuery).toHaveBeenCalledTimes(1)
+    expect(changeQuery).toHaveBeenCalledWith({ collection: { consortium: ['CEOS'] } })
   })
 
   test('applies advanced fields immediately and only clears collection identifiers', async () => {
@@ -333,21 +390,23 @@ describe('AdvancedSearchFilters', () => {
     expect(screen.queryByRole('button', { name: 'Apply' })).not.toBeInTheDocument()
     expect(screen.queryByRole('checkbox', { name: 'Online Only' })).not.toBeInTheDocument()
 
-    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
-      entryId: ['ATL03_004'],
-      shortName: ['ATL03'],
-      version: ['004'],
-      doi: ['10.5067/EXAMPLE'],
-      entryTitle: ['Example Collection'],
-      consortium: ['CEOS'],
-      collectionDataType: ['SCIENCE_QUALITY'],
-      collectionProgress: ['ACTIVE'],
-      downloadable: true,
-      browsable: true,
-      variableName: ['temperature'],
-      serviceName: ['test_service'],
-      toolName: ['test_tool']
-    }))
+    expect(changeQuery).toHaveBeenCalledTimes(13)
+    expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['ATL03_004'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(2, { collection: { shortName: ['ATL03'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(3, { collection: { version: ['004'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(4, { collection: { doi: ['10.5067/EXAMPLE'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(5, { collection: { entryTitle: ['Example Collection'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(6, { collection: { variableName: ['temperature'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(7, { collection: { serviceName: ['test_service'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(8, { collection: { toolName: ['test_tool'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(9, { collection: { consortium: ['CEOS'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(10, {
+      collection: { collectionDataType: ['SCIENCE_QUALITY'] }
+    })
+
+    expect(changeQuery).toHaveBeenNthCalledWith(11, { collection: { collectionProgress: ['ACTIVE'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(12, { collection: { downloadable: true } })
+    expect(changeQuery).toHaveBeenNthCalledWith(13, { collection: { browsable: true } })
 
     await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
 
@@ -355,12 +414,14 @@ describe('AdvancedSearchFilters', () => {
       .toHaveTextContent('10.5067/EXAMPLE')
 
     expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeChecked()
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { entryId: undefined } })
+    expect(changeQuery).toHaveBeenCalledTimes(14)
+    expect(changeQuery).toHaveBeenNthCalledWith(14, { collection: { entryId: undefined } })
 
-    expect(useEdscStore.getState().query.collection.doi).toEqual(['10.5067/EXAMPLE'])
-    expect(useEdscStore.getState().query.collection.consortium).toEqual(['CEOS'])
-    expect(useEdscStore.getState().query.collection.shortName).toEqual(['ATL03'])
-    expect(useEdscStore.getState().query.collection.version).toEqual(['004'])
+    expect(screen.getByRole('list', { name: 'Selected values for Short Name' }))
+      .toHaveTextContent('ATL03')
+
+    expect(screen.getByRole('list', { name: 'Selected values for Version' }))
+      .toHaveTextContent('004')
   })
 
   test('removes advanced filters independently without clearing identifiers', async () => {
@@ -371,12 +432,18 @@ describe('AdvancedSearchFilters', () => {
     await addValue(user, 'DOI Value', '10.5067/EXAMPLE')
 
     await user.click(screen.getByRole('checkbox', { name: 'CEOS' }))
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { consortium: undefined } })
+    expect(changeQuery).toHaveBeenCalledTimes(5)
+    expect(changeQuery).toHaveBeenNthCalledWith(5, { collection: { consortium: undefined } })
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { downloadable: undefined } })
+    expect(changeQuery).toHaveBeenCalledTimes(6)
+    expect(changeQuery).toHaveBeenNthCalledWith(6, { collection: { downloadable: undefined } })
     await user.click(screen.getByRole('button', { name: 'Remove DOI Value 10.5067/EXAMPLE' }))
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { doi: undefined } })
-    expect(useEdscStore.getState().query.collection.entryId).toEqual(['ATL03_004'])
+    expect(changeQuery).toHaveBeenCalledTimes(7)
+    expect(changeQuery).toHaveBeenNthCalledWith(7, { collection: { doi: undefined } })
+    expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['ATL03_004'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(2, { collection: { consortium: ['CEOS'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(3, { collection: { downloadable: true } })
+    expect(changeQuery).toHaveBeenNthCalledWith(4, { collection: { doi: ['10.5067/EXAMPLE'] } })
     expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
       .toHaveTextContent('ATL03_004')
   })
@@ -401,25 +468,26 @@ describe('AdvancedSearchFilters', () => {
     expect(screen.getByRole('list', { name: 'Selected values for Entry ID' }))
       .toHaveTextContent('ATL03_004')
 
-    expect(useEdscStore.getState().query.collection.entryId).toEqual(['ATL03_004'])
+    expect(changeQuery).toHaveBeenCalledTimes(1)
+    expect(changeQuery).toHaveBeenCalledWith({ collection: { entryId: ['ATL03_004'] } })
   })
 
   test('supports closing the column with the close button and Escape', async () => {
-    const onClose = vi.fn()
-    const { user } = await setupLoaded({ overrideProps: { onClose } })
+    const { props, user } = setup()
 
     expect(screen.getByRole('textbox', { name: 'Add Entry ID' })).toHaveFocus()
     await user.keyboard('{Escape}')
-    expect(onClose).toHaveBeenCalledTimes(1)
+    expect(props.onClose).toHaveBeenCalledTimes(1)
     await user.click(screen.getByRole('button', { name: 'Close Advanced Filters' }))
-    expect(onClose).toHaveBeenCalledTimes(2)
+    expect(props.onClose).toHaveBeenCalledTimes(2)
   })
 
   test('allows entering a short name without a version', async () => {
     const { user } = await setupLoaded()
     await addValue(user, 'Short Name', 'ATL03')
 
-    expect(changeQuery).toHaveBeenLastCalledWith({
+    expect(changeQuery).toHaveBeenCalledTimes(1)
+    expect(changeQuery).toHaveBeenCalledWith({
       collection: { shortName: ['ATL03'] }
     })
 
@@ -433,14 +501,10 @@ describe('AdvancedSearchFilters', () => {
     await addValue(user, 'Short Name', 'ATL03')
     await addValue(user, 'Version', '004')
 
+    expect(changeQuery).toHaveBeenCalledTimes(3)
     expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['ATL03_004'] } })
     expect(changeQuery).toHaveBeenNthCalledWith(2, { collection: { shortName: ['ATL03'] } })
     expect(changeQuery).toHaveBeenNthCalledWith(3, { collection: { version: ['004'] } })
-    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
-      entryId: ['ATL03_004'],
-      shortName: ['ATL03'],
-      version: ['004']
-    }))
   })
 
   test('supports multiple values for each identifier field', async () => {
@@ -452,11 +516,16 @@ describe('AdvancedSearchFilters', () => {
     await addValue(user, 'Version', '004')
     await addValue(user, 'Version', '005')
 
-    expect(useEdscStore.getState().query.collection).toEqual(expect.objectContaining({
-      entryId: ['ATL03_004', 'ATL03_005'],
-      shortName: ['ATL03', 'ATL06'],
-      version: ['004', '005']
-    }))
+    expect(changeQuery).toHaveBeenCalledTimes(6)
+    expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['ATL03_004'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(2, {
+      collection: { entryId: ['ATL03_004', 'ATL03_005'] }
+    })
+
+    expect(changeQuery).toHaveBeenNthCalledWith(3, { collection: { shortName: ['ATL03'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(4, { collection: { shortName: ['ATL03', 'ATL06'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(5, { collection: { version: ['004'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(6, { collection: { version: ['004', '005'] } })
   })
 
   test('removes an Entry ID value without clearing other identifiers', async () => {
@@ -467,7 +536,8 @@ describe('AdvancedSearchFilters', () => {
 
     await user.click(screen.getByRole('button', { name: 'Remove Entry ID ATL03_004' }))
 
-    expect(changeQuery).toHaveBeenLastCalledWith({ collection: { entryId: undefined } })
+    expect(changeQuery).toHaveBeenCalledTimes(4)
+    expect(changeQuery).toHaveBeenNthCalledWith(4, { collection: { entryId: undefined } })
     expect(screen.queryByRole('list', { name: 'Selected values for Entry ID' }))
       .not.toBeInTheDocument()
 
@@ -503,6 +573,10 @@ describe('AdvancedSearchFilters', () => {
       .toHaveTextContent('CUSTOM_001')
       .toHaveTextContent('CUSTOM_002')
 
-    expect(useEdscStore.getState().query.collection.entryId).toEqual(['CUSTOM_001', 'CUSTOM_002'])
+    expect(changeQuery).toHaveBeenCalledTimes(2)
+    expect(changeQuery).toHaveBeenNthCalledWith(1, { collection: { entryId: ['CUSTOM_001'] } })
+    expect(changeQuery).toHaveBeenNthCalledWith(2, {
+      collection: { entryId: ['CUSTOM_001', 'CUSTOM_002'] }
+    })
   })
 })

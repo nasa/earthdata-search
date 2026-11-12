@@ -4,9 +4,10 @@ import React, {
   useState
 } from 'react'
 import { pick } from 'lodash-es'
-import { FaTimes } from 'react-icons/fa'
+import { FaQuestionCircle, FaTimes } from 'react-icons/fa'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 // @ts-expect-error: This file does not have types
 import FacetsList from './FacetsList'
@@ -17,6 +18,7 @@ import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import type { QuerySlice } from '../../zustand/types'
+import renderTooltip from '../../util/renderTooltip'
 
 import './AdvancedSearchFilters.scss'
 
@@ -77,12 +79,12 @@ const renderSelectedCount = (value: AdvancedFilterValue) => {
 }
 
 interface AdvancedSearchFiltersProps {
-  /** Closes the Advanced Filters column; the close button is hidden when omitted */
-  onClose?: (() => void) | null
+  /** Closes the Advanced Filters column */
+  onClose: () => void
 }
 
 const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
-  onClose = null
+  onClose
 }) => {
   const query: Partial<CollectionQuery> = useEdscStore(getCollectionsQuery)
   const hasPortalConsortium = useEdscStore(
@@ -98,7 +100,9 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
   const formRef = useRef<HTMLDivElement>(null)
   const selectedOptionsCount = visibleFilters.reduce((count, { key }) => {
-    const value = key === 'consortium' && query.onlyEosdisCollections ? ['EOSDIS'] : query[key]
+    if (key === 'consortium' && query.onlyEosdisCollections) return count
+
+    const value = query[key]
     const selectedCountForFilter = Array.isArray(value)
       ? value.length
       : Number(Boolean(value))
@@ -135,7 +139,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     options = []
   }: AdvancedFilterDefinition) => {
     const isEosdisOnlyConsortium = key === 'consortium' && query.onlyEosdisCollections
-    const value = isEosdisOnlyConsortium ? ['EOSDIS'] : advancedFilters[key]
+    const value = isEosdisOnlyConsortium ? undefined : advancedFilters[key]
     const updateValue = (nextValue: AdvancedFilterValue) => updateAdvancedFilter(key, nextValue)
 
     if (type === 'array') {
@@ -158,11 +162,23 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
 
       const choices = [...new Set([...options, ...selected])]
 
-      return (
+      const filter = (
         <fieldset key={key} disabled={!!isEosdisOnlyConsortium}>
           <legend>
             {label}
             {renderSelectedCount(selected)}
+            {
+              key === 'consortium' && (
+                <Button
+                  size="sm"
+                  variant="link"
+                  type="button"
+                  aria-label="Consortium filtering information"
+                >
+                  <EDSCIcon icon={FaQuestionCircle} />
+                </Button>
+              )
+            }
           </legend>
           <FacetsList
             facetCategory={key}
@@ -184,6 +200,29 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
           />
         </fieldset>
       )
+
+      if (key === 'consortium') {
+        return (
+          <OverlayTrigger
+            key={key}
+            placement="top"
+            trigger={['hover', 'focus']}
+            overlay={
+              (tooltipProps) => renderTooltip({
+                ...tooltipProps,
+                id: 'advanced-search-consortium-disabled',
+                children: 'Consortium filtering is disabled when only including EOSDIS collections'
+              })
+            }
+          >
+            <div>
+              {filter}
+            </div>
+          </OverlayTrigger>
+        )
+      }
+
+      return filter
     }
 
     if (type === 'boolean') {
@@ -230,7 +269,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
       aria-label="Advanced Filters"
       onKeyDown={
         (event: React.KeyboardEvent<HTMLFormElement>) => {
-          if (event.key === 'Escape' && onClose) onClose()
+          if (event.key === 'Escape') onClose()
         }
       }
     >
@@ -245,20 +284,16 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
             )
           }
         </h2>
-        {
-          onClose && (
-            <Button
-              size="sm"
-              variant="link"
-              type="button"
-              aria-label="Close Advanced Filters"
-              title="Close Advanced Filters"
-              onClick={onClose}
-            >
-              <EDSCIcon icon={FaTimes} />
-            </Button>
-          )
-        }
+        <Button
+          size="sm"
+          variant="link"
+          type="button"
+          aria-label="Close Advanced Filters"
+          title="Close Advanced Filters"
+          onClick={onClose}
+        >
+          <EDSCIcon icon={FaTimes} />
+        </Button>
       </header>
       <div className="advanced-search-filters__body">
         <fieldset className="advanced-search-filters__identifier-section">
