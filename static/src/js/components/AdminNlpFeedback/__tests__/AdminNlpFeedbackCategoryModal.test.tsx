@@ -108,6 +108,32 @@ describe('AdminNlpFeedbackCategoryModal component', () => {
     })
   })
 
+  describe('when an entry contains markup', () => {
+    test('renders the query and comment as plain text', async () => {
+      const maliciousComment = '<img src=x alt="injected" onerror="alert(1)"><script>alert(1)</script>'
+      const maliciousQuery = '<b onmouseover="alert(1)">rainfall</b>'
+
+      setup({
+        overrideApolloClientMocks: [buildCategoryMock({
+          entries: [
+            buildEntry(1, {
+              nlpQuery: maliciousQuery,
+              feedback: maliciousComment
+            })
+          ]
+        })]
+      })
+
+      const dialog = await screen.findByRole('dialog', { name: 'Keyword Feedback' })
+
+      expect(await within(dialog).findByText(maliciousComment)).toBeInTheDocument()
+      expect(within(dialog).getByText(maliciousQuery)).toBeInTheDocument()
+
+      // The markup is shown as literal text, so no element is created from it
+      expect(within(dialog).queryByRole('img', { name: 'injected' })).not.toBeInTheDocument()
+    })
+  })
+
   describe('when entries are returned', () => {
     test('displays the title, subtitle and entries', async () => {
       setup({
