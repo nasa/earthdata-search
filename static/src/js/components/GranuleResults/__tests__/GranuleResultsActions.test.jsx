@@ -176,6 +176,34 @@ describe('GranuleResultsActions component', () => {
     })
   })
 
+  describe('when smart handoffs exist but are not valid with the current parameters', () => {
+    test('renders a disabled Explore button with informative tooltip', async () => {
+      setup({
+        overrideProps: {
+          hasSmartHandoffs: true,
+          handoffLinks: []
+        }
+      })
+
+      const exploreButton = screen.getByRole('button', { name: 'Explore' })
+      expect(exploreButton).toBeInTheDocument()
+      expect(exploreButton).toBeDisabled()
+    })
+  })
+
+  describe('when no smart handoffs exist for the collection', () => {
+    test('does not render an Explore button', () => {
+      setup({
+        overrideProps: {
+          hasSmartHandoffs: false,
+          handoffLinks: []
+        }
+      })
+
+      expect(screen.queryByRole('button', { name: 'Explore' })).not.toBeInTheDocument()
+    })
+  })
+
   describe('when a user is not subscribed', () => {
     test('renders the correct subscription button', () => {
       setup()
