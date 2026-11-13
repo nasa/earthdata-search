@@ -3,7 +3,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { pick } from 'lodash-es'
+import { useShallow } from 'zustand/react/shallow'
 import { FaQuestionCircle, FaTimes } from 'react-icons/fa'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -16,7 +16,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 // @ts-expect-error: This file does not have types
 import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getAdvancedFilters } from '../../zustand/selectors/query'
 import type { QuerySlice } from '../../zustand/types'
 import renderTooltip from '../../util/renderTooltip'
 
@@ -58,7 +58,6 @@ interface AdvancedFilterDefinition {
 }
 
 const filterDefinitions = advancedCollectionFilters as AdvancedFilterDefinition[]
-const advancedFilterKeys = filterDefinitions.map(({ key }) => key)
 const identifierFilterKeys: AdvancedFilterKey[] = ['entryId', 'shortName', 'version']
 const toArray = (value: AdvancedFilterValue): string[] => {
   if (Array.isArray(value)) return value
@@ -86,7 +85,10 @@ interface AdvancedSearchFiltersProps {
 const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   onClose
 }) => {
-  const query: Partial<CollectionQuery> = useEdscStore(getCollectionsQuery)
+  const appliedAdvancedFilters: AdvancedFilterValues = useEdscStore(useShallow(getAdvancedFilters))
+  const onlyEosdisCollections = useEdscStore(
+    (state) => state.query.collection.onlyEosdisCollections
+  )
   const hasPortalConsortium = useEdscStore(
     (state) => Boolean(state.portal.query?.consortium?.length)
   )
@@ -94,15 +96,14 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     || !hasPortalConsortium)
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilterValues>(
-    pick(query, advancedFilterKeys)
+    appliedAdvancedFilters
   )
 
-  const appliedFiltersKey = JSON.stringify(pick(query, advancedFilterKeys))
   const formRef = useRef<HTMLDivElement>(null)
   const selectedOptionsCount = visibleFilters.reduce((count, { key }) => {
-    if (key === 'consortium' && query.onlyEosdisCollections) return count
+    if (key === 'consortium' && onlyEosdisCollections) return count
 
-    const value = query[key]
+    const value = appliedAdvancedFilters[key]
     const selectedCountForFilter = Array.isArray(value)
       ? value.length
       : Number(Boolean(value))
@@ -117,8 +118,8 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
 
   // Sync the advanced controls when their applied query values change
   useEffect(() => {
-    setAdvancedFilters(JSON.parse(appliedFiltersKey))
-  }, [appliedFiltersKey])
+    setAdvancedFilters(appliedAdvancedFilters)
+  }, [appliedAdvancedFilters])
 
   const updateAdvancedFilter = (key: AdvancedFilterKey, nextValue: AdvancedFilterValue) => {
     setAdvancedFilters((current) => ({
@@ -138,7 +139,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     type,
     options = []
   }: AdvancedFilterDefinition) => {
-    const isEosdisOnlyConsortium = key === 'consortium' && query.onlyEosdisCollections
+    const isEosdisOnlyConsortium = key === 'consortium' && onlyEosdisCollections
     const value = isEosdisOnlyConsortium ? undefined : advancedFilters[key]
     const updateValue = (nextValue: AdvancedFilterValue) => updateAdvancedFilter(key, nextValue)
 
@@ -241,13 +242,13 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     return null
   }
 
-  const getAdvancedFilters = (keys: AdvancedFilterKey[]) => (
+  const getFilterDefinitions = (keys: AdvancedFilterKey[]) => (
     visibleFilters.filter(({ key }) => keys.includes(key))
   )
-  const identifierFilters = getAdvancedFilters(identifierFilterKeys)
-  const enumFilters = getAdvancedFilters(['consortium', 'collectionDataType', 'collectionProgress'])
-  const textEntryFilters = getAdvancedFilters(['doi', 'entryTitle', 'variableName', 'serviceName', 'toolName'])
-  const accessFilters = getAdvancedFilters(['downloadable', 'browsable'])
+  const identifierFilters = getFilterDefinitions(identifierFilterKeys)
+  const enumFilters = getFilterDefinitions(['consortium', 'collectionDataType', 'collectionProgress'])
+  const textEntryFilters = getFilterDefinitions(['doi', 'entryTitle', 'variableName', 'serviceName', 'toolName'])
+  const accessFilters = getFilterDefinitions(['downloadable', 'browsable'])
 
   return (
     <Form

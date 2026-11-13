@@ -262,9 +262,6 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
   collectionQuery.includeInactiveCollections = decodeHelp(params, 'includeInactiveCollections')
-  if (params.entry_id) collectionQuery.entryId = decodeHelp(params, 'entryId')
-  if (params.short_name) collectionQuery.shortName = decodeHelp(params, 'shortName')
-  if (params.version) collectionQuery.version = decodeHelp(params, 'version')
   Object.entries(advancedUrlDefs).forEach(([key, { shortKey }]) => {
     if (params[shortKey] !== undefined) collectionQuery[key] = decodeHelp(params, key)
   })

@@ -6,6 +6,7 @@ import {
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import AdvancedSearchFilters from '../AdvancedSearchFilters'
+import * as AdvancedFilterValueInput from '../AdvancedFilterValueInput'
 import useEdscStore from '../../../zustand/useEdscStore'
 
 const changeQuery = vi.fn()
@@ -40,15 +41,8 @@ const setup = setupTest({
   }
 })
 
-const setupLoaded = async (options) => {
-  const result = setup(options)
-  await screen.findByRole('textbox', { name: 'Add Entry ID' })
-
-  return result
-}
-
 const addValue = async (user, label, value, key = null) => {
-  const input = screen.getByRole('textbox', { name: `Add ${label}` })
+  const input = await screen.findByRole('textbox', { name: `Add ${label}` })
   await user.type(input, value)
 
   if (key) {
@@ -59,6 +53,45 @@ const addValue = async (user, label, value, key = null) => {
 }
 
 describe('AdvancedSearchFilters', () => {
+  test('ignores spatial query changes but updates when applied advanced filters change', () => {
+    const renderInput = vi.spyOn(AdvancedFilterValueInput, 'default')
+    setup()
+
+    renderInput.mockClear()
+
+    act(() => {
+      useEdscStore.setState((state) => ({
+        query: {
+          ...state.query,
+          collection: {
+            ...state.query.collection,
+            spatial: { point: '10,20' }
+          }
+        }
+      }))
+    })
+
+    expect(renderInput).not.toHaveBeenCalled()
+
+    act(() => {
+      useEdscStore.setState((state) => ({
+        query: {
+          ...state.query,
+          collection: {
+            ...state.query.collection,
+            doi: ['10.5067/UPDATED']
+          }
+        }
+      }))
+    })
+
+    expect(screen.getByRole('list', { name: 'Selected values for DOI Value' }))
+      .toHaveTextContent('10.5067/UPDATED')
+
+    expect(screen.getByRole('heading', { name: 'Advanced Filters 1 Selected' })).toBeVisible()
+    renderInput.mockRestore()
+  })
+
   test('hides consortium controls and excludes their selections from the count for a portal consortium', () => {
     setup({
       overrideZustandState: {
@@ -286,7 +319,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('accepts arbitrary multiple values for each collection identifier', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
 
     await addValue(user, 'Entry ID', 'CUSTOM_001')
     await addValue(user, 'Entry ID', 'CUSTOM_002')
@@ -362,7 +395,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('applies a checkbox filter when its label is clicked', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
 
     await user.click(screen.getByText('CEOS'))
 
@@ -372,7 +405,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('applies advanced fields immediately and only clears collection identifiers', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Entry ID', 'ATL03_004')
     await addValue(user, 'Short Name', 'ATL03')
     await addValue(user, 'Version', '004')
@@ -425,7 +458,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('removes advanced filters independently without clearing identifiers', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Entry ID', 'ATL03_004')
     await user.click(screen.getByRole('checkbox', { name: 'CEOS' }))
     await user.click(screen.getByRole('checkbox', { name: 'Downloadable' }))
@@ -449,7 +482,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('keeps selected identifiers when collection results change', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Entry ID', 'ATL03_004')
 
     await act(() => {
@@ -483,7 +516,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('allows entering a short name without a version', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Short Name', 'ATL03')
 
     expect(changeQuery).toHaveBeenCalledTimes(1)
@@ -495,7 +528,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('shows all identifier fields and updates them independently', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
 
     await addValue(user, 'Entry ID', 'ATL03_004')
     await addValue(user, 'Short Name', 'ATL03')
@@ -508,7 +541,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('supports multiple values for each identifier field', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Entry ID', 'ATL03_004')
     await addValue(user, 'Entry ID', 'ATL03_005')
     await addValue(user, 'Short Name', 'ATL03')
@@ -529,7 +562,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('removes an Entry ID value without clearing other identifiers', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Entry ID', 'ATL03_004')
     await addValue(user, 'Short Name', 'ATL03')
     await addValue(user, 'Version', '004')
@@ -549,7 +582,7 @@ describe('AdvancedSearchFilters', () => {
   })
 
   test('retains arbitrary Entry ID values when collection results change', async () => {
-    const { user } = await setupLoaded()
+    const { user } = setup()
     await addValue(user, 'Entry ID', 'CUSTOM_001')
     await addValue(user, 'Entry ID', 'CUSTOM_002')
 

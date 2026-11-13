@@ -1,7 +1,10 @@
+import { pick } from 'lodash-es'
 // @ts-expect-error The file does not have types
 import snakecaseKeys from 'snakecase-keys'
 
 import { EdscStore, GranuleQuery } from '../types'
+// @ts-expect-error The file does not have types
+import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 
 import { getCollectionId, getFocusedCollectionMetadata } from './collection'
 
@@ -29,6 +32,19 @@ import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../../u
  * Retrieve current collection query information for collection searches
  */
 export const getCollectionsQuery = (state: EdscStore) => state.query?.collection || {}
+
+const advancedFilterKeys = advancedCollectionFilters.map(({ key }: { key: string }) => key)
+
+/**
+ * Retrieve current advanced collection filter values
+ */
+export const getAdvancedFilters = (state: EdscStore) => {
+  const query = getCollectionsQuery(state)
+
+  const advancedFilters = pick(query, advancedFilterKeys)
+
+  return advancedFilters
+}
 
 /**
  * Retrieve current collection spatial information
