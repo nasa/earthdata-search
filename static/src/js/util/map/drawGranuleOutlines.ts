@@ -3,6 +3,9 @@ import VectorSource from 'ol/source/Vector'
 import { Geometry } from 'ol/geom'
 
 import drawOutline from './drawOutline'
+import { drawGranuleOutlinesSnapshot, saveGranuleOutlinesSnapshot } from './granuleOutlinesSnapshot'
+
+import spatialTypes from '../../constants/spatialTypes'
 
 // Draw the granule outlines
 const drawGranuleOutlines = ({
@@ -23,24 +26,38 @@ const drawGranuleOutlines = ({
   // If the map is undefined, don't draw anything
   if (!map) return
 
+  const view = map.getView()
+  const isMoving = view.getAnimating() || view.getInteracting()
+
+  // Drawing the outlines of a lot of granules is slow. If the outlines that were drawn last
+  // time can be used again, draw the copy of them that was saved instead.
+  const snapshotDrawn = drawGranuleOutlinesSnapshot({
+    ctx,
+    granuleBackgroundsSource,
+    isMoving,
+    map
+  })
+
+  if (snapshotDrawn) return
+
   // Get the device pixel ratio for use in scaling the drawing
   const dpr = window.devicePixelRatio || 1
 
-  const viewExtent = map.getView().calculateExtent(map.getSize())
+  const viewExtent = view.calculateExtent(map.getSize())
 
   // Only get the features that intersect the view extent
   const features = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
 
-  // Sort features by the index property
-  const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
+  // The granules are drawn as a 'stack'. The granule with the lowest index is on the top of
+  // the stack, and each granule hides the outlines of the granules below it.
+  //
+  // To draw the stack we start with the granule on the bottom and work up to the top. So
+  // sort the features by the index property, highest index first.
+  const sortedFeatures = features.sort((a, b) => b.get('index') - a.get('index'))
 
   // Loop through the features that have been drawn on the granuleBackgroundsLayer
   sortedFeatures.forEach((feature) => {
     ctx.beginPath()
-
-    // Set the globalCompositeOperation to 'destination-over' so new granule outlines
-    // are drawn behind existing granule backgrounds. This creates a 'stack' of granules.
-    ctx.globalCompositeOperation = 'destination-over'
 
     // Get the style value saved in the feature's properties
     const properties = feature.getProperties()
@@ -62,26 +79,38 @@ const drawGranuleOutlines = ({
       ctx.lineWidth = stroke.getWidth()
     }
 
+    const geometry = feature.getGeometry() as Geometry
+
     // Draw the path for the granule outline
     drawOutline({
       ctx,
-      geometry: feature.getGeometry() as Geometry,
+      geometry,
       map,
       scale: dpr
     })
 
+    // If the granule is a polygon, erase the outlines of the granules below it from inside
+    // the polygon. Filling with 'destination-out' doesn't paint anything, it removes what has
+    // already been drawn from the area being filled.
+    if (geometry.getType() === spatialTypes.MULTI_POLYGON) {
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fill()
+    }
+
+    // Set the globalCompositeOperation back to the default of 'source-over', so this
+    // granule's outline is drawn on top of the outlines of the granules below it
+    ctx.globalCompositeOperation = 'source-over'
+
     // Draw the shape on the canvas
     ctx.stroke()
-
-    // Add path around full canvas extent to clip the granule outlines
-    ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
-    // Clip
-    ctx.clip()
   })
 
-  // Reset the globalCompositeOperation to the default of 'source-over'
-  ctx.globalCompositeOperation = 'source-over'
+  // Save a copy of the outlines that were just drawn, so they can be used again
+  saveGranuleOutlinesSnapshot({
+    ctx,
+    granuleBackgroundsSource,
+    map
+  })
 }
 
 export default drawGranuleOutlines
