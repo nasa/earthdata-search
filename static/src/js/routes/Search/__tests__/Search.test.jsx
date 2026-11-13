@@ -156,12 +156,10 @@ describe('Search component', () => {
       })
 
       const toggle = screen.getByRole('button', { name: 'Expand Advanced Filters, 3 selected' })
-      const toggleContent = within(toggle).getByTestId('advanced-filters-toggle-content')
 
-      expect(within(toggleContent).getByText('3')).toBeVisible()
-      expect(within(toggleContent).getByText('Expand Advanced Filters')).toBeVisible()
-      expect(toggleContent).toHaveClass('advanced-search-filters__toggle-content')
-      expect(within(toggleContent).getByText('3')).toHaveClass('facets-group__selected-count')
+      expect(within(toggle).getByText('3')).toBeVisible()
+      expect(within(toggle).getByText('Expand Advanced Filters')).toBeVisible()
+      expect(within(toggle).getByText('3')).toHaveClass('facets-group__selected-count')
     })
 
     test('should render search panels', async () => {

@@ -245,10 +245,7 @@ export const Search = () => {
                               }
                             }
                           >
-                            <span
-                              className="advanced-search-filters__toggle-content"
-                              data-testid="advanced-filters-toggle-content"
-                            >
+                            <span className="advanced-search-filters__toggle-content">
                               <span className="advanced-search-filters__toggle-main">
                                 <EDSCIcon icon={FaSlidersH} className="advanced-search-filters__toggle-icon" aria-hidden="true" />
                                 {advancedFiltersOpen ? 'Collapse Advanced Filters' : 'Expand Advanced Filters'}

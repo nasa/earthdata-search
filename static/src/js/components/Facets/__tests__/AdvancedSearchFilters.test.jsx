@@ -53,6 +53,64 @@ const addValue = async (user, label, value, key = null) => {
 }
 
 describe('AdvancedSearchFilters', () => {
+  test('clears only advanced filters', async () => {
+    const appliedFilters = {
+      entryId: ['ATL03_004'],
+      shortName: ['ATL03'],
+      version: ['004'],
+      doi: ['10.5067/EXAMPLE'],
+      entryTitle: ['Example Collection'],
+      consortium: ['CEOS'],
+      collectionDataType: ['SCIENCE_QUALITY'],
+      collectionProgress: ['ACTIVE'],
+      downloadable: true,
+      browsable: true,
+      variableName: ['temperature'],
+      serviceName: ['Harmony'],
+      toolName: ['Panoply']
+    }
+    const { user, props, zustandState } = setup({
+      overrideZustandState: {
+        query: {
+          collection: {
+            ...appliedFilters,
+            keyword: 'rain',
+            spatial: { point: '10,20' },
+            temporal: { startDate: '2020-01-01T00:00:00.000Z' },
+            onlyEosdisCollections: true
+          }
+        }
+      }
+    })
+    await user.click(screen.getByRole('button', { name: 'Clear All Advanced Filters' }))
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+      collection: {
+        entryId: undefined,
+        shortName: undefined,
+        version: undefined,
+        doi: undefined,
+        entryTitle: undefined,
+        consortium: undefined,
+        collectionDataType: undefined,
+        collectionProgress: undefined,
+        downloadable: undefined,
+        browsable: undefined,
+        variableName: undefined,
+        serviceName: undefined,
+        toolName: undefined
+      }
+    })
+
+    expect(screen.queryByRole('list', { name: /Selected values for/ })).not.toBeInTheDocument()
+    expect(props.onClose).not.toHaveBeenCalled()
+    expect(screen.getByRole('checkbox', { name: 'Downloadable' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'Browsable' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'CEOS' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'CEOS' })).toBeDisabled()
+  })
+
   test('ignores spatial query changes but updates when applied advanced filters change', () => {
     const renderInput = vi.spyOn(AdvancedFilterValueInput, 'default')
     setup()

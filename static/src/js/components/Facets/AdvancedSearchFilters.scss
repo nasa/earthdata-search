@@ -99,7 +99,8 @@
 
     legend,
     .form-label {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0;
+      padding-block: 0.5rem;
       color: utils.$color__carbon--90;
       font-size: 0.825rem;
       font-weight: 600;
@@ -119,6 +120,12 @@
         background: transparent;
         border-left-color: transparent;
       }
+    }
+
+    fieldset:disabled .advanced-search-filters__consortium-info {
+      color: var(--bs-btn-color);
+      pointer-events: auto;
+      opacity: 1;
     }
   }
 

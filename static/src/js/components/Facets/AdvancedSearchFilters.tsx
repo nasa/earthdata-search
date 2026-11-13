@@ -133,6 +133,13 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     changeQuery({ collection: { [key]: queryValue } as Partial<CollectionQuery> })
   }
 
+  const clearAdvancedFilters = () => {
+    setAdvancedFilters({})
+    changeQuery({
+      collection: Object.fromEntries(filterDefinitions.map(({ key }) => [key, undefined]))
+    })
+  }
+
   const renderAdvancedFilter = ({
     key,
     label,
@@ -182,6 +189,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
                   }
                 >
                   <Button
+                    className="advanced-search-filters__consortium-info"
                     size="sm"
                     variant="link"
                     type="button"
@@ -302,6 +310,17 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
           {accessFilters.map(renderAdvancedFilter)}
         </fieldset>
       </div>
+      <footer className="advanced-search-filters__footer">
+        <Button
+          variant="link"
+          size="sm"
+          type="button"
+          aria-label="Clear All Advanced Filters"
+          onClick={clearAdvancedFilters}
+        >
+          Clear All Advanced Filters
+        </Button>
+      </footer>
     </Form>
   )
 }
