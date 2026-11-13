@@ -47,8 +47,8 @@ const SearchFormFeedback: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
 
-  const [createNlpFeedback] = useMutation(CREATE_NLP_FEEDBACK)
-  const [updateNlpFeedback] = useMutation(UPDATE_NLP_FEEDBACK)
+  const [createNlpFeedback, { loading: createLoading }] = useMutation(CREATE_NLP_FEEDBACK)
+  const [updateNlpFeedback, { loading: updateLoading }] = useMutation(UPDATE_NLP_FEEDBACK)
 
   // Automatically hide the feedback component after a thank-you message is shown
   useEffect(() => {
@@ -150,7 +150,7 @@ const SearchFormFeedback: React.FC = () => {
           tooltip="Yes"
           tooltipId="search-form-feedback--thumbs-up"
           onClick={handleThumbsUpClick}
-          disabled={hasVotedNegative}
+          disabled={hasVotedNegative || createLoading}
         />
         <Button
           variant="naked"
@@ -161,7 +161,7 @@ const SearchFormFeedback: React.FC = () => {
           tooltip="No"
           tooltipId="search-form-feedback--thumbs-down"
           onClick={handleThumbsDownClick}
-          disabled={hasVotedNegative}
+          disabled={hasVotedNegative || createLoading}
         />
       </div>
 
@@ -218,6 +218,7 @@ const SearchFormFeedback: React.FC = () => {
                 bootstrapVariant="light"
                 bootstrapSize="sm"
                 label="Skip feedback"
+                disabled={updateLoading}
                 onClick={onSkipFeedback}
               >
                 Skip
@@ -227,7 +228,7 @@ const SearchFormFeedback: React.FC = () => {
                 bootstrapVariant="primary"
                 bootstrapSize="sm"
                 label="Submit feedback"
-                disabled={!canSubmit}
+                disabled={!canSubmit || createLoading || updateLoading}
               >
                 Submit
               </Button>

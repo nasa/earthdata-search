@@ -534,7 +534,8 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/graphQl/handler.js',
       functionName: 'graphql',
-      functionNamePrefix
+      functionNamePrefix,
+      memorySize: 512
     })
 
     /**
