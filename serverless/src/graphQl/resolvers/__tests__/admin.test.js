@@ -55,7 +55,7 @@ describe('Admin Resolver', () => {
         incomplete: false,
         relevancy: false,
         other: false,
-        feedback: 'Wrong keyword',
+        comment: 'Wrong keyword',
         total: 3
       }
 
@@ -107,7 +107,7 @@ describe('Admin Resolver', () => {
               incomplete: false,
               relevancy: false,
               other: false,
-              feedback: 'Wrong keyword'
+              comment: 'Wrong keyword'
             }],
             count: 3,
             pageInfo: {
@@ -205,7 +205,7 @@ describe('Admin Resolver', () => {
             incomplete_count: 10,
             relevancy_count: 75,
             other_count: 5,
-            free_text_count: 40
+            comment_count: 40
           })
         }
 
@@ -239,7 +239,7 @@ describe('Admin Resolver', () => {
             incompleteCount: 10,
             relevancyCount: 75,
             otherCount: 5,
-            freeTextCount: 40
+            commentCount: 40
           }
         })
       })

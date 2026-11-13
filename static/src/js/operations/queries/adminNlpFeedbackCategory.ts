@@ -23,15 +23,15 @@ const ADMIN_NLP_FEEDBACK_CATEGORY = gql`
       }
       count
       adminNlpFeedback {
-        nlpRequestId
-        nlpQuery
+        comment
+        incomplete
         keyword
+        nlpQuery
+        nlpRequestId
+        other
+        relevancy
         spatial
         temporal
-        incomplete
-        relevancy
-        other
-        feedback
       }
     }
   }

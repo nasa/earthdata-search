@@ -109,7 +109,7 @@ const SearchFormFeedback: React.FC = () => {
 
     updateNlpFeedback({
       variables: {
-        feedback: comment,
+        comment,
         nlpRequestId,
         ...Object.fromEntries(
           NLP_FEEDBACK_CATEGORIES.map(({ field }) => [field, selectedReasons.includes(field)])

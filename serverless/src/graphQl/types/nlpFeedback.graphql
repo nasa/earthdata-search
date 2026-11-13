@@ -26,8 +26,8 @@ type NlpFeedbackReport {
   "Count of other NLP feedback"
   otherCount: Int!
 
-  "Count of NLP feedback with free text feedback"
-  freeTextCount: Int!
+  "Count of NLP feedback with comments"
+  commentCount: Int!
 }
 
 type NlpFeedback {
@@ -58,8 +58,8 @@ type NlpFeedback {
   "Indicates if the feedback is related to other aspects"
   other: Boolean
 
-  "The user feedback for this NLP request"
-  feedback: String
+  "The user comment for this NLP request"
+  comment: String
 }
 
 enum NlpFeedbackCategory {
@@ -81,8 +81,8 @@ enum NlpFeedbackCategory {
   "Other feedback"
   OTHER
 
-  "Free text feedback"
-  FEEDBACK
+  "Comment feedback"
+  COMMENT
 }
 
 type Mutation {
@@ -122,6 +122,6 @@ type Mutation {
     other: Boolean
 
     "The user feedback for this NLP request"
-    feedback: String
+    comment: String
   ): Boolean
 }

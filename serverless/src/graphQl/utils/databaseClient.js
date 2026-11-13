@@ -368,8 +368,8 @@ export default class DatabaseClient {
           db.raw('COUNT(*) FILTER (WHERE incomplete)::int AS incomplete_count'),
           db.raw('COUNT(*) FILTER (WHERE relevancy)::int AS relevancy_count'),
           db.raw('COUNT(*) FILTER (WHERE other)::int AS other_count'),
-          // Ignore whitespace-only comments, matching the `feedback` category in getNlpFeedbackCategory
-          db.raw('COUNT(*) FILTER (WHERE NULLIF(TRIM(feedback), \'\') IS NOT NULL)::int AS free_text_count')
+          // Ignore whitespace-only comments, matching the `comment` category in getNlpFeedbackCategory
+          db.raw('COUNT(*) FILTER (WHERE NULLIF(TRIM(comment), \'\') IS NOT NULL)::int AS comment_count')
         )
         // Dates are YYYY-MM-DD, so compare against the day after `endDate` to include the whole end day
         .where('created_at', '>=', db.raw('?::date', [startDate]))
@@ -387,7 +387,7 @@ export default class DatabaseClient {
   /**
    * Retrieves NLP feedback entries matching a category within a date range
    * @param {Object} params - Parameters object
-   * @param {string} params.category - The category column to filter by, or `feedback` for entries with free text
+   * @param {string} params.category - The category column to filter by, or `comment` for entries with free text
    * @param {string} params.startDate - Start date (inclusive) for the query
    * @param {string} params.endDate - End date (inclusive) for the query
    * @param {number} [params.limit=20] - The maximum number of entries to retrieve
@@ -415,7 +415,7 @@ export default class DatabaseClient {
           'incomplete',
           'relevancy',
           'other',
-          'feedback'
+          'comment'
         )
         // Total number of matching rows before limit/offset, used to build pageInfo
         .select(db.raw('count(*) OVER() as total'))
@@ -434,9 +434,9 @@ export default class DatabaseClient {
           }
         ])
 
-      if (category === 'feedback') {
-        // Ignore whitespace-only comments, matching `free_text_count` in getNlpFeedbackReport
-        query = query.andWhereRaw('NULLIF(TRIM(feedback), \'\') IS NOT NULL')
+      if (category === 'comment') {
+        // Ignore whitespace-only comments, matching `comment_count` in getNlpFeedbackReport
+        query = query.andWhereRaw('NULLIF(TRIM(comment), \'\') IS NOT NULL')
       } else {
         query = query.andWhere(category, true)
       }
@@ -1108,6 +1108,7 @@ export default class DatabaseClient {
   /**
    * Updates the NLP feedback for a given request ID
    * @param {Object} params - Parameters object
+   * @param {string} params.comment - The comment to update
    * @param {string} params.id - The ID of the NLP request
    * @param {boolean} params.incomplete - Whether the feedback is incomplete
    * @param {boolean} params.keyword - The keyword associated with the feedback
@@ -1115,18 +1116,17 @@ export default class DatabaseClient {
    * @param {boolean} params.relevancy - The relevancy of the feedback
    * @param {boolean} params.spatial - The spatial information of the feedback
    * @param {boolean} params.temporal - The temporal information of the feedback
-   * @param {string} params.feedback - The feedback to update
    * @returns {Promise<number>} A promise that resolves to the number of rows updated
    */
   async updateNlpFeedback({
+    comment,
     id,
     incomplete,
     keyword,
     other,
     relevancy,
     spatial,
-    temporal,
-    feedback
+    temporal
   }) {
     try {
       const db = await this.getDbConnection()
@@ -1134,13 +1134,13 @@ export default class DatabaseClient {
       const [result] = await db('nlp_feedback')
         .where({ id })
         .update({
+          comment,
           incomplete,
           keyword,
           other,
           relevancy,
           spatial,
           temporal,
-          feedback,
           updated_at: new Date()
         })
         .returning('*')

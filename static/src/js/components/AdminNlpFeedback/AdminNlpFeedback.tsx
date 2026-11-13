@@ -48,7 +48,7 @@ interface NlpFeedbackReport {
   /** Count of other NLP feedback entries */
   otherCount: number
   /** Count of free text NLP feedback entries */
-  freeTextCount: number
+  commentCount: number
 }
 
 interface AdminNlpFeedbackReportQueryData {
@@ -171,13 +171,26 @@ const AdminNlpFeedback = () => {
       totalCount,
       positiveCount,
       negativeCount,
-      freeTextCount
+      commentCount
     } = report
 
     return (
       <>
         <div className="admin-nlp-feedback__actions">
-          <Button variant="light" onClick={() => window.print()}>
+          <Button
+            variant="light"
+            onClick={
+              () => {
+                // Temporarily change the document title for printing
+                const originalTitle = document.title
+                document.title = `Earthdata Search NLP Report - ${reportRange.startDate} - ${reportRange.endDate}`
+
+                window.print()
+
+                document.title = originalTitle
+              }
+            }
+          >
             Print / Save as PDF
           </Button>
         </div>
@@ -311,17 +324,17 @@ const AdminNlpFeedback = () => {
               <button
                 type="button"
                 className="admin-nlp-feedback__drilldown admin-nlp-feedback__drilldown--count"
-                disabled={freeTextCount === 0}
-                aria-label={`View ${commafy(freeTextCount)} written comments`}
-                title={freeTextCount === 0 ? undefined : 'View written comments'}
+                disabled={commentCount === 0}
+                aria-label={`View ${commafy(commentCount)} written comments`}
+                title={commentCount === 0 ? undefined : 'View written comments'}
                 onClick={
                   () => openCategoryModal({
-                    category: 'FEEDBACK',
+                    category: 'COMMENT',
                     title: 'Written Comments'
                   })
                 }
               >
-                {commafy(freeTextCount)}
+                {commafy(commentCount)}
               </button>
             </span>
             <span>{`Generated ${moment().format(DISPLAY_DATE_FORMAT)}`}</span>

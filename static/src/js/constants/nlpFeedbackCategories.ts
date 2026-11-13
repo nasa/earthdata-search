@@ -6,7 +6,7 @@ export type NlpFeedbackCategoryEnum =
   | 'INCOMPLETE'
   | 'RELEVANCY'
   | 'OTHER'
-  | 'FEEDBACK'
+  | 'COMMENT'
 
 /** Boolean reason columns on an NLP feedback entry */
 export type NlpFeedbackReasonField =

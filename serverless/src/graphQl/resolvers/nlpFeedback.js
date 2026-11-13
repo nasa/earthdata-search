@@ -56,12 +56,12 @@ export default {
         relevancy,
         spatial,
         temporal,
-        feedback: rawFeedback
+        comment: rawComment
       } = args
 
       // Validate before categorizing so oversized input never reaches the LLM
-      const feedback = sanitizeUserText(rawFeedback)
-      assertMaxLength(feedback, MAX_FEEDBACK_LENGTH, 'feedback')
+      const comment = sanitizeUserText(rawComment)
+      assertMaxLength(comment, MAX_FEEDBACK_LENGTH, 'comment')
 
       // Categorize the feedback field
       const {
@@ -71,17 +71,17 @@ export default {
         relevancy: relevancyFeedback,
         spatial: spatialFeedback,
         temporal: temporalFeedback
-      } = await categorizeNlpFeedback(feedback ?? '')
+      } = await categorizeNlpFeedback(comment ?? '')
 
       return databaseClient.updateNlpFeedback({
+        comment,
         id: nlpRequestId,
         incomplete: incomplete || incompleteFeedback,
         keyword: keyword || keywordFeedback,
         other: other || otherFeedback,
         relevancy: relevancy || relevancyFeedback,
         spatial: spatial || spatialFeedback,
-        temporal: temporal || temporalFeedback,
-        feedback
+        temporal: temporal || temporalFeedback
       })
     }
   }

@@ -660,7 +660,7 @@ describe('DatabaseClient', () => {
         incomplete_count: 10,
         relevancy_count: 75,
         other_count: 5,
-        free_text_count: 40
+        comment_count: 40
       }
 
       dbTracker.on('query', (query) => {
@@ -686,7 +686,7 @@ describe('DatabaseClient', () => {
         + 'COUNT(*) FILTER (WHERE incomplete)::int AS incomplete_count, '
         + 'COUNT(*) FILTER (WHERE relevancy)::int AS relevancy_count, '
         + 'COUNT(*) FILTER (WHERE other)::int AS other_count, '
-        + 'COUNT(*) FILTER (WHERE NULLIF(TRIM(feedback), \'\') IS NOT NULL)::int AS free_text_count '
+        + 'COUNT(*) FILTER (WHERE NULLIF(TRIM(comment), \'\') IS NOT NULL)::int AS comment_count '
         + 'from "nlp_feedback" where "created_at" >= $1::date and "created_at" < $2::date + interval \'1 day\' limit $3'
       )
 
@@ -715,7 +715,7 @@ describe('DatabaseClient', () => {
   })
 
   describe('getNlpFeedbackCategory', () => {
-    const baseSql = 'select "id" as "nlpRequestId", "query" as "nlpQuery", "positive", "keyword", "spatial", "temporal", "incomplete", "relevancy", "other", "feedback", count(*) OVER() as total from "nlp_feedback" where "created_at" >= $1::date and "created_at" < $2::date + interval \'1 day\''
+    const baseSql = 'select "id" as "nlpRequestId", "query" as "nlpQuery", "positive", "keyword", "spatial", "temporal", "incomplete", "relevancy", "other", "comment", count(*) OVER() as total from "nlp_feedback" where "created_at" >= $1::date and "created_at" < $2::date + interval \'1 day\''
     const orderSql = 'order by "created_at" desc, "id" desc'
 
     const startDate = '2026-01-01'
@@ -773,14 +773,14 @@ describe('DatabaseClient', () => {
       })
 
       await databaseClient.getNlpFeedbackCategory({
-        category: 'feedback',
+        category: 'comment',
         startDate,
         endDate
       })
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual(`${baseSql} and NULLIF(TRIM(feedback), '') IS NOT NULL ${orderSql} limit $3`)
+      expect(queries[0].sql).toEqual(`${baseSql} and NULLIF(TRIM(comment), '') IS NOT NULL ${orderSql} limit $3`)
       expect(queries[0].bindings).toEqual([startDate, endDate, 20])
     })
 
@@ -2388,7 +2388,7 @@ describe('DatabaseClient', () => {
           relevancy: false,
           spatial: false,
           temporal: true,
-          feedback: 'the temporal value was wrong'
+          comment: 'the temporal value was wrong'
         }])
       })
 
@@ -2400,7 +2400,7 @@ describe('DatabaseClient', () => {
         relevancy: false,
         spatial: false,
         temporal: true,
-        feedback: 'the temporal value was wrong'
+        comment: 'the temporal value was wrong'
       })
 
       expect(nlpFeedback).toBeDefined()
@@ -2422,13 +2422,13 @@ describe('DatabaseClient', () => {
         relevancy: false,
         spatial: false,
         temporal: true,
-        feedback: 'the temporal value was wrong'
+        comment: 'the temporal value was wrong'
       })).rejects.toThrow('Failed to update NLP feedback')
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('update "nlp_feedback" set "incomplete" = $1, "keyword" = $2, "other" = $3, "relevancy" = $4, "spatial" = $5, "temporal" = $6, "feedback" = $7, "updated_at" = $8 where "id" = $9 returning *')
-      expect(queries[0].bindings).toEqual([false, false, false, false, false, true, 'the temporal value was wrong', new Date(mockToday), 1])
+      expect(queries[0].sql).toEqual('update "nlp_feedback" set "comment" = $1, "incomplete" = $2, "keyword" = $3, "other" = $4, "relevancy" = $5, "spatial" = $6, "temporal" = $7, "updated_at" = $8 where "id" = $9 returning *')
+      expect(queries[0].bindings).toEqual(['the temporal value was wrong', false, false, false, false, false, true, new Date(mockToday), 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to update NLP feedback', expect.any(Error))

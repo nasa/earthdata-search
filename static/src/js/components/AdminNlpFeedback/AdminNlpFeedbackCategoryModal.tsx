@@ -37,7 +37,7 @@ interface NlpFeedbackEntry extends Record<NlpFeedbackReasonField, boolean | null
   /** The NLP query associated with this feedback entry */
   nlpQuery: string
   /** The feedback text associated with this entry, if any */
-  feedback: string | null
+  comment: string | null
 }
 
 interface AdminNlpFeedbackCategoryQueryData {
@@ -168,7 +168,7 @@ const AdminNlpFeedbackCategoryModal: React.FC<AdminNlpFeedbackCategoryModalProps
           <tbody>
             {
               adminNlpFeedback.map((entry) => {
-                const { feedback, nlpQuery, nlpRequestId } = entry
+                const { comment, nlpQuery, nlpRequestId } = entry
 
                 const reasons = NLP_FEEDBACK_CATEGORIES.filter(({ field }) => entry[field])
 
@@ -210,8 +210,8 @@ const AdminNlpFeedbackCategoryModal: React.FC<AdminNlpFeedbackCategoryModalProps
                     </td>
                     <td className="admin-nlp-feedback-category-modal__comment">
                       {
-                        feedback?.trim()
-                          ? feedback
+                        comment?.trim()
+                          ? comment
                           : <span className="admin-nlp-feedback-category-modal__none">No comment</span>
                       }
                     </td>

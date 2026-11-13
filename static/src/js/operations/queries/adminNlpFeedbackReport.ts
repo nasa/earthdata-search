@@ -18,7 +18,7 @@ const ADMIN_NLP_FEEDBACK_REPORT = gql`
       incompleteCount
       relevancyCount
       otherCount
-      freeTextCount
+      commentCount
     }
   }
 `

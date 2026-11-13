@@ -40,7 +40,7 @@ const buildReportMock = (overrides = {}) => ({
         incompleteCount: 10,
         relevancyCount: 75,
         otherCount: 5,
-        freeTextCount: 40,
+        commentCount: 40,
         ...overrides
       }
     }
@@ -68,15 +68,15 @@ const buildCategoryMock = (category: string) => ({
         },
         count: 1,
         adminNlpFeedback: [{
-          nlpRequestId: 'request-1',
-          nlpQuery: 'rainfall in Brazil last summer',
-          keyword: true,
-          spatial: false,
-          temporal: false,
+          comment: 'Wrong keyword was used',
           incomplete: false,
-          relevancy: false,
+          keyword: true,
+          nlpQuery: 'rainfall in Brazil last summer',
+          nlpRequestId: 'request-1',
           other: false,
-          feedback: 'Wrong keyword was used'
+          relevancy: false,
+          spatial: false,
+          temporal: false
         }]
       }
     }
@@ -165,7 +165,7 @@ describe('AdminNlpFeedback component', () => {
           incompleteCount: 0,
           relevancyCount: 0,
           otherCount: 0,
-          freeTextCount: 0
+          commentCount: 0
         })]
       })
 
@@ -195,7 +195,7 @@ describe('AdminNlpFeedback component', () => {
 
     test('opens the written comments modal from the footer', async () => {
       const { user } = setup({
-        overrideApolloClientMocks: [buildReportMock(), buildCategoryMock('FEEDBACK')]
+        overrideApolloClientMocks: [buildReportMock(), buildCategoryMock('COMMENT')]
       })
 
       await fillDates(user)

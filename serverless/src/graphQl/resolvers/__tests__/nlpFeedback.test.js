@@ -127,7 +127,7 @@ describe('NLP Feedback Resolver', () => {
         const response = await server.executeOperation({
           query: UPDATE_NLP_FEEDBACK,
           variables: {
-            feedback: 'the box was too large to be useful',
+            comment: 'the box was too large to be useful',
             incomplete: false,
             keyword: false,
             nlpRequestId: '123',
@@ -145,7 +145,7 @@ describe('NLP Feedback Resolver', () => {
         expect(errors).toBeUndefined()
 
         expect(databaseClient.updateNlpFeedback).toHaveBeenCalledWith({
-          feedback: 'the box was too large to be useful',
+          comment: 'the box was too large to be useful',
           id: '123',
           incomplete: false,
           keyword: false,
@@ -174,18 +174,18 @@ describe('NLP Feedback Resolver', () => {
         await server.executeOperation({
           query: UPDATE_NLP_FEEDBACK,
           variables: {
-            feedback: '  wrong\u0000 location\r\n<script>alert(1)</script>  ',
+            comment: '  wrong\u0000 location\r\n<script>alert(1)</script>  ',
             nlpRequestId: '123'
           }
         }, {
           contextValue
         })
 
-        const expectedFeedback = 'wrong location\n<script>alert(1)</script>'
+        const expectedComment = 'wrong location\n<script>alert(1)</script>'
 
-        expect(categorizeNlpFeedback).toHaveBeenCalledWith(expectedFeedback)
+        expect(categorizeNlpFeedback).toHaveBeenCalledWith(expectedComment)
         expect(databaseClient.updateNlpFeedback).toHaveBeenCalledWith(
-          expect.objectContaining({ feedback: expectedFeedback })
+          expect.objectContaining({ comment: expectedComment })
         )
       })
 
@@ -204,7 +204,7 @@ describe('NLP Feedback Resolver', () => {
         await server.executeOperation({
           query: UPDATE_NLP_FEEDBACK,
           variables: {
-            feedback: '   \n  ',
+            comment: '   \n  ',
             keyword: true,
             nlpRequestId: '123'
           }
@@ -215,7 +215,7 @@ describe('NLP Feedback Resolver', () => {
         expect(categorizeNlpFeedback).toHaveBeenCalledWith('')
         expect(databaseClient.updateNlpFeedback).toHaveBeenCalledWith(
           expect.objectContaining({
-            feedback: null,
+            comment: null,
             keyword: true
           })
         )
@@ -235,7 +235,7 @@ describe('NLP Feedback Resolver', () => {
         const response = await server.executeOperation({
           query: UPDATE_NLP_FEEDBACK,
           variables: {
-            feedback: 'a'.repeat(501),
+            comment: 'a'.repeat(501),
             nlpRequestId: '123'
           }
         }, {
@@ -244,7 +244,7 @@ describe('NLP Feedback Resolver', () => {
 
         const { data, errors } = response.body.singleResult
 
-        expect(errors[0].message).toEqual('feedback must be 500 characters or fewer')
+        expect(errors[0].message).toEqual('comment must be 500 characters or fewer')
         expect(errors[0].extensions.code).toEqual('BAD_USER_INPUT')
         expect(data).toEqual({ updateNlpFeedback: null })
 

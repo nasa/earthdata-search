@@ -30,7 +30,7 @@ const buildEntry = (index: number, overrides = {}) => ({
   incomplete: false,
   relevancy: false,
   other: false,
-  feedback: null,
+  comment: null,
   ...overrides
 })
 
@@ -118,7 +118,7 @@ describe('AdminNlpFeedbackCategoryModal component', () => {
           entries: [
             buildEntry(1, {
               nlpQuery: maliciousQuery,
-              feedback: maliciousComment
+              comment: maliciousComment
             })
           ]
         })]
@@ -141,7 +141,7 @@ describe('AdminNlpFeedbackCategoryModal component', () => {
           entries: [
             buildEntry(1, {
               spatial: true,
-              feedback: 'Should have searched for precipitation'
+              comment: 'Should have searched for precipitation'
             }),
             buildEntry(2, {
               keyword: true
