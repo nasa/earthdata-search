@@ -162,21 +162,33 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
 
       const choices = [...new Set([...options, ...selected])]
 
-      const filter = (
+      return (
         <fieldset key={key} disabled={!!isEosdisOnlyConsortium}>
           <legend>
             {label}
             {renderSelectedCount(selected)}
             {
               key === 'consortium' && (
-                <Button
-                  size="sm"
-                  variant="link"
-                  type="button"
-                  aria-label="Consortium filtering information"
+                <OverlayTrigger
+                  placement="top"
+                  trigger={['hover', 'focus']}
+                  overlay={
+                    (tooltipProps) => renderTooltip({
+                      ...tooltipProps,
+                      id: 'advanced-search-consortium-disabled',
+                      children: 'Consortium filtering is disabled when only including EOSDIS collections'
+                    })
+                  }
                 >
-                  <EDSCIcon icon={FaQuestionCircle} />
-                </Button>
+                  <Button
+                    size="sm"
+                    variant="link"
+                    type="button"
+                    aria-label="Consortium filtering information"
+                  >
+                    <EDSCIcon icon={FaQuestionCircle} />
+                  </Button>
+                </OverlayTrigger>
               )
             }
           </legend>
@@ -200,29 +212,6 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
           />
         </fieldset>
       )
-
-      if (key === 'consortium') {
-        return (
-          <OverlayTrigger
-            key={key}
-            placement="top"
-            trigger={['hover', 'focus']}
-            overlay={
-              (tooltipProps) => renderTooltip({
-                ...tooltipProps,
-                id: 'advanced-search-consortium-disabled',
-                children: 'Consortium filtering is disabled when only including EOSDIS collections'
-              })
-            }
-          >
-            <div>
-              {filter}
-            </div>
-          </OverlayTrigger>
-        )
-      }
-
-      return filter
     }
 
     if (type === 'boolean') {
