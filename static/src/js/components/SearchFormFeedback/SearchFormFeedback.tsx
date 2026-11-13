@@ -9,6 +9,11 @@ import {
 
 import Button from '../Button/Button'
 
+import {
+  NLP_FEEDBACK_CATEGORIES,
+  type NlpFeedbackReasonField
+} from '../../constants/nlpFeedbackCategories'
+
 import CREATE_NLP_FEEDBACK from '../../operations/mutations/createNlpFeedback'
 import UPDATE_NLP_FEEDBACK from '../../operations/mutations/updateNlpFeedback'
 
@@ -20,33 +25,6 @@ import './SearchFormFeedback.scss'
 const COMMENT_MAX_LENGTH = 500
 
 const THANKS_MESSAGE_DURATION_MS = 5000
-
-const NEGATIVE_FEEDBACK_REASONS = [
-  {
-    id: 'keyword',
-    label: 'Wrong keyword'
-  },
-  {
-    id: 'spatial',
-    label: 'Wrong location'
-  },
-  {
-    id: 'temporal',
-    label: 'Wrong date range'
-  },
-  {
-    id: 'incomplete',
-    label: 'Missed part of my search'
-  },
-  {
-    id: 'relevancy',
-    label: 'Results aren\'t relevant'
-  },
-  {
-    id: 'other',
-    label: 'Other'
-  }
-]
 
 /**
  * Renders a "Did we understand your search?" prompt with thumbs up and thumbs down buttons.
@@ -64,7 +42,7 @@ const SearchFormFeedback: React.FC = () => {
   // Kept separate from `isNegativeFormOpen` so the thumbs stay disabled even if the form is closed
   const [hasVotedNegative, setHasVotedNegative] = useState(false)
   const [isNegativeFormOpen, setIsNegativeFormOpen] = useState(false)
-  const [selectedReasons, setSelectedReasons] = useState<string[]>([])
+  const [selectedReasons, setSelectedReasons] = useState<NlpFeedbackReasonField[]>([])
   const [comment, setComment] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
@@ -117,7 +95,7 @@ const SearchFormFeedback: React.FC = () => {
   }
 
   // Handle the click on a reason by toggling its selection in the list of selected reasons
-  const handleReasonClick = (reasonId: string) => {
+  const handleReasonClick = (reasonId: NlpFeedbackReasonField) => {
     setSelectedReasons((previousReasons) => (
       previousReasons.includes(reasonId)
         ? previousReasons.filter((id) => id !== reasonId)
@@ -131,14 +109,11 @@ const SearchFormFeedback: React.FC = () => {
 
     updateNlpFeedback({
       variables: {
-        feedback: comment,
-        incomplete: selectedReasons.includes('incomplete'),
-        keyword: selectedReasons.includes('keyword'),
+        comment,
         nlpRequestId,
-        other: selectedReasons.includes('other'),
-        relevancy: selectedReasons.includes('relevancy'),
-        spatial: selectedReasons.includes('spatial'),
-        temporal: selectedReasons.includes('temporal')
+        ...Object.fromEntries(
+          NLP_FEEDBACK_CATEGORIES.map(({ field }) => [field, selectedReasons.includes(field)])
+        )
       },
       onCompleted: () => {
         setIsSubmitted(true)
@@ -197,18 +172,18 @@ const SearchFormFeedback: React.FC = () => {
               <legend className="search-form-feedback__legend">What went wrong?</legend>
               <div className="search-form-feedback__reasons">
                 {
-                  NEGATIVE_FEEDBACK_REASONS.map(({ id, label }) => {
-                    const isSelected = selectedReasons.includes(id)
+                  NLP_FEEDBACK_CATEGORIES.map(({ field, option }) => {
+                    const isSelected = selectedReasons.includes(field)
 
                     return (
                       <button
-                        key={id}
+                        key={field}
                         type="button"
                         className={`search-form-feedback__reason${isSelected ? ' search-form-feedback__reason--selected' : ''}`}
                         aria-pressed={isSelected}
-                        onClick={() => handleReasonClick(id)}
+                        onClick={() => handleReasonClick(field)}
                       >
-                        {label}
+                        {option}
                       </button>
                     )
                   })

@@ -645,6 +645,163 @@ describe('DatabaseClient', () => {
     })
   })
 
+  describe('getNlpFeedbackReport', () => {
+    const startDate = '2026-01-01'
+    const endDate = '2026-01-31'
+
+    test('retrieves the NLP feedback counts within the date range', async () => {
+      const report = {
+        total_count: 1250,
+        positive_count: 1000,
+        negative_count: 250,
+        keyword_count: 100,
+        spatial_count: 50,
+        temporal_count: 25,
+        incomplete_count: 10,
+        relevancy_count: 75,
+        other_count: 5,
+        comment_count: 40
+      }
+
+      dbTracker.on('query', (query) => {
+        query.response([report])
+      })
+
+      const result = await databaseClient.getNlpFeedbackReport({
+        startDate,
+        endDate
+      })
+
+      expect(result).toEqual(report)
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual(
+        'select COUNT(*)::int AS total_count, '
+        + 'COUNT(*) FILTER (WHERE positive)::int AS positive_count, '
+        + 'COUNT(*) FILTER (WHERE NOT positive)::int AS negative_count, '
+        + 'COUNT(*) FILTER (WHERE keyword)::int AS keyword_count, '
+        + 'COUNT(*) FILTER (WHERE spatial)::int AS spatial_count, '
+        + 'COUNT(*) FILTER (WHERE temporal)::int AS temporal_count, '
+        + 'COUNT(*) FILTER (WHERE incomplete)::int AS incomplete_count, '
+        + 'COUNT(*) FILTER (WHERE relevancy)::int AS relevancy_count, '
+        + 'COUNT(*) FILTER (WHERE other)::int AS other_count, '
+        + 'COUNT(*) FILTER (WHERE NULLIF(TRIM(comment), \'\') IS NOT NULL)::int AS comment_count '
+        + 'from "nlp_feedback" where "created_at" >= $1::date and "created_at" < $2::date + interval \'1 day\' limit $3'
+      )
+
+      expect(queries[0].bindings).toEqual([startDate, endDate, 1])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = vi.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getNlpFeedbackReport({
+        startDate,
+        endDate
+      })).rejects.toThrow('Failed to retrieve NLP feedback report')
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].bindings).toEqual([startDate, endDate, 1])
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve NLP feedback report', expect.any(Error))
+    })
+  })
+
+  describe('getNlpFeedbackCategory', () => {
+    const baseSql = 'select "id" as "nlpRequestId", "query" as "nlpQuery", "positive", "keyword", "spatial", "temporal", "incomplete", "relevancy", "other", "comment", count(*) OVER() as total from "nlp_feedback" where "created_at" >= $1::date and "created_at" < $2::date + interval \'1 day\''
+    const orderSql = 'order by "created_at" desc, "id" desc'
+
+    const startDate = '2026-01-01'
+    const endDate = '2026-01-31'
+
+    test('retrieves the first page of a category with the default limit', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([{
+          nlpRequestId: 'mock-id',
+          keyword: true,
+          total: 1
+        }])
+      })
+
+      const result = await databaseClient.getNlpFeedbackCategory({
+        category: 'keyword',
+        startDate,
+        endDate
+      })
+
+      expect(result).toEqual([{
+        nlpRequestId: 'mock-id',
+        keyword: true,
+        total: 1
+      }])
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual(`${baseSql} and "keyword" = $3 ${orderSql} limit $4`)
+      expect(queries[0].bindings).toEqual([startDate, endDate, true, 20])
+    })
+
+    test('applies the limit and offset', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([])
+      })
+
+      await databaseClient.getNlpFeedbackCategory({
+        category: 'spatial',
+        startDate,
+        endDate,
+        limit: 10,
+        offset: 30
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual(`${baseSql} and "spatial" = $3 ${orderSql} limit $4 offset $5`)
+      expect(queries[0].bindings).toEqual([startDate, endDate, true, 10, 30])
+    })
+
+    test('filters to entries with free text when the category is feedback', async () => {
+      dbTracker.on('query', (query) => {
+        query.response([])
+      })
+
+      await databaseClient.getNlpFeedbackCategory({
+        category: 'comment',
+        startDate,
+        endDate
+      })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual(`${baseSql} and NULLIF(TRIM(comment), '') IS NOT NULL ${orderSql} limit $3`)
+      expect(queries[0].bindings).toEqual([startDate, endDate, 20])
+    })
+
+    test('returns an error', async () => {
+      const consoleMock = vi.spyOn(console, 'log')
+
+      dbTracker.on('query', (query) => {
+        query.reject('Unknown Error')
+      })
+
+      await expect(databaseClient.getNlpFeedbackCategory({
+        category: 'keyword',
+        startDate,
+        endDate
+      })).rejects.toThrow('Failed to retrieve NLP feedback category')
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve NLP feedback category', expect.any(Error))
+    })
+  })
+
   describe('getProjects', () => {
     test('retrieves the projects', async () => {
       dbTracker.on('query', (query) => {
@@ -2231,7 +2388,7 @@ describe('DatabaseClient', () => {
           relevancy: false,
           spatial: false,
           temporal: true,
-          feedback: 'the temporal value was wrong'
+          comment: 'the temporal value was wrong'
         }])
       })
 
@@ -2243,7 +2400,7 @@ describe('DatabaseClient', () => {
         relevancy: false,
         spatial: false,
         temporal: true,
-        feedback: 'the temporal value was wrong'
+        comment: 'the temporal value was wrong'
       })
 
       expect(nlpFeedback).toBeDefined()
@@ -2265,13 +2422,13 @@ describe('DatabaseClient', () => {
         relevancy: false,
         spatial: false,
         temporal: true,
-        feedback: 'the temporal value was wrong'
+        comment: 'the temporal value was wrong'
       })).rejects.toThrow('Failed to update NLP feedback')
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('update "nlp_feedback" set "incomplete" = $1, "keyword" = $2, "other" = $3, "relevancy" = $4, "spatial" = $5, "temporal" = $6, "feedback" = $7, "updated_at" = $8 where "id" = $9 returning *')
-      expect(queries[0].bindings).toEqual([false, false, false, false, false, true, 'the temporal value was wrong', new Date(mockToday), 1])
+      expect(queries[0].sql).toEqual('update "nlp_feedback" set "comment" = $1, "incomplete" = $2, "keyword" = $3, "other" = $4, "relevancy" = $5, "spatial" = $6, "temporal" = $7, "updated_at" = $8 where "id" = $9 returning *')
+      expect(queries[0].bindings).toEqual(['the temporal value was wrong', false, false, false, false, false, true, new Date(mockToday), 1])
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Failed to update NLP feedback', expect.any(Error))

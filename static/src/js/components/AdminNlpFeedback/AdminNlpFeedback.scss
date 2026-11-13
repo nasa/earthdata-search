@@ -1,0 +1,310 @@
+@use '../../../css/utils';
+
+.admin-nlp-feedback {
+  &__form {
+    margin-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
+  &__report {
+    padding: 2.5rem;
+    border: 1px solid utils.$color__carbon--20;
+    border-radius: 0.5rem;
+    background: utils.$color__spacesuit-white;
+    color: utils.$color__carbon--90;
+  }
+
+  &__report-header {
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid utils.$color__nasa-blue--shade;
+  }
+
+  &__report-eyebrow {
+    margin-bottom: 0.25rem;
+    color: utils.$color__nasa-blue--shade;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__report-title {
+    margin-bottom: 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  &__report-range {
+    margin: 0;
+    color: utils.$color__carbon--60;
+  }
+
+  &__empty {
+    padding: 2rem 0;
+    color: utils.$color__carbon--60;
+    text-align: center;
+  }
+
+  &__section {
+    margin-bottom: 2.25rem;
+    break-inside: avoid;
+  }
+
+  &__section-title {
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  &__section-description {
+    margin-bottom: 1rem;
+    color: utils.$color__carbon--60;
+    font-size: 0.875rem;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 0;
+  }
+
+  &__stat {
+    padding: 1rem 1.25rem;
+    border: 1px solid utils.$color__carbon--20;
+    border-top: 4px solid utils.$color__nasa-blue--shade;
+    border-radius: 0.375rem;
+
+    &--positive {
+      border-top-color: utils.$color__active-green;
+    }
+
+    &--negative {
+      border-top-color: utils.$color__nasa-red;
+    }
+  }
+
+  &__stat-label {
+    color: utils.$color__carbon--60;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  &__stat-value {
+    margin: 0.25rem 0 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__stat-meta {
+    margin: 0;
+    color: utils.$color__carbon--60;
+    font-size: 0.85rem;
+  }
+
+  &__reasons {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__reason {
+    border-bottom: 1px solid utils.$color__carbon--10;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    th,
+    td {
+      padding: 0.6rem 0;
+      vertical-align: middle;
+    }
+  }
+
+  &__reason-label {
+    width: 34%;
+    padding-right: 1rem !important;
+    font-weight: normal;
+  }
+
+  &__reason-name {
+    display: block;
+    font-weight: 600;
+  }
+
+  // Category names and counts that open the drill-down modal. Styled as links on
+  // screen, and reset to plain text when printed.
+  &__drilldown {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: utils.$color__nasa-blue--shade;
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: underline;
+    text-decoration-color: rgba(utils.$color__nasa-blue--shade, 0.4);
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration-color: currentColor;
+    }
+
+    &:focus-visible {
+      border-radius: 0.125rem;
+      outline: 2px solid utils.$color__nasa-blue;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      color: inherit;
+      text-decoration: none;
+      cursor: default;
+    }
+
+    &--count {
+      font-weight: 700;
+    }
+  }
+
+  &__reason-option {
+    display: block;
+    color: utils.$color__carbon--60;
+    font-size: 0.8rem;
+  }
+
+  &__reason-bar-cell {
+    width: 46%;
+  }
+
+  &__reason-bar {
+    display: block;
+    height: 0.75rem;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background: utils.$color__carbon--10;
+  }
+
+  &__reason-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 0.375rem;
+    background: utils.$color__nasa-blue;
+  }
+
+  &__reason-percent,
+  &__reason-count {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__reason-percent {
+    width: 10%;
+    font-weight: 700;
+  }
+
+  &__reason-count {
+    width: 10%;
+    color: utils.$color__carbon--60;
+    font-size: 0.875rem;
+  }
+
+  &__note {
+    margin: 1rem 0 0;
+    color: utils.$color__carbon--60;
+    font-size: 0.8rem;
+  }
+
+  &__report-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid utils.$color__carbon--20;
+    color: utils.$color__carbon--60;
+    font-size: 0.85rem;
+
+    strong {
+      color: utils.$color__carbon--90;
+    }
+  }
+}
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 0.6in;
+  }
+
+  // The app shell uses fixed-height, scrolling containers which would clip the
+  // printout to a single viewport. Let the document flow naturally instead, and
+  // drop relative positioning so the report below anchors to the top of the page.
+  html,
+  body,
+  #root,
+  .wrapping-container,
+  .route-wrapper {
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: utils.$color__spacesuit-white !important;
+  }
+
+  // Hide all app chrome (toolbar, footer, banners, form) and show only the report
+  body * {
+    visibility: hidden;
+  }
+
+  .admin-nlp-feedback__report,
+  .admin-nlp-feedback__report * {
+    visibility: visible;
+  }
+
+  .admin-nlp-feedback__report {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    font-size: 11pt;
+  }
+
+  // Keep the colored accents and bars, which browsers drop by default
+  .admin-nlp-feedback__report-header,
+  .admin-nlp-feedback__stat,
+  .admin-nlp-feedback__reason-bar,
+  .admin-nlp-feedback__reason-bar-fill {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .admin-nlp-feedback__reason {
+    break-inside: avoid;
+  }
+
+  .admin-nlp-feedback__drilldown {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .admin-nlp-feedback__drilldown--count {
+    color: utils.$color__carbon--90;
+  }
+}

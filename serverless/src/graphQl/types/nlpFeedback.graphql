@@ -1,3 +1,90 @@
+type NlpFeedbackReport {
+  "Total count of NLP feedback"
+  totalCount: Int!
+
+  "Count of positive NLP feedback"
+  positiveCount: Int!
+
+  "Count of negative NLP feedback"
+  negativeCount: Int!
+
+  "Count of keyword-related NLP feedback"
+  keywordCount: Int!
+
+  "Count of spatial-related NLP feedback"
+  spatialCount: Int!
+
+  "Count of temporal-related NLP feedback"
+  temporalCount: Int!
+
+  "Count of incomplete NLP feedback"
+  incompleteCount: Int!
+
+  "Count of relevancy-related NLP feedback"
+  relevancyCount: Int!
+
+  "Count of other NLP feedback"
+  otherCount: Int!
+
+  "Count of NLP feedback with comments"
+  commentCount: Int!
+}
+
+type NlpFeedback {
+  "The ID of the NLP request associated with this feedback"
+  nlpRequestId: String!
+
+  "Indicates if the feedback was positive"
+  positive: Boolean!
+
+  "The NLP query associated with this feedback"
+  nlpQuery: String!
+
+  "Indicates if the feedback is related to the extracted keyword"
+  keyword: Boolean
+
+  "Indicates if the feedback is related to the extracted spatial"
+  spatial: Boolean
+
+  "Indicates if the feedback is related to the extracted temporal"
+  temporal: Boolean
+
+  "Indicates if the feedback is related to an incomplete result"
+  incomplete: Boolean
+
+  "Indicates if the feedback is related to the collection relevancy"
+  relevancy: Boolean
+
+  "Indicates if the feedback is related to other aspects"
+  other: Boolean
+
+  "The user comment for this NLP request"
+  comment: String
+}
+
+enum NlpFeedbackCategory {
+  "Keyword-related feedback"
+  KEYWORD
+
+  "Spatial-related feedback"
+  SPATIAL
+
+  "Temporal-related feedback"
+  TEMPORAL
+
+  "Incomplete result feedback"
+  INCOMPLETE
+
+  "Collection relevancy feedback"
+  RELEVANCY
+
+  "Other feedback"
+  OTHER
+
+  "Comment feedback"
+  COMMENT
+}
+
 type Mutation {
   "Creates an initial NLP Feedback"
   createNlpFeedback(
@@ -35,6 +122,6 @@ type Mutation {
     other: Boolean
 
     "The user feedback for this NLP request"
-    feedback: String
+    comment: String
   ): Boolean
 }

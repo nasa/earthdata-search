@@ -31,6 +31,14 @@ describe('permissions', () => {
             isValidUser,
             isAdminUser
           ),
+          adminNlpFeedbackReport: and(
+            isValidUser,
+            isAdminUser
+          ),
+          adminNlpFeedbackCategory: and(
+            isValidUser,
+            isAdminUser
+          ),
           adminPreferencesMetrics: and(
             isValidUser,
             isAdminUser

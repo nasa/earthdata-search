@@ -149,6 +149,10 @@ describe('App component', () => {
                   expect.objectContaining({
                     path: routes.ADMIN_PREFERENCES_METRICS,
                     lazy: expect.any(Function)
+                  }),
+                  expect.objectContaining({
+                    path: routes.ADMIN_NLP_FEEDBACK,
+                    lazy: expect.any(Function)
                   })
                 ]
               })

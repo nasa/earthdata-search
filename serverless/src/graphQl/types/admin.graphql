@@ -1,3 +1,14 @@
+type AdminNlpFeedbackCategory {
+  "List of NLP feedback entries matching the category"
+  adminNlpFeedback: [NlpFeedback]
+
+  "Pagination information"
+  pageInfo: PageInfo
+
+  "Total count of NLP feedback entries matching the category"
+  count: Int
+}
+
 type AdminPreferencesEntry {
   "Preference value"
   value: String
@@ -134,6 +145,33 @@ type MultiCollectionRetrieval {
 type Query {
   "Checks if the user is authorized for admin functionality"
   adminIsAuthorized: Boolean
+
+  "Retrieves admin NLP feedback"
+  adminNlpFeedbackReport(
+    "Start date for the NLP feedback report"
+    startDate: DateTime!
+
+    "End date for the NLP feedback report"
+    endDate: DateTime!
+  ): NlpFeedbackReport
+
+  "Retrieves NLP feedback entries for a category"
+  adminNlpFeedbackCategory(
+    "Start date for the NLP feedback category query"
+    startDate: DateTime!
+
+    "End date for the NLP feedback category query"
+    endDate: DateTime!
+
+    "Category to filter by"
+    category: NlpFeedbackCategory!
+
+    "Sets the number of NLP feedback entries to return"
+    limit: Int
+
+    "Offset for pagination"
+    offset: Int
+  ): AdminNlpFeedbackCategory
 
   "Retrieves admin preferences metrics"
   adminPreferencesMetrics: AdminPreferencesMetrics
