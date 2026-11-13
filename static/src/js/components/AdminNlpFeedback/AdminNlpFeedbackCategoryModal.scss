@@ -1,0 +1,95 @@
+@use '../../../css/utils';
+
+.admin-nlp-feedback-category-modal {
+  &__subtitle {
+    margin: 0.25rem 0 0;
+    color: utils.$color__carbon--60;
+    font-size: 0.875rem;
+  }
+
+  &__empty {
+    padding: 2rem 0;
+    margin: 0;
+    color: utils.$color__carbon--60;
+    text-align: center;
+  }
+
+  &__table {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+
+    th {
+      white-space: nowrap;
+    }
+  }
+
+  // UUIDs are long and unbroken, so keep them compact and allow wrapping
+  &__request-id {
+    width: 20%;
+  }
+
+  &__request-id-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  &__request-id-value {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--bs-font-monospace);
+    font-size: 0.75rem;
+    word-break: break-all;
+  }
+
+  &__copy {
+    flex-shrink: 0;
+    padding: 0.125rem;
+    color: utils.$color__carbon--60;
+    line-height: 1;
+
+    &:hover,
+    &:focus-visible {
+      color: utils.$color__nasa-blue--shade;
+    }
+  }
+
+  &__query {
+    width: 30%;
+    font-weight: 600;
+  }
+
+  &__reasons {
+    width: 20%;
+  }
+
+  &__reason {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    margin: 0 0.25rem 0.25rem 0;
+    border: 1px solid rgba(utils.$color__nasa-blue--shade, 0.25);
+    border-radius: 1rem;
+    background: rgba(utils.$color__nasa-blue, 0.08);
+    color: utils.$color__nasa-blue--shade;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  &__comment {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &__none {
+    color: utils.$color__carbon--50;
+    font-style: italic;
+  }
+
+  &__pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,4 +1,6 @@
 import ADMIN_IS_AUTHORIZED from '../../../../../static/src/js/operations/queries/adminIsAuthorized'
+import ADMIN_NLP_FEEDBACK_CATEGORY from '../../../../../static/src/js/operations/queries/adminNlpFeedbackCategory'
+import ADMIN_NLP_FEEDBACK_REPORT from '../../../../../static/src/js/operations/queries/adminNlpFeedbackReport'
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
 import ADMIN_PROJECT from '../../../../../static/src/js/operations/queries/adminProject'
 import ADMIN_PROJECTS from '../../../../../static/src/js/operations/queries/adminProjects'
@@ -39,6 +41,233 @@ describe('Admin Resolver', () => {
 
         expect(data).toEqual({
           adminIsAuthorized: true
+        })
+      })
+    })
+
+    describe('adminNlpFeedbackCategory', () => {
+      const nlpFeedbackRow = {
+        nlpRequestId: '4f4b7c0e-3c1d-4a4e-9a51-6f0a1d2b3c4d',
+        nlpQuery: 'rainfall in Brazil last summer',
+        keyword: true,
+        spatial: false,
+        temporal: false,
+        incomplete: false,
+        relevancy: false,
+        other: false,
+        comment: 'Wrong keyword',
+        total: 3
+      }
+
+      const variables = {
+        startDate: '2026-01-01T00:00:00.000Z',
+        endDate: '2026-01-31T23:59:59.999Z',
+        category: 'KEYWORD'
+      }
+
+      test('returns paginated results with all fields', async () => {
+        const databaseClient = {
+          getNlpFeedbackCategory: vi.fn().mockResolvedValue([nlpFeedbackRow])
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_NLP_FEEDBACK_CATEGORY,
+          variables: {
+            ...variables,
+            limit: 2,
+            offset: 2
+          }
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.getNlpFeedbackCategory).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getNlpFeedbackCategory).toHaveBeenCalledWith({
+          startDate: '2026-01-01T00:00:00.000Z',
+          endDate: '2026-01-31T23:59:59.999Z',
+          category: 'keyword',
+          limit: 2,
+          offset: 2
+        })
+
+        expect(data).toEqual({
+          adminNlpFeedbackCategory: {
+            adminNlpFeedback: [{
+              nlpRequestId: '4f4b7c0e-3c1d-4a4e-9a51-6f0a1d2b3c4d',
+              nlpQuery: 'rainfall in Brazil last summer',
+              keyword: true,
+              spatial: false,
+              temporal: false,
+              incomplete: false,
+              relevancy: false,
+              other: false,
+              comment: 'Wrong keyword'
+            }],
+            count: 3,
+            pageInfo: {
+              currentPage: 2,
+              hasNextPage: false,
+              hasPreviousPage: true,
+              pageCount: 2
+            }
+          }
+        })
+      })
+
+      test('defaults limit and offset when they are not provided', async () => {
+        const databaseClient = {
+          getNlpFeedbackCategory: vi.fn().mockResolvedValue([])
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_NLP_FEEDBACK_CATEGORY,
+          variables
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.getNlpFeedbackCategory).toHaveBeenCalledWith(
+          expect.objectContaining({
+            limit: 20,
+            offset: 0
+          })
+        )
+
+        expect(data).toEqual({
+          adminNlpFeedbackCategory: {
+            adminNlpFeedback: [],
+            count: 0,
+            pageInfo: {
+              currentPage: null,
+              hasNextPage: false,
+              hasPreviousPage: false,
+              pageCount: 0
+            }
+          }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        const databaseClient = {
+          getNlpFeedbackCategory: vi.fn().mockImplementation(() => {
+            throw new Error('Something failed')
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_NLP_FEEDBACK_CATEGORY,
+          variables
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        expect(errors[0].message).toEqual('Something failed')
+
+        expect(data).toEqual({
+          adminNlpFeedbackCategory: null
+        })
+      })
+    })
+
+    describe('adminNlpFeedbackReport', () => {
+      const variables = {
+        startDate: '2026-01-01T00:00:00.000Z',
+        endDate: '2026-01-31T23:59:59.999Z'
+      }
+
+      test('returns results with all fields', async () => {
+        const databaseClient = {
+          getNlpFeedbackReport: vi.fn().mockResolvedValue({
+            total_count: 1250,
+            positive_count: 1000,
+            negative_count: 250,
+            keyword_count: 100,
+            spatial_count: 50,
+            temporal_count: 25,
+            incomplete_count: 10,
+            relevancy_count: 75,
+            other_count: 5,
+            comment_count: 40
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_NLP_FEEDBACK_REPORT,
+          variables
+        }, {
+          contextValue
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(databaseClient.getNlpFeedbackReport).toHaveBeenCalledTimes(1)
+        expect(databaseClient.getNlpFeedbackReport).toHaveBeenCalledWith({
+          startDate: '2026-01-01T00:00:00.000Z',
+          endDate: '2026-01-31T23:59:59.999Z'
+        })
+
+        expect(data).toEqual({
+          adminNlpFeedbackReport: {
+            totalCount: 1250,
+            positiveCount: 1000,
+            negativeCount: 250,
+            keywordCount: 100,
+            spatialCount: 50,
+            temporalCount: 25,
+            incompleteCount: 10,
+            relevancyCount: 75,
+            otherCount: 5,
+            commentCount: 40
+          }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        const databaseClient = {
+          getNlpFeedbackReport: vi.fn().mockImplementation(() => {
+            throw new Error('Something failed')
+          })
+        }
+
+        const { contextValue, server } = setupServer({
+          databaseClient
+        })
+
+        const response = await server.executeOperation({
+          query: ADMIN_NLP_FEEDBACK_REPORT,
+          variables
+        }, {
+          contextValue
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        expect(errors[0].message).toEqual('Something failed')
+
+        expect(data).toEqual({
+          adminNlpFeedbackReport: null
         })
       })
     })

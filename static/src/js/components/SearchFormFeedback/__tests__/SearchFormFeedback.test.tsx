@@ -145,7 +145,7 @@ describe('SearchFormFeedback component', () => {
               request: {
                 query: UPDATE_NLP_FEEDBACK,
                 variables: {
-                  feedback: 'This is my feedback.',
+                  comment: 'This is my feedback.',
                   incomplete: false,
                   keyword: true,
                   nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',

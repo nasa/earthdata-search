@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 const UPDATE_NLP_FEEDBACK = gql`
   mutation UpdateNlpFeedback(
-    $feedback: String
+    $comment: String
     $incomplete: Boolean
     $keyword: Boolean
     $nlpRequestId: String!
@@ -12,7 +12,7 @@ const UPDATE_NLP_FEEDBACK = gql`
     $temporal: Boolean
   ) {
     updateNlpFeedback(
-      feedback: $feedback
+      comment: $comment
       incomplete: $incomplete
       keyword: $keyword
       nlpRequestId: $nlpRequestId

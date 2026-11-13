@@ -50,6 +50,13 @@ const Admin = () => (
           >
             Preferences Metrics
           </PortalLinkContainer>
+          <PortalLinkContainer
+            type="button"
+            bootstrapVariant="primary"
+            to={routes.ADMIN_NLP_FEEDBACK}
+          >
+            NLP Feedback
+          </PortalLinkContainer>
         </Stack>
       </Col>
     </Row>

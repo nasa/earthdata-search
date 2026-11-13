@@ -45,7 +45,7 @@ exports.up = (pgm) => {
       default: false,
       notNull: true
     },
-    feedback: {
+    comment: {
       type: 'text'
     },
     updated_at: {

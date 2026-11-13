@@ -31,11 +31,12 @@ describe('Admin', () => {
     setup()
 
     const portalLinks = screen.getAllByRole('link')
-    expect(portalLinks).toHaveLength(4)
+    expect(portalLinks).toHaveLength(5)
 
     expect(screen.getByRole('link', { name: 'Retrievals' })).toHaveAttribute('href', routes.ADMIN_RETRIEVALS)
     expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', routes.ADMIN_PROJECTS)
     expect(screen.getByRole('link', { name: 'Retrieval Metrics' })).toHaveAttribute('href', routes.ADMIN_RETRIEVAL_METRICS)
     expect(screen.getByRole('link', { name: 'Preferences Metrics' })).toHaveAttribute('href', routes.ADMIN_PREFERENCES_METRICS)
+    expect(screen.getByRole('link', { name: 'NLP Feedback' })).toHaveAttribute('href', routes.ADMIN_NLP_FEEDBACK)
   })
 })

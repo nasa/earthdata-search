@@ -264,6 +264,16 @@ const browserRouter = createBrowserRouter([
                 Component: AdminPreferencesMetrics.default
               }
             }
+          },
+          {
+            path: routes.ADMIN_NLP_FEEDBACK,
+            async lazy() {
+              const AdminNlpFeedback = await import('./components/AdminNlpFeedback/AdminNlpFeedback')
+
+              return {
+                Component: AdminNlpFeedback.default
+              }
+            }
           }
         ]
       }
