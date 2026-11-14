@@ -25,6 +25,35 @@ describe('createQuerySlice', () => {
   })
 
   describe('changeQuery', () => {
+    describe('when previous values exist', () => {
+      test('preserves the existing values', async () => {
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = vi.fn()
+          state.query.collection.shortName = ['ATL03']
+          state.query.collection.version = ['004', '005']
+          state.query.collection.doi = ['10.5067/EXAMPLE']
+          state.query.collection.downloadable = true
+          state.query.collection.keyword = 'snow'
+          state.query.collection.pageNum = 3
+        })
+
+        const { query } = useEdscStore.getState()
+        const previousValues = query.collection
+
+        await query.changeQuery({ collection: { keyword: 'ice' } })
+
+        const updatedState = useEdscStore.getState()
+        expect(updatedState.query.collection).toEqual({
+          ...previousValues,
+          keyword: 'ice',
+          pageNum: 1
+        })
+
+        expect(updatedState.collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(updatedState.collections.getCollections).toHaveBeenCalledWith()
+      })
+    })
+
     describe('when there is no focused collection', () => {
       test('updates the collection query and calls getCollections', async () => {
         useEdscStore.setState((state) => {

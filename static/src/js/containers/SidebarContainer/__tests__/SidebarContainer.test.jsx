@@ -29,6 +29,17 @@ const setup = setupTest({
 })
 
 describe('SidebarContainer component', () => {
+  test('forwards the advanced filter column', () => {
+    const secondaryChildren = <div>Advanced Filters</div>
+    setup({ overrideProps: { secondaryChildren } })
+
+    expect(Sidebar).toHaveBeenCalledTimes(1)
+    expect(Sidebar).toHaveBeenCalledWith(
+      expect.objectContaining({ secondaryChildren }),
+      {}
+    )
+  })
+
   describe('when the sidebar is not visible', () => {
     test('passes its props and renders a single Sidebar component', () => {
       useLocation.mockReturnValue({
@@ -43,7 +54,8 @@ describe('SidebarContainer component', () => {
           children: <div>Sidebar Children</div>,
           headerChildren: null,
           panels: null,
-          visible: false
+          visible: false,
+          secondaryChildren: null
         },
         {}
       )
@@ -64,7 +76,8 @@ describe('SidebarContainer component', () => {
           children: <div>Sidebar Children</div>,
           headerChildren: null,
           panels: null,
-          visible: true
+          visible: true,
+          secondaryChildren: null
         },
         {}
       )

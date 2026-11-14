@@ -264,6 +264,7 @@ describe('nlpSearch handler', () => {
           expect(responseStream.write).not.toHaveBeenCalledWith(expect.stringContaining('Found short name'))
           expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"entryIds":["ATL03_004"]'))
           expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"shortNames":[]'))
+          expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"keyword":null'))
         })
       })
 
@@ -295,6 +296,7 @@ describe('nlpSearch handler', () => {
           expect(responseStream.write).not.toHaveBeenCalledWith(expect.stringContaining('Found entry ID'))
           expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"entryIds":[]'))
           expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"shortNames":["ATL03"]'))
+          expect(responseStream.write).toHaveBeenCalledWith(expect.stringContaining('"keyword":null'))
         })
       })
 

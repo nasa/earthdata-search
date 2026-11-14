@@ -1,5 +1,7 @@
 import qs from 'qs'
 import cleanDeep from 'clean-deep'
+import { pick } from 'lodash-es'
+import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 
 import { decodeCollections, encodeCollections } from './collectionsEncoders'
 import { decodeFacets, encodeFacets } from './facetEncoders'
@@ -47,7 +49,25 @@ export const stringify = (params) => qs.stringify(
 /**
  * Mapping of URL Shortened Keys to their store keys
  */
+const advancedUrlEncoders = {
+  array: [encodeArray, decodeArray],
+  boolean: [encodeBoolean, decodeBoolean]
+}
+
+const advancedUrlDefs = Object.fromEntries(advancedCollectionFilters.map(({
+  key, cmrKey, type
+}) => {
+  const [encode, decode] = advancedUrlEncoders[type] || [encodeString, decodeString]
+
+  return [key, {
+    shortKey: cmrKey,
+    encode,
+    decode
+  }]
+}))
+
 const urlDefs = {
+  ...advancedUrlDefs,
   earthdataEnvironment: {
     shortKey: 'ee',
     encode: encodeEarthdataEnvironment,
@@ -242,6 +262,10 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
   collectionQuery.includeInactiveCollections = decodeHelp(params, 'includeInactiveCollections')
+  Object.entries(advancedUrlDefs).forEach(([key, { shortKey }]) => {
+    if (params[shortKey] !== undefined) collectionQuery[key] = decodeHelp(params, key)
+  })
+
   collectionQuery.sortKey = decodeCollectionSortKey(params)
   collectionQuery.spatial = spatial
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
@@ -339,6 +363,9 @@ export const encodeUrlQuery = (props) => {
   const { collectionsQuery: collectionsQueryProps = {} } = props
   const {
     spatial = {},
+    entryId,
+    shortName,
+    version,
     hasGranulesOrCwic,
     keyword: keywordSearch,
     onlyEosdisCollections,
@@ -358,6 +385,10 @@ export const encodeUrlQuery = (props) => {
 
   const allProps = {
     ...props,
+    ...pick(collectionsQueryProps, Object.keys(advancedUrlDefs)),
+    entryId,
+    shortName,
+    version,
     boundingBoxSearch,
     circleSearch,
     collectionSortKey: sortKey,

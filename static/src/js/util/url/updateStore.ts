@@ -12,6 +12,8 @@ import { MODAL_NAMES } from '../../constants/modalNames'
 import { routes } from '../../constants/routes'
 
 import useEdscStore from '../../zustand/useEdscStore'
+// @ts-expect-error This file doesn't have types
+import advancedCollectionFilters from '../../data/advancedCollectionFilters'
 
 import { isPath } from '../isPath'
 import {
@@ -127,6 +129,10 @@ export const updateStore = async ({
           ...mergedQuery,
           collection: {
             ...mergedQuery.collection,
+            ...Object.fromEntries([
+              'entryId', 'shortName', 'version',
+              ...advancedCollectionFilters.map(({ key }: { key: string }) => key)
+            ].map((key) => [key, query.collection[key as keyof typeof query.collection]])),
             // If `hasGranulesOrCwic` is `undefined` from the decoded values it needs to stay `undefined` in the
             // store, not fallback to the initial state
             hasGranulesOrCwic: query.collection.hasGranulesOrCwic

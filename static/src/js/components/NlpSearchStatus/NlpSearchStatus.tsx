@@ -204,7 +204,7 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         signal: init?.signal
       })
     },
-    onFinish: async (prompt, completionText) => {
+    onFinish: async (_prompt, completionText) => {
       // Ignore stale completions for a request that has been cancelled.
       if (lastStartedRequestIdRef.current == null) return
 
@@ -233,7 +233,9 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         nlpRequestId,
         query,
         spatialArea,
-        temporal
+        temporal,
+        entryIds = [],
+        shortNames = []
       } = parsedResult
 
       const spatial = parseWktSpatial(spatialArea)
@@ -251,7 +253,10 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
         collection: {
           hasGranulesOrCwic,
           includeInactiveCollections,
-          keyword: keyword || prompt,
+          entryId: entryIds,
+          shortName: shortNames.length ? shortNames : undefined,
+          version: undefined,
+          keyword,
           nlpRequestId,
           nlpQuery: query,
           spatial,

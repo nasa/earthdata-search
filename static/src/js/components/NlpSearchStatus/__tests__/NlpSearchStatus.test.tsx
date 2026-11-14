@@ -139,6 +139,9 @@ describe('NlpSearchStatus component', () => {
     expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
         keyword: 'average temp',
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         nlpQuery: 'average temp in Western montana last april',
@@ -155,6 +158,56 @@ describe('NlpSearchStatus component', () => {
 
     expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(1)
     expect(props.onNlpSearchComplete).toHaveBeenCalledWith({ hasSpatial: true })
+  })
+
+  test('forwards NLP identifiers into their collection query fields', async () => {
+    const { zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'ATL03_004 and ATL06 rainfall',
+        requestId: 1
+      }
+    })
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'ATL03_004 and ATL06 rainfall',
+        'Final result:\n{"keyword":"rainfall","entryIds":["ATL03_004"],"shortNames":["ATL06"],"spatialArea":null,"temporal":null}'
+      )
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
+      collection: expect.objectContaining({
+        entryId: ['ATL03_004'],
+        shortName: ['ATL06'],
+        version: undefined,
+        keyword: 'rainfall'
+      })
+    }))
+  })
+
+  test('leaves keyword empty for a short-name-only search', async () => {
+    const { zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'ATL06',
+        requestId: 1
+      }
+    })
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.(
+        'ATL06',
+        'Final result:\n{"keyword":"","shortNames":["ATL06"]}'
+      )
+    })
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(expect.objectContaining({
+      collection: expect.objectContaining({
+        shortName: ['ATL06'],
+        keyword: ''
+      })
+    }))
   })
 
   test('reports parsing errors when final result is not valid json', async () => {
@@ -259,7 +312,10 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
-        keyword: 'find point',
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
+        keyword: undefined,
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         nlpQuery: 'find point',
         temporal: {},
@@ -332,7 +388,10 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
-        keyword: 'invalid area',
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
+        keyword: undefined,
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         nlpQuery: 'invalid area',
         temporal: {},
@@ -369,6 +428,9 @@ describe('NlpSearchStatus component', () => {
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
+        entryId: [],
+        shortName: undefined,
+        version: undefined,
         keyword: 'rainfall',
         nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
         nlpQuery: 'rainfall',

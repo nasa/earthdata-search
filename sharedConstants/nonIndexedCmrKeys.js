@@ -2,9 +2,14 @@ export const collectionRequestNonIndexedCmrKeys = [
   'bounding_box',
   'circle',
   'collection_data_type',
+  'collection_progress',
   'concept_id',
   'consortium',
+  'created_at',
   'data_center_h',
+  'doi',
+  'entry_id',
+  'entry_title',
   'granule_data_format_h',
   'granule_data_format',
   'horizontal_data_resolution_range',
@@ -20,11 +25,16 @@ export const collectionRequestNonIndexedCmrKeys = [
   'project_h',
   'provider',
   'service_type',
+  'service_name',
+  'short_name',
   'sort_key',
   'spatial_keyword',
   'tag_key',
   'tool_concept_id',
-  'two_d_coordinate_system_name'
+  'tool_name',
+  'two_d_coordinate_system_name',
+  'version',
+  'variable_name'
 ]
 
 export const granuleRequestNonIndexedCmrKeys = [

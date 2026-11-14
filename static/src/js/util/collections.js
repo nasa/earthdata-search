@@ -23,16 +23,29 @@ export const prepareCollectionParams = () => {
   const selectedRegion = getSelectedRegionQuery(zustandState)
 
   const {
+    browsable,
+    collectionDataType,
+    collectionProgress,
+    consortium: selectedConsortium = [],
+    doi,
+    downloadable,
+    entryId,
+    entryTitle,
     hasGranulesOrCwic,
+    includeInactiveCollections,
     keyword,
     onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
-    includeInactiveCollections,
+    serviceName,
+    shortName,
     sortKey,
     spatial = {},
     tagKey: selectedTag,
-    temporal = {}
+    temporal = {},
+    toolName,
+    variableName,
+    version
   } = collectionQuery
 
   const {
@@ -78,7 +91,7 @@ export const prepareCollectionParams = () => {
   let cloudHosted
   if (featureFacets.availableInEarthdataCloud) cloudHosted = true
 
-  let consortium = []
+  let consortium = selectedConsortium
   if (onlyEosdisCollections) {
     consortium = ['EOSDIS']
   }
@@ -88,28 +101,37 @@ export const prepareCollectionParams = () => {
 
   const collectionParams = {
     boundingBox,
+    browsable,
     circle,
     cloudHosted,
     cmrFacets,
+    collectionDataType,
+    collectionProgress,
+    doi,
+    downloadable,
+    entryId,
+    entryTitle,
     featureFacets,
     hasGranulesOrCwic,
+    includeInactiveCollections,
     keyword,
     line,
     pageNum,
     point,
     polygon,
+    serviceName,
     serviceType,
-    includeInactiveCollections,
+    shortName,
     sortKey,
     tagKey,
     temporalString,
-    viewAllFacetsCategory,
+    toolName,
+    variableName,
+    version,
     viewAllFacets,
+    viewAllFacetsCategory,
     ...portalQuery,
-    consortium: [
-      ...consortium,
-      ...portalConsortium
-    ]
+    consortium: portalConsortium.length ? portalConsortium : consortium
   }
 
   // Apply any overrides for advanced search
@@ -129,16 +151,24 @@ export const buildCollectionSearchParams = (params) => {
 
   const {
     boundingBox,
+    browsable,
     circle,
     cloudHosted,
     cmrFacets,
+    collectionDataType,
+    collectionProgress,
     conceptId,
     consortium,
     dataCenter,
+    doi,
+    downloadable,
     echoCollectionId,
+    entryId,
+    entryTitle,
     featureFacets,
     granuleDataFormat,
     hasGranulesOrCwic,
+    includeInactiveCollections,
     instrument,
     keyword,
     line,
@@ -148,14 +178,18 @@ export const buildCollectionSearchParams = (params) => {
     polygon,
     project,
     provider,
+    serviceName,
     serviceType,
-    includeInactiveCollections,
+    shortName,
     sortKey: selectedSortKey,
     spatialKeyword,
     standardProduct,
     tagKey,
     temporalString,
     toolConceptId,
+    toolName,
+    variableName,
+    version,
     viewAllFacets,
     viewAllFacetsCategory
   } = params
@@ -224,14 +258,23 @@ export const buildCollectionSearchParams = (params) => {
   return {
     ...defaultParams,
     boundingBox,
+    browsable,
     circle,
     cloudHosted,
-    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : undefined,
+    collectionDataType: featureFacets.nearRealTime ? ['NEAR_REAL_TIME'] : collectionDataType,
+    collectionProgress,
     concept_id: conceptId,
     consortium,
-    dataCenterH: facetsToSend.data_center_h,
     dataCenter,
+    dataCenterH: facetsToSend.data_center_h,
+    doi,
+    downloadable,
     echoCollectionId,
+    entryId,
+    entryTitle,
+    facetsSize: viewAllFacetsCategory
+      ? { [categoryNameToCMRParam(viewAllFacetsCategory)]: 10000 }
+      : undefined,
     granuleDataFormat,
     granuleDataFormatH: facetsToSend.granule_data_format_h,
     hasGranulesOrCwic,
@@ -248,19 +291,21 @@ export const buildCollectionSearchParams = (params) => {
     point,
     polygon,
     processingLevelIdH: facetsToSend.processing_level_id_h,
-    projectH: facetsToSend.project_h,
     project,
+    projectH: facetsToSend.project_h,
     provider,
     scienceKeywordsH: facetsToSend.science_keywords_h,
+    serviceName,
     serviceType,
+    shortName,
     spatialKeyword,
     standardProduct,
     tagKey,
     temporal: temporalString,
     toolConceptId,
+    toolName,
     twoDCoordinateSystemName: facetsToSend.two_d_coordinate_system_name,
-    facetsSize: viewAllFacetsCategory
-      ? { [categoryNameToCMRParam(viewAllFacetsCategory)]: 10000 }
-      : undefined
+    variableName,
+    version
   }
 }

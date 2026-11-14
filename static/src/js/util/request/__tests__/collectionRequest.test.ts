@@ -31,14 +31,21 @@ describe('CollectionRequest#permittedCmrKeys', () => {
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
+      'browsable',
       'circle',
       'cloud_hosted',
       'collection_data_type',
+      'collection_progress',
       'concept_id',
       'consortium',
       'data_center_h',
       'data_center',
+      'doi',
+      'downloadable',
       'echo_collection_id',
+      'entry_id',
+      'entry_title',
+      'created_at',
       'facets_size',
       'granule_data_format_h',
       'granule_data_format',
@@ -70,14 +77,35 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'provider',
       'science_keywords_h',
       'service_type',
+      'service_name',
+      'short_name',
       'sort_key',
       'spatial_keyword',
       'standard_product',
       'tag_key',
       'temporal',
       'tool_concept_id',
-      'two_d_coordinate_system_name'
+      'tool_name',
+      'two_d_coordinate_system_name',
+      'version',
+      'variable_name'
     ])
+  })
+})
+
+describe('CollectionRequest#filterData', () => {
+  test('preserves advanced collection identifiers in the request payload', () => {
+    const request = new CollectionRequest(null, 'prod')
+
+    expect(request.filterData({
+      entryId: ['ATL03_004', 'ATL03_003'],
+      shortName: 'ATL03',
+      version: '003'
+    })).toEqual({
+      entry_id: ['ATL03_004', 'ATL03_003'],
+      short_name: 'ATL03',
+      version: '003'
+    })
   })
 })
 
@@ -89,9 +117,14 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'bounding_box',
       'circle',
       'collection_data_type',
+      'collection_progress',
       'concept_id',
       'consortium',
+      'created_at',
       'data_center_h',
+      'doi',
+      'entry_id',
+      'entry_title',
       'granule_data_format_h',
       'granule_data_format',
       'horizontal_data_resolution_range',
@@ -107,12 +140,100 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'project_h',
       'provider',
       'service_type',
+      'service_name',
+      'short_name',
       'sort_key',
       'spatial_keyword',
       'tag_key',
       'tool_concept_id',
-      'two_d_coordinate_system_name'
+      'tool_name',
+      'two_d_coordinate_system_name',
+      'version',
+      'variable_name'
     ])
+  })
+})
+
+describe('CollectionRequest#transformRequest', () => {
+  test('serializes multiple title and associated name selections', () => {
+    const request = new CollectionRequest(null, 'prod')
+    const body = request.transformRequest({
+      entryTitle: ['Title One', 'Title Two'],
+      variableName: ['variable_one', 'variable_two'],
+      serviceName: ['service_one', 'service_two'],
+      toolName: ['tool_one', 'tool_two']
+    }, {})
+    if (typeof body !== 'string') throw new TypeError('Expected a URL-encoded request body')
+
+    const params = new URLSearchParams(body)
+
+    expect(params.getAll('entry_title[]')).toEqual(['Title One', 'Title Two'])
+    expect(params.getAll('variable_name[]')).toEqual(['variable_one', 'variable_two'])
+    expect(params.getAll('service_name[]')).toEqual(['service_one', 'service_two'])
+    expect(params.getAll('tool_name[]')).toEqual(['tool_one', 'tool_two'])
+  })
+
+  test('includes multiple DOI values in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+    const body = request.transformRequest({
+      doi: ['10.5067/EXAMPLE', '10.5067/OTHER_DOI']
+    }, {})
+    if (typeof body !== 'string') throw new TypeError('Expected a URL-encoded request body')
+
+    const params = new URLSearchParams(body)
+
+    expect(params.getAll('doi[]')).toEqual(['10.5067/EXAMPLE', '10.5067/OTHER_DOI'])
+  })
+
+  test('includes advanced filters with CMR field names in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+    const body = request.transformRequest({
+      doi: '10.5067/EXAMPLE',
+      entryTitle: 'Example Collection',
+      consortium: ['CEOS'],
+      collectionDataType: ['SCIENCE_QUALITY'],
+      collectionProgress: ['ACTIVE', 'COMPLETE'],
+      downloadable: true,
+      browsable: true,
+      variableName: 'temperature',
+      serviceName: 'testServie',
+      toolName: 'test_tool'
+    }, {})
+    if (typeof body !== 'string') throw new TypeError('Expected a URL-encoded request body')
+
+    const params = new URLSearchParams(body)
+
+    expect(Object.fromEntries(params)).toEqual({
+      doi: '10.5067/EXAMPLE',
+      entry_title: 'Example Collection',
+      'consortium[]': 'CEOS',
+      'collection_data_type[]': 'SCIENCE_QUALITY',
+      'collection_progress[]': 'COMPLETE',
+      downloadable: 'true',
+      browsable: 'true',
+      variable_name: 'temperature',
+      service_name: 'testServie',
+      tool_name: 'test_tool'
+    })
+
+    expect(params.getAll('collection_progress[]')).toEqual(['ACTIVE', 'COMPLETE'])
+  })
+
+  test('includes multiple Entry IDs in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+
+    expect(request.transformRequest({ entryId: ['ATL03_004', 'ATL03_003'] }, {}))
+      .toEqual('entry_id[]=ATL03_004&entry_id[]=ATL03_003')
+  })
+
+  test('includes multiple Short Names and Versions in the POST body', () => {
+    const request = new CollectionRequest(null, 'prod')
+
+    expect(request.transformRequest({
+      shortName: ['ATL03', 'ATL06'],
+      version: ['003', '004']
+    }, {}))
+      .toEqual('short_name[]=ATL03&short_name[]=ATL06&version[]=003&version[]=004')
   })
 })
 

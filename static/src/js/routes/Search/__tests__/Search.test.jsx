@@ -1,10 +1,11 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
 import { Search } from '../Search'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import { encodeUrlQuery } from '../../../util/url/url'
 
 const mockClassListAdd = vi.fn()
 const mockClassListRemove = vi.fn()
@@ -124,6 +125,43 @@ afterEach(() => {
 
 describe('Search component', () => {
   describe('when on the /search route', () => {
+    test('opens the advanced filter column and restores focus when closed', async () => {
+      const { user } = setup()
+      const expand = screen.getByRole('button', { name: /Expand Advanced Filters/ })
+
+      expect(screen.queryByRole('form', { name: 'Advanced Filters' })).not.toBeInTheDocument()
+      await user.click(expand)
+
+      expect(expand).toHaveAttribute('aria-expanded', 'true')
+      const filters = screen.getByRole('form', { name: 'Advanced Filters' })
+      expect(filters).toBeVisible()
+      expect(screen.getByRole('group', { name: 'DOI Value' })).toBeInTheDocument()
+      await user.click(screen.getByRole('button', { name: 'Close Advanced Filters' }))
+
+      expect(screen.queryByRole('form', { name: 'Advanced Filters' })).not.toBeInTheDocument()
+      expect(expand).toHaveFocus()
+      expect(expand).toHaveAttribute('aria-expanded', 'false')
+    })
+
+    test('shows the active advanced filter count on its toggle button', () => {
+      setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              doi: ['10.5067/EXAMPLE'],
+              entryId: ['ATL03_004', 'ATL06_006']
+            }
+          }
+        }
+      })
+
+      const toggle = screen.getByRole('button', { name: 'Expand Advanced Filters, 3 selected' })
+
+      expect(within(toggle).getByText('3')).toBeVisible()
+      expect(within(toggle).getByText('Expand Advanced Filters')).toBeVisible()
+      expect(within(toggle).getByText('3')).toHaveClass('facets-group__selected-count')
+    })
+
     test('should render search panels', async () => {
       setup()
 
@@ -148,6 +186,46 @@ describe('Search component', () => {
       expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
     })
 
+    test('hides consortium controls when the portal defines a consortium', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          portal: { query: { consortium: ['CWIC'] } },
+          query: {
+            collection: {
+              consortium: ['CEOS']
+            }
+          }
+        }
+      })
+
+      expect(screen.queryByRole('checkbox', { name: 'Include only EOSDIS collections' })).not.toBeInTheDocument()
+      await user.click(screen.getByRole('button', { name: 'Expand Advanced Filters' }))
+      expect(screen.queryByRole('group', { name: /Consortium/ })).not.toBeInTheDocument()
+    })
+
+    test('disables advanced consortium choices when EOSDIS-only is selected', async () => {
+      const { user } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              consortium: ['CEOS'],
+              onlyEosdisCollections: true
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('checkbox', { name: 'Include only EOSDIS collections' })).toBeChecked()
+      await user.click(screen.getByRole('button', { name: 'Expand Advanced Filters' }))
+      const consortium = within(screen.getByRole('group', { name: /Consortium/ }))
+      consortium.getAllByRole('checkbox').forEach((checkbox) => {
+        expect(checkbox).toBeDisabled()
+        expect(checkbox).not.toBeChecked()
+      })
+
+      expect(screen.getByRole('heading', { name: 'Advanced Filters' })).toBeVisible()
+    })
+
     test('renders the "Include inactive collections" checkbox under PortalFeatureContainer', async () => {
       vi.spyOn(getApplicationConfig, 'getApplicationConfig')
         .mockReturnValue({
@@ -159,8 +237,7 @@ describe('Search component', () => {
       const checkbox = await screen.findByLabelText('Include inactive collections')
       expect(checkbox).toBeInTheDocument()
 
-      const icons = screen.getAllByRole('graphics-symbol')
-      const tooltip = icons[1]
+      const tooltip = within(screen.getByText('Include inactive collections')).getByRole('graphics-symbol')
       await user.hover(tooltip)
       expect(screen.getByText('Include collections labeled as planned, deprecated, preprint, in review, or not provided in results')).toBeInTheDocument()
     })
@@ -193,8 +270,12 @@ describe('Search component', () => {
         })
       })
 
-      test('checking the "Include only EOSDIS collections" checkbox calls changeQuery', async () => {
-        const { user, zustandState } = setup()
+      test('checking EOSDIS-only clears the advanced consortium selection', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            query: { collection: { consortium: ['FEDEO'] } }
+          }
+        })
 
         const onlyEosdisCollectionsCheckbox = await screen.findByText('Include only EOSDIS collections')
 
@@ -203,7 +284,42 @@ describe('Search component', () => {
         expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
         expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
-            onlyEosdisCollections: true
+            onlyEosdisCollections: true,
+            consortium: undefined
+          }
+        })
+
+        const [{ collection }] = zustandState.query.changeQuery.mock.calls[0]
+        const url = encodeUrlQuery({
+          pathname: '/search',
+          collectionsQuery: {
+            ...zustandState.query.collection,
+            ...collection
+          }
+        })
+        const { searchParams } = new URL(url, 'http://localhost')
+        expect(searchParams.get('oe')).toEqual('t')
+        expect(searchParams.has('consortium[0]')).toBe(false)
+      })
+
+      test('unchecking EOSDIS-only only clears its flag', async () => {
+        const { user, zustandState } = setup({
+          overrideZustandState: {
+            query: {
+              collection: {
+                onlyEosdisCollections: true,
+                consortium: ['CEOS']
+              }
+            }
+          }
+        })
+
+        await user.click(screen.getByRole('checkbox', { name: 'Include only EOSDIS collections' }))
+
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+          collection: {
+            onlyEosdisCollections: undefined
           }
         })
       })

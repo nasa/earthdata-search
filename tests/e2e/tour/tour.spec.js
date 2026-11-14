@@ -8,15 +8,24 @@ import graphQlHeaders from './__mocks__/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
-const expectWithinMargin = async (actual, expected, margin, step) => {
-  Object.keys(expected).forEach((key) => {
-    const diff = Math.abs(actual[key] - expected[key])
-    if (diff >= margin) {
-      console.log(`Step: ${step} - Key: ${key} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
-    }
+const expectSpotlightMatchesTarget = async (spotlight, target) => {
+  await expect(target).toBeVisible()
+  await expect(spotlight).toBeVisible()
 
-    expect.soft(diff).toBeLessThanOrEqual(margin)
-  })
+  await expect.poll(async () => {
+    const targetBox = await target.boundingBox()
+    const spotlightBox = await spotlight.boundingBox()
+    if (!targetBox || !spotlightBox) return Infinity
+
+    const padding = 10
+
+    return Math.max(
+      Math.abs(spotlightBox.x - (targetBox.x - padding)),
+      Math.abs(spotlightBox.y - (targetBox.y - padding)),
+      Math.abs(spotlightBox.width - (targetBox.width + padding * 2)),
+      Math.abs(spotlightBox.height - (targetBox.height + padding * 2))
+    )
+  }, { message: 'The tour spotlight should align with its target' }).toBeLessThanOrEqual(10)
 }
 
 test.describe('When dontShowTour is set to false', () => {
@@ -224,240 +233,138 @@ test.describe('When not logged in', () => {
     // Start the tour by clicking the "Start Tour" button
     await page.getByRole('button', { name: 'Start Tour' }).click()
 
-    // Wait a short time to ensure the tour animation shows the start of the tour
-    await page.waitForTimeout(500)
-
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.getByRole('heading', { name: 'Welcome to Earthdata Search!' })).toBeVisible()
     await page.getByRole('button', { name: 'Take the tour' }).click()
 
     // Step 1: This area contains the filters
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'This area contains the filters used when searching for collections' })).toBeVisible()
 
     // Check for the presence of the highlighted section
     const spotlight = page.locator('.react-joyride__spotlight')
     await expect(spotlight).toBeVisible()
 
-    // Get and verify the position and size of the highlighted section
-    let rect = await spotlight.boundingBox()
-    let spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: -10,
-      top: 22,
-      width: 340,
-      height: 844
-    }, 10, 1)
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.sidebar__inner').filter({
+      has: page.getByRole('heading', {
+        name: 'Filter Collections',
+        exact: true
+      })
+    }))
 
     // Testing arrow key navigation
     await page.keyboard.press('ArrowRight')
-
-    await page.waitForTimeout(500)
 
     // Verify we're on the next step
     await expect(page.getByRole('alertdialog', { name: 'Search for collections by topic (e.g., "Land Surface Temperature")' })).toBeVisible()
 
     // Now go back to the previous step using the left arrow key
     await page.keyboard.press('ArrowLeft')
+    await expect(page.getByRole('alertdialog', { name: 'This area contains the filters used when searching for collections' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Testing "Previous" button
+    await expect(page.getByRole('alertdialog', { name: 'Search for collections by topic (e.g., "Land Surface Temperature")' })).toBeVisible()
     await page.getByRole('button', { name: 'Previous' }).click()
     await expect(page.getByRole('alertdialog', { name: 'This area contains the filters used when searching for collections' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 2: Search for collections
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Search for collections by topic (e.g., "Land Surface Temperature")' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.search-form__primary').filter({
+      has: page.getByPlaceholder('Type to search for data', { exact: true })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: -10,
-      top: 72,
-      width: 134,
-      height: 69
-    }, 10, 2)
 
     // Step 3: Temporal filters
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Use the temporal filters to limit search results to a specific date' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.temporal-selection-dropdown').filter({
+      has: page.getByRole('button', {
+        name: 'Open temporal filters',
+        exact: true
+      })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 116,
-      top: 72,
-      width: 119,
-      height: 61
-    }, 10, 3)
 
     // Step 4: Spatial filters
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Use the spatial filters to limit search results to the specified area of interest' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.spatial-selection-dropdown').filter({
+      has: page.getByRole('button', {
+        name: 'spatial-selection-dropdown',
+        exact: true
+      })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 219,
-      top: 72,
-      width: 60,
-      height: 69
-    }, 10, 4)
 
     // Step 5: Advanced Search
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Use Advanced Search parameters to filter results' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.getByRole('button', {
+      name: 'Show advanced search options',
+      exact: true
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: -10,
-      top: 136,
-      width: 339,
-      height: 758
-    }, 10, 5)
 
     // Step 6: Refine Search by Category
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Refine your search further using categories like Features, Keywords' })).toBeVisible()
+
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.sidebar-section-body').filter({
+      has: page.getByRole('heading', {
+        name: 'Filter Collections',
+        exact: true
+      })
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 310,
-      top: 22,
-      width: 620,
-      height: 844
-    }, 10, 7)
 
     // Step 7: High-level description for each search result
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'A high-level description is displayed for each search result' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.locator('section.panel-section').filter({ visible: true }))
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 910,
-      top: 39,
-      width: 40,
-      height: 85
-    }, 10, 8)
 
     // Step 8: Resize Search Results Panel
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'To make more room to view the map, the search results can be resized' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.getByRole('button', {
+      name: 'Collapse panel (])',
+      exact: true
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 910,
-      top: 22,
-      width: 500,
-      height: 844
-    }, 10, 9)
 
     // Step 9: Pan and zoom the map
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Pan the map by clicking and dragging, and zoom by using the scroll wheel' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.search-tour__target-overlay'))
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 1274,
-      top: 359,
-      width: 124,
-      height: 500
-    }, 10, 10)
-
     // Step 10: Map tools
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Use the map tools to switch map projections, draw, edit, or remove spatial bounds' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.locator('.map-controls'))
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 11: Log in to set preferences, save projects, etc.
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Log in with Earthdata Login to set' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.getByRole('button', {
+      name: 'Log In',
+      exact: true
+    }))
+
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Testing "Previous" button on Step 13
+    await expect(page.getByRole('alertdialog', { name: 'You can replay this tour anytime' })).toBeVisible()
     await page.getByRole('button', { name: 'Previous' }).click()
     await expect(page.getByRole('alertdialog', { name: 'Log in with Earthdata Login' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 12: Replay info
-    await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'You can replay this tour anytime' })).toBeVisible()
+    await expectSpotlightMatchesTarget(spotlight, page.getByRole('button', {
+      name: 'Start tour',
+      exact: true
+    }))
+
     await page.getByRole('button', { name: 'Finish Tour' }).click()
 
     // Final step: Want to learn more?

@@ -11,11 +11,13 @@ const Sidebar = ({
   children,
   panels = null,
   visible,
+  secondaryChildren = null,
   headerChildren = null
 }) => {
   const setSidebarWidth = useEdscStore((state) => state.ui.panels.setSidebarWidth)
   const className = classNames({
     sidebar: true,
+    'sidebar--expanded': !!secondaryChildren,
     'sidebar--hidden': !visible
   })
 
@@ -41,7 +43,11 @@ const Sidebar = ({
   // but we are currently seeing an sporadic issue in playwright due to lazy loading the
   // css and the sidebar being a flex child.
   return (
-    <section ref={observedElementRef} className={className} style={{ width: '20.5rem' }}>
+    <section
+      ref={observedElementRef}
+      className={className}
+      style={{ width: secondaryChildren ? 'min(43rem, 100vw)' : '20.5rem' }}
+    >
       <div className="sidebar__inner">
         { headerChildren }
         <SimpleBar
@@ -55,6 +61,7 @@ const Sidebar = ({
           {children}
         </SimpleBar>
       </div>
+      {secondaryChildren && <div className="sidebar__secondary">{secondaryChildren}</div>}
       {panels && panels}
     </section>
   )
@@ -63,6 +70,7 @@ const Sidebar = ({
 Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   panels: PropTypes.node,
+  secondaryChildren: PropTypes.node,
   visible: PropTypes.bool.isRequired,
   headerChildren: PropTypes.node
 }
