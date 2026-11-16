@@ -26,17 +26,6 @@ const categories = [{
   description: 'Indicates if the feedback mentions temporal aspects. Typically related to time or date information.'
 }]
 
-const bedrockOptions = {
-  region: 'us-east-1'
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  bedrockOptions.accessKeyId = process.env.AWS_ACCESS_KEY_ID
-  bedrockOptions.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
-}
-
-const bedrock = createAmazonBedrock(bedrockOptions)
-
 /**
  * Categorizes the given NLP feedback into predefined categories.
  * @param {String} feedback The feedback to be categorized
@@ -44,6 +33,17 @@ const bedrock = createAmazonBedrock(bedrockOptions)
  */
 const categorizeNlpFeedback = async (feedback = '') => {
   if (!feedback) return {}
+
+  const bedrockOptions = {
+    region: 'us-east-1'
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    bedrockOptions.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+    bedrockOptions.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+  }
+
+  const bedrock = createAmazonBedrock(bedrockOptions)
 
   const model = bedrock(process.env.BEDROCK_MODEL_ID || 'amazon.nova-pro-v1:0')
 

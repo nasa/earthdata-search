@@ -28,6 +28,35 @@ describe('SearchFormFeedback component', () => {
   })
 
   describe('when clicking the thumbs up button', () => {
+    test('disables the thumbs up and thumbs down buttons while waiting for the network request', async () => {
+      const { user } = setup({
+        overrideApolloClientMocks: [
+          {
+            request: {
+              query: CREATE_NLP_FEEDBACK,
+              variables: {
+                nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+                positive: true
+              }
+            },
+            result: {
+              data: {
+                createNlpFeedback: true
+              }
+            }
+          }
+        ]
+      })
+
+      const yesButton = screen.getByLabelText('Yes')
+      const noButton = screen.getByLabelText('No')
+
+      await user.click(yesButton)
+
+      expect(yesButton).toBeDisabled()
+      expect(noButton).toBeDisabled()
+    })
+
     test('calls the createNlpFeedback mutation and displays a success message', async () => {
       const { user } = setup({
         overrideApolloClientMocks: [
@@ -56,6 +85,35 @@ describe('SearchFormFeedback component', () => {
   })
 
   describe('when clicking the No button', () => {
+    test('disables the thumbs up and thumbs down buttons while waiting for the network request', async () => {
+      const { user } = setup({
+        overrideApolloClientMocks: [
+          {
+            request: {
+              query: CREATE_NLP_FEEDBACK,
+              variables: {
+                nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+                positive: false
+              }
+            },
+            result: {
+              data: {
+                createNlpFeedback: true
+              }
+            }
+          }
+        ]
+      })
+
+      const yesButton = screen.getByLabelText('Yes')
+      const noButton = screen.getByLabelText('No')
+
+      await user.click(noButton)
+
+      expect(yesButton).toBeDisabled()
+      expect(noButton).toBeDisabled()
+    })
+
     test('calls the createNlpFeedback mutation and displays the feedback form', async () => {
       const { user } = setup({
         overrideApolloClientMocks: [
@@ -124,6 +182,62 @@ describe('SearchFormFeedback component', () => {
     })
 
     describe('when submitting the feedback form', () => {
+      test('disables the skip and submit buttons while waiting for the network request', async () => {
+        const { user } = setup({
+          overrideApolloClientMocks: [
+            {
+              request: {
+                query: CREATE_NLP_FEEDBACK,
+                variables: {
+                  nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+                  positive: false
+                }
+              },
+              result: {
+                data: {
+                  createNlpFeedback: true
+                }
+              }
+            },
+            {
+              request: {
+                query: UPDATE_NLP_FEEDBACK,
+                variables: {
+                  comment: '',
+                  incomplete: false,
+                  keyword: true,
+                  nlpRequestId: 'b65c3f7b-91f1-4df3-a61f-13a887a0dbf0',
+                  other: false,
+                  relevancy: false,
+                  spatial: false,
+                  temporal: false
+                }
+              },
+              result: {
+                data: {
+                  updateNlpFeedback: true
+                }
+              }
+            }
+          ]
+        })
+
+        const noButton = screen.getByLabelText('No')
+
+        await user.click(noButton)
+
+        const wrongKeywordButton = screen.getByRole('button', { name: 'Wrong keyword' })
+        await user.click(wrongKeywordButton)
+
+        const skipButton = screen.getByRole('button', { name: 'Skip feedback' })
+        const submitButton = screen.getByRole('button', { name: 'Submit feedback' })
+
+        await user.click(submitButton)
+
+        expect(skipButton).toBeDisabled()
+        expect(submitButton).toBeDisabled()
+      })
+
       test('displays a success message', async () => {
         const { user } = setup({
           overrideApolloClientMocks: [
