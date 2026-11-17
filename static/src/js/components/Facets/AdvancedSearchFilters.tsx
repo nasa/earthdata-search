@@ -89,6 +89,9 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   const onlyEosdisCollections = useEdscStore(
     (state) => state.query.collection.onlyEosdisCollections
   )
+  const includeInactiveCollections = useEdscStore(
+    (state) => state.query.collection.includeInactiveCollections
+  )
   const hasPortalConsortium = useEdscStore(
     (state) => Boolean(state.portal.query?.consortium?.length)
   )
@@ -102,6 +105,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
   const formRef = useRef<HTMLDivElement>(null)
   const selectedOptionsCount = visibleFilters.reduce((count, { key }) => {
     if (key === 'consortium' && onlyEosdisCollections) return count
+    if (key === 'collectionProgress' && includeInactiveCollections) return count
 
     const value = appliedAdvancedFilters[key]
     const selectedCountForFilter = Array.isArray(value)
@@ -147,7 +151,9 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
     options = []
   }: AdvancedFilterDefinition) => {
     const isEosdisOnlyConsortium = key === 'consortium' && onlyEosdisCollections
-    const value = isEosdisOnlyConsortium ? undefined : advancedFilters[key]
+    const isInactiveProgress = key === 'collectionProgress' && includeInactiveCollections
+    const isDisabled = !!isEosdisOnlyConsortium || !!isInactiveProgress
+    const value = isDisabled ? undefined : advancedFilters[key]
     const updateValue = (nextValue: AdvancedFilterValue) => updateAdvancedFilter(key, nextValue)
 
     if (type === 'array') {
@@ -171,7 +177,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
       const choices = [...new Set([...options, ...selected])]
 
       return (
-        <fieldset key={key} disabled={!!isEosdisOnlyConsortium}>
+        <fieldset key={key} disabled={isDisabled}>
           <legend>
             {label}
             {renderSelectedCount(selected)}
@@ -194,6 +200,31 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
                     variant="link"
                     type="button"
                     aria-label="Consortium filtering information"
+                  >
+                    <EDSCIcon icon={FaQuestionCircle} />
+                  </Button>
+                </OverlayTrigger>
+              )
+            }
+            {
+              key === 'collectionProgress' && (
+                <OverlayTrigger
+                  placement="top"
+                  trigger={['hover', 'focus']}
+                  overlay={
+                    (tooltipProps) => renderTooltip({
+                      ...tooltipProps,
+                      id: 'advanced-search-collection-progress-disabled',
+                      children: 'Collection Progress filtering is disabled when including inactive collections'
+                    })
+                  }
+                >
+                  <Button
+                    className="advanced-search-filters__consortium-info"
+                    size="sm"
+                    variant="link"
+                    type="button"
+                    aria-label="Collection Progress filtering information"
                   >
                     <EDSCIcon icon={FaQuestionCircle} />
                   </Button>
@@ -301,7 +332,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
           </div>
         </fieldset>
         <fieldset>
-          <legend className="advanced-search-filters__section-heading">Collection Metadata</legend>
+          <legend className="advanced-search-filters__section-heading">Collection Properties</legend>
           {enumFilters.map(renderAdvancedFilter)}
           {textEntryFilters.map(renderAdvancedFilter)}
         </fieldset>

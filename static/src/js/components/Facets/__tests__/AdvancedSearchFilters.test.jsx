@@ -236,6 +236,27 @@ describe('AdvancedSearchFilters', () => {
     expect(changeQuery).toHaveBeenCalledWith({ collection: { consortium: ['CEOS'] } })
   })
 
+  test('disables and hides collection progress selections while including inactive collections', () => {
+    setup({
+      overrideZustandState: {
+        query: {
+          collection: {
+            includeInactiveCollections: true,
+            collectionProgress: ['ACTIVE']
+          }
+        }
+      }
+    })
+
+    const progress = within(screen.getByRole('group', { name: 'Collection Progress' }))
+    progress.getAllByRole('checkbox').forEach((checkbox) => {
+      expect(checkbox).toBeDisabled()
+      expect(checkbox).not.toBeChecked()
+    })
+
+    expect(progress.queryByText(/Selected/)).not.toBeInTheDocument()
+  })
+
   test('hides the disabled consortium count without excluding other filters from the total', () => {
     setup({
       overrideZustandState: {
@@ -418,7 +439,7 @@ describe('AdvancedSearchFilters', () => {
 
   test('groups collection metadata and access filters in their sections', () => {
     setup()
-    const collectionMetadata = within(screen.getByRole('group', { name: 'Collection Metadata' }))
+    const collectionMetadata = within(screen.getByRole('group', { name: 'Collection Properties' }))
     expect(collectionMetadata.getByRole('group', { name: 'Consortium' })).toBeVisible()
     expect(collectionMetadata.getByRole('group', { name: 'Collection Data Type' })).toBeVisible()
     expect(collectionMetadata.getByRole('group', { name: 'Collection Progress' })).toBeVisible()
@@ -427,7 +448,7 @@ describe('AdvancedSearchFilters', () => {
     expect(collectionMetadata.getByRole('group', { name: 'Variable Name' })).toBeVisible()
     expect(collectionMetadata.getByRole('group', { name: 'Service Name' })).toBeVisible()
     expect(collectionMetadata.getByRole('group', { name: 'Tool Name' })).toBeVisible()
-    expect(collectionMetadata.getByText('Collection Metadata'))
+    expect(collectionMetadata.getByText('Collection Properties'))
       .toHaveClass('advanced-search-filters__section-heading')
 
     expect(screen.getByText('Access Options'))

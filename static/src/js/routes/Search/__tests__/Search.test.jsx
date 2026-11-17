@@ -339,7 +339,8 @@ describe('Search component', () => {
         expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
         expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
-            includeInactiveCollections: true
+            includeInactiveCollections: true,
+            collectionProgress: undefined
           }
         })
       })

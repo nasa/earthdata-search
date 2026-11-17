@@ -88,6 +88,8 @@ export const Search = () => {
       if (hasPortalConsortium || collectionQuery.onlyEosdisCollections) return count
     }
 
+    if (key === 'collectionProgress' && collectionQuery.includeInactiveCollections) return count
+
     const value = collectionQuery[key]
 
     return count + (Array.isArray(value) ? value.length : Number(Boolean(value)))
@@ -133,7 +135,10 @@ export const Search = () => {
 
     if (id === 'input__include-inactive') {
       if (!checked) collection.includeInactiveCollections = undefined
-      if (checked) collection.includeInactiveCollections = true
+      if (checked) {
+        collection.includeInactiveCollections = true
+        collection.collectionProgress = undefined
+      }
     }
 
     changeQuery({
