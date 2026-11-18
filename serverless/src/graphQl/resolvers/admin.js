@@ -154,21 +154,11 @@ export default {
       } = retrievalOrder
 
       if ([
-        ACCESS_METHOD_TYPES.ESI,
-        ACCESS_METHOD_TYPES.ECHO_ORDERS,
         ACCESS_METHOD_TYPES.HARMONY
       ].includes(type)) {
         let queueUrl
 
-        if (type === ACCESS_METHOD_TYPES.ESI) {
-          // Submits to Catalog Rest and is often referred to as a
-          // service order -- this is presenting in EDSC as the 'Customize' access method
-          queueUrl = getQueueUrl(QUEUE_NAMES.CatalogRestOrderQueue)
-        } else if (type === ACCESS_METHOD_TYPES.ECHO_ORDERS) {
-          // Submits to cmr-ordering and is often referred to as an
-          // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
-          queueUrl = getQueueUrl(QUEUE_NAMES.CmrOrderingOrderQueue)
-        } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
+        if (type === ACCESS_METHOD_TYPES.HARMONY) {
           // Submits to Harmony
           queueUrl = getQueueUrl(QUEUE_NAMES.HarmonyOrderQueue)
         }

@@ -68,16 +68,6 @@ const GET_PROJECT_COLLECTIONS = `
             serviceOptions
             supportedOutputProjections
             supportedReformattings
-            maxItemsPerOrder
-            orderOptions {
-              count
-              items {
-                conceptId
-                revisionId
-                name
-                form
-              }
-            }
             variables {
               count
               items {

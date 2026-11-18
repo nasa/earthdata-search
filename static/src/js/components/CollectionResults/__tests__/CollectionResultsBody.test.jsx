@@ -52,21 +52,7 @@ const setup = setupTest({
           isOpenSearch: false,
           organizations: ['test/org'],
           serviceFeatures: {
-            esi: {
-              has_formats: false,
-              has_spatial_subsetting: false,
-              has_temporal_subsetting: false,
-              has_transforms: false,
-              has_variables: false
-            },
             harmony: {
-              has_formats: false,
-              has_spatial_subsetting: false,
-              has_temporal_subsetting: false,
-              has_transforms: false,
-              has_variables: false
-            },
-            opendap: {
               has_formats: false,
               has_spatial_subsetting: false,
               has_temporal_subsetting: false,

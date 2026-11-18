@@ -422,75 +422,87 @@
       "title": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
       "versionId": "7",
       "services": {
-        "count": 1,
+        "count": 2,
         "items": [
-          {
-            "conceptId": "S2023593455-GHRC_DAAC",
-            "longName": "GHRC Earthdata Cloud OPeNDAP",
-            "name": "GHRC_Cloud_OPeNDAP",
-            "type": "OPeNDAP",
-            "url": {
-              "urlValue": "https://opendap.earthdata.nasa.gov",
-              "description": "the main access point"
-            },
-            "serviceOptions": {
-              "supportedReformattings": [
-                {
-                  "supportedInputFormat": "NETCDF-4",
-                  "supportedOutputFormats": [
-                    "ASCII",
-                    "CSV",
-                    "NETCDF-3",
-                    "NETCDF-4"
-                  ]
-                },
-                {
-                  "supportedInputFormat": "HDF5",
-                  "supportedOutputFormats": [
-                    "ASCII",
-                    "CSV",
-                    "NETCDF-3",
-                    "NETCDF-4"
-                  ]
-                }
-              ],
-              "subset": {
-                "spatialSubset": {
-                  "boundingBox": {
-                    "allowMultipleValues": false
-                  }
-                },
-                "temporalSubset": {
-                  "allowMultipleValues": false
-                },
-                "variableSubset": {
-                  "allowMultipleValues": true
-                }
-              }
-            },
-            "supportedOutputProjections": null,
-            "supportedReformattings": [
-              {
-                "supportedInputFormat": "NETCDF-4",
-                "supportedOutputFormats": [
-                  "ASCII",
-                  "CSV",
-                  "NETCDF-3",
-                  "NETCDF-4"
-                ]
-              },
-              {
-                "supportedInputFormat": "HDF5",
-                "supportedOutputFormats": [
-                  "ASCII",
-                  "CSV",
-                  "NETCDF-3",
-                  "NETCDF-4"
-                ]
-              }
-            ]
-          }
+  {
+    "conceptId": "S2164732315-XYZ_PROV",
+    "longName": "Harmony OPeNDAP SubSetter (HOSS) and MaskFill for geographic collections",
+    "name": "Harmony OPeNDAP SubSetter (HOSS) Geographic",
+    "type": "Harmony",
+    "url": {
+      "description": "This is the harmony root endpoint.",
+      "urlValue": "https://harmony.earthdata.nasa.gov"
+    },
+    "serviceOptions": {
+      "subset": {
+        "spatialSubset": {
+          "boundingBox": {
+            "allowMultipleValues": false
+          },
+          "shapefile": [
+            {
+              "format": "GeoJSON"
+            }
+          ]
+        },
+        "variableSubset": {
+          "allowMultipleValues": true
+        },
+        "temporalSubset": {
+          "allowMultipleValues": false
+        }
+      },
+      "supportedReformattings": [
+        {
+          "supportedInputFormat": "HDF5",
+          "supportedOutputFormats": [
+            "NETCDF-4"
+          ]
+        },
+        {
+          "supportedInputFormat": "NETCDF-4",
+          "supportedOutputFormats": [
+            "NETCDF-4"
+          ]
+        }
+      ]
+    },
+    "supportedOutputProjections": null,
+    "supportedReformattings": [
+      {
+        "supportedInputFormat": "HDF5",
+        "supportedOutputFormats": [
+          "NETCDF-4"
         ]
+      },
+      {
+        "supportedInputFormat": "NETCDF-4",
+        "supportedOutputFormats": [
+          "NETCDF-4"
+        ]
+      }
+    ]
+  },
+  {
+    "conceptId": "S2874702816-XYZ_PROV",
+    "longName": "Opendap Hyrax data server",
+    "name": "OPeNDAP",
+    "type": "NOT PROVIDED",
+    "url": {
+      "description": "This is the URL to the Hyrax server's landing page",
+      "urlValue": "https://opendap.earthdata.nasa.gov"
+    },
+    "serviceOptions": {
+      "subset": {
+        "variableSubset": {
+          "allowMultipleValues": true
+        }
+      }
+    },
+    "supportedOutputProjections": null,
+    "supportedReformattings": null
+  }
+]
       },
       "granules": {
         "count": 6338,

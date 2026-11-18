@@ -13,7 +13,7 @@ import GranuleRequest from '../../../util/request/granuleRequest'
 
 // @ts-expect-error This file does not have types
 import * as applicationConfig from '../../../../../../sharedUtils/config'
-import { EchoOrderAccessMethod, HarmonyAccessMethod } from '../../types'
+import { HarmonyAccessMethod } from '../../types'
 import { handleAlert } from '../../../util/handleAlert'
 
 import {
@@ -769,22 +769,27 @@ describe('createProjectSlice', () => {
           .post(/saved_access_configs/)
           .reply(200, {
             collectionId1: {
-              url: 'https://example.com/ops/egi/request',
-              type: 'ECHO ORDERS',
-              model: '<mockModel></mockModel>',
-              rawModel: '<mockRawModel></mockRawModel>',
-              maxItemsPerOrder: 2000,
-              optionDefinition: {
-                name: 'Delivery Option',
-                conceptId: 'OO1000000-EDSC'
+              mbr: {
+                neLat: 31.08850198924431,
+                neLng: -94.19999999999999,
+                swLat: 28.275300000000215,
+                swLng: -99.50000000000001
               },
-              formDigest: 'da2a203dca5e777d2b2c2fc3553c3d2f'
+              url: 'https://harmony.earthdata.nasa.gov',
+              type: 'Harmony',
+              selectedOutputFormat: 'application/netcdf',
+              supportsConcatenation: true,
+              enableSpatialSubsetting: true,
+              enableTemporalSubsetting: true,
+              enableConcatenateDownload: true,
+              supportsShapefileSubsetting: true,
+              supportsBoundingBoxSubsetting: true
             }
           })
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId1&version=${HARMONY_CAPABILITES_API_VERSION}`)
-          .reply(200, mockNoServicesCapabilitiesDocument as HarmonyCapabilitiesDocument)
+          .reply(200, mockHarmonyCapabilitiesDocument as HarmonyCapabilitiesDocument)
 
         nock(/harmony.example.com/)
           .get(`/capabilities?collectionId=collectionId2&version=${HARMONY_CAPABILITES_API_VERSION}`)
@@ -812,62 +817,112 @@ describe('createProjectSlice', () => {
                     }]
                   },
                   services: {
-                    count: 1,
-                    items: [{
-                      conceptId: 'S100000-EDSC',
-                      type: 'ECHO ORDERS',
-                      url: {
-                        urlValue: 'https://example.com/ops/egi/request'
-                      },
-                      serviceOptions: {
-                        interpolationTypes: [
-                          'Bilinear Interpolation',
-                          'Nearest Neighbor'
-                        ],
-                        subset: {
-                          spatialSubset: {
-                            boundingBox: {
+                    count: 3,
+                    items: [
+                      {
+                        conceptId: 'S3616918926-LARC_CLOUD',
+                        description: 'Harmony service chain of Filter, L2 Swath Projector, Net2Cog, and Hybig services for Level 2 data. ',
+                        longName: 'Image Manager that Automates Generation, ENhancement, And Transformation for Optimized Rendering-Level 2',
+                        name: 'IMAGENATOR-L2',
+                        type: 'NOT PROVIDED',
+                        url: {
+                          urlValue: 'https://harmony.earthdata.nasa.gov'
+                        },
+                        serviceOptions: {
+                          subset: {
+                            variableSubset: {
                               allowMultipleValues: false
+                            }
+                          },
+                          supportedOutputProjections: [
+                            {
+                              projectionName: 'WGS 84 / Antarctic Polar Stereographic'
                             },
-                            shapefile: [
-                              {
-                                format: 'ESRI'
-                              },
-                              {
-                                format: 'KML'
-                              },
-                              {
-                                format: 'GeoJSON'
-                              }
-                            ]
+                            {
+                              projectionName: 'NSIDC Sea Ice Polar Stereographic North'
+                            }
+                          ]
+                        },
+                        supportedOutputProjections: [
+                          {
+                            projectionName: 'WGS 84 / Antarctic Polar Stereographic'
                           },
-                          temporalSubset: {
-                            allowMultipleValues: false
-                          },
-                          variableSubset: {
-                            allowMultipleValues: true
+                          {
+                            projectionName: 'NSIDC Sea Ice Polar Stereographic North'
                           }
+                        ],
+                        supportedReformattings: null,
+                        variables: {
+                          count: 0,
+                          items: []
                         }
                       },
-                      supportedOutputProjections: null,
-                      supportedReformattings: null,
-                      maxItemsPerOrder: 2000,
-                      orderOptions: {
-                        count: 1,
-                        items: [
-                          {
-                            conceptId: 'OO1000000-EDSC',
-                            revisionId: '1',
-                            name: 'Delivery Option',
-                            form: '<form></form>'
+                      {
+                        conceptId: 'S2874702816-XYZ_PROV',
+                        description: 'Hyrax provides direct access to subsetting of NASA data using Python or your favorite analysis tool.',
+                        longName: 'Opendap Hyrax data server',
+                        name: 'OPeNDAP',
+                        type: 'NOT PROVIDED',
+                        url: {
+                          description: "This is the URL to the Hyrax server's landing page",
+                          urlValue: 'https://opendap.earthdata.nasa.gov'
+                        },
+                        serviceOptions: {
+                          subset: {
+                            variableSubset: {
+                              allowMultipleValues: true
+                            }
                           }
-                        ]
+                        },
+                        supportedOutputProjections: null,
+                        supportedReformattings: null,
+                        variables: {
+                          count: 0,
+                          items: []
+                        }
                       },
-                      variables: {
-                        count: 0,
-                        items: []
+                      {
+                        conceptId: 'S2940253910-LARC_CLOUD',
+                        description: 'Chained Service of the L2ss, Batchee, STITCHEE, and PODAAC CONCISE services: L2ss is the PODAAC L2 subsetter, performing subsetting on level-2 data granules; Batchee groups together filenames so that further operations (such as concatenation) can be performed separately on each group of files; STITCHEE concatenates netCDF data along an existing dimension; and PODAAC CONCISE concatenates netCDF data along a newly created dimension.',
+                        longName: 'Subsetter And Multi-dimensional Batched Aggregation in Harmony (SAMBAH)',
+                        name: 'SAMBAH',
+                        type: 'Harmony',
+                        url: {
+                          urlValue: 'https://harmony.earthdata.nasa.gov'
+                        },
+                        serviceOptions: {
+                          subset: {
+                            spatialSubset: {
+                              shapefile: [
+                                {
+                                  format: 'GeoJSON'
+                                }
+                              ],
+                              boundingBox: {
+                                allowMultipleValues: false
+                              }
+                            },
+                            temporalSubset: {
+                              allowMultipleValues: false
+                            },
+                            variableSubset: {
+                              allowMultipleValues: true
+                            }
+                          },
+                          aggregation: {
+                            concatenate: {
+                              concatenateDefault: true
+                            }
+                          }
+                        },
+                        supportedOutputProjections: null,
+                        supportedReformattings: null,
+                        variables: {
+                          count: 0,
+                          items: []
+                        }
                       }
-                    }]
+                    ]
                   },
                   dataQualitySummaries: {
                     items: []
@@ -898,25 +953,140 @@ describe('createProjectSlice', () => {
         const { byId } = collections
         const collection1 = byId.collectionId1
 
-        expect(collection1.selectedAccessMethod).toEqual('echoOrders0')
+        expect(collection1.selectedAccessMethod).toEqual('harmony')
         expect(collection1.accessMethods).toEqual({
           download: {
             isValid: true,
             type: 'download'
           },
-          echoOrders0: {
-            form: '<form></form>',
-            formDigest: 'da2a203dca5e777d2b2c2fc3553c3d2f',
-            maxItemsPerOrder: 2000,
-            model: '<mockModel></mockModel>',
-            optionDefinition: {
-              conceptId: 'OO1000000-EDSC',
-              name: 'Delivery Option',
-              revisionId: '1'
+          harmony: {
+            derivedHarmonyState: {
+              capabilities: {
+                concatenate: {
+                  disabled: true,
+                  supported: false
+                },
+                outputFormats: {
+                  disabled: false,
+                  outputFormatAvailability: {
+                    HDF: true
+                  },
+                  supported: [
+                    {
+                      mimeType: 'application/x-hdf',
+                      name: 'HDF'
+                    }
+                  ],
+                  value: ''
+                },
+                reproject: {
+                  disabled: true,
+                  outputProjectionAvailability: {},
+                  supported: [],
+                  value: ''
+                },
+                spatialSubset: {
+                  bboxDisabled: false,
+                  disabled: false,
+                  shapeDisabled: false,
+                  supported: true
+                },
+                temporalSubset: {
+                  disabled: false,
+                  supported: true
+                },
+                variableSubset: {
+                  disabled: false,
+                  supported: true
+                }
+              },
+              collectionId: 'collectionId1',
+              shortName: 'Short Name',
+              variables: []
             },
-            rawModel: '<mockRawModel></mockRawModel>',
-            type: 'ECHO ORDERS',
-            url: 'https://example.com/ops/egi/request'
+            enableConcatenateDownload: false,
+            enableSpatialSubsetting: false,
+            enableTemporalSubsetting: false,
+            harmonyCapabilitiesDocument: {
+              conceptId: 'collectionId1',
+              services: [
+                {
+                  capabilities: {
+                    concatenation: false,
+                    outputFormats: [
+                      {
+                        mimeType: 'application/x-hdf',
+                        name: 'HDF'
+                      }
+                    ],
+                    reprojection: {
+                      supportedProjections: []
+                    },
+                    subsetting: {
+                      bbox: true,
+                      shape: true,
+                      temporal: true,
+                      variable: true
+                    }
+                  },
+                  href: 'https://cmr.uat.earthdata.nasa.gov/search/concepts/S1242315633-EEDTEST',
+                  name: 'sds/trajectory-subsetter'
+                }
+              ],
+              shortName: 'Short Name',
+              summary: {
+                concatenation: false,
+                outputFormats: [
+                  {
+                    mimeType: 'application/x-hdf',
+                    name: 'HDF'
+                  }
+                ],
+                reprojection: {
+                  supportedProjections: []
+                },
+                subsetting: {
+                  bbox: true,
+                  shape: true,
+                  temporal: true,
+                  variable: true
+                }
+              },
+              variables: []
+            },
+            harmonyUserSelections: {},
+            hierarchyMappings: [],
+            id: 'collectionId1',
+            isConcatenationDisabled: true,
+            isSpatialSubsettingDisabled: false,
+            isTemporalSubsettingDisabled: false,
+            isValid: true,
+            isVariableSubsettingDisabled: false,
+            keywordMappings: [],
+            outputFormatAvailability: {
+              HDF: true
+            },
+            outputProjectionAvailability: {},
+            selectedOutputFormat: 'application/netcdf',
+            selectedOutputProjection: undefined,
+            selectedVariables: undefined,
+            shortName: 'Short Name',
+            supportedOutputFormats: [
+              {
+                mimeType: 'application/x-hdf',
+                name: 'HDF'
+              }
+            ],
+            supportedOutputProjections: [],
+            supportsBoundingBoxSubsetting: true,
+            supportsConcatenation: false,
+            supportsShapefileSubsetting: true,
+            supportsSpatialSubsetting: true,
+            supportsTemporalSubsetting: true,
+            supportsVariableSubsetting: true,
+            type: 'Harmony',
+            url: 'https://harmony.example.com',
+            variables: {}
           }
         })
       })
@@ -1987,21 +2157,41 @@ describe('createProjectSlice', () => {
               isValid: true,
               type: 'download'
             },
-            echoOrders0: {
-              form: '<form></form>',
-              formDigest: 'da2a203dca5e777d2b2c2fc3553c3d2f',
-              maxItemsPerOrder: 2000,
-              model: '<mockModel></mockModel>',
-              optionDefinition: {
-                conceptId: 'OO1000000-EDSC',
-                name: 'Delivery Option',
-                revisionId: '1'
-              },
-              rawModel: '<mockRawModel></mockRawModel>',
-              type: 'ECHO ORDERS',
-              url: 'https://example.com/ops/egi/request',
-              hasChanged: false,
-              isValid: false
+            harmony: {
+              outputFormatAvailability: { HDF: true },
+              enableConcatenateDownload: false,
+              enableSpatialSubsetting: false,
+              enableTemporalSubsetting: false,
+              id: 'C4054955340-GES_DISC',
+              isValid: true,
+              isSpatialSubsettingDisabled: false,
+              isTemporalSubsettingDisabled: false,
+              isVariableSubsettingDisabled: false,
+              isConcatenationDisabled: true,
+              shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+              selectedOutputFormat: '',
+              selectedVariables: [],
+              supportedOutputFormats: [{
+                name: 'NETCDF-4',
+                mimeType: 'application/x-netcdf4'
+              }],
+              supportedOutputProjections: [],
+              supportsConcatenation: false,
+              supportsShapefileSubsetting: true,
+              supportsBoundingBoxSubsetting: true,
+              supportsTemporalSubsetting: true,
+              supportsVariableSubsetting: true,
+              type: 'Harmony',
+              url: 'https://harmony.earthdata.nasa.gov',
+              variables: {},
+              hierarchyMappings: [],
+              keywordMappings: [],
+              harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+              harmonyUserSelections: { temporalSubset: true },
+              derivedHarmonyState: mockDerivedHarmonyState,
+              outputProjectionAvailability: {},
+              selectedOutputProjection: '',
+              supportsSpatialSubsetting: false
             }
           }
         }
@@ -2012,34 +2202,54 @@ describe('createProjectSlice', () => {
 
       project.selectAccessMethod({
         collectionId,
-        selectedAccessMethod: 'echoOrders0'
+        selectedAccessMethod: 'download'
       })
 
       const updatedState = useEdscStore.getState()
       const { project: updatedProject } = updatedState
       const updatedProjectCollection = updatedProject.collections.byId[collectionId]
 
-      expect(updatedProjectCollection.selectedAccessMethod).toEqual('echoOrders0')
+      expect(updatedProjectCollection.selectedAccessMethod).toEqual('download')
       expect(updatedProjectCollection.accessMethods).toEqual({
         download: {
           isValid: true,
           type: 'download'
         },
-        echoOrders0: {
-          form: '<form></form>',
-          formDigest: 'da2a203dca5e777d2b2c2fc3553c3d2f',
-          maxItemsPerOrder: 2000,
-          model: '<mockModel></mockModel>',
-          optionDefinition: {
-            conceptId: 'OO1000000-EDSC',
-            name: 'Delivery Option',
-            revisionId: '1'
-          },
-          rawModel: '<mockRawModel></mockRawModel>',
-          type: 'ECHO ORDERS',
-          url: 'https://example.com/ops/egi/request',
-          hasChanged: false,
-          isValid: false
+        harmony: {
+          outputFormatAvailability: { HDF: true },
+          enableConcatenateDownload: false,
+          enableSpatialSubsetting: false,
+          enableTemporalSubsetting: false,
+          id: 'C4054955340-GES_DISC',
+          isValid: true,
+          isSpatialSubsettingDisabled: false,
+          isTemporalSubsettingDisabled: false,
+          isVariableSubsettingDisabled: false,
+          isConcatenationDisabled: true,
+          shortName: 'GPM_3GPROFF18SSMIS_CLIM',
+          selectedOutputFormat: '',
+          selectedVariables: [],
+          supportedOutputFormats: [{
+            name: 'NETCDF-4',
+            mimeType: 'application/x-netcdf4'
+          }],
+          supportedOutputProjections: [],
+          supportsConcatenation: false,
+          supportsShapefileSubsetting: true,
+          supportsBoundingBoxSubsetting: true,
+          supportsTemporalSubsetting: true,
+          supportsVariableSubsetting: true,
+          type: 'Harmony',
+          url: 'https://harmony.earthdata.nasa.gov',
+          variables: {},
+          hierarchyMappings: [],
+          keywordMappings: [],
+          harmonyCapabilitiesDocument: mockHarmonyCapabilitiesDocument,
+          harmonyUserSelections: { temporalSubset: true },
+          derivedHarmonyState: mockDerivedHarmonyState,
+          outputProjectionAvailability: {},
+          selectedOutputProjection: '',
+          supportsSpatialSubsetting: false
         }
       })
     })
@@ -2182,63 +2392,6 @@ describe('createProjectSlice', () => {
   })
 
   describe('updateAccessMethod', () => {
-    test('updates the access method for a collection', () => {
-      const collectionId = 'collectionId'
-      const accessMethod = {
-        type: 'ECHO ORDERS',
-        form: '<form></form>',
-        formDigest: 'da2a203dca5e777d2b2c2fc3553c3d2f',
-        maxItemsPerOrder: 2000,
-        model: '<mockModel></mockModel>',
-        optionDefinition: {
-          conceptId: 'OO1000000-EDSC',
-          name: 'Delivery Option',
-          revisionId: '1'
-        },
-        rawModel: '<mockRawModel></mockRawModel>',
-        url: 'https://example.com/ops/egi/request',
-        hasChanged: false,
-        isValid: false
-      }
-
-      useEdscStore.setState((state) => {
-        state.project.collections.allIds.push(collectionId)
-        state.project.collections.byId[collectionId] = {
-          granules: initialGranuleState,
-          isVisible: true,
-          accessMethods: {
-            download: {
-              isValid: true,
-              type: 'download'
-            },
-            echoOrders0: accessMethod as EchoOrderAccessMethod
-          }
-        }
-      })
-
-      const zustandState = useEdscStore.getState()
-      const { project } = zustandState
-
-      project.updateAccessMethod({
-        collectionId,
-        method: {
-          echoOrders0: {
-            type: 'ECHO ORDERS',
-            model: '<mockModel>Updated</mockModel>'
-          }
-        }
-      })
-
-      const updatedState = useEdscStore.getState()
-      const { project: updatedProject } = updatedState
-      const updatedProjectCollection = updatedProject.collections.byId[collectionId]
-
-      expect(updatedProjectCollection.accessMethods?.echoOrders0).toEqual({
-        ...accessMethod,
-        model: '<mockModel>Updated</mockModel>'
-      })
-    })
-
     test('updates harmony selection of temporalSubset/enableTemporalSubsetting when method type is harmony', () => {
       const collectionId = 'collectionId'
 

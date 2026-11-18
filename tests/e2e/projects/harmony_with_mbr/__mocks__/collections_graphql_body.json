@@ -301,11 +301,6 @@
                 },
                 "supportedOutputProjections": null,
                 "supportedReformattings": null,
-                "maxItemsPerOrder": null,
-                "orderOptions": {
-                  "count": 0,
-                  "items": []
-                },
                 "variables": {
                   "count": 0,
                   "items": []
@@ -342,11 +337,6 @@
                 },
                 "supportedOutputProjections": null,
                 "supportedReformattings": null,
-                "maxItemsPerOrder": null,
-                "orderOptions": {
-                  "count": 0,
-                  "items": []
-                },
                 "variables": {
                   "count": 0,
                   "items": []

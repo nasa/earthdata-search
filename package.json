@@ -137,7 +137,6 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@edsc/earthdata-react-icons": "^0.0.2",
-    "@edsc/echoforms": "^1.1.19",
     "@edsc/geo-utils": "^1.0.7",
     "@edsc/smart-handoffs": "^1.0.6",
     "@edsc/timeline": "^1.1.8",

@@ -357,11 +357,11 @@ test.describe('Path /search/granules/collection-details', () => {
 
       // Check reformatting options
       testCollectionReformattingOptions(page, [{
-        input: 'NETCDF-4',
-        outputs: 'ASCII, CSV, NETCDF-3, NETCDF-4'
-      }, {
         input: 'HDF5',
-        outputs: 'ASCII, CSV, NETCDF-3, NETCDF-4'
+        outputs: 'NETCDF-4'
+      }, {
+        input: 'NETCDF-4',
+        outputs: 'NETCDF-4'
       }])
 
       // Check projection

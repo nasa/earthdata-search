@@ -14,7 +14,6 @@ import type {
   Temporal,
   TimelineIntervals,
   UrsProfile,
-  VariableMetadata,
   Subscription
 } from '../types/sharedTypes'
 import { ModalName } from '../constants/modalNames'
@@ -557,64 +556,6 @@ type DownloadAccessMethod = {
   type: 'download'
 }
 
-type OptionDefinition = {
-  /** The option name */
-  name: string
-  /** The option concept ID */
-  conceptId: string
-  /** The option revision ID */
-  revisionId: string
-}
-
-/** The ESI access method */
-export type EsiAccessMethod = {
-  name?: string
-  /** The ECHO Form XML */
-  form: string
-  /** A hash of the form */
-  formDigest: string
-  /** Has the access method changed */
-  hasChanged: boolean
-  /** Is the access method valid */
-  isValid: boolean
-  /** The maximum number of items per order */
-  maxItemsPerOrder: number
-  /** The ECHO Form model */
-  model: string
-  /** The option definition for the ESI access method */
-  optionDefinition: OptionDefinition
-  /** The ECHO Form raw model */
-  rawModel: string
-  /** The type of access method */
-  type: 'ESI'
-  /** The ESI access method URL */
-  url: string
-}
-
-/** The Echo Orders access method */
-export type EchoOrderAccessMethod = {
-  /** The ECHO Form XML */
-  form: string
-  /** A hash of the form */
-  formDigest: string
-  /** Has the access method changed */
-  hasChanged: boolean
-  /** Is the access method valid */
-  isValid: boolean
-  /** The maximum number of items per order */
-  maxItemsPerOrder: number
-  /** The ECHO Form model */
-  model: string
-  /** The option definition for the ECHO Orders access method */
-  optionDefinition: OptionDefinition
-  /** The ECHO Form raw model */
-  rawModel: string
-  /** The type of access method */
-  type: 'ECHO ORDERS'
-  /** The ECHO Orders access method URL */
-  url: string
-}
-
 /** A Hierarchy Mapping may take one of two data shapes */
 export type HierarchyMapping =
   | {
@@ -707,88 +648,9 @@ export type HarmonyAccessMethod = {
   }
 }
 
-/** The OPeNDAP access method */
-export type OpendapAccessMethod = {
-  /** The OPeNDAP access method description */
-  description?: string
-  /** Variable ids grouped by their hierarchical names */
-  hierarchyMappings: HierarchyMapping[]
-  /** The OPeNDAP access method ID */
-  id?: string
-  /** Is the access method valid */
-  isValid: boolean
-  /** Variable ids grouped by their scienceKeywords */
-  keywordMappings: KeywordMapping[]
-  /** The OPeNDAP access method long name */
-  longName?: string
-  /** The OPeNDAP access method name */
-  name?: string
-  /** The selected output format */
-  selectedOutputFormat?: string
-  /** The supported output formats */
-  selectedOutputProjection?: undefined
-  /** The supported output formats, based on Harmony Formats for consistency */
-  supportedOutputFormats?: HarmonyOutputFormat[]
-  /** Flag to indicate if variable subsetting is supported */
-  supportsVariableSubsetting?: boolean
-  /** The type of access method */
-  type: 'OPeNDAP'
-  /** The OPeNDAP access method URL */
-  url?: string
-  /** The OPeNDAP access method variables */
-  variables: {
-    /** The variable ID */
-    [variableId: string]: VariableMetadata
-  }
-}
-
-/** The SWODLR access method */
-export type SwodlrAccessMethod = {
-  /** The SWODLR access method ID */
-  id: string
-  /** Is the access method valid */
-  isValid: boolean
-  /** The SWODLR access method long name */
-  longName: string
-  /** The SWODLR access method name */
-  name: string
-  /** Flag to indicate if SWODLR is supported */
-  supportsSwodlr: boolean
-  /** The SWODLR data */
-  swodlrData: {
-    /** The SWODLR data custom parameters */
-    custom_params: {
-      /** The granule ID */
-      [granuleId: string]: {
-        /** The MGRS band adjustment */
-        mgrsBandAdjust: number
-        /** The UTM zone adjustment */
-        utmZoneAdjust: number
-      }
-    }
-    /** The SWODLR data parameters */
-    params: {
-      /** The output granule extent flag */
-      outputGranuleExtentFlag: boolean
-      /** The output sampling grid type */
-      outputSamplingGridType: string
-      /** The output sampling grid resolution */
-      rasterResolution: number
-    }
-  }
-  /** The type of access method */
-  type: 'SWODLR'
-  /** The SWODLR access method URL */
-  url: string
-}
-
 /** The access method types */
 export type AccessMethodTypes = DownloadAccessMethod
-  | EchoOrderAccessMethod
-  | EsiAccessMethod
   | HarmonyAccessMethod
-  | OpendapAccessMethod
-  | SwodlrAccessMethod
 
 /** The access methods for a project collection */
 type AccessMethods = {

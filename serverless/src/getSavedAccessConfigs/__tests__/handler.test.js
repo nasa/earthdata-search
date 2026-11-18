@@ -64,139 +64,27 @@ describe('getSavedAccessConfigs', () => {
     })
   })
 
-  test('returns the saved access configuration with the old `form_digest`', async () => {
-    const consoleMock = vi.spyOn(console, 'log')
-
-    dbTracker.on('query', (query, step) => {
-      if (step === 1) {
-        query.response([{
-          collection_id: 'collectionId',
-          access_method: {
-            type: 'ECHO ORDERS',
-            form: '<form>echo form</form>',
-            option_definition: {
-              id: 'option_def_guid',
-              name: 'Option Definition'
-            },
-            model: '<mock>model</mock>',
-            rawModel: '<mock>raw model</mock>',
-            form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
-          }
-        }])
-      }
-    })
-
-    const event = {
-      body: JSON.stringify({
-        params: {
-          collectionIds: ['collectionId']
-        }
-      })
-    }
-
-    const result = await getSavedAccessConfigs(event, {})
-    expect(consoleMock).toHaveBeenCalledTimes(1)
-    expect(consoleMock.mock.calls[0]).toEqual(['Found savedAccessConfigs for ECHO ORDERS collectionIds: collectionId'])
-
-    expect(result).toEqual({
-      body: JSON.stringify({
-        collectionId: {
-          type: 'ECHO ORDERS',
-          form: '<form>echo form</form>',
-          option_definition: {
-            id: 'option_def_guid',
-            name: 'Option Definition'
-          },
-          model: '<mock>model</mock>',
-          rawModel: '<mock>raw model</mock>',
-          form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6',
-          formDigest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
-        }
-      }),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Credentials': true
-      },
-      isBase64Encoded: false,
-      statusCode: 200
-    })
-  })
-
-  test('returns the saved access configuration with the new `formDigest`', async () => {
-    const consoleMock = vi.spyOn(console, 'log')
-
-    dbTracker.on('query', (query, step) => {
-      if (step === 1) {
-        query.response([{
-          collection_id: 'collectionId',
-          access_method: {
-            type: 'ECHO ORDERS',
-            form: '<form>echo form</form>',
-            option_definition: {
-              id: 'option_def_guid',
-              name: 'Option Definition'
-            },
-            model: '<mock>model</mock>',
-            rawModel: '<mock>raw model</mock>',
-            formDigest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
-          }
-        }])
-      }
-    })
-
-    const event = {
-      body: JSON.stringify({
-        params: {
-          collectionIds: ['collectionId']
-        }
-      })
-    }
-
-    const result = await getSavedAccessConfigs(event, {})
-
-    expect(consoleMock).toHaveBeenCalledTimes(1)
-    expect(consoleMock.mock.calls[0]).toEqual(['Found savedAccessConfigs for ECHO ORDERS collectionIds: collectionId'])
-
-    expect(result).toEqual({
-      body: JSON.stringify({
-        collectionId: {
-          type: 'ECHO ORDERS',
-          form: '<form>echo form</form>',
-          option_definition: {
-            id: 'option_def_guid',
-            name: 'Option Definition'
-          },
-          model: '<mock>model</mock>',
-          rawModel: '<mock>raw model</mock>',
-          formDigest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
-        }
-      }),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Credentials': true
-      },
-      isBase64Encoded: false,
-      statusCode: 200
-    })
-  })
-
   test('returns an error', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response([{
           collection_id: 'collectionId',
           access_method: {
-            type: 'ECHO ORDERS',
-            form: '<form>echo form</form>',
-            option_definition: {
-              id: 'option_def_guid',
-              name: 'Option Definition'
+            mbr: {
+              neLat: 31.08850198924431,
+              neLng: -94.19999999999999,
+              swLat: 28.275300000000215,
+              swLng: -99.50000000000001
             },
-            model: '<mock>model</mock>',
-            rawModel: '<mock>raw model</mock>',
-            form_digest: '95d8b918c2634d9d27daece7bf941a33caec9bb6'
+            url: 'https://harmony.earthdata.nasa.gov',
+            type: 'Harmony',
+            selectedOutputFormat: 'application/netcdf',
+            supportsConcatenation: true,
+            enableSpatialSubsetting: true,
+            enableTemporalSubsetting: true,
+            enableConcatenateDownload: true,
+            supportsShapefileSubsetting: true,
+            supportsBoundingBoxSubsetting: true
           }
         }])
       }

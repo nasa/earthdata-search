@@ -14,11 +14,7 @@ import { ORDER_STATES } from '../../../../../sharedConstants/orderStates'
 import GET_RETRIEVAL_COLLECTION from '../../operations/queries/getRetrievalCollection'
 
 import DownloadStatusItem from './AccessMethodItems/DownloadStatusItem'
-import EchoOrderStatusItem from './AccessMethodItems/EchoOrderStatusItem'
-import EsiStatusItem from './AccessMethodItems/EsiStatusItem'
 import HarmonyStatusItem from './AccessMethodItems/HarmonyStatusItem'
-import OpendapStatusItem from './AccessMethodItems/OpendapStatusItem'
-import SwodlrStatusItem from './AccessMethodItems/SwodlrStatusItem'
 
 // @ts-expect-error This file does not have types
 import Skeleton from '../Skeleton/Skeleton'
@@ -104,7 +100,7 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
         setRefreshInterval(orderStatusRefreshTime)
       }
     } else {
-      // If there are no retrieval orders, stop refreshing (download or opendap types)
+      // If there are no retrieval orders, stop refreshing (download type)
       setRefreshInterval(0)
     }
   }, [retrievalCollection])
@@ -135,20 +131,8 @@ const OrderStatusCollection: React.FC<OrderStatusCollectionProps> = ({
 
   // Determine the appropriate OrderStatusItemComponent based on the access method type
   switch (accessMethodType.toLowerCase()) {
-    case ACCESS_METHOD_TYPES.ECHO_ORDERS.toLowerCase():
-      OrderStatusItemComponent = EchoOrderStatusItem
-      break
-    case ACCESS_METHOD_TYPES.ESI.toLowerCase():
-      OrderStatusItemComponent = EsiStatusItem
-      break
     case ACCESS_METHOD_TYPES.HARMONY.toLowerCase():
       OrderStatusItemComponent = HarmonyStatusItem
-      break
-    case ACCESS_METHOD_TYPES.OPENDAP.toLowerCase():
-      OrderStatusItemComponent = OpendapStatusItem
-      break
-    case ACCESS_METHOD_TYPES.SWODLR.toLowerCase():
-      OrderStatusItemComponent = SwodlrStatusItem
       break
     default:
       OrderStatusItemComponent = DownloadStatusItem

@@ -245,11 +245,7 @@ test.describe('page titles', () => {
               collections: {
                 byId: {},
                 download: [],
-                opendap: [],
-                echo_orders: [],
-                esi: [],
-                harmony: [],
-                swodlr: []
+                harmony: []
               },
               links: []
             }

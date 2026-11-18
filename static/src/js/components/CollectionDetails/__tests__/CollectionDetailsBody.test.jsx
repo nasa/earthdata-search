@@ -615,31 +615,38 @@ describe('CollectionDetailsBody component', () => {
                   services: {
                     items: [
                       {
-                        type: 'ECHO ORDERS',
-                        supportedOutputFormats: null,
-                        supportedReformattings: null
-                      },
-                      {
-                        type: 'ESI',
+                        conceptId: 'S3177988677-POCLOUD',
+                        longName: 'Network Common Data Form (NetCDF) to Cloud Optimized GeoTIFF (COG)',
+                        name: 'net2cog',
+                        type: 'Harmony',
+                        url: {
+                          urlValue: 'https://harmony.earthdata.nasa.gov',
+                          description: 'PROJECT HOME PAGE'
+                        },
+                        serviceOptions: {
+                          supportedReformattings: [
+                            {
+                              supportedOutputFormats: [
+                                'GEOTIFF'
+                              ],
+                              supportedInputFormat: 'NETCDF-4'
+                            }
+                          ],
+                          subset: {
+                            variableSubset: {
+                              allowMultipleValues: true
+                            }
+                          }
+                        },
+                        supportedOutputProjections: null,
                         supportedReformattings: [
                           {
-                            supportedInputFormat: 'HDF-EOS2',
-                            supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
-                          },
-                          {
-                            supportedInputFormat: 'HDF-EOS5',
-                            supportedOutputFormats: ['PNG', 'JPEG']
-                          },
-                          {
-                            supportedInputFormat: 'HDF-EOS5',
-                            supportedOutputFormats: ['TIFF']
+                            supportedOutputFormats: [
+                              'GEOTIFF'
+                            ],
+                            supportedInputFormat: 'NETCDF-4'
                           }
                         ]
-                      },
-                      {
-                        type: 'NOT PROVIDED',
-                        supportedOutputFormats: null,
-                        supportedReformattings: null
                       }
                     ]
                   }
@@ -649,12 +656,8 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        // Element types are implementation details not using `getByRole` here
-        // https://github.com/testing-library/dom-testing-library/issues/140
-        expect(screen.getByText('HDF-EOS2')).toBeInTheDocument()
-        expect(screen.getByText('HDF-EOS5')).toBeInTheDocument()
-        expect(screen.getByText('XML, ASCII, ICARTT')).toBeInTheDocument()
-        expect(screen.getByText('PNG, JPEG, TIFF')).toBeInTheDocument()
+        // DT element of NETCDF-4 with a DD element of NETCDF-4, GEOTIFF
+        expect(screen.getByRole('definition', { name: 'NETCDF-4' })).toHaveTextContent('GEOTIFF')
       })
 
       test('does not render duplicate formats', () => {
@@ -667,31 +670,97 @@ describe('CollectionDetailsBody component', () => {
                   services: {
                     items: [
                       {
-                        type: 'ECHO ORDERS',
-                        supportedOutputFormats: null,
-                        supportedReformattings: null
-                      },
-                      {
-                        type: 'ESI',
+                        conceptId: 'S2164732315-XYZ_PROV',
+                        longName: 'Harmony OPeNDAP SubSetter (HOSS) and MaskFill for geographic collections',
+                        name: 'Harmony OPeNDAP SubSetter (HOSS) Geographic',
+                        type: 'Harmony',
+                        url: {
+                          description: 'This is the harmony root endpoint.',
+                          urlValue: 'https://harmony.earthdata.nasa.gov'
+                        },
+                        serviceOptions: {
+                          subset: {
+                            spatialSubset: {
+                              boundingBox: {
+                                allowMultipleValues: false
+                              },
+                              shapefile: [
+                                {
+                                  format: 'GeoJSON'
+                                }
+                              ]
+                            },
+                            variableSubset: {
+                              allowMultipleValues: true
+                            },
+                            temporalSubset: {
+                              allowMultipleValues: false
+                            }
+                          },
+                          supportedReformattings: [
+                            {
+                              supportedInputFormat: 'HDF5',
+                              supportedOutputFormats: [
+                                'NETCDF-4'
+                              ]
+                            },
+                            {
+                              supportedInputFormat: 'NETCDF-4',
+                              supportedOutputFormats: [
+                                'NETCDF-4'
+                              ]
+                            }
+                          ]
+                        },
+                        supportedOutputProjections: null,
                         supportedReformattings: [
                           {
-                            supportedInputFormat: 'HDF-EOS2',
-                            supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                            supportedInputFormat: 'HDF5',
+                            supportedOutputFormats: [
+                              'NETCDF-4'
+                            ]
                           },
                           {
-                            supportedInputFormat: 'HDF-EOS5',
-                            supportedOutputFormats: ['PNG', 'JPEG']
-                          },
-                          {
-                            supportedInputFormat: 'HDF-EOS5',
-                            supportedOutputFormats: ['TIFF', 'PNG', 'JPEG'] // PNG and JPEG are duplicated for HDF-EOS5
+                            supportedInputFormat: 'NETCDF-4',
+                            supportedOutputFormats: [
+                              'NETCDF-4'
+                            ]
                           }
                         ]
                       },
                       {
-                        type: 'NOT PROVIDED',
-                        supportedOutputFormats: null,
-                        supportedReformattings: null
+                        conceptId: 'S3177988677-POCLOUD',
+                        longName: 'Network Common Data Form (NetCDF) to Cloud Optimized GeoTIFF (COG)',
+                        name: 'net2cog',
+                        type: 'Harmony',
+                        url: {
+                          urlValue: 'https://harmony.earthdata.nasa.gov',
+                          description: 'PROJECT HOME PAGE'
+                        },
+                        serviceOptions: {
+                          supportedReformattings: [
+                            {
+                              supportedOutputFormats: [
+                                'GEOTIFF'
+                              ],
+                              supportedInputFormat: 'NETCDF-4'
+                            }
+                          ],
+                          subset: {
+                            variableSubset: {
+                              allowMultipleValues: true
+                            }
+                          }
+                        },
+                        supportedOutputProjections: null,
+                        supportedReformattings: [
+                          {
+                            supportedOutputFormats: [
+                              'GEOTIFF'
+                            ],
+                            supportedInputFormat: 'NETCDF-4'
+                          }
+                        ]
                       }
                     ]
                   }
@@ -701,13 +770,11 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        expect(screen.getByText('HDF-EOS2')).toBeInTheDocument()
+        // DT element of HDF-5 with a DD element of NETCDF-4
+        expect(screen.getByRole('definition', { name: 'HDF5' })).toHaveTextContent('NETCDF-4')
 
-        // Only one element with the text `HDF-EOS5` is rendered
-        expect(screen.getAllByText('HDF-EOS5').length).toEqual(1)
-
-        expect(screen.getByText('XML, ASCII, ICARTT')).toBeInTheDocument()
-        expect(screen.getByText('PNG, JPEG, TIFF')).toBeInTheDocument()
+        // DT element of NETCDF-4 with a DD element of NETCDF-4, GEOTIFF
+        expect(screen.getByRole('definition', { name: 'NETCDF-4' })).toHaveTextContent('NETCDF-4, GEOTIFF')
       })
 
       test('does not render options not supported by EDSC', () => {

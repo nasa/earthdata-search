@@ -108,7 +108,7 @@ describe('DownloadFilesPanel', () => {
     test('hides the copy and save buttons', () => {
       setup({
         overrideProps: {
-          accessMethodType: 'ESI',
+          accessMethodType: 'Harmony',
           downloadLinks: ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
           granuleLinksIsLoading: true,
           showTextWindowActions: false
@@ -125,7 +125,7 @@ describe('DownloadFilesPanel', () => {
         eddLink: null,
         hideEdd: false,
         fileContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
-        fileName: '1-ESI.txt',
+        fileName: '1-Harmony.txt',
         id: 'links-1',
         modalTitle: 'Download Files'
       }, {})
@@ -134,7 +134,7 @@ describe('DownloadFilesPanel', () => {
     test('hides the download button', () => {
       setup({
         overrideProps: {
-          accessMethodType: 'ESI',
+          accessMethodType: 'Harmony',
           collectionIsCSDA: true,
           downloadLinks: ['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov'],
           granuleCount: 10,
@@ -153,7 +153,7 @@ describe('DownloadFilesPanel', () => {
         eddLink: null,
         hideEdd: true,
         fileContents: 'http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov',
-        fileName: '1-ESI.txt',
+        fileName: '1-Harmony.txt',
         id: 'links-1',
         modalTitle: 'Download Files'
       }, {})

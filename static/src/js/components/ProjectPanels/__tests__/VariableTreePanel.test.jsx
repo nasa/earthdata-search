@@ -13,7 +13,7 @@ const setup = setupTest({
   Component: VariableTreePanel,
   defaultProps: {
     accessMethods: {
-      opendap: {
+      harmony: {
         keywordMappings: [{
           children: [{
             id: 'V123456-EDSC'
@@ -43,7 +43,7 @@ const setup = setupTest({
     onUpdateSelectedVariables: vi.fn(),
     onViewDetails: vi.fn(),
     panelHeader: '',
-    selectedAccessMethod: 'opendap'
+    selectedAccessMethod: 'harmony'
   }
 })
 
@@ -63,9 +63,9 @@ describe('VariableTreePanel', () => {
     setup({
       overrideProps: {
         accessMethods: {
-          opendap: {}
+          harmony: {}
         },
-        selectedAccessMethod: 'opendap'
+        selectedAccessMethod: 'harmony'
       }
     })
 
@@ -106,7 +106,7 @@ describe('VariableTreePanel', () => {
     setup({
       overrideProps: {
         accessMethods: {
-          opendap: {
+          harmony: {
             hierarchyMappings: [],
             keywordMappings: [],
             selectedVariables: [],
@@ -132,7 +132,7 @@ describe('VariableTreePanel', () => {
     const { props } = setup({
       overrideProps: {
         accessMethods: {
-          opendap: {
+          harmony: {
             hierarchyMappings: [
               {
                 children: [{
@@ -197,7 +197,7 @@ describe('VariableTreePanel', () => {
       const { props } = setup({
         overrideProps: {
           accessMethods: {
-            opendap: {
+            harmony: {
               hierarchyMappings: [
                 {
                   children: [{
@@ -282,7 +282,7 @@ describe('VariableTreePanel', () => {
         const { props, user } = setup({
           overrideProps: {
             accessMethods: {
-              opendap: {
+              harmony: {
                 hierarchyMappings: [
                   {
                     children: [{
@@ -364,7 +364,7 @@ describe('VariableTreePanel', () => {
         const { props, user } = setup({
           overrideProps: {
             accessMethods: {
-              opendap: {
+              harmony: {
                 hierarchyMappings: [
                   {
                     children: [{
