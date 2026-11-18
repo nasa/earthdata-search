@@ -1,3 +1,4 @@
+// Preserve campaign attribution (utm_*) and Google ad click IDs (gclid/dclid).
 const isAnalyticsParam = (key: string) => {
   const normalizedKey = key.toLowerCase()
 
