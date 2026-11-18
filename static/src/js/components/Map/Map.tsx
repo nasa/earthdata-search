@@ -251,7 +251,7 @@ const createView = ({
     padding,
     projection,
     rotation: rotationInRad,
-    zoom: zoom || projectionConfig.zoom
+    zoom: zoom ?? projectionConfig.zoom
   })
 
   return view

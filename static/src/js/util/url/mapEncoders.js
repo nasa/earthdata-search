@@ -184,12 +184,12 @@ export const decodeMap = (params) => {
 
   // If a value is set, add it to the return object
   if (decodedBase) returnValue.base = decodedBase
-  if (decodedLatitude) returnValue.latitude = decodedLatitude
-  if (decodedLongitude) returnValue.longitude = decodedLongitude
+  if (decodedLatitude !== undefined) returnValue.latitude = decodedLatitude
+  if (decodedLongitude !== undefined) returnValue.longitude = decodedLongitude
   if (decodedOverlays) returnValue.overlays = decodedOverlays
   if (decodedProjection) returnValue.projection = decodedProjection
-  if (decodedRotation) returnValue.rotation = decodedRotation
-  if (decodedZoom) returnValue.zoom = decodedZoom
+  if (decodedRotation !== undefined) returnValue.rotation = decodedRotation
+  if (decodedZoom !== undefined) returnValue.zoom = decodedZoom
 
   return returnValue
 }
