@@ -4,6 +4,7 @@ import {
   urlPathsWithoutUrlParams
 // @ts-expect-error This file doesn't have types
 } from './url'
+import { preserveAnalyticsParams } from './preserveAnalyticsParams'
 
 import routerHelper, { type Router } from '../../router/router'
 import useEdscStore from '../../zustand/useEdscStore'
@@ -81,16 +82,24 @@ export const changeUrl = async (options: string | Record<string, unknown>) => {
         })
       )
 
+      let finalSearch = stripParameters ? '' : newSearch
+
+      if (!stripParameters) {
+        finalSearch = preserveAnalyticsParams(oldSearch, newSearch)
+      }
+
       let newOptions = options
       if (stripParameters) {
         newOptions = newPathname
+      } else if (finalSearch !== newSearch) {
+        newOptions = `${newPathname}?${finalSearch}`
       }
 
       await updateUrl({
         options: newOptions,
         oldLocation: location,
         newPathname,
-        newSearch: stripParameters ? '' : newSearch
+        newSearch: finalSearch
       })
     } else {
       // Missing keys keep the current value, so only the provided piece of the url changes
@@ -100,11 +109,20 @@ export const changeUrl = async (options: string | Record<string, unknown>) => {
       } = options as { pathname?: string, search?: string }
       newPathname = pathname
 
+      const finalSearch = preserveAnalyticsParams(oldSearch, search)
+
+      const newOptions = finalSearch === search
+        ? options
+        : {
+          ...options,
+          search: normalizeSearch(finalSearch)
+        }
+
       await updateUrl({
-        options,
+        options: newOptions,
         oldLocation: location,
         newPathname,
-        newSearch: search
+        newSearch: finalSearch
       })
     }
   } catch (error) {

@@ -37,6 +37,53 @@ describe('changeUrl', () => {
       expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
       expect(routerHelper.router?.navigate).toHaveBeenCalledWith(newPath, { replace: false })
     })
+
+    test('preserves analytics parameters when updating the search query', async () => {
+      routerHelper.router!.state = {
+        location: {
+          pathname: '/search',
+          search: '?q=old&utm_source=test&utm_medium=agent&utm_campaign=launch&gclid=click-id&dclid=display-id&other=discarded'
+        }
+      }
+
+      await changeUrl('/search?q=new')
+
+      expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router?.navigate).toHaveBeenCalledWith(
+        '/search?q=new&utm_source=test&utm_medium=agent&utm_campaign=launch&gclid=click-id&dclid=display-id',
+        { replace: true }
+      )
+    })
+
+    test('prefers analytics parameter values supplied in the new URL', async () => {
+      routerHelper.router!.state = {
+        location: {
+          pathname: '/search',
+          search: '?q=old&utm_source=original&utm_medium=email&utm_campaign=launch&gclid=old-click&dclid=old-display'
+        }
+      }
+
+      await changeUrl('/search?q=new&utm_source=newsource&gclid=new-click')
+
+      expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router?.navigate).toHaveBeenCalledWith(
+        '/search?q=new&utm_source=newsource&gclid=new-click&utm_medium=email&utm_campaign=launch&dclid=old-display',
+        { replace: true }
+      )
+    })
+
+    test('does not navigate when preserving analytics parameters produces the current URL', async () => {
+      routerHelper.router!.state = {
+        location: {
+          pathname: '/search',
+          search: '?q=hello&utm_source=test&utm_medium=agent&gclid=click-id&dclid=display-id'
+        }
+      }
+
+      await changeUrl('/search?q=hello')
+
+      expect(routerHelper.router?.navigate).not.toHaveBeenCalled()
+    })
   })
 
   describe('when called with an object', () => {
@@ -92,6 +139,23 @@ describe('changeUrl', () => {
       })
 
       expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(0)
+    })
+
+    test('preserves analytics parameters when an object replaces the search', async () => {
+      routerHelper.router!.state = {
+        location: {
+          pathname: '/search',
+          search: '?q=old&utm_source=test&utm_medium=agent&utm_campaign=launch&gclid=click-id&dclid=display-id'
+        }
+      }
+
+      await changeUrl({ search: '?q=new' })
+
+      expect(routerHelper.router?.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router?.navigate).toHaveBeenCalledWith(
+        { search: '?q=new&utm_source=test&utm_medium=agent&utm_campaign=launch&gclid=click-id&dclid=display-id' },
+        { replace: true }
+      )
     })
   })
 
