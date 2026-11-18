@@ -55,6 +55,10 @@ const GranuleResultsActionsContainer = () => {
     removedGranuleIds = []
   } = projectCollectionGranules
 
+  const { tools = {} } = collectionMetadata || {}
+  const { items: toolItems = [] } = tools || {}
+  const hasSmartHandoffs = Boolean(toolItems && toolItems.length > 0)
+
   const handoffLinks = getHandoffLinks({
     collectionMetadata,
     collectionQuery,
@@ -68,6 +72,7 @@ const GranuleResultsActionsContainer = () => {
       focusedProjectCollection={focusedProjectCollection}
       granuleLimit={granuleLimit}
       handoffLinks={handoffLinks}
+      hasSmartHandoffs={hasSmartHandoffs}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
       projectCollectionIds={projectCollectionIds}

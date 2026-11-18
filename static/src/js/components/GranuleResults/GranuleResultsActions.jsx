@@ -12,9 +12,11 @@ import { useLocation } from 'react-router'
 import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Dropdown from 'react-bootstrap/Dropdown'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import { metricsAddCollectionToProject } from '../../util/metrics/metricsAddCollectionToProject'
 import { commafy } from '../../util/commafy'
+import renderTooltip from '../../util/renderTooltip'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import Button from '../Button/Button'
@@ -47,6 +49,7 @@ const GranuleResultsActions = ({
   focusedProjectCollection,
   granuleLimit = undefined,
   handoffLinks = [],
+  hasSmartHandoffs = false,
   initialLoading,
   isCollectionInProject,
   projectGranuleCount = 0,
@@ -218,6 +221,37 @@ const GranuleResultsActions = ({
               </Dropdown>
             )
           }
+          {
+            (hasSmartHandoffs && handoffLinks.length === 0) && (
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  (tooltipProps) => renderTooltip({
+                    children: 'Smart handoffs are not valid with the current parameters',
+                    className: 'granule-results-actions__explore-tooltip',
+                    id: 'tooltip__granule-results-actions__explore-button',
+                    ...tooltipProps
+                  })
+                }
+              >
+                <div className="granule-results-actions__action granule-results-actions__action--explore">
+                  <Button
+                    type="button"
+                    naked
+                    icon={IoShare}
+                    className="granule-results-actions__explore-button"
+                    dataTestId="granule-results-actions__explore-button"
+                    label="Explore"
+                    title="Explore"
+                    disabled
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    Explore
+                  </Button>
+                </div>
+              </OverlayTrigger>
+            )
+          }
         </div>
         <PortalFeatureContainer authentication>
           <>
@@ -241,6 +275,7 @@ GranuleResultsActions.propTypes = {
   focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleLimit: PropTypes.number,
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
+  hasSmartHandoffs: PropTypes.bool,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   projectGranuleCount: PropTypes.number,

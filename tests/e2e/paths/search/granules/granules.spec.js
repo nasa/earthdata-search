@@ -1219,4 +1219,71 @@ test.describe('Path /search/granules', () => {
       await expect(page.getByTestId('granule-results-actions__subscriptions-button')).toHaveClass(/granule-results-actions__action--is-active/)
     })
   })
+
+  test.describe('When a collection has smart handoffs configured but invalid for current parameters', () => {
+    test('renders the Explore button as disabled to inform the user', async ({ page, context }) => {
+      const conceptId = 'C1214470488-ASF'
+
+      await page.route('**/collections.json', async (route) => {
+        await route.fulfill({
+          body: JSON.stringify(commonBody),
+          headers: commonHeaders
+        })
+      })
+
+      await page.route('**/granules.json', async (route) => {
+        await route.fulfill({
+          body: JSON.stringify(commonGranulesHeaders),
+          headers: commonGranulesHeaders
+        })
+      })
+
+      await page.route('**/granules/timeline', async (route) => {
+        await route.fulfill({
+          body: JSON.stringify(noParamsTimelineBody),
+          headers: noParamsTimelineHeaders
+        })
+      })
+
+      await page.route('https://graphql.earthdata.nasa.gov/api', async (route) => {
+        if (isGetCollectionQuery(route, conceptId)) {
+          const bodyWithTools = {
+            ...subscriptionGraphQlBody,
+            data: {
+              ...subscriptionGraphQlBody.data,
+              collection: {
+                ...subscriptionGraphQlBody.data.collection,
+                tools: {
+                  count: 1,
+                  items: [
+                    {
+                      name: 'Smart Handoff Tool',
+                      potentialAction: {
+                        type: 'SearchAction',
+                        target: {
+                          urlTemplate: 'https://worldview.earthdata.nasa.gov/?v={point}'
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+
+          await route.fulfill({
+            body: JSON.stringify(bodyWithTools),
+            headers: subscriptionGraphQlHeaders
+          })
+        }
+      })
+
+      // Navigate to granules view without spatial point parameter (so point handoff is invalid)
+      await page.goto('/search/granules?p=C1214470488-ASF')
+
+      const exploreButton = page.getByTestId('granule-results-actions__explore-button')
+      await expect(exploreButton).toBeVisible()
+      await expect(exploreButton).toBeDisabled()
+    })
+  })
 })
