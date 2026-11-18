@@ -113,6 +113,20 @@ describe('decodes overlays correctly', () => {
     }
     expect(decodeUrlParams('?overlays=test')).toEqual(expectedResult)
   })
+
+  test('when all overlays are off (none)', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      mapView: {
+        overlays: {
+          coastlines: false,
+          bordersRoads: false,
+          placeLabels: false
+        }
+      }
+    }
+    expect(decodeUrlParams('?overlays=none')).toEqual(expectedResult)
+  })
 })
 
 describe('decodes projection correctly', () => {
@@ -203,6 +217,22 @@ describe('url#encodeUrlQuery', () => {
 
     test('does not encode the default map state', () => {
       expect(encodeUrlQuery(defaultProps)).toEqual('/path/here')
+    })
+
+    test('encodes overlays correctly when all overlays are off', () => {
+      const props = {
+        ...defaultProps,
+        mapView: {
+          ...defaultProps.mapView,
+          overlays: {
+            bordersRoads: false,
+            coastlines: false,
+            placeLabels: false
+          }
+        }
+      }
+
+      expect(encodeUrlQuery(props)).toEqual('/path/here?overlays=none')
     })
 
     test('encodes map correctly', () => {

@@ -50,7 +50,7 @@ export const encodeMap = (map, mapPreferences) => {
     base: encodedBase,
     lat: latitude,
     long: longitude,
-    overlays: encodedOverlays.join(','),
+    overlays: encodedOverlays.length > 0 ? encodedOverlays.join(',') : 'none',
     projection: encodedProjection,
     rotation,
     zoom
@@ -87,7 +87,7 @@ export const encodeMap = (map, mapPreferences) => {
       base: encodedBasePreference,
       lat: latitudePreference,
       long: longitudePreference,
-      overlays: encodedOverlaysPreference.join(','),
+      overlays: encodedOverlaysPreference.length > 0 ? encodedOverlaysPreference.join(',') : 'none',
       projection: encodedProjectionPreference,
       rotation: rotationPreference,
       zoom: zoomPreference
