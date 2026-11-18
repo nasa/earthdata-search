@@ -90,33 +90,6 @@ describe('ChunkedOrderModal component', () => {
     expect(getByTextWithMarkup('The collection collection title contains 9,001 granules which exceeds the 2,000 granule limit configured by the provider. When submitted, the order will automatically be split into 5 orders.')).toBeInTheDocument()
   })
 
-  test('should render instructions when the maxItemsPerOrder is less than 2000', () => {
-    setup({
-      overrideZustandState: {
-        project: {
-          collections: {
-            allIds: ['C100005-EDSC'],
-            byId: {
-              'C100005-EDSC': {
-                granules: {
-                  count: 9001
-                },
-                accessMethods: {
-                  echoOrder0: {
-                    maxItemsPerOrder: 1000
-                  }
-                },
-                selectedAccessMethod: 'echoOrder0'
-              }
-            }
-          }
-        }
-      }
-    })
-
-    expect(getByTextWithMarkup('The collection collection title contains 9,001 granules which exceeds the 1,000 granule limit configured by the provider. When submitted, the order will automatically be split into 10 orders.')).toBeInTheDocument()
-  })
-
   test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
     const { user } = setup()
 
@@ -134,75 +107,6 @@ describe('ChunkedOrderModal component', () => {
       },
       updatePath: true
     }), {})
-  })
-
-  describe('access methods email notice', () => {
-    const emailNotice = 'Note: You will receive a separate set of confirmation emails for each order in collection title.'
-    test('ordering shows the notice ', () => {
-      setup({
-        overrideZustandState: {
-          project: {
-            collections: {
-              allIds: ['C100005-EDSC'],
-              byId: {
-                'C100005-EDSC': {
-                  granules: {
-                    count: 9001
-                  },
-                  selectedAccessMethod: 'echoOrder0'
-                }
-              }
-            }
-          }
-        }
-      })
-
-      expect(screen.getByText(emailNotice)).toBeInTheDocument()
-    })
-
-    test('esi shows the notice', () => {
-      setup({
-        overrideZustandState: {
-          project: {
-            collections: {
-              allIds: ['C100005-EDSC'],
-              byId: {
-                'C100005-EDSC': {
-                  granules: {
-                    count: 9001
-                  },
-                  selectedAccessMethod: 'esi0'
-                }
-              }
-            }
-          }
-        }
-      })
-
-      expect(screen.getByText(emailNotice)).toBeInTheDocument()
-    })
-
-    test('harmony does no show the notice', () => {
-      setup({
-        overrideZustandState: {
-          project: {
-            collections: {
-              allIds: ['C100005-EDSC'],
-              byId: {
-                'C100005-EDSC': {
-                  granules: {
-                    count: 9001
-                  },
-                  selectedAccessMethod: 'harmony'
-                }
-              }
-            }
-          }
-        }
-      })
-
-      expect(screen.queryByText(emailNotice)).not.toBeInTheDocument()
-    })
   })
 
   describe('modal actions', () => {

@@ -6,7 +6,6 @@ import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getAuthorizerContext from '../../util/getAuthorizerContext'
 import * as fetchCmrLinks from '../fetchCmrLinks'
 import * as fetchOpenSearchLinks from '../fetchOpenSearchLinks'
-import * as fetchOpendapLinks from '../fetchOpendapLinks'
 
 import retrieveGranuleLinks from '../handler'
 
@@ -176,77 +175,6 @@ describe('retrieveGranuleLinks', () => {
         temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
         two_d_coordinate_system: {}
       },
-      pageNum: 1
-    })
-  })
-
-  test('calls fetchOpendapLinks for opendap granules', async () => {
-    const expectedResponse = {
-      links: {
-        download: [
-          'http://example.com'
-        ]
-      }
-    }
-    const fetchOpendapLinksMock = vi.spyOn(fetchOpendapLinks, 'fetchOpendapLinks').mockImplementation(() => expectedResponse.links)
-
-    dbTracker.on('query', (query) => {
-      query.response([{
-        access_method: {
-          type: 'OPeNDAP',
-          isValid: true
-        },
-        collection_id: 'C1214470488-ASF',
-        granule_params: {
-          exclude: {},
-          options: {},
-          page_num: 1,
-          temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
-          page_size: 20,
-          concept_id: [],
-          echo_collection_id: 'C1214470488-ASF',
-          two_d_coordinate_system: {}
-        },
-        collection_metadata: {
-          mock: 'metadata'
-        }
-      }])
-    })
-
-    const event = {
-      queryStringParameters: {
-        id: '1234567',
-        linkTypes: 'data,s3'
-      }
-    }
-
-    const response = await retrieveGranuleLinks(event, {})
-
-    expect(response).toEqual(expect.objectContaining({
-      body: JSON.stringify(expectedResponse),
-      statusCode: 200
-    }))
-
-    expect(fetchOpendapLinksMock).toHaveBeenCalledTimes(1)
-    expect(fetchOpendapLinksMock).toHaveBeenCalledWith({
-      accessMethod: {
-        isValid: true,
-        type: 'OPeNDAP'
-      },
-      collectionId: 'C1214470488-ASF',
-      earthdataEnvironment: 'prod',
-      edlToken: 'mock-access-token',
-      granuleParams: {
-        concept_id: [],
-        echo_collection_id: 'C1214470488-ASF',
-        exclude: {},
-        options: {},
-        page_num: 1,
-        page_size: 20,
-        temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
-        two_d_coordinate_system: {}
-      },
-      requestId: 'mock-request-id',
       pageNum: 1
     })
   })
@@ -531,66 +459,6 @@ describe('retrieveGranuleLinks', () => {
         statusCode: 200
       }))
     })
-  })
-
-  test('returns links from order_information for esi orders', async () => {
-    const expectedResponse = {
-      done: true,
-      links: [
-        'http://example.com/file1',
-        'http://example.com/file2'
-      ]
-    }
-
-    dbTracker.on('query', (query) => {
-      query.response([{
-        access_method: {
-          type: 'ESI',
-          isValid: true
-        },
-        collection_id: 'C1214470488-ASF',
-        granule_params: {
-          exclude: {},
-          options: {},
-          page_num: 1,
-          temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
-          page_size: 20,
-          concept_id: [],
-          echo_collection_id: 'C1214470488-ASF',
-          two_d_coordinate_system: {}
-        },
-        collection_metadata: {
-          mock: 'metadata'
-        },
-        order_information: {
-          order: {
-            orderId: 5000006631366,
-            Instructions: 'Your request has completed processing. You may retrieve the results from the download URLs until 2025-12-09 11:30:04.525'
-          },
-          downloadUrls: {
-            downloadUrl: [
-              'http://example.com/file1',
-              'http://example.com/file2'
-            ]
-          }
-        }
-      }])
-    })
-
-    const event = {
-      queryStringParameters: {
-        id: '1234567',
-        flattenLinks: true,
-        linkTypes: 'data,s3'
-      }
-    }
-
-    const response = await retrieveGranuleLinks(event, {})
-
-    expect(response).toEqual(expect.objectContaining({
-      body: JSON.stringify(expectedResponse),
-      statusCode: 200
-    }))
   })
 
   test('returns an error', async () => {

@@ -181,7 +181,7 @@ const CollectionDetailsBody = () => {
     const { items } = services
 
     if (items) {
-      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony', 'swodlr']
+      const supportedServiceTypes = ['harmony']
       items.forEach((service) => {
         const {
           supportedReformattings: supportedReformattingsList,
@@ -406,17 +406,24 @@ const CollectionDetailsBody = () => {
                           } = reformattings
 
                           const key = `input-format__${supportedInputFormat}-${i}`
+                          const dtId = `reformatting-item__${supportedInputFormat}-${i}`
 
                           return (
                             <dl
                               key={key}
                               className="collection-details-body__reformatting-item"
                             >
-                              <dt className="collection-details-body__reformatting-item-heading">
+                              <dt
+                                className="collection-details-body__reformatting-item-heading"
+                                id={dtId}
+                              >
                                 {supportedInputFormat}
                                 <EDSCIcon icon={ArrowLineRight} className="collection-details-body__reformatting-item-icon" />
                               </dt>
-                              <dd className="collection-details-body__reformatting-item-body">
+                              <dd
+                                aria-labelledby={dtId}
+                                className="collection-details-body__reformatting-item-body"
+                              >
                                 {supportedOutputFormats.join(', ')}
                               </dd>
                             </dl>

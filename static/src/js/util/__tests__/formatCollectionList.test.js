@@ -15,20 +15,6 @@ describe('formatCollectionList', () => {
       isNrt: false,
       organizations: ['test/org'],
       serviceFeatures: {
-        esi: {
-          hasFormats: false,
-          hasVariables: false,
-          hasTransforms: false,
-          hasSpatialSubsetting: false,
-          hasTemporalSubsetting: false
-        },
-        opendap: {
-          hasFormats: false,
-          hasVariables: false,
-          hasTransforms: false,
-          hasSpatialSubsetting: false,
-          hasTemporalSubsetting: false
-        },
         harmony: {
           hasFormats: false,
           hasVariables: false,
@@ -170,25 +156,11 @@ describe('formatCollectionList', () => {
       isNrt: false,
       organizations: ['test/org'],
       serviceFeatures: {
-        esi: {
-          hasFormats: false,
+        harmony: {
+          hasFormats: true,
           hasVariables: true,
           hasTransforms: true,
           hasSpatialSubsetting: true,
-          hasTemporalSubsetting: false
-        },
-        opendap: {
-          hasFormats: false,
-          hasVariables: false,
-          hasTransforms: false,
-          hasSpatialSubsetting: true,
-          hasTemporalSubsetting: false
-        },
-        harmony: {
-          hasFormats: true,
-          hasVariables: false,
-          hasTransforms: false,
-          hasSpatialSubsetting: false,
           hasTemporalSubsetting: true
         }
       },

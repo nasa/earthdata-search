@@ -39,7 +39,7 @@ describe('startOrderStatusUpdateWorkflow', () => {
   test('starts the order status workflow', async () => {
     const consoleMock = vi.spyOn(console, 'log')
 
-    await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
+    await startOrderStatusUpdateWorkflow(1, 'access-token', 'Harmony')
 
     expect(client.send).toHaveBeenCalledTimes(1)
     expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
@@ -48,7 +48,7 @@ describe('startOrderStatusUpdateWorkflow', () => {
         input: JSON.stringify({
           id: 1,
           accessToken: 'access-token',
-          orderType: 'ESI'
+          orderType: 'Harmony'
         })
       }
     }))
@@ -68,7 +68,7 @@ describe('startOrderStatusUpdateWorkflow', () => {
 
       const consoleMock = vi.spyOn(console, 'log')
 
-      await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
+      await startOrderStatusUpdateWorkflow(1, 'access-token', 'Harmony')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('Starting order status update workflow for order ID: 1')
@@ -77,7 +77,7 @@ describe('startOrderStatusUpdateWorkflow', () => {
       expect(mockStepFunctionMock).toHaveBeenCalledWith('UpdateOrderStatus', {
         accessToken: 'access-token',
         id: 1,
-        orderType: 'ESI'
+        orderType: 'Harmony'
       })
 
       expect(client.send).toHaveBeenCalledTimes(0)
@@ -92,7 +92,7 @@ describe('startOrderStatusUpdateWorkflow', () => {
 
       const consoleMock = vi.spyOn(console, 'log')
 
-      await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
+      await startOrderStatusUpdateWorkflow(1, 'access-token', 'Harmony')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
       expect(consoleMock).toHaveBeenCalledWith('State Machine Invocation (Order ID: 1): ', {
@@ -107,7 +107,7 @@ describe('startOrderStatusUpdateWorkflow', () => {
           input: JSON.stringify({
             id: 1,
             accessToken: 'access-token',
-            orderType: 'ESI'
+            orderType: 'Harmony'
           })
         }
       }))

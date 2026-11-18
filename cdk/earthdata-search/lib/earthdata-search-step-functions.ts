@@ -20,16 +20,10 @@ export interface StepFunctionsProps {
   stageName: string;
   /** SQS Queues that trigger lambda functions */
   queues: {
-    /** The SQS queue for processing catalog rest orders */
-    catalogRestOrderQueue: cdk.aws_sqs.IQueue;
-    /** The SQS queue for processing CMR orders */
-    cmrOrderingOrderQueue: cdk.aws_sqs.IQueue;
     /** The SQS queue for processing color maps */
     colorMapsProcessingQueue: cdk.aws_sqs.IQueue;
     /** The SQS queue for processing harmony orders */
     harmonyOrderQueue: cdk.aws_sqs.IQueue;
-    /** The SQS queue for processing swodlr orders */
-    swodlrOrderQueue: cdk.aws_sqs.IQueue;
     /** The SQS queue for processing tags */
     tagProcessingQueue: cdk.aws_sqs.IQueue;
     /** The SQS queue for processing user data */
@@ -53,28 +47,6 @@ export class StepFunctions extends Construct {
     const functionNamePrefix = scope.stackName
 
     /**
-     * Fetch Catalog Rest Order
-     */
-    const fetchCatalogRestOrderNestedStack = new cdk.NestedStack(scope, 'FetchCatalogRestOrderNestedStack')
-    const { lambdaFunction: fetchCatalogRestOrderLambda } = new application.NodeJsFunction(fetchCatalogRestOrderNestedStack, 'FetchCatalogRestOrderLambda', {
-      ...defaultLambdaConfig,
-      entry: '../../serverless/src/fetchCatalogRestOrder/handler.js',
-      functionName: 'fetchCatalogRestOrder',
-      functionNamePrefix
-    })
-
-    /**
-     * Fetch CMR Ordering Order
-     */
-    const fetchCmrOrderingOrderNestedStack = new cdk.NestedStack(scope, 'FetchCmrOrderingOrderNestedStack')
-    const { lambdaFunction: fetchCmrOrderingOrderLambda } = new application.NodeJsFunction(fetchCmrOrderingOrderNestedStack, 'FetchCmrOrderingOrderLambda', {
-      ...defaultLambdaConfig,
-      entry: '../../serverless/src/fetchCmrOrderingOrder/handler.js',
-      functionName: 'fetchCmrOrderingOrder',
-      functionNamePrefix
-    })
-
-    /**
      * Fetch Harmony Order
      */
     const fetchHarmonyOrderNestedStack = new cdk.NestedStack(scope, 'FetchHarmonyOrderNestedStack')
@@ -82,17 +54,6 @@ export class StepFunctions extends Construct {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/fetchHarmonyOrder/handler.js',
       functionName: 'fetchHarmonyOrder',
-      functionNamePrefix
-    })
-
-    /**
-     * Fetch SWODLR Order
-     */
-    const fetchSwodlrOrderNestedStack = new cdk.NestedStack(scope, 'FetchSwodlrOrderNestedStack')
-    const { lambdaFunction: fetchSwodlrOrderLambda } = new application.NodeJsFunction(fetchSwodlrOrderNestedStack, 'FetchSwodlrOrderLambda', {
-      ...defaultLambdaConfig,
-      entry: '../../serverless/src/fetchSwodlrOrder/handler.js',
-      functionName: 'fetchSwodlrOrder',
       functionNamePrefix
     })
 
@@ -115,40 +76,13 @@ export class StepFunctions extends Construct {
             Type: 'Choice',
             Choices: [{
               Variable: '$.orderType',
-              StringEquals: 'ESI',
-              Next: 'FetchCatalogRestOrderStatus'
-            }, {
-              Variable: '$.orderType',
-              StringEquals: 'ECHO ORDERS',
-              Next: 'FetchCmrOrderingOrderStatus'
-            }, {
-              Variable: '$.orderType',
               StringEquals: 'Harmony',
               Next: 'FetchHarmonyOrderStatus'
-            }, {
-              Variable: '$.orderType',
-              StringEquals: 'SWODLR',
-              Next: 'FetchSwodlrOrderStatus'
             }]
-          },
-          FetchCatalogRestOrderStatus: {
-            Type: 'Task',
-            Resource: fetchCatalogRestOrderLambda.functionArn,
-            Next: 'CheckOrderStatus'
-          },
-          FetchCmrOrderingOrderStatus: {
-            Type: 'Task',
-            Resource: fetchCmrOrderingOrderLambda.functionArn,
-            Next: 'CheckOrderStatus'
           },
           FetchHarmonyOrderStatus: {
             Type: 'Task',
             Resource: fetchHarmonyOrderLambda.functionArn,
-            Next: 'CheckOrderStatus'
-          },
-          FetchSwodlrOrderStatus: {
-            Type: 'Task',
-            Resource: fetchSwodlrOrderLambda.functionArn,
             Next: 'CheckOrderStatus'
           },
           CheckOrderStatus: {
@@ -192,47 +126,6 @@ export class StepFunctions extends Construct {
     })
 
     /**
-     * Submit Catalog Rest Order
-     */
-    const submitCatalogRestOrderNestedStack = new cdk.NestedStack(scope, 'SubmitCatalogRestOrderNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(submitCatalogRestOrderNestedStack, 'SubmitCatalogRestOrderLambda', {
-      ...defaultLambdaConfig,
-      environment: {
-        ...defaultLambdaConfig.environment,
-        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
-      },
-      entry: '../../serverless/src/submitCatalogRestOrder/handler.js',
-      functionName: 'submitCatalogRestOrder',
-      functionNamePrefix,
-      memorySize: 192,
-      sqs: {
-        queue: queues.catalogRestOrderQueue
-      },
-      timeout: cdk.Duration.minutes(10)
-    })
-
-    /**
-     * Submit CMR Ordering Order
-     */
-    const submitCmrOrderingOrderNestedStack = new cdk.NestedStack(scope, 'SubmitCmrOrderingOrderNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(submitCmrOrderingOrderNestedStack, 'SubmitCmrOrderingOrderLambda', {
-      ...defaultLambdaConfig,
-      environment: {
-        ...defaultLambdaConfig.environment,
-        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
-      },
-      entry: '../../serverless/src/submitCmrOrderingOrder/handler.js',
-      functionName: 'submitCmrOrderingOrder',
-      functionNamePrefix,
-      sqs: {
-        queue: queues.cmrOrderingOrderQueue
-      },
-      timeout: cdk.Duration.minutes(10)
-    })
-
-    /**
      * Submit Harmony Order
      */
     const submitHarmonyOrderNestedStack = new cdk.NestedStack(scope, 'SubmitHarmonyOrderNestedStack')
@@ -249,26 +142,6 @@ export class StepFunctions extends Construct {
       memorySize: 256,
       sqs: {
         queue: queues.harmonyOrderQueue
-      },
-      timeout: cdk.Duration.minutes(10)
-    })
-
-    /**
-     * Submit SWODLR Order
-     */
-    const submitSwodlrOrderNestedStack = new cdk.NestedStack(scope, 'SubmitSwodlrOrderNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(submitSwodlrOrderNestedStack, 'SubmitSwodlrOrderLambda', {
-      ...defaultLambdaConfig,
-      environment: {
-        ...defaultLambdaConfig.environment,
-        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
-      },
-      entry: '../../serverless/src/submitSwodlrOrder/handler.js',
-      functionName: 'submitSwodlrOrder',
-      functionNamePrefix,
-      sqs: {
-        queue: queues.swodlrOrderQueue
       },
       timeout: cdk.Duration.minutes(10)
     })

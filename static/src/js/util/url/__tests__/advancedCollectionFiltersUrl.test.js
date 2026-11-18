@@ -63,8 +63,8 @@ const advancedFilterCases = [
   },
   {
     key: 'serviceName',
-    value: ['Harmony', 'OPeNDAP'],
-    queryString: '?service_name[0]=Harmony&service_name[1]=OPeNDAP'
+    value: ['Harmony'],
+    queryString: '?service_name[0]=Harmony'
   },
   {
     key: 'toolName',

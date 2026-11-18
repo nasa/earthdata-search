@@ -67,7 +67,7 @@ describe('queryToHumanizedList', () => {
   test('returns a humanized param for Customizable', () => {
     const query = {
       hasGranulesOrCwic: true,
-      serviceType: ['esi', 'opendap', 'harmony']
+      serviceType: ['harmony']
     }
 
     const subscriptionType = 'collection'

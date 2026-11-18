@@ -29,7 +29,7 @@ const getApolloClient = ({
   earthdataEnvironment,
   edlToken
 }) => {
-  const { cmrHost, graphQlHost } = getEarthdataConfig(earthdataEnvironment)
+  const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
   // If the client has already been created with the same edlToken, return it
   // The edlToken will change when the cookie has been loaded, so we need to create a new client
@@ -94,27 +94,13 @@ const getApolloClient = ({
     uri: `${graphQlHost}/api`
   })
 
-  // Create the HTTP link for the CMR Ordering API
-  const cmrOrderingLink = createHttpLink({
-    uri: `${cmrHost}/ordering/api`
-  })
-
-  const cmrLinks = ApolloLink.split(
-    // If the clientName is 'cmrOrdering', use the cmrOrderingLink
-    (operation) => operation.getContext().clientName === apolloClientNames.CMR_ORDERING,
-    cmrTokenAuthLink.concat(cmrOrderingLink),
-    // Default to the cmrGraphqlLink
-    cmrTokenAuthLink.concat(cmrGraphqlLink)
-  )
-
   // Create a new ApolloClient instance
   client = new ApolloClient({
     cache,
     link: ApolloLink.split(
       // If the clientName is 'cmrOrdering' or 'cmrGraphql', use the cmrLinks to determine the endpoint
-      (operation) => operation.getContext().clientName === apolloClientNames.CMR_ORDERING
-        || operation.getContext().clientName === apolloClientNames.CMR_GRAPHQL,
-      cmrLinks,
+      (operation) => operation.getContext().clientName === apolloClientNames.CMR_GRAPHQL,
+      cmrTokenAuthLink.concat(cmrGraphqlLink),
       // Default to the edscLink
       edlTokenAuthLink.concat(edscLink)
     )

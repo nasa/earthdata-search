@@ -11,16 +11,10 @@ import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRa
 import Skeleton from '../../Skeleton/Skeleton'
 
 import setupTest from '../../../../../../vitestConfigs/setupTest'
-import EchoForm from '../EchoForm'
 
 import { radioListItemSkeleton } from '../../FormFields/AccessMethodRadio/skeleton'
 
-import {
-  harmonyAccessMethod,
-  echoForm,
-  rawModel,
-  opendapAccessMethod
-} from './__mocks__/mocks'
+import { harmonyAccessMethod } from './__mocks__/mocks'
 
 vi.mock('../../Skeleton/Skeleton', () => ({ default: vi.fn(() => <div />) }))
 
@@ -29,14 +23,6 @@ vi.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', async () => ({
     (await vi.importActual('../../FormFields/AccessMethodRadio/AccessMethodRadio')).AccessMethodRadio
   )
 }))
-
-// Mock the Swodlr max value so the mock objects don't get so large in the tests
-vi.mock('../../../constants/swodlrConstants', async () => ({
-  ...(await vi.importActual('../../../constants/swodlrConstants')),
-  maxSwodlrGranuleCount: 2
-}))
-
-vi.mock('../EchoForm', () => ({ default: vi.fn(() => <div />) }))
 
 const emptySpatial = {
   boundingBox: [],
@@ -176,35 +162,6 @@ describe('AccessMethod component', () => {
           .objectContaining({ shapes: radioListItemSkeleton }), {})
       })
     })
-
-    test('updates the selected access method when type is orderable', async () => {
-      const collectionId = 'collectionId'
-      const { props, user } = setup({
-        overrideProps: {
-          accessMethods: {
-            esi0: {
-              isValid: true,
-              type: 'ESI'
-            }
-          },
-          metadata: {
-            conceptId: collectionId,
-            granule_count: 10000
-          }
-        }
-      })
-
-      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
-      await user.click(directDownloadAccessMethodRadioButton)
-
-      expect(props.onSelectAccessMethod).toHaveBeenCalledTimes(1)
-
-      // Multiple `ESI` services are possible for a collection
-      expect(props.onSelectAccessMethod).toHaveBeenCalledWith({
-        collectionId,
-        selectedAccessMethod: 'esi0'
-      })
-    })
   })
 
   describe('radio button display', () => {
@@ -224,54 +181,6 @@ describe('AccessMethod component', () => {
       expect(directDownloadAccessMethodRadioButton.value).toEqual('download')
     })
 
-    test('renders a radio button for echo orders', () => {
-      setup({
-        overrideProps: {
-          accessMethods: {
-            echoOrder0: {
-              isValid: true,
-              type: 'ECHO ORDERS'
-            }
-          }
-        }
-      })
-
-      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
-      expect(directDownloadAccessMethodRadioButton.value).toEqual('echoOrder0')
-    })
-
-    test('renders a radio button for esi', () => {
-      setup({
-        overrideProps: {
-          accessMethods: {
-            esi: {
-              isValid: true,
-              type: 'ESI'
-            }
-          }
-        }
-      })
-
-      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
-      expect(directDownloadAccessMethodRadioButton.value).toEqual('esi')
-    })
-
-    test('renders a radio button for opendap', () => {
-      setup({
-        overrideProps: {
-          accessMethods: {
-            opendap: {
-              isValid: true,
-              type: 'OPeNDAP'
-            }
-          }
-        }
-      })
-
-      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
-      expect(directDownloadAccessMethodRadioButton.value).toEqual('opendap')
-    })
-
     test('renders a radio button for harmony', () => {
       setup({
         overrideProps: {
@@ -287,8 +196,6 @@ describe('AccessMethod component', () => {
         checked: false,
         description: 'Select from the parameters below to customize your download',
         details: 'Select options like variables, transformations, and output formats by applying parameters. Data will be staged in the cloud for download and analysis.',
-        disabled: false,
-        errorMessage: '',
         externalLink: {
           link: 'https://harmony.earthdata.nasa.gov/',
           message: 'What is Harmony?'
@@ -303,8 +210,6 @@ describe('AccessMethod component', () => {
         checked: false,
         description: 'Select from the parameters below to customize your download',
         details: 'Select options like variables, transformations, and output formats by applying parameters. Data will be staged in the cloud for download and analysis.',
-        disabled: false,
-        errorMessage: '',
         externalLink: {
           link: 'https://harmony.earthdata.nasa.gov/',
           message: 'What is Harmony?'
@@ -317,316 +222,6 @@ describe('AccessMethod component', () => {
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony')
-    })
-  })
-
-  describe('Selected Access Method: Echo Forms/Echo Orders', () => {
-    test('lazy loads the echo-forms component and provides the correct fallback', async () => {
-      const collectionId = 'collectionId'
-
-      setup({
-        overrideProps: {
-          accessMethods: {
-            echoOrder0: {
-              isValid: true,
-              type: 'ECHO ORDERS',
-              form: echoForm
-            }
-          },
-          metadata: {
-            conceptId: collectionId
-          },
-          selectedAccessMethod: 'echoOrder0'
-        }
-      })
-
-      // Spinner up before the lazy loaded component has completed loading
-      expect(screen.getByTestId('access-method-echoform-spinner')).toBeInTheDocument()
-
-      // Wait for the lazy loaded component to load with the mocked implementation
-      await waitFor(() => expect(EchoForm).toHaveBeenCalledTimes(1))
-      expect(EchoForm).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        form: echoForm,
-        methodKey: 'echoOrder0',
-        onUpdateAccessMethod: expect.any(Function),
-        rawModel: null,
-        spatial: emptySpatial,
-        temporal: {}
-      }, {})
-    })
-
-    test('renders an echoform with saved fields', async () => {
-      const collectionId = 'collectionId'
-
-      setup({
-        overrideProps: {
-          accessMethods: {
-            echoOrder0: {
-              isValid: true,
-              type: 'ECHO ORDERS',
-              form: echoForm,
-              rawModel
-            }
-          },
-          metadata: {
-            conceptId: collectionId
-          },
-          selectedAccessMethod: 'echoOrder0'
-        }
-      })
-
-      // TODO this gets called once if ran with `.only` vitest is not clearing this correctly between
-      // this and the other `echoform` tests
-      await waitFor(() => {
-        expect(EchoForm).toHaveBeenCalledTimes(2)
-      })
-
-      expect(EchoForm).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        form: echoForm,
-        methodKey: 'echoOrder0',
-        onUpdateAccessMethod: expect.any(Function),
-        rawModel,
-        spatial: emptySpatial,
-        temporal: {}
-      }, {})
-    })
-  })
-
-  describe('Selected Access Method: OPeNDAP', () => {
-    test('selecting a output format calls onUpdateAccessMethod', async () => {
-      const collectionId = 'collectionId'
-      const { props, user } = setup({
-        overrideProps: {
-          accessMethods: {
-            opendap: opendapAccessMethod
-          },
-          metadata: {
-            conceptId: collectionId
-          },
-          selectedAccessMethod: 'opendap'
-        }
-      })
-
-      expect(screen.getByRole('option', { name: 'Default Format' }).selected).toBe(true)
-      expect(screen.getByRole('option', { name: 'Default Format' }).value).toBe('')
-
-      const selectElement = screen.getByTestId('access-methods__output-format-options')
-
-      await user.selectOptions(selectElement, 'nc4')
-
-      expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-      expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        method: {
-          opendap: {
-            selectedOutputFormat: 'nc4'
-          }
-        }
-      })
-    })
-
-    describe('Variables Subsetting', () => {
-      describe('when variables subsetting is supported', () => {
-        describe('and when variables is an empty object', () => {
-          test('displays meaningful message', () => {
-            const collectionId = 'collectionId'
-
-            setup({
-              overrideProps: {
-                accessMethods: {
-                  opendap: {
-                    ...opendapAccessMethod,
-                    variables: {}
-                  }
-                },
-                metadata: {
-                  conceptId: collectionId
-                },
-                selectedAccessMethod: 'opendap'
-              }
-            })
-
-            expect(screen.getByText('No variables available for selected item.')).toBeInTheDocument()
-            expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
-            expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
-          })
-        })
-
-        describe('and when variables is a populated object', () => {
-          test('displays Edit Variables Button', () => {
-            const collectionId = 'collectionId'
-
-            setup({
-              overrideProps: {
-                accessMethods: {
-                  opendap: opendapAccessMethod
-                },
-                metadata: {
-                  conceptId: collectionId
-                },
-                selectedAccessMethod: 'opendap'
-              }
-            })
-
-            expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
-          })
-        })
-
-        describe('when the variables have been selected', () => {
-          test('displays the number of selected variables', async () => {
-            const selectedVariables = ['V1233612363-E2E_18_4']
-            setup({
-              overrideProps: {
-                accessMethods: {
-                  opendap: {
-                    ...opendapAccessMethod,
-                    selectedVariables
-                  }
-                },
-                selectedAccessMethod: 'opendap'
-              }
-            })
-
-            // Check if the text indicating the number of selected variables is present
-            expect(screen.getByText(`${selectedVariables.length} variable selected`)).toBeInTheDocument()
-          })
-        })
-      })
-    })
-  })
-
-  describe('Selected Access Method: SWODLR', () => {
-    describe('when there are less than 10 granules', () => {
-      test('SWODLR Option displayed', async () => {
-        const collectionId = 'collectionId'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              swodlr: {
-                type: 'SWODLR',
-                supportsSwodlr: true
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'swodlr',
-            projectCollection: {
-              isVisible: true,
-              granules: {
-                addedGranuleIds: [
-                  'G10000000000-EDSC',
-                  'G1000000001-EDSC'
-                ],
-                byId: {
-                  'G10000000000-EDSC': {
-                    id: 'G10000000000-EDSC'
-                  },
-                  'G1000000001-EDSC': {
-                    id: 'G1000000001-EDSC'
-                  }
-                }
-              }
-            }
-          }
-        })
-
-        const swodlrText = await screen.findByText('Granule Extent')
-        expect(swodlrText).toBeInTheDocument()
-      })
-
-      describe('when the granule list contains undefined values', () => {
-        test('does not load the SWODLR form', async () => {
-          const collectionId = 'C1000000000-EDSC'
-          setup({
-            overrideProps: {
-              accessMethods: {
-                swodlr: {
-                  type: 'SWODLR',
-                  supportsSwodlr: true
-                }
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'swodlr',
-              projectCollection: {
-                isVisible: true,
-                granules: {
-                  addedGranuleIds: [
-                    'G1000000000-EDSC',
-                    'G1000000001-EDSC',
-                    'G1000000002-EDSC'
-                  ],
-                  byId: {}
-                }
-              }
-            }
-          })
-
-          await waitFor(() => {
-            const swodlrText = screen.queryByText('Granule Extent')
-
-            // The swodlr form will not load
-            expect(swodlrText).not.toBeInTheDocument()
-          })
-        })
-      })
-    })
-
-    describe('when there are more than 10 granules', () => {
-      test('SWODLR Options do not display', async () => {
-        const collectionId = 'C1000000000-EDSC'
-        setup({
-          overrideProps: {
-            accessMethods: {
-              swodlr: {
-                type: 'SWODLR',
-                supportsSwodlr: true
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            },
-            selectedAccessMethod: 'swodlr',
-            projectCollection: {
-              isVisible: true,
-              granules: {
-                addedGranuleIds: [
-                  'G1000000000-EDSC',
-                  'G1000000001-EDSC',
-                  'G1000000002-EDSC'
-                ],
-                byId: {}
-              }
-            }
-          },
-          overrideZustandState: {
-            granule: {
-              granuleMetadata: {
-                'G1000000000-EDSC': {
-                  id: 'G1000000000-EDSC'
-                },
-                'G1000000001-EDSC': {
-                  id: 'G1000000001-EDSC'
-                },
-                'G1000000002-EDSC': {
-                  id: 'G1000000002-EDSC'
-                }
-              }
-            }
-          }
-        })
-
-        await waitFor(() => {
-          const swodlrText = screen.queryByText('Granule Extent')
-
-          // The swodlr form will not load
-          expect(swodlrText).not.toBeInTheDocument()
-        })
-      })
     })
   })
 

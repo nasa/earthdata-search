@@ -601,20 +601,6 @@ export type SubscriptionResponse = {
 }
 
 /**
- * Represents an ECHO Order Option returned by the GraphQL query.
- */
-export interface OrderOptionItem {
-  /** The unique CMR concept ID for the order option. */
-  conceptId: string
-  /** The specific revision ID of the order option. */
-  revisionId?: string
-  /** The name of the order option. */
-  name: string
-  /** The ECHO Form XML associated with this order option. */
-  form: string
-}
-
-/**
  * Represents a Variable returned by the GraphQL query.
  */
 export interface ServiceVariableItem {
@@ -654,15 +640,6 @@ export interface ServiceItem {
   supportedOutputProjections?: Record<string, unknown>[]
   /** List of format name combinations which explicitly state which re-formatting options are available. (Generic as no subfields queried) */
   supportedReformattings?: Record<string, unknown>[]
-  /** The maximum number of items (granules) per order allowed by this service. */
-  maxItemsPerOrder?: number
-  /** The ECHO order options associated with this service. */
-  orderOptions?: {
-    /** The total number of order options available. */
-    count: number
-    /** The array of order option items. */
-    items: OrderOptionItem[]
-  }
   /** The variables associated with this service. */
   variables?: {
     /** The total number of variables associated with the service. */
@@ -721,51 +698,8 @@ export type HarmonyOrderInformation = {
   jobId: string
 }
 
-/** Order information for SWODLR orders */
-export type SwodlrOrderInformation = {
-  /** The reason message (I think its a status?) */
-  reason: string
-  /** The granules associated with the order */
-  granules: {
-    /** The granule URI */
-    uri: string
-  }[]
-}
-
-/** Order information for ESI orders */
-export type EsiOrderInformation = {
-  /** Contact information for the order */
-  contactInformation: {
-    /** The contact name */
-    contactName: string
-    /** The contact email */
-    contactEmail: string
-  }
-  /** The download URLs for the order */
-  downloadUrls: {
-    /** The download URLs for the order */
-    downloadUrl: string[]
-  }
-  /** Process information for the order */
-  processInfo: {
-    /** The process message */
-    message: string
-  }
-  /** Request status information for the order */
-  requestStatus: {
-    /** The request status */
-    status: string
-    /** The number of items processed */
-    numberProcessed: number
-    /** The total number of items */
-    totalNumber: number
-  }
-}
-
 /** Combined order information type */
-export type OrderInformation = EsiOrderInformation
-  & HarmonyOrderInformation
-  & SwodlrOrderInformation
+export type OrderInformation = HarmonyOrderInformation
 
 /** A retrieval order */
 export interface RetrievalOrder {
@@ -797,7 +731,7 @@ export interface RetrievalCollection {
   granuleCount: number
   /** Access method configuration for data retrieval */
   accessMethod: {
-    /** Type of access method (e.g., 'download', 'opendap', 'esi') */
+    /** Type of access method (e.g., 'download', 'harmony') */
     type: string
   }
   /** ISO timestamp when the retrieval collection was created */

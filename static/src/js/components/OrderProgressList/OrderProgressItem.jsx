@@ -10,7 +10,6 @@ import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../share
 import ExternalLink from '../ExternalLink/ExternalLink'
 
 import { ACCESS_METHOD_TYPES } from '../../../../../sharedConstants/accessMethodTypes'
-import { ORDER_STATES } from '../../../../../sharedConstants/orderStates'
 
 import './OrderProgressItem.scss'
 
@@ -41,31 +40,6 @@ export const OrderProgressItem = ({
     }
 
     jobInformationHref = domainName && orderId ? `${domainName}/workflow-ui/${orderId}` : null
-  }
-
-  if (type === ACCESS_METHOD_TYPES.ESI) {
-    const { requestStatus = {} } = orderInformation
-
-    const {
-      totalNumber = 0,
-      numberProcessed = 0
-    } = requestStatus
-
-    numGranulesProccessed = numberProcessed
-    totalGranulesInOrder = totalNumber
-
-    if (totalGranulesInOrder === 0) {
-      totalPercentProcessed = 0
-    } else {
-      totalPercentProcessed = Math.floor((numGranulesProccessed / totalGranulesInOrder) * 100)
-    }
-  }
-
-  // Grab the order status if it exists and check if it's complete
-  const { status = 'created' } = orderInformation
-
-  if (type === ACCESS_METHOD_TYPES.SWODLR && status === ORDER_STATES.COMPLETE) {
-    totalPercentProcessed = 100
   }
 
   const badgeClass = classNames(

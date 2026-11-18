@@ -8,15 +8,9 @@ export interface QueuesProps {
 }
 
 export class Queues extends Construct {
-  public readonly catalogRestOrderQueue: sqs.Queue
-
-  public readonly cmrOrderingOrderQueue: sqs.Queue
-
   public readonly colorMapsProcessingQueue: sqs.Queue
 
   public readonly harmonyOrderQueue: sqs.Queue
-
-  public readonly swodlrOrderQueue: sqs.Queue
 
   public readonly tagProcessingQueue: sqs.Queue
 
@@ -28,36 +22,6 @@ export class Queues extends Construct {
     const {
       queueNameSuffix = ''
     } = props
-
-    // CatalogRestOrderQueue
-    const catalogRestOrderDeadLetterQueue = new sqs.Queue(scope, 'CatalogRestOrderDeadLetterQueue', {
-      queueName: `${scope.stackName}-CatalogRestOrderDeadLetterQueue${queueNameSuffix}`,
-      retentionPeriod: cdk.Duration.days(14)
-    })
-    const catalogRestOrderQueue = new sqs.Queue(scope, 'CatalogRestOrderQueue', {
-      queueName: `${scope.stackName}-CatalogRestOrderQueue${queueNameSuffix}`,
-      visibilityTimeout: cdk.Duration.seconds(600),
-      deadLetterQueue: {
-        queue: catalogRestOrderDeadLetterQueue,
-        maxReceiveCount: 2
-      }
-    })
-    this.catalogRestOrderQueue = catalogRestOrderQueue
-
-    // CmrOrderingOrderQueue
-    const cmrOrderingOrderDeadLetterQueue = new sqs.Queue(scope, 'CmrOrderingOrderDeadLetterQueue', {
-      queueName: `${scope.stackName}-CmrOrderingOrderDeadLetterQueue${queueNameSuffix}`,
-      retentionPeriod: cdk.Duration.days(14)
-    })
-    const cmrOrderingOrderQueue = new sqs.Queue(scope, 'CmrOrderingOrderQueue', {
-      queueName: `${scope.stackName}-CmrOrderingOrderQueue${queueNameSuffix}`,
-      visibilityTimeout: cdk.Duration.seconds(600),
-      deadLetterQueue: {
-        maxReceiveCount: 2,
-        queue: cmrOrderingOrderDeadLetterQueue
-      }
-    })
-    this.cmrOrderingOrderQueue = cmrOrderingOrderQueue
 
     // ColorMapsProcessingQueue
     const colorMapsProcessingQueue = new sqs.Queue(scope, 'ColorMapsProcessingQueue', {
@@ -81,21 +45,6 @@ export class Queues extends Construct {
       }
     })
     this.harmonyOrderQueue = harmonyOrderQueue
-
-    // SwodlrOrderQueue
-    const swodlrOrderDeadLetterQueue = new sqs.Queue(scope, 'SwodlrOrderDeadLetterQueue', {
-      queueName: `${scope.stackName}-SwodlrOrderDeadLetterQueue${queueNameSuffix}`,
-      retentionPeriod: cdk.Duration.days(14)
-    })
-    const swodlrOrderQueue = new sqs.Queue(scope, 'SwodlrOrderQueue', {
-      queueName: `${scope.stackName}-SwodlrOrderQueue${queueNameSuffix}`,
-      visibilityTimeout: cdk.Duration.seconds(600),
-      deadLetterQueue: {
-        maxReceiveCount: 2,
-        queue: swodlrOrderDeadLetterQueue
-      }
-    })
-    this.swodlrOrderQueue = swodlrOrderQueue
 
     // TagProcessingQueue
     const tagProcessingDeadLetterQueue = new sqs.Queue(scope, 'TagProcessingDeadLetterQueue', {

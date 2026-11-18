@@ -2,11 +2,7 @@ import {
   DerivedHarmonyState,
   HarmonyCapabilitiesDocument
 } from '../../../../util/getDerivedHarmonyState/derivedHarmonyStateTypes'
-import { HarmonyAccessMethod, OpendapAccessMethod } from '../../../../zustand/types'
-
-export const echoForm = '<form xmlns="http://echo.nasa.gov/v9/echoforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <model> <instance> <ecs:options xmlns:ecs="http://ecs.nasa.gov/options"> <!-- ECS distribution options example --> <ecs:distribution> <ecs:mediatype> <ecs:value>FtpPull</ecs:value> </ecs:mediatype> <ecs:mediaformat> <ecs:ftppull-format> <ecs:value>FILEFORMAT</ecs:value> </ecs:ftppull-format> </ecs:mediaformat> </ecs:distribution> <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing> <ecs:ancillary> <ecs:orderQA/> <ecs:orderPH/> <ecs:orderBrowse/> </ecs:ancillary> </ecs:options> </instance> </model> <ui> <group id="mediaOptionsGroup" label="Media Options" ref="ecs:distribution"> <output id="MediaTypeOutput" label="Media Type:" relevant="ecs:mediatype/ecs:value =\'FtpPull\'" type="xsd:string" value="\'HTTPS Pull\'"/> <output id="FtpPullMediaFormatOutput" label="Media Format:" relevant="ecs:mediaformat/ecs:ftppull-format/ecs:value=\'FILEFORMAT\'" type="xsd:string" value="\'File\'"/> </group> <group id="checkancillaryoptions" label="Additional file options:" ref="ecs:ancillary" relevant="//ecs:do-ancillaryprocessing = \'true\'"> <input label="Include associated Browse file in order" ref="ecs:orderBrowse" type="xsd:boolean"/> <input label="Include associated Quality Assurance file in order" ref="ecs:orderQA" type="xsd:boolean"/> <input label="Include associated Production History file in order" ref="ecs:orderPH" type="xsd:boolean"/> </group> </ui> </form>'
-
-export const rawModel = '<model> <instance> <ecs:options xmlns:ecs="http://ecs.nasa.gov/options"> <!-- ECS distribution options example --> <ecs:distribution> <ecs:mediatype> <ecs:value>FtpPull</ecs:value> </ecs:mediatype> <ecs:mediaformat> <ecs:ftppull-format> <ecs:value>FILEFORMAT</ecs:value> </ecs:ftppull-format> </ecs:mediaformat> </ecs:distribution> <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing> <ecs:ancillary> <ecs:orderQA/> <ecs:orderPH/> <ecs:orderBrowse/> </ecs:ancillary> </ecs:options> </instance> </model>'
+import { HarmonyAccessMethod } from '../../../../zustand/types'
 
 const harmonyCapabilitiesDocument: HarmonyCapabilitiesDocument = {
   conceptId: 'C100000-EDSC',
@@ -186,51 +182,6 @@ export const harmonyAccessMethod: HarmonyAccessMethod = {
       name: 'mock_variable',
       scienceKeywords: [],
       units: ''
-    }
-  }
-}
-
-export const opendapAccessMethod: OpendapAccessMethod = {
-  hierarchyMappings: [
-    {
-      id: 'V1233612363-E2E_18_4'
-    }
-  ],
-  id: 'S1224238025-E2E_18_4',
-  isValid: false,
-  keywordMappings: [
-    {
-      children: [
-        {
-          id: 'V1233612363-E2E_18_4'
-        }
-      ],
-      label: 'METHANE'
-    }
-  ],
-  type: 'OPeNDAP',
-  longName: 'AIRS/Aqua L3 Daily Standard Physical Retrieval (AIRS+AMSU) 1 degree x 1 degree V006 (AIRX3STD) at GES DISC',
-  name: 'AIRX3STD.006',
-  supportedOutputFormats: [
-    {
-      name: 'NETCDF-4',
-      mimeType: 'nc4'
-    }
-  ],
-  supportsVariableSubsetting: true,
-  variables: {
-    'V1233612363-E2E_18_4': {
-      conceptId: 'V1233612363-E2E_18_4',
-      definition: 'definition',
-      instanceInformation: null,
-      longName: '',
-      name: 'mock-variable',
-      nativeId: 'variable123',
-      scienceKeywords: [
-        {
-          category: 'EARTH SCIENCE'
-        }
-      ]
     }
   }
 }

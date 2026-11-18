@@ -87,26 +87,6 @@ const encodeConcatenateDownload = (projectCollection) => {
   return enableConcatenateDownload ? 't' : 'f'
 }
 
-const encodeSwodlrDownload = (projectCollection) => {
-  if (!projectCollection) return null
-
-  const {
-    accessMethods,
-    selectedAccessMethod
-  } = projectCollection
-
-  if (!accessMethods || !selectedAccessMethod) {
-    return null
-  }
-
-  const selectedMethod = accessMethods[selectedAccessMethod]
-  const {
-    swodlrData
-  } = selectedMethod
-
-  return swodlrData
-}
-
 const encodeSelectedVariables = (projectCollection) => {
   if (!projectCollection) return null
 
@@ -226,13 +206,6 @@ const decodedSelectedVariables = (pgParam) => {
   if (!variableIds) return undefined
 
   return variableIds.split('!')
-}
-
-const decodedSwodlrDownload = (pgParam) => {
-  const { swod: swodlrData } = pgParam
-  if (!swodlrData) return undefined
-
-  return swodlrData
 }
 
 const decodedSelectedAccessMethod = (pgParam) => {
@@ -391,9 +364,6 @@ export const encodeCollections = (props) => {
     // Encode selected variables
     pg.uv = encodeSelectedVariables(projectCollection)
 
-    // Encode swodlr form variables
-    pg.swod = encodeSwodlrDownload(projectCollection)
-
     // Encode concatenation selection
     pg.cd = encodeConcatenateDownload(projectCollection)
 
@@ -475,7 +445,6 @@ export const decodeCollections = (params) => {
     let removedGranuleIds = []
     let removedIsOpenSearch
     let selectedAccessMethod
-    let swodlrData
     let selectedOutputFormat
     let selectedOutputProjection
     let variableIds
@@ -555,11 +524,6 @@ export const decodeCollections = (params) => {
         enableConcatenateDownload = decodedConcatenateDownload(pCollection)
       }
 
-      // Decode swodlr subsettings on collections
-      if (selectedAccessMethod && selectedAccessMethod.startsWith('swodlr')) {
-        swodlrData = decodedSwodlrDownload(pCollection)
-      }
-
       // Determine if the collection is a CWIC collection
       isOpenSearch = excludedIsOpenSearch || addedIsOpenSearch || removedIsOpenSearch
 
@@ -599,14 +563,6 @@ export const decodeCollections = (params) => {
               selectedOutputFormat,
               selectedOutputProjection,
               selectedVariables: variableIds
-            }
-          }
-        }
-
-        if (swodlrData) {
-          projectById[collectionId].accessMethods = {
-            [selectedAccessMethod]: {
-              swodlrData
             }
           }
         }

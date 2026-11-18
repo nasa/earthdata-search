@@ -1,8 +1,6 @@
 import React, {
   useState,
   useEffect,
-  lazy,
-  Suspense,
   useMemo,
   useCallback
 } from 'react'
@@ -21,16 +19,10 @@ import Button from '../Button/Button'
 import EDSCAlert from '../EDSCAlert/EDSCAlert'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import RadioList from '../FormFields/RadioList/RadioList'
-import Spinner from '../Spinner/Spinner'
-import SwodlrForm from './SwodlrForm'
-
-import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
 import './AccessMethod.scss'
-
-const EchoForm = lazy(() => import('./EchoForm'))
 
 /**
  * Renders AccessMethod.
@@ -48,7 +40,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
 const AccessMethod = ({
   accessMethods = {},
   index = null,
-  isActive = false,
   metadata = {},
   onSelectAccessMethod,
   onUpdateAccessMethod,
@@ -74,8 +65,6 @@ const AccessMethod = ({
   const {
     outputFormatAvailability = {},
     outputProjectionAvailability = {},
-    form,
-    rawModel = null,
     selectedVariables = [],
     selectedOutputFormat = '',
     selectedOutputProjection = '',
@@ -87,7 +76,6 @@ const AccessMethod = ({
     supportsSpatialSubsetting = false,
     supportsVariableSubsetting = false,
     supportsConcatenation = false,
-    supportsSwodlr = false,
     enableTemporalSubsetting: isTemporalSubsettingSelected = false,
     enableSpatialSubsetting: isSpatialSubsettingSelected = false,
     enableConcatenateDownload: isConcatenateSelected = false,
@@ -254,11 +242,7 @@ const AccessMethod = ({
   const radioList = useMemo(() => {
     const accessMethodsByType = {
       download: [],
-      'ECHO ORDERS': [],
-      ESI: [],
-      OPeNDAP: [],
-      Harmony: [],
-      SWODLR: []
+      Harmony: []
     }
 
     Object.keys(accessMethods).forEach((methodKey) => {
@@ -270,12 +254,9 @@ const AccessMethod = ({
 
       let id = null
       let title = null
-      let subtitle = null
       let description = null
       let externalLink = null
       let details = null
-      let disabled = false
-      let errorMessage = ''
 
       switch (accessMethodType) {
         case 'download': {
@@ -283,39 +264,6 @@ const AccessMethod = ({
           title = 'Download all data'
           description = 'Direct download of all selected data'
           details = 'The data will be available for download immediately.'
-
-          break
-        }
-
-        case 'ECHO ORDERS': {
-          id = `${collectionId}_access-method__customize_${methodKey}`
-          title = 'Stage For Delivery'
-          subtitle = 'ECHO Orders'
-          description = 'Submit a request for data to be staged for delivery.'
-          details = 'The requested data files will be compressed in zip format and stored for retrieval via HTTP. You will receive an email from the data provider when your files are ready to download.'
-
-          break
-        }
-
-        case 'ESI': {
-          id = `${collectionId}_access-method__customize_${methodKey}`
-          title = 'Customize'
-          subtitle = 'ESI'
-          description = 'Select options like variables, transformations, and output formats for access via the data provider.'
-          details = 'The requested data files will be made available for access after the data provider has finished processing your request. You will receive an email from the data provider when your files are ready to download.'
-
-          break
-        }
-
-        case 'OPeNDAP': {
-          id = `${collectionId}_access-method__opendap_${methodKey}`
-          title = 'Customize with OPeNDAP'
-          description = 'Select options like variables, transformations, and output formats for direct access via link or script'
-          details = 'The data will be made available for access immediately.'
-          externalLink = {
-            link: 'https://harmony.earthdata.nasa.gov/',
-            message: 'What is Harmony?'
-          }
 
           break
         }
@@ -333,22 +281,6 @@ const AccessMethod = ({
           break
         }
 
-        case 'SWODLR': {
-          id = `${collectionId}_access-method__swodlr_${methodKey}`
-          title = 'Generate with SWODLR'
-          description = 'Set options and generate new standard products'
-          details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
-          // Update the error message if more than 10 granules are selected
-          disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
-          errorMessage = granuleList && granuleList.length > maxSwodlrGranuleCount ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
-          externalLink = {
-            link: swoldrMoreInfoPage,
-            message: 'What is SWODLR?'
-          }
-
-          break
-        }
-
         default:
           break
       }
@@ -359,11 +291,8 @@ const AccessMethod = ({
             id,
             methodKey,
             title,
-            subtitle,
             description,
             details,
-            disabled,
-            errorMessage,
             externalLink
           }
         )
@@ -372,10 +301,6 @@ const AccessMethod = ({
 
     return [
       ...accessMethodsByType.Harmony,
-      ...accessMethodsByType.OPeNDAP,
-      ...accessMethodsByType.ESI,
-      ...accessMethodsByType['ECHO ORDERS'],
-      ...accessMethodsByType.SWODLR,
       ...accessMethodsByType.download
     ]
   }, [accessMethods, collectionId, granuleList.length])
@@ -402,21 +327,8 @@ const AccessMethod = ({
     })
   }
 
-  const granuleListUndefined = granuleList[0] === undefined
-  const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
-
   // Default supportedOutputFormatOptions
   let supportedOutputFormatOptions = []
-
-  if (isOpendap) {
-    // Map each supported format to an <option> element
-    supportedOutputFormatOptions = supportedOutputFormats
-      .map((format) => (
-        <option key={format.mimeType} value={format.mimeType}>
-          {format.name}
-        </option>
-      ))
-  }
 
   // Default supportedOutputProjectionOptions
   let supportedOutputProjectionOptions = []
@@ -449,21 +361,13 @@ const AccessMethod = ({
     ))
   }
 
-  const echoFormFallback = (
-    <div className="access-method__echoform-loading">
-      <Spinner className="access-method__echoform-spinner" dataTestId="access-method-echoform-spinner" size="tiny" type="dots" />
-    </div>
-  )
-
   const isCustomizationAvailable = supportsVariableSubsetting
     || supportsTemporalSubsetting
     || supportsShapefileSubsetting
     || supportsBoundingBoxSubsetting
     || supportedOutputFormatOptions.length > 0
     || supportedOutputProjectionOptions.length > 0
-    || supportsSwodlr
     || supportsConcatenation
-    || (form && isActive)
 
   const {
     startDate = '',
@@ -537,23 +441,6 @@ const AccessMethod = ({
         {
           isCustomizationAvailable && (
             <>
-              {
-                form && isActive && (
-                  <ProjectPanelSection nested>
-                    <Suspense fallback={echoFormFallback}>
-                      <EchoForm
-                        collectionId={collectionId}
-                        form={form}
-                        methodKey={selectedAccessMethod}
-                        rawModel={rawModel}
-                        spatial={spatial}
-                        temporal={temporal}
-                        onUpdateAccessMethod={onUpdateAccessMethod}
-                      />
-                    </Suspense>
-                  </ProjectPanelSection>
-                )
-              }
               {
                 // Relay customization limitations
                 <div className="access-method__harmony-method-info">
@@ -805,19 +692,6 @@ const AccessMethod = ({
             </ProjectPanelSection>
           )
         }
-        {
-          (supportsSwodlr
-            && granuleList.length <= maxSwodlrGranuleCount
-            && !granuleListUndefined) && (
-            <SwodlrForm
-              granuleList={granuleList}
-              collectionId={collectionId}
-              onUpdateAccessMethod={onUpdateAccessMethod}
-              selectedAccessMethod={selectedAccessMethod}
-              setGranuleList={setGranuleList}
-            />
-          )
-        }
       </ProjectPanelSection>
     </div>
   )
@@ -826,7 +700,6 @@ const AccessMethod = ({
 AccessMethod.propTypes = {
   accessMethods: PropTypes.shape({}),
   index: PropTypes.number,
-  isActive: PropTypes.bool,
   metadata: PropTypes.shape({
     conceptId: PropTypes.string,
     endDate: PropTypes.string,
