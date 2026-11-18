@@ -444,17 +444,17 @@ describe('ProjectHeader component', () => {
     test('when the state is editing the submit button is visible', async () => {
       const { user } = setup()
 
-      await user.click(screen.getByRole('textbox'))
+      await user.click(screen.getByRole('textbox', { name: 'Project name' }))
 
-      expect(screen.getByTestId('submit_button')).toBeInTheDocument()
-      expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Submit project name' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Edit project name' })).not.toBeInTheDocument()
     })
 
     test('when the state is not editing the edit button is visible', async () => {
       setup()
 
-      expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
-      expect(screen.getByTestId('edit_button')).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Submit project name' })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Edit project name' })).toBeInTheDocument()
     })
 
     test('focusing on project name and pressing enter enables editing', async () => {
