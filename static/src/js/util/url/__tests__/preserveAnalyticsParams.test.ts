@@ -26,5 +26,4 @@ describe('preserveAnalyticsParams', () => {
 
     expect(result).toEqual('utm_source=earthdata%26mcp%2Btest')
   })
-
 })
