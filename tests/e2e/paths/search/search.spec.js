@@ -532,7 +532,7 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=esi&service_type[]=opendap&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
             route.fulfill({
               body: JSON.stringify(customizableBody),

@@ -44,7 +44,7 @@ describe('metricsDataAccess', () => {
       collections: [
         {
           collectionId: 'C1234567890-EDSC',
-          service: 'OPeNDAP',
+          service: 'Harmony',
           type: 'service'
         }
       ]
@@ -54,7 +54,7 @@ describe('metricsDataAccess', () => {
     expect(dataLayerPushSpy).toHaveBeenNthCalledWith(1, {
       event: 'dataAccess',
       dimension17: 'C1234567890-EDSC',
-      dimension18: 'OPeNDAP',
+      dimension18: 'Harmony',
       dimension19: 'service',
       dataAccessCategory: 'Data Access',
       dataAccessAction: 'Completion',

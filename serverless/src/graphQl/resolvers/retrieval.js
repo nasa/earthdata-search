@@ -4,7 +4,6 @@ import { SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 
 import { obfuscateId } from '../../util/obfuscation/obfuscateId'
 import { fetchGranuleLinks } from '../../util/fetchGranuleLinks'
-import { removeSpatialFromAccessMethod } from '../../util/removeSpatialFromAccessMethod'
 import { generateRetrievalPayloads } from '../../util/generateRetrievalPayloads'
 import { getQueueUrl, QUEUE_NAMES } from '../../util/getQueueUrl'
 import { ACCESS_METHOD_TYPES } from '../../../../sharedConstants/accessMethodTypes'
@@ -177,18 +176,16 @@ export default {
             userId
           })
 
-          const accessMethodWithoutSpatial = removeSpatialFromAccessMethod(accessMethod)
-
           if (existingAccessConfig.length) {
             await databaseClient.updateAccessConfiguration({
-              accessMethod: accessMethodWithoutSpatial
+              accessMethod
             }, {
               collectionId: id,
               userId
             })
           } else {
             await databaseClient.saveAccessConfiguration({
-              accessMethod: accessMethodWithoutSpatial,
+              accessMethod,
               collectionId: id,
               userId
             })
@@ -200,10 +197,7 @@ export default {
           const { type } = accessMethod
 
           if ([
-            ACCESS_METHOD_TYPES.ESI,
-            ACCESS_METHOD_TYPES.ECHO_ORDERS,
-            ACCESS_METHOD_TYPES.HARMONY,
-            ACCESS_METHOD_TYPES.SWODLR
+            ACCESS_METHOD_TYPES.HARMONY
           ].includes(type)) {
           // The insert above returns an array but we've only added a single row
           // so we will always take the first result
@@ -217,19 +211,9 @@ export default {
 
             let queueUrl
 
-            if (type === ACCESS_METHOD_TYPES.ESI) {
-              // Submits to Catalog Rest and is often referred to as a
-              // service order -- this is presenting in EDSC as the 'Customize' access method
-              queueUrl = getQueueUrl(QUEUE_NAMES.CatalogRestOrderQueue)
-            } else if (type === ACCESS_METHOD_TYPES.ECHO_ORDERS) {
-              // Submits to cmr-ordering and is often referred to as an
-              // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
-              queueUrl = getQueueUrl(QUEUE_NAMES.CmrOrderingOrderQueue)
-            } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
+            if (type === ACCESS_METHOD_TYPES.HARMONY) {
               // Submits to Harmony
               queueUrl = getQueueUrl(QUEUE_NAMES.HarmonyOrderQueue)
-            } else if (type === ACCESS_METHOD_TYPES.SWODLR) {
-              queueUrl = getQueueUrl(QUEUE_NAMES.SwodlrOrderQueue)
             }
 
             // Initialize the array we'll send to sqs

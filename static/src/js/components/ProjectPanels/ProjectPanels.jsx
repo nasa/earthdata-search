@@ -139,30 +139,6 @@ const ProjectPanels = () => {
     onChangePanel(panelId)
   }
 
-  // Function to check if the form can be reset
-  const canResetForm = (accessMethods, selectedAccessMethod) => {
-    if (!accessMethods || !selectedAccessMethod) return false
-
-    const { type = '' } = accessMethods[selectedAccessMethod]
-
-    if (type === 'ESI' || type === 'ECHO ORDERS') return true
-
-    return false
-  }
-
-  // Function to reset the form
-  const resetForm = (collectionId, selectedAccessMethod) => {
-    updateAccessMethod({
-      collectionId,
-      method: {
-        [selectedAccessMethod]: {
-          model: undefined,
-          rawModel: undefined
-        }
-      }
-    })
-  }
-
   const {
     allIds: projectIds,
     byId: projectCollectionsById
@@ -322,18 +298,6 @@ const ProjectPanels = () => {
         <span className="project-panels__collection-count">
           {`Collection ${index + 1} of ${projectIds.length}`}
         </span>
-        {
-          canResetForm(accessMethods, selectedAccessMethod) && (
-            <Button
-              className="project-panels__action"
-              label="Reset Form"
-              bootstrapVariant="light"
-              onClick={() => resetForm(collectionId, selectedAccessMethod)}
-            >
-              Reset Form
-            </Button>
-          )
-        }
         {
           index > 0 && (
             <Button

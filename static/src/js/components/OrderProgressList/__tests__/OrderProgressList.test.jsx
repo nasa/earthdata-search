@@ -2,13 +2,13 @@ import { screen } from '@testing-library/react'
 
 import { OrderProgressList } from '../OrderProgressList'
 
-import { retrievalStatusPropsEsi } from './mocks'
+import { retrievalStatusPropsHarmonyOrder } from './mocks'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
 
 const setup = setupTest({
   Component: OrderProgressList,
   defaultProps: {
-    retrievalOrders: retrievalStatusPropsEsi.orders
+    retrievalOrders: [retrievalStatusPropsHarmonyOrder]
   }
 })
 
@@ -20,6 +20,6 @@ describe('OrderProgressList component', () => {
 
   test('renders items', () => {
     setup()
-    expect(screen.queryAllByRole('listitem').length).toEqual(2)
+    expect(screen.queryAllByRole('listitem').length).toEqual(1)
   })
 })

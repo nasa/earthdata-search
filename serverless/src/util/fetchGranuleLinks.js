@@ -1,7 +1,6 @@
 import { ACCESS_METHOD_TYPES } from '../../../sharedConstants/accessMethodTypes'
 import fetchDownloadLinks from '../retrieveGranuleLinks/fetchDownloadLinks'
 import fetchHarmonyLinks from '../retrieveGranuleLinks/fetchHarmonyLinks'
-import { fetchOpendapLinks } from '../retrieveGranuleLinks/fetchOpendapLinks'
 import { flattenGranuleLinks } from '../retrieveGranuleLinks/flattenGranuleLinks'
 import { deobfuscateId } from './obfuscation/deobfuscateId'
 
@@ -58,18 +57,6 @@ export const fetchGranuleLinks = async ({
       }))
 
       break
-    case ACCESS_METHOD_TYPES.OPENDAP.toLowerCase():
-      links = await fetchOpendapLinks({
-        accessMethod,
-        collectionId,
-        earthdataEnvironment,
-        edlToken,
-        granuleParams,
-        pageNum,
-        requestId
-      })
-
-      break
     case ACCESS_METHOD_TYPES.HARMONY.toLowerCase():
       // When the order has multiple Harmony jobs, we need to return the links from every job
       if (retrievalCollectionRows.length > 1) {
@@ -101,37 +88,6 @@ export const fetchGranuleLinks = async ({
         links = fetchHarmonyLinks({ links: combinedOrderInformationLinks })
       } else {
         links = fetchHarmonyLinks(orderInformation)
-      }
-
-      done = true
-      break
-    case ACCESS_METHOD_TYPES.ESI.toLowerCase():
-      // When the order has multiple Harmony jobs, we need to return the links from every job
-      if (retrievalCollectionRows.length) {
-        // Combine the `order_information` objects from each row into a single object keyed by the `jobID`
-        const combinedOrderInformation = retrievalCollectionRows.reduce((acc, curr) => {
-          const { order_information: currentOrderInformation } = curr
-          const { downloadUrls, order = {} } = currentOrderInformation
-          const { orderId } = order
-
-          // Initialize the accumulator for this jobID if it doesn't exist
-          if (!acc[orderId]) {
-            acc[orderId] = {
-              orderInformation: { downloadUrls }
-            }
-          }
-
-          return acc
-        }, {})
-
-        // Combine the `links` array from each object in `combinedOrderInformation`
-        const combinedOrderInformationLinks = Object.values(combinedOrderInformation).flatMap(
-          // Using `|| []` will ensure we always return an array. This is important before the
-          // order information exists
-          (info) => info.orderInformation?.downloadUrls?.downloadUrl || []
-        )
-
-        links = { download: combinedOrderInformationLinks }
       }
 
       done = true

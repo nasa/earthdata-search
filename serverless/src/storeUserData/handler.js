@@ -5,7 +5,7 @@ import { getUrsUserData } from './getUrsUserData'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
- * Accepts a username and token to fetch profile information from URS and CMR-ordering
+ * Accepts a username and token to fetch profile information from URS
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */

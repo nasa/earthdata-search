@@ -40,7 +40,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
     }
 
     // If only displaying customizable collections, add a key of "Customizable"
-    if (subscriptionsQuery.serviceType && ['esi', 'opendap', 'harmony'].every((type) => subscriptionsQuery.serviceType.includes(type))) {
+    if (subscriptionsQuery.serviceType && ['harmony'].every((type) => subscriptionsQuery.serviceType.includes(type))) {
       values.push({
         key: 'serviceType',
         humanizedKey: 'Include only datasets that support customization'
