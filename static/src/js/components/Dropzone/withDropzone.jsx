@@ -82,7 +82,6 @@ export const withDropzone = (WrappedComponent) => {
 
         // Create the Dropzone instance
         Dz.autoDiscover = false
-        console.log('🚀 ~ withDropzone.jsx:83 ~ WithDropzone ~ dropzoneOptions:', dropzoneOptions)
         dropzoneRef.current = new Dz(dropzoneElement, {
           ...dropzoneOptions,
           accept: (file, done) => {
@@ -90,7 +89,6 @@ export const withDropzone = (WrappedComponent) => {
               name,
               type
             } = file
-            console.log('🚀 ~ withDropzone.jsx:83 ~ accept ~ file:', file)
 
             // Call lambda to get an s3 presigned url
             fetch(`${apiHost}/shapefile_upload_url`, {
@@ -105,7 +103,6 @@ export const withDropzone = (WrappedComponent) => {
               .then((res) => res.json())
               .then((data) => {
                 // Save the presigned URL and S3 key to the file object
-                console.log('🚀 ~ withDropzone.jsx:96 ~ WithDropzone ~ data:', data)
                 /* eslint-disable no-param-reassign */
                 file.uploadUrl = data.url
                 file.s3Key = data.key
@@ -117,7 +114,6 @@ export const withDropzone = (WrappedComponent) => {
         })
 
         dropzoneRef.current.on('processing', (file) => {
-          console.log('🚀 ~ withDropzone.jsx:85 ~ processing ~ file:', file)
           // Set the upload URL for the current file to the presigned S3 URL
           dropzoneRef.current.options.url = file.uploadUrl
         })

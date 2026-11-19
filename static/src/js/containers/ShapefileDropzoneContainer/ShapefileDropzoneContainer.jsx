@@ -70,13 +70,10 @@ export const ShapefileDropzoneContainer = () => {
       }
       onSuccess={
         async (file, resp, dropzoneEl) => {
-          console.log('🚀 ~ ShapefileDropzoneContainer.jsx:137 ~ ShapefileDropzoneContainer ~ file:', file)
           const { s3Key } = file
 
           const response = await fetch(`${apiHost}/convert_shapefile?s3Key=${encodeURIComponent(s3Key)}`)
           const data = await response.json()
-
-          console.log('🚀 ~ ShapefileDropzoneContainer.jsx:145 ~ ShapefileDropzoneContainer ~ data:', data)
 
           const { name, size } = file
           const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
