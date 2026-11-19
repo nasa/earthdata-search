@@ -11,7 +11,9 @@ export interface EarthdataSearchInfrastructureStackProps extends cdk.StackProps 
 const {
   DB_ALLOCATED_STORAGE = '20',
   DB_INSTANCE_CLASS = 'db.t3.micro',
+  EDSC_HOST = 'http://localhost:8080',
   NLP_SHORT_NAME_FILE_BUCKET_NAME = 'earthdata-search-dev-nlp-short-name-file',
+  SHAPEFILE_UPLOAD_BUCKET_NAME = 'earthdata-search-dev-shapefile-uploads',
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
   STAGE_NAME = 'dev',
@@ -126,6 +128,14 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                 Resource: '*'
               },
               {
+                // Allows `convertShapefile` to remove uploaded shapefiles after they are converted
+                Effect: 'Allow',
+                Action: [
+                  's3:DeleteObject'
+                ],
+                Resource: `arn:aws:s3:::${SHAPEFILE_UPLOAD_BUCKET_NAME}/*`
+              },
+              {
                 Effect: 'Allow',
                 Action: [
                   'bedrock:InvokeModelWithResponseStream',
@@ -196,6 +206,30 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryption: s3.BucketEncryption.S3_MANAGED,
       enforceSSL: true,
+      removalPolicy: RemovalPolicy.DESTROY
+    })
+
+    // S3 bucket for storing shapefiles to be converted
+    // eslint-disable-next-line no-new
+    new s3.Bucket(this, 'EDSCS3ShapefileBucket', {
+      bucketName: SHAPEFILE_UPLOAD_BUCKET_NAME,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      // The browser uploads directly to the bucket using a presigned URL from `getShapefileUploadUrl`
+      cors: [{
+        allowedHeaders: ['*'],
+        allowedMethods: [s3.HttpMethods.PUT],
+        allowedOrigins: [EDSC_HOST],
+        maxAge: 3000
+      }],
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      enforceSSL: true,
+      lifecycleRules: [{
+        // `convertShapefile` deletes files after a successful conversion, this cleans up
+        // any uploads that were abandoned or failed to convert
+        id: 'ExpireUnconvertedShapefiles',
+        enabled: true,
+        expiration: cdk.Duration.days(1)
+      }],
       removalPolicy: RemovalPolicy.DESTROY
     })
 

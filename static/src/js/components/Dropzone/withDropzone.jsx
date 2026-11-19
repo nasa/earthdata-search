@@ -9,6 +9,9 @@ import Dz from 'dropzone'
 import classNames from 'classnames'
 
 import { eventEmitter } from '../../events/events'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+
+const { apiHost } = getEnvironmentConfig()
 
 export const withDropzone = (WrappedComponent) => {
   const WithDropzone = (props) => {
@@ -79,7 +82,45 @@ export const withDropzone = (WrappedComponent) => {
 
         // Create the Dropzone instance
         Dz.autoDiscover = false
-        dropzoneRef.current = new Dz(dropzoneElement, dropzoneOptions)
+        console.log('🚀 ~ withDropzone.jsx:83 ~ WithDropzone ~ dropzoneOptions:', dropzoneOptions)
+        dropzoneRef.current = new Dz(dropzoneElement, {
+          ...dropzoneOptions,
+          accept: (file, done) => {
+            const {
+              name,
+              type
+            } = file
+            console.log('🚀 ~ withDropzone.jsx:83 ~ accept ~ file:', file)
+
+            // Call lambda to get an s3 presigned url
+            fetch(`${apiHost}/shapefile_upload_url`, {
+              method: 'POST',
+              body: JSON.stringify({
+                params: {
+                  contentType: type,
+                  filename: name
+                }
+              })
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                // Save the presigned URL and S3 key to the file object
+                console.log('🚀 ~ withDropzone.jsx:96 ~ WithDropzone ~ data:', data)
+                /* eslint-disable no-param-reassign */
+                file.uploadUrl = data.url
+                file.s3Key = data.key
+                /* eslint-enable no-param-reassign */
+
+                done()
+              })
+          }
+        })
+
+        dropzoneRef.current.on('processing', (file) => {
+          console.log('🚀 ~ withDropzone.jsx:85 ~ processing ~ file:', file)
+          // Set the upload URL for the current file to the presigned S3 URL
+          dropzoneRef.current.options.url = file.uploadUrl
+        })
 
         // Register event listeners
         dropzoneRef.current.on('dragleave', handleDragLeave)
