@@ -64,13 +64,25 @@ If you decide to install via Homebrew you'll need to create the default user.
 
     createuser -s postgres
 
+##### GDAL, Optional
+
+Shapefile uploads are converted to GeoJSON by the `convertShapefile` lambda, which runs GDAL's `ogr2ogr` command. In AWS this is provided by a Lambda layer (see [Building the GDAL Lambda layer](#building-the-gdal-lambda-layer)), but locally `ogr2ogr` needs to be installed and available on your `PATH`, otherwise uploading a shapefile will fail.
+
+**Recommended:** Use Homebrew
+
+    brew install gdal
+
+Verify the install with:
+
+    ogr2ogr --version
+
 ##### Docker, Optional
 
 Docker is used to simulate SQS locally using [ElasticMQ](https://github.com/softwaremill/elasticmq).
 
 ##### Valkey, Optional
 
-To use an image cache (for scaled images and NLP search) you need to have Valkey installed locally. 
+To use an image cache (for scaled images and NLP search) you need to have Valkey installed locally.
 
 **Recommended:** Use Homebrew
 
@@ -78,7 +90,7 @@ To use an image cache (for scaled images and NLP search) you need to have Valkey
     brew services start valkey
 
 **Migrating from Redis:**
-If you previously had Redis installed, you must stop and uninstall it, and ensure port `6379` is clear before starting Valkey. 
+If you previously had Redis installed, you must stop and uninstall it, and ensure port `6379` is clear before starting Valkey.
 
     brew services stop redis
     brew uninstall redis
