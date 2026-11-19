@@ -7,6 +7,20 @@
 
 import S3rver from 's3rver'
 
+const corsXml = `
+<CORSConfiguration>
+  <CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>HEAD</AllowedMethod>
+    <AllowedHeader>*</AllowedHeader>
+    <ExposeHeader>ETag</ExposeHeader>
+  </CORSRule>
+</CORSConfiguration>
+`
+
 const server = new S3rver({
   port: 4569,
   hostname: 'localhost',
@@ -14,6 +28,9 @@ const server = new S3rver({
   directory: './tmp',
   configureBuckets: [{
     name: process.env.NLP_SHORT_NAME_FILE_BUCKET_NAME
+  }, {
+    name: process.env.SHAPEFILE_UPLOAD_BUCKET_NAME,
+    configs: [corsXml]
   }]
 })
 
