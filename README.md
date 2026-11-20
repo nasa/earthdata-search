@@ -64,13 +64,25 @@ If you decide to install via Homebrew you'll need to create the default user.
 
     createuser -s postgres
 
+##### GDAL, Optional
+
+Shapefile uploads are converted to GeoJSON by the `convertShapefile` lambda, which runs GDAL's `ogr2ogr` command. In AWS this is provided by a Lambda layer (see [Building the GDAL Lambda layer](#building-the-gdal-lambda-layer)), but locally `ogr2ogr` needs to be installed and available on your `PATH`, otherwise uploading a shapefile will fail.
+
+**Recommended:** Use Homebrew
+
+    brew install gdal
+
+Verify the install with:
+
+    ogr2ogr --version
+
 ##### Docker, Optional
 
 Docker is used to simulate SQS locally using [ElasticMQ](https://github.com/softwaremill/elasticmq).
 
 ##### Valkey, Optional
 
-To use an image cache (for scaled images and NLP search) you need to have Valkey installed locally. 
+To use an image cache (for scaled images and NLP search) you need to have Valkey installed locally.
 
 **Recommended:** Use Homebrew
 
@@ -78,7 +90,7 @@ To use an image cache (for scaled images and NLP search) you need to have Valkey
     brew services start valkey
 
 **Migrating from Redis:**
-If you previously had Redis installed, you must stop and uninstall it, and ensure port `6379` is clear before starting Valkey. 
+If you previously had Redis installed, you must stop and uninstall it, and ensure port `6379` is clear before starting Valkey.
 
     brew services stop redis
     brew uninstall redis
@@ -201,6 +213,27 @@ with a JSON object of
 {
   "projection": <projection-code>
 }
+
+### Building the GDAL Lambda layer
+
+The `convertShapefile` lambda uses the [ogr2ogr](https://www.npmjs.com/package/ogr2ogr) package, which runs the `ogr2ogr` command line tool from [GDAL](https://gdal.org/). GDAL is not included in the Lambda runtime, so it is provided by a Lambda layer built from `gdal-layer.Dockerfile`.
+
+The layer is built for the `arm64` architecture on Amazon Linux 2023, matching the Node.js Lambda runtime. It only includes the `ogr2ogr` binary, the Shapefile and GeoJSON drivers, and PROJ for reprojection.
+
+To create a new layer (requires Docker):
+
+1. Update `GDAL_VERSION` and/or `PROJ_VERSION` at the top of `gdal-layer.Dockerfile`. Available versions are listed at [download.osgeo.org/gdal](https://download.osgeo.org/gdal/) and [download.osgeo.org/proj](https://download.osgeo.org/proj/).
+2. Build the layer:
+
+        npm run build:gdal-layer
+
+    This compiles PROJ and GDAL (expect it to take several minutes), tests the result inside the `public.ecr.aws/lambda/nodejs:22` image, and writes the layer to `layers/gdal-<GDAL_VERSION>-arm64.zip`. The build fails if the test conversion fails.
+3. Update the layer path in `cdk/earthdata-search/lib/earthdata-search-functions.ts` to the new zip file.
+4. Delete the old zip from `layers/` and commit the new one.
+
+If `convertShapefile` needs to support another input format, enable its driver in the GDAL `cmake` command in `gdal-layer.Dockerfile` (e.g. `-DOGR_ENABLE_DRIVER_KML=ON`) and rebuild the layer. Some drivers require additional libraries; see the [GDAL build documentation](https://gdal.org/en/stable/development/building_from_source.html).
+
+The lambda must set `GDAL_DATA=/opt/share/gdal` and `PROJ_DATA=/opt/share/proj` so GDAL and PROJ can find their data files in the layer.
 
 ### Run the Automated [Vitest](https://vitest.dev/) tests
 
