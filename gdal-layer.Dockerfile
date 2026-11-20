@@ -21,6 +21,7 @@ ARG PROJ_VERSION
 RUN dnf install -y \
     binutils \
     cmake \
+    expat-devel \
     findutils \
     gcc-c++ \
     gzip \
@@ -47,7 +48,11 @@ RUN curl -fsSL https://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz | tar
   && cmake --install proj-build
 
 # Minimal GDAL build to keep the layer well under Lambda's 250 MB unzipped limit: no language
-# bindings, no optional external libraries, and only the vector drivers `convertShapefile` needs
+# bindings, no optional external libraries, and only the vector drivers `convertShapefile` needs.
+# The drivers need to cover every file type the shapefile dropzone accepts:
+#   .zip (shapefile) => Shape, .json/.geojson => GeoJSON, .kml/.kmz => KML, .rss/.georss/.xml => GeoRSS
+# The KML and GeoRSS drivers need Expat to read files. `.kmz` files are unzipped by the
+# `convertShapefile` lambda, so the larger LIBKML driver isn't needed
 RUN curl -fsSL https://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz | tar xz \
   && cmake -S gdal-${GDAL_VERSION} -B gdal-build ${CMAKE_COMMON_OPTIONS} \
     -DCMAKE_PREFIX_PATH=/opt \
@@ -56,18 +61,21 @@ RUN curl -fsSL https://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSI
     -DBUILD_PYTHON_BINDINGS=OFF \
     -DGDAL_BUILD_OPTIONAL_DRIVERS=OFF \
     -DGDAL_USE_EXTERNAL_LIBS=OFF \
+    -DGDAL_USE_EXPAT=ON \
     -DGDAL_USE_ZLIB_INTERNAL=ON \
     -DOGR_BUILD_OPTIONAL_DRIVERS=OFF \
     -DOGR_ENABLE_DRIVER_GEOJSON=ON \
+    -DOGR_ENABLE_DRIVER_GEORSS=ON \
+    -DOGR_ENABLE_DRIVER_KML=ON \
     -DOGR_ENABLE_DRIVER_SHAPE=ON \
   && cmake --build gdal-build -j"$(nproc)" \
   && cmake --install gdal-build
 
-# Assemble the layer contents. sqlite is a PROJ runtime dependency that isn't guaranteed
-# to exist in the Lambda runtime, so it is bundled as well
+# Assemble the layer contents. sqlite (used by PROJ) and expat (used by GDAL) are runtime
+# dependencies that aren't guaranteed to exist in the Lambda runtime, so they are bundled as well
 RUN mkdir -p /layer/bin /layer/lib /layer/share \
   && cp /opt/bin/ogr2ogr /layer/bin/ \
-  && cp -P /opt/lib/libgdal.so* /opt/lib/libproj.so* /usr/lib64/libsqlite3.so* /layer/lib/ \
+  && cp -P /opt/lib/libgdal.so* /opt/lib/libproj.so* /usr/lib64/libsqlite3.so* /usr/lib64/libexpat.so* /layer/lib/ \
   && cp -r /opt/share/gdal /opt/share/proj /layer/share/ \
   && find /layer/bin /layer/lib -type f -exec strip --strip-unneeded {} + \
   && cd /layer \
@@ -87,13 +95,20 @@ COPY --from=build /gdal-${GDAL_VERSION}-arm64.zip /
 
 WORKDIR /tmp/layer-test
 
-# Round trip a point through a reprojected shapefile and back to GeoJSON in EPSG:4326
+# Round trip a point through each supported input format and back to GeoJSON in EPSG:4326.
+# `grep` ensures the feature survived the round trip, not just that a file was written
 RUN /opt/bin/ogr2ogr --version \
   && printf '%s' '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"name":"test"},"geometry":{"type":"Point","coordinates":[-77,38]}}]}' > input.geojson \
   && /opt/bin/ogr2ogr -f "ESRI Shapefile" output.shp input.geojson -t_srs EPSG:3857 \
-  && /opt/bin/ogr2ogr -f GeoJSON /vsistdout/ output.shp -t_srs EPSG:4326 > result.geojson \
-  && cat result.geojson \
-  && test -s result.geojson
+  && /opt/bin/ogr2ogr -f KML output.kml input.geojson \
+  && /opt/bin/ogr2ogr -f GeoRSS output.xml input.geojson -dsco USE_EXTENSIONS=YES \
+  && for file in input.geojson output.shp output.kml output.xml; do \
+    echo "Converting ${file}" \
+    && /opt/bin/ogr2ogr -f GeoJSON /vsistdout/ "${file}" -t_srs EPSG:4326 > result.geojson \
+    && cat result.geojson \
+    && grep -q '"Point"' result.geojson \
+    || exit 1; \
+  done
 
 # Only export the zip. Copying from the `test` stage ensures the tests run before it is exported
 FROM scratch

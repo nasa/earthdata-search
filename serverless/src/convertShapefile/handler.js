@@ -68,6 +68,32 @@ const flattenZipFile = async (fileContents, filename) => {
 }
 
 /**
+ * Returns the contents of the root KML document in a KMZ file. A KMZ is a zip containing one
+ * KML document (usually `doc.kml`) and optionally files it references, such as images. The
+ * Lambda layer's GDAL only includes the KML driver, which can't read KMZ files directly.
+ * Returns null if the KMZ doesn't contain a KML document.
+ * @param {Uint8Array} fileContents The contents of the KMZ file
+ */
+const extractKmlFromKmz = async (fileContents) => {
+  const contents = await JSZip.loadAsync(fileContents)
+
+  const kmlEntries = Object.values(contents.files)
+    .filter((entry) => (
+      !entry.dir
+      && !isIgnoredZipEntry(entry.name)
+      && entry.name.toLowerCase().endsWith('.kml')
+    ))
+
+  // Prefer `doc.kml` per the KMZ convention, otherwise use the first KML document in the archive
+  const rootEntry = kmlEntries.find(({ name }) => name.split('/').pop().toLowerCase() === 'doc.kml')
+    || kmlEntries[0]
+
+  if (!rootEntry) return null
+
+  return rootEntry.async('nodebuffer')
+}
+
+/**
  * Converts a shapefile that was uploaded to S3 into GeoJSON
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
@@ -112,9 +138,24 @@ const convertShapefile = async (event, context) => {
     // is preserved so ogr2ogr can choose the correct input driver (e.g. `.zip` => `/vsizip/`)
     workingDirectory = await mkdtemp(join(tmpdir(), 'convertShapefile-'))
     const filename = basename(s3Key)
-    const filePath = join(workingDirectory, filename)
+    let filePath = join(workingDirectory, filename)
 
     let fileContents = await response.Body.transformToByteArray()
+
+    // Extract the KML document from KMZ files so it can be read by the KML driver
+    if (filename.toLowerCase().endsWith('.kmz')) {
+      try {
+        const kmlContents = await extractKmlFromKmz(fileContents)
+
+        if (kmlContents) {
+          fileContents = kmlContents
+          filePath = filePath.replace(/\.kmz$/i, '.kml')
+        }
+      } catch (zipError) {
+        // If the kmz can't be read, convert the original and let ogr2ogr report the error
+        parseError(zipError, { logPrefix: `Unable to read kmz file '${filename}':` })
+      }
+    }
 
     // If a zip file's contents are all nested under a single directory, move them to the
     // root of the zip so ogr2ogr can find the shapefile

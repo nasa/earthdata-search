@@ -365,4 +365,56 @@ describe('convertShapefile', () => {
       })
     })
   })
+
+  describe('when converting kmz files', () => {
+    beforeEach(() => {
+      vi.spyOn(console, 'log').mockImplementation(() => {})
+    })
+
+    test('converts the doc.kml file from the kmz', async () => {
+      const fileContents = await createZipFile([
+        'files/',
+        'files/icon.png',
+        'other.kml',
+        'doc.kml'
+      ])
+
+      const result = await getConvertedFileContents('abc-123/i-95.kmz', fileContents)
+
+      expect(result.toString()).toEqual('contents of doc.kml')
+      expect(ogr2ogr).toHaveBeenCalledWith(expect.stringMatching(/i-95\.kml$/), expect.any(Object))
+    })
+
+    test('converts the first kml file when there is no doc.kml', async () => {
+      const fileContents = await createZipFile([
+        '__MACOSX/._i-95.kml',
+        'i-95.kml'
+      ])
+
+      const result = await getConvertedFileContents('abc-123/i-95.KMZ', fileContents)
+
+      expect(result.toString()).toEqual('contents of i-95.kml')
+      expect(ogr2ogr).toHaveBeenCalledWith(expect.stringMatching(/i-95\.kml$/), expect.any(Object))
+    })
+
+    test('converts the original file when the kmz does not contain a kml file', async () => {
+      const fileContents = await createZipFile(['image.png'])
+
+      const result = await getConvertedFileContents('abc-123/i-95.kmz', fileContents)
+
+      expect(result.equals(Buffer.from(fileContents))).toBe(true)
+      expect(ogr2ogr).toHaveBeenCalledWith(expect.stringMatching(/i-95\.kmz$/), expect.any(Object))
+    })
+
+    test('logs the error and converts the original file when the kmz cannot be read', async () => {
+      const fileContents = new TextEncoder().encode('not a kmz file')
+
+      const result = await getConvertedFileContents('abc-123/i-95.kmz', fileContents)
+
+      expect(result.equals(Buffer.from(fileContents))).toBe(true)
+
+      expect(console.log).toHaveBeenCalledTimes(1)
+      expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Unable to read kmz file 'i-95.kmz':"))
+    })
+  })
 })
