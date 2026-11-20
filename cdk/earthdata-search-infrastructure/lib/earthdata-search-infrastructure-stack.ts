@@ -156,6 +156,23 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                   'firehose:PutRecord'
                 ],
                 Resource: '*'
+              },
+              {
+                // Allows the setNlpSearchStatus lambda to disable NLP search when the Bedrock budget is reached
+                // and re-enable it when the budget resets, and the nlpSearch lambda to check the flag before
+                // calling Bedrock
+                Effect: 'Allow',
+                Action: [
+                  'ssm:GetParameter',
+                  'ssm:PutParameter'
+                ],
+                Resource: [
+                  'arn:aws:ssm:',
+                  this.region,
+                  ':',
+                  this.account,
+                  `:parameter/earthdata-search/${STAGE_NAME}/nlp-search-disabled`
+                ].join('')
               }
             ]
           }
