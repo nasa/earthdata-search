@@ -13,6 +13,7 @@ import {
 import * as cacheItem from '../../util/cache/cacheItem'
 import * as getItemFromCache from '../../util/cache/getItemFromCache'
 import * as shortNameSearch from '../shortNameSearch'
+import * as isNlpSearchDisabled from '../isNlpSearchDisabled'
 
 vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
@@ -81,6 +82,55 @@ beforeEach(() => {
 })
 
 describe('nlpSearch handler', () => {
+  describe('when NLP search has been disabled by the Bedrock budget', () => {
+    test('returns the original query as the keyword without calling bedrock', async () => {
+      process.env.USE_NLP_SEARCH = 'true'
+
+      vi.spyOn(isNlpSearchDisabled, 'isNlpSearchDisabled').mockResolvedValueOnce(true)
+      const shortNameSearchMock = vi.spyOn(shortNameSearch, 'shortNameSearch')
+      const consoleMock = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const event = {
+        queryStringParameters: {
+          query: 'Find me rainfall data over California in 2020'
+        }
+      }
+
+      const responseStream = {
+        write: vi.fn(),
+        end: vi.fn()
+      }
+
+      await nlpSearchHandler(event, responseStream)
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('NLP search has been disabled by the Bedrock budget. Skipping NLP search.')
+
+      expect(responseStream.write).toHaveBeenCalledTimes(4)
+      expect(responseStream.write).toHaveBeenNthCalledWith(1, 'Analyzing your query...\n')
+      expect(responseStream.write).toHaveBeenNthCalledWith(2, 'Natural language search is temporarily unavailable. Searching by keyword instead.\n')
+      expect(responseStream.write).toHaveBeenNthCalledWith(3, 'Final result:\n')
+      expect(responseStream.write).toHaveBeenNthCalledWith(4, JSON.stringify({
+        entryIds: [],
+        keyword: 'Find me rainfall data over California in 2020',
+        hasGranulesOrCwic: true,
+        includeInactiveCollections: false,
+        nlpRequestId: 'mock-request-id',
+        query: 'Find me rainfall data over California in 2020',
+        shortNames: [],
+        spatial: null,
+        spatialArea: null,
+        temporal: null,
+        nlpSearchDisabled: true
+      }))
+
+      expect(responseStream.end).toHaveBeenCalledTimes(1)
+
+      expect(shortNameSearchMock).toHaveBeenCalledTimes(0)
+      expect(mockBedrock.doStreamCalls).toHaveLength(0)
+    })
+  })
+
   describe('when USE_NLP_SEARCH is false', () => {
     test('returns the original query without processing', async () => {
       process.env.USE_NLP_SEARCH = 'false'

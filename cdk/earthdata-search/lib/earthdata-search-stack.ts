@@ -7,6 +7,7 @@ import { application } from '@edsc/cdk-utils'
 
 import { ALB } from './earthdata-search-alb'
 import { Authorizers } from './earthdata-search-authorizers'
+import { BedrockBudget } from './earthdata-search-bedrock-budget'
 import { Functions } from './earthdata-search-functions'
 import { Queues } from './earthdata-search-queues'
 import { StepFunctions } from './earthdata-search-step-functions'
@@ -19,6 +20,8 @@ export interface EarthdataSearchStackProps extends cdk.StackProps {
 const logGroupSuffix = ''
 
 const {
+  BEDROCK_BUDGET_LIMIT = '100',
+
   BEDROCK_MODEL_ID = 'amazon.nova-pro-v1:0',
   IMAGE_CACHE_EXPIRE_SECONDS = '84000',
   CLEANUP_RETRIEVALS_JOB_ENABLED,
@@ -114,6 +117,9 @@ export class EarthdataSearchStack extends cdk.Stack {
       userDataQueue
     } = queues
 
+    // SSM parameter set by the Bedrock budget to disable NLP search
+    const nlpSearchDisabledParameterName = `/earthdata-search/${STAGE_NAME}/nlp-search-disabled`
+
     const environment = {
       BEDROCK_MODEL_ID,
       CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheValkeyEndpoint`),
@@ -134,6 +140,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       GEOCODE_INDEX_PORT,
       GEOCODE_INDEX_REGION,
       HARMONY_QUEUE_URL: harmonyOrderQueue.queueUrl,
+      NLP_SEARCH_DISABLED_PARAMETER_NAME: nlpSearchDisabledParameterName,
       NLP_SHORT_NAME_FILE_BUCKET_NAME,
       NODE_ENV,
       NODE_OPTIONS: '--enable-source-maps',
@@ -204,6 +211,15 @@ export class EarthdataSearchStack extends cdk.Stack {
       defaultLambdaConfig,
       gibsJobEnabled: GIBS_JOB_ENABLED === 'true',
       queues,
+      stageName: STAGE_NAME
+    })
+
+    // eslint-disable-next-line no-new
+    new BedrockBudget(this, 'BedrockBudget', {
+      // Fall back to $100 if the env variable is set but empty
+      budgetLimit: parseFloat(BEDROCK_BUDGET_LIMIT) || 100,
+      defaultLambdaConfig,
+      nlpSearchDisabledParameterName,
       stageName: STAGE_NAME
     })
 
