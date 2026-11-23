@@ -193,6 +193,36 @@ export class Functions extends Construct {
     })
 
     /**
+     * Convert Shapefile
+     */
+    const convertShapefileNestedStack = new cdk.NestedStack(scope, 'ConvertShapefileNestedStack')
+    const gdalLambdaLayer = new lambda.LayerVersion(scope, 'GdalLambdaLayer', {
+      code: lambda.Code.fromAsset('../../layers/gdal-3.13.3-arm64.zip'),
+      compatibleRuntimes: [defaultLambdaConfig.runtime],
+      description: 'GDAL Lambda Layer'
+    })
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(convertShapefileNestedStack, 'ConvertShapefileLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        methods: ['GET'],
+        path: 'convert_shapefile'
+      },
+      entry: '../../serverless/src/convertShapefile/handler.js',
+      functionName: 'convertShapefile',
+      functionNamePrefix,
+      layers: [gdalLambdaLayer],
+      environment: {
+        ...defaultLambdaConfig.environment,
+        GDAL_DATA: '/opt/share/gdal',
+        PROJ_DATA: '/opt/share/proj'
+      },
+      memorySize: 512
+    })
+
+    /**
      * Decode ID
      */
     const decodeIdNestedStack = new cdk.NestedStack(scope, 'DecodeIdNestedStack')
@@ -515,6 +545,24 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/getShapefile/handler.js',
       functionName: 'getShapefile',
+      functionNamePrefix
+    })
+
+    /**
+     * Get Shapefile Upload URL
+     */
+    const getShapefileUploadUrlNestedStack = new cdk.NestedStack(scope, 'GetShapefileUploadUrlNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(getShapefileUploadUrlNestedStack, 'GetShapefileUploadUrlLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        methods: ['POST'],
+        path: 'shapefile_upload_url'
+      },
+      entry: '../../serverless/src/getShapefileUploadUrl/handler.js',
+      functionName: 'getShapefileUploadUrl',
       functionNamePrefix
     })
 
