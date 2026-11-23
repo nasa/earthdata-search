@@ -89,7 +89,7 @@ describe('getShapefileUploadUrl', () => {
 
     const [, command] = getSignedUrl.mock.calls[0]
 
-    expect(command.input.Bucket).toEqual('earthdata-search-dev-shapefile-uploads')
+    expect(command.input.Bucket).toEqual('earthdata-search-dev-shapefile-upload')
   })
 
   describe('when sanitizing the filename', () => {

@@ -38,7 +38,7 @@ const {
   OBFUSCATION_SPIN_SHAPEFILES = '',
   ORDER_DELAY_SECONDS = '1',
   ORDER_STATUS_REFRESH_TIME = '60000',
-  SHAPEFILE_UPLOAD_BUCKET_NAME = 'earthdata-search-dev-shapefile-uploads',
+  SHAPEFILE_UPLOAD_BUCKET_NAME = 'earthdata-search-dev-shapefile-upload',
   STAGE_NAME = 'dev',
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',

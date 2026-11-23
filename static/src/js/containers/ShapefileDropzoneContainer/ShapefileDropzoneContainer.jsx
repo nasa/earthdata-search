@@ -86,7 +86,13 @@ export const ShapefileDropzoneContainer = () => {
         }
       }
       onError={
-        (file) => {
+        (file, error) => {
+          if (error.startsWith('Server responded with')) {
+            onShapefileErrored('Error uploading file')
+
+            return
+          }
+
           let shapefileError = ''
 
           if (file.name.match('.*(zip|shp|dbf|shx)$')) {
@@ -101,9 +107,7 @@ export const ShapefileDropzoneContainer = () => {
             shapefileError = 'Invalid file format.'
           }
 
-          onShapefileErrored({
-            message: shapefileError
-          })
+          onShapefileErrored(shapefileError)
         }
       }
       onRemovedFile={

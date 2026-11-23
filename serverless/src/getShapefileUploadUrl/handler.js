@@ -27,7 +27,7 @@ const getShapefileUploadUrl = async (event, context) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const {
-    SHAPEFILE_UPLOAD_BUCKET_NAME: bucketName = 'earthdata-search-dev-shapefile-uploads'
+    SHAPEFILE_UPLOAD_BUCKET_NAME: bucketName = 'earthdata-search-dev-shapefile-upload'
   } = process.env
 
   try {

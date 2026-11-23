@@ -203,15 +203,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
         })
       })
 
@@ -234,15 +232,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'Invalid file format.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('Invalid file format.')
         })
       })
     })
@@ -270,15 +266,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.')
         })
       })
 
@@ -301,15 +295,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'Invalid file format.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('Invalid file format.')
         })
       })
     })
@@ -337,15 +329,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('To use a GeoJSON file, please upload a valid .json or .geojson file.')
         })
       })
 
@@ -368,15 +358,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'Invalid file format.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('Invalid file format.')
         })
       })
     })
@@ -405,15 +393,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.')
         })
       })
 
@@ -436,15 +422,13 @@ describe('ShapefileDropzoneContainer component', () => {
           const { onError } = componentProps
 
           await act(() => {
-            onError(mockFile)
+            onError(mockFile, '')
           })
 
           expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
           expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-          expect(onShapefileErroredMock).toHaveBeenCalledWith({
-            message: 'Invalid file format.'
-          })
+          expect(onShapefileErroredMock).toHaveBeenCalledWith('Invalid file format.')
         })
       })
     })
@@ -468,15 +452,42 @@ describe('ShapefileDropzoneContainer component', () => {
         const { onError } = componentProps
 
         await act(() => {
-          onError(mockFile)
+          onError(mockFile, '')
         })
 
         expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
 
         expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
-        expect(onShapefileErroredMock).toHaveBeenCalledWith({
-          message: 'Invalid file format.'
+        expect(onShapefileErroredMock).toHaveBeenCalledWith('Invalid file format.')
+      })
+    })
+
+    describe('when the file upload fails', () => {
+      test('calls onShapefileErrored with the correct message', async () => {
+        const onShapefileErroredMock = vi.fn()
+        const { zustandState } = setup({
+          overrideZustandState: {
+            shapefile: {
+              setErrored: onShapefileErroredMock
+            }
+          }
         })
+
+        const mockFile = {
+          name: 'test-file-name.zip'
+        }
+
+        const componentProps = ShapefileDropzone.mock.calls[0][0]
+        const { onError } = componentProps
+
+        await act(() => {
+          onError(mockFile, 'Server responded with 0 code.')
+        })
+
+        expect(zustandState.ui.modals.setOpenModal).toHaveBeenCalledTimes(0)
+
+        expect(onShapefileErroredMock).toHaveBeenCalledTimes(1)
+        expect(onShapefileErroredMock).toHaveBeenCalledWith('Error uploading file')
       })
     })
   })

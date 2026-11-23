@@ -59,8 +59,8 @@ export const withDropzone = (WrappedComponent) => {
       if (onSuccess) onSuccess(file, response, dropzone)
     }
 
-    const handleError = (file) => {
-      if (onError) onError(file)
+    const handleError = (file, error) => {
+      if (onError) onError(file, error)
     }
 
     const handleRemovedFile = () => {

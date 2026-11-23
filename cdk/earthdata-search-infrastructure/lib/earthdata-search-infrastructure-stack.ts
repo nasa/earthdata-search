@@ -13,7 +13,7 @@ const {
   DB_INSTANCE_CLASS = 'db.t3.micro',
   EDSC_HOST = 'http://localhost:8080',
   NLP_SHORT_NAME_FILE_BUCKET_NAME = 'earthdata-search-dev-nlp-short-name-file',
-  SHAPEFILE_UPLOAD_BUCKET_NAME = 'earthdata-search-dev-shapefile-uploads',
+  SHAPEFILE_UPLOAD_BUCKET_NAME = 'earthdata-search-dev-shapefile-upload',
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
   STAGE_NAME = 'dev',
