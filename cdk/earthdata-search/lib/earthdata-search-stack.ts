@@ -21,7 +21,7 @@ const logGroupSuffix = ''
 
 const {
   BEDROCK_BUDGET_LIMIT = '100',
-
+  BEDROCK_BUDGET_SHUT_OFF_PERCENT = '99',
   BEDROCK_MODEL_ID = 'amazon.nova-pro-v1:0',
   IMAGE_CACHE_EXPIRE_SECONDS = '84000',
   CLEANUP_RETRIEVALS_JOB_ENABLED,
@@ -212,6 +212,7 @@ export class EarthdataSearchStack extends cdk.Stack {
     new BedrockBudget(this, 'BedrockBudget', {
       // Fall back to $100 if the env variable is set but empty
       budgetLimit: parseFloat(BEDROCK_BUDGET_LIMIT) || 100,
+      budgetShutOffPercent: parseFloat(BEDROCK_BUDGET_SHUT_OFF_PERCENT),
       defaultLambdaConfig,
       nlpSearchDisabledParameterName,
       stageName: STAGE_NAME

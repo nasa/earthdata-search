@@ -12,6 +12,8 @@ import { application } from '@edsc/cdk-utils'
 export interface BedrockBudgetProps {
   /** Monthly budget limit in USD */
   budgetLimit: number;
+  /** Percentage at which the Bedrock budget triggers a shut off */
+  budgetShutOffPercent: number;
   /** Default Lambda config options */
   defaultLambdaConfig: application.NodeJsFunctionProps;
   /** Name of the SSM parameter indicating whether NLP search should be disabled */
@@ -44,6 +46,7 @@ export class BedrockBudget extends Construct {
 
     const {
       budgetLimit,
+      budgetShutOffPercent,
       defaultLambdaConfig,
       nlpSearchDisabledParameterName,
       stageName
@@ -169,7 +172,7 @@ export class BedrockBudget extends Construct {
           notification: {
             comparisonOperator: 'GREATER_THAN',
             notificationType: 'ACTUAL',
-            threshold: 99,
+            threshold: budgetShutOffPercent,
             thresholdType: 'PERCENTAGE'
           },
           subscribers: [{
