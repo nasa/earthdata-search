@@ -81,8 +81,6 @@ describe('#prepareCollectionParams', () => {
       expect(params).toEqual(
         expect.objectContaining({
           serviceType: [
-            'esi',
-            'opendap',
             'harmony'
           ]
         })

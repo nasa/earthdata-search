@@ -82,8 +82,6 @@ export const prepareCollectionParams = () => {
 
   const serviceType = []
   if (featureFacets.customizable) {
-    serviceType.push('esi')
-    serviceType.push('opendap')
     serviceType.push('harmony')
   }
 

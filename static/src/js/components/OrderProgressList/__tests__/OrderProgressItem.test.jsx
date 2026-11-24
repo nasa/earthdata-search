@@ -3,10 +3,8 @@ import { screen } from '@testing-library/react'
 import { OrderProgressItem } from '../OrderProgressItem'
 
 import {
-  retrievalStatusPropsEsi,
   retrievalStatusPropsHarmonyOrder,
   retrievalStatusPropsHarmonyOrderInProgress,
-  retrievalStatusPropsSwodlrOrder,
   retrievalStatusPropsUponRequestOrder
 } from './mocks'
 import setupTest from '../../../../../../vitestConfigs/setupTest'
@@ -14,54 +12,11 @@ import setupTest from '../../../../../../vitestConfigs/setupTest'
 const setup = setupTest({
   Component: OrderProgressItem,
   defaultProps: {
-    retrievalOrder: retrievalStatusPropsEsi.orders[0]
+    retrievalOrder: [retrievalStatusPropsHarmonyOrder]
   }
 })
 
 describe('OrderProgressItem component', () => {
-  describe('Complete Swodlr Order', () => {
-    test('shows the correct order metadata', () => {
-      setup({
-        overrideProps: {
-          retrievalOrder: retrievalStatusPropsSwodlrOrder
-        }
-      })
-
-      expect(screen.getByRole('heading', {
-        level: 5,
-        name: 'Order ID: e7efe743-f253-43e3-b017-74faa8bdfcf1'
-      })).toBeInTheDocument()
-
-      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Complete')
-      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(100%)')
-      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
-    })
-  })
-
-  describe('Complete ESI Order', () => {
-    test('shows the correct order metadata', () => {
-      const { orders } = retrievalStatusPropsEsi
-      const esiOrder = orders[0]
-
-      setup({
-        overrideProps: {
-          retrievalOrder: esiOrder
-        }
-      })
-
-      const orderHeading = screen.getByRole('heading', {
-        level: 5,
-        name: 'Order ID: 5000000333461'
-      })
-
-      expect(orderHeading).toBeInTheDocument()
-      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Complete')
-      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('81 of 81 granule(s) processed (100%)')
-
-      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
-    })
-  })
-
   describe('Harmony Order in progress', () => {
     test('shows the correct order metadata upon initial request of order', () => {
       setup({
@@ -122,32 +77,6 @@ describe('OrderProgressItem component', () => {
       expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
       expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Successful')
       expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(100%)')
-    })
-  })
-
-  describe('when order information is not defined', () => {
-    test('displays the correct progress', () => {
-      const { orders } = retrievalStatusPropsEsi
-      const esiOrder = orders[0]
-
-      setup({
-        overrideProps: {
-          retrievalOrder: {
-            ...esiOrder,
-            state: 'creating',
-            orderInformation: {}
-          }
-        }
-      })
-
-      expect(screen.getByRole('heading', {
-        level: 5,
-        name: 'Order ID: 5000000333461'
-      })).toBeInTheDocument()
-
-      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Creating')
-      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(0%)')
-      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
     })
   })
 })

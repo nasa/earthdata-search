@@ -16,7 +16,6 @@ import { prepareRetrievalParams } from '../util/retrievals'
 import deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import { metricsDataAccess } from '../util/metrics/metricsDataAccess'
 
-import type { EchoOrderAccessMethod, EsiAccessMethod } from '../zustand/types'
 import logEvent from '../util/metrics/experiments/logEvent'
 
 export const useCreateRetrieval = () => {
@@ -70,26 +69,9 @@ export const useCreateRetrieval = () => {
       if (type === ACCESS_METHOD_TYPES.DOWNLOAD) {
         selectedService = 'Download'
         selectedType = 'download'
-      } else if (type === ACCESS_METHOD_TYPES.ECHO_ORDERS) {
-        const { optionDefinition } = selectedMethod as EchoOrderAccessMethod
-        const { name: serviceName } = optionDefinition
-
-        selectedService = serviceName
-        selectedType = 'order'
-      } else if (type === ACCESS_METHOD_TYPES.ESI) {
-        const { optionDefinition } = selectedMethod as EsiAccessMethod
-        const { name: serviceName } = optionDefinition
-        selectedService = serviceName
-        selectedType = 'esi'
-      } else if (type === ACCESS_METHOD_TYPES.OPENDAP) {
-        selectedService = 'OPeNDAP'
-        selectedType = 'opendap'
       } else if (type === ACCESS_METHOD_TYPES.HARMONY) {
         selectedService = 'Harmony'
         selectedType = 'harmony'
-      } else if (type === ACCESS_METHOD_TYPES.SWODLR) {
-        selectedService = 'SWODLR'
-        selectedType = 'swodlr'
       }
 
       return {

@@ -3,8 +3,9 @@ import { parse } from 'qs'
 import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { useLocation } from 'react-router'
 
-import { calculateGranulesPerOrder, calculateOrderCount } from '../../util/orderCount'
+import { calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -22,6 +23,8 @@ import { MODAL_NAMES } from '../../constants/modalNames'
 import { useCreateRetrieval } from '../../hooks/useCreateRetrieval'
 
 import './ChunkedOrderModal.scss'
+
+const { defaultGranulesPerOrder } = getApplicationConfig()
 
 const ChunkedOrderModal = () => {
   const location = useLocation()
@@ -84,28 +87,11 @@ const ChunkedOrderModal = () => {
             const { [collectionId]: projectCollection } = projectCollectionsRequiringChunking
             const orderCount = calculateOrderCount(projectCollection)
 
-            const {
-              accessMethods = {},
-              granules = {},
-              selectedAccessMethod
-            } = projectCollection
+            const { granules = {} } = projectCollection
 
             const { count: granuleCount } = granules
 
-            const granulesPerOrder = calculateGranulesPerOrder(
-              accessMethods,
-              selectedAccessMethod
-            )
-
-            // Display notice for services which send confirmation emails
-            let sendsEmails = false
-            const isEchoOrdering = /echoOrder\d+$/
-            const isEsi = /esi\d+$/
-
-            if (selectedAccessMethod
-              && (isEchoOrdering.test(selectedAccessMethod) || isEsi.test(selectedAccessMethod))) {
-              sendsEmails = true
-            }
+            const granulesPerOrder = defaultGranulesPerOrder
 
             const { [collectionId]: projectCollectionMetadata = {} } = projectCollectionsMetadata
             const { title } = projectCollectionMetadata
@@ -134,17 +120,6 @@ const ChunkedOrderModal = () => {
                   <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
                   .
                 </p>
-                {
-                  sendsEmails && (
-                    <p>
-                      Note: You will receive a separate set of confirmation emails
-                      for each order in
-                      {' '}
-                      {title}
-                      .
-                    </p>
-                  )
-                }
               </div>
             )
           })

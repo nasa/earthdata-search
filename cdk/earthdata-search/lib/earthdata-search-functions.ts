@@ -36,16 +36,10 @@ export interface FunctionsProps {
   gibsJobEnabled: boolean;
   /** SQS Queues that trigger lambda functions */
   queues: {
-    /** The SQS queue for processing catalog rest orders */
-    catalogRestOrderQueue: sqs.IQueue;
-    /** The SQS queue for processing CMR orders */
-    cmrOrderingOrderQueue: sqs.IQueue;
     /** The SQS queue for processing color maps */
     colorMapsProcessingQueue: sqs.IQueue;
     /** The SQS queue for processing harmony orders */
     harmonyOrderQueue: sqs.IQueue;
-    /** The SQS queue for processing swodlr orders */
-    swodlrOrderQueue: sqs.IQueue;
     /** The SQS queue for processing tags */
     tagProcessingQueue: sqs.IQueue;
     /** The SQS queue for processing user data */

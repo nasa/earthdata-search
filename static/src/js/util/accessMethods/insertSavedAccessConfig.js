@@ -1,4 +1,3 @@
-import { XMLValidator } from 'fast-xml-parser'
 import { isEmpty } from 'lodash-es'
 
 /**
@@ -26,63 +25,21 @@ export const insertSavedAccessConfig = (methods, savedAccessConfig) => {
         return
       }
 
-      if (method.id === savedAccessConfig.id) {
-        if (['Harmony', 'OPeNDAP'].includes(method.type)) {
-          selectedAccessMethod = methodName
+      if (['Harmony'].includes(method.type)) {
+        selectedAccessMethod = methodName
 
-          // Pull out values from the saved access method that would not have changed
-          const {
-            selectedOutputFormat,
-            selectedOutputProjection,
-            selectedVariables
-          } = savedAccessConfig
+        // Pull out values from the saved access method that would not have changed
+        const {
+          selectedOutputFormat,
+          selectedOutputProjection,
+          selectedVariables
+        } = savedAccessConfig
 
-          accessMethods[methodName] = {
-            ...methods[methodName],
-            selectedOutputFormat,
-            selectedOutputProjection,
-            selectedVariables
-          }
-
-          return
-        }
-
-        if (['ESI', 'ECHO ORDERS'].includes(method.type)) {
-          const { formDigest: savedFormDigest } = savedAccessConfig
-          const { formDigest: methodFormDigest } = method
-
-          // Ensure the saved EchoForm is the same form as the current EchoForm
-          if (savedFormDigest === methodFormDigest) {
-            selectedAccessMethod = methodName
-
-            // Pull out values from the saved access method that would not have changed
-            const {
-              model = '',
-              rawModel = '',
-              formDigest
-            } = savedAccessConfig
-
-            // Pull out the form from the access method
-            const { form } = method
-
-            // Parse the savedAccessConfig values and if it is not valid XML, don't use it
-            if (
-              XMLValidator.validate(form) === true
-              && XMLValidator.validate(model) === true
-              && XMLValidator.validate(rawModel) === true
-            ) {
-              // Only override values that the user configured
-              accessMethods[methodName] = {
-                ...methods[methodName],
-                form,
-                model,
-                rawModel,
-                formDigest
-              }
-            } else {
-              console.log('There was a problem parsing the savedAccessConfig values, using the default form instead.')
-            }
-          }
+        accessMethods[methodName] = {
+          ...methods[methodName],
+          selectedOutputFormat,
+          selectedOutputProjection,
+          selectedVariables
         }
       }
     }

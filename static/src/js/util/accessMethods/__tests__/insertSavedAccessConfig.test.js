@@ -28,15 +28,22 @@ describe('insertSavedAccessConfig', () => {
 
   test('returns the original methods if no savedAccessConfig exists', () => {
     const methods = {
-      esi0: {
-        form: '<form><model><instance><prov:options xmlns:prov="http://www.example.com/orderoptions"><prov:boolreference>true</prov:boolreference></prov:options></instance></model><ui><input id="boolinput" label="Bool input" ref="prov:boolreference" type="xs:boolean"><help>Helpful text</help></input></ui></form>',
-        formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
-        optionDefinition: {
-          conceptId: 'OO10000-EDSC',
-          name: 'mock form'
+      harmony: {
+        mbr: {
+          neLat: 31.08850198924431,
+          neLng: -94.19999999999999,
+          swLat: 28.275300000000215,
+          swLng: -99.50000000000001
         },
-        type: 'ESI',
-        url: 'https://example.com'
+        url: 'https://harmony.earthdata.nasa.gov',
+        type: 'Harmony',
+        selectedOutputFormat: 'application/netcdf',
+        supportsConcatenation: true,
+        enableSpatialSubsetting: true,
+        enableTemporalSubsetting: true,
+        enableConcatenateDownload: true,
+        supportsShapefileSubsetting: true,
+        supportsBoundingBoxSubsetting: true
       }
     }
     const savedAccessConfig = {}
@@ -45,72 +52,6 @@ describe('insertSavedAccessConfig', () => {
 
     expect(result).toEqual({
       methods
-    })
-  })
-
-  test('returns the original methods if no the echoform cannot be parsed', () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
-
-    const methods = {
-      esi0: {
-        form: '<form><model><instance><prov:options xmlns:prov="http://www.example.com/orderoptions"><prov:boolreference>true</prov:boolreference></prov:options></instance></model><ui><input id="boolinput" label="Bool input" ref="prov:boolreference" type="xs:boolean"><help>Helpful text</help></input></ui></form>',
-        formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
-        optionDefinition: {
-          conceptId: 'OO10000-EDSC',
-          name: 'mock form'
-        },
-        type: 'ESI',
-        url: 'https://example.com'
-      }
-    }
-    const savedAccessConfig = {
-      ...methods.esi0,
-      model: 'mock',
-      rawModel: 'mock'
-    }
-
-    const result = insertSavedAccessConfig(methods, savedAccessConfig)
-
-    expect(result).toEqual({
-      methods,
-      selectedAccessMethod: 'esi0'
-    })
-
-    expect(consoleSpy).toHaveBeenCalledTimes(1)
-    expect(consoleSpy).toHaveBeenCalledWith('There was a problem parsing the savedAccessConfig values, using the default form instead.')
-  })
-
-  test('inserts a saved ESI access config', () => {
-    const methods = {
-      download: {
-        isValid: true,
-        type: 'download'
-      },
-      esi0: {
-        form: '<form><model><instance><prov:options xmlns:prov="http://www.example.com/orderoptions"><prov:boolreference>true</prov:boolreference></prov:options></instance></model><ui><input id="boolinput" label="Bool input" ref="prov:boolreference" type="xs:boolean"><help>Helpful text</help></input></ui></form>',
-        formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
-        optionDefinition: {
-          conceptId: 'OO10000-EDSC',
-          name: 'mock form'
-        },
-        type: 'ESI',
-        url: 'https://example.com'
-      }
-    }
-    const savedAccessConfig = {
-      ...methods.esi0,
-      model: '<prov:options xmlns:prov="http://www.example.com/orderoptions"><prov:boolreference>true</prov:boolreference></prov:options>',
-      rawModel: '<prov:options xmlns:prov="http://www.example.com/orderoptions"><prov:boolreference>true</prov:boolreference></prov:options>'
-    }
-
-    const result = insertSavedAccessConfig(methods, savedAccessConfig)
-
-    expect(result).toEqual({
-      methods: {
-        ...methods,
-        esi0: savedAccessConfig
-      },
-      selectedAccessMethod: 'esi0'
     })
   })
 

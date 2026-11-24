@@ -2,7 +2,6 @@ import 'array-foreach-async'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getGranuleLimit } from '../../../static/src/js/util/collectionMetadata/granuleLimit'
-import { maxSwodlrGranuleCount } from '../../../static/src/js/constants/swodlrConstants'
 import { hasTag } from '../../../sharedUtils/tags'
 import { limitedCollectionSize } from '../../../sharedUtils/limitedCollectionSize'
 
@@ -19,19 +18,12 @@ const isLimitedCollection = (collectionMetadata) => {
  * Determine the maximum number of granules a user can request per order
  * @param {Object} collectionMetadata CMR Collection metadata
  */
-const maxGranulesPerOrder = (collectionMetadata, accessMethod) => {
+const maxGranulesPerOrder = (collectionMetadata) => {
   const { defaultGranulesPerOrder } = getApplicationConfig()
 
-  const { maxItemsPerOrder, type } = accessMethod
-
-  // Each swodlr order must be parsed separately
-  if (type === 'SWODLR') {
-    return 1
-  }
-
-  if (maxItemsPerOrder || isLimitedCollection(collectionMetadata)) {
+  if (isLimitedCollection(collectionMetadata)) {
     // Return the minimum between the default order size and the collection granuleLimit
-    return Math.min(maxItemsPerOrder, defaultGranulesPerOrder, getGranuleLimit(collectionMetadata))
+    return Math.min(defaultGranulesPerOrder, getGranuleLimit(collectionMetadata))
   }
 
   return defaultGranulesPerOrder
@@ -76,28 +68,12 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
   Array.from(Array(totalPages)).forEach((_, pageNum) => {
     const adjustedPageNumber = pageNum + 1
 
-    const { concept_id: conceptId } = granuleParams
-
-    let conceptIds = conceptId
-
-    if (accessMethod.type === 'SWODLR') {
-      if (adjustedPageNumber > maxSwodlrGranuleCount) {
-        throw new Error('Swodlr too many granules at retrieval')
-      }
-
-      // Only slice concept IDs if we have them; otherwise keep the empty array
-      if (conceptId && conceptId.length > 0) {
-        conceptIds = [conceptId[pageNum]]
-      }
-    }
-
     orderPayloads.push({
       ...granuleParams,
 
       // Override these values if they were provided with the current iterations values
       page_num: adjustedPageNumber,
-      page_size: pageSize,
-      concept_id: conceptIds
+      page_size: pageSize
     })
   })
 

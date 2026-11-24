@@ -105,11 +105,8 @@ export class EarthdataSearchStack extends cdk.Stack {
       queueNameSuffix: logGroupSuffix
     })
     const {
-      catalogRestOrderQueue,
-      cmrOrderingOrderQueue,
       colorMapsProcessingQueue,
       harmonyOrderQueue,
-      swodlrOrderQueue,
       tagProcessingQueue,
       userDataQueue
     } = queues
@@ -119,8 +116,6 @@ export class EarthdataSearchStack extends cdk.Stack {
       CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheValkeyEndpoint`),
       IMAGE_CACHE_EXPIRE_SECONDS,
       CACHE_PORT: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheValkeyPort`),
-      CATALOG_REST_QUEUE_URL: catalogRestOrderQueue.queueUrl,
-      CMR_ORDERING_ORDER_QUEUE_URL: cmrOrderingOrderQueue.queueUrl,
       COLOR_MAP_QUEUE_URL: colorMapsProcessingQueue.queueUrl,
       CONFIG_SECRET_ID: cdk.Fn.importValue(`${STAGE_NAME}-DbPasswordSecret`),
       DATABASE_ENDPOINT: cdk.Fn.importValue(`${STAGE_NAME}-DatabaseEndpoint`),
@@ -142,7 +137,6 @@ export class EarthdataSearchStack extends cdk.Stack {
       ORDER_DELAY_SECONDS,
       SHAPEFILE_UPLOAD_BUCKET_NAME,
       STAGE_NAME,
-      SWODLR_QUEUE_URL: swodlrOrderQueue.queueUrl,
       TAG_QUEUE_URL: tagProcessingQueue.queueUrl,
       USE_GEOCODER,
       USE_CACHE,
