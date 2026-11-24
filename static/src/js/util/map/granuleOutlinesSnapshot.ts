@@ -98,6 +98,9 @@ export const saveGranuleOutlinesSnapshot = ({
  * @param {Boolean} params.isMoving If the map is currently being panned or zoomed
  * @param {Object} params.map The OL map
  * @returns {Boolean} `false` if there is no snapshot that can be used. Nothing has been drawn, so the granule outlines need to be drawn again.
+ *
+ * A snapshot that can't be used is not deleted here. The caller draws the outlines again and
+ * calls `saveGranuleOutlinesSnapshot`, which replaces it and reuses its canvas.
  */
 export const drawGranuleOutlinesSnapshot = ({
   ctx,
