@@ -2,6 +2,7 @@ import { shapefileEventTypes } from '../constants/eventTypes'
 import { eventEmitter } from '../events/events'
 import useEdscStore from '../zustand/useEdscStore'
 import { ShapefileFile } from '../types/sharedTypes'
+import splitShapefileOnAntimeridian from './geometry/splitShapefileOnAntimeridian'
 
 // Add an edscId to each feature in the shapefile
 const addEdscIdsToShapefile = (file: ShapefileFile): ShapefileFile => {
@@ -51,12 +52,15 @@ const addShapefile = async ({
   // Add edscIds to each feature
   const fileWithIds = addEdscIdsToShapefile(updatedFile)
 
+  // Split any polygons that cross the antimeridian into a polygon on each side of the antimeridian
+  const splitFile = splitShapefileOnAntimeridian(fileWithIds)
+
   const { shapefile } = useEdscStore.getState()
   const { saveShapefile } = shapefile
 
   // Save the shapefile to the store
   await saveShapefile({
-    file: fileWithIds,
+    file: splitFile,
     filename,
     size
   })
@@ -78,7 +82,7 @@ const addShapefile = async ({
           eventEmitter.emitBuffered(
             shapefileEventTypes.ADDSHAPEFILE,
             file,
-            fileWithIds,
+            splitFile,
             updateQuery
           )
 
