@@ -38,6 +38,18 @@ describe('Banner component', () => {
     expect(screen.getByRole('banner')).toHaveClass('banner--error')
   })
 
+  test('info banner should render correctly', () => {
+    setup({
+      overrideProps: {
+        type: 'info'
+      }
+    })
+
+    const banner = screen.getByRole('banner')
+    expect(banner).toHaveClass('banner--info')
+    expect(banner).not.toHaveClass('banner--error')
+  })
+
   describe('when the message prop is not provided', () => {
     test('does not render a message', async () => {
       setup({

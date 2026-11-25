@@ -22,7 +22,7 @@ import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
 import { escapePromptTags } from '../util/escapePromptTags'
 import { shortNameSearch } from './shortNameSearch'
-import { isNlpSearchDisabled } from './isNlpSearchDisabled'
+import { isNlpSearchDisabled } from '../util/isNlpSearchDisabled'
 import { pluralize } from '../../../sharedUtils/pluralize'
 
 let bedrock

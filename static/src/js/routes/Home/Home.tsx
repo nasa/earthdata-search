@@ -5,6 +5,7 @@ import React, {
   useState
 } from 'react'
 import { useNavigate } from 'react-router'
+import { useQuery } from '@apollo/client'
 import { sortBy } from 'lodash-es'
 import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
@@ -23,6 +24,7 @@ import {
 import Button from '../../components/Button/Button'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import NlpSearchStatus from '../../components/NlpSearchStatus/NlpSearchStatus'
+import Spinner from '../../components/Spinner/Spinner'
 
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -56,7 +58,10 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
 import { routes } from '../../constants/routes'
+import NLP_SEARCH_STATUS from '../../operations/queries/nlpSearchStatus'
 import renderTooltip from '../../util/renderTooltip'
+// @ts-expect-error: Types do not exist for this file
+import addToast from '../../util/addToast'
 
 import routerHelper from '../../router/router'
 
@@ -92,6 +97,16 @@ const preloadRoutes = () => {
   // @ts-expect-error: Types are not defined in this file
   import('../../components/SearchTour/SearchTour')
   import('../../containers/MapContainer/MapContainer')
+}
+
+/**
+ * NLP search status GraphQL query result type
+ */
+interface NlpSearchStatusQueryData {
+  nlpSearchStatus: {
+    /** Whether NLP search is temporarily disabled */
+    disabled: boolean
+  }
 }
 
 export interface HomeTopic {
@@ -163,12 +178,15 @@ export const Home: React.FC = () => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const isNlpActiveRef = useRef(false)
+
   const [showAllPortals, setShowAllPortals] = useState(false)
   const [activeNlpPrompt, setActiveNlpPrompt] = useState('')
   const [nlpRequestId, setNlpRequestId] = useState(0)
   const [hasSubmittedNlpSearch, setHasSubmittedNlpSearch] = useState(false)
   const [isNlpStreaming, setIsNlpStreaming] = useState(false)
   const [isNlpNavigationPending, setIsNlpNavigationPending] = useState(false)
+  // Set when an NLP search response reports that NLP search is temporarily unavailable
+  const [hasNlpBecomeUnavailable, setHasNlpBecomeUnavailable] = useState(false)
 
   const { isLoading } = useEdscStore(getCollectionsPageInfo)
 
@@ -180,19 +198,54 @@ export const Home: React.FC = () => {
   // Check if NLP search is enabled. If so, utlize the nlp endpoint and alert users of the change through UI elements.
   const isNlpEnabled = nlpSearchEnabled === 'true'
 
-  const searchMode = useEdscStore(getNlpSearchMode)
+  // Check whether NLP search has been temporarily disabled. The page waits for this
+  // result so it doesn't render the Enhanced search mode and then switch away from it.
+  const {
+    data: nlpSearchStatusData,
+    loading: isNlpSearchStatusLoading
+  } = useQuery<NlpSearchStatusQueryData>(NLP_SEARCH_STATUS, {
+    fetchPolicy: 'network-only',
+    skip: !isNlpEnabled
+  })
+
+  const isNlpDisabledOnLoad = isNlpEnabled && !!nlpSearchStatusData?.nlpSearchStatus.disabled
+
+  const isNlpTemporarilyDisabled = isNlpDisabledOnLoad || (isNlpEnabled && hasNlpBecomeUnavailable)
+
+  const setShowNlpSearchUnavailableBanner = useEdscStore(
+    (state) => state.home.setShowNlpSearchUnavailableBanner
+  )
+
+  useEffect(() => {
+    // Let the user know why the search mode toggle is disabled. The banner is rendered in
+    // the AppLayout so it sits above the SecondaryToolbar instead of underneath it.
+    if (!isNlpDisabledOnLoad) return undefined
+
+    setShowNlpSearchUnavailableBanner(true)
+
+    // Hide the banner when leaving the Home page
+    return () => setShowNlpSearchUnavailableBanner(false)
+  }, [isNlpDisabledOnLoad, setShowNlpSearchUnavailableBanner])
+
+  const userSearchMode = useEdscStore(getNlpSearchMode)
   const setNlpSearchUserSelection = useEdscStore(
     (state) => state.growthbook.setNlpSearchUserSelection
   )
 
+  // Force traditional mode while NLP is temporarily disabled, without overwriting the
+  // user's saved selection so it is restored once NLP is available again
+  const searchMode = isNlpTemporarilyDisabled ? traditionalSearchMode : userSearchMode
+
   const isNlpSearchActive = isNlpEnabled && searchMode === nlpSearchMode
 
   useEffect(() => {
-    // Focus the search input when the component mounts
-    if (inputRef.current) {
-      inputRef.current?.focus()
+    // Focus the search input once it has rendered (after the NLP status has loaded)
+    if (!isNlpSearchStatusLoading && inputRef.current) {
+      inputRef.current.focus()
     }
+  }, [isNlpSearchStatusLoading])
 
+  useEffect(() => {
     // This event listener is used to load the Search and Map components
     // when the DOM is ready which helps prevent a flash of white when the
     // page loads.
@@ -258,6 +311,22 @@ export const Home: React.FC = () => {
   const onNlpSearchFailed = useCallback(() => {
     resetNlpSearchUi()
   }, [resetNlpSearchUi])
+
+  const onNlpSearchUnavailable = useCallback(() => {
+    resetNlpSearchUi()
+    setHasNlpBecomeUnavailable(true)
+
+    addToast('We could not complete the request because Enhanced search is temporarily unavailable. Please try again using Traditional search.', {
+      appearance: 'info'
+    })
+  }, [resetNlpSearchUi])
+
+  useEffect(() => {
+    // Return focus to the search input so the user can resubmit their query
+    if (hasNlpBecomeUnavailable && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [hasNlpBecomeUnavailable])
 
   const onSearchModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nextSearchMode = event.target.value as HomeSearchMode
@@ -343,9 +412,20 @@ export const Home: React.FC = () => {
   const isSearchInputDisabled = isNlpSearchActive && isNlpStreaming
   const shouldShowNlpStatus = isNlpSearchActive && hasSubmittedNlpSearch && !!activeNlpPrompt
 
+  if (isNlpSearchStatusLoading) {
+    return (
+      <Spinner
+        dataTestId="home-nlp-search-status-spinner"
+        type="dots"
+        className="root__spinner spinner spinner--dots spinner--small"
+      />
+    )
+  }
+
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
+
         <section
           className="home__hero position-relative w-100 d-flex px-5 flex-column flex-shrink-0"
         >
@@ -368,7 +448,7 @@ export const Home: React.FC = () => {
                   Earth observations
                 </h1>
                 {
-                  isNlpEnabled ? (
+                  isNlpSearchActive ? (
                     <p className="home__hero-subtitle text-white mb-0 lead">
                       Describe your search, or use keywords, time, and place
                     </p>
@@ -384,7 +464,11 @@ export const Home: React.FC = () => {
                 isNlpEnabled && (
                   <div className="home__search-mode-control position-relative d-flex align-items-center">
                     <div className="position-relative">
-                      <fieldset className="home__search-mode-toggle" aria-label="Search mode">
+                      <fieldset
+                        className="home__search-mode-toggle"
+                        aria-label="Search mode"
+                        disabled={isNlpTemporarilyDisabled}
+                      >
                         <legend className="visually-hidden">Search mode</legend>
                         <input
                           className="btn-check"
@@ -401,7 +485,9 @@ export const Home: React.FC = () => {
                             (tooltipProps) => renderTooltip({
                               ...tooltipProps,
                               className: 'tooltip--wide',
-                              children: 'Describe what you are looking for to start your search'
+                              children: isNlpTemporarilyDisabled
+                                ? 'Enhanced search is temporarily unavailable. Please try again later.'
+                                : 'Describe what you are looking for to start your search'
                             })
                           }
                         >
@@ -499,6 +585,7 @@ export const Home: React.FC = () => {
                                   onStreamingChange={setIsNlpStreaming}
                                   onNlpSearchComplete={onNlpSearchComplete}
                                   onNlpSearchFailed={onNlpSearchFailed}
+                                  onNlpSearchUnavailable={onNlpSearchUnavailable}
                                 />
                               </div>
                             </div>

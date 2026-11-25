@@ -5,6 +5,7 @@ import {
   waitFor
 } from '@testing-library/react'
 import type { Mock } from 'vitest'
+import { useQuery } from '@apollo/client'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -13,6 +14,9 @@ import { Home } from '../Home'
 import Spinner from '../../../components/Spinner/Spinner'
 import { routes } from '../../../constants/routes'
 import { localStorageKeys } from '../../../constants/localStorageKeys'
+import NLP_SEARCH_STATUS from '../../../operations/queries/nlpSearchStatus'
+// @ts-expect-error: Types do not exist for this file
+import addToast from '../../../util/addToast'
 import { sessionStorageKeys } from '../../../constants/sessionStorageKeys'
 
 // @ts-expect-error: Types do not exist for this file
@@ -27,10 +31,24 @@ vi.mock('../../../zustand/selectors/growthbook', () => ({
 
 vi.mock('../../../components/Spinner/Spinner', () => ({ default: vi.fn(() => <div />) }))
 
+vi.mock('../../../util/addToast', () => ({ default: vi.fn() }))
+
+const nlpSearchStatusEnabledResult = {
+  data: { nlpSearchStatus: { disabled: false } },
+  loading: false
+}
+
+vi.mock('@apollo/client', async () => ({
+  ...(await vi.importActual('@apollo/client')),
+  useQuery: vi.fn()
+}))
+
 /**
  * Props captured from the mocked NlpSearchStatus component.
  */
 type NlpSearhStatusMockProps = {
+  /** Called when the NLP endpoint reports NLP search is temporarily unavailable. */
+  onNlpSearchUnavailable?: () => void
   /** Called when NLP flow completes successfully. */
   onNlpSearchComplete?: (options: { hasSpatial: boolean }) => void
   /** Called when NLP flow fails and UI should reset. */
@@ -106,6 +124,9 @@ const setup = setupTest({
     },
     growthbook: {
       setNlpSearchUserSelection: vi.fn()
+    },
+    home: {
+      setShowNlpSearchUnavailableBanner: vi.fn()
     }
   },
   withRouter: true
@@ -121,7 +142,9 @@ beforeEach(() => {
   // We want to avoid preloading routes in tests to avoid flaky tests
   process.env.NODE_ENV = 'test'
   localStorage.removeItem(localStorageKeys.homeSearchMode)
-  sessionStorage.removeItem(sessionStorageKeys.dontShowNlpPopup)
+  sessionStorage.removeItem(sessionStorageKeys.dontShowNlpPopup);
+
+  (useQuery as Mock).mockReturnValue(nlpSearchStatusEnabledResult)
 })
 
 afterEach(() => {
@@ -362,6 +385,56 @@ describe('Home', () => {
           })
         })
 
+        describe('when NLP search is temporarily unavailable', () => {
+          test('switches to the disabled Traditional mode UI and alerts the user', async () => {
+            const { user, zustandState } = setup()
+
+            const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
+
+            await user.type(searchInput, 'test search')
+            await user.click(screen.getByRole('button', { name: /search/i }))
+
+            const latestCallProps = mockNlpSearchStatus.mock.calls.at(-1)?.[0]
+            await act(async () => {
+              latestCallProps?.onStreamingChange?.(true)
+            })
+
+            await act(async () => {
+              latestCallProps?.onNlpSearchUnavailable?.()
+            })
+
+            expect(addToast).toHaveBeenCalledTimes(1)
+            expect(addToast).toHaveBeenCalledWith(
+              'We could not complete the request because Enhanced search is temporarily unavailable. Please try again using Traditional search.',
+              {
+                appearance: 'info'
+              }
+            )
+
+            const enhancedRadio = screen.getByRole('radio', { name: 'Enhanced BETA' })
+            const traditionalRadio = screen.getByRole('radio', { name: 'Traditional' })
+
+            expect(enhancedRadio).not.toBeChecked()
+            expect(enhancedRadio).toBeDisabled()
+            expect(traditionalRadio).toBeChecked()
+            expect(traditionalRadio).toBeDisabled()
+
+            // Only the toast is shown when NLP becomes unavailable mid-search, not the banner
+            expect(zustandState.home.setShowNlpSearchUnavailableBanner).toHaveBeenCalledTimes(0)
+
+            const traditionalInput = screen.getByPlaceholderText('Type to search for data')
+            expect(traditionalInput).toBeEnabled()
+            expect(traditionalInput).toHaveValue('test search')
+            expect(traditionalInput).toHaveFocus()
+            expect(screen.getByTestId('home-hero-status-region')).toHaveClass('home__hero-status-region--inactive')
+
+            // The user's saved search mode selection is not changed
+            expect(zustandState.growthbook.setNlpSearchUserSelection).toHaveBeenCalledTimes(0)
+            expect(mockRouterNavigate).not.toHaveBeenCalled()
+            expect(mockUseNavigate).not.toHaveBeenCalled()
+          })
+        })
+
         describe('when NLP search completes successfully', () => {
           test('navigates to /search', async () => {
             const { user } = setup()
@@ -489,6 +562,125 @@ describe('Home', () => {
           expect(setNlpSearchUserSelection).toHaveBeenCalledWith('nlp')
         })
       })
+    })
+
+    describe('when checking the NLP search status', () => {
+      test('requests the NLP search status', () => {
+        const { zustandState } = setup()
+
+        expect(zustandState.home.setShowNlpSearchUnavailableBanner).toHaveBeenCalledTimes(0)
+
+        expect(useQuery).toHaveBeenCalledWith(NLP_SEARCH_STATUS, {
+          fetchPolicy: 'network-only',
+          skip: false
+        })
+      })
+
+      test('renders only a spinner while the NLP search status is loading', () => {
+        (useQuery as Mock).mockReturnValue({
+          data: undefined,
+          loading: true
+        })
+
+        setup()
+
+        expect(Spinner).toHaveBeenCalledTimes(1)
+        expect(Spinner).toHaveBeenCalledWith({
+          className: 'root__spinner spinner spinner--dots spinner--small',
+          dataTestId: 'home-nlp-search-status-spinner',
+          type: 'dots'
+        }, {})
+
+        expect(screen.queryByText("Search NASA's 42 Earth observations")).not.toBeInTheDocument()
+        expect(screen.queryByRole('radio', { name: 'Enhanced BETA' })).not.toBeInTheDocument()
+      })
+    })
+
+    describe('when NLP search is temporarily disabled', () => {
+      beforeEach(() => {
+        (getNlpSearchMode as Mock).mockReturnValue('nlp');
+
+        (useQuery as Mock).mockReturnValue({
+          data: { nlpSearchStatus: { disabled: true } },
+          loading: false
+        })
+      })
+
+      test('forces the Traditional mode UI and disables the toggle', () => {
+        setup()
+
+        const enhancedRadio = screen.getByRole('radio', { name: 'Enhanced BETA' })
+        const traditionalRadio = screen.getByRole('radio', { name: 'Traditional' })
+
+        expect(enhancedRadio).not.toBeChecked()
+        expect(enhancedRadio).toBeDisabled()
+        expect(traditionalRadio).toBeChecked()
+        expect(traditionalRadio).toBeDisabled()
+
+        expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
+        expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM/)).not.toBeInTheDocument()
+      })
+
+      test('shows the NLP search unavailable banner', () => {
+        const { zustandState } = setup()
+
+        expect(addToast).toHaveBeenCalledTimes(0)
+
+        expect(zustandState.home.setShowNlpSearchUnavailableBanner).toHaveBeenCalledTimes(1)
+        expect(zustandState.home.setShowNlpSearchUnavailableBanner).toHaveBeenCalledWith(true)
+      })
+
+      test('hides the NLP search unavailable banner when leaving the Home page', () => {
+        const { unmount, zustandState } = setup()
+
+        const { setShowNlpSearchUnavailableBanner } = zustandState.home;
+        (setShowNlpSearchUnavailableBanner as Mock).mockClear()
+
+        unmount()
+
+        expect(setShowNlpSearchUnavailableBanner).toHaveBeenCalledTimes(1)
+        expect(setShowNlpSearchUnavailableBanner).toHaveBeenCalledWith(false)
+      })
+
+      test('does not change the saved search mode selection', async () => {
+        const { user, zustandState } = setup()
+
+        await user.click(screen.getByRole('radio', { name: 'Enhanced BETA' }))
+
+        expect(zustandState.growthbook.setNlpSearchUserSelection).toHaveBeenCalledTimes(0)
+      })
+
+      test('performs a traditional search on submit', async () => {
+        const { user, zustandState } = setup()
+
+        await user.type(screen.getByPlaceholderText('Type to search for data'), 'test')
+        await user.click(screen.getByRole('button', { name: /search/i }))
+
+        expect(mockNlpSearchStatus).toHaveBeenCalledTimes(0)
+        expect(zustandState.collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+        expect(mockUseNavigate).toHaveBeenCalledWith(routes.SEARCH)
+      })
+    })
+  })
+
+  describe('when the nlpSearch environment variable is disabled', () => {
+    test('skips the NLP search status query', () => {
+      getApplicationConfig.mockReturnValue({
+        numberOfGranules: '42',
+        nlpSearch: 'false'
+      })
+
+      setup()
+
+      expect(useQuery).toHaveBeenCalledWith(NLP_SEARCH_STATUS, {
+        fetchPolicy: 'network-only',
+        skip: true
+      })
+
+      expect(screen.queryByRole('radio', { name: 'Enhanced BETA' })).not.toBeInTheDocument()
     })
   })
 

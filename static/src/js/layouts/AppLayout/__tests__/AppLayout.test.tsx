@@ -24,6 +24,7 @@ import UrlQueryContainer from '../../../containers/UrlQueryContainer/UrlQueryCon
 // @ts-expect-error The file does not have types
 import WrappingContainer from '../../../containers/WrappingContainer/WrappingContainer'
 import UserLoader from '../../../components/UserLoader/UserLoader'
+import NlpSearchUnavailableBanner from '../../../components/NlpSearchUnavailableBanner/NlpSearchUnavailableBanner'
 
 vi.mock('../../../components/EdlTokenLoader/EdlTokenLoader', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 vi.mock('../../../components/ErrorBanner/ErrorBanner', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
@@ -35,6 +36,7 @@ vi.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => ({ defaul
 vi.mock('../../../containers/UrlQueryContainer/UrlQueryContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 vi.mock('../../../containers/WrappingContainer/WrappingContainer', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
 vi.mock('../../../components/UserLoader/UserLoader', () => ({ default: vi.fn(({ children }) => <div>{children}</div>) }))
+vi.mock('../../../components/NlpSearchUnavailableBanner/NlpSearchUnavailableBanner', () => ({ default: vi.fn(() => <div />) }))
 
 vi.mock('react-router', async () => ({
   ...(await vi.importActual('react-router')),
@@ -57,6 +59,9 @@ describe('AppLayout', () => {
 
     expect(ErrorBanner).toHaveBeenCalledTimes(1)
     expect(ErrorBanner).toHaveBeenCalledWith({}, {})
+
+    expect(NlpSearchUnavailableBanner).toHaveBeenCalledTimes(1)
+    expect(NlpSearchUnavailableBanner).toHaveBeenCalledWith({}, {})
 
     expect(EdlTokenLoader).toHaveBeenCalledTimes(1)
     expect(EdlTokenLoader).toHaveBeenCalledWith(

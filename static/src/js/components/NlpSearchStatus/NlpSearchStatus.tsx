@@ -23,6 +23,9 @@ import './NlpSearchStatus.scss'
 
 export const FINAL_RESULT_MARKER = 'Final result:'
 
+// Message streamed by the /nlp endpoint when NLP search has been temporarily disabled
+export const NLP_SEARCH_UNAVAILABLE_MESSAGE = 'Natural language search is temporarily unavailable.'
+
 /**
  * Props accepted by the NlpSearchStatus component.
  */
@@ -37,6 +40,8 @@ type NlpSearchStatusProps = {
     onNlpSearchComplete?: (options: { hasSpatial: boolean }) => void | Promise<void>
   /** Called when NLP parsing or streaming fails. */
     onNlpSearchFailed?: () => void
+  /** Called when the /nlp endpoint reports that NLP search is temporarily unavailable. */
+    onNlpSearchUnavailable?: () => void
 }
 
 const getNLPDisplayText = (completionText: string) => {
@@ -134,7 +139,8 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
   requestId,
   onStreamingChange = () => {},
   onNlpSearchComplete = () => {},
-  onNlpSearchFailed = () => {}
+  onNlpSearchFailed = () => {},
+  onNlpSearchUnavailable = () => {}
 }) => {
   const lastStartedRequestIdRef = useRef<number | null>(null)
   const completionTextRef = useRef('')
@@ -209,6 +215,18 @@ const NlpSearchStatus: React.FC<NlpSearchStatusProps> = ({
       if (lastStartedRequestIdRef.current == null) return
 
       const parsedResult = parsedNlpFinalResult(completionText)
+
+      // NLP search is temporarily unavailable, don't run the search. The parent
+      // is responsible for alerting the user and switching to traditional search.
+      if (
+        getNLPDisplayText(completionText).includes(NLP_SEARCH_UNAVAILABLE_MESSAGE)
+        || parsedResult?.nlpSearchDisabled
+      ) {
+        onStreamingChange(false)
+        onNlpSearchUnavailable()
+
+        return
+      }
 
       if (!parsedResult) {
         handleError({
