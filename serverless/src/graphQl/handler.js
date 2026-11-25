@@ -4,7 +4,6 @@ import {
 } from '@apollo/server/plugin/landingPage/default'
 import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { applyMiddleware } from 'graphql-middleware'
 
 import buildPermissions from './permissions'
 import resolvers from './resolvers'
@@ -18,12 +17,11 @@ const apolloPlugins = [
   })
 ]
 
-const schema = applyMiddleware(
+const schema = buildPermissions(
   makeExecutableSchema({
     typeDefs,
     resolvers
-  }),
-  buildPermissions()
+  })
 )
 
 const server = new ApolloServer({

@@ -2,8 +2,8 @@ import {
   allow,
   and,
   deny,
-  shield
-} from 'graphql-shield'
+  guard
+} from 'graphql-guard'
 
 import isValidUser from './rules/isValidUser'
 import isAdminUser from './rules/isAdminUser'
@@ -11,7 +11,8 @@ import userOwnsProject from './rules/userOwnsProject'
 import userOwnsProjectIfProjectOwned from './rules/userOwnsProjectIfProjectOwned'
 import userOwnsRetrieval from './rules/userOwnsRetrieval'
 
-const buildPermissions = () => shield(
+const buildPermissions = (schema) => guard(
+  schema,
   {
     Query: {
       // This wildcard will catch any mutations we do not explicitly allow since we are not
@@ -86,8 +87,8 @@ const buildPermissions = () => shield(
     }
   },
   {
-    // Only allow the external errors when running in the local DEV environment
-    allowExternalErrors: process.env.NODE_ENV === 'development'
+    // Only show resolver errors when running in the local DEV environment
+    suppressResolverError: process.env.NODE_ENV !== 'development'
   }
 )
 

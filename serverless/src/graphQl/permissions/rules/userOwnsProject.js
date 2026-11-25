@@ -1,4 +1,4 @@
-import { rule } from 'graphql-shield'
+import { rule } from 'graphql-guard'
 
 /**
  * Checks if the user owns the project requested

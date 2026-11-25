@@ -1,4 +1,4 @@
-import { rule } from 'graphql-shield'
+import { rule } from 'graphql-guard'
 
 /**
  * Return true is the user owns the project. Also returns true if there is no current user id

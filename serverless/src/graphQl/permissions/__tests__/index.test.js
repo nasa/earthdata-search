@@ -2,8 +2,8 @@ import {
   allow,
   and,
   deny,
-  shield
-} from 'graphql-shield'
+  guard
+} from 'graphql-guard'
 
 import isValidUser from '../rules/isValidUser'
 import isAdminUser from '../rules/isAdminUser'
@@ -13,17 +13,20 @@ import buildPermissions from '../index'
 import userOwnsProjectIfProjectOwned from '../rules/userOwnsProjectIfProjectOwned'
 import userOwnsRetrieval from '../rules/userOwnsRetrieval'
 
-vi.mock('graphql-shield', async () => ({
-  ...(await vi.importActual('graphql-shield')),
-  shield: vi.fn()
+vi.mock('graphql-guard', async () => ({
+  ...(await vi.importActual('graphql-guard')),
+  guard: vi.fn()
 }))
 
 describe('permissions', () => {
   test('permissions are correct', () => {
-    buildPermissions()
+    const schema = {}
 
-    expect(shield).toHaveBeenCalledTimes(1)
-    expect(shield).toHaveBeenCalledWith(
+    buildPermissions(schema)
+
+    expect(guard).toHaveBeenCalledTimes(1)
+    expect(guard).toHaveBeenCalledWith(
+      schema,
       {
         Query: {
           '*': deny,
@@ -96,7 +99,7 @@ describe('permissions', () => {
         }
       },
       {
-        allowExternalErrors: false
+        suppressResolverError: true
       }
     )
   })
