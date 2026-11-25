@@ -10,6 +10,14 @@
     box-shadow: bootstrap.$box-shadow;
     overflow: hidden;
 
+    // The menu is shown before Popper has positioned it, so on the first open it can paint
+    // for a frame at the top left of the page. Popper adds `data-popper-placement` once it
+    // has measured the menu, so keep the menu hidden until then. (React Bootstrap's
+    // Popover and Tooltip hide themselves the same way until their first measure.)
+    &:not([data-popper-placement]) {
+      visibility: hidden;
+    }
+
     &--has-actions {
       padding-top: 0;
     }

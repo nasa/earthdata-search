@@ -8,7 +8,6 @@ import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
 import classNames from 'classnames'
-import { snakeCase } from 'lodash-es'
 
 import RadioSettingDropdownItem from './RadioSettingDropdownItem'
 import RadioSettingToggle from '../CustomToggle/RadioSettingToggle'
@@ -36,7 +35,6 @@ export const RadioSettingDropdown = ({
   const menuRef = useRef(null)
   const wrapperRef = useRef(null)
 
-  const [menuOffsetX, setMenuOffsetX] = useState(0)
   const [dropdownActive, setDropdownActive] = useState(false)
 
   const radioSettingClasses = classNames(
@@ -103,27 +101,20 @@ export const RadioSettingDropdown = ({
     }
   }, [onWindowMouseMove])
 
-  useEffect(() => {
-    // If the dropdown is visible and the refs are defined, calculate and set the offset.
-    if (dropdownActive && toggleRef.current && menuRef.current) {
-      const toggleWidth = toggleRef.current.clientWidth
-      const menuWidth = menuRef.current.clientWidth
-
-      // Calculate the offset as the difference between the widths of the menu and toggle.
-      const newOffset = ((menuWidth - toggleWidth) / 2) * -1
-
-      setMenuOffsetX(newOffset)
-    }
-  }, [dropdownActive, toggleRef.current, menuRef.current, settings])
-
   return (
     <div
       ref={wrapperRef}
       className={radioSettingClasses}
     >
+      {/*
+        Center the menu under the toggle with Popper's `bottom` placement. Don't give this
+        Dropdown a `key` that changes with the label: remounting it while open re-creates the
+        portaled menu, which paints at the top left of the page (over the Temporal button)
+        before Popper positions it.
+      */}
       <Dropdown
-        key={`${menuOffsetX}_${snakeCase(label)}`}
         className="radio-setting-dropdown__dropdown"
+        drop="down-centered"
         show={dropdownActive}
       >
         <Dropdown.Toggle
@@ -141,16 +132,6 @@ export const RadioSettingDropdown = ({
               data-testid={`${id}__menu`}
               ref={menuRef}
               className={menuClasses}
-              popperConfig={
-                {
-                  modifiers: [{
-                    name: 'offset',
-                    options: {
-                      offset: [menuOffsetX, 0]
-                    }
-                  }]
-                }
-              }
             >
               {
                 settings.length > 0 && settings.map((setting, index) => {

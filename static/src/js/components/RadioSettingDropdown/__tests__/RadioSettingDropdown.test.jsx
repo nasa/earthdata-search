@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { screen } from '@testing-library/react'
 import { FaBacon } from 'react-icons/fa'
@@ -52,22 +53,37 @@ describe('RadioSettingDropdown component', () => {
     const button = screen.getByRole('button')
     await user.click(button)
 
-    // The `useEffect` updating `menuOffsetX` is causing the component to render twice.
-    expect(RadioSettingDropdownItem).toHaveBeenCalledTimes(2)
-    expect(RadioSettingDropdownItem).toHaveBeenNthCalledWith(1, {
+    expect(RadioSettingDropdownItem).toHaveBeenCalledTimes(1)
+    expect(RadioSettingDropdownItem).toHaveBeenCalledWith({
       icon: undefined,
       inProgress: undefined,
       isActive: false,
       onClick: expect.any(Function),
       title: 'setting label'
     }, {})
+  })
 
-    expect(RadioSettingDropdownItem).toHaveBeenNthCalledWith(2, {
-      icon: undefined,
-      inProgress: undefined,
+  test('does not remount the dropdown when the label changes', () => {
+    const settings = [{
+      label: 'setting label',
       isActive: false,
-      onClick: expect.any(Function),
-      title: 'setting label'
-    }, {})
+      onClick: itemOnClickCallbackMock
+    }]
+
+    const { props, rerender } = setup({
+      overrideProps: {
+        label: 'Sort: Usage',
+        settings
+      }
+    })
+
+    const toggle = screen.getByRole('button')
+
+    // Changing the label (e.g. picking a new sort) must keep the same toggle element.
+    // Remounting the Dropdown re-creates the portaled menu, which flashes at the top left of the page.
+    rerender(<RadioSettingDropdown {...props} label="Sort: Relevance" />)
+
+    expect(screen.getByRole('button')).toBe(toggle)
+    expect(toggle).toHaveTextContent('Sort: Relevance')
   })
 })
