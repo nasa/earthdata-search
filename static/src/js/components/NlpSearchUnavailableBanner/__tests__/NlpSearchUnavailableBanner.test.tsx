@@ -20,7 +20,7 @@ describe('NlpSearchUnavailableBanner', () => {
 
     const banner = screen.getByRole('banner')
     expect(banner).toHaveClass('banner--info')
-    expect(banner).toHaveTextContent('Enhanced Search is temporarily unavailable Please try again using Traditional search')
+    expect(banner).toHaveTextContent('Enhanced Search is temporarily unavailable Please try again using Standard search')
   })
 
   test('does not render when showNlpSearchUnavailableBanner is false', () => {

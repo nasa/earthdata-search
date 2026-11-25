@@ -23,7 +23,7 @@ const NlpSearchUnavailableBanner = () => {
   return (
     <Banner
       title="Enhanced Search is temporarily unavailable"
-      message="Please try again using Traditional search"
+      message="Please try again using Standard search"
       type="info"
       onClose={() => setShowNlpSearchUnavailableBanner(false)}
     />

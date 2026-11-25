@@ -181,7 +181,7 @@ describe('Home', () => {
       setup()
 
       expect(screen.queryByRole('radio', { name: 'Enhanced BETA' })).not.toBeInTheDocument()
-      expect(screen.queryByRole('radio', { name: 'Traditional' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('radio', { name: 'Standard' })).not.toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
       expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
@@ -238,7 +238,7 @@ describe('Home', () => {
         expect(screen.getByText('BETA')).toHaveClass('home__beta-badge')
 
         expect(screen.getByRole('radio', { name: 'Enhanced BETA' })).toBeChecked()
-        expect(screen.getByRole('radio', { name: 'Traditional' })).not.toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Standard' })).not.toBeChecked()
         expect(screen.getByPlaceholderText('Wildfires in California during summer 2023')).toBeInTheDocument()
         expect(screen.queryByRole('button', { name: 'Open temporal filters' })).not.toBeInTheDocument()
         expect(screen.queryByRole('button', { name: 'spatial-selection-dropdown' })).not.toBeInTheDocument()
@@ -386,7 +386,7 @@ describe('Home', () => {
         })
 
         describe('when NLP search is temporarily unavailable', () => {
-          test('switches to the disabled Traditional mode UI and alerts the user', async () => {
+          test('switches to the disabled Standard mode UI and alerts the user', async () => {
             const { user, zustandState } = setup()
 
             const searchInput = screen.getByPlaceholderText('Wildfires in California during summer 2023')
@@ -405,14 +405,14 @@ describe('Home', () => {
 
             expect(addToast).toHaveBeenCalledTimes(1)
             expect(addToast).toHaveBeenCalledWith(
-              'We could not complete the request because Enhanced search is temporarily unavailable. Please try again using Traditional search.',
+              'We could not complete the request because Enhanced search is temporarily unavailable. Please try again using Standard search.',
               {
                 appearance: 'info'
               }
             )
 
             const enhancedRadio = screen.getByRole('radio', { name: 'Enhanced BETA' })
-            const traditionalRadio = screen.getByRole('radio', { name: 'Traditional' })
+            const traditionalRadio = screen.getByRole('radio', { name: 'Standard' })
 
             expect(enhancedRadio).not.toBeChecked()
             expect(enhancedRadio).toBeDisabled()
@@ -488,11 +488,11 @@ describe('Home', () => {
         })
       })
 
-      describe('when selecting the Traditional mode', () => {
+      describe('when selecting the Standard mode', () => {
         test('calls setNlpSearchUserSelection', async () => {
           const { user, zustandState } = setup()
 
-          await user.click(screen.getByRole('radio', { name: 'Traditional' }))
+          await user.click(screen.getByRole('radio', { name: 'Standard' }))
 
           const { growthbook } = zustandState
           const { setNlpSearchUserSelection } = growthbook
@@ -507,11 +507,11 @@ describe('Home', () => {
         (getNlpSearchMode as Mock).mockReturnValue('traditional')
       })
 
-      test('renders the Traditional mode UI', () => {
+      test('renders the Standard mode UI', () => {
         setup()
 
         expect(screen.getByRole('radio', { name: 'Enhanced BETA' })).not.toBeChecked()
-        expect(screen.getByRole('radio', { name: 'Traditional' })).toBeChecked()
+        expect(screen.getByRole('radio', { name: 'Standard' })).toBeChecked()
         expect(screen.getByPlaceholderText('Type to search for data')).toBeInTheDocument()
         expect(screen.queryByText(/Disclaimer: Enhanced search uses an LLM to parse your query and may make mistakes/)).not.toBeInTheDocument()
         expect(screen.getByRole('button', { name: 'Open temporal filters' })).toBeInTheDocument()
@@ -606,11 +606,11 @@ describe('Home', () => {
         })
       })
 
-      test('forces the Traditional mode UI and disables the toggle', () => {
+      test('forces the Standard mode UI and disables the toggle', () => {
         setup()
 
         const enhancedRadio = screen.getByRole('radio', { name: 'Enhanced BETA' })
-        const traditionalRadio = screen.getByRole('radio', { name: 'Traditional' })
+        const traditionalRadio = screen.getByRole('radio', { name: 'Standard' })
 
         expect(enhancedRadio).not.toBeChecked()
         expect(enhancedRadio).toBeDisabled()

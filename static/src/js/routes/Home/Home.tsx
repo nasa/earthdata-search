@@ -316,7 +316,7 @@ export const Home: React.FC = () => {
     resetNlpSearchUi()
     setHasNlpBecomeUnavailable(true)
 
-    addToast('We could not complete the request because Enhanced search is temporarily unavailable. Please try again using Traditional search.', {
+    addToast('We could not complete the request because Enhanced search is temporarily unavailable. Please try again using Standard search.', {
       appearance: 'info'
     })
   }, [resetNlpSearchUi])
@@ -518,7 +518,7 @@ export const Home: React.FC = () => {
                           }
                         >
                           <label className="home__search-mode-toggle-label" htmlFor="home-search-mode-traditional">
-                            Traditional
+                            Standard
                           </label>
                         </OverlayTrigger>
                       </fieldset>

@@ -5,7 +5,7 @@
     "ui:enumNames": [
       "Default",
       "AI Enhanced Search",
-      "Traditional Search"
+      "Standard Search"
     ]
   },
   "collectionSort": {
