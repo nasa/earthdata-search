@@ -184,6 +184,12 @@
     outline-offset: 0.125rem;
   }
 
+  &__search-mode-toggle:disabled &__search-mode-toggle-label {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+
   &__nlp-chat-wrapper {
     width: 100%;
     margin-top: 0;

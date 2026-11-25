@@ -20,6 +20,7 @@ import UrlQueryContainer from '../../containers/UrlQueryContainer/UrlQueryContai
 // @ts-expect-error The file does not have types
 import WrappingContainer from '../../containers/WrappingContainer/WrappingContainer'
 import UserLoader from '../../components/UserLoader/UserLoader'
+import NlpSearchUnavailableBanner from '../../components/NlpSearchUnavailableBanner/NlpSearchUnavailableBanner'
 
 const AppLayout = () => (
   <>
@@ -27,6 +28,7 @@ const AppLayout = () => (
     <HistoryContainer />
     <MetricsContainer />
     <ErrorBanner />
+    <NlpSearchUnavailableBanner />
     <EdlTokenLoader>
       <UserLoader>
         <UrlQueryContainer>

@@ -6,6 +6,7 @@ import colormap from './colormap.graphql'
 import pageInfo from './pageInfo.graphql'
 import project from './project.graphql'
 import nlpFeedback from './nlpFeedback.graphql'
+import nlpSearchStatus from './nlpSearchStatus.graphql'
 import region from './region.graphql'
 import retrieval from './retrieval.graphql'
 import user from './user.graphql'
@@ -23,6 +24,7 @@ export default mergeTypeDefs(
     pageInfo,
     project,
     nlpFeedback,
+    nlpSearchStatus,
     region,
     retrieval,
     user

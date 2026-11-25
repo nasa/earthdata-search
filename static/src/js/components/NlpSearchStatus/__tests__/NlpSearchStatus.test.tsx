@@ -66,7 +66,8 @@ const setup = setupTest({
     requestId: 0,
     onStreamingChange: vi.fn(),
     onNlpSearchComplete: vi.fn(),
-    onNlpSearchFailed: vi.fn()
+    onNlpSearchFailed: vi.fn(),
+    onNlpSearchUnavailable: vi.fn()
   }
 })
 
@@ -234,6 +235,41 @@ describe('NlpSearchStatus component', () => {
     expect(props.onStreamingChange).toHaveBeenCalledWith(false)
     expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(1)
     expect(props.onNlpSearchFailed).toHaveBeenCalledWith()
+  })
+
+  test('calls onNlpSearchUnavailable and does not run the search when NLP search is temporarily unavailable', async () => {
+    const { props, zustandState } = setup({
+      overrideProps: {
+        activePrompt: 'rainfall in california',
+        requestId: 1
+      }
+    })
+
+    await waitFor(() => {
+      expect(props.onStreamingChange).toHaveBeenCalledTimes(1)
+    })
+
+    const completionText = [
+      'Analyzing your query...',
+      'Natural language search is temporarily unavailable. Searching by keyword instead.',
+      'Final result:',
+      '{"keyword":"rainfall in california","query":"rainfall in california","nlpSearchDisabled":true}'
+    ].join('\n')
+
+    await act(async () => {
+      capturedUseCompletionOptions.onFinish?.('rainfall in california', completionText)
+    })
+
+    expect(props.onNlpSearchUnavailable).toHaveBeenCalledTimes(1)
+    expect(props.onNlpSearchUnavailable).toHaveBeenCalledWith()
+
+    expect(props.onStreamingChange).toHaveBeenCalledTimes(2)
+    expect(props.onStreamingChange).toHaveBeenLastCalledWith(false)
+
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(0)
+    expect(zustandState.errors.handleError).toHaveBeenCalledTimes(0)
+    expect(props.onNlpSearchComplete).toHaveBeenCalledTimes(0)
+    expect(props.onNlpSearchFailed).toHaveBeenCalledTimes(0)
   })
 
   test('resets UI and calls onNlpSearchFailed when onError fires', async () => {

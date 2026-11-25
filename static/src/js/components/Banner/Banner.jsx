@@ -19,7 +19,8 @@ export const Banner = ({
   const bannerClassNames = classNames([
     'banner',
     {
-      'banner--error': type === 'error'
+      'banner--error': type === 'error',
+      'banner--info': type === 'info'
     }
   ])
 

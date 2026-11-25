@@ -54,6 +54,7 @@ const buildPermissions = () => shield(
         isAdminUser
       ),
       colormaps: allow,
+      nlpSearchStatus: allow,
       project: allow,
       projects: isValidUser,
       regions: allow,

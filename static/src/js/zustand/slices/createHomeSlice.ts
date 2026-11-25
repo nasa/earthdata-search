@@ -13,6 +13,12 @@ const createHomeSlice: ImmerStateCreator<HomeSlice> = (set) => ({
       set((state) => {
         state.home.openFacetGroup = groupName
       })
+    },
+    showNlpSearchUnavailableBanner: false,
+    setShowNlpSearchUnavailableBanner: (showNlpSearchUnavailableBanner) => {
+      set((state) => {
+        state.home.showNlpSearchUnavailableBanner = showNlpSearchUnavailableBanner
+      })
     }
   }
 })

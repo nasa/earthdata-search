@@ -13,7 +13,7 @@ import {
 import * as cacheItem from '../../util/cache/cacheItem'
 import * as getItemFromCache from '../../util/cache/getItemFromCache'
 import * as shortNameSearch from '../shortNameSearch'
-import * as isNlpSearchDisabled from '../isNlpSearchDisabled'
+import * as isNlpSearchDisabled from '../../util/isNlpSearchDisabled'
 
 vi.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')

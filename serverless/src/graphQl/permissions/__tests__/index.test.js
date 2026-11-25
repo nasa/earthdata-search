@@ -64,6 +64,7 @@ describe('permissions', () => {
             isAdminUser
           ),
           colormaps: allow,
+          nlpSearchStatus: allow,
           project: allow,
           projects: isValidUser,
           regions: allow,

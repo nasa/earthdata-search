@@ -1,0 +1,9 @@
+type NlpSearchStatus {
+  "Whether natural language search has been disabled (e.g. the Bedrock budget has been reached)"
+  disabled: Boolean!
+}
+
+type Query {
+  "Retrieves the current status of natural language search"
+  nlpSearchStatus: NlpSearchStatus!
+}

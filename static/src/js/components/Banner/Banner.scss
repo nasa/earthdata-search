@@ -16,8 +16,8 @@
     top: -3em;
   }
 
-  &--error {
-    background-color: utils.$color__nasa-red--shade;
+  &--error,
+  &--info {
     color: utils.$color__spacesuit-white;
 
     .banner__title {
@@ -38,6 +38,14 @@
         color: utils.$color__spacesuit-white;
       }
     }
+  }
+
+  &--error {
+    background-color: utils.$color__nasa-red--shade;
+  }
+
+  &--info {
+    background-color: utils.$color__nasa-blue;
   }
 
   &__content {

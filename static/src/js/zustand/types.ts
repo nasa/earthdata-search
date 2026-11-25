@@ -370,6 +370,10 @@ export type HomeSlice = {
     openFacetGroup: string | null
     /** Function to set the setOpenFacetGroup value */
     setOpenFacetGroup: (groupName: string | null) => void
+    /** Flag to show the banner explaining NLP search is temporarily unavailable */
+    showNlpSearchUnavailableBanner: boolean
+    /** Function to set the showNlpSearchUnavailableBanner value */
+    setShowNlpSearchUnavailableBanner: (showNlpSearchUnavailableBanner: boolean) => void
   }
 }
 

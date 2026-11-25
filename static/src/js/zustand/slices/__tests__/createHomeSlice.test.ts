@@ -9,7 +9,9 @@ describe('createHomeSlice', () => {
       startDrawing: false,
       setStartDrawing: expect.any(Function),
       openFacetGroup: null,
-      setOpenFacetGroup: expect.any(Function)
+      setOpenFacetGroup: expect.any(Function),
+      showNlpSearchUnavailableBanner: false,
+      setShowNlpSearchUnavailableBanner: expect.any(Function)
     })
   })
 
@@ -36,6 +38,19 @@ describe('createHomeSlice', () => {
       const updatedState = useEdscStore.getState()
       const { home: updatedHome } = updatedState
       expect(updatedHome.openFacetGroup).toEqual('science_keywords')
+    })
+  })
+
+  describe('setShowNlpSearchUnavailableBanner', () => {
+    test('updates showNlpSearchUnavailableBanner', () => {
+      const zustandState = useEdscStore.getState()
+      const { home } = zustandState
+      const { setShowNlpSearchUnavailableBanner } = home
+      setShowNlpSearchUnavailableBanner(true)
+
+      const updatedState = useEdscStore.getState()
+      const { home: updatedHome } = updatedState
+      expect(updatedHome.showNlpSearchUnavailableBanner).toBe(true)
     })
   })
 })

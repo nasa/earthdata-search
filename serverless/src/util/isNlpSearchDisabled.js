@@ -24,6 +24,9 @@ export const clearNlpSearchDisabledCache = () => {
  * @returns {Promise<Boolean>} True if NLP search has been disabled
  */
 export const isNlpSearchDisabled = async () => {
+  // In development, return false to allow NLP search to be used without requiring the SSM parameter to be set
+  if (process.env.NODE_ENV === 'development') return false
+
   const { NLP_SEARCH_DISABLED_PARAMETER_NAME: parameterName } = process.env
 
   if (!parameterName) return false
@@ -38,6 +41,8 @@ export const isNlpSearchDisabled = async () => {
     const { Parameter: parameter = {} } = await ssmClient.send(new GetParameterCommand({
       Name: parameterName
     }))
+
+    console.log(`Read SSM parameter ${parameterName}:`, parameter.Value)
 
     cachedValue = parameter.Value === 'true'
     cacheExpiresAt = Date.now() + CACHE_TTL_MS
