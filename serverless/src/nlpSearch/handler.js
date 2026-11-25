@@ -22,6 +22,7 @@ import { getItemFromCache } from '../util/cache/getItemFromCache'
 import { cacheItem } from '../util/cache/cacheItem'
 import { escapePromptTags } from '../util/escapePromptTags'
 import { shortNameSearch } from './shortNameSearch'
+import { isNlpSearchDisabled } from './isNlpSearchDisabled'
 import { pluralize } from '../../../sharedUtils/pluralize'
 
 let bedrock
@@ -263,6 +264,22 @@ export const handler = async (event, originalResponseStream) => {
     spatial: null,
     spatialArea: null,
     temporal: null
+  }
+
+  // The Bedrock budget sets this SSM parameter when spending reaches the limit. Fall back
+  // to a keyword search and flag the result so the frontend knows NLP search didn't happen
+  if (await isNlpSearchDisabled()) {
+    console.warn('NLP search has been disabled by the Bedrock budget. Skipping NLP search.')
+    responseStream.write('Natural language search is temporarily unavailable. Searching by keyword instead.\n')
+
+    extractedResults.keyword = originalQuery
+    extractedResults.nlpSearchDisabled = true
+
+    responseStream.write('Final result:\n')
+    responseStream.write(JSON.stringify(extractedResults))
+    responseStream.end()
+
+    return
   }
 
   if (process.env.USE_NLP_SEARCH !== 'true') {
